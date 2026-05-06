@@ -281,7 +281,7 @@ public sealed class ExecutionPipelineTests
         workspace.WriteFile(Path.Combine("project", "steps", "dotnet", "custom-dotnet", "custom-dotnet.csproj"), $$"""
         <Project Sdk="Microsoft.NET.Sdk">
           <PropertyGroup>
-            <TargetFramework>net8.0</TargetFramework>
+            <TargetFramework>net10.0</TargetFramework>
             <ImplicitUsings>enable</ImplicitUsings>
             <Nullable>enable</Nullable>
           </PropertyGroup>

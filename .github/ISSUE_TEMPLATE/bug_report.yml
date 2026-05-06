@@ -1,0 +1,65 @@
+name: Bug Report
+description: Report a defect in Cress, its orchestration, or its test tooling
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a bug. Please include enough detail for us to reproduce it quickly.
+
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: Which Cress version or commit are you using?
+      placeholder: main @ abc1234
+    validations:
+      required: true
+
+  - type: dropdown
+    id: surface
+    attributes:
+      label: Area
+      options:
+        - CLI
+        - Studio (WPF)
+        - Studio Web
+        - AppHost / Aspire
+        - Execution engine
+        - Recorder
+        - Importers / exporters
+        - CI/CD
+        - Documentation
+    validations:
+      required: true
+
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      description: Commands, flows, profiles, and files needed to reproduce the issue.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: Include stack traces, screenshots, or failing workflow links when available.
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: OS, .NET SDK, Node version, browser/runtime details, and whether AppHost was involved.
+    validations:
+      required: false

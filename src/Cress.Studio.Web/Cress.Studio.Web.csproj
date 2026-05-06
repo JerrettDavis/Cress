@@ -1,13 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <ItemGroup>
+    <ProjectReference Include="..\Cress.ServiceDefaults\Cress.ServiceDefaults.csproj" />
     <ProjectReference Include="..\Cress.Studio.Core\Cress.Studio.Core.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
-    <TargetFramework>net8.0-windows</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
+    <TargetFramework>net10.0-windows</TargetFramework>
   </PropertyGroup>
 
 </Project>

@@ -13,10 +13,18 @@ public static class MetricsCommand
     public static Command Create(IServiceProvider services)
     {
         var command = new Command("metrics", "Aggregate run history metrics for a project");
-        var projectArgument = new Argument<string>("project", "Path to the project (default: current directory)") { Arity = ArgumentArity.ZeroOrOne };
-        var formatOption = new Option<string>("--format", () => "table", "Output format: table or json");
-        var windowOption = new Option<string?>("--window", "Restrict analysis to runs within this duration (e.g. 7d, 24h, 30m)");
-        var maxOption = new Option<int?>("--max", "Maximum number of runs to include");
+        var projectArgument = new Argument<string?>("project")
+        {
+            Description = "Path to the project (default: current directory)",
+            Arity = ArgumentArity.ZeroOrOne
+        };
+        var formatOption = new Option<string>("--format")
+        {
+            Description = "Output format: table or json",
+            DefaultValueFactory = _ => "table"
+        };
+        var windowOption = new Option<string?>("--window") { Description = "Restrict analysis to runs within this duration (e.g. 7d, 24h, 30m)" };
+        var maxOption = new Option<int?>("--max") { Description = "Maximum number of runs to include" };
 
         command.AddArgument(projectArgument);
         command.AddOption(formatOption);

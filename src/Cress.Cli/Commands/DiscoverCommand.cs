@@ -14,14 +14,14 @@ public static class DiscoverCommand
     public static Command Create(IServiceProvider services)
     {
         var command = new Command("discover", "Discover project assets");
-        var jsonOption = new Option<bool>("--json", "Emit machine-readable output");
+        var jsonOption = new Option<bool>("--json") { Description = "Emit machine-readable output" };
         command.AddOption(jsonOption);
         command.SetHandler((InvocationContext context) => Execute(services, context, "all", jsonOption));
 
         foreach (var area in new[] { "flows", "steps", "capabilities", "fixtures", "drivers" })
         {
             var subcommand = new Command(area, $"Discover {area}");
-            var subJsonOption = new Option<bool>("--json", "Emit machine-readable output");
+            var subJsonOption = new Option<bool>("--json") { Description = "Emit machine-readable output" };
             subcommand.AddOption(subJsonOption);
             subcommand.SetHandler((InvocationContext context) => Execute(services, context, area, subJsonOption));
             command.AddCommand(subcommand);

@@ -25,10 +25,14 @@ public static class ExportCommand
     {
         var command = new Command("gherkin", "Export a flow to a Gherkin .feature file");
 
-        var projectArgument = new Argument<string?>("project", () => null, "Path to the Cress project directory");
-        var flowOption = new Option<string?>("--flow", "Flow id to export (partial match supported)");
-        var outputOption = new Option<string?>("--output", "Output .feature file path (default: <project>/exports/<flowId>.feature)");
-        var phraseOverrideOption = new Option<string?>("--phrases", "Path to a phrases.yaml override file");
+        var projectArgument = new Argument<string?>("project")
+        {
+            Description = "Path to the Cress project directory",
+            Arity = ArgumentArity.ZeroOrOne
+        };
+        var flowOption = new Option<string?>("--flow") { Description = "Flow id to export (partial match supported)" };
+        var outputOption = new Option<string?>("--output") { Description = "Output .feature file path (default: <project>/exports/<flowId>.feature)" };
+        var phraseOverrideOption = new Option<string?>("--phrases") { Description = "Path to a phrases.yaml override file" };
 
         command.AddArgument(projectArgument);
         command.AddOption(flowOption);
@@ -141,9 +145,13 @@ public static class ExportCommand
     {
         var command = new Command("cypress", "Export a flow to a Cypress .cy.ts test file");
 
-        var projectArgument = new Argument<string?>("project", () => null, "Path to the Cress project directory");
-        var flowOption = new Option<string?>("--flow", "Flow id to export (partial match supported)");
-        var outputOption = new Option<string?>("--output", "Output .cy.ts file path (default: <project>/exports/<flowId>.cy.ts)");
+        var projectArgument = new Argument<string?>("project")
+        {
+            Description = "Path to the Cress project directory",
+            Arity = ArgumentArity.ZeroOrOne
+        };
+        var flowOption = new Option<string?>("--flow") { Description = "Flow id to export (partial match supported)" };
+        var outputOption = new Option<string?>("--output") { Description = "Output .cy.ts file path (default: <project>/exports/<flowId>.cy.ts)" };
 
         command.AddArgument(projectArgument);
         command.AddOption(flowOption);
@@ -185,9 +193,13 @@ public static class ExportCommand
     {
         var command = new Command("selenium-ide", "Export a flow to a Selenium IDE .side JSON file");
 
-        var projectArgument = new Argument<string?>("project", () => null, "Path to the Cress project directory");
-        var flowOption = new Option<string?>("--flow", "Flow id to export (partial match supported)");
-        var outputOption = new Option<string?>("--output", "Output .side file path (default: <project>/exports/<flowId>.side)");
+        var projectArgument = new Argument<string?>("project")
+        {
+            Description = "Path to the Cress project directory",
+            Arity = ArgumentArity.ZeroOrOne
+        };
+        var flowOption = new Option<string?>("--flow") { Description = "Flow id to export (partial match supported)" };
+        var outputOption = new Option<string?>("--output") { Description = "Output .side file path (default: <project>/exports/<flowId>.side)" };
 
         command.AddArgument(projectArgument);
         command.AddOption(flowOption);

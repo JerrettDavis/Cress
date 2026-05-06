@@ -8,8 +8,12 @@ public static class InitCommand
     public static Command Create()
     {
         var command = new Command("init", "Initialize a new Cress project");
-        var pathArgument = new Argument<DirectoryInfo?>("path", () => null, "Target directory");
-        var forceOption = new Option<bool>("--force", "Overwrite an existing Cress project");
+        var pathArgument = new Argument<DirectoryInfo?>("path")
+        {
+            Description = "Target directory",
+            Arity = ArgumentArity.ZeroOrOne
+        };
+        var forceOption = new Option<bool>("--force") { Description = "Overwrite an existing Cress project" };
 
         command.AddArgument(pathArgument);
         command.AddOption(forceOption);

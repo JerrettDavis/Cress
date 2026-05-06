@@ -11,14 +11,18 @@ public static class RunCommand
     public static Command Create(IServiceProvider services)
     {
         var command = new Command("run", "Run one or more flows");
-        var pathArgument = new Argument<string?>("flow", () => null, "Optional flow path");
-        var tagOption = new Option<string?>("--tag", "Select flows by tag");
-        var profileOption = new Option<string?>("--profile", "Profile to use");
-        var parallelOption = new Option<int?>("--parallel", "Maximum parallel flows");
-        var reportOption = new Option<string?>("--report", "Comma-separated report formats");
-        var continueOption = new Option<bool>("--continue-on-failure", "Continue running flows after a failure");
-        var dryRunOption = new Option<bool>("--dry-run", "Generate the plan and stop");
-        var jsonOption = new Option<bool>("--json", "Emit machine-readable output");
+        var pathArgument = new Argument<string?>("flow")
+        {
+            Description = "Optional flow path",
+            Arity = ArgumentArity.ZeroOrOne
+        };
+        var tagOption = new Option<string?>("--tag") { Description = "Select flows by tag" };
+        var profileOption = new Option<string?>("--profile") { Description = "Profile to use" };
+        var parallelOption = new Option<int?>("--parallel") { Description = "Maximum parallel flows" };
+        var reportOption = new Option<string?>("--report") { Description = "Comma-separated report formats" };
+        var continueOption = new Option<bool>("--continue-on-failure") { Description = "Continue running flows after a failure" };
+        var dryRunOption = new Option<bool>("--dry-run") { Description = "Generate the plan and stop" };
+        var jsonOption = new Option<bool>("--json") { Description = "Emit machine-readable output" };
         command.AddArgument(pathArgument);
         command.AddOption(tagOption);
         command.AddOption(profileOption);

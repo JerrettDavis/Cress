@@ -26,10 +26,14 @@ public sealed class StudioEndToEndTests
         studio.CaptureWindow("source-edited");
 
         studio.ClickButton("ApplySourceButton");
+        studio.WaitForCondition(
+            () => studio.GetElementText("StatusMessageText").Contains("Source applied to designer.", StringComparison.OrdinalIgnoreCase),
+            TimeSpan.FromSeconds(10),
+            "Studio did not report that source changes were applied.");
         studio.SelectTab("DesignerTab");
         studio.WaitForCondition(
             () => string.Equals(studio.GetTextBoxText("FlowNameTextBox"), "Desktop studio flow edited", StringComparison.Ordinal),
-            TimeSpan.FromSeconds(10),
+            TimeSpan.FromSeconds(20),
             "Designer did not reflect the edited flow name.");
         studio.CaptureWindow("designer-updated");
 

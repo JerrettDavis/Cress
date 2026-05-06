@@ -14,11 +14,19 @@ public static class FlakeReportCommand
     public static Command Create(IServiceProvider services)
     {
         var command = new Command("flake-report", "Report flaky flows for a project based on run history");
-        var projectArgument = new Argument<string>("project", "Path to the project (default: current directory)") { Arity = ArgumentArity.ZeroOrOne };
-        var formatOption = new Option<string>("--format", () => "table", "Output format: table or json");
-        var windowOption = new Option<int?>("--window", "Number of most-recent runs to analyse (overrides project config)");
-        var thresholdOption = new Option<double?>("--threshold", "Fail-rate threshold 0.0–1.0 for flaky classification (overrides project config)");
-        var exitCodeOption = new Option<bool>("--exit-code-on-flaky", "Exit with code 1 if any flow is flagged as flaky (CI gate)");
+        var projectArgument = new Argument<string?>("project")
+        {
+            Description = "Path to the project (default: current directory)",
+            Arity = ArgumentArity.ZeroOrOne
+        };
+        var formatOption = new Option<string>("--format")
+        {
+            Description = "Output format: table or json",
+            DefaultValueFactory = _ => "table"
+        };
+        var windowOption = new Option<int?>("--window") { Description = "Number of most-recent runs to analyse (overrides project config)" };
+        var thresholdOption = new Option<double?>("--threshold") { Description = "Fail-rate threshold 0.0–1.0 for flaky classification (overrides project config)" };
+        var exitCodeOption = new Option<bool>("--exit-code-on-flaky") { Description = "Exit with code 1 if any flow is flagged as flaky (CI gate)" };
 
         command.AddArgument(projectArgument);
         command.AddOption(formatOption);

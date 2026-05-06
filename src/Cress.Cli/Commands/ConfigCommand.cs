@@ -18,7 +18,7 @@ public static class ConfigCommand
     private static Command CreatePrintCommand(IServiceProvider services)
     {
         var command = new Command("print", "Print effective configuration");
-        var profileOption = new Option<string?>("--profile", "Profile to load");
+        var profileOption = new Option<string?>("--profile") { Description = "Profile to load" };
 
         command.AddOption(profileOption);
         command.SetHandler((InvocationContext context) =>

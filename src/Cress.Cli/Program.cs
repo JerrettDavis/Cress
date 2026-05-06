@@ -34,7 +34,6 @@ var services = new ServiceCollection()
     .BuildServiceProvider();
 
 var rootCommand = new RootCommand("Cress end-to-end testing CLI");
-rootCommand.Name = "cress";
 rootCommand.AddCommand(InitCommand.Create());
 rootCommand.AddCommand(ConfigCommand.Create(services));
 rootCommand.AddCommand(ValidateCommand.Create(services));

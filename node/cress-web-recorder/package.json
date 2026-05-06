@@ -4,9 +4,9 @@
   "type": "module",
   "main": "index.js",
   "peerDependencies": {
-    "playwright": "^1.52.0"
+    "playwright": "^1.59.1"
   },
   "devDependencies": {
-    "playwright": "^1.52.0"
+    "playwright": "^1.59.1"
   }
 }

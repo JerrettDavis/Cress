@@ -2,87 +2,196 @@ name: CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
   workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: write
 
 env:
   DOTNET_NOLOGO: true
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
   DOTNET_CLI_TELEMETRY_OPTOUT: true
+  TEST_RESULTS_DIR: artifacts\test-results
 
 jobs:
-  build-and-test:
-    name: Build and Test
+  build-test-and-coverage:
+    name: Build, Test, Coverage
     runs-on: windows-latest
-    timeout-minutes: 30
-    permissions:
-      contents: read
+    timeout-minutes: 45
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup .NET 8
+      - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '8.x'
+          global-json-file: global.json
 
-      - name: Setup Node 20
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20.x'
-          cache: 'npm'
-
-      - name: Restore NuGet packages
-        run: dotnet restore Cress.sln
-
-      - name: Build solution
-        # --warnaserror is intentionally omitted: Cress has pre-existing Scriban CVE analyzer
-        # warnings that are dependency-side (not our code). Enable once upstream resolves them.
-        run: dotnet build Cress.sln --configuration Release --no-restore /p:ContinuousIntegrationBuild=true
-
-      # Run Cress.UnitTests, excluding FlaUiRuntimeDriverTests.
-      # FlaUiRuntimeDriverTests requires a real Windows UI automation target (FlaUI)
-      # that is not available in CI — run it locally with a running test app.
-      - name: Run unit tests (Cress.UnitTests)
-        run: >
-          dotnet test tests/Cress.UnitTests/Cress.UnitTests.csproj
-          --configuration Release
-          --no-build
-          --filter "FullyQualifiedName!~FlaUiRuntimeDriverTests"
-          --logger "trx;LogFileName=unit-test-results.trx"
-          --logger "console;verbosity=normal"
-
-      # Run bUnit / Blazor component tests — no display or WPF required.
-      - name: Run web tests (Cress.Studio.Web.Tests)
-        run: >
-          dotnet test tests/Cress.Studio.Web.Tests/Cress.Studio.Web.Tests.csproj
-          --configuration Release
-          --no-build
-          --logger "trx;LogFileName=web-test-results.trx"
-          --logger "console;verbosity=normal"
-
-      # Cress.Studio.E2ETests is excluded entirely from CI because it requires the
-      # WPF Studio application to be running and a real Windows display/session.
-      # Run locally: dotnet test tests/Cress.Studio.E2ETests
+          node-version: '22'
+          cache: npm
 
       - name: Install Node dependencies
         run: npm ci
 
-      # Install Playwright Chromium before running web-recorder tests
       - name: Install Playwright Chromium
         run: npx playwright install chromium
+
+      - name: Restore
+        run: dotnet restore Cress.sln
+
+      - name: Build
+        run: dotnet build Cress.sln --configuration Release --no-restore /p:ContinuousIntegrationBuild=true
+
+      - name: Test with coverage
+        run: >
+          dotnet test Cress.sln
+          --configuration Release
+          --no-build
+          --results-directory ${{ env.TEST_RESULTS_DIR }}
+          --logger "trx;LogFileName=test-results.trx"
+          --collect:"XPlat Code Coverage"
+          --
+          DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=cobertura
+          DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Include=[Cress*]*
+          DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude=[*Tests]*
 
       - name: Run Node tests
         run: node --test node/tests/*.test.mjs
 
-      - name: Upload test results
-        uses: actions/upload-artifact@v4
+      - name: Install ReportGenerator
         if: always()
+        run: dotnet tool update -g dotnet-reportgenerator-globaltool --version 5.5.4
+
+      - name: Generate coverage report
+        if: always()
+        shell: pwsh
+        run: |
+          $reports = (Get-ChildItem $env:TEST_RESULTS_DIR -Recurse -Filter coverage.cobertura.xml | ForEach-Object FullName) -join ';'
+          if ([string]::IsNullOrWhiteSpace($reports)) {
+            Write-Host 'No coverage files found.'
+            exit 0
+          }
+
+          reportgenerator `
+            "-reports:$reports" `
+            "-targetdir:coverage-report" `
+            "-reporttypes:HtmlInline;Cobertura;TextSummary;Badges" `
+            "-assemblyfilters:+Cress*;-*Tests*" `
+            "-filefilters:-**\tests\**"
+
+          $summary = Get-Content coverage-report\Summary.txt -Raw
+          "COVERAGE_SUMMARY<<EOF" | Out-File -FilePath $env:GITHUB_ENV -Append
+          $summary | Out-File -FilePath $env:GITHUB_ENV -Append
+          "EOF" | Out-File -FilePath $env:GITHUB_ENV -Append
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
         with:
           name: test-results
           path: |
-            **/TestResults/**/*.trx
-          retention-days: 7
+            ${{ env.TEST_RESULTS_DIR }}\**\*.trx
+            ${{ env.TEST_RESULTS_DIR }}\**\coverage.cobertura.xml
+
+      - name: Upload coverage report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage-report
+
+      - name: Add coverage summary to PR
+        if: always() && github.event_name == 'pull_request'
+        uses: marocchino/sticky-pull-request-comment@v3
+        with:
+          recreate: true
+          message: |
+            ## Cress coverage
+            ```
+            ${{ env.COVERAGE_SUMMARY }}
+            ```
+
+  apphost-smoke:
+    name: AppHost Smoke
+    runs-on: windows-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install Node dependencies
+        run: npm ci
+
+      - name: Build
+        run: dotnet build Cress.sln --configuration Release /p:ContinuousIntegrationBuild=true
+
+      - name: Smoke test AppHost startup
+        shell: pwsh
+        run: |
+          $stdout = Join-Path $PWD 'apphost.stdout.log'
+          $stderr = Join-Path $PWD 'apphost.stderr.log'
+          $proc = Start-Process `
+            -FilePath dotnet `
+            -ArgumentList @('run', '--project', 'src\Cress.AppHost\Cress.AppHost.csproj', '--configuration', 'Release', '--no-build', '--launch-profile', 'http') `
+            -WorkingDirectory $PWD `
+            -RedirectStandardOutput $stdout `
+            -RedirectStandardError $stderr `
+            -PassThru
+
+          try {
+            $started = $false
+            for ($i = 0; $i -lt 30; $i++) {
+              Start-Sleep -Seconds 2
+              if (Test-Path $stdout) {
+                $text = Get-Content $stdout -Raw
+                if ($text -match 'Distributed application started\.' -and $text -match 'Now listening on:') {
+                  $started = $true
+                  break
+                }
+              }
+
+              if ($proc.HasExited) {
+                break
+              }
+            }
+
+            if (-not $started) {
+              if (Test-Path $stdout) { Get-Content $stdout }
+              if (Test-Path $stderr) { Get-Content $stderr }
+              throw 'AppHost did not report a successful startup.'
+            }
+          }
+          finally {
+            if (-not $proc.HasExited) {
+              Stop-Process -Id $proc.Id
+            }
+          }
+
+      - name: Upload AppHost logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: apphost-logs
+          path: |
+            apphost.stdout.log
+            apphost.stderr.log

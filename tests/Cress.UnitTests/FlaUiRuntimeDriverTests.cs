@@ -222,7 +222,7 @@ public sealed class FlaUiRuntimeDriverTests
     {
         var projectFile = Path.Combine(GetRepositoryRoot(), "tests", "Cress.FlaUi.TestApp", "Cress.FlaUi.TestApp.csproj");
         await RunProcessAsync("dotnet", GetRepositoryRoot(), "build", projectFile, "-v", "minimal");
-        return Path.Combine(GetRepositoryRoot(), "tests", "Cress.FlaUi.TestApp", "bin", "Debug", "net8.0-windows", "Cress.FlaUi.TestApp.exe");
+        return Path.Combine(GetRepositoryRoot(), "tests", "Cress.FlaUi.TestApp", "bin", "Debug", "net10.0-windows", "Cress.FlaUi.TestApp.exe");
     }
 
     private static async Task RunProcessAsync(string fileName, string workingDirectory, params string[] arguments)

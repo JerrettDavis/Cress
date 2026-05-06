@@ -12,11 +12,15 @@ public static class PlanCommand
     public static Command Create(IServiceProvider services)
     {
         var command = new Command("plan", "Generate an execution plan without running it");
-        var pathArgument = new Argument<string?>("flow", () => null, "Optional flow path");
-        var tagOption = new Option<string?>("--tag", "Select flows by tag");
-        var profileOption = new Option<string?>("--profile", "Profile to use");
-        var outputOption = new Option<FileInfo?>("--output", "Write the plan JSON to a file");
-        var jsonOption = new Option<bool>("--json", "Emit JSON to stdout");
+        var pathArgument = new Argument<string?>("flow")
+        {
+            Description = "Optional flow path",
+            Arity = ArgumentArity.ZeroOrOne
+        };
+        var tagOption = new Option<string?>("--tag") { Description = "Select flows by tag" };
+        var profileOption = new Option<string?>("--profile") { Description = "Profile to use" };
+        var outputOption = new Option<FileInfo?>("--output") { Description = "Write the plan JSON to a file" };
+        var jsonOption = new Option<bool>("--json") { Description = "Emit JSON to stdout" };
         command.AddArgument(pathArgument);
         command.AddOption(tagOption);
         command.AddOption(profileOption);

@@ -19,12 +19,20 @@ public static class GenerateCommand
     private static Command CreateStepsCommand(IServiceProvider services)
     {
         var command = new Command("steps", "Generate missing step stubs");
-        var pathArgument = new Argument<string?>("flow", () => null, "Optional flow path");
-        var tagOption = new Option<string?>("--tag", "Select flows by tag");
-        var profileOption = new Option<string?>("--profile", "Profile to use");
-        var languageOption = new Option<string>("--language", () => "dotnet", "Target language");
-        var forceOption = new Option<bool>("--force", "Overwrite existing generated files");
-        var jsonOption = new Option<bool>("--json", "Emit machine-readable output");
+        var pathArgument = new Argument<string?>("flow")
+        {
+            Description = "Optional flow path",
+            Arity = ArgumentArity.ZeroOrOne
+        };
+        var tagOption = new Option<string?>("--tag") { Description = "Select flows by tag" };
+        var profileOption = new Option<string?>("--profile") { Description = "Profile to use" };
+        var languageOption = new Option<string>("--language")
+        {
+            Description = "Target language",
+            DefaultValueFactory = _ => "dotnet"
+        };
+        var forceOption = new Option<bool>("--force") { Description = "Overwrite existing generated files" };
+        var jsonOption = new Option<bool>("--json") { Description = "Emit machine-readable output" };
         command.AddArgument(pathArgument);
         command.AddOption(tagOption);
         command.AddOption(profileOption);

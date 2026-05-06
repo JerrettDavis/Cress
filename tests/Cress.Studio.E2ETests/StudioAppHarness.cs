@@ -487,7 +487,7 @@ internal sealed class StudioAppHarness : IAsyncDisposable
     {
         foreach (var configuration in new[] { "Debug", "Release" })
         {
-            var candidate = Path.Combine(repositoryRoot, projectRelativePath, "bin", configuration, "net8.0-windows", executableName);
+            var candidate = Path.Combine(repositoryRoot, projectRelativePath, "bin", configuration, "net10.0-windows", executableName);
             if (File.Exists(candidate))
             {
                 return candidate;

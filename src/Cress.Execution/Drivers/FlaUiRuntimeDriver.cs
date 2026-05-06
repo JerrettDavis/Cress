@@ -344,10 +344,39 @@ public sealed class FlaUiRuntimeDriver : IRuntimeDriver
             }
 
             var actual = element.Name;
-            return string.Equals(actual, expected, StringComparison.Ordinal)
-                ? Success($"Element text matched '{expected}'.")
-                : Failure($"Expected text '{expected}', but found '{actual}'.", "assertion-failed");
+            var normalizedExpected = NormalizeWhitespace(expected);
+            var normalizedActual = NormalizeWhitespace(actual);
+            if (string.Equals(normalizedActual, normalizedExpected, StringComparison.Ordinal))
+            {
+                return Success($"Element text matched '{expected}'.");
+            }
+
+            if (!string.IsNullOrWhiteSpace(normalizedActual) && normalizedActual.Contains(normalizedExpected, StringComparison.Ordinal))
+            {
+                return Success($"Element text contained '{expected}'.");
+            }
+
+            if (element.Patterns.Value.IsSupported)
+            {
+                var value = element.Patterns.Value.Pattern.Value.ValueOrDefault;
+                var normalizedValue = NormalizeWhitespace(value);
+                if (string.Equals(normalizedValue, normalizedExpected, StringComparison.Ordinal))
+                {
+                    return Success($"Element value matched '{expected}'.");
+                }
+
+                if (!string.IsNullOrWhiteSpace(normalizedValue) && normalizedValue.Contains(normalizedExpected, StringComparison.Ordinal))
+                {
+                    return Success($"Element value contained '{expected}'.");
+                }
+            }
+
+            return Failure($"Expected text '{expected}', but found '{actual}'.", "assertion-failed");
         }
+
+        private static string NormalizeWhitespace(string? value)
+            => string.Join(' ', (value ?? string.Empty)
+                .Split([' ', '\t', '\r', '\n'], StringSplitOptions.RemoveEmptyEntries));
 
         private DriverExecutionResult AssertWindowTitle(PlanAction action)
         {

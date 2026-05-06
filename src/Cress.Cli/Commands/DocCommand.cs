@@ -21,12 +21,20 @@ public static class DocCommand
     private static Command CreateGenerateCommand(IServiceProvider services)
     {
         var command = new Command("generate", "Generate a living doc HTML page for a project");
-        var projectArgument = new Argument<string>("project", "Path to the Cress project") { Arity = ArgumentArity.ZeroOrOne };
-        var templateOption = new Option<string>("--template", () => "executive", "Template name (executive|technical|public) or path to a .scriban-html file");
-        var outputOption = new Option<string?>("--output", "Output file path (default: <project>/reports/living-doc.html)");
-        var titleOption = new Option<string?>("--title", "Page title override");
-        var logoOption = new Option<string?>("--logo", "Logo URL");
-        var accentOption = new Option<string?>("--accent", "Accent colour hex (e.g. #22c55e)");
+        var projectArgument = new Argument<string?>("project")
+        {
+            Description = "Path to the Cress project",
+            Arity = ArgumentArity.ZeroOrOne
+        };
+        var templateOption = new Option<string>("--template")
+        {
+            Description = "Template name (executive|technical|public) or path to a .scriban-html file",
+            DefaultValueFactory = _ => "executive"
+        };
+        var outputOption = new Option<string?>("--output") { Description = "Output file path (default: <project>/reports/living-doc.html)" };
+        var titleOption = new Option<string?>("--title") { Description = "Page title override" };
+        var logoOption = new Option<string?>("--logo") { Description = "Logo URL" };
+        var accentOption = new Option<string?>("--accent") { Description = "Accent colour hex (e.g. #22c55e)" };
 
         command.AddArgument(projectArgument);
         command.AddOption(templateOption);

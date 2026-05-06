@@ -12,7 +12,7 @@ public static class DoctorCommand
     public static Command Create(IServiceProvider services)
     {
         var command = new Command("doctor", "Check environment readiness");
-        var jsonOption = new Option<bool>("--json", "Emit machine-readable output");
+        var jsonOption = new Option<bool>("--json") { Description = "Emit machine-readable output" };
 
         command.AddOption(jsonOption);
         command.SetHandler((InvocationContext context) =>

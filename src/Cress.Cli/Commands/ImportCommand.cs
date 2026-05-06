@@ -25,9 +25,12 @@ public static class ImportCommand
     {
         var command = new Command("gherkin", "Import a Gherkin .feature file and emit a flow.yaml");
 
-        var featureFileArgument = new Argument<string>("feature-file", "Path to the .feature file to import");
-        var outputOption = new Option<string?>("--output", "Output flow.yaml path (default: <feature-name>.flow.yaml alongside the input file)");
-        var phraseOverrideOption = new Option<string?>("--phrases", "Path to a phrases.yaml override file");
+        var featureFileArgument = new Argument<string>("feature-file")
+        {
+            Description = "Path to the .feature file to import"
+        };
+        var outputOption = new Option<string?>("--output") { Description = "Output flow.yaml path (default: <feature-name>.flow.yaml alongside the input file)" };
+        var phraseOverrideOption = new Option<string?>("--phrases") { Description = "Path to a phrases.yaml override file" };
 
         command.AddArgument(featureFileArgument);
         command.AddOption(outputOption);
@@ -110,9 +113,12 @@ public static class ImportCommand
     {
         var command = new Command("playwright", "Import a Playwright codegen .ts/.js file and emit a flow.yaml");
 
-        var codegenFileArgument = new Argument<string>("codegen-file", "Path to the Playwright codegen .ts or .js file to import");
-        var outputOption = new Option<string?>("--output", "Output flow.yaml path (default: <codegen-name>.flow.yaml alongside the input file)");
-        var nameOption = new Option<string?>("--name", "Override the flow name (default: derived from test('...') in the file)");
+        var codegenFileArgument = new Argument<string>("codegen-file")
+        {
+            Description = "Path to the Playwright codegen .ts or .js file to import"
+        };
+        var outputOption = new Option<string?>("--output") { Description = "Output flow.yaml path (default: <codegen-name>.flow.yaml alongside the input file)" };
+        var nameOption = new Option<string?>("--name") { Description = "Override the flow name (default: derived from test('...') in the file)" };
 
         command.AddArgument(codegenFileArgument);
         command.AddOption(outputOption);
@@ -195,9 +201,12 @@ public static class ImportCommand
     {
         var command = new Command("postman", "Import a Postman Collection v2.1 JSON file and emit flow.yaml files");
 
-        var collectionArgument = new Argument<string>("collection", "Path to the Postman Collection v2.1 JSON file");
-        var outputOption = new Option<string?>("--output", "Output directory for generated flow.yaml files (default: directory of the input file)");
-        var singleFlowOption = new Option<bool>("--single-flow", "Combine all requests into a single flow.yaml instead of one file per request");
+        var collectionArgument = new Argument<string>("collection")
+        {
+            Description = "Path to the Postman Collection v2.1 JSON file"
+        };
+        var outputOption = new Option<string?>("--output") { Description = "Output directory for generated flow.yaml files (default: directory of the input file)" };
+        var singleFlowOption = new Option<bool>("--single-flow") { Description = "Combine all requests into a single flow.yaml instead of one file per request" };
 
         command.AddArgument(collectionArgument);
         command.AddOption(outputOption);

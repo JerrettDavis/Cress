@@ -1,33 +1,69 @@
 # Cress
 
 [![CI](https://github.com/JerrettDavis/Cress/actions/workflows/ci.yml/badge.svg)](https://github.com/JerrettDavis/Cress/actions/workflows/ci.yml)
+[![CodeQL](https://github.com/JerrettDavis/Cress/actions/workflows/codeql.yml/badge.svg)](https://github.com/JerrettDavis/Cress/actions/workflows/codeql.yml)
+[![Docs](https://github.com/JerrettDavis/Cress/actions/workflows/docs.yml/badge.svg)](https://github.com/JerrettDavis/Cress/actions/workflows/docs.yml)
 
-Cress is a .NET 8 / C# test automation framework with a WPF Studio IDE and a Node.js plugin host, targeting Windows.
+Cress is a **.NET 10 / C# latest** end-to-end testing platform for Windows, with a WPF Studio, a Blazor web experience, Node-based automation components, and an Aspire AppHost for centralized orchestration and monitoring.
 
-## Build
+## Requirements
 
-```
+- .NET SDK `10.0.107` or later in the .NET 10 feature band
+- Node.js `22.x`
+- Windows for the full WPF Studio and desktop E2E experience
+
+## Restore and build
+
+```powershell
+npm ci
 dotnet restore Cress.sln
 dotnet build Cress.sln --configuration Release --no-restore
 ```
 
-## Test
+## Run with Aspire orchestration
 
+Start the centralized AppHost to launch the web app, wire in service defaults, and coordinate local monitoring:
+
+```powershell
+dotnet run --project src\Cress.AppHost\Cress.AppHost.csproj --configuration Release --launch-profile http
 ```
-# .NET tests (CI-safe subset — excludes FlaUI and E2E tests that require a live display)
-dotnet test tests/Cress.UnitTests/Cress.UnitTests.csproj --configuration Release --filter "FullyQualifiedName!~FlaUiRuntimeDriverTests"
-dotnet test tests/Cress.Studio.Web.Tests/Cress.Studio.Web.Tests.csproj --configuration Release
 
-# Full local run (requires running WPF Studio + FlaUI test app)
-dotnet test Cress.sln --configuration Release
+The AppHost orchestrates:
 
-# Node tests
+- `Cress.Studio.Web` as an Aspire project resource
+- `Cress.Studio` as a desktop executable resource
+
+## Validation
+
+```powershell
+# Full .NET test suite, including desktop and end-to-end coverage on Windows
+dotnet test Cress.sln --configuration Release --no-build
+
+# Node test suite
 node --test node/tests/*.test.mjs
+
+# Living docs preview
+dotnet run --project src\Cress.Cli\Cress.Cli.csproj --configuration Release -- doc generate specs\httpbin-smoke --output artifacts\docs\httpbin-smoke.html --template executive
 ```
 
-## CI
+## CI/CD
 
-CI runs on `windows-latest` (required for WPF/Windows targets). The following are excluded from CI and must be run locally:
+GitHub Actions now validates the repo with:
 
-- `FlaUiRuntimeDriverTests` — requires a live FlaUI automation target
-- `Cress.Studio.E2ETests` — requires the WPF Studio application and a Windows display session
+| Workflow | Purpose |
+| --- | --- |
+| `ci.yml` | Windows build, full .NET tests, Node tests, coverage publishing, and Aspire AppHost smoke validation |
+| `codeql.yml` | Static analysis for C# and JavaScript |
+| `dependency-review.yml` | Pull request dependency risk review |
+| `docs.yml` | Living-doc generation preview from the sample spec project |
+
+The CI workflow publishes:
+
+- TRX test results
+- Cobertura + HTML coverage artifacts
+- AppHost startup logs
+- A sticky PR coverage summary
+
+## Sample spec project
+
+`specs\httpbin-smoke` is the CI-friendly sample project used for documentation and end-to-end validation of the CLI, parser, and HTTP driver stack. See `specs\httpbin-smoke\README.md` for the project layout and flow details.

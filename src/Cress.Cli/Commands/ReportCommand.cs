@@ -22,7 +22,7 @@ public static class ReportCommand
     private static Command CreateListCommand(IServiceProvider services)
     {
         var command = new Command("list", "List recent reports");
-        var jsonOption = new Option<bool>("--json", "Emit machine-readable output");
+        var jsonOption = new Option<bool>("--json") { Description = "Emit machine-readable output" };
         command.AddOption(jsonOption);
         command.SetHandler((InvocationContext context) =>
         {
@@ -89,8 +89,12 @@ public static class ReportCommand
     private static Command CreateSummarizeCommand(IServiceProvider services)
     {
         var command = new Command("summarize", "Summarize a selected run");
-        var pathArgument = new Argument<string?>("path", () => null, "Run artifact or report directory");
-        var jsonOption = new Option<bool>("--json", "Emit machine-readable output");
+        var pathArgument = new Argument<string?>("path")
+        {
+            Description = "Run artifact or report directory",
+            Arity = ArgumentArity.ZeroOrOne
+        };
+        var jsonOption = new Option<bool>("--json") { Description = "Emit machine-readable output" };
         command.AddArgument(pathArgument);
         command.AddOption(jsonOption);
         command.SetHandler((InvocationContext context) =>

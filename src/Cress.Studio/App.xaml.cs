@@ -1,13 +1,15 @@
 using System.Windows;
+using Cress.ServiceDefaults;
 using Cress.Studio.Services;
 using Cress.Studio.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace Cress.Studio;
 
 public partial class App : Application
 {
-    private ServiceProvider? _serviceProvider;
+    private IHost? _host;
     private StudioThemeManager? _themeManager;
 
     public StudioThemeManager? ThemeManager => _themeManager;
@@ -17,8 +19,9 @@ public partial class App : Application
         base.OnStartup(e);
         _themeManager = new StudioThemeManager(this);
         _themeManager.Start();
-        _serviceProvider = ConfigureServices();
-        var window = _serviceProvider.GetRequiredService<MainWindow>();
+        _host = ConfigureHost(e.Args);
+        _host.StartAsync().GetAwaiter().GetResult();
+        var window = _host.Services.GetRequiredService<MainWindow>();
         if (window.DataContext is MainWindowViewModel viewModel)
         {
             viewModel.Initialize(e.Args.FirstOrDefault());
@@ -31,17 +34,24 @@ public partial class App : Application
     protected override void OnExit(ExitEventArgs e)
     {
         _themeManager?.Dispose();
-        _serviceProvider?.Dispose();
+        if (_host is not null)
+        {
+            _host.StopAsync().GetAwaiter().GetResult();
+            _host.Dispose();
+        }
+
         base.OnExit(e);
     }
 
-    private static ServiceProvider ConfigureServices()
+    private static IHost ConfigureHost(string[] args)
     {
-        var services = new ServiceCollection()
+        var builder = Host.CreateApplicationBuilder(args);
+        builder.AddServiceDefaults();
+        builder.Services
             .AddCressStudioBackend()
             .AddSingleton<MainWindowViewModel>()
             .AddSingleton<MainWindow>();
 
-        return services.BuildServiceProvider();
+        return builder.Build();
     }
 }

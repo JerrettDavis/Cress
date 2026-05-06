@@ -1,0 +1,12 @@
+<Project Sdk="Aspire.AppHost.Sdk/13.2.4">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <UserSecretsId>cress-apphost-1e4d0d91-b5ab-4e74-b1eb-d4f69198d82f</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Cress.Studio\Cress.Studio.csproj" />
+    <ProjectReference Include="..\Cress.Studio.Web\Cress.Studio.Web.csproj" />
+  </ItemGroup>
+</Project>

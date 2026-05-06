@@ -13,8 +13,8 @@ public static class ValidateCommand
     public static Command Create(IServiceProvider services)
     {
         var command = new Command("validate", "Validate the current Cress project");
-        var jsonOption = new Option<bool>("--json", "Emit machine-readable output");
-        var strictOption = new Option<bool>("--strict", "Treat stricter validation rules as errors");
+        var jsonOption = new Option<bool>("--json") { Description = "Emit machine-readable output" };
+        var strictOption = new Option<bool>("--strict") { Description = "Treat stricter validation rules as errors" };
 
         command.AddOption(jsonOption);
         command.AddOption(strictOption);

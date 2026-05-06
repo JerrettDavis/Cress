@@ -393,6 +393,7 @@ public sealed class PluginHost
         var candidates = Directory.Exists(Path.Combine(projectRoot, "steps", "dotnet"))
             ? Directory.EnumerateFiles(Path.Combine(projectRoot, "steps", "dotnet"), $"{pluginName}.dll", SearchOption.AllDirectories)
                 .Where(path => path.Contains($"{Path.DirectorySeparatorChar}bin{Path.DirectorySeparatorChar}", StringComparison.OrdinalIgnoreCase))
+                .Where(path => !path.Contains($"{Path.DirectorySeparatorChar}ref{Path.DirectorySeparatorChar}", StringComparison.OrdinalIgnoreCase))
                 .OrderByDescending(File.GetLastWriteTimeUtc)
                 .Take(1)
             : [];

@@ -1,0 +1,375 @@
+@page "/"
+@rendermode InteractiveServer
+@implements IDisposable
+@inject StudioWorkspaceState State
+@inject IJSRuntime JS
+
+<PageTitle>Cress Studio Web</PageTitle>
+
+<div class="studio-shell">
+    @if (!State.HasLoadedProject)
+    {
+        <section id="workspace" class="card hero-panel" aria-labelledby="studio-home-title">
+            <div class="hero-header">
+                <div>
+                    <h1 id="studio-home-title">Test automation studio</h1>
+                    <p class="hero-copy">Load a project, author resilient flows, and inspect evidence.</p>
+                </div>
+                <div class="hero-badges">
+                    <span class="pill">System theme aware</span>
+                    <span class="pill">Visible focus states</span>
+                    <span class="pill">Reduced-motion friendly</span>
+                </div>
+            </div>
+        </section>
+    }
+    else
+    {
+        <h1 id="studio-home-title" class="visually-hidden">Test automation studio</h1>
+    }
+
+    <section class="card toolbar-panel" aria-labelledby="workspace-setup-title">
+        <div class="panel-header">
+            <div class="panel-heading">
+                <h2 id="workspace-setup-title">Workspace setup</h2>
+                <p>Configure path, profile, retries, and capture rules before loading or refreshing the current project snapshot.</p>
+            </div>
+            @if (State.Snapshot is not null)
+            {
+                <span class="pill">@State.Snapshot.Catalog.ProjectRoot</span>
+            }
+        </div>
+
+        <div class="toolbar-sections">
+            <div class="toolbar-grid">
+                <div class="field-stack">
+                    <label for="workspacePath">Workspace or project path</label>
+                    <input id="workspacePath" class="text-input" @bind="State.ProjectPathInput" placeholder="C:\path\to\project or workspace" />
+                    <span class="field-hint">Use a project or workspace root so flows, suites, reports, and artifacts stay connected.</span>
+                </div>
+                <div class="field-stack">
+                    <label for="profileSelect">Profile</label>
+                    <select id="profileSelect" class="text-input" @bind="State.SelectedProfile">
+                        @foreach (var profile in State.AvailableProfiles)
+                        {
+                            <option value="@profile">@profile</option>
+                        }
+                    </select>
+                    <span class="field-hint">Profiles control environment-specific paths and driver configuration.</span>
+                </div>
+            </div>
+
+            <div class="toolbar-grid">
+                <div class="field-stack">
+                    <label for="retryOverride">Retry override</label>
+                    <input id="retryOverride" class="text-input" @bind="State.RetryCountOverrideText" />
+                    <span class="field-hint">Increase retries for flake investigation without editing the saved suite or flow definition.</span>
+                </div>
+                <div class="field-stack">
+                    <label for="screenshotPolicy">Screenshot policy</label>
+                    <select id="screenshotPolicy" class="text-input" @bind="State.ScreenshotPolicy">
+                        <option value="on-failure">On failure</option>
+                        <option value="every-step">Every step</option>
+                        <option value="off">Off</option>
+                    </select>
+                    <span class="field-hint">Capture enough evidence for triage while keeping routine runs lightweight.</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="toolbar-actions" aria-label="Workspace actions">
+            <div class="toolbar-primary">
+                @* Load project: single primary CTA on this surface (filled accent) *@
+                <button type="button" class="action-button primary" @onclick="LoadProjectAsync" disabled="@State.IsBusy"
+                        title="Load the workspace or project at the configured path">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+                    Load project
+                </button>
+                <button type="button" class="action-button" @onclick="RefreshProjectAsync" disabled="@(!State.HasLoadedProject || State.IsBusy)"
+                        title="Re-scan the project directory and rebuild the snapshot">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+                    Refresh
+                </button>
+                <span class="toolbar-divider" aria-hidden="true"></span>
+                <button type="button" class="action-button success" @onclick="RunAllAsync" disabled="@(!State.HasLoadedProject || State.IsBusy)"
+                        title="Execute every flow in the loaded project">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                    Run all
+                </button>
+                <button type="button" class="action-button success" @onclick="RunSelectedAsync" disabled="@(!State.HasSelectedFlow || State.IsBusy)"
+                        title="Run the currently selected flow">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/><line x1="19" y1="3" x2="19" y2="21"/></svg>
+                    Run flow
+                </button>
+                <button type="button" class="action-button success" @onclick="RunSuiteAsync" disabled="@(!State.HasSelectedSuite || State.IsBusy)"
+                        title="Run the currently selected suite">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+                    Run suite
+                </button>
+                <span class="toolbar-divider" aria-hidden="true"></span>
+                <button type="button" class="action-button" @onclick="OpenFileAsync" disabled="@(string.IsNullOrEmpty(State.SelectedFlow?.FilePath))"
+                        title="Copy the selected flow's file path to the clipboard">Open file</button>
+                <button type="button" class="action-button" @onclick="SaveFlowAsync" disabled="@(!State.HasSelectedFlow || State.IsBusy)"
+                        title="Persist the current flow edits to disk">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+                    Save flow
+                </button>
+                <span class="toolbar-divider" aria-hidden="true"></span>
+                <RecordButton />
+                <QuickActionSelector />
+            </div>
+            <details class="toolbar-more">
+                <summary class="action-button" aria-label="More actions">More actions</summary>
+                <div class="toolbar-more-panel">
+                    <button type="button" class="action-button" @onclick="CreateFlowAsync" disabled="@(!State.HasLoadedProject || State.IsBusy)">New flow</button>
+                    <button type="button" class="action-button" @onclick="ApplySourceAsync" disabled="@(!State.HasSelectedFlow || State.IsBusy)">Apply source</button>
+                    <button type="button" class="action-button" @onclick="RebuildSourceAsync" disabled="@(!State.HasSelectedFlow || State.IsBusy)">Rebuild source</button>
+                    <button type="button" class="action-button" @onclick="CreateSuiteAsync" disabled="@(!State.HasLoadedProject || State.IsBusy)">New suite</button>
+                    <button type="button" class="action-button" @onclick="SaveSuiteAsync" disabled="@(!State.HasSelectedSuite || State.IsBusy)">Save suite</button>
+                    <button type="button" class="action-button danger" @onclick="DeleteSuiteAsync" disabled="@(!State.HasSelectedSuite || State.IsBusy)" title="Permanently delete the selected suite">Delete suite</button>
+                    <button type="button" class="action-button success" @onclick="RerunFailedAsync" disabled="@(State.SelectedRun is null || State.IsBusy)" title="Re-execute only the failed flows from the selected run">Rerun failed</button>
+                    <button type="button" class="action-button success" @onclick="RerunFromStepAsync" disabled="@(State.SelectedRunFlow is null || State.IsBusy)" title="Resume the selected run from the last failing step">Rerun from step</button>
+                </div>
+            </details>
+        </div>
+    </section>
+
+    <div class="studio-grid">
+        <ExplorerPanel />
+
+        <section id="designer" class="card editor-panel" aria-labelledby="designer-title">
+            <div class="panel-header">
+                <div class="panel-heading">
+                    <h2 id="designer-title">Designer</h2>
+                    <p>Switch between overview, editable flow metadata, suite composition, and raw source without losing context.</p>
+                </div>
+                <div class="tab-row" role="tablist" aria-label="Designer views">
+                    <button type="button" class="@GetTabClass("overview")" @onclick='() => SetEditorTab("overview")'>Overview</button>
+                    <button type="button" class="@GetTabClass("flow")" @onclick='() => SetEditorTab("flow")'>Flow editor</button>
+                    <button type="button" class="@GetTabClass("suite")" @onclick='() => SetEditorTab("suite")'>Suite editor</button>
+                    <button type="button" class="@GetTabClass("source")" @onclick='() => SetEditorTab("source")'>Source</button>
+                    <button type="button" class="@GetTabClass("metrics")" @onclick='() => SetEditorTab("metrics")'>Metrics</button>
+                </div>
+            </div>
+
+            @switch (_editorTab)
+            {
+                case "flow":
+                    <FlowDesigner Document="State.SelectedFlow"
+                                  Analysis="State.FlowAnalysis"
+                                  CapabilityOptions="State.CapabilityOptions"
+                                  OnAddFixture="State.AddFixtureRowAsync"
+                                  OnRemoveFixture="State.RemoveFixtureRowAsync"
+                                  OnAddAction="State.AddActionRowAsync"
+                                  OnRemoveAction="State.RemoveActionRowAsync"
+                                  OnAddExpectation="State.AddExpectationRowAsync"
+                                  OnRemoveExpectation="State.RemoveExpectationRowAsync"
+                                  OnChanged="State.RefreshFlowAnalysis"
+                                  OnQuickAction="State.ApplyQuickAction" />
+                    break;
+                case "suite":
+                    <SuiteEditor />
+                    break;
+                case "source":
+                    <div class="field-stack">
+                        <label>Selected source</label>
+                        <textarea class="text-input source-input" @bind="State.SourceEditorText" readonly="@(State.SelectedFlow is null)"></textarea>
+                        <span class="field-hint">Source editing writes directly through the shared flow document service and can be round-tripped back into the form designer.</span>
+                    </div>
+                    break;
+                case "metrics":
+                    <MetricsPanel />
+                    break;
+                default:
+                    <div class="overview-grid">
+                        <div class="summary-cards">
+                            <div class="summary-card">
+                                <span>Flows</span>
+                                <strong>@State.FlowCount</strong>
+                            </div>
+                            <div class="summary-card">
+                                <span>Capabilities</span>
+                                <strong>@State.CapabilityCount</strong>
+                            </div>
+                            <div class="summary-card">
+                                <span>Fixtures</span>
+                                <strong>@State.FixtureCount</strong>
+                            </div>
+                            <div class="summary-card">
+                                <span>Runs</span>
+                                <strong>@State.Runs.Count</strong>
+                            </div>
+                        </div>
+
+                        <div class="overview-sections">
+                            <section class="subpanel">
+                                <div class="subpanel-header">
+                                    <div>
+                                        <h3>Capability coverage</h3>
+                                        <p>Spot whether core capabilities have healthy flow depth and current run outcomes.</p>
+                                    </div>
+                                </div>
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Capability</th>
+                                            <th scope="col">Flows</th>
+                                            <th scope="col">Latest</th>
+                                            <th scope="col">Criteria</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in State.Snapshot?.CapabilityCoverage ?? [])
+                                        {
+                                            <tr>
+                                                <td>@item.CapabilityName <div class="muted">@item.CapabilityId</div></td>
+                                                <td>@item.FlowCount</td>
+                                                <td>@item.LatestOutcome</td>
+                                                <td>@item.AcceptanceCriteriaCount</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </section>
+                            <section class="subpanel">
+                                <div class="subpanel-header">
+                                    <div>
+                                        <h3>Selected asset</h3>
+                                        <p>Keep path, metadata, and summary context visible while switching tabs.</p>
+                                    </div>
+                                </div>
+                                <pre class="summary-pre">@State.SelectedAssetSummary</pre>
+                            </section>
+                            <RunInsightsPanel />
+                        </div>
+                    </div>
+                    break;
+            }
+        </section>
+
+        <ResultsPanel />
+    </div>
+
+    <RecordingTargetPicker />
+    <RecordingSavePanel />
+    <RecordingLivePanel />
+</div>
+
+@code {
+    private string _editorTab = "overview";
+    private string? _lastObservedFlowFilePath;
+    private string? _lastObservedSuiteFilePath;
+
+    protected override void OnInitialized()
+    {
+        State.Changed += HandleStateChanged;
+    }
+
+    public void Dispose()
+    {
+        State.Changed -= HandleStateChanged;
+    }
+
+    private void HandleStateChanged()
+    {
+        var currentFlowPath = State.SelectedFlow?.FilePath;
+        var currentSuitePath = State.SelectedSuite?.FilePath;
+
+        if (currentFlowPath is not null && currentFlowPath != _lastObservedFlowFilePath)
+        {
+            _editorTab = "flow";
+        }
+        else if (currentSuitePath is not null && currentSuitePath != _lastObservedSuiteFilePath)
+        {
+            _editorTab = "suite";
+        }
+
+        _lastObservedFlowFilePath = currentFlowPath;
+        _lastObservedSuiteFilePath = currentSuitePath;
+
+        InvokeAsync(StateHasChanged);
+    }
+
+    private Task LoadProjectAsync()
+    {
+        _editorTab = "overview";
+        State.LoadProject();
+        return Task.CompletedTask;
+    }
+
+    private Task RefreshProjectAsync()
+    {
+        State.RefreshProject();
+        return Task.CompletedTask;
+    }
+
+    private Task CreateFlowAsync()
+    {
+        _editorTab = "flow";
+        State.CreateNewFlow();
+        return Task.CompletedTask;
+    }
+
+    private Task SaveFlowAsync()
+    {
+        State.SaveSelectedFlow();
+        return Task.CompletedTask;
+    }
+
+    private async Task OpenFileAsync()
+    {
+        var path = State.SelectedFlow?.FilePath;
+        if (!string.IsNullOrEmpty(path))
+        {
+            await JS.InvokeVoidAsync("navigator.clipboard.writeText", path);
+        }
+    }
+
+    private Task ApplySourceAsync()
+    {
+        _editorTab = "flow";
+        State.ApplySource();
+        return Task.CompletedTask;
+    }
+
+    private Task RebuildSourceAsync()
+    {
+        _editorTab = "source";
+        State.RebuildSource();
+        return Task.CompletedTask;
+    }
+
+    private Task CreateSuiteAsync()
+    {
+        _editorTab = "suite";
+        State.CreateNewSuite();
+        return Task.CompletedTask;
+    }
+
+    private Task SaveSuiteAsync()
+    {
+        State.SaveSelectedSuite();
+        return Task.CompletedTask;
+    }
+
+    private Task DeleteSuiteAsync()
+    {
+        State.DeleteSelectedSuite();
+        _editorTab = "overview";
+        return Task.CompletedTask;
+    }
+
+    private Task RunSelectedAsync() => State.RunSelectedAsync();
+    private Task RunAllAsync() => State.RunAllAsync();
+    private Task RunSuiteAsync() => State.RunSelectedSuiteAsync();
+    private Task RerunFailedAsync() => State.RerunFailedAsync();
+    private Task RerunFromStepAsync() => State.RerunFromStepAsync();
+
+    private void SetEditorTab(string tab)
+    {
+        _editorTab = tab;
+    }
+
+    private string GetTabClass(string tab)
+        => _editorTab == tab ? "tab-button active" : "tab-button";
+}

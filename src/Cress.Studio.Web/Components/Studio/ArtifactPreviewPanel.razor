@@ -1,0 +1,104 @@
+@implements IDisposable
+@inject StudioWorkspaceState State
+@inject IJSRuntime JS
+
+<section class="subpanel">
+    <div class="subpanel-header">
+        <div>
+            <h3>Artifacts and reports</h3>
+            <p>Preview screenshots, structured reports, and supporting evidence side by side.</p>
+        </div>
+    </div>
+    <input class="text-input" @bind="State.ArtifactFilter" @bind:event="oninput" placeholder="Filter artifacts" />
+    <div class="stack-list">
+        @{
+            var filtered = State.SelectedRunArtifacts.Where(item => string.IsNullOrWhiteSpace(State.ArtifactFilter)
+                || item.DisplayName.Contains(State.ArtifactFilter, StringComparison.OrdinalIgnoreCase)
+                || item.Detail.Contains(State.ArtifactFilter, StringComparison.OrdinalIgnoreCase)).ToList();
+        }
+        @if (filtered.Count == 0)
+        {
+            <p class="subpanel-empty">No artifacts match the current filter.</p>
+        }
+        else
+        {
+            @foreach (var artifact in filtered)
+            {
+                <button type="button" class="@GetArtifactButtonClass(State.SelectedArtifact?.Path == artifact.Path)"
+                        @onclick="() => State.SelectArtifact(artifact)"
+                        title="@artifact.Detail">
+                    <span class="artifact-item">
+                        <span class="artifact-icon" aria-hidden="true">@GetArtifactTypeLabel(artifact.DisplayName)</span>
+                        <span class="artifact-item-text">
+                            <strong>@artifact.DisplayName</strong>
+                            <span class="artifact-path" title="@artifact.Detail">@artifact.Detail</span>
+                        </span>
+                    </span>
+                </button>
+            }
+        }
+    </div>
+</section>
+
+<section class="subpanel preview-panel">
+    <div class="subpanel-header">
+        <div>
+            <h3>Preview</h3>
+            <p>Open the selected report or evidence asset directly in context.</p>
+        </div>
+        <button type="button" class="action-button" @onclick="OpenArtifactAsync" disabled="@(State.SelectedArtifact is null)">Open artifact</button>
+    </div>
+    @if (!string.IsNullOrWhiteSpace(State.PreviewImageDataUrl))
+    {
+        <img src="@State.PreviewImageDataUrl" alt="Selected artifact preview" class="preview-image" />
+    }
+    else if (!string.IsNullOrWhiteSpace(State.PreviewText))
+    {
+        <pre class="preview-text">@State.PreviewText</pre>
+    }
+    else
+    {
+        <p class="subpanel-empty">Select a report or evidence file to preview it here.</p>
+    }
+</section>
+
+@code {
+    protected override void OnInitialized()
+    {
+        State.Changed += HandleStateChanged;
+    }
+
+    public void Dispose()
+    {
+        State.Changed -= HandleStateChanged;
+    }
+
+    private void HandleStateChanged()
+        => InvokeAsync(StateHasChanged);
+
+    private async Task OpenArtifactAsync()
+    {
+        var path = State.SelectedArtifact?.Path;
+        if (!string.IsNullOrEmpty(path))
+        {
+            await JS.InvokeVoidAsync("navigator.clipboard.writeText", path);
+        }
+    }
+
+    private static string GetArtifactButtonClass(bool selected)
+        => selected ? "explorer-button selected" : "explorer-button";
+
+    private static string GetArtifactTypeLabel(string displayName)
+    {
+        var ext = System.IO.Path.GetExtension(displayName).ToLowerInvariant();
+        return ext switch
+        {
+            ".png" or ".jpg" or ".jpeg" or ".gif" or ".svg" or ".webp" => "img",
+            ".json" => "{}",
+            ".html" or ".htm" or ".xml" => "<>",
+            ".md" or ".txt" => "doc",
+            ".pdf" => "pdf",
+            _ => "file"
+        };
+    }
+}

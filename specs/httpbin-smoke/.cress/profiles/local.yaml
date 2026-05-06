@@ -1,0 +1,9 @@
+profile: local
+baseUrl: https://httpbin.org
+timeouts:
+  step: 30000
+  expectation: 10000
+evidence:
+  mode: standard
+variables:
+  environment: local

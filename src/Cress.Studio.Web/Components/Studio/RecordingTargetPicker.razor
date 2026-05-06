@@ -1,0 +1,234 @@
+@inject StudioWorkspaceState State
+@implements IDisposable
+
+@if (State.IsRecorderPickerOpen)
+{
+    <div class="modal-backdrop" @onclick="Cancel" role="presentation"></div>
+    <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="picker-title">
+        <div class="modal-header">
+            <h3 id="picker-title">Choose recording target</h3>
+            <button type="button" class="action-button" @onclick="Cancel" aria-label="Close">&#x2715;</button>
+        </div>
+
+        @* ── Tab bar ──────────────────────────────────────────────────────── *@
+        <div class="picker-tabs" role="tablist" aria-label="Recording mode">
+            <button type="button"
+                    role="tab"
+                    class="picker-tab @(_activeTab == Tab.Desktop ? "picker-tab--active" : string.Empty)"
+                    aria-selected="@(_activeTab == Tab.Desktop)"
+                    aria-controls="picker-panel-desktop"
+                    id="picker-tab-desktop"
+                    @onclick="() => SwitchTab(Tab.Desktop)">
+                Desktop
+            </button>
+            <button type="button"
+                    role="tab"
+                    class="picker-tab @(_activeTab == Tab.Web ? "picker-tab--active" : string.Empty)"
+                    aria-selected="@(_activeTab == Tab.Web)"
+                    aria-controls="picker-panel-web"
+                    id="picker-tab-web"
+                    @onclick="() => SwitchTab(Tab.Web)">
+                Web
+            </button>
+        </div>
+
+        @* ── Desktop panel ───────────────────────────────────────────────── *@
+        @if (_activeTab == Tab.Desktop)
+        {
+            <div id="picker-panel-desktop"
+                 role="tabpanel"
+                 aria-labelledby="picker-tab-desktop"
+                 class="modal-body">
+                @if (_loading)
+                {
+                    <p class="muted">Enumerating running processes...</p>
+                }
+                else if (_targets.Count == 0)
+                {
+                    <p class="muted">No windows with visible titles found. Try launching an application first.</p>
+                }
+                else
+                {
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Process</th>
+                                <th scope="col">Window title</th>
+                                <th scope="col">PID</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var target in _targets)
+                            {
+                                <tr>
+                                    <td>@target.ProcessName</td>
+                                    <td>@target.MainWindowTitle</td>
+                                    <td>@target.ProcessId</td>
+                                    <td>
+                                        <button type="button"
+                                                class="action-button success"
+                                                disabled="@(!target.IsAttachable)"
+                                                title="@(target.IsAttachable ? "Start recording this process" : "Cannot attach (elevated process)")"
+                                                @onclick="() => AttachAsync(target)">
+                                            Attach
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+            </div>
+        }
+
+        @* ── Web panel ───────────────────────────────────────────────────── *@
+        @if (_activeTab == Tab.Web)
+        {
+            <div id="picker-panel-web"
+                 role="tabpanel"
+                 aria-labelledby="picker-tab-web"
+                 class="modal-body">
+
+                <div class="field-stack">
+                    <label for="web-url">URL</label>
+                    <input id="web-url"
+                           type="url"
+                           class="text-input"
+                           placeholder="https://example.com"
+                           @bind="_webUrl"
+                           @bind:event="oninput"
+                           autocomplete="url"
+                           spellcheck="false" />
+                </div>
+
+                <div class="field-stack" style="margin-top:0.5rem">
+                    <label for="web-browser">Browser</label>
+                    <select id="web-browser" class="text-input" @bind="_webBrowser">
+                        <option value="chromium">Chromium</option>
+                        <option value="firefox">Firefox</option>
+                        <option value="webkit">WebKit</option>
+                    </select>
+                </div>
+
+                <p class="field-hint" style="margin-top:0.5rem">
+                    A browser window will open. Navigate and interact normally; events are captured live.
+                </p>
+
+                <div style="margin-top:0.75rem">
+                    <button type="button"
+                            class="action-button success"
+                            disabled="@(!IsWebUrlValid())"
+                            title="@(IsWebUrlValid() ? "Start recording in browser" : "Enter a valid URL to start")"
+                            @onclick="StartWebRecordingAsync">
+                        Start recording
+                    </button>
+                </div>
+            </div>
+        }
+
+        <div class="modal-footer">
+            @if (_activeTab == Tab.Desktop)
+            {
+                <button type="button" class="action-button" @onclick="RefreshAsync">Refresh</button>
+            }
+            <button type="button" class="action-button" @onclick="Cancel">Cancel</button>
+        </div>
+    </div>
+}
+
+@code {
+    private enum Tab { Desktop, Web }
+
+    private List<RecordingTargetInfo> _targets = [];
+    private bool _loading = true;
+    private Tab _activeTab = Tab.Desktop;
+
+    // Web tab state
+    private string _webUrl = string.Empty;
+    private string _webBrowser = "chromium";
+
+    protected override void OnInitialized()
+    {
+        State.Changed += HandleStateChanged;
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (State.IsRecorderPickerOpen && _loading && _activeTab == Tab.Desktop)
+        {
+            await LoadTargetsAsync();
+        }
+    }
+
+    public void Dispose()
+    {
+        State.Changed -= HandleStateChanged;
+    }
+
+    private void HandleStateChanged()
+        => InvokeAsync(async () =>
+        {
+            if (State.IsRecorderPickerOpen && _loading && _activeTab == Tab.Desktop)
+            {
+                await LoadTargetsAsync();
+            }
+
+            StateHasChanged();
+        });
+
+    private async Task LoadTargetsAsync()
+    {
+        _loading = true;
+        StateHasChanged();
+        var list = await State.RecorderService.ListAvailableTargetsAsync();
+        _targets = list.ToList();
+        _loading = false;
+        StateHasChanged();
+    }
+
+    private async Task RefreshAsync()
+    {
+        _loading = true;
+        await LoadTargetsAsync();
+    }
+
+    private async Task AttachAsync(RecordingTargetInfo target)
+    {
+        await State.BeginRecordingAsync(target.ProcessId);
+        _loading = true; // reset for next open
+    }
+
+    private async Task StartWebRecordingAsync()
+    {
+        if (!IsWebUrlValid()) return;
+        await State.BeginWebRecordingAsync(_webUrl.Trim(), _webBrowser);
+    }
+
+    private void SwitchTab(Tab tab)
+    {
+        _activeTab = tab;
+        if (tab == Tab.Desktop && _loading)
+        {
+            // Kick off target loading when switching back to Desktop.
+            _ = LoadTargetsAsync();
+        }
+    }
+
+    private bool IsWebUrlValid()
+    {
+        var url = _webUrl?.Trim() ?? string.Empty;
+        if (string.IsNullOrEmpty(url)) return false;
+        return Uri.TryCreate(url, UriKind.Absolute, out var uri)
+               && (uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps);
+    }
+
+    private void Cancel()
+    {
+        State.CloseRecorderPicker();
+        _loading = true; // reset so next open re-enumerates
+        _activeTab = Tab.Desktop;
+        _webUrl = string.Empty;
+        _webBrowser = "chromium";
+    }
+}

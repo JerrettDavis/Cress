@@ -1,0 +1,227 @@
+@implements IDisposable
+@inject StudioWorkspaceState State
+
+<aside id="results" class="card results-panel" aria-labelledby="results-title">
+    <div class="panel-header results-panel-header">
+        <div class="panel-heading">
+            <h2 id="results-title">Runs, evidence, and diagnostics</h2>
+            <p>Review live output, artifacts, preview surfaces, and comparisons without leaving the workspace.</p>
+        </div>
+    </div>
+
+    <section class="subpanel">
+        <div class="subpanel-header subpanel-header--sticky">
+            <div>
+                <h3>Live run</h3>
+                <p>Streaming status and event feed for the current execution.</p>
+            </div>
+        </div>
+        <div class="live-headline">@State.LiveRunHeadline</div>
+        @if (State.LiveEvents.Count == 0)
+        {
+            <p class="subpanel-empty">No run in progress — start a run to see live output.</p>
+        }
+        else
+        {
+            <ul class="event-list">
+                @foreach (var item in State.LiveEvents)
+                {
+                    <li>@item</li>
+                }
+            </ul>
+        }
+    </section>
+
+    <section class="subpanel">
+        <div class="subpanel-header subpanel-header--sticky">
+            <div>
+                <h3>Recent runs</h3>
+                <p>Find the right run quickly, then inspect flows, steps, and artifacts below.</p>
+            </div>
+        </div>
+        <input class="text-input" @bind="State.RunFilter" @bind:event="oninput" placeholder="Filter runs" />
+        @{
+            var filteredRuns = State.Runs.Where(run => string.IsNullOrWhiteSpace(State.RunFilter)
+                || run.Result.Metadata.RunId.Contains(State.RunFilter, StringComparison.OrdinalIgnoreCase)
+                || State.DescribeRun(run).Contains(State.RunFilter, StringComparison.OrdinalIgnoreCase))
+                .ToList();
+        }
+        @if (State.Runs.Count == 0)
+        {
+            <p class="subpanel-empty">No runs yet — click Run all to start.</p>
+        }
+        else if (filteredRuns.Count == 0)
+        {
+            <p class="subpanel-empty">No runs match the filter.</p>
+        }
+        else
+        {
+            <div class="stack-list">
+                @foreach (var run in filteredRuns)
+                {
+                    var allPassed = run.Result.Flows.All(f => f.Outcome == RunOutcome.Passed);
+                    var anyFailed = run.Result.Flows.Any(f => f.Outcome == RunOutcome.Failed);
+                    var statusClass = allPassed ? "run-status--passed" : anyFailed ? "run-status--failed" : "run-status--partial";
+                    <button type="button" class="@GetExplorerButtonClass(State.SelectedRun?.Result.Metadata.RunId == run.Result.Metadata.RunId)" @onclick="() => State.SelectRun(run)">
+                        <span class="run-status-row">
+                            <span class="run-status-dot @statusClass" aria-hidden="true"></span>
+                            <strong class="run-id-text">@run.Result.Metadata.RunId</strong>
+                        </span>
+                        <span class="run-meta-text">@State.DescribeRun(run)</span>
+                    </button>
+                }
+            </div>
+        }
+    </section>
+
+    <section class="subpanel">
+        <div class="subpanel-header subpanel-header--sticky">
+            <div>
+                <h3>Run flows</h3>
+                <p>Outcome-first listing for the selected run.</p>
+            </div>
+        </div>
+        @if (State.SelectedRun is null)
+        {
+            <p class="subpanel-empty">Select a run above to see its flows.</p>
+        }
+        else if (!State.SelectedRun.Result.Flows.Any())
+        {
+            <p class="subpanel-empty">This run has no flow results.</p>
+        }
+        else
+        {
+            <div class="stack-list run-flows-list">
+                @foreach (var flow in State.SelectedRun.Result.Flows)
+                {
+                    var flowPassed = flow.Outcome == RunOutcome.Passed;
+                    var flowStatusClass = flowPassed ? "run-status--passed" : "run-status--failed";
+                    <button type="button" class="@GetExplorerButtonClass(State.SelectedRunFlow?.FlowId == flow.FlowId)" @onclick="() => State.SelectRunFlow(flow)">
+                        <span class="run-status-row">
+                            <span class="run-status-dot @flowStatusClass" aria-hidden="true"></span>
+                            <strong>@flow.Outcome</strong>
+                        </span>
+                        <span>@flow.Name</span>
+                    </button>
+                }
+            </div>
+        }
+    </section>
+
+    <section class="subpanel">
+        <div class="subpanel-header subpanel-header--sticky">
+            <div>
+                <h3>Steps</h3>
+                <p>Step diagnostics with attempt count and final outcome.</p>
+            </div>
+        </div>
+        @if (State.SelectedRunFlow is null)
+        {
+            <p class="subpanel-empty">Select a run flow above to see its steps.</p>
+        }
+        else if (!State.SelectedRunSteps.Any())
+        {
+            <p class="subpanel-empty">No steps recorded for this flow.</p>
+        }
+        else
+        {
+            <div class="stack-list run-steps-list">
+                @foreach (var step in State.SelectedRunSteps)
+                {
+                    var stepPassed = step.Outcome == RunOutcome.Passed;
+                    var stepStatusClass = stepPassed ? "run-status--passed" : "run-status--failed";
+                    <button type="button" class="@GetExplorerButtonClass(ReferenceEquals(State.SelectedRunStep, step))" @onclick="() => State.SelectRunStep(step)">
+                        <span class="run-status-row">
+                            <span class="run-status-dot @stepStatusClass" aria-hidden="true"></span>
+                            <strong>@step.Name</strong>
+                        </span>
+                        <span class="run-step-meta">@step.Kind • attempt @step.Attempt • @step.Outcome</span>
+                    </button>
+                }
+            </div>
+        }
+    </section>
+
+    <ArtifactPreviewPanel />
+
+    <section class="subpanel">
+        <div class="subpanel-header subpanel-header--sticky">
+            <div>
+                <h3>Diagnostics</h3>
+                <p>Warnings and errors stay readable, scannable, and close to the related workflow surface.</p>
+            </div>
+        </div>
+        @if (!State.Diagnostics.Any())
+        {
+            <p class="subpanel-empty">No diagnostics — workspace is clean.</p>
+        }
+        else
+        {
+            <ul class="diagnostic-list">
+                @foreach (var diagnostic in State.Diagnostics)
+                {
+                    var severityClass = diagnostic.Severity switch
+                    {
+                        DiagnosticSeverity.Error   => "diagnostic-item--error",
+                        DiagnosticSeverity.Warning => "diagnostic-item--warning",
+                        _                          => "diagnostic-item--info"
+                    };
+                    <li class="diagnostic-item @severityClass">
+                        <span class="diagnostic-icon" aria-hidden="true">@GetDiagnosticIcon(diagnostic.Severity)</span>
+                        <span class="diagnostic-body">
+                            <strong>@diagnostic.Severity @diagnostic.Code</strong>
+                            <span>@diagnostic.Message</span>
+                            @if (!string.IsNullOrWhiteSpace(diagnostic.File))
+                            {
+                                <small>@diagnostic.File</small>
+                            }
+                        </span>
+                    </li>
+                }
+            </ul>
+        }
+    </section>
+
+    <section class="subpanel">
+        <div class="subpanel-header subpanel-header--sticky">
+            <div>
+                <h3>Comparison</h3>
+                <p>Readable summary that helps spot regressions or retry improvements quickly.</p>
+            </div>
+        </div>
+        @if (string.IsNullOrWhiteSpace(State.SelectedRunComparison.Summary))
+        {
+            <p class="subpanel-empty">No comparison available — select a run to generate a diff.</p>
+        }
+        else
+        {
+            <pre class="summary-pre">@State.SelectedRunComparison.Summary</pre>
+        }
+    </section>
+</aside>
+
+@code {
+    protected override void OnInitialized()
+    {
+        State.Changed += HandleStateChanged;
+    }
+
+    public void Dispose()
+    {
+        State.Changed -= HandleStateChanged;
+    }
+
+    private void HandleStateChanged()
+        => InvokeAsync(StateHasChanged);
+
+    private static string GetExplorerButtonClass(bool selected)
+        => selected ? "explorer-button selected" : "explorer-button";
+
+    private static string GetDiagnosticIcon(DiagnosticSeverity severity)
+        => severity switch
+        {
+            DiagnosticSeverity.Error   => "✕",
+            DiagnosticSeverity.Warning => "⚠",
+            _                          => "ℹ"
+        };
+}

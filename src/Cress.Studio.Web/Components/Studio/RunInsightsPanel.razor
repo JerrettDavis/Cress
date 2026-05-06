@@ -1,0 +1,128 @@
+@implements IDisposable
+@inject StudioWorkspaceState State
+
+<section class="subpanel">
+    <div class="subpanel-header">
+        <div>
+            <h3>Recent activity</h3>
+            <p>Recent runs and workspace changes stay visible without burying the current task.</p>
+        </div>
+    </div>
+    <div class="stack-list">
+        @if (State.RunInsights.RecentActivity.Count == 0)
+        {
+            <p class="subpanel-empty">No recent activity yet — run a flow to see history here.</p>
+        }
+        else
+        {
+            @foreach (var item in State.RunInsights.RecentActivity)
+            {
+                <div class="explorer-button insights-activity-item">
+                    <strong>@item.Headline</strong>
+                    <span>@item.Detail</span>
+                </div>
+            }
+        }
+    </div>
+</section>
+
+<section class="subpanel">
+    <div class="subpanel-header">
+        <div>
+            <h3>Flake watch</h3>
+            <p>Highlight unstable flows so retries and trends are obvious at a glance.</p>
+        </div>
+    </div>
+    @if (State.RunInsights.FlakyFlows.Count == 0)
+    {
+        <p class="subpanel-empty">No flaky flows detected — all flows are stable.</p>
+    }
+    else
+    {
+        <table class="data-table" aria-label="Flake watch">
+            <thead>
+                <tr>
+                    <th scope="col">Flow</th>
+                    <th scope="col">Score</th>
+                    <th scope="col">Trend</th>
+                    <th scope="col">Retries</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in State.RunInsights.FlakyFlows.Take(8))
+                {
+                    <tr>
+                        <td>
+                            @if (item.StepBreakdown.Count > 0)
+                            {
+                                <details class="flake-step-details">
+                                    <summary>
+                                        <span class="flake-flow-name">@item.Name</span>
+                                        <div class="flake-flow-id">@item.FlowId</div>
+                                    </summary>
+                                    <table class="data-table flake-step-breakdown" aria-label="Step instability for @item.Name">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Step</th>
+                                                <th scope="col">Fails</th>
+                                                <th scope="col">Rate</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var step in item.StepBreakdown)
+                                            {
+                                                var rateClass = step.FlakeRate >= 50 ? "flake-rate-high"
+                                                    : step.FlakeRate > 20 ? "flake-rate-medium"
+                                                    : "flake-rate-low";
+                                                <tr>
+                                                    <td>@(step.StepIndex + 1)</td>
+                                                    <td>@step.StepName</td>
+                                                    <td>@step.FailCount / @step.TotalCount</td>
+                                                    <td class="@rateClass">@step.FlakeRate%</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </details>
+                            }
+                            else
+                            {
+                                <span class="flake-flow-name">@item.Name</span>
+                                <div class="flake-flow-id">@item.FlowId</div>
+                            }
+                        </td>
+                        <td class="flake-score">@item.FlakeScore</td>
+                        <td>@item.Trend</td>
+                        <td class="flake-retries">@item.RetryRecoveries</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</section>
+
+<section class="subpanel">
+    <div class="subpanel-header">
+        <div>
+            <h3>Latest comparison</h3>
+            <p>Readable diff-style summary for the newest run comparison.</p>
+        </div>
+    </div>
+    <pre class="comparison-narrative">@State.RunInsights.LatestComparison.Summary</pre>
+</section>
+
+@code {
+    protected override void OnInitialized()
+    {
+        State.Changed += HandleStateChanged;
+    }
+
+    public void Dispose()
+    {
+        State.Changed -= HandleStateChanged;
+    }
+
+    private void HandleStateChanged()
+        => InvokeAsync(StateHasChanged);
+}

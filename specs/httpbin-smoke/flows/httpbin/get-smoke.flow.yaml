@@ -1,0 +1,33 @@
+version: 1
+id: httpbin-get-smoke
+name: GET /get returns 200 with request metadata
+capability: http-connectivity
+
+summary: >
+  Sends a GET request to https://httpbin.org/get and verifies that
+  the response is 200 OK and that the response body contains a JSON
+  url field that echoes the request URL.
+
+tags:
+  - smoke
+  - http
+  - get
+
+traceability:
+  requirement: HTTP-AC1
+  acceptanceCriteria:
+    - HTTP-AC1
+
+when:
+  - step: http.get
+    with:
+      url: https://httpbin.org/get
+
+then:
+  - expect: http.assert-status
+    with:
+      status: "200"
+  - expect: http.assert-json
+    with:
+      path: url
+      equals: https://httpbin.org/get

@@ -1,0 +1,15 @@
+{
+  "name": "cress",
+  "private": true,
+  "workspaces": [
+    "node/cress-sdk",
+    "node/cress-plugin-host-node",
+    "node/cress-driver-playwright",
+    "node/cress-web-recorder"
+  ],
+  "scripts": {
+    "build": "\"%npm_node_execpath%\" --check node/cress-sdk/index.js && \"%npm_node_execpath%\" --check node/cress-plugin-host-node/host.js && \"%npm_node_execpath%\" --check node/cress-driver-playwright/host.js",
+    "test": "\"%npm_node_execpath%\" --test node/tests/*.test.mjs"
+  }
+}
+

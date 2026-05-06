@@ -1,0 +1,30 @@
+version: 1
+project:
+  name: calc-smoke
+  defaultProfile: local
+
+paths:
+  capabilities: capabilities
+  flows: flows
+  models: models
+  fixtures: fixtures
+  steps: steps
+  artifacts: artifacts/runs
+  reports: reports
+
+defaults:
+  timeout: 30000
+  retries: 0
+  evidence: standard
+  cleanup: on-success
+
+plugins:
+  discover: []
+
+drivers:
+  http:
+    enabled: false
+  playwright:
+    enabled: false
+  flaui:
+    enabled: true

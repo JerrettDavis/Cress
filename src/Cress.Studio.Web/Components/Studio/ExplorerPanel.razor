@@ -1,0 +1,282 @@
+@implements IDisposable
+@inject StudioWorkspaceState State
+
+<aside class="card explorer-panel" aria-labelledby="explorer-title">
+    <div class="panel-header">
+        <div class="panel-heading">
+            <h2 id="explorer-title">Explorer</h2>
+            <p>Browse the current workspace by flow, suite, capability, fixture, step, or run.</p>
+        </div>
+        @if (State.HasLoadedProject)
+        {
+            <span class="pill">@State.FlowCount flows</span>
+        }
+    </div>
+
+    @if (!State.HasLoadedProject)
+    {
+        <div class="empty-panel">Load a Cress workspace to browse flows, suites, steps, fixtures, capabilities, runs, and reports.</div>
+    }
+    else
+    {
+        <div class="field-stack explorer-search-wrap">
+            <label for="explorerFilter" class="visually-hidden">Search explorer</label>
+            <div class="explorer-search-field">
+                <span class="explorer-search-icon" aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+                    </svg>
+                </span>
+                <input id="explorerFilter" class="text-input explorer-search-input" @bind="State.ExplorerFilter" @bind:event="oninput" placeholder="Find a flow, suite, or capability" />
+                @if (!string.IsNullOrEmpty(State.ExplorerFilter))
+                {
+                    <button type="button" class="explorer-search-clear" aria-label="Clear filter" @onclick="ClearFilter">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
+                        </svg>
+                    </button>
+                }
+            </div>
+        </div>
+
+        <details open>
+            <summary>
+                <span class="summary-chevron" aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                </span>
+                Flows <span class="summary-count">(@State.FlowCount)</span>
+            </summary>
+            <div class="explorer-group">
+                @{
+                    var flows = State.Snapshot!.Catalog.NormalizedFlows
+                        .Where(item => string.IsNullOrWhiteSpace(State.ExplorerFilter)
+                            || item.Name.Contains(State.ExplorerFilter, StringComparison.OrdinalIgnoreCase)
+                            || item.FlowId.Contains(State.ExplorerFilter, StringComparison.OrdinalIgnoreCase))
+                        .OrderBy(item => item.Name, StringComparer.OrdinalIgnoreCase)
+                        .ToList();
+                }
+                @if (flows.Count == 0)
+                {
+                    <p class="explorer-empty">No flows match the filter.</p>
+                }
+                else
+                {
+                    @foreach (var flow in flows)
+                    {
+                        <button type="button" class="@GetExplorerButtonClass(State.SelectedFlow?.FilePath == flow.SourceFile)" @onclick="() => SelectFlow(flow.SourceFile)">
+                            <strong>@flow.Name</strong>
+                            <span>@flow.FlowId</span>
+                        </button>
+                    }
+                }
+            </div>
+        </details>
+
+        <details open>
+            <summary>
+                <span class="summary-chevron" aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                </span>
+                Suites <span class="summary-count">(@State.Suites.Count)</span>
+            </summary>
+            <div class="explorer-group">
+                @{
+                    var suites = State.Suites
+                        .Where(item => string.IsNullOrWhiteSpace(State.ExplorerFilter)
+                            || item.Name.Contains(State.ExplorerFilter, StringComparison.OrdinalIgnoreCase)
+                            || item.Id.Contains(State.ExplorerFilter, StringComparison.OrdinalIgnoreCase))
+                        .OrderBy(item => item.Name, StringComparer.OrdinalIgnoreCase)
+                        .ToList();
+                }
+                @if (suites.Count == 0 && State.Suites.Count == 0)
+                {
+                    <p class="explorer-empty">No suites defined.</p>
+                }
+                else if (suites.Count == 0)
+                {
+                    <p class="explorer-empty">No suites match the filter.</p>
+                }
+                else
+                {
+                    @foreach (var suite in suites)
+                    {
+                        <button type="button" class="@GetExplorerButtonClass(State.SelectedSuite?.FilePath == suite.FilePath)" @onclick="() => SelectSuite(suite)">
+                            <strong>@suite.Name</strong>
+                            <span>@suite.Id</span>
+                        </button>
+                    }
+                }
+            </div>
+        </details>
+
+        <details>
+            <summary>
+                <span class="summary-chevron" aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                </span>
+                Capabilities <span class="summary-count">(@State.CapabilityCount)</span>
+            </summary>
+            <div class="explorer-group">
+                @{
+                    var capabilities = State.Snapshot!.Catalog.Capabilities
+                        .Where(item => string.IsNullOrWhiteSpace(State.ExplorerFilter)
+                            || item.Name.Contains(State.ExplorerFilter, StringComparison.OrdinalIgnoreCase)
+                            || item.Id.Contains(State.ExplorerFilter, StringComparison.OrdinalIgnoreCase))
+                        .OrderBy(item => item.Name, StringComparer.OrdinalIgnoreCase)
+                        .ToList();
+                }
+                @if (capabilities.Count == 0)
+                {
+                    <p class="explorer-empty">No capabilities@(State.CapabilityCount == 0 ? " defined." : " match the filter.")</p>
+                }
+                else
+                {
+                    @foreach (var capability in capabilities)
+                    {
+                        <button type="button" class="explorer-button" @onclick="() => SelectCapability(capability)">
+                            <strong>@capability.Name</strong>
+                            <span>@capability.Id</span>
+                        </button>
+                    }
+                }
+            </div>
+        </details>
+
+        <details>
+            <summary>
+                <span class="summary-chevron" aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                </span>
+                Fixtures <span class="summary-count">(@State.FixtureCount)</span>
+            </summary>
+            <div class="explorer-group">
+                @{
+                    var fixtures = State.Snapshot!.Catalog.FixtureDefinitions
+                        .Where(item => string.IsNullOrWhiteSpace(State.ExplorerFilter)
+                            || item.Key.Contains(State.ExplorerFilter, StringComparison.OrdinalIgnoreCase)
+                            || item.Value.Type.Contains(State.ExplorerFilter, StringComparison.OrdinalIgnoreCase))
+                        .OrderBy(item => item.Key, StringComparer.OrdinalIgnoreCase)
+                        .ToList();
+                }
+                @if (fixtures.Count == 0)
+                {
+                    <p class="explorer-empty">No fixtures@(State.FixtureCount == 0 ? " defined." : " match the filter.")</p>
+                }
+                else
+                {
+                    @foreach (var fixture in fixtures)
+                    {
+                        <button type="button" class="explorer-button" @onclick="() => SelectFixture(fixture.Key)">
+                            <strong>@fixture.Key</strong>
+                            <span>@fixture.Value.Type</span>
+                        </button>
+                    }
+                }
+            </div>
+        </details>
+
+        <details>
+            <summary>
+                <span class="summary-chevron" aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                </span>
+                Steps <span class="summary-count">(@State.StepCount)</span>
+            </summary>
+            <div class="explorer-group">
+                @{
+                    var steps = State.Snapshot!.Catalog.StepRegistry.Definitions.Values
+                        .Where(item => string.IsNullOrWhiteSpace(State.ExplorerFilter)
+                            || item.Name.Contains(State.ExplorerFilter, StringComparison.OrdinalIgnoreCase))
+                        .OrderBy(item => item.Name, StringComparer.OrdinalIgnoreCase)
+                        .ToList();
+                }
+                @if (steps.Count == 0)
+                {
+                    <p class="explorer-empty">No steps@(State.StepCount == 0 ? " defined." : " match the filter.")</p>
+                }
+                else
+                {
+                    @foreach (var step in steps)
+                    {
+                        <button type="button" class="explorer-button" @onclick="() => SelectStep(step.Name)">
+                            <strong>@step.Name</strong>
+                            <span>@(step.Implementation?.Plugin ?? "builtin")/@(step.Implementation?.Operation ?? "n/a")</span>
+                        </button>
+                    }
+                }
+            </div>
+        </details>
+
+        <details>
+            <summary>
+                <span class="summary-chevron" aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                </span>
+                Runs <span class="summary-count">(@State.Runs.Count)</span>
+            </summary>
+            <div class="explorer-group">
+                @{
+                    var runs = State.Runs
+                        .Where(run => string.IsNullOrWhiteSpace(State.ExplorerFilter)
+                            || run.Result.Metadata.RunId.Contains(State.ExplorerFilter, StringComparison.OrdinalIgnoreCase))
+                        .ToList();
+                }
+                @if (runs.Count == 0)
+                {
+                    <p class="explorer-empty">No runs yet — click Run all to start.</p>
+                }
+                else
+                {
+                    @foreach (var run in runs)
+                    {
+                        <button type="button" class="@GetExplorerButtonClass(State.SelectedRun?.Result.Metadata.RunId == run.Result.Metadata.RunId)" @onclick="() => SelectRun(run)">
+                            <strong>@run.Result.Metadata.RunId</strong>
+                            <span>@State.DescribeRun(run)</span>
+                        </button>
+                    }
+                }
+            </div>
+        </details>
+    }
+</aside>
+
+@code {
+    protected override void OnInitialized()
+    {
+        State.Changed += HandleStateChanged;
+    }
+
+    public void Dispose()
+    {
+        State.Changed -= HandleStateChanged;
+    }
+
+    private void HandleStateChanged()
+        => InvokeAsync(StateHasChanged);
+
+    private void ClearFilter()
+    {
+        State.ExplorerFilter = string.Empty;
+    }
+
+    private void SelectFlow(string? path)
+        => State.SelectFlow(path);
+
+    private void SelectSuite(StudioSuiteDocument suite)
+        => State.SelectSuite(suite);
+
+    private void SelectCapability(CressCapability capability)
+        => State.SelectCapability(capability);
+
+    private void SelectFixture(string fixtureName)
+        => State.SelectFixture(fixtureName);
+
+    private void SelectStep(string stepName)
+        => State.SelectStep(stepName);
+
+    private void SelectRun(StoredRunResult run)
+        => State.SelectRun(run);
+
+    private static string GetExplorerButtonClass(bool selected)
+        => selected ? "explorer-button selected" : "explorer-button";
+}

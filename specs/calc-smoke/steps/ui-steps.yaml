@@ -1,0 +1,225 @@
+version: 1
+steps:
+  - name: ui.attach
+    description: Attach to a running desktop application by process name or ID.
+    drivers:
+      - flaui
+    inputs:
+      processName:
+        type: string
+        required: false
+        description: Process name to attach to (e.g. calc, notepad).
+      processId:
+        type: string
+        required: false
+        description: Numeric process ID to attach to.
+      windowTitle:
+        type: string
+        required: false
+        description: Expected window title substring (optional, for disambiguation).
+    implementation:
+      operation: attach
+
+  - name: ui.launch
+    description: Launch a desktop application from an executable path.
+    drivers:
+      - flaui
+    inputs:
+      application:
+        type: string
+        required: true
+        description: Path to the application executable.
+      arguments:
+        type: string
+        required: false
+        description: Command-line arguments to pass.
+      windowTitle:
+        type: string
+        required: false
+        description: Expected window title to wait for after launch.
+    implementation:
+      operation: launch
+
+  - name: ui.invoke
+    description: Click or invoke a UI element identified by automationId, name, controlType, or V1 locator fields.
+    drivers:
+      - flaui
+    inputs:
+      automationId:
+        type: string
+        required: false
+        description: UIA AutomationId of the target element (preferred — stable across runs).
+      name:
+        type: string
+        required: false
+        description: Accessible name of the target element (fallback when AutomationId is absent).
+      controlType:
+        type: string
+        required: false
+        description: Control type hint (e.g. Button, MenuItem) for disambiguation.
+      className:
+        type: string
+        required: false
+        description: UIA ClassName of the target element.
+      role:
+        type: string
+        required: false
+        description: "ARIA role / UIA ControlType cross-platform alias (e.g. button, textbox, checkbox). Alias for controlType; V2 wires driver-side resolution."
+      testId:
+        type: string
+        required: false
+        description: "Test data-attribute value (e.g. data-testid). Maps to automationId for desktop drivers. V2 wires resolution."
+      label:
+        type: string
+        required: false
+        description: "Accessible label / aria-label. No UIA equivalent for desktop; reserved for web driver (V2)."
+      text:
+        type: string
+        required: false
+        description: Visible text content of the element. Used as fallback name-search by desktop driver.
+      cssSelector:
+        type: string
+        required: false
+        description: "Raw CSS selector. Web driver only — desktop drivers will fail with an unsupported-locator error."
+      xpath:
+        type: string
+        required: false
+        description: "Raw XPath expression. Web driver only — desktop drivers will fail with an unsupported-locator error."
+    implementation:
+      operation: invoke
+
+  - name: ui.fill
+    description: Set the text value of an editable control (text box, combo box, etc.).
+    drivers:
+      - flaui
+    inputs:
+      automationId:
+        type: string
+        required: false
+        description: UIA AutomationId of the target element.
+      name:
+        type: string
+        required: false
+        description: Accessible name of the target element.
+      role:
+        type: string
+        required: false
+        description: "ARIA role / UIA ControlType cross-platform alias. V2 wires driver-side resolution."
+      testId:
+        type: string
+        required: false
+        description: "Test data-attribute value. Maps to automationId for desktop drivers. V2 wires resolution."
+      label:
+        type: string
+        required: false
+        description: "Accessible label / aria-label. Reserved for web driver (V2)."
+      cssSelector:
+        type: string
+        required: false
+        description: "Raw CSS selector. Web driver only."
+      xpath:
+        type: string
+        required: false
+        description: "Raw XPath expression. Web driver only."
+      value:
+        type: string
+        required: true
+        description: Text value to enter into the control.
+    implementation:
+      operation: fill
+
+  - name: ui.press-key
+    description: Simulate a keyboard key press (e.g. Enter, Escape, Tab).
+    drivers:
+      - flaui
+    inputs:
+      key:
+        type: string
+        required: true
+        description: Key name to press (e.g. Enter, Escape, Tab, Delete).
+    implementation:
+      operation: press-key
+
+  - name: ui.wait-for-window
+    description: Wait for a window with a given title to appear, then assert it.
+    drivers:
+      - flaui
+    inputs:
+      title:
+        type: string
+        required: true
+        description: Expected window title (substring match).
+    implementation:
+      operation: wait-for-window
+
+  - name: ui.assert-text
+    description: Assert that a UI element's accessible Name matches an expected string.
+    drivers:
+      - flaui
+    inputs:
+      automationId:
+        type: string
+        required: false
+        description: UIA AutomationId of the element to check.
+      name:
+        type: string
+        required: false
+        description: Accessible name of the element to find.
+      role:
+        type: string
+        required: false
+        description: "ARIA role / UIA ControlType cross-platform alias. V2 wires driver-side resolution."
+      testId:
+        type: string
+        required: false
+        description: "Test data-attribute value. Maps to automationId for desktop drivers. V2 wires resolution."
+      label:
+        type: string
+        required: false
+        description: "Accessible label / aria-label. Reserved for web driver (V2)."
+      cssSelector:
+        type: string
+        required: false
+        description: "Raw CSS selector. Web driver only."
+      xpath:
+        type: string
+        required: false
+        description: "Raw XPath expression. Web driver only."
+      text:
+        type: string
+        required: true
+        description: Expected text value (exact match against element Name property).
+    implementation:
+      operation: assert-text
+
+  - name: ui.assert-window-title
+    description: Assert that the current window title matches an expected value.
+    drivers:
+      - flaui
+    inputs:
+      title:
+        type: string
+        required: true
+        description: Expected window title (exact match).
+    implementation:
+      operation: assert-window-title
+
+  - name: ui.screenshot
+    description: Capture a screenshot of the current application window.
+    drivers:
+      - flaui
+    inputs:
+      name:
+        type: string
+        required: false
+        description: Optional name for the screenshot artifact.
+    implementation:
+      operation: screenshot
+
+  - name: ui.close
+    description: Close the desktop application under test.
+    drivers:
+      - flaui
+    inputs: {}
+    implementation:
+      operation: close

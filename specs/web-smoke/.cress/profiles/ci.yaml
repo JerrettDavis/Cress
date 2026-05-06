@@ -1,0 +1,9 @@
+profile: ci
+baseUrl: http://localhost:3000
+timeouts:
+  step: 60000
+  expectation: 15000
+evidence:
+  mode: full
+variables:
+  environment: ci

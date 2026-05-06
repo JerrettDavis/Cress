@@ -1,0 +1,61 @@
+@implements IDisposable
+@inject StudioWorkspaceState State
+
+<div class="studio-statusbar" aria-live="polite" aria-label="Studio status">
+    <div class="statusbar-item" aria-label="Current status">
+        <span class="statusbar-dot @DotClass" aria-hidden="true"></span>
+        <span>Status</span>
+        <span>: </span>
+        <strong title="@State.StatusMessage">@State.StatusMessage</strong>
+    </div>
+    <div class="statusbar-item" aria-label="Live run">
+        <span>Live</span>
+        <span>: </span>
+        <span title="@State.LiveRunHeadline">@State.LiveRunHeadline</span>
+    </div>
+    <div class="statusbar-item" aria-label="Selection">
+        <span>Selection</span>
+        <span>: </span>
+        <span title="@State.SelectionHeadline">@State.SelectionHeadline</span>
+    </div>
+    <div class="statusbar-item" aria-label="Last run">
+        <span>Last run</span>
+        <span>: </span>
+        <span title="@(_lastRunDescription)">@(_lastRunDescription)</span>
+    </div>
+</div>
+
+@code {
+    private StoredRunResult? _lastRun => State.Runs.FirstOrDefault();
+    private string _lastRunDescription => _lastRun is not null ? State.DescribeRun(_lastRun) : "—";
+
+    private string DotClass
+    {
+        get
+        {
+            if (State.IsBusy) return "statusbar-dot--running";
+            var msg = State.StatusMessage ?? string.Empty;
+            if (msg.Contains("error", StringComparison.OrdinalIgnoreCase)
+                || msg.Contains("fail", StringComparison.OrdinalIgnoreCase))
+                return "statusbar-dot--error";
+            if (msg.Contains("pass", StringComparison.OrdinalIgnoreCase)
+                || msg.Contains("success", StringComparison.OrdinalIgnoreCase)
+                || msg.Contains("complete", StringComparison.OrdinalIgnoreCase))
+                return "statusbar-dot--success";
+            return "statusbar-dot--idle";
+        }
+    }
+
+    protected override void OnInitialized()
+    {
+        State.Changed += HandleStateChanged;
+    }
+
+    public void Dispose()
+    {
+        State.Changed -= HandleStateChanged;
+    }
+
+    private void HandleStateChanged()
+        => InvokeAsync(StateHasChanged);
+}

@@ -1,0 +1,8 @@
+version: 1
+fixtures:
+  - name: default-user
+    description: Standard test user credentials for the example app.
+    values:
+      email: user@example.com
+      password: s3cr3t
+      displayName: Test User

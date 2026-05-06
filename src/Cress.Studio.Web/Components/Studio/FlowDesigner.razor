@@ -1,0 +1,265 @@
+@if (Document is null)
+{
+    <div class="empty-panel subpanel-empty">Select or create a flow to edit the executable design, fixtures, actions, expectations, and source-backed metadata.</div>
+}
+else
+{
+    <div class="flow-designer">
+
+        <!-- Flow header strip: id + name + status pill -->
+        <div class="flow-header-strip">
+            <span class="flow-header-id">@Document.Id</span>
+            <span class="flow-header-name">@Document.Name</span>
+            @if (!string.IsNullOrWhiteSpace(Document.CapabilityId))
+            {
+                <span class="check-item-badge" title="@Document.CapabilityId">@Document.CapabilityId</span>
+            }
+            @{
+                var statusSlug = (Document.Status ?? string.Empty).ToLowerInvariant().Trim();
+                var statusClass = statusSlug switch
+                {
+                    "ready"    => "flow-status-pill--ready",
+                    "draft"    => "flow-status-pill--draft",
+                    "disabled" => "flow-status-pill--disabled",
+                    _          => string.Empty
+                };
+            }
+            <span class="flow-status-pill @statusClass">@Document.Status</span>
+        </div>
+
+        <!-- Tags -->
+        @if (!string.IsNullOrWhiteSpace(Document.TagsText))
+        {
+            <div class="tag-chips" aria-label="Flow tags">
+                @foreach (var tag in Document.TagsText.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
+                {
+                    <span class="tag-chip">@tag</span>
+                }
+            </div>
+        }
+
+        <section class="subpanel">
+            <div class="subpanel-header">
+                <h3>Quick actions</h3>
+                <span class="muted">@Analysis.Summary</span>
+            </div>
+            <div class="toolbar-actions">
+                @foreach (var action in Analysis.QuickActions)
+                {
+                    <button class="action-button" type="button" @onclick="() => OnQuickAction.InvokeAsync(action.Id)">@action.Title</button>
+                }
+            </div>
+            @if (Analysis.Diagnostics.Count > 0)
+            {
+                <ul class="diagnostic-list" style="list-style:none;padding:0;">
+                    @foreach (var diagnostic in Analysis.Diagnostics)
+                    {
+                        var severityClass = diagnostic.Severity.ToString().ToLowerInvariant() switch
+                        {
+                            "error"   => "diagnostic-item--error",
+                            "warning" => "diagnostic-item--warning",
+                            _         => "diagnostic-item--info"
+                        };
+                        var severityIcon = diagnostic.Severity.ToString().ToLowerInvariant() switch
+                        {
+                            "error"   => "✕",
+                            "warning" => "▲",
+                            _         => "ℹ"
+                        };
+                        <li class="diagnostic-item @severityClass">
+                            <span class="diagnostic-icon" aria-hidden="true">@severityIcon</span>
+                            <div class="diagnostic-body">
+                                <strong>@diagnostic.Message</strong>
+                                @if (!string.IsNullOrWhiteSpace(diagnostic.Recommendation))
+                                {
+                                    <small>@diagnostic.Recommendation</small>
+                                }
+                            </div>
+                        </li>
+                    }
+                </ul>
+            }
+        </section>
+
+        <!-- Identity + targeting fields -->
+        <div class="form-section">
+            <h4 class="form-section-heading">Identity</h4>
+            <div class="editor-grid two-column">
+                <div class="field-stack">
+                    <label for="flow-id">Flow id</label>
+                    <input id="flow-id" class="text-input" @bind="Document.Id" @bind:event="oninput" @bind:after="NotifyChanged" />
+                </div>
+                <div class="field-stack">
+                    <label for="flow-name">Flow name</label>
+                    <input id="flow-name" class="text-input" @bind="Document.Name" @bind:event="oninput" @bind:after="NotifyChanged" />
+                </div>
+                <div class="field-stack">
+                    <label for="flow-capability">Capability</label>
+                    <input id="flow-capability" class="text-input" list="capabilityOptions" @bind="Document.CapabilityId" @bind:event="oninput" @bind:after="NotifyChanged" />
+                    <datalist id="capabilityOptions">
+                        @foreach (var capability in CapabilityOptions)
+                        {
+                            <option value="@capability"></option>
+                        }
+                    </datalist>
+                </div>
+                <div class="field-stack">
+                    <label for="flow-status">Status</label>
+                    <input id="flow-status" class="text-input" @bind="Document.Status" @bind:event="oninput" @bind:after="NotifyChanged" />
+                </div>
+                <div class="field-stack">
+                    <label for="flow-tags">Tags</label>
+                    <input id="flow-tags" class="text-input" @bind="Document.TagsText" @bind:event="oninput" @bind:after="NotifyChanged" />
+                    <small class="form-helper">Comma-separated, e.g. <code>smoke, auth</code>.</small>
+                </div>
+                <div class="field-stack">
+                    <label for="flow-filepath">Source file</label>
+                    <input id="flow-filepath" class="text-input" value="@Document.FilePath" readonly title="@Document.FilePath" />
+                </div>
+            </div>
+        </div>
+
+        <div class="field-stack">
+            <label for="flow-summary">Summary</label>
+            <textarea id="flow-summary" class="text-input multiline-input" @bind="Document.Summary" @bind:event="oninput" @bind:after="NotifyChanged"></textarea>
+        </div>
+
+        <section class="subpanel">
+            <div class="subpanel-header">
+                <h3>Fixtures</h3>
+                <button class="action-button" @onclick="() => OnAddFixture.InvokeAsync()">Add fixture</button>
+            </div>
+            @if (Document.Fixtures.Count == 0)
+            {
+                <p class="subpanel-empty">No fixtures — add one to inject test data.</p>
+            }
+            else
+            {
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Alias</th>
+                            <th>Use</th>
+                            <th>Source</th>
+                            <th>For</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (var index = 0; index < Document.Fixtures.Count; index++)
+                        {
+                            var row = Document.Fixtures[index];
+                            <tr>
+                                <td><input class="text-input" @bind="row.Alias" @bind:event="oninput" @bind:after="NotifyChanged" /></td>
+                                <td><input class="text-input" @bind="row.Use" @bind:event="oninput" @bind:after="NotifyChanged" /></td>
+                                <td><input class="text-input" @bind="row.Source" @bind:event="oninput" @bind:after="NotifyChanged" /></td>
+                                <td><input class="text-input" @bind="row.For" @bind:event="oninput" @bind:after="NotifyChanged" /></td>
+                                <td><button class="action-button danger" type="button" @onclick="() => OnRemoveFixture.InvokeAsync(index)">Remove</button></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        </section>
+
+        <section class="subpanel">
+            <div class="subpanel-header">
+                <h3>Actions</h3>
+                <button class="action-button" @onclick="() => OnAddAction.InvokeAsync()">Add action</button>
+            </div>
+            @if (Document.Actions.Count == 0)
+            {
+                <p class="subpanel-empty">No actions — add steps that drive the flow under test.</p>
+            }
+            else
+            {
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Step</th>
+                            <th>Inputs (key=value)</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (var index = 0; index < Document.Actions.Count; index++)
+                        {
+                            var row = Document.Actions[index];
+                            <tr>
+                                <td>
+                                    <input class="text-input" @bind="row.Name" @bind:event="oninput" @bind:after="NotifyChanged" />
+                                    @foreach (var diagnostic in GetDiagnostics($"action:{index}"))
+                                    {
+                                        <small class="inline-hint">@diagnostic.Message</small>
+                                    }
+                                </td>
+                                <td><textarea class="text-input multiline-input compact" @bind="row.InputsText" @bind:event="oninput" @bind:after="NotifyChanged"></textarea></td>
+                                <td><button class="action-button danger" type="button" @onclick="() => OnRemoveAction.InvokeAsync(index)">Remove</button></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        </section>
+
+        <section class="subpanel">
+            <div class="subpanel-header">
+                <h3>Expectations</h3>
+                <button class="action-button" @onclick="() => OnAddExpectation.InvokeAsync()">Add expectation</button>
+            </div>
+            @if (Document.Expectations.Count == 0)
+            {
+                <p class="subpanel-empty">No expectations — add assertions to validate outcomes.</p>
+            }
+            else
+            {
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Expect</th>
+                            <th>Inputs (key=value)</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (var index = 0; index < Document.Expectations.Count; index++)
+                        {
+                            var row = Document.Expectations[index];
+                            <tr>
+                                <td>
+                                    <input class="text-input" @bind="row.Name" @bind:event="oninput" @bind:after="NotifyChanged" />
+                                    @foreach (var diagnostic in GetDiagnostics($"expectation:{index}"))
+                                    {
+                                        <small class="inline-hint">@diagnostic.Message</small>
+                                    }
+                                </td>
+                                <td><textarea class="text-input multiline-input compact" @bind="row.InputsText" @bind:event="oninput" @bind:after="NotifyChanged"></textarea></td>
+                                <td><button class="action-button danger" type="button" @onclick="() => OnRemoveExpectation.InvokeAsync(index)">Remove</button></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        </section>
+    </div>
+}
+
+@code {
+    [Parameter] public FlowDocumentViewModel? Document { get; set; }
+    [Parameter] public FlowEditorAnalysis Analysis { get; set; } = new();
+    [Parameter] public IReadOnlyList<string> CapabilityOptions { get; set; } = [];
+    [Parameter] public EventCallback OnAddFixture { get; set; }
+    [Parameter] public EventCallback<int> OnRemoveFixture { get; set; }
+    [Parameter] public EventCallback OnAddAction { get; set; }
+    [Parameter] public EventCallback<int> OnRemoveAction { get; set; }
+    [Parameter] public EventCallback OnAddExpectation { get; set; }
+    [Parameter] public EventCallback<int> OnRemoveExpectation { get; set; }
+    [Parameter] public EventCallback OnChanged { get; set; }
+    [Parameter] public EventCallback<string> OnQuickAction { get; set; }
+
+    private IEnumerable<FlowEditorDiagnostic> GetDiagnostics(string target)
+        => Analysis.Diagnostics.Where(item => string.Equals(item.Target, target, StringComparison.OrdinalIgnoreCase));
+
+    private Task NotifyChanged()
+        => OnChanged.InvokeAsync();
+}

@@ -1,0 +1,88 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+env:
+  DOTNET_NOLOGO: true
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+
+jobs:
+  build-and-test:
+    name: Build and Test
+    runs-on: windows-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.x'
+
+      - name: Setup Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'npm'
+
+      - name: Restore NuGet packages
+        run: dotnet restore Cress.sln
+
+      - name: Build solution
+        # --warnaserror is intentionally omitted: Cress has pre-existing Scriban CVE analyzer
+        # warnings that are dependency-side (not our code). Enable once upstream resolves them.
+        run: dotnet build Cress.sln --configuration Release --no-restore /p:ContinuousIntegrationBuild=true
+
+      # Run Cress.UnitTests, excluding FlaUiRuntimeDriverTests.
+      # FlaUiRuntimeDriverTests requires a real Windows UI automation target (FlaUI)
+      # that is not available in CI — run it locally with a running test app.
+      - name: Run unit tests (Cress.UnitTests)
+        run: >
+          dotnet test tests/Cress.UnitTests/Cress.UnitTests.csproj
+          --configuration Release
+          --no-build
+          --filter "FullyQualifiedName!~FlaUiRuntimeDriverTests"
+          --logger "trx;LogFileName=unit-test-results.trx"
+          --logger "console;verbosity=normal"
+
+      # Run bUnit / Blazor component tests — no display or WPF required.
+      - name: Run web tests (Cress.Studio.Web.Tests)
+        run: >
+          dotnet test tests/Cress.Studio.Web.Tests/Cress.Studio.Web.Tests.csproj
+          --configuration Release
+          --no-build
+          --logger "trx;LogFileName=web-test-results.trx"
+          --logger "console;verbosity=normal"
+
+      # Cress.Studio.E2ETests is excluded entirely from CI because it requires the
+      # WPF Studio application to be running and a real Windows display/session.
+      # Run locally: dotnet test tests/Cress.Studio.E2ETests
+
+      - name: Install Node dependencies
+        run: npm ci
+
+      # Install Playwright Chromium before running web-recorder tests
+      - name: Install Playwright Chromium
+        run: npx playwright install chromium
+
+      - name: Run Node tests
+        run: node --test node/tests/*.test.mjs
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-results
+          path: |
+            **/TestResults/**/*.trx
+          retention-days: 7

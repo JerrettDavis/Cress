@@ -1,0 +1,34 @@
+version: 1
+id: httpbin-post-smoke
+name: POST /post echoes submitted JSON payload
+capability: http-connectivity
+
+summary: >
+  Sends a POST request to https://httpbin.org/post with a small JSON body
+  and verifies that the response is 200 OK and that the echoed payload
+  contains the submitted key.
+
+tags:
+  - smoke
+  - http
+  - post
+
+traceability:
+  requirement: HTTP-AC2
+  acceptanceCriteria:
+    - HTTP-AC2
+
+when:
+  - step: http.post
+    with:
+      url: https://httpbin.org/post
+      json: '{"probe":"cress-smoke"}'
+
+then:
+  - expect: http.assert-status
+    with:
+      status: "200"
+  - expect: http.assert-json
+    with:
+      path: json.probe
+      equals: cress-smoke

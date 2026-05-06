@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{{ branding.title }} — Status</title>
+  <style>
+    :root {
+      --accent:      {{ branding.accent_color }};
+      --operational: #22c55e;
+      --minor:       #f59e0b;
+      --outage:      #ef4444;
+      --bg:          #f8fafc;
+      --card:        #ffffff;
+      --border:      #e2e8f0;
+      --text:        #1e293b;
+      --muted:       #64748b;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+           background: var(--bg); color: var(--text); line-height: 1.5;
+           display: flex; flex-direction: column; min-height: 100vh; }
+
+    /* ── Banner ── */
+    header { background: var(--accent); color: #fff; text-align: center; padding: 28px 16px 20px; }
+    header img { height: 40px; margin-bottom: 10px; display: block; margin-left: auto; margin-right: auto; }
+    header h1 { font-size: 1.6rem; font-weight: 700; }
+
+    /* ── Layout ── */
+    .container { flex: 1; max-width: 680px; margin: 0 auto; padding: 36px 24px; width: 100%; }
+
+    /* ── Status banner ── */
+    .status-banner { border-radius: 12px; padding: 24px 28px; text-align: center;
+                     margin-bottom: 32px; border: 2px solid transparent; }
+    .status-banner.operational { background: #dcfce7; border-color: var(--operational); color: #166534; }
+    .status-banner.minor       { background: #fef9c3; border-color: var(--minor);       color: #713f12; }
+    .status-banner.outage      { background: #fee2e2; border-color: var(--outage);       color: #991b1b; }
+    .status-banner .icon { font-size: 2.4rem; line-height: 1; }
+    .status-banner h2   { font-size: 1.35rem; font-weight: 700; margin-top: 8px; }
+    .status-banner .sub { font-size: 0.88rem; margin-top: 6px; opacity: 0.85; }
+
+    /* ── SVG sparkline ── */
+    .sparkline-wrap { background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+                      padding: 16px 20px; margin-bottom: 28px; }
+    .sparkline-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: .06em;
+                       color: var(--muted); margin-bottom: 10px; }
+    .sparkline-svg { display: block; width: 100%; height: 80px; overflow: visible; }
+
+    /* ── Flow list ── */
+    .flow-list { background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+                 overflow: hidden; margin-bottom: 28px; }
+    .flow-list-header { padding: 12px 18px; border-bottom: 1px solid var(--border);
+                        font-size: 0.75rem; text-transform: uppercase; letter-spacing: .07em;
+                        color: var(--muted); font-weight: 600; }
+    .flow-row { display: flex; align-items: center; gap: 12px; padding: 12px 18px;
+                border-bottom: 1px solid var(--border); font-size: 0.92rem; }
+    .flow-row:last-child { border-bottom: none; }
+    .flow-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .flow-dot.operational { background: var(--operational); }
+    .flow-dot.minor       { background: var(--minor); }
+    .flow-dot.outage      { background: var(--outage); }
+    .flow-name  { flex: 1; font-weight: 500; }
+    .flow-state { font-size: 0.82rem; font-weight: 600; }
+    .flow-state.operational { color: var(--operational); }
+    .flow-state.minor       { color: var(--minor); }
+    .flow-state.outage      { color: var(--outage); }
+
+    footer { text-align: center; padding: 18px; font-size: 0.75rem; color: var(--muted);
+             border-top: 1px solid var(--border); }
+  </style>
+</head>
+<body>
+
+  <header>
+    {{ if branding.logo_url }}
+    <img src="{{ branding.logo_url }}" alt="logo" />
+    {{ end }}
+    <h1>{{ branding.title }}</h1>
+  </header>
+
+  <div class="container">
+
+    <!-- ── § Status banner ── -->
+    {{- $rate = suite.pass_rate -}}
+    {{- $banner_class = ($rate >= 0.99) ? "operational" : (($rate >= 0.95) ? "minor" : "outage") -}}
+    {{- $banner_icon  = ($rate >= 0.99) ? "✓" : (($rate >= 0.95) ? "⚠" : "✗") -}}
+    {{- $banner_text  = ($rate >= 0.99) ? "All Systems Operational" : (($rate >= 0.95) ? "Minor Issues Detected" : "Service Degraded") -}}
+
+    <div class="status-banner {{ $banner_class }}">
+      <div class="icon">{{ $banner_icon }}</div>
+      <h2>{{ $banner_text }}</h2>
+      <div class="sub">
+        Pass rate: <strong>{{ format_percent suite.pass_rate }}</strong>
+        &nbsp;·&nbsp; Last updated: {{ meta.generated_at }}
+      </div>
+    </div>
+
+    <!-- ── § Sparkline (last 30 runs — real SVG) ── -->
+    {{ if recent_runs.size > 0 }}
+    {{- $runs30 = recent_runs | array.limit 30 -}}
+    {{- $n = $runs30.size -}}
+    <div class="sparkline-wrap">
+      <div class="sparkline-label">Last {{ $n }} runs</div>
+      <svg class="sparkline-svg" viewBox="0 0 {{ $n }} 100" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="spfill" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%"   stop-color="var(--{{ $banner_class }})" stop-opacity="0.35"/>
+            <stop offset="100%" stop-color="var(--{{ $banner_class }})" stop-opacity="0.04"/>
+          </linearGradient>
+        </defs>
+        {{- $pts = "" -}}
+        {{- $i = 0 -}}
+        {{ for $r in $runs30 }}
+          {{- $total = $r.passed_count + $r.failed_count -}}
+          {{- $y = ($total > 0) ? (100 - ($r.passed_count / $total * 90 | math.round 1)) : 10 -}}
+          {{- $x = $i + 0.5 -}}
+          {{- $pts = $pts + $x + "," + $y + " " -}}
+          {{- $i = $i + 1 -}}
+        {{ end }}
+        <!-- filled area path -->
+        {{- $first_run = $runs30[0] -}}
+        {{- $first_total = $first_run.passed_count + $first_run.failed_count -}}
+        {{- $first_y = ($first_total > 0) ? (100 - ($first_run.passed_count / $first_total * 90 | math.round 1)) : 10 -}}
+        {{- $last_run = $runs30[$n - 1] -}}
+        {{- $last_total = $last_run.passed_count + $last_run.failed_count -}}
+        {{- $last_y = ($last_total > 0) ? (100 - ($last_run.passed_count / $last_total * 90 | math.round 1)) : 10 -}}
+        <polygon
+          points="0.5,{{ $first_y }} {{ $pts }}{{ $n - 0.5 }},{{ $last_y }} {{ $n - 0.5 }},100 0.5,100"
+          fill="url(#spfill)" />
+        <polyline
+          points="{{ $pts }}"
+          fill="none"
+          stroke="var(--{{ $banner_class }})"
+          stroke-width="0.08"
+          stroke-linecap="round"
+          stroke-linejoin="round" />
+      </svg>
+    </div>
+    {{ end }}
+
+    <!-- ── § Public flow list ── -->
+    {{- $public_flows = flows | array.filter @(do; ret $0.status != "draft"; end) -}}
+    {{ if $public_flows.size > 0 }}
+    <div class="flow-list">
+      <div class="flow-list-header">Services</div>
+      {{ for f in $public_flows }}
+        {{- $state = (f.pass_rate >= 0.99) ? "operational" : ((f.pass_rate >= 0.95) ? "minor" : "outage") -}}
+        {{- $state_label = (f.pass_rate >= 0.99) ? "Operational" : ((f.pass_rate >= 0.95) ? "Degraded" : "Outage") -}}
+        <div class="flow-row">
+          <div class="flow-dot {{ $state }}"></div>
+          <span class="flow-name">{{ f.name }}</span>
+          <span class="flow-state {{ $state }}">{{ $state_label }}</span>
+        </div>
+      {{ end }}
+    </div>
+    {{ end }}
+
+  </div>
+
+  <footer>
+    Powered by <a href="https://github.com/jd/cress" style="color:var(--accent);text-decoration:none">Cress</a>
+    {{ if branding.logo_url }} &nbsp;·&nbsp; {{ branding.title }}{{ end }}
+  </footer>
+
+</body>
+</html>

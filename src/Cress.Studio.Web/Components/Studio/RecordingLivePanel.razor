@@ -1,0 +1,156 @@
+@inject StudioWorkspaceState State
+@implements IDisposable
+@using Cress.Recorder
+
+@* Slide-in drawer: only rendered while recording is active. *@
+@if (State.IsRecording)
+{
+    <div class="recording-drawer recording-drawer--open"
+         aria-live="polite"
+         aria-label="Live recording panel"
+         role="region">
+
+        @* --- Header --------------------------------------------------------- *@
+        <div class="recording-drawer-header">
+            <span class="record-dot record-dot--pulse" aria-hidden="true"></span>
+            <span class="recording-badge" aria-label="Recording active">RECORDING</span>
+            <span class="recording-target-name" title="@State.RecordingTargetName">
+                @(State.RecordingTargetName ?? "…")
+            </span>
+            <span class="recording-meta">
+                <span class="recording-elapsed" aria-label="Elapsed time">@FormatElapsed(State.RecordedElapsed)</span>
+                <span class="recording-count" aria-label="Events captured">@State.RecordedEventCount events</span>
+            </span>
+        </div>
+
+        @* --- Event list ------------------------------------------------------ *@
+        <div class="recording-event-list" role="log" aria-label="Captured events" @ref="_listRef">
+            @{
+                // Show last 100 events for performance.
+                var events = State.CurrentEvents;
+                var offset = Math.Max(0, events.Count - 100);
+                var startTime = events.Count > 0 ? events[0].Timestamp : DateTimeOffset.UtcNow;
+            }
+            @if (events.Count == 0)
+            {
+                <p class="recording-empty-hint">
+                    Interact with the target application — events will appear here as you act.
+                </p>
+            }
+            else
+            {
+                @for (int i = offset; i < events.Count; i++)
+                {
+                    var evt = events[i];
+                    var rel = evt.Timestamp - startTime;
+                    <div class="recording-event-row">
+                        <span class="recording-event-ts" title="@evt.Timestamp.ToString("HH:mm:ss.fff")">@FormatRelative(rel)</span>
+                        <span class="recording-event-icon @KindCssClass(evt.Kind)" aria-hidden="true">@KindIcon(evt.Kind)</span>
+                        <span class="recording-event-label" title="@evt.Element.ToString()">@EventLabel(evt)</span>
+                    </div>
+                }
+            }
+        </div>
+
+        @* --- Footer (Stop button — tab-reachable) ---------------------------- *@
+        <div class="recording-drawer-footer">
+            <button type="button"
+                    class="action-button danger recording-stop-btn"
+                    @onclick="StopAsync"
+                    aria-label="Stop recording and open save panel"
+                    tabindex="0">
+                Stop recording
+            </button>
+        </div>
+    </div>
+}
+
+@code {
+    private ElementReference _listRef;
+
+    protected override void OnInitialized()
+    {
+        State.Changed += HandleStateChanged;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        // Auto-scroll the event list to the bottom when new events arrive.
+        // We use a small JS interop call only if there are events to show.
+        if (State.IsRecording && State.RecordedEventCount > 0)
+        {
+            try
+            {
+                // Scroll via JS interop — this is a best-effort call.
+                // Silence errors (e.g. component unmounted before render completes).
+                await JS.InvokeVoidAsync("cressRecording.scrollToBottom", _listRef);
+            }
+            catch
+            {
+                // Intentionally swallowed — non-critical scroll-to-bottom.
+            }
+        }
+    }
+
+    public void Dispose()
+    {
+        State.Changed -= HandleStateChanged;
+    }
+
+    [Inject] private Microsoft.JSInterop.IJSRuntime JS { get; set; } = default!;
+
+    private void HandleStateChanged()
+        => InvokeAsync(StateHasChanged);
+
+    private async Task StopAsync()
+        => await State.EndRecordingAsync();
+
+    // -------------------------------------------------------------------------
+    // Formatting helpers
+    // -------------------------------------------------------------------------
+
+    private static string FormatElapsed(TimeSpan t)
+        => $"{(int)t.TotalMinutes:D2}:{t.Seconds:D2}";
+
+    private static string FormatRelative(TimeSpan rel)
+    {
+        var totalMin = (int)rel.TotalMinutes;
+        return $"{totalMin:D2}:{rel.Seconds:D2}.{rel.Milliseconds:D3}";
+    }
+
+    private static string EventLabel(RecordedEvent evt)
+    {
+        var el = evt.Element;
+        if (!string.IsNullOrWhiteSpace(el.AutomationId))
+        {
+            return $"{el.ControlType} [{el.AutomationId}]";
+        }
+        if (!string.IsNullOrWhiteSpace(el.Name))
+        {
+            return $"{el.ControlType} \"{el.Name}\"";
+        }
+        return !string.IsNullOrWhiteSpace(el.ControlType) ? el.ControlType : evt.Kind.ToString();
+    }
+
+    private static string KindIcon(EventKind kind)
+        => kind switch
+        {
+            EventKind.Invoke       => "↩",
+            EventKind.ValueChanged => "✎",
+            EventKind.FocusChanged => "⊙",
+            EventKind.KeyDown      => "⌨",
+            EventKind.WindowOpened => "⧉",
+            _                      => "●"
+        };
+
+    private static string KindCssClass(EventKind kind)
+        => kind switch
+        {
+            EventKind.Invoke       => "event-kind--invoke",
+            EventKind.ValueChanged => "event-kind--value",
+            EventKind.FocusChanged => "event-kind--focus",
+            EventKind.KeyDown      => "event-kind--key",
+            EventKind.WindowOpened => "event-kind--window",
+            _                      => string.Empty
+        };
+}

@@ -55,6 +55,7 @@ jobs:
           dotnet test Cress.sln
           --configuration Release
           --no-build
+          --filter "FullyQualifiedName!~FlaUiRuntimeDriverTests&FullyQualifiedName!~StudioEndToEndTests"
           --results-directory ${{ env.TEST_RESULTS_DIR }}
           --logger "trx;LogFileName=test-results.trx"
           --collect:"XPlat Code Coverage"

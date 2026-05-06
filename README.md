@@ -36,7 +36,7 @@ The AppHost orchestrates:
 ## Validation
 
 ```powershell
-# Full .NET test suite, including desktop and end-to-end coverage on Windows
+# Full local .NET test suite, including desktop and end-to-end coverage on Windows
 dotnet test Cress.sln --configuration Release --no-build
 
 # Node test suite
@@ -52,7 +52,7 @@ GitHub Actions now validates the repo with:
 
 | Workflow | Purpose |
 | --- | --- |
-| `ci.yml` | Windows build, full .NET tests, Node tests, coverage publishing, and Aspire AppHost smoke validation |
+| `ci.yml` | Windows build, CI-safe .NET coverage run, Node tests, coverage publishing, and Aspire AppHost smoke validation |
 | `codeql.yml` | Static analysis for C# and JavaScript |
 | `dependency-review.yml` | Pull request dependency risk review |
 | `docs.yml` | Living-doc generation preview from the sample spec project |
@@ -63,6 +63,8 @@ The CI workflow publishes:
 - Cobertura + HTML coverage artifacts
 - AppHost startup logs
 - A sticky PR coverage summary
+
+Desktop-display automation remains covered by the local Windows suite, but the hosted GitHub runner uses the CI-safe subset because FlaUI and full Studio E2E can be disrupted by the shared desktop session model on `windows-latest`.
 
 ## Sample spec project
 

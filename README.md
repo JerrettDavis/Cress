@@ -6,6 +6,16 @@
 
 Cress is a **.NET 10 / C# latest** end-to-end testing platform for Windows, with a WPF Studio, a Blazor web experience, Node-based automation components, and an Aspire AppHost for centralized orchestration and monitoring.
 
+## Guides and examples
+
+See [docs/README.md](docs/README.md) for:
+
+- step-by-step web app automation walkthroughs
+- step-by-step desktop app automation walkthroughs
+- Studio screenshots and user guides
+- integration guidance for bringing Cress into your systems
+- design guidance for making your apps easier to automate with Cress
+
 ## Requirements
 
 - .NET SDK `10.0.107` or later in the .NET 10 feature band

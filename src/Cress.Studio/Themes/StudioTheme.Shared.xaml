@@ -1,0 +1,336 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Style x:Key="StudioFocusVisual" TargetType="{x:Type Control}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Control}">
+                    <Rectangle Margin="-3"
+                               RadiusX="10"
+                               RadiusY="10"
+                               SnapsToDevicePixels="True"
+                               Stroke="{DynamicResource StudioFocusBrush}"
+                               StrokeThickness="2" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type Window}">
+        <Setter Property="Background" Value="{DynamicResource StudioWindowBackgroundBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource StudioForegroundBrush}" />
+        <Setter Property="FontFamily" Value="Segoe UI" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="UseLayoutRounding" Value="True" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="TextOptions.TextFormattingMode" Value="Ideal" />
+    </Style>
+
+    <Style x:Key="StudioPanelCard" TargetType="{x:Type Border}">
+        <Setter Property="Background" Value="{DynamicResource StudioSurfaceBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource StudioBorderBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="18" />
+        <Setter Property="Padding" Value="16" />
+    </Style>
+
+    <Style x:Key="StudioMetricCard" TargetType="{x:Type Border}" BasedOn="{StaticResource StudioPanelCard}">
+        <Setter Property="Background" Value="{DynamicResource StudioSurfaceAltBrush}" />
+        <Setter Property="Padding" Value="14" />
+        <Setter Property="Margin" Value="0,0,12,0" />
+    </Style>
+
+    <Style x:Key="StudioTitleText" TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="{DynamicResource StudioForegroundBrush}" />
+        <Setter Property="FontSize" Value="28" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+    </Style>
+
+    <Style x:Key="StudioSectionTitleText" TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="{DynamicResource StudioForegroundBrush}" />
+        <Setter Property="FontSize" Value="18" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+    </Style>
+
+    <Style x:Key="StudioEyebrowText" TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="{DynamicResource StudioAccentBrush}" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+    </Style>
+
+    <Style x:Key="StudioMutedText" TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="{DynamicResource StudioMutedForegroundBrush}" />
+        <Setter Property="TextWrapping" Value="Wrap" />
+    </Style>
+
+    <Style x:Key="StudioStatusPill" TargetType="{x:Type Border}">
+        <Setter Property="Background" Value="{DynamicResource StudioAccentSoftBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource StudioBorderBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="999" />
+        <Setter Property="Padding" Value="10,5" />
+        <Setter Property="Margin" Value="0,0,8,8" />
+    </Style>
+
+    <Style x:Key="StudioBadgeText" TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="{DynamicResource StudioForegroundBrush}" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+    </Style>
+
+    <Style TargetType="{x:Type Button}">
+        <Setter Property="FocusVisualStyle" Value="{StaticResource StudioFocusVisual}" />
+        <Setter Property="Margin" Value="0,0,8,8" />
+        <Setter Property="Padding" Value="14,9" />
+        <Setter Property="MinHeight" Value="38" />
+        <Setter Property="Background" Value="{DynamicResource StudioSurfaceAltBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource StudioForegroundBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource StudioBorderBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="Root"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="10">
+                        <ContentPresenter Margin="{TemplateBinding Padding}"
+                                          HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                          RecognizesAccessKey="True" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Root" Property="Background" Value="{DynamicResource StudioHoverBrush}" />
+                            <Setter TargetName="Root" Property="BorderBrush" Value="{DynamicResource StudioBorderStrongBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="Root" Property="Background" Value="{DynamicResource StudioSelectionBrush}" />
+                            <Setter TargetName="Root" Property="BorderBrush" Value="{DynamicResource StudioAccentBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter TargetName="Root" Property="BorderBrush" Value="{DynamicResource StudioFocusBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Root" Property="Opacity" Value="0.48" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="PrimaryActionButton" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+        <Setter Property="Background" Value="{DynamicResource StudioAccentBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource StudioAccentForegroundBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource StudioAccentBrush}" />
+    </Style>
+
+    <Style x:Key="SuccessActionButton" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+        <Setter Property="Background" Value="{DynamicResource StudioSuccessSoftBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource StudioSuccessBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource StudioSuccessBrush}" />
+    </Style>
+
+    <Style x:Key="DangerActionButton" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+        <Setter Property="Background" Value="{DynamicResource StudioDangerSoftBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource StudioDangerBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource StudioDangerBrush}" />
+    </Style>
+
+    <Style TargetType="{x:Type TextBox}">
+        <Setter Property="FocusVisualStyle" Value="{StaticResource StudioFocusVisual}" />
+        <Setter Property="Background" Value="{DynamicResource StudioSurfaceInsetBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource StudioForegroundBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource StudioBorderBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Padding" Value="10,8" />
+        <Setter Property="MinHeight" Value="38" />
+        <Setter Property="CaretBrush" Value="{DynamicResource StudioAccentBrush}" />
+    </Style>
+
+    <Style TargetType="{x:Type ComboBox}">
+        <Setter Property="FocusVisualStyle" Value="{StaticResource StudioFocusVisual}" />
+        <Setter Property="Background" Value="{DynamicResource StudioSurfaceInsetBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource StudioForegroundBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource StudioBorderBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Padding" Value="8,6" />
+        <Setter Property="MinHeight" Value="38" />
+    </Style>
+
+    <Style TargetType="{x:Type ListBox}">
+        <Setter Property="Background" Value="{DynamicResource StudioSurfaceInsetBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource StudioForegroundBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource StudioBorderBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Padding" Value="6" />
+    </Style>
+
+    <Style TargetType="{x:Type ListBoxItem}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Padding" Value="10,8" />
+        <Setter Property="Margin" Value="0,0,0,6" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource StudioFocusVisual}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                    <Border x:Name="Root"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="10"
+                            Padding="{TemplateBinding Padding}">
+                        <ContentPresenter />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Root" Property="Background" Value="{DynamicResource StudioHoverBrush}" />
+                            <Setter TargetName="Root" Property="BorderBrush" Value="{DynamicResource StudioBorderStrongBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="Root" Property="Background" Value="{DynamicResource StudioSelectionBrush}" />
+                            <Setter TargetName="Root" Property="BorderBrush" Value="{DynamicResource StudioAccentBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Root" Property="Opacity" Value="0.5" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type TreeView}">
+        <Setter Property="Background" Value="{DynamicResource StudioSurfaceInsetBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource StudioForegroundBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource StudioBorderBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Padding" Value="6" />
+    </Style>
+
+    <Style TargetType="{x:Type TreeViewItem}">
+        <Setter Property="FocusVisualStyle" Value="{StaticResource StudioFocusVisual}" />
+        <Setter Property="Margin" Value="0,0,0,4" />
+    </Style>
+
+    <Style TargetType="{x:Type GroupBox}">
+        <Setter Property="Foreground" Value="{DynamicResource StudioForegroundBrush}" />
+        <Setter Property="Margin" Value="0,0,0,14" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type GroupBox}">
+                    <Border Background="{DynamicResource StudioSurfaceAltBrush}"
+                            BorderBrush="{DynamicResource StudioBorderBrush}"
+                            BorderThickness="1"
+                            CornerRadius="16"
+                            Padding="14">
+                        <StackPanel>
+                            <TextBlock Margin="0,0,0,12"
+                                       Foreground="{DynamicResource StudioForegroundBrush}"
+                                       FontSize="16"
+                                       FontWeight="SemiBold"
+                                       Text="{TemplateBinding Header}" />
+                            <ContentPresenter />
+                        </StackPanel>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type TabControl}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Padding" Value="0" />
+    </Style>
+
+    <Style TargetType="{x:Type TabItem}">
+        <Setter Property="FocusVisualStyle" Value="{StaticResource StudioFocusVisual}" />
+        <Setter Property="Foreground" Value="{DynamicResource StudioMutedForegroundBrush}" />
+        <Setter Property="Padding" Value="14,8" />
+        <Setter Property="Margin" Value="0,0,8,0" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TabItem}">
+                    <Border x:Name="Root"
+                            Background="{DynamicResource StudioSurfaceAltBrush}"
+                            BorderBrush="{DynamicResource StudioBorderBrush}"
+                            BorderThickness="1"
+                            CornerRadius="12,12,0,0"
+                            Padding="{TemplateBinding Padding}">
+                        <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                          ContentSource="Header" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Root" Property="BorderBrush" Value="{DynamicResource StudioBorderStrongBrush}" />
+                            <Setter Property="Foreground" Value="{DynamicResource StudioForegroundBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="Root" Property="Background" Value="{DynamicResource StudioSurfaceBrush}" />
+                            <Setter TargetName="Root" Property="BorderBrush" Value="{DynamicResource StudioAccentBrush}" />
+                            <Setter Property="Foreground" Value="{DynamicResource StudioForegroundBrush}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type DataGrid}">
+        <Setter Property="Background" Value="{DynamicResource StudioSurfaceInsetBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource StudioForegroundBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource StudioBorderBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="RowBackground" Value="{DynamicResource StudioSurfaceInsetBrush}" />
+        <Setter Property="AlternatingRowBackground" Value="{DynamicResource StudioSurfaceAltBrush}" />
+        <Setter Property="GridLinesVisibility" Value="Horizontal" />
+        <Setter Property="HorizontalGridLinesBrush" Value="{DynamicResource StudioBorderBrush}" />
+        <Setter Property="VerticalGridLinesBrush" Value="{DynamicResource StudioBorderBrush}" />
+        <Setter Property="HeadersVisibility" Value="Column" />
+        <Setter Property="CanUserReorderColumns" Value="False" />
+        <Setter Property="AutoGenerateColumns" Value="False" />
+        <Setter Property="ColumnHeaderStyle">
+            <Setter.Value>
+                <Style TargetType="{x:Type DataGridColumnHeader}">
+                    <Setter Property="Background" Value="{DynamicResource StudioSurfaceAltBrush}" />
+                    <Setter Property="Foreground" Value="{DynamicResource StudioMutedForegroundBrush}" />
+                    <Setter Property="BorderBrush" Value="{DynamicResource StudioBorderBrush}" />
+                    <Setter Property="BorderThickness" Value="0,0,0,1" />
+                    <Setter Property="FontWeight" Value="SemiBold" />
+                    <Setter Property="Padding" Value="10,8" />
+                </Style>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="RowStyle">
+            <Setter.Value>
+                <Style TargetType="{x:Type DataGridRow}">
+                    <Setter Property="Background" Value="{DynamicResource StudioSurfaceInsetBrush}" />
+                    <Setter Property="BorderBrush" Value="{DynamicResource StudioBorderBrush}" />
+                    <Setter Property="BorderThickness" Value="0,0,0,1" />
+                    <Setter Property="MinHeight" Value="36" />
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="{DynamicResource StudioHoverBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="{DynamicResource StudioSelectionBrush}" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type CheckBox}">
+        <Setter Property="Foreground" Value="{DynamicResource StudioForegroundBrush}" />
+        <Setter Property="Margin" Value="0,0,0,8" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource StudioFocusVisual}" />
+    </Style>
+</ResourceDictionary>

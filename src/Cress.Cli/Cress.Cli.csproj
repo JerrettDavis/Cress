@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\Cress.Core\Cress.Core.csproj" />
+    <ProjectReference Include="..\Cress.ProjectSystem\Cress.ProjectSystem.csproj" />
+    <ProjectReference Include="..\Cress.Specs\Cress.Specs.csproj" />
+    <ProjectReference Include="..\Cress.Validation\Cress.Validation.csproj" />
+    <ProjectReference Include="..\Cress.Execution\Cress.Execution.csproj" />
+    <ProjectReference Include="..\Cress.Gherkin\Cress.Gherkin.csproj" />
+    <ProjectReference Include="..\Cress.Importers\Cress.Importers.csproj" />
+    <ProjectReference Include="..\Cress.Studio.Core\Cress.Studio.Core.csproj" />
+    <ProjectReference Include="..\Cress.LivingDocs\Cress.LivingDocs.csproj" />
+    <ProjectReference Include="..\Cress.Exporters\Cress.Exporters.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AssemblyName>cress</AssemblyName>
+    <RootNamespace>Cress.Cli</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.1" />
+    <PackageReference Include="System.CommandLine" Version="2.0.0-beta4.22272.1" />
+  </ItemGroup>
+</Project>

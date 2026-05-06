@@ -1,0 +1,13 @@
+profile: local
+timeouts:
+  step: 15000
+  expectation: 10000
+  driver: 10000
+evidence:
+  mode: standard
+  screenshots: true
+flaui:
+  windowTitle: Calculator
+  launchTimeoutMs: 8000
+variables:
+  environment: local

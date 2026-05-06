@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{{ branding.title }}</title>
+  <style>
+    :root {
+      --accent: {{ branding.accent_color }};
+      --pass: #22c55e;
+      --fail: #ef4444;
+      --flaky: #f59e0b;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --border: #e2e8f0;
+      --text: #1e293b;
+      --muted: #64748b;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+           background: var(--bg); color: var(--text); line-height: 1.5; }
+    header { background: var(--accent); color: #fff; padding: 20px 32px;
+             display: flex; align-items: center; gap: 16px; }
+    header h1 { font-size: 1.5rem; font-weight: 700; }
+    header .subtitle { font-size: 0.85rem; opacity: 0.85; margin-top: 2px; }
+    header img { height: 40px; border-radius: 4px; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 24px 32px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; margin-bottom: 28px; }
+    .stat-card { background: var(--card); border: 1px solid var(--border); border-radius: 8px;
+                 padding: 20px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,.05); }
+    .stat-card .value { font-size: 2rem; font-weight: 700; color: var(--accent); }
+    .stat-card .label { font-size: 0.8rem; color: var(--muted); margin-top: 4px; text-transform: uppercase; letter-spacing: .05em; }
+    .pass-rate-ring { position: relative; width: 88px; height: 88px; margin: 0 auto 8px; }
+    .pass-rate-ring svg { transform: rotate(-90deg); }
+    .pass-rate-ring .pct { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+                           font-size: 1.1rem; font-weight: 700; color: var(--text); }
+    section h2 { font-size: 1.1rem; font-weight: 600; margin-bottom: 12px; color: var(--text); }
+    table { width: 100%; border-collapse: collapse; background: var(--card);
+            border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-bottom: 28px; }
+    th { background: #f1f5f9; padding: 10px 14px; text-align: left; font-size: 0.8rem;
+         text-transform: uppercase; letter-spacing: .05em; color: var(--muted); border-bottom: 1px solid var(--border); }
+    td { padding: 10px 14px; border-bottom: 1px solid var(--border); font-size: 0.9rem; }
+    tr:last-child td { border-bottom: none; }
+    .badge-pass { color: var(--pass); font-weight: 600; }
+    .badge-fail { color: var(--fail); font-weight: 600; }
+    .badge-flaky { color: var(--flaky); font-weight: 600; }
+    .badge-unknown { color: var(--muted); font-weight: 600; }
+    .run-history { display: flex; gap: 4px; align-items: flex-end; height: 40px; margin-bottom: 28px; }
+    .run-bar { flex: 1; border-radius: 3px 3px 0 0; min-width: 8px; max-width: 20px; }
+    .run-bar.pass { background: var(--pass); }
+    .run-bar.fail { background: var(--fail); }
+    footer { text-align: center; padding: 20px; font-size: 0.78rem; color: var(--muted); border-top: 1px solid var(--border); }
+  </style>
+</head>
+<body>
+  <header>
+    {{ if branding.logo_url }}
+    <img src="{{ branding.logo_url }}" alt="logo" />
+    {{ end }}
+    <div>
+      <h1>{{ branding.title }}</h1>
+      <div class="subtitle">Generated {{ meta.generated_at }} &nbsp;·&nbsp; {{ meta.project_name }}
+        {{ if meta.git_sha != "" }} &nbsp;·&nbsp; <code>{{ meta.git_sha | string.slice 0 7 }}</code>{{ end }}
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <!-- ── Stat cards ── -->
+    <div class="stats-grid">
+
+      <!-- Pass-rate ring -->
+      <div class="stat-card">
+        {{- $pct = suite.pass_rate * 100 | math.round 1 -}}
+        {{- $circ = 201.06 -}}
+        {{- $dash = $circ * suite.pass_rate | math.round 2 -}}
+        <div class="pass-rate-ring">
+          <svg width="88" height="88" viewBox="0 0 88 88">
+            <circle cx="44" cy="44" r="32" fill="none" stroke="#e2e8f0" stroke-width="8"/>
+            <circle cx="44" cy="44" r="32" fill="none" stroke="{{ branding.accent_color }}" stroke-width="8"
+                    stroke-dasharray="{{ $dash }} {{ $circ }}" stroke-linecap="round"/>
+          </svg>
+          <div class="pct">{{ $pct }}%</div>
+        </div>
+        <div class="label">Pass Rate</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="value">{{ suite.total_flows }}</div>
+        <div class="label">Total Flows</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="value" style="color:var(--pass)">{{ suite.passed_runs }}</div>
+        <div class="label">Passed Runs</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="value" style="color:var(--fail)">{{ suite.failed_runs }}</div>
+        <div class="label">Failed Runs</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="value">{{ format_duration suite.avg_duration }}</div>
+        <div class="label">Avg Duration</div>
+      </div>
+
+    </div>
+
+    <!-- ── Run history sparkbar ── -->
+    {{ if recent_runs.size > 0 }}
+    <section>
+      <h2>Run History</h2>
+      <div class="run-history">
+        {{ for run in recent_runs }}
+          {{- $total = run.passed_count + run.failed_count -}}
+          {{- $h = ($total > 0) ? (run.passed_count / $total * 36 | math.round 0) : 4 -}}
+          {{- $cls = (run.failed_count == 0) ? "pass" : "fail" -}}
+          <div class="run-bar {{ $cls }}" style="height:{{ $h }}px" title="{{ run.run_id }}: {{ run.passed_count }}P / {{ run.failed_count }}F"></div>
+        {{ end }}
+      </div>
+    </section>
+    {{ end }}
+
+    <!-- ── Flow summary table ── -->
+    <section>
+      <h2>Flow Status</h2>
+      {{ if flows.size == 0 }}
+        <p style="color:var(--muted);margin-bottom:28px">No flow data available — run <code>cress run</code> to populate history.</p>
+      {{ else }}
+      <table>
+        <thead>
+          <tr>
+            <th>Flow</th>
+            <th>Status</th>
+            <th>Pass Rate</th>
+            <th>Avg Duration</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{ for flow in flows }}
+          <tr>
+            <td><strong>{{ flow.name }}</strong><br /><small style="color:var(--muted)">{{ flow.id }}</small></td>
+            <td><span class="{{ status_badge_class flow.status }}">{{ status_emoji flow.status }} {{ flow.status }}</span></td>
+            <td>{{ format_percent flow.pass_rate }}</td>
+            <td>{{ format_duration flow.avg_duration }}</td>
+          </tr>
+          {{ end }}
+        </tbody>
+      </table>
+      {{ end }}
+    </section>
+
+    <!-- ── Flows needing attention (failing or flaky) ── -->
+    {{ $failing = flows | array.filter @(do; ret $0.status == "failing" || $0.status == "flaky"; end) }}
+    {{ if $failing.size > 0 }}
+    <section>
+      <h2>Needs Attention</h2>
+      <table>
+        <thead>
+          <tr><th>Flow</th><th>Status</th><th>Pass Rate</th></tr>
+        </thead>
+        <tbody>
+          {{ for flow in $failing | array.limit 5 }}
+          <tr>
+            <td><strong>{{ flow.name }}</strong></td>
+            <td><span class="{{ status_badge_class flow.status }}">{{ status_emoji flow.status }} {{ flow.status }}</span></td>
+            <td>{{ format_percent flow.pass_rate }}</td>
+          </tr>
+          {{ end }}
+        </tbody>
+      </table>
+    </section>
+    {{ end }}
+
+  </div>
+
+  <footer>
+    Generated by Cress v{{ meta.version }} &nbsp;·&nbsp; {{ meta.generated_at }}
+  </footer>
+</body>
+</html>

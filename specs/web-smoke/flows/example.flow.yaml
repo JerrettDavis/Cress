@@ -1,0 +1,85 @@
+version: 1
+id: web-smoke.example-login-and-search
+name: "Web Smoke: Login and search flow"
+capability: web-recording
+
+summary: >
+  Demonstrates the full range of web step shapes produced by the V4 inference engine.
+  Uses testId, role+label, role-only, label-only, cssSelector, and browser.navigate
+  locator strategies together with fill debounce and key-press steps.
+
+tags:
+  - web
+  - smoke
+  - example
+
+traceability:
+  requirement: WEB-AC1
+  acceptanceCriteria:
+    - WEB-AC1
+    - WEB-AC2
+    - WEB-AC3
+
+status: draft
+
+when:
+  # 1. Navigate to the login page (browser.navigate — web-specific step)
+  - step: browser.navigate
+    with:
+      url: http://localhost:3000/login
+
+  # 2. Fill email input — testId locator (highest priority; single fill after debounce)
+  - step: ui.fill
+    with:
+      testId: email-input
+      value: user@example.com
+
+  # 3. Fill password — label locator (no testId on this field)
+  - step: ui.fill
+    with:
+      label: Password
+      value: s3cr3t
+
+  # 4. Click the sign-in button — role+label combination
+  - step: ui.invoke
+    with:
+      role: button
+      label: Sign in
+
+  # 5. SPA navigation fires automatically after successful login
+  - step: browser.navigate
+    with:
+      url: http://localhost:3000/dashboard
+
+  # 6. Fill the search box — testId locator (collapsed from keystroke stream)
+  - step: ui.fill
+    with:
+      testId: search-input
+      value: quarterly report
+
+  # 7. Press Enter to submit the search
+  - step: ui.press-key
+    with:
+      key: Enter
+
+  # 8. Navigate to a specific result
+  - step: browser.navigate
+    with:
+      url: http://localhost:3000/reports/quarterly
+
+  # 9. Click a download link — role-only (no label available)
+  - step: ui.invoke
+    with:
+      role: link
+
+  # 10. Click a pagination button — CSS selector fallback (no semantic attributes)
+  - step: ui.invoke
+    with:
+      cssSelector: .pagination .next
+
+then:
+  # Assert the report heading is visible
+  - expect: ui.assert-text
+    with:
+      testId: report-heading
+      text: Quarterly Report Q1 2026

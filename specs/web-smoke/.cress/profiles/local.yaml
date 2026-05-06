@@ -1,0 +1,9 @@
+profile: local
+baseUrl: http://localhost:3000
+timeouts:
+  step: 30000
+  expectation: 10000
+evidence:
+  mode: standard
+variables:
+  environment: local

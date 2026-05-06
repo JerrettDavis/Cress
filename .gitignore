@@ -1,0 +1,47 @@
+# .NET
+bin/
+obj/
+*.user
+*.suo
+*.userosscache
+.vs/
+*.dll
+*.pdb
+*.exe
+TestResults/
+coverage-report/
+
+# NuGet
+packages/
+*.nupkg
+*.snupkg
+
+# Node
+node_modules/
+npm-debug.log*
+
+# IDE
+.idea/
+*.swp
+*.swo
+
+# Generated artifacts (session work, regeneratable)
+artifacts/
+reports/
+
+# Spec project run output (regenerated each run)
+specs/*/artifacts/
+specs/*/reports/
+specs/calc-smoke/flows/calc-add.flow.yaml
+
+# Log files
+*.log
+
+# Secrets
+.env
+.env.local
+.env.*.local
+
+# OS
+.DS_Store
+Thumbs.db

@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{{ branding.title }} — Technical Report</title>
+  <style>
+    :root {
+      --accent: {{ branding.accent_color }};
+      --pass:   #22c55e;
+      --fail:   #ef4444;
+      --flaky:  #f59e0b;
+      --draft:  #94a3b8;
+      --bg:     #f8fafc;
+      --card:   #ffffff;
+      --border: #e2e8f0;
+      --text:   #1e293b;
+      --muted:  #64748b;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+           background: var(--bg); color: var(--text); line-height: 1.5; }
+
+    /* ── Header ── */
+    header { background: var(--accent); color: #fff; padding: 18px 32px;
+             display: flex; align-items: center; gap: 16px; }
+    header img { height: 36px; border-radius: 4px; }
+    header h1 { font-size: 1.35rem; font-weight: 700; }
+    header .subtitle { font-size: 0.8rem; opacity: 0.88; margin-top: 3px; font-variant-numeric: tabular-nums; }
+    header code { background: rgba(255,255,255,.2); border-radius: 3px; padding: 1px 5px; font-size: 0.78em; }
+
+    /* ── Layout ── */
+    .container { max-width: 1280px; margin: 0 auto; padding: 28px 36px; }
+    section { margin-bottom: 36px; }
+    section h2 { font-size: 1rem; font-weight: 600; color: var(--text);
+                 text-transform: uppercase; letter-spacing: .07em;
+                 margin-bottom: 14px; padding-bottom: 6px;
+                 border-bottom: 2px solid var(--accent); }
+
+    /* ── Stat cards ── */
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
+                  gap: 14px; margin-bottom: 36px; }
+    .stat-card { background: var(--card); border: 1px solid var(--border); border-radius: 8px;
+                 padding: 18px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,.05); }
+    .stat-card .value { font-size: 1.9rem; font-weight: 700; color: var(--accent);
+                        font-variant-numeric: tabular-nums; }
+    .stat-card .label { font-size: 0.75rem; color: var(--muted); margin-top: 4px;
+                        text-transform: uppercase; letter-spacing: .06em; }
+
+    /* ── Tables ── */
+    table { width: 100%; border-collapse: collapse; background: var(--card);
+            border: 1px solid var(--border); border-radius: 8px; overflow: hidden;
+            margin-bottom: 0; font-size: 0.87rem; }
+    th { background: #f1f5f9; padding: 9px 13px; text-align: left; font-size: 0.75rem;
+         text-transform: uppercase; letter-spacing: .05em; color: var(--muted);
+         border-bottom: 1px solid var(--border); white-space: nowrap; }
+    td { padding: 9px 13px; border-bottom: 1px solid var(--border);
+         font-variant-numeric: tabular-nums; vertical-align: middle; }
+    tr:last-child td { border-bottom: none; }
+    td.mono { font-family: ui-monospace, "Cascadia Code", monospace; font-size: 0.82rem; color: var(--muted); }
+    td.num  { text-align: right; }
+    th.num  { text-align: right; }
+
+    /* ── Status badges ── */
+    .badge-pass    { color: var(--pass);  font-weight: 600; }
+    .badge-fail    { color: var(--fail);  font-weight: 600; }
+    .badge-flaky   { color: var(--flaky); font-weight: 600; }
+    .badge-unknown { color: var(--draft); font-weight: 600; }
+
+    /* ── Run outcome cell ── */
+    .outcome-pass { color: var(--pass); font-weight: 700; }
+    .outcome-fail { color: var(--fail); font-weight: 700; }
+
+    /* ── Screenshot grid ── */
+    .screenshot-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .screenshot-card { border: 1px solid var(--border); border-radius: 8px; overflow: hidden;
+                       background: var(--card); }
+    .screenshot-card img { width: 100%; display: block; }
+    .screenshot-caption { padding: 8px 12px; font-size: 0.8rem; color: var(--muted);
+                          border-top: 1px solid var(--border); }
+    .screenshot-caption strong { color: var(--text); }
+
+    /* ── Per-step timing bars ── */
+    details { margin-bottom: 2px; }
+    details summary { cursor: pointer; padding: 7px 12px; background: #f8fafc;
+                      border: 1px solid var(--border); border-radius: 6px;
+                      font-size: 0.83rem; font-weight: 600; color: var(--text);
+                      list-style: none; display: flex; align-items: center; gap: 8px; }
+    details summary::-webkit-details-marker { display: none; }
+    details summary::before { content: "▶"; font-size: 0.65rem; color: var(--muted);
+                               transition: transform .15s; }
+    details[open] summary::before { transform: rotate(90deg); }
+    details[open] { margin-bottom: 12px; }
+    .step-table { margin-top: 0; border-radius: 0 0 8px 8px; border-top: none; }
+    .step-bar-cell { width: 200px; }
+    .step-bar-wrap { height: 10px; background: #e2e8f0; border-radius: 5px; overflow: hidden; }
+    .step-bar-fill { height: 100%; background: var(--accent); border-radius: 5px;
+                     opacity: 0.75; min-width: 2px; }
+
+    /* ── Diagnostics ── */
+    .diag-error   { border-left: 4px solid var(--fail);  }
+    .diag-warning { border-left: 4px solid var(--flaky); }
+    .diag-info    { border-left: 4px solid var(--accent); }
+    .sev-error    { color: var(--fail);  font-weight: 600; }
+    .sev-warning  { color: var(--flaky); font-weight: 600; }
+    .sev-info     { color: var(--accent); font-weight: 600; }
+
+    footer { text-align: center; padding: 20px; font-size: 0.77rem;
+             color: var(--muted); border-top: 1px solid var(--border); margin-top: 12px; }
+  </style>
+</head>
+<body>
+
+  <header>
+    {{ if branding.logo_url }}
+    <img src="{{ branding.logo_url }}" alt="logo" />
+    {{ end }}
+    <div>
+      <h1>{{ branding.title }} — Technical Report</h1>
+      <div class="subtitle">
+        {{ meta.generated_at }} &nbsp;·&nbsp; {{ meta.project_name }}
+        {{ if meta.git_sha != "" }} &nbsp;·&nbsp; <code>{{ meta.git_sha | string.slice 0 7 }}</code>{{ end }}
+        {{ if meta.version != "" }} &nbsp;·&nbsp; v{{ meta.version }}{{ end }}
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <!-- ── § Suite at a glance ── -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="value">{{ suite.total_flows }}</div>
+        <div class="label">Total Flows</div>
+      </div>
+      <div class="stat-card">
+        <div class="value">{{ format_percent suite.pass_rate }}</div>
+        <div class="label">Pass Rate</div>
+      </div>
+      <div class="stat-card">
+        <div class="value">{{ format_duration suite.avg_duration }}</div>
+        <div class="label">Avg Duration</div>
+      </div>
+      {{- $total_runs = suite.passed_runs + suite.failed_runs -}}
+      {{- $flake_rate = ($total_runs > 0) ? (suite.failed_runs / $total_runs) : 0 -}}
+      <div class="stat-card">
+        <div class="value">{{ format_percent $flake_rate }}</div>
+        <div class="label">Flake Rate</div>
+      </div>
+    </div>
+
+    <!-- ── § Run history table ── -->
+    {{ if recent_runs.size > 0 }}
+    <section>
+      <h2>Run History</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Run ID</th>
+            <th>Timestamp</th>
+            <th class="num">Passed</th>
+            <th class="num">Failed</th>
+            <th>Outcome</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{ for r in recent_runs | array.limit 20 }}
+          {{- $ok = r.failed_count == 0 -}}
+          <tr>
+            <td class="mono">{{ r.run_id }}</td>
+            <td>{{ r.timestamp }}</td>
+            <td class="num" style="color:var(--pass)">{{ r.passed_count }}</td>
+            <td class="num" style="color:{{ ($ok) ? 'var(--muted)' : 'var(--fail)' }}">{{ r.failed_count }}</td>
+            <td class="{{ $ok ? 'outcome-pass' : 'outcome-fail' }}">{{ $ok ? '✓ Pass' : '✗ Fail' }}</td>
+          </tr>
+          {{ end }}
+        </tbody>
+      </table>
+    </section>
+    {{ end }}
+
+    <!-- ── § Per-flow metrics table ── -->
+    <section>
+      <h2>Flow Metrics</h2>
+      {{ if flows.size == 0 }}
+        <p style="color:var(--muted)">No flow data — run <code>cress run</code> to populate history.</p>
+      {{ else }}
+      <table>
+        <thead>
+          <tr>
+            <th>Flow</th>
+            <th>Status</th>
+            <th class="num">Runs</th>
+            <th class="num">Pass %</th>
+            <th class="num">Avg</th>
+            {{ if metrics }}
+            <th class="num">P50</th>
+            <th class="num">P95</th>
+            <th class="num">P99</th>
+            <th class="num">Flake %</th>
+            {{ end }}
+          </tr>
+        </thead>
+        <tbody>
+          {{ for f in flows }}
+          {{- $fm = null -}}
+          {{ if metrics }}
+            {{ for mf in metrics.flows }}
+              {{ if mf.flow_id == f.id }}
+                {{- $fm = mf -}}
+              {{ end }}
+            {{ end }}
+          {{ end }}
+          <tr>
+            <td>
+              <strong>{{ f.name }}</strong>
+              {{ if f.description }}<br /><small style="color:var(--muted)">{{ f.description }}</small>{{ end }}
+              <br /><span class="mono" style="font-size:0.78rem">{{ f.id }}</span>
+            </td>
+            <td><span class="{{ status_badge_class f.status }}">{{ status_emoji f.status }} {{ f.status }}</span></td>
+            <td class="num">{{ $fm ? $fm.runs : "—" }}</td>
+            <td class="num">{{ format_percent f.pass_rate }}</td>
+            <td class="num">{{ format_duration f.avg_duration }}</td>
+            {{ if metrics }}
+            <td class="num">{{ $fm ? (format_duration $fm.p50) : "—" }}</td>
+            <td class="num">{{ $fm ? (format_duration $fm.p95) : "—" }}</td>
+            <td class="num">{{ $fm ? (format_duration $fm.p99) : "—" }}</td>
+            <td class="num">{{ $fm ? (format_percent $fm.flake_rate) : "—" }}</td>
+            {{ end }}
+          </tr>
+          {{ end }}
+        </tbody>
+      </table>
+      {{ end }}
+    </section>
+
+    <!-- ── § Per-step timing ── -->
+    {{ if metrics && metrics.steps.size > 0 }}
+    <section>
+      <h2>Per-Step Timing</h2>
+      {{ for f in flows }}
+        {{- $has_steps = false -}}
+        {{ for s in metrics.steps }}
+          {{ if s.flow_id == f.id }}
+            {{- $has_steps = true -}}
+          {{ end }}
+        {{ end }}
+        {{ if $has_steps }}
+          {{- $max_p95_ms = 1 -}}
+          {{ for s in metrics.steps }}
+            {{ if s.flow_id == f.id }}
+              {{- $ms = s.p95.total_milliseconds | math.round 0 -}}
+              {{ if $ms > $max_p95_ms }}{{- $max_p95_ms = $ms -}}{{ end }}
+            {{ end }}
+          {{ end }}
+        <details>
+          <summary>
+            <span class="{{ status_badge_class f.status }}">{{ status_emoji f.status }}</span>
+            {{ f.name }}
+          </summary>
+          <table class="step-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Step</th>
+                <th class="num">Runs</th>
+                <th class="num">Passed</th>
+                <th class="num">P50</th>
+                <th class="num">P95</th>
+                <th class="num">P99</th>
+                <th class="step-bar-cell">P95 bar</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{ for s in metrics.steps | array.sort "step_index" }}
+                {{ if s.flow_id == f.id }}
+                {{- $bar_pct = ($max_p95_ms > 0) ? (s.p95.total_milliseconds / $max_p95_ms * 100 | math.round 0) : 0 -}}
+                <tr>
+                  <td class="num" style="color:var(--muted)">{{ s.step_index + 1 }}</td>
+                  <td>{{ s.step_name }}</td>
+                  <td class="num">{{ s.runs }}</td>
+                  <td class="num">{{ s.passed }}</td>
+                  <td class="num">{{ format_duration s.p50 }}</td>
+                  <td class="num">{{ format_duration s.p95 }}</td>
+                  <td class="num">{{ format_duration s.p99 }}</td>
+                  <td class="step-bar-cell">
+                    <div class="step-bar-wrap">
+                      <div class="step-bar-fill" style="width:{{ $bar_pct }}%"></div>
+                    </div>
+                  </td>
+                </tr>
+                {{ end }}
+              {{ end }}
+            </tbody>
+          </table>
+        </details>
+        {{ end }}
+      {{ end }}
+    </section>
+    {{ end }}
+
+    <!-- ── § Failed test screenshots ── -->
+    {{ if screenshots.size > 0 }}
+    <section>
+      <h2>Screenshot Evidence</h2>
+      {{- $seen_flow_ids = [] -}}
+      {{ for s in screenshots }}
+        {{- $already = false -}}
+        {{ for seen in $seen_flow_ids }}
+          {{ if seen == s.flow_id }}{{- $already = true -}}{{ end }}
+        {{ end }}
+        {{ if !$already }}
+          {{- $seen_flow_ids = $seen_flow_ids | array.add s.flow_id -}}
+          <p style="font-weight:600;font-size:0.88rem;margin-bottom:10px;margin-top:16px;color:var(--muted)">{{ s.flow_id }}</p>
+          <div class="screenshot-grid">
+            {{ for shot in screenshots }}
+              {{ if shot.flow_id == s.flow_id }}
+              <div class="screenshot-card">
+                <img src="{{ shot.file_path }}" alt="{{ shot.flow_id }} — {{ shot.step_name }}" loading="lazy" />
+                <div class="screenshot-caption"><strong>{{ shot.step_name }}</strong></div>
+              </div>
+              {{ end }}
+            {{ end }}
+          </div>
+        {{ end }}
+      {{ end }}
+    </section>
+    {{ end }}
+
+    <!-- ── § Diagnostics ── -->
+    {{ if diagnostics.size > 0 }}
+    <section>
+      <h2>Diagnostics ({{ diagnostics.size }})</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Severity</th>
+            <th>Flow</th>
+            <th>Message</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{ for d in diagnostics }}
+          {{- $sev_lower = d.severity | string.downcase -}}
+          <tr class="diag-{{ $sev_lower }}">
+            <td><span class="sev-{{ $sev_lower }}">{{ d.severity }}</span></td>
+            <td class="mono">{{ d.flow_id }}</td>
+            <td>{{ d.message }}</td>
+          </tr>
+          {{ end }}
+        </tbody>
+      </table>
+    </section>
+    {{ end }}
+
+  </div>
+
+  <footer>
+    Generated by Cress v{{ meta.version }} &nbsp;·&nbsp; {{ meta.generated_at }}
+    &nbsp;·&nbsp; {{ meta.project_name }}
+  </footer>
+
+</body>
+</html>

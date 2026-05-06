@@ -1,0 +1,353 @@
+@implements IDisposable
+@inject StudioWorkspaceState State
+
+@{
+    var m = State.CurrentMetrics;
+}
+
+@if (m is null || m.Suite.TotalRuns == 0)
+{
+    <div class="subpanel-empty metrics-empty">
+        <p>No run history yet. Run flows to populate metrics.</p>
+    </div>
+}
+else
+{
+    @* ---- A. Suite stat cards ---- *@
+    <section class="subpanel metrics-suite" aria-label="Suite summary">
+        <div class="summary-cards metrics-stat-cards">
+            <div class="summary-card">
+                <span>Total runs</span>
+                <strong class="metrics-stat-num">@m.Suite.TotalRuns</strong>
+            </div>
+            <div class="summary-card">
+                <span>Pass rate</span>
+                <strong class="metrics-stat-num @PassRateClass(m.Suite.PassRate)">@FormatPercent(m.Suite.PassRate)</strong>
+            </div>
+            <div class="summary-card">
+                <span>Avg duration</span>
+                <strong class="metrics-stat-num">@FormatDuration(m.Suite.AvgDuration)</strong>
+            </div>
+            <div class="summary-card">
+                <span>Flake rate</span>
+                <strong class="metrics-stat-num @FlakeRateClass(FlakeSuiteRate(m))">@FormatPercent(FlakeSuiteRate(m))</strong>
+            </div>
+        </div>
+    </section>
+
+    @* ---- B. Pass-rate sparkline ---- *@
+    @if (m.Trend.Count >= 3)
+    {
+        <section class="subpanel metrics-sparkline-section" aria-label="Pass rate trend">
+            <div class="subpanel-header">
+                <div>
+                    <h3>Pass-rate trend</h3>
+                    <p>Pass rate over @m.Trend.Count time buckets.</p>
+                </div>
+            </div>
+            @{
+                var pts = BuildSparklinePoints(m.Trend, 600, 60);
+                var lineColor = SparklineColor(m.Trend.Last());
+                var areaId = "sparkline-fill";
+            }
+            <div class="metrics-sparkline-wrap">
+                <svg class="metrics-sparkline" viewBox="0 0 600 60" preserveAspectRatio="none"
+                     role="img" aria-label="Pass rate sparkline" width="100%" height="60">
+                    <defs>
+                        <linearGradient id="@areaId" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="@lineColor" stop-opacity="0.25" />
+                            <stop offset="100%" stop-color="@lineColor" stop-opacity="0.03" />
+                        </linearGradient>
+                    </defs>
+                    <polygon class="metrics-sparkline-area" fill="url(#@areaId)"
+                             points="@BuildAreaPoints(pts, 60)" />
+                    <polyline class="metrics-sparkline-line" fill="none"
+                              stroke="@lineColor" stroke-width="1.5"
+                              stroke-linecap="round" stroke-linejoin="round"
+                              points="@string.Join(" ", pts.Select(p => $"{p.X:0.#},{p.Y:0.#}"))" />
+                    @if (pts.Count >= 2)
+                    {
+                        var first = pts[0];
+                        var last = pts[^1];
+                        var firstRate = TrendPassRate(m.Trend[0]);
+                        var lastRate = TrendPassRate(m.Trend[^1]);
+                        @((MarkupString)$"<text x=\"{first.X + 3:0.#}\" y=\"{first.Y - 4:0.#}\" class=\"metrics-sparkline-label\">{System.Net.WebUtility.HtmlEncode(FormatPercent(firstRate))}</text>")
+                        @((MarkupString)$"<text x=\"{last.X - 3:0.#}\" y=\"{last.Y - 4:0.#}\" text-anchor=\"end\" class=\"metrics-sparkline-label\">{System.Net.WebUtility.HtmlEncode(FormatPercent(lastRate))}</text>")
+                    }
+                </svg>
+            </div>
+        </section>
+    }
+
+    @* ---- C. Top 10 slowest flows table ---- *@
+    <section class="subpanel metrics-flows-section" aria-label="Top slowest flows">
+        <div class="subpanel-header">
+            <div>
+                <h3>Top 10 slowest flows</h3>
+                <p>Sorted by P95. Click a row to open that flow in the explorer.</p>
+            </div>
+        </div>
+        @{
+            var slowest = m.Flows
+                .OrderByDescending(f => f.P95)
+                .Take(10)
+                .ToList();
+        }
+        @if (slowest.Count == 0)
+        {
+            <p class="subpanel-empty">No flow metrics yet.</p>
+        }
+        else
+        {
+            <table class="data-table metrics-flows-table" aria-label="Slowest flows">
+                <thead>
+                    <tr>
+                        <th scope="col">Flow</th>
+                        <th scope="col" class="num-col">Runs</th>
+                        <th scope="col" class="num-col">Pass%</th>
+                        <th scope="col" class="num-col">Avg</th>
+                        <th scope="col" class="num-col">P50</th>
+                        <th scope="col" class="num-col">P95</th>
+                        <th scope="col" class="num-col">P99</th>
+                        <th scope="col" class="num-col">Flake%</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var flow in slowest)
+                    {
+                        var flowSteps = m.Steps.Where(s => string.Equals(s.FlowId, flow.FlowId, StringComparison.OrdinalIgnoreCase)).ToList();
+                        var hasSteps = flowSteps.Count > 0;
+                        var selectedCls = string.Equals(State.SelectedFlow?.Id, flow.FlowId, StringComparison.OrdinalIgnoreCase)
+                            ? " metrics-row-selected"
+                            : "";
+                        <tr class="metrics-flow-row@(selectedCls)" @onclick="() => SelectFlowById(flow.FlowId)" role="button" tabindex="0"
+                            @onkeydown="@(e => { if (e.Key == "Enter" || e.Key == " ") SelectFlowById(flow.FlowId); })">
+                            <td>
+                                @if (hasSteps)
+                                {
+                                    <details class="metrics-step-details" @onclick:stopPropagation>
+                                        <summary class="metrics-step-summary">@flow.FlowId</summary>
+                                        @* ---- E. Per-step P95 bars ---- *@
+                                        <div class="metrics-step-bars" role="list">
+                                            @{
+                                                var maxP95ms = flowSteps.Max(s => s.P95.TotalMilliseconds);
+                                                maxP95ms = maxP95ms <= 0 ? 1 : maxP95ms;
+                                            }
+                                            @foreach (var step in flowSteps)
+                                            {
+                                                var barPct = (int)Math.Round(step.P95.TotalMilliseconds / maxP95ms * 100);
+                                                <div class="metrics-step-bar-row" role="listitem">
+                                                    <span class="metrics-step-name">@step.StepName</span>
+                                                    <div class="metrics-step-bar-track">
+                                                        <div class="metrics-step-bar-fill" style="width:@barPct%" aria-label="P95 @FormatDuration(step.P95)"></div>
+                                                    </div>
+                                                    <span class="metrics-step-bar-value">@FormatDuration(step.P95)</span>
+                                                </div>
+                                            }
+                                        </div>
+                                    </details>
+                                }
+                                else
+                                {
+                                    @flow.FlowId
+                                }
+                            </td>
+                            <td class="num-col">@flow.Runs</td>
+                            <td class="num-col @PassRateClass(flow.PassRate)">@FormatPercent(flow.PassRate)</td>
+                            <td class="num-col">@FormatDuration(flow.AvgDuration)</td>
+                            <td class="num-col">@FormatDuration(flow.P50)</td>
+                            <td class="num-col">@FormatDuration(flow.P95)</td>
+                            <td class="num-col">@FormatDuration(flow.P99)</td>
+                            <td class="num-col @FlakeRateClass(flow.FlakeRate)">@FormatPercent(flow.FlakeRate)</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </section>
+
+    @* ---- D. Flake heatmap grid ---- *@
+    <section class="subpanel metrics-heatmap-section" aria-label="Flake heatmap">
+        <div class="subpanel-header">
+            <div>
+                <h3>Flake heatmap</h3>
+                <p>Last 20 runs (newest right) for top 20 flows by run count.</p>
+            </div>
+        </div>
+        @{
+            var heatFlows = m.Flows
+                .OrderByDescending(f => f.Runs)
+                .Take(20)
+                .ToList();
+            const int HeatCols = 20;
+        }
+        @if (heatFlows.Count == 0)
+        {
+            <p class="subpanel-empty">No heatmap data yet.</p>
+        }
+        else
+        {
+            <div class="metrics-heatmap" role="table" aria-label="Flake heatmap grid">
+                @foreach (var hf in heatFlows)
+                {
+                    var cells = BuildHeatCellsForFlow(hf.FlowId, HeatCols);
+                    <div class="metrics-heatmap-row" role="row">
+                        <span class="metrics-heatmap-label" role="rowheader" title="@hf.FlowId">@hf.FlowId</span>
+                        <div class="metrics-heatmap-cells" role="gridcell">
+                            @foreach (var cell in cells)
+                            {
+                                <span class="metrics-heatmap-cell metrics-heatmap-cell--@cell.CssClass"
+                                      title="@cell.Tooltip"
+                                      tabindex="0"
+                                      role="cell"
+                                      aria-label="@cell.Tooltip"></span>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    </section>
+}
+
+@code {
+    // -------------------------------------------------------------------------
+    // Lifecycle
+    // -------------------------------------------------------------------------
+
+    protected override void OnInitialized()
+    {
+        State.Changed += HandleStateChanged;
+    }
+
+    public void Dispose()
+    {
+        State.Changed -= HandleStateChanged;
+    }
+
+    private void HandleStateChanged()
+        => InvokeAsync(StateHasChanged);
+
+    // -------------------------------------------------------------------------
+    // Interaction
+    // -------------------------------------------------------------------------
+
+    private void SelectFlowById(string flowId)
+    {
+        var flow = State.AvailableFlows.FirstOrDefault(f =>
+            string.Equals(f.FlowId, flowId, StringComparison.OrdinalIgnoreCase));
+        if (flow?.SourceFile is not null)
+        {
+            State.SelectFlow(flow.SourceFile);
+        }
+    }
+
+    // -------------------------------------------------------------------------
+    // Helpers — formatting
+    // -------------------------------------------------------------------------
+
+    private static string FormatPercent(double rate)
+        => $"{rate * 100:0.#}%";
+
+    private static string FormatDuration(TimeSpan ts)
+    {
+        if (ts.TotalSeconds < 1) return $"{ts.TotalMilliseconds:0}ms";
+        if (ts.TotalMinutes < 1) return $"{ts.TotalSeconds:0.#}s";
+        return $"{ts.TotalMinutes:0.#}m";
+    }
+
+    private static string PassRateClass(double rate)
+        => rate >= 0.95 ? "metrics-green" : rate >= 0.80 ? "metrics-amber" : "metrics-red";
+
+    private static string FlakeRateClass(double rate)
+        => rate <= 0 ? "" : rate < 0.1 ? "metrics-amber" : "metrics-red";
+
+    private static double FlakeSuiteRate(RunMetrics m)
+    {
+        if (m.Flows.Count == 0) return 0.0;
+        var flakyCount = m.Flows.Count(f => f.FlakeRate > 0);
+        return (double)flakyCount / m.Flows.Count;
+    }
+
+    // -------------------------------------------------------------------------
+    // Helpers — sparkline
+    // -------------------------------------------------------------------------
+
+    private static double TrendPassRate(TrendPoint tp)
+    {
+        var total = tp.PassedFlows + tp.FailedFlows;
+        return total == 0 ? 0.0 : (double)tp.PassedFlows / total;
+    }
+
+    private static string SparklineColor(TrendPoint last)
+    {
+        var rate = TrendPassRate(last);
+        if (rate >= 0.95) return "var(--color-success)";
+        if (rate >= 0.80) return "var(--color-warning)";
+        return "var(--color-danger)";
+    }
+
+    private sealed record SparkPoint(double X, double Y);
+
+    private static List<SparkPoint> BuildSparklinePoints(IReadOnlyList<TrendPoint> trend, double width, double height)
+    {
+        if (trend.Count == 0) return [];
+        var rates = trend.Select(TrendPassRate).ToList();
+        var n = rates.Count;
+        var pts = new List<SparkPoint>(n);
+        var pad = 2.0;
+        for (var i = 0; i < n; i++)
+        {
+            var x = n == 1 ? width / 2 : pad + (width - pad * 2) * i / (n - 1);
+            var y = height - pad - (height - pad * 2) * rates[i];
+            pts.Add(new SparkPoint(x, y));
+        }
+        return pts;
+    }
+
+    private static string BuildAreaPoints(List<SparkPoint> pts, double height)
+    {
+        if (pts.Count == 0) return "";
+        var sb = new System.Text.StringBuilder();
+        sb.Append($"0,{height:0.#}");
+        foreach (var p in pts)
+        {
+            sb.Append($" {p.X:0.#},{p.Y:0.#}");
+        }
+        sb.Append($" {pts[^1].X:0.#},{height:0.#}");
+        return sb.ToString();
+    }
+
+    // -------------------------------------------------------------------------
+    // Helpers — heatmap
+    // -------------------------------------------------------------------------
+
+    private sealed record HeatCell(string CssClass, string Tooltip);
+    private List<HeatCell> BuildHeatCellsForFlow(string flowId, int cols)
+    {
+        var cells = new List<HeatCell>(cols);
+
+        // Collect per-run outcomes for this flow, newest-first
+        var outcomes = State.Runs
+            .SelectMany(r => r.Result.Flows
+                .Where(f => string.Equals(f.FlowId, flowId, StringComparison.OrdinalIgnoreCase))
+                .Select(f => (RunId: r.Result.Metadata.RunId, Outcome: f.Outcome)))
+            .ToList(); // newest run first because State.Runs is newest-first
+
+        // Right-align: pad with "not-run" on the left if fewer than cols entries
+        var padCount = Math.Max(0, cols - outcomes.Count);
+        for (var i = 0; i < padCount; i++)
+        {
+            cells.Add(new HeatCell("none", "Not run"));
+        }
+        foreach (var (runId, outcome) in outcomes.Take(cols))
+        {
+            var css = outcome == RunOutcome.Passed ? "pass"
+                : outcome is RunOutcome.Failed or RunOutcome.Errored ? "fail"
+                : "none";
+            var tooltip = $"{flowId} • {runId} • {outcome}";
+            cells.Add(new HeatCell(css, tooltip));
+        }
+        return cells;
+    }
+}

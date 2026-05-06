@@ -1,0 +1,28 @@
+version: 1
+project:
+  name: web-smoke
+  defaultProfile: local
+
+paths:
+  capabilities: capabilities
+  flows: flows
+  fixtures: fixtures
+  steps: steps
+  artifacts: artifacts/runs
+  reports: reports
+
+defaults:
+  timeout: 30000
+  retries: 1
+  evidence: standard
+  cleanup: on-success
+
+drivers:
+  playwright:
+    enabled: true
+    browser: chromium
+    headless: true
+  http:
+    enabled: false
+  flaui:
+    enabled: false

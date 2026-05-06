@@ -1,0 +1,7 @@
+{
+  "name": "sample-plugin",
+  "private": true,
+  "type": "module",
+  "main": "dist/index.js"
+}
+

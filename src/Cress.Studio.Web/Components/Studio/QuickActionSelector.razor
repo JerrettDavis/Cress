@@ -1,0 +1,41 @@
+@implements IDisposable
+@inject StudioWorkspaceState State
+
+@if (State.HasSelectedFlow && State.FlowAnalysis.QuickActions.Count > 0)
+{
+    <select class="text-input" @bind="_selectedActionId" aria-label="Quick action">
+        <option value="">Select quick action...</option>
+        @foreach (var action in State.FlowAnalysis.QuickActions)
+        {
+            <option value="@action.Id">@action.Title</option>
+        }
+    </select>
+    <button type="button" class="action-button" @onclick="ApplyAsync" disabled="@string.IsNullOrEmpty(_selectedActionId)">Apply</button>
+}
+
+@code {
+    private string _selectedActionId = string.Empty;
+
+    protected override void OnInitialized()
+    {
+        State.Changed += HandleStateChanged;
+    }
+
+    public void Dispose()
+    {
+        State.Changed -= HandleStateChanged;
+    }
+
+    private void HandleStateChanged()
+        => InvokeAsync(StateHasChanged);
+
+    private Task ApplyAsync()
+    {
+        if (!string.IsNullOrEmpty(_selectedActionId))
+        {
+            State.ApplyQuickAction(_selectedActionId);
+        }
+
+        return Task.CompletedTask;
+    }
+}

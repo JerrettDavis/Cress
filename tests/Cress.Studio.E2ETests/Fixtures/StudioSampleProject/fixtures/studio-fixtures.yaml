@@ -1,0 +1,6 @@
+version: 1
+fixtures:
+  operator.session:
+    type: operator.session
+    strategy: shared
+    cleanup: on-success

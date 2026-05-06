@@ -1,0 +1,44 @@
+version: 1
+steps:
+  - name: desktop.open
+    drivers:
+      - flaui
+    retrySafe: true
+    implementation:
+      plugin: builtin.flaui
+      operation: open
+  - name: desktop.fill
+    drivers:
+      - flaui
+    retrySafe: true
+    implementation:
+      plugin: builtin.flaui
+      operation: fill
+  - name: desktop.click
+    drivers:
+      - flaui
+    retrySafe: true
+    implementation:
+      plugin: builtin.flaui
+      operation: click
+  - name: desktop.capture
+    drivers:
+      - flaui
+    retrySafe: true
+    implementation:
+      plugin: builtin.flaui
+      operation: screenshot
+  - name: desktop.text
+    drivers:
+      - flaui
+    retrySafe: true
+    implementation:
+      plugin: builtin.flaui
+      operation: assert-text
+  - name: desktop.window_title
+    drivers:
+      - flaui
+    retrySafe: true
+    implementation:
+      plugin: builtin.flaui
+      operation: assert-window-title

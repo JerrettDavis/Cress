@@ -1,0 +1,145 @@
+.layout-shell {
+    display: grid;
+    grid-template-columns: 17rem minmax(0, 1fr);
+    min-height: 100vh;
+}
+
+.layout-sidebar {
+    position: sticky;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    min-height: 100vh;
+    padding: 1.5rem 1rem 1.5rem 1.5rem;
+    border-right: 1px solid var(--color-border);
+    background:
+        linear-gradient(180deg, color-mix(in srgb, var(--color-accent-soft) 48%, transparent), transparent 14rem),
+        var(--color-panel);
+}
+
+.sidebar-brand {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    padding: 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    background: var(--color-surface-raised);
+    box-shadow: var(--shadow-sm);
+}
+
+.brand-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 0.95rem;
+    background: linear-gradient(135deg, var(--color-accent), var(--color-accent-strong));
+    color: var(--color-on-accent);
+    font-weight: 800;
+    letter-spacing: 0.04em;
+}
+
+.brand-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.brand-copy strong {
+    font-size: 1.05rem;
+}
+
+.brand-copy span {
+    color: var(--color-muted);
+    line-height: 1.45;
+}
+
+.brand-eyebrow {
+    color: var(--color-accent);
+    font-size: 0.77rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.layout-main {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.layout-topbar {
+    display: flex;
+    justify-content: space-between;
+    gap: 1.5rem;
+    align-items: flex-start;
+    padding: 1.5rem 1.75rem 0;
+}
+
+.layout-topbar h2 {
+    margin: 0.35rem 0 0;
+    font-size: clamp(1.35rem, 1.1rem + 1vw, 2rem);
+}
+
+.topbar-copy {
+    max-width: 54rem;
+    margin: 0.6rem 0 0;
+    color: var(--color-muted);
+}
+
+.topbar-pills {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 0.6rem;
+}
+
+.layout-body {
+    min-width: 0;
+}
+
+#blazor-error-ui {
+    align-items: center;
+    gap: 0.75rem;
+    background: var(--color-danger-soft);
+    border-top: 1px solid var(--color-danger-border);
+    color: var(--color-danger);
+    bottom: 0;
+    display: none;
+    left: 0;
+    padding: 0.9rem 1.25rem;
+    position: fixed;
+    right: 0;
+    z-index: 1000;
+}
+
+#blazor-error-ui .reload,
+#blazor-error-ui .dismiss {
+    color: inherit;
+    font-weight: 700;
+}
+
+@media (max-width: 1080px) {
+    .layout-shell {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .layout-sidebar {
+        position: static;
+        min-height: auto;
+        border-right: 0;
+        border-bottom: 1px solid var(--color-border);
+        padding-right: 1.5rem;
+    }
+
+    .layout-topbar {
+        flex-direction: column;
+    }
+
+    .topbar-pills {
+        justify-content: flex-start;
+    }
+}

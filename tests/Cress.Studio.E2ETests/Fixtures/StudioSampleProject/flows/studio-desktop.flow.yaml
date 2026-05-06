@@ -1,0 +1,29 @@
+version: 1
+id: studio-desktop-flow
+name: Desktop studio flow
+capability: desktop-automation
+summary: Exercises the sample desktop automation workflow from Studio.
+status: ready
+tags:
+  - studio
+  - e2e
+when:
+  - step: desktop.open
+  - step: desktop.fill
+    with:
+      automationId: NameInput
+      value: Grace Hopper
+  - step: desktop.click
+    with:
+      automationId: ContinueButton
+  - step: desktop.capture
+    with:
+      name: greeting-surface
+then:
+  - expect: desktop.text
+    with:
+      automationId: GreetingLabel
+      text: Hello Grace Hopper
+  - expect: desktop.window_title
+    with:
+      title: Cress FlaUI Test App

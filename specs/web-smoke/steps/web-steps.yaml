@@ -1,0 +1,137 @@
+version: 1
+steps:
+  - name: browser.navigate
+    description: Navigate the browser to an absolute or relative URL.
+    drivers:
+      - playwright
+    inputs:
+      url:
+        type: string
+        required: true
+        description: Absolute URL (or path relative to profile baseUrl) to navigate to.
+      waitUntil:
+        type: string
+        required: false
+        description: "Navigation wait condition: load (default), networkidle, domcontentloaded."
+    implementation:
+      operation: navigate
+
+  - name: ui.invoke
+    description: Click (invoke) an interactive element identified by a Cress locator.
+    drivers:
+      - playwright
+      - flaui
+    inputs:
+      testId:
+        type: string
+        required: false
+        description: data-testid attribute value (web preferred).
+      role:
+        type: string
+        required: false
+        description: ARIA role (e.g. button, link, textbox).
+      label:
+        type: string
+        required: false
+        description: Accessible name / aria-label.
+      text:
+        type: string
+        required: false
+        description: Visible innerText of the element.
+      cssSelector:
+        type: string
+        required: false
+        description: CSS selector (web fallback).
+      xpath:
+        type: string
+        required: false
+        description: XPath expression (web fallback).
+      automationId:
+        type: string
+        required: false
+        description: UIA AutomationId (desktop).
+      name:
+        type: string
+        required: false
+        description: UIA Name property (desktop fallback).
+    implementation:
+      operation: click
+
+  - name: ui.fill
+    description: Type text into a form input element.
+    drivers:
+      - playwright
+      - flaui
+    inputs:
+      testId:
+        type: string
+        required: false
+        description: data-testid attribute value (web preferred).
+      role:
+        type: string
+        required: false
+        description: ARIA role of the input element.
+      label:
+        type: string
+        required: false
+        description: Associated label text.
+      cssSelector:
+        type: string
+        required: false
+        description: CSS selector (web fallback).
+      automationId:
+        type: string
+        required: false
+        description: UIA AutomationId (desktop).
+      value:
+        type: string
+        required: true
+        description: Text to type into the field.
+    implementation:
+      operation: fill
+
+  - name: ui.press-key
+    description: Simulate a keyboard key press.
+    drivers:
+      - playwright
+      - flaui
+    inputs:
+      key:
+        type: string
+        required: true
+        description: "Key name (e.g. Enter, Tab, Escape, ArrowDown)."
+    implementation:
+      operation: press-key
+
+  - name: ui.assert-text
+    description: Assert that a text element displays the expected string.
+    drivers:
+      - playwright
+      - flaui
+    inputs:
+      testId:
+        type: string
+        required: false
+        description: data-testid locator (web preferred).
+      role:
+        type: string
+        required: false
+        description: ARIA role of the element.
+      label:
+        type: string
+        required: false
+        description: Accessible label.
+      cssSelector:
+        type: string
+        required: false
+        description: CSS selector fallback.
+      automationId:
+        type: string
+        required: false
+        description: UIA AutomationId (desktop).
+      text:
+        type: string
+        required: true
+        description: Expected text content.
+    implementation:
+      operation: assert-text

@@ -1,0 +1,77 @@
+version: 1
+steps:
+  - name: http.get
+    description: Send a GET request to a URL or path.
+    drivers:
+      - http
+    inputs:
+      url:
+        type: string
+        required: false
+        description: Absolute URL to send the GET request to.
+      path:
+        type: string
+        required: false
+        description: Path relative to the profile baseUrl.
+    implementation:
+      operation: get
+
+  - name: http.post
+    description: Send a POST request with a JSON body.
+    drivers:
+      - http
+    inputs:
+      url:
+        type: string
+        required: false
+        description: Absolute URL to send the POST request to.
+      path:
+        type: string
+        required: false
+        description: Path relative to the profile baseUrl.
+      json:
+        type: string
+        required: false
+        description: JSON body to include in the request.
+    implementation:
+      operation: post
+
+  - name: http.assert-status
+    description: Assert that the last HTTP response has a given status code.
+    drivers:
+      - http
+    inputs:
+      status:
+        type: string
+        required: true
+        description: Expected HTTP status code (e.g. 200).
+    implementation:
+      operation: assert-status
+
+  - name: http.assert-json
+    description: Assert that a JSON path in the last response equals an expected value.
+    drivers:
+      - http
+    inputs:
+      path:
+        type: string
+        required: true
+        description: Dot-separated JSON path (e.g. url or headers.Host).
+      equals:
+        type: string
+        required: true
+        description: Expected value at the JSON path.
+    implementation:
+      operation: assert-json
+
+  - name: http.assert-body-contains
+    description: Assert that the last response body contains a given string.
+    drivers:
+      - http
+    inputs:
+      text:
+        type: string
+        required: true
+        description: Substring expected to appear in the response body.
+    implementation:
+      operation: assert-body-contains

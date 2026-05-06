@@ -1,0 +1,37 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <sys:String x:Key="StudioThemeName">Dark</sys:String>
+
+    <SolidColorBrush x:Key="StudioWindowBackgroundBrush" Color="#FF07111F" />
+    <SolidColorBrush x:Key="StudioWindowGradientBrush" Color="#FF0F1B31" />
+    <SolidColorBrush x:Key="StudioSurfaceBrush" Color="#FF0F172A" />
+    <SolidColorBrush x:Key="StudioSurfaceAltBrush" Color="#FF111D33" />
+    <SolidColorBrush x:Key="StudioSurfaceRaisedBrush" Color="#FF15233B" />
+    <SolidColorBrush x:Key="StudioSurfaceInsetBrush" Color="#FF091424" />
+    <SolidColorBrush x:Key="StudioBorderBrush" Color="#FF223352" />
+    <SolidColorBrush x:Key="StudioBorderStrongBrush" Color="#FF355074" />
+    <SolidColorBrush x:Key="StudioForegroundBrush" Color="#FFF8FAFC" />
+    <SolidColorBrush x:Key="StudioMutedForegroundBrush" Color="#FFCBD5E1" />
+    <SolidColorBrush x:Key="StudioSubtleForegroundBrush" Color="#FF94A3B8" />
+    <SolidColorBrush x:Key="StudioAccentBrush" Color="#FF38BDF8" />
+    <SolidColorBrush x:Key="StudioAccentForegroundBrush" Color="#FF04111E" />
+    <SolidColorBrush x:Key="StudioAccentSoftBrush" Color="#FF0F3657" />
+    <SolidColorBrush x:Key="StudioSuccessBrush" Color="#FF4ADE80" />
+    <SolidColorBrush x:Key="StudioSuccessSoftBrush" Color="#FF10351F" />
+    <SolidColorBrush x:Key="StudioWarningBrush" Color="#FFFBBF24" />
+    <SolidColorBrush x:Key="StudioWarningSoftBrush" Color="#FF3C2A05" />
+    <SolidColorBrush x:Key="StudioDangerBrush" Color="#FFFB7185" />
+    <SolidColorBrush x:Key="StudioDangerSoftBrush" Color="#FF47111D" />
+    <SolidColorBrush x:Key="StudioSelectionBrush" Color="#FF123C61" />
+    <SolidColorBrush x:Key="StudioHoverBrush" Color="#FF192742" />
+    <SolidColorBrush x:Key="StudioFocusBrush" Color="#FF7DD3FC" />
+
+    <!-- Custom chrome tokens (dark) -->
+    <SolidColorBrush x:Key="StudioTitleBarBrush" Color="#FF0D1928" />
+    <SolidColorBrush x:Key="StudioTitleBarForegroundBrush" Color="#FFF8FAFC" />
+    <SolidColorBrush x:Key="StudioWindowControlForegroundBrush" Color="#FFCBD5E1" />
+    <SolidColorBrush x:Key="StudioWindowControlHoverBrush" Color="#FF192742" />
+    <SolidColorBrush x:Key="StudioWindowControlCloseHoverBrush" Color="#FFE81123" />
+    <SolidColorBrush x:Key="StudioWindowControlCloseHoverForegroundBrush" Color="#FFFFFFFF" />
+</ResourceDictionary>

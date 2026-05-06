@@ -1,0 +1,422 @@
+@inject StudioWorkspaceState State
+@implements IDisposable
+@using Cress.Recorder
+@using Cress.Recorder.Inference
+@using Cress.Recorder.Serialization
+
+@if (State.IsRecorderSavePanelOpen && State.LastRecordingResult is not null)
+{
+    <div class="modal-backdrop" @onclick="Discard" role="presentation"></div>
+    <div class="modal-dialog modal-dialog--wide" role="dialog" aria-modal="true" aria-labelledby="save-panel-title">
+        <div class="modal-header">
+            <h3 id="save-panel-title">Save recording</h3>
+            <button type="button" class="action-button" @onclick="Discard" aria-label="Close">&#x2715;</button>
+        </div>
+
+        <div class="modal-body">
+            @* ---- Form fields ---- *@
+            <div class="field-stack">
+                <label for="rec-flow-id">Flow ID</label>
+                <input id="rec-flow-id" class="text-input" @bind="_flowId" placeholder="e.g. recorded.calc.20260505-120000" />
+            </div>
+            <div class="field-stack">
+                <label for="rec-flow-name">Flow name</label>
+                <input id="rec-flow-name" class="text-input" @bind="_flowName" placeholder="e.g. Calculator — add 2 plus 2" />
+            </div>
+            <div class="field-stack">
+                <label for="rec-capability">Capability</label>
+                <select id="rec-capability" class="text-input" @bind="_capability">
+                    <option value="">(none)</option>
+                    @foreach (var cap in State.CapabilityOptions)
+                    {
+                        <option value="@cap">@cap</option>
+                    }
+                </select>
+            </div>
+            <div class="field-stack">
+                <label for="rec-save-path">Save path</label>
+                <input id="rec-save-path" class="text-input" @bind="_savePath" />
+                <span class="field-hint">Full path including filename, e.g. C:\project\flows\recorded\my-flow.flow.yaml</span>
+            </div>
+
+            @* ---- Assertion target selector ---- *@
+            @if (_uniqueAutomationIds.Count > 0)
+            {
+                <div class="field-stack" style="margin-top:0.75rem">
+                    <label for="rec-assertion-target">Treat element as assertion target</label>
+                    <select id="rec-assertion-target" class="text-input" @bind="_assertionTargetId" @bind:after="RerunInference">
+                        <option value="">(none — no assertion steps)</option>
+                        @foreach (var id in _uniqueAutomationIds)
+                        {
+                            <option value="@id">@id</option>
+                        }
+                    </select>
+                    <span class="field-hint">Selecting an element re-runs inference: ValueChanged events on it become AssertText steps.</span>
+                </div>
+            }
+
+            @* ---- Editable step list ---- *@
+            <div class="subpanel" style="margin-top:1rem">
+                <div class="subpanel-header">
+                    <h4>Inferred steps (@_editableSteps.Count steps, @State.LastRecordingResult.Events.Count raw events, duration @FormatDuration(State.LastRecordingResult.Duration))</h4>
+                </div>
+                @if (_editableSteps.Count == 0)
+                {
+                    <p class="muted">No steps were captured. Interact with the application while recording to capture steps.</p>
+                }
+                else
+                {
+                    <ol class="step-preview-list">
+                        @for (int i = 0; i < _editableSteps.Count; i++)
+                        {
+                            var step = _editableSteps[i];
+                            var localIndex = i;
+                            <li class="step-preview-item">
+                                <span class="step-preview-kind @StepKindCssClass(step.Kind)">@StepKindIcon(step.Kind)</span>
+                                <span class="step-preview-text">@step.ToString()</span>
+                                <button type="button"
+                                        class="action-button step-preview-delete"
+                                        title="Remove this step"
+                                        aria-label="Remove step @(i + 1)"
+                                        @onclick="() => DeleteStep(localIndex)">
+                                    &#x2715;
+                                </button>
+                            </li>
+                        }
+                    </ol>
+                }
+            </div>
+
+            @* ---- Filtered events (read-only) ---- *@
+            @if (_filteredEvents.Count > 0)
+            {
+                <details class="subpanel" style="margin-top:0.5rem">
+                    <summary>
+                        <span class="summary-chevron" aria-hidden="true">&#x276F;</span>
+                        Captured events not converted to steps (@_filteredEvents.Count)
+                    </summary>
+                    <ol class="step-preview-list" style="margin-top:0.35rem">
+                        @foreach (var evt in _filteredEvents)
+                        {
+                            <li class="step-preview-item step-preview-item--muted">
+                                <span class="step-preview-kind">@EventKindIcon(evt.Kind)</span>
+                                <span class="step-preview-text">@evt.ToString()</span>
+                            </li>
+                        }
+                    </ol>
+                </details>
+            }
+
+            @if (!string.IsNullOrEmpty(_saveError))
+            {
+                <p class="diagnostic diagnostic--error" role="alert">@_saveError</p>
+            }
+        </div>
+
+        @if (!string.IsNullOrEmpty(_replayStatus))
+        {
+            <p class="diagnostic @_replayStatusCssClass" role="status">@_replayStatus</p>
+        }
+
+        <div class="modal-footer">
+            <button type="button" class="action-button primary" @onclick="SaveAsync" disabled="@_saving">
+                @(_saving ? "Saving..." : "Save")
+            </button>
+            <button type="button"
+                    class="action-button"
+                    @onclick="ReplayAsync"
+                    disabled="@(_savedPath is null || _replaying)">
+                @(_replaying ? "Replaying..." : "Replay just-recorded")
+            </button>
+            <button type="button" class="action-button danger" @onclick="Discard" disabled="@(_saving || _replaying)">Discard</button>
+        </div>
+    </div>
+}
+
+@code {
+    private string _flowId = string.Empty;
+    private string _flowName = string.Empty;
+    private string _capability = string.Empty;
+    private string _savePath = string.Empty;
+    private string _saveError = string.Empty;
+    private string _assertionTargetId = string.Empty;
+    private bool _saving;
+
+    // Replay state — enabled only after a successful save.
+    private string? _savedPath;   // null = no save yet; non-null = path of last saved file
+    private bool _replaying;
+    private string _replayStatus = string.Empty;
+    private string _replayStatusCssClass = string.Empty;
+
+    // Editable working copy of the inferred steps.
+    private List<InferredStep> _editableSteps = [];
+    // Events that were NOT converted to steps (focus, duplicates, etc.).
+    private List<RecordedEvent> _filteredEvents = [];
+    // Unique AutomationIds seen across all captured events (for the assertion target dropdown).
+    private List<string> _uniqueAutomationIds = [];
+
+    protected override void OnInitialized()
+    {
+        State.Changed += HandleStateChanged;
+    }
+
+    protected override void OnParametersSet()
+    {
+        if (State.IsRecorderSavePanelOpen && State.LastRecordingResult is not null && string.IsNullOrEmpty(_flowId))
+        {
+            InitializeDefaults();
+        }
+    }
+
+    public void Dispose()
+    {
+        State.Changed -= HandleStateChanged;
+    }
+
+    private void HandleStateChanged()
+    {
+        if (State.IsRecorderSavePanelOpen && State.LastRecordingResult is not null && string.IsNullOrEmpty(_flowId))
+        {
+            InitializeDefaults();
+        }
+
+        InvokeAsync(StateHasChanged);
+    }
+
+    private void InitializeDefaults()
+    {
+        var result = State.LastRecordingResult;
+        if (result is null) return;
+
+        var ts = DateTimeOffset.Now.ToString("yyyyMMdd-HHmmss");
+        var processSlug = SlugifyProcessName(result.ProcessName ?? "app");
+        _flowId = $"recorded.{processSlug}.{ts}";
+        _flowName = BuildDefaultName(result);
+
+        var projectRoot = State.Snapshot?.Catalog.ProjectRoot;
+        if (!string.IsNullOrEmpty(projectRoot))
+        {
+            _savePath = Path.Combine(projectRoot, "flows", "recorded", $"{_flowId}.flow.yaml");
+        }
+
+        // Populate editable step list from the result.
+        _editableSteps = result.Steps.ToList();
+
+        // Collect unique AutomationIds for the assertion target dropdown.
+        _uniqueAutomationIds = result.Events
+            .Select(e => e.Element.AutomationId)
+            .Where(id => !string.IsNullOrWhiteSpace(id))
+            .Distinct(StringComparer.Ordinal)
+            .OrderBy(id => id, StringComparer.OrdinalIgnoreCase)
+            .ToList();
+
+        // Compute which events were NOT turned into steps.
+        BuildFilteredEvents(result.Events);
+    }
+
+    private void BuildFilteredEvents(IReadOnlyList<RecordedEvent> rawEvents)
+    {
+        // Events whose kind maps to nothing actionable in the standard inference
+        // (focus events, key-downs with no key, etc.) are "filtered".
+        // Simpler approach: show events that did not produce a corresponding step
+        // by matching on kind — FocusChanged is always filtered, other kinds may pass through.
+        _filteredEvents = rawEvents
+            .Where(e => e.Kind == EventKind.FocusChanged
+                || (e.Kind == EventKind.KeyDown && string.IsNullOrWhiteSpace(e.Key)))
+            .ToList();
+    }
+
+    private void DeleteStep(int index)
+    {
+        if (index >= 0 && index < _editableSteps.Count)
+        {
+            _editableSteps.RemoveAt(index);
+        }
+    }
+
+    private void RerunInference()
+    {
+        var result = State.LastRecordingResult;
+        if (result is null) return;
+
+        var engine = new StepInferenceEngine();
+        var options = new InferenceOptions
+        {
+            DebounceWindow = TimeSpan.FromMilliseconds(50),
+            IgnoreFocusEvents = true,
+            AssertionTargetAutomationId = string.IsNullOrWhiteSpace(_assertionTargetId) ? null : _assertionTargetId
+        };
+        _editableSteps = engine.Infer(result.Events, options).ToList();
+        BuildFilteredEvents(result.Events);
+    }
+
+    private async Task SaveAsync()
+    {
+        _saveError = string.Empty;
+        _saving = true;
+        StateHasChanged();
+
+        try
+        {
+            var result = State.LastRecordingResult;
+            if (result is null)
+            {
+                _saveError = "No recording result available.";
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(_savePath))
+            {
+                _saveError = "Please enter a save path.";
+                return;
+            }
+
+            var metadata = new RecordedFlowSerializer.RecordedFlowMetadata
+            {
+                Id = string.IsNullOrWhiteSpace(_flowId) ? "recorded-flow" : _flowId,
+                Name = string.IsNullOrWhiteSpace(_flowName) ? "Recorded flow" : _flowName,
+                Capability = string.IsNullOrWhiteSpace(_capability) ? null : _capability,
+                AttachProcessName = result.ProcessName,
+            };
+
+            var serializer = new RecordedFlowSerializer();
+            serializer.SaveToFile(_editableSteps, metadata, _savePath);
+
+            // Track the saved path so the Replay button can use it.
+            _savedPath = _savePath;
+            _replayStatus = string.Empty;
+
+            // Refresh the project so the new flow appears in the Explorer.
+            State.RefreshProject();
+
+            // Do NOT close the panel automatically — user may want to Replay next.
+        }
+        catch (Exception ex)
+        {
+            _saveError = ex.Message;
+        }
+        finally
+        {
+            _saving = false;
+            StateHasChanged();
+        }
+    }
+
+    private async Task ReplayAsync()
+    {
+        if (_savedPath is null) return;
+
+        var projectPath = State.Snapshot?.Catalog.ProjectRoot;
+        if (string.IsNullOrWhiteSpace(projectPath))
+        {
+            _replayStatus = "Cannot replay: no project is loaded.";
+            _replayStatusCssClass = "diagnostic--error";
+            return;
+        }
+
+        _replaying = true;
+        _replayStatus = "Replaying...";
+        _replayStatusCssClass = string.Empty;
+        StateHasChanged();
+
+        try
+        {
+            var result = await State.RecorderService.ReplayRecordedFlowAsync(_savedPath, projectPath);
+            _replayStatus = result.Passed
+                ? $"Passed — {result.Summary}"
+                : $"Failed — {result.Summary}";
+            _replayStatusCssClass = result.Passed ? "diagnostic--success" : "diagnostic--error";
+        }
+        catch (Exception ex)
+        {
+            _replayStatus = $"Replay error: {ex.Message}";
+            _replayStatusCssClass = "diagnostic--error";
+        }
+        finally
+        {
+            _replaying = false;
+            StateHasChanged();
+        }
+    }
+
+    private void Discard()
+    {
+        ResetForm();
+        State.CloseSavePanel();
+    }
+
+    private void ResetForm()
+    {
+        _flowId = string.Empty;
+        _flowName = string.Empty;
+        _capability = string.Empty;
+        _savePath = string.Empty;
+        _saveError = string.Empty;
+        _assertionTargetId = string.Empty;
+        _editableSteps = [];
+        _filteredEvents = [];
+        _uniqueAutomationIds = [];
+        _savedPath = null;
+        _replaying = false;
+        _replayStatus = string.Empty;
+        _replayStatusCssClass = string.Empty;
+    }
+
+    // -------------------------------------------------------------------------
+    // Formatting helpers
+    // -------------------------------------------------------------------------
+
+    private static string BuildDefaultName(RecordingResult result)
+    {
+        var processName = result.ProcessName;
+        if (string.IsNullOrEmpty(processName))
+        {
+            return "Recorded flow";
+        }
+
+        var titleCase = char.ToUpperInvariant(processName[0]) + processName[1..].ToLowerInvariant();
+        return $"{titleCase} — recorded {DateTimeOffset.Now:yyyy-MM-dd HH:mm}";
+    }
+
+    private static string SlugifyProcessName(string name)
+        => new string(name.Select(c => char.IsLetterOrDigit(c) ? char.ToLowerInvariant(c) : '-').ToArray())
+            .Trim('-');
+
+    private static string FormatDuration(TimeSpan t)
+        => t.TotalMinutes >= 1
+            ? $"{(int)t.TotalMinutes}m {t.Seconds}s"
+            : $"{t.Seconds}s";
+
+    private static string StepKindIcon(StepKind kind)
+        => kind switch
+        {
+            StepKind.Click          => "↩",
+            StepKind.AssertText     => "✔",
+            StepKind.SetValue       => "✎",
+            StepKind.PressKey       => "⌨",
+            StepKind.WaitForWindow  => "⧉",
+            _                       => "●"
+        };
+
+    private static string StepKindCssClass(StepKind kind)
+        => kind switch
+        {
+            StepKind.Click          => "event-kind--invoke",
+            StepKind.AssertText     => "event-kind--assert",
+            StepKind.SetValue       => "event-kind--value",
+            StepKind.PressKey       => "event-kind--key",
+            StepKind.WaitForWindow  => "event-kind--window",
+            _                       => string.Empty
+        };
+
+    private static string EventKindIcon(EventKind kind)
+        => kind switch
+        {
+            EventKind.Invoke        => "↩",
+            EventKind.ValueChanged  => "✎",
+            EventKind.FocusChanged  => "⊙",
+            EventKind.KeyDown       => "⌨",
+            EventKind.WindowOpened  => "⧉",
+            _                       => "●"
+        };
+}

@@ -1,0 +1,62 @@
+@inject StudioWorkspaceState State
+@implements IDisposable
+
+<span class="record-button-wrap">
+@if (State.IsRecording)
+{
+    <button type="button" class="action-button record-active" @onclick="StopAsync"
+            title="Stop recording and save the captured flow">
+        <span class="record-dot record-dot--pulse" aria-hidden="true"></span>
+        Stop recording
+        @if (State.RecordingTargetName is not null)
+        {
+            <span class="record-elapsed">
+                @FormatElapsed(State.RecordedElapsed)&nbsp;·&nbsp;@State.RecordedEventCount&nbsp;events
+            </span>
+        }
+    </button>
+}
+else
+{
+    <button type="button" class="action-button record-idle" @onclick="OpenPickerAsync"
+            title="Record a new flow by capturing UI interactions">
+        <span class="record-dot" aria-hidden="true"></span>
+        Record
+    </button>
+}
+@if (!string.IsNullOrEmpty(State.RecordingError))
+{
+    <span class="record-error" role="alert">@State.RecordingError</span>
+}
+</span>
+
+@code {
+    protected override void OnInitialized()
+    {
+        State.Changed += HandleStateChanged;
+    }
+
+    public void Dispose()
+    {
+        State.Changed -= HandleStateChanged;
+    }
+
+    private void HandleStateChanged()
+        => InvokeAsync(StateHasChanged);
+
+    private Task OpenPickerAsync()
+    {
+        State.OpenRecorderPicker();
+        return Task.CompletedTask;
+    }
+
+    private async Task StopAsync()
+    {
+        await State.EndRecordingAsync();
+    }
+
+    private static string FormatElapsed(TimeSpan t)
+        => t.TotalHours >= 1
+            ? $"{(int)t.TotalHours}h {t.Minutes:D2}m {t.Seconds:D2}s"
+            : $"{t.Minutes}m {t.Seconds:D2}s";
+}

@@ -1,0 +1,10 @@
+{
+  "name": "@cress/plugin-host-node",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "host.js",
+  "dependencies": {
+    "@cress/sdk": "file:../cress-sdk"
+  }
+}
+

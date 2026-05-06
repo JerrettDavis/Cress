@@ -1,0 +1,6 @@
+version: 1
+fixtures:
+  httpbin-endpoint:
+    type: http-target
+    strategy: static
+    cleanup: never

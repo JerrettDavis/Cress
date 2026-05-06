@@ -1,0 +1,6 @@
+version: 1
+fixtures:
+  calculator-app:
+    type: desktop-app
+    strategy: attach-or-launch
+    cleanup: never

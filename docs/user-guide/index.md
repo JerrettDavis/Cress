@@ -23,6 +23,7 @@ The user guide focuses on the day-to-day authoring workflow: opening a project, 
 - [Testing desktop apps](testing-desktop-apps.md)
 - [Framework integrations](../developer-guide/test-framework-integrations.md)
 - [Framework demos and development-cycle integration](../developer-guide/test-framework-demos.md)
+- [Environment orchestration](../developer-guide/environment-orchestration.md)
 
 ## Testing targets
 
@@ -44,6 +45,16 @@ You can now generate framework-native C# tests that call the Cress engine direct
 3. CI pipelines run Cress-authored scenarios beside the rest of the product suite
 
 Start with the [framework integration guide](../developer-guide/test-framework-integrations.md).
+
+## GUI and code working together
+
+The strongest Cress setups combine:
+
+1. GUI-based authoring and evidence review in Studio or Studio Web
+2. code-based orchestration with AppHost, profiles, plugins, and generated xUnit/NUnit/MSTest tests
+3. environment-aware execution across services, browsers, desktop apps, and CLIs
+
+See [Environment orchestration](../developer-guide/environment-orchestration.md) for the end-to-end setup patterns.
 
 ## Where screenshots and wizard-style flows fit
 

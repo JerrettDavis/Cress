@@ -34,6 +34,8 @@ dotnet run --project src\Cress.AppHost\Cress.AppHost.csproj --configuration Rele
 
 This starts the Aspire AppHost that orchestrates Studio Web and the desktop Studio app.
 
+![Project loaded in Studio](../images/studio/project-loaded.png)
+
 ## 5. Build the docs site locally
 
 ```powershell

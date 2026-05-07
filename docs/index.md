@@ -66,6 +66,7 @@ Cress can now generate framework-native tests for teams that want Cress-authored
 
 - [xUnit, NUnit, and MSTest integration guide](developer-guide/test-framework-integrations.md)
 - [Framework demos and development-cycle integration](developer-guide/test-framework-demos.md)
+- [Environment orchestration](developer-guide/environment-orchestration.md)
 
 ## Studio at a glance
 

@@ -11,6 +11,8 @@ This page shows how teams can use Cress-authored flows in **xUnit**, **NUnit**, 
 | CLI smoke | `demos\cmd-smoke` | MSTest | good for internal tooling, installers, release helpers, and admin utilities; create this demo project from the CLI walkthrough first |
 | Web smoke | `specs\web-smoke` | xUnit or NUnit | good for portals that need browser coverage alongside service or component tests |
 
+![Project loaded in Studio](../images/studio/project-loaded.png)
+
 ## Demo 1: service smoke in xUnit
 
 Use the built-in HTTP sample as a lightweight API test that product engineers can run with the rest of their suite.
@@ -105,6 +107,8 @@ dotnet run --project src\Cress.Cli\Cress.Cli.csproj -- export xunit specs\web-sm
 
 The strongest adoption pattern is to treat Cress as the **flow authoring and execution engine** while letting the host test framework remain the team's operational entry point.
 
+![Metrics tab](../images/studio/metrics-tab.png)
+
 ### 1. Author
 
 Designers, QA, or SDETs:
@@ -191,6 +195,10 @@ jobs:
             **\TestResults\**
             **\artifacts\**
 ```
+
+When the run fails, the same evidence can be reviewed in the GUI-oriented results surface during local reproduction.
+
+![Results panel](../images/studio/results-panel.png)
 
 ## Recommended ownership model
 

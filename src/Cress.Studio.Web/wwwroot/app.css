@@ -525,6 +525,10 @@ svg {
     padding: 0;
 }
 
+.panel-focus {
+    box-shadow: inset 3px 0 0 var(--color-accent);
+}
+
 .card,
 .subpanel {
     border: 1px solid var(--color-border);
@@ -595,6 +599,82 @@ svg {
     flex-wrap: wrap;
     justify-content: flex-end;
     gap: 0.35rem;
+}
+
+.onboarding-panel {
+    padding: 0.75rem;
+}
+
+.onboarding-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+}
+
+.workspace-chip {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 0.5rem;
+    border: 1px solid var(--color-border);
+    background: var(--color-surface-inset);
+    overflow-wrap: anywhere;
+}
+
+.demo-card-list,
+.workspace-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.demo-card,
+.node-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    padding: 0.65rem;
+    border: 1px solid var(--color-border);
+    background: var(--color-surface-inset);
+}
+
+.demo-card p,
+.node-card p {
+    margin: 0;
+    color: var(--color-muted);
+    font-size: 12px;
+    line-height: 1.45;
+}
+
+.demo-card-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+}
+
+.demo-card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+}
+
+.workspace-list-button {
+    align-items: flex-start;
+}
+
+.workspace-list-button strong,
+.workspace-list-button span {
+    text-align: left;
+}
+
+.node-card--selected {
+    border-color: var(--color-accent-border);
+    background: var(--color-accent-soft);
+}
+
+.workspace-pill {
+    border-color: var(--color-accent-border);
+    color: var(--color-accent);
 }
 
 /* Old status cards in hero — replaced by bottom status bar. Keep hidden. */
@@ -668,6 +748,16 @@ svg {
     flex-wrap: wrap;
     gap: 0.25rem;
     align-items: flex-start;
+}
+
+.workspace-path-row {
+    display: flex;
+    gap: 0.4rem;
+    align-items: center;
+}
+
+.workspace-path-row .text-input {
+    flex: 1;
 }
 
 .toolbar-primary {
@@ -2264,6 +2354,73 @@ input[type="checkbox"] {
     flex-shrink: 0;
 }
 
+.workspace-picker-body {
+    gap: 0.75rem;
+}
+
+.workspace-picker-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: flex-end;
+    margin-bottom: 0.75rem;
+}
+
+.workspace-picker-location {
+    flex: 1 1 20rem;
+}
+
+.workspace-picker-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+}
+
+.workspace-picker-error {
+    margin-bottom: 0.75rem;
+    padding: 0.45rem 0.6rem;
+    border: 1px solid var(--color-danger-border);
+    background: var(--color-danger-soft);
+    color: var(--color-danger);
+    font-size: 12px;
+}
+
+.workspace-picker-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+}
+
+.workspace-picker-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.75rem;
+    align-items: center;
+    padding: 0.6rem;
+    border: 1px solid var(--color-border);
+    background: var(--color-surface-inset);
+}
+
+.workspace-picker-entry {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    min-width: 0;
+}
+
+.workspace-picker-entry strong,
+.workspace-picker-entry span {
+    overflow-wrap: anywhere;
+}
+
+.workspace-picker-meta,
+.workspace-picker-row-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    align-items: center;
+}
+
 /* ==========================================================================
    Picker tab bar — Desktop | Web segmented control (V5)
    ========================================================================== */
@@ -2315,6 +2472,10 @@ input[type="checkbox"] {
     .action-button .btn-label,
     .toolbar-primary .action-button > span:not(.toolbar-divider) {
         display: none;
+    }
+
+    .onboarding-grid {
+        grid-template-columns: minmax(0, 1fr);
     }
 }
 

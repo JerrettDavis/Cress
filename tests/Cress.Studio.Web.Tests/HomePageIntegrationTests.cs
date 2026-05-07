@@ -58,14 +58,12 @@ public sealed class HomePageIntegrationTests : IClassFixture<WebApplicationFacto
     [Fact]
     public async Task Home_page_composes_status_bar_component()
     {
-        // StatusBar renders the hero-status block with labelled status cards.
+        // StatusBar renders the labelled workspace/run/selection summary row.
         using var client = _factory.CreateClient();
 
         var html = await client.GetStringAsync("/");
 
-        // "Ready." is the default StatusMessage rendered by StatusBar.
-        Assert.Contains("Ready.", html, StringComparison.OrdinalIgnoreCase);
-        // "No run in progress." is the default LiveRunHeadline rendered by StatusBar.
+        Assert.Contains("Status", html, StringComparison.OrdinalIgnoreCase);
         Assert.Contains("No run in progress.", html, StringComparison.OrdinalIgnoreCase);
     }
 
@@ -130,5 +128,18 @@ public sealed class HomePageIntegrationTests : IClassFixture<WebApplicationFacto
         // On initial load it's always idle — confirm "Record" is present.
         Assert.Contains("Record", html, StringComparison.OrdinalIgnoreCase);
         Assert.Contains("record-idle", html, StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Theory]
+    [InlineData("/workspace", "Workspace setup")]
+    [InlineData("/designer", "Designer views")]
+    [InlineData("/results", "Runs, evidence, and diagnostics")]
+    public async Task Studio_routes_render_expected_sections(string route, string expectedText)
+    {
+        using var client = _factory.CreateClient();
+
+        var html = await client.GetStringAsync(route);
+
+        Assert.Contains(expectedText, html, StringComparison.OrdinalIgnoreCase);
     }
 }

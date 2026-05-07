@@ -1,15 +1,19 @@
 @page "/"
+@page "/workspace"
+@page "/designer"
+@page "/results"
 @rendermode InteractiveServer
 @implements IDisposable
 @inject StudioWorkspaceState State
 @inject IJSRuntime JS
+@inject NavigationManager Navigation
 
 <PageTitle>Cress Studio Web</PageTitle>
 
 <div class="studio-shell">
     @if (!State.HasLoadedProject)
     {
-        <section id="workspace" class="card hero-panel" aria-labelledby="studio-home-title">
+        <section class="card hero-panel" aria-labelledby="studio-home-title">
             <div class="hero-header">
                 <div>
                     <h1 id="studio-home-title">Test automation studio</h1>
@@ -28,7 +32,131 @@
         <h1 id="studio-home-title" class="visually-hidden">Test automation studio</h1>
     }
 
-    <section class="card toolbar-panel" aria-labelledby="workspace-setup-title">
+    @if (!State.HasLoadedProject)
+    {
+        <section class="card onboarding-panel" aria-labelledby="studio-quickstart-title">
+            <div class="panel-header">
+                <div class="panel-heading">
+                    <h2 id="studio-quickstart-title">Start with a real workspace</h2>
+                    <p>Pick a folder on this machine, reopen a recent workspace, or launch one of the built-in demos before you touch the designer.</p>
+                </div>
+            </div>
+
+            <div class="onboarding-grid">
+                <section class="subpanel">
+                    <div class="subpanel-header">
+                        <div>
+                            <h3>Suggested workspace</h3>
+                            <p>Studio now starts from a known Cress sample instead of the web app folder.</p>
+                        </div>
+                    </div>
+
+                    @if (string.IsNullOrWhiteSpace(State.SuggestedWorkspacePath))
+                    {
+                        <p class="subpanel-empty">No suggested workspace was detected in this environment. Browse for a folder or load a demo.</p>
+                    }
+                    else
+                    {
+                        <div class="workspace-chip">
+                            <strong>@State.SuggestedWorkspacePath</strong>
+                        </div>
+                        <div class="helper-actions">
+                            <button type="button" class="action-button primary" @onclick="UseSuggestedWorkspace">Use suggested</button>
+                            <button type="button" class="action-button success" @onclick="LoadSuggestedWorkspace">Load suggested</button>
+                            <button type="button" class="action-button" @onclick="OpenWorkspacePicker">Browse folders</button>
+                        </div>
+                    }
+                </section>
+
+                <section class="subpanel">
+                    <div class="subpanel-header">
+                        <div>
+                            <h3>Recent workspaces</h3>
+                            <p>Jump back into the last folders you opened from this browser session profile.</p>
+                        </div>
+                    </div>
+
+                    @if (!State.HasRecentWorkspaces)
+                    {
+                        <p class="subpanel-empty">No recent workspaces yet. Load a project once and it will appear here automatically.</p>
+                    }
+                    else
+                    {
+                        <div class="workspace-list">
+                            @foreach (var recent in State.RecentWorkspaces)
+                            {
+                                <button type="button" class="explorer-button workspace-list-button" @onclick="@(() => LoadRecentWorkspace(recent))">
+                                    <strong>@Path.GetFileName(recent)</strong>
+                                    <span>@recent</span>
+                                </button>
+                            }
+                        </div>
+                    }
+                </section>
+
+                <section class="subpanel">
+                    <div class="subpanel-header">
+                        <div>
+                            <h3>Built-in demos</h3>
+                            <p>Open a concrete sample for service, browser, or desktop coverage without hunting through the repo.</p>
+                        </div>
+                    </div>
+
+                    <div class="demo-card-list">
+                        @foreach (var demo in State.DemoWorkspaces)
+                        {
+                            <article class="demo-card">
+                                <div class="demo-card-copy">
+                                    <strong>@demo.Title</strong>
+                                    <p>@demo.Description</p>
+                                    <div class="demo-card-tags">
+                                        @foreach (var tag in demo.Tags)
+                                        {
+                                            <span class="pill">@tag</span>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="helper-actions">
+                                    <button type="button" class="action-button success" @onclick="@(() => LoadDemoWorkspace(demo.Id))">Load demo</button>
+                                    <button type="button" class="action-button" @onclick="@(() => UseDemoWorkspace(demo.Id))">Use path</button>
+                                </div>
+                            </article>
+                        }
+                    </div>
+                </section>
+
+                <section class="subpanel">
+                    <div class="subpanel-header">
+                        <div>
+                            <h3>Execution nodes</h3>
+                            <p>Today the app runs through the embedded local node. This panel is the starting point for remote-node orchestration.</p>
+                        </div>
+                    </div>
+
+                    <div class="workspace-list">
+                        @foreach (var node in State.RunnerNodes)
+                        {
+                            <div class="node-card @(State.SelectedRunnerNodeId == node.Id ? "node-card--selected" : string.Empty)">
+                                <div>
+                                    <strong>@node.Name</strong>
+                                    <div class="muted">@node.DisplayName</div>
+                                </div>
+                                <p>@node.Description</p>
+                                <div class="demo-card-tags">
+                                    @foreach (var capability in node.Capabilities)
+                                    {
+                                        <span class="pill">@capability</span>
+                                    }
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </section>
+            </div>
+        </section>
+    }
+
+    <section id="workspace" class="@GetSectionClass("workspace", "card toolbar-panel")" aria-labelledby="workspace-setup-title">
         <div class="panel-header">
             <div class="panel-heading">
                 <h2 id="workspace-setup-title">Workspace setup</h2>
@@ -44,8 +172,11 @@
             <div class="toolbar-grid">
                 <div class="field-stack">
                     <label for="workspacePath">Workspace or project path</label>
-                    <input id="workspacePath" class="text-input" @bind="State.ProjectPathInput" placeholder="C:\path\to\project or workspace" />
-                    <span class="field-hint">Use a project or workspace root so flows, suites, reports, and artifacts stay connected.</span>
+                    <div class="workspace-path-row">
+                        <input id="workspacePath" class="text-input" @bind="State.ProjectPathInput" placeholder="C:\path\to\project or workspace" />
+                        <button type="button" class="action-button" @onclick="OpenWorkspacePicker" title="Browse folders on the host machine">Browse</button>
+                    </div>
+                    <span class="field-hint">Use a project or workspace root so flows, suites, reports, and artifacts stay connected. Blank paths no longer fall back to the web app folder.</span>
                 </div>
                 <div class="field-stack">
                     <label for="profileSelect">Profile</label>
@@ -73,6 +204,28 @@
                         <option value="off">Off</option>
                     </select>
                     <span class="field-hint">Capture enough evidence for triage while keeping routine runs lightweight.</span>
+                </div>
+            </div>
+
+            <div class="toolbar-grid">
+                <div class="field-stack">
+                    <label for="runnerNode">Execution node</label>
+                    <select id="runnerNode" class="text-input" @bind="State.SelectedRunnerNodeId">
+                        @foreach (var node in State.RunnerNodes)
+                        {
+                            <option value="@node.Id">@node.DisplayName</option>
+                        }
+                    </select>
+                    <span class="field-hint">The local embedded node runs flows in-process today; remote nodes will plug into this same orchestration slot.</span>
+                </div>
+                <div class="field-stack">
+                    <label>Quick workspace actions</label>
+                    <div class="helper-actions">
+                        <button type="button" class="action-button" @onclick="UseSuggestedWorkspace" disabled="@string.IsNullOrWhiteSpace(State.SuggestedWorkspacePath)">Use suggested path</button>
+                        <button type="button" class="action-button" @onclick="OpenWorkspacePicker">Browse folders</button>
+                        <button type="button" class="action-button" @onclick="LoadFirstDemo" disabled="@(State.DemoWorkspaces.Count == 0)">Load first demo</button>
+                    </div>
+                    <span class="field-hint">Use demos and recent folders to get into the designer quickly instead of typing paths from memory.</span>
                 </div>
             </div>
         </div>
@@ -137,7 +290,7 @@
     <div class="studio-grid">
         <ExplorerPanel />
 
-        <section id="designer" class="card editor-panel" aria-labelledby="designer-title">
+        <section id="designer" class="@GetSectionClass("designer", "card editor-panel")" aria-labelledby="designer-title">
             <div class="panel-header">
                 <div class="panel-heading">
                     <h2 id="designer-title">Designer</h2>
@@ -253,16 +406,48 @@
     <RecordingTargetPicker />
     <RecordingSavePanel />
     <RecordingLivePanel />
+    <WorkspacePickerDialog />
 </div>
 
 @code {
     private string _editorTab = "overview";
+    private string _shellSection = "workspace";
     private string? _lastObservedFlowFilePath;
     private string? _lastObservedSuiteFilePath;
+    private string? _pendingScrollTargetId;
+    private string _recentWorkspacesSnapshot = string.Empty;
 
     protected override void OnInitialized()
     {
         State.Changed += HandleStateChanged;
+        UpdateShellSectionFromUri();
+    }
+
+    protected override void OnParametersSet()
+    {
+        UpdateShellSectionFromUri();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            var recentWorkspaces = await JS.InvokeAsync<string[]>("cressStudio.getRecentWorkspaces");
+            State.SetRecentWorkspaces(recentWorkspaces);
+        }
+
+        if (!string.IsNullOrWhiteSpace(_pendingScrollTargetId))
+        {
+            await JS.InvokeVoidAsync("cressStudio.scrollSectionIntoView", _pendingScrollTargetId);
+            _pendingScrollTargetId = null;
+        }
+
+        var currentSnapshot = string.Join("||", State.RecentWorkspaces);
+        if (!string.Equals(currentSnapshot, _recentWorkspacesSnapshot, StringComparison.Ordinal))
+        {
+            _recentWorkspacesSnapshot = currentSnapshot;
+            await JS.InvokeVoidAsync("cressStudio.setRecentWorkspaces", State.RecentWorkspaces.ToArray());
+        }
     }
 
     public void Dispose()
@@ -290,11 +475,63 @@
         InvokeAsync(StateHasChanged);
     }
 
+    private void UpdateShellSectionFromUri()
+    {
+        var relative = Navigation.ToBaseRelativePath(Navigation.Uri);
+        var normalized = string.IsNullOrWhiteSpace(relative)
+            ? "workspace"
+            : relative.Trim('/').ToLowerInvariant();
+
+        _shellSection = normalized switch
+        {
+            "designer" => "designer",
+            "results" => "results",
+            _ => "workspace"
+        };
+        _pendingScrollTargetId = _shellSection;
+    }
+
     private Task LoadProjectAsync()
     {
         _editorTab = "overview";
         State.LoadProject();
         return Task.CompletedTask;
+    }
+
+    private void OpenWorkspacePicker()
+        => State.OpenWorkspacePicker();
+
+    private void UseSuggestedWorkspace()
+        => State.UseSuggestedWorkspace();
+
+    private Task LoadSuggestedWorkspace()
+    {
+        State.UseSuggestedWorkspace();
+        return LoadProjectAsync();
+    }
+
+    private void LoadRecentWorkspace(string path)
+        => State.LoadRecentWorkspace(path);
+
+    private void UseDemoWorkspace(string demoId)
+    {
+        var demo = State.DemoWorkspaces.FirstOrDefault(item => string.Equals(item.Id, demoId, StringComparison.OrdinalIgnoreCase));
+        if (demo is not null)
+        {
+            State.SetProjectPath(demo.ProjectPath);
+        }
+    }
+
+    private void LoadDemoWorkspace(string demoId)
+        => State.LoadDemoWorkspace(demoId);
+
+    private void LoadFirstDemo()
+    {
+        var demo = State.DemoWorkspaces.FirstOrDefault();
+        if (demo is not null)
+        {
+            State.LoadDemoWorkspace(demo.Id);
+        }
     }
 
     private Task RefreshProjectAsync()
@@ -372,4 +609,9 @@
 
     private string GetTabClass(string tab)
         => _editorTab == tab ? "tab-button active" : "tab-button";
+
+    private string GetSectionClass(string section, string baseClass)
+        => string.Equals(_shellSection, section, StringComparison.OrdinalIgnoreCase)
+            ? $"{baseClass} panel-focus"
+            : baseClass;
 }

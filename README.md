@@ -8,11 +8,12 @@ Cress is a **.NET 10 / C# latest** end-to-end testing platform for Windows, with
 
 ## Guides and examples
 
-See [docs/README.md](docs/README.md) for:
+See [docs/README.md](docs/README.md) and the published DocFX site at <https://jerrettdavis.github.io/Cress/> for:
 
 - step-by-step web app automation walkthroughs
 - step-by-step desktop app automation walkthroughs
 - Studio screenshots and user guides
+- getting-started, user, developer, and API guides
 - integration guidance for bringing Cress into your systems
 - design guidance for making your apps easier to automate with Cress
 
@@ -25,6 +26,7 @@ See [docs/README.md](docs/README.md) for:
 ## Restore and build
 
 ```powershell
+dotnet tool restore
 npm ci
 dotnet restore Cress.sln
 dotnet build Cress.sln --configuration Release --no-restore
@@ -52,6 +54,9 @@ dotnet test Cress.sln --configuration Release --no-build
 # Node test suite
 node --test node/tests/*.test.mjs
 
+# DocFX site build
+dotnet tool run docfx docs\docfx.json --output artifacts\docs-site
+
 # Living docs preview
 dotnet run --project src\Cress.Cli\Cress.Cli.csproj --configuration Release -- doc generate specs\httpbin-smoke --output artifacts\docs\httpbin-smoke.html --template executive
 ```
@@ -65,13 +70,14 @@ GitHub Actions now validates the repo with:
 | `ci.yml` | Windows build, CI-safe .NET coverage run, Node tests, coverage publishing, and Aspire AppHost smoke validation |
 | `codeql.yml` | Static analysis for C# and JavaScript |
 | `dependency-review.yml` | Pull request dependency risk review |
-| `docs.yml` | Living-doc generation preview from the sample spec project |
+| `docs.yml` | DocFX site build, preview artifact publishing, and GitHub Pages deployment |
 
-The CI workflow publishes:
+The CI workflows publish:
 
 - TRX test results
 - Cobertura + HTML coverage artifacts
 - AppHost startup logs
+- DocFX site preview artifacts
 - A sticky PR coverage summary
 
 Desktop-display automation remains covered by the local Windows suite, but the hosted GitHub runner uses the CI-safe subset because FlaUI and full Studio E2E can be disrupted by the shared desktop session model on `windows-latest`.

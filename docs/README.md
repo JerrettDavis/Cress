@@ -1,16 +1,25 @@
-# Cress guides and examples
+# Cress documentation
 
-This doc set shows how to use **Cress Studio**, **Cress Studio Web**, the **CLI**, and the **sample spec projects** to design, author, run, and integrate end-to-end automation.
+The repository now includes a **DocFX-powered documentation site** with:
+
+- getting-started guides
+- user guides with screenshots and step-by-step flows
+- developer guides for local setup, extensibility, and CI
+- API guides and generated .NET reference
+
+## Published site
+
+- GitHub Pages: <https://jerrettdavis.github.io/Cress/>
+- DocFX config: `docs\docfx.json`
 
 ## Start here
 
-| Guide | What it covers |
+| Section | What it covers |
 | --- | --- |
-| [Studio workflow](guides/studio-workflow.md) | Tour the main authoring surfaces, screenshots, and day-to-day workflow |
-| [Web app automation](guides/web-app-automation.md) | Step-by-step workflow for recording and refining browser automation |
-| [Desktop app automation](guides/desktop-app-automation.md) | Step-by-step workflow for authoring FlaUI-backed Windows desktop automation |
-| [Integrating with your system](guides/integrating-with-your-system.md) | How to connect Cress to your environments, CI, and reporting flow |
-| [Designing for Cress](guides/designing-for-cress.md) | How to make your web and desktop apps easier to automate reliably |
+| [Getting started](getting-started/index.md) | prerequisites, onboarding path selection, and first-run quickstarts |
+| [User guide](user-guide/index.md) | Studio walkthroughs, recording flows, authoring guidance, and debugging |
+| [Developer guide](developer-guide/index.md) | repository structure, local development, extensibility, and docs/CI |
+| [API guide](api/index.md) | CLI command reference, project schema, and generated API reference |
 
 ## Built-in demo material
 
@@ -18,14 +27,17 @@ These repo examples back the guides and are good starting points for your own pr
 
 | Example | Focus |
 | --- | --- |
-| `specs\httpbin-smoke` | HTTP-only project, validation, reporting, living docs |
-| `specs\web-smoke` | Browser flow structure, locator strategy, Playwright-backed steps |
-| `specs\calc-smoke` | Desktop/FlaUI project structure and profile shape |
-| `tests\Cress.Studio.E2ETests\Fixtures\StudioSampleProject` | End-to-end Studio sample project used in the desktop walkthrough |
+| `specs\httpbin-smoke` | HTTP-only project, validation, reporting, and living docs |
+| `specs\web-smoke` | browser flow structure, locator strategy, and Playwright-backed steps |
+| `specs\calc-smoke` | desktop/FlaUI project structure and profile shape |
+| `tests\Cress.Studio.E2ETests\Fixtures\StudioSampleProject` | Studio sample project used in the desktop walkthrough |
 
-## Recommended learning path
+## Legacy repo-browsing guides
 
-1. Read the [Studio workflow](guides/studio-workflow.md) to understand the surfaces.
-2. Follow either the [web](guides/web-app-automation.md) or [desktop](guides/desktop-app-automation.md) guide.
-3. Use [Integrating with your system](guides/integrating-with-your-system.md) to wire the project into your delivery pipeline.
-4. Share [Designing for Cress](guides/designing-for-cress.md) with the teams building the systems you want to automate.
+The original markdown walkthroughs remain available in `docs\guides\` for direct repo browsing:
+
+- [Studio workflow](guides/studio-workflow.md)
+- [Web app automation](guides/web-app-automation.md)
+- [Desktop app automation](guides/desktop-app-automation.md)
+- [Integrating with your system](guides/integrating-with-your-system.md)
+- [Designing for Cress](guides/designing-for-cress.md)

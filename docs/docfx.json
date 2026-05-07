@@ -1,0 +1,69 @@
+{
+  "$schema": "https://raw.githubusercontent.com/dotnet/docfx/main/schemas/docfx.schema.json",
+  "metadata": [
+    {
+      "src": [
+        {
+          "src": "..",
+          "files": [
+            "src/**/*.csproj"
+          ],
+          "exclude": [
+            "src/Cress.AppHost/Cress.AppHost.csproj",
+            "src/Cress.Recorder.PoC/Cress.Recorder.PoC.csproj",
+            "src/Cress.Studio/Cress.Studio.csproj",
+            "src/Cress.Studio.Web/Cress.Studio.Web.csproj"
+          ]
+        }
+      ],
+      "dest": "reference/api"
+    }
+  ],
+  "build": {
+    "content": [
+      {
+        "files": [
+          "README.md",
+          "index.md",
+          "toc.yml",
+          "getting-started/**/*.md",
+          "getting-started/**/toc.yml",
+          "user-guide/**/*.md",
+          "user-guide/**/toc.yml",
+          "developer-guide/**/*.md",
+          "developer-guide/**/toc.yml",
+          "api/**/*.md",
+          "api/**/toc.yml",
+          "reference/**/*.md",
+          "reference/**/toc.yml",
+          "guides/**/*.md"
+        ]
+      },
+      {
+        "files": [
+          "reference/api/**/*.yml"
+        ]
+      }
+    ],
+    "resource": [
+      {
+        "files": [
+          "images/**"
+        ]
+      }
+    ],
+    "dest": "_site",
+    "globalMetadata": {
+      "_appTitle": "Cress documentation",
+      "_appName": "Cress",
+      "_appFooter": "Cress documentation site",
+      "_enableSearch": true,
+      "_disableContribution": true
+    },
+    "template": [
+      "default",
+      "modern"
+    ],
+    "markdownEngineName": "markdig"
+  }
+}

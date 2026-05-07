@@ -1,0 +1,10 @@
+- name: User guide
+  href: index.md
+- name: Studio overview
+  href: studio-overview.md
+- name: Recording workflows
+  href: recording-workflows.md
+- name: Authoring flows
+  href: authoring-flows.md
+- name: Running and debugging
+  href: running-and-debugging.md

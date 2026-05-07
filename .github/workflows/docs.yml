@@ -7,27 +7,35 @@ on:
       - README.md
       - docs/**
       - .github/workflows/docs.yml
-      - src/Cress.LivingDocs/**
-      - src/Cress.Cli/**
-      - specs/**
+      - src/**
+      - .config/dotnet-tools.json
+      - Directory.Build.props
+      - Directory.Packages.props
+      - global.json
   pull_request:
     branches: [main]
     paths:
       - README.md
       - docs/**
       - .github/workflows/docs.yml
-      - src/Cress.LivingDocs/**
-      - src/Cress.Cli/**
-      - specs/**
+      - src/**
+      - .config/dotnet-tools.json
+      - Directory.Build.props
+      - Directory.Packages.props
+      - global.json
   workflow_dispatch:
 
 permissions:
   contents: read
 
+concurrency:
+  group: docs-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  living-doc-preview:
+  build-docfx:
     runs-on: windows-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
 
     steps:
       - name: Checkout
@@ -38,24 +46,46 @@ jobs:
         with:
           global-json-file: global.json
 
+      - name: Restore local tools
+        run: dotnet tool restore
+
       - name: Restore
         run: dotnet restore Cress.sln
 
       - name: Build
         run: dotnet build Cress.sln --configuration Release --no-restore /p:ContinuousIntegrationBuild=true
 
-      - name: Generate living docs preview
-        run: >
-          dotnet run --project src\Cress.Cli\Cress.Cli.csproj
-          --configuration Release
-          --no-build
-          --
-          doc generate specs\httpbin-smoke
-          --output artifacts\docs\httpbin-smoke.html
-          --template executive
+      - name: Build DocFX site
+        run: dotnet tool run docfx docs\docfx.json --output artifacts\docs-site
 
-      - name: Upload docs preview
+      - name: Upload docs preview artifact
         uses: actions/upload-artifact@v4
         with:
-          name: docs-preview
-          path: artifacts\docs
+          name: docs-site-preview
+          path: artifacts\docs-site
+
+      - name: Configure Pages
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        uses: actions/configure-pages@v5
+
+      - name: Upload GitHub Pages artifact
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: artifacts\docs-site
+
+  deploy-docfx:
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    needs: build-docfx
+    runs-on: windows-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

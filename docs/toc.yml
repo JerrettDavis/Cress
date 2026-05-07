@@ -1,0 +1,48 @@
+- name: Home
+  href: index.md
+- name: Getting started
+  items:
+    - name: Overview
+      href: getting-started/index.md
+    - name: HTTP quickstart
+      href: getting-started/quickstart-http.md
+    - name: Web quickstart
+      href: getting-started/quickstart-web.md
+    - name: Desktop quickstart
+      href: getting-started/quickstart-desktop.md
+- name: User guide
+  items:
+    - name: Overview
+      href: user-guide/index.md
+    - name: Studio overview
+      href: user-guide/studio-overview.md
+    - name: Recording workflows
+      href: user-guide/recording-workflows.md
+    - name: Authoring flows
+      href: user-guide/authoring-flows.md
+    - name: Running and debugging
+      href: user-guide/running-and-debugging.md
+- name: Developer guide
+  items:
+    - name: Overview
+      href: developer-guide/index.md
+    - name: Repository overview
+      href: developer-guide/repository-overview.md
+    - name: Local development
+      href: developer-guide/local-development.md
+    - name: Extensibility
+      href: developer-guide/extensibility.md
+    - name: Designing for automation
+      href: developer-guide/designing-for-automation.md
+    - name: Docs and CI
+      href: developer-guide/docs-and-ci.md
+- name: API guide
+  items:
+    - name: Overview
+      href: api/index.md
+    - name: CLI reference
+      href: api/cli-reference.md
+    - name: Project schema
+      href: api/project-schema.md
+    - name: Generated API reference
+      href: reference/api/index.md

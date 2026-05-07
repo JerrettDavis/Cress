@@ -13,6 +13,7 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddCressStudioBackend(this IServiceCollection services)
         => services
             .AddCressRuntime()
+            .AddCressFlaUiRuntime()
             .AddSingleton<ProjectValidator>()
             .AddSingleton<StepStubGenerator>()
             .AddSingleton<RunResultRepository>()

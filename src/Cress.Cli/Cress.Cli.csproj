@@ -7,20 +7,35 @@
     <ProjectReference Include="..\Cress.Execution\Cress.Execution.csproj" />
     <ProjectReference Include="..\Cress.Gherkin\Cress.Gherkin.csproj" />
     <ProjectReference Include="..\Cress.Importers\Cress.Importers.csproj" />
-    <ProjectReference Include="..\Cress.Studio.Core\Cress.Studio.Core.csproj" />
     <ProjectReference Include="..\Cress.LivingDocs\Cress.LivingDocs.csproj" />
     <ProjectReference Include="..\Cress.Exporters\Cress.Exporters.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net10.0-windows</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <AssemblyName>cress</AssemblyName>
     <RootNamespace>Cress.Cli</RootNamespace>
+    <PackAsTool>true</PackAsTool>
+    <ToolCommandName>cress</ToolCommandName>
+    <PackageId>Cress.Cli</PackageId>
+    <PackageTitle>Cress CLI</PackageTitle>
+    <Description>Workflow-first CLI for Cress project validation, execution, reporting, and export.</Description>
+    <Authors>Jerrett Davis</Authors>
+    <PackageProjectUrl>https://github.com/JerrettDavis/Cress</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/JerrettDavis/Cress</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <PackageTags>testing;automation;e2e;playwright;desktop;http;dotnet-tool</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
     <PackageReference Include="System.CommandLine" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
 </Project>

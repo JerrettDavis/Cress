@@ -32,6 +32,20 @@ dotnet restore Cress.sln
 dotnet build Cress.sln --configuration Release --no-restore
 ```
 
+## Fastest first run
+
+If you want the quickest proof that Cress can run a real flow, pack the CLI as a local dotnet tool and run the built-in HTTP sample:
+
+```powershell
+dotnet pack src\Cress.Cli\Cress.Cli.csproj --configuration Release --output artifacts\packages
+dotnet tool install --tool-path .\.tools\cress --add-source artifacts\packages Cress.Cli
+Set-Location specs\httpbin-smoke
+..\..\.tools\cress\cress validate
+..\..\.tools\cress\cress run flows\httpbin\get-smoke.flow.yaml --report html,json,junit
+```
+
+For the reusable CI path, see the GitHub Actions guide in `docs\developer-guide\github-actions-integration.md`.
+
 ## Run with Aspire orchestration
 
 Start the centralized AppHost to launch the web app, wire in service defaults, and coordinate local monitoring:

@@ -1,0 +1,88 @@
+name: Run Cress
+description: Pack the Cress CLI from this repository, install it as a local dotnet tool, and run a Cress command against the caller workspace.
+
+inputs:
+  command:
+    description: Full command line to pass after the cress executable, for example "validate" or "run specs\\httpbin-smoke --profile ci --report html,json,junit".
+    required: true
+  working-directory:
+    description: Working directory in the caller repository where the cress command should run.
+    required: false
+    default: .
+  dotnet-version:
+    description: .NET SDK version to install before packing the tool.
+    required: false
+    default: 10.0.x
+  node-version:
+    description: Node.js version to install when Playwright browser setup is requested.
+    required: false
+    default: '22'
+  install-playwright-chromium:
+    description: Install Playwright Chromium before running the Cress command.
+    required: false
+    default: 'false'
+
+runs:
+  using: composite
+  steps:
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ inputs.dotnet-version }}
+
+    - name: Setup Node.js
+      if: inputs.install-playwright-chromium == 'true'
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ inputs.node-version }}
+
+    - name: Install Playwright Chromium
+      if: inputs.install-playwright-chromium == 'true'
+      shell: pwsh
+      run: npx playwright install chromium
+
+    - name: Pack Cress CLI
+      shell: pwsh
+      run: |
+        $repoRoot = Resolve-Path (Join-Path $env:GITHUB_ACTION_PATH '..\..\..')
+        $packDir = Join-Path $env:RUNNER_TEMP 'cress-packages'
+        if (Test-Path $packDir) {
+          Remove-Item -Path $packDir -Recurse -Force
+        }
+
+        New-Item -ItemType Directory -Path $packDir | Out-Null
+
+        dotnet pack `
+          (Join-Path $repoRoot 'src\Cress.Cli\Cress.Cli.csproj') `
+          --configuration Release `
+          --output $packDir `
+          /p:ContinuousIntegrationBuild=true
+
+    - name: Install packed Cress CLI
+      shell: pwsh
+      run: |
+        $packDir = Join-Path $env:RUNNER_TEMP 'cress-packages'
+        $toolDir = Join-Path $env:RUNNER_TEMP 'cress-tool'
+        if (Test-Path $toolDir) {
+          Remove-Item -Path $toolDir -Recurse -Force
+        }
+
+        dotnet tool install `
+          --tool-path $toolDir `
+          --add-source $packDir `
+          Cress.Cli
+
+        "CRESS_TOOL_DIR=$toolDir" | Out-File -FilePath $env:GITHUB_ENV -Append
+
+    - name: Smoke test packed Cress CLI
+      shell: pwsh
+      run: |
+        & (Join-Path $env:CRESS_TOOL_DIR 'cress.exe') --help
+
+    - name: Run Cress command
+      shell: pwsh
+      working-directory: ${{ inputs.working-directory }}
+      run: |
+        $toolPath = Join-Path $env:CRESS_TOOL_DIR 'cress.exe'
+        $command = "${{ inputs.command }}"
+        Invoke-Expression "& `"$toolPath`" $command"

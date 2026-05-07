@@ -78,7 +78,6 @@ public sealed class StudioRunInsightsService
             .GroupBy(item => item.Flow.FlowId, StringComparer.OrdinalIgnoreCase)
             .Select(group =>
             {
-                // Apply configurable window: take only the most recent N runs for this flow
                 var ordered = group.OrderByDescending(item => item.StartedAt).Take(flakeConfig.Window).ToList();
                 var outcomes = ordered.Select(item => item.Flow.Outcome).ToList();
                 var transitions = outcomes.Zip(outcomes.Skip(1)).Count(pair => pair.First != pair.Second);
@@ -87,14 +86,12 @@ public sealed class StudioRunInsightsService
                 var retryRecoveries = ordered.Count(item => item.Flow.PassedWithRetry);
                 var flakeScore = Math.Min(100, transitions * 25 + retryRecoveries * 20 + (passedCount > 0 && failedCount > 0 ? 20 : 0));
 
-                // Apply configurable flake criteria
                 var failRate = ordered.Count == 0 ? 0d : (double)failedCount / ordered.Count;
                 var isFlaky = flakeScore >= 20
                     && passedCount >= flakeConfig.MinPasses
                     && failedCount >= flakeConfig.MinFails
                     && failRate >= flakeConfig.Threshold;
 
-                // Per-step instability breakdown within the window
                 var stepBreakdown = BuildStepBreakdown(ordered.Select(item => item.Flow).ToList());
 
                 return new StudioFlowHealthItem
@@ -128,7 +125,6 @@ public sealed class StudioRunInsightsService
 
     private static IReadOnlyList<StepInstability> BuildStepBreakdown(IReadOnlyList<FlowRunResult> flowRuns)
     {
-        // Collect all steps across the window runs, grouped by step index then by name
         var stepData = new Dictionary<int, (string Name, int TotalCount, int FailCount)>();
 
         foreach (var flow in flowRuns)
@@ -206,7 +202,6 @@ public sealed record StepInstability
     public string StepName { get; init; } = string.Empty;
     public int FailCount { get; init; }
     public int TotalCount { get; init; }
-    /// <summary>Failure rate expressed as a percentage (0–100), rounded to 1 decimal place.</summary>
     public double FlakeRate { get; init; }
 }
 

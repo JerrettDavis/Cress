@@ -323,7 +323,7 @@ public sealed class FlaUiRuntimeDriver : IRuntimeDriver
                 return Failure("FlaUI text assertions require a 'text', 'equals', or 'expected' input.", "invalid-assertion");
             }
 
-            if (!HasLocator(action.Inputs))
+            if (TryGetWindowAssertion(action, out var usesWindow))
             {
                 var window = EnsureWindow();
                 if (window is null)
@@ -331,10 +331,10 @@ public sealed class FlaUiRuntimeDriver : IRuntimeDriver
                     return Failure("FlaUI could not locate a window to assert against.", "window-not-found");
                 }
 
-                var found = window.FindFirstDescendant(_automation.ConditionFactory.ByName(expected));
-                return found is not null
-                    ? Success($"Found text '{expected}'.")
-                    : Failure($"Expected text '{expected}' was not found.", "assertion-failed");
+                var actualWindowTitle = window.Title ?? string.Empty;
+                return ContainsOrEquals(actualWindowTitle, expected)
+                    ? Success($"Window title matched '{expected}'.")
+                    : Failure($"Expected window title to match '{expected}', but found '{actualWindowTitle}'.", "assertion-failed");
             }
 
             var element = FindElement(action);
@@ -343,40 +343,11 @@ public sealed class FlaUiRuntimeDriver : IRuntimeDriver
                 return Failure("FlaUI could not locate an element for text assertion.", "locator-not-found");
             }
 
-            var actual = element.Name;
-            var normalizedExpected = NormalizeWhitespace(expected);
-            var normalizedActual = NormalizeWhitespace(actual);
-            if (string.Equals(normalizedActual, normalizedExpected, StringComparison.Ordinal))
-            {
-                return Success($"Element text matched '{expected}'.");
-            }
-
-            if (!string.IsNullOrWhiteSpace(normalizedActual) && normalizedActual.Contains(normalizedExpected, StringComparison.Ordinal))
-            {
-                return Success($"Element text contained '{expected}'.");
-            }
-
-            if (element.Patterns.Value.IsSupported)
-            {
-                var value = element.Patterns.Value.Pattern.Value.ValueOrDefault;
-                var normalizedValue = NormalizeWhitespace(value);
-                if (string.Equals(normalizedValue, normalizedExpected, StringComparison.Ordinal))
-                {
-                    return Success($"Element value matched '{expected}'.");
-                }
-
-                if (!string.IsNullOrWhiteSpace(normalizedValue) && normalizedValue.Contains(normalizedExpected, StringComparison.Ordinal))
-                {
-                    return Success($"Element value contained '{expected}'.");
-                }
-            }
-
-            return Failure($"Expected text '{expected}', but found '{actual}'.", "assertion-failed");
+            var actual = ReadElementText(element);
+            return ContainsOrEquals(actual, expected)
+                ? Success($"Element text matched '{expected}'.")
+                : Failure($"Expected element text to match '{expected}', but found '{actual}'.", "assertion-failed");
         }
-
-        private static string NormalizeWhitespace(string? value)
-            => string.Join(' ', (value ?? string.Empty)
-                .Split([' ', '\t', '\r', '\n'], StringSplitOptions.RemoveEmptyEntries));
 
         private DriverExecutionResult AssertWindowTitle(PlanAction action)
         {
@@ -392,9 +363,9 @@ public sealed class FlaUiRuntimeDriver : IRuntimeDriver
                 return Failure("FlaUI could not locate the application window.", "window-not-found");
             }
 
-            return string.Equals(window.Title, expected, StringComparison.Ordinal)
+            return ContainsOrEquals(window.Title ?? string.Empty, expected)
                 ? Success($"Window title matched '{expected}'.")
-                : Failure($"Expected window title '{expected}', but found '{window.Title}'.", "assertion-failed");
+                : Failure($"Expected window title to match '{expected}', but found '{window.Title}'.", "assertion-failed");
         }
 
         private DriverExecutionResult PressKey(PlanAction action)
@@ -411,12 +382,11 @@ public sealed class FlaUiRuntimeDriver : IRuntimeDriver
                 return Failure("FlaUI could not locate a window to send key input to.", "window-not-found");
             }
 
-            // Use FlaUI keyboard simulation via SendKeys pattern.
-            // For simple key names, map common values to their keyboard representations.
             try
             {
+                window.Focus();
                 FlaUI.Core.Input.Keyboard.Type(key);
-                return Success($"Pressed key '{key}'.");
+                return Success($"Sent key '{key}'.");
             }
             catch (Exception ex)
             {
@@ -428,12 +398,12 @@ public sealed class FlaUiRuntimeDriver : IRuntimeDriver
         {
             if (_process is null || _process.HasExited)
             {
-                return Success("No desktop application was running.");
+                return Success("Application is already closed.");
             }
 
-            if (_ownsProcess)
+            try
             {
-                try
+                if (_ownsProcess)
                 {
                     _process.CloseMainWindow();
                     if (!_process.WaitForExit(2000))
@@ -441,252 +411,12 @@ public sealed class FlaUiRuntimeDriver : IRuntimeDriver
                         _process.Kill(entireProcessTree: true);
                     }
                 }
-                catch (Exception ex)
-                {
-                    return Failure(ex.Message, "application-close-failed");
-                }
             }
-
-            return Success("Desktop application closed.");
-        }
-
-        private AutomationElement? FindElement(PlanAction action)
-        {
-            var window = EnsureWindow();
-            if (window is null)
+            catch
             {
-                return null;
             }
 
-            var timeoutMs = ResolveTimeoutMs(action);
-            var until = DateTime.UtcNow.AddMilliseconds(timeoutMs);
-            do
-            {
-                var element = TryFindElement(window, action.Inputs);
-                if (element is not null)
-                {
-                    return element;
-                }
-
-                Thread.Sleep(150);
-            }
-            while (DateTime.UtcNow < until);
-
-            return null;
-        }
-
-        /// <summary>
-        /// Validates that a step is not using web-only locators without a desktop-native fallback.
-        /// When a step has ONLY <c>cssSelector</c> or <c>xpath</c> (no desktop-friendly locator),
-        /// returns a clear diagnostic failure.
-        /// <para>
-        /// Mixed locator preference: when both <c>testId</c> (or any desktop locator) and
-        /// <c>cssSelector</c>/<c>xpath</c> are present, FlaUI uses the desktop locator silently
-        /// and ignores the web-only fields. This enables flows shared across desktop and web drivers.
-        /// </para>
-        /// </summary>
-        private DriverExecutionResult? CheckWebOnlyLocators(IReadOnlyDictionary<string, string> inputs)
-        {
-            var hasWebOnly = (inputs.ContainsKey("cssSelector") && !string.IsNullOrWhiteSpace(inputs["cssSelector"]))
-                || (inputs.ContainsKey("xpath") && !string.IsNullOrWhiteSpace(inputs["xpath"]));
-
-            if (!hasWebOnly)
-            {
-                return null;
-            }
-
-            // If the step ONLY has web-only locators with no desktop-native fallback, fail clearly.
-            var hasDesktopLocator = (inputs.TryGetValue("automationId", out var aid) && !string.IsNullOrWhiteSpace(aid))
-                || (inputs.TryGetValue("name", out var nm) && !string.IsNullOrWhiteSpace(nm))
-                || (inputs.TryGetValue("controlType", out var ct) && !string.IsNullOrWhiteSpace(ct))
-                || (inputs.TryGetValue("testId", out var tid) && !string.IsNullOrWhiteSpace(tid))
-                || (inputs.TryGetValue("role", out var role) && !string.IsNullOrWhiteSpace(role))
-                || (inputs.TryGetValue("label", out var lbl) && !string.IsNullOrWhiteSpace(lbl))
-                || (inputs.TryGetValue("text", out var txt) && !string.IsNullOrWhiteSpace(txt));
-
-            if (!hasDesktopLocator)
-            {
-                var webKey = inputs.ContainsKey("cssSelector") && !string.IsNullOrWhiteSpace(inputs["cssSelector"])
-                    ? "cssSelector"
-                    : "xpath";
-                return Failure(
-                    $"Locator strategy '{webKey}' is not supported by the desktop driver. Use automationId, testId, name, role, or label.",
-                    "locator-strategy-not-supported");
-            }
-
-            // Mixed (desktop + web-only): silently ignore the web-only fields and proceed with
-            // desktop locator. This allows a single flow YAML to target both FlaUI and Playwright.
-            return null;
-        }
-
-        /// <summary>
-        /// Resolves a UIA element from the window using the following locator priority order:
-        /// <list type="number">
-        ///   <item><c>automationId</c> — direct UIA AutomationId match (highest precision)</item>
-        ///   <item><c>testId</c> — first-class alias for automationId on desktop (V2)</item>
-        ///   <item><c>name</c> + <c>controlType</c> — combined UIA Name + ControlType AND match</item>
-        ///   <item><c>name</c> alone — UIA Name match</item>
-        ///   <item><c>label</c> — accessible label; attempts UIA LabeledBy relation, falls back to Name search</item>
-        ///   <item><c>role</c> alone — matches by ControlType; returns first match (wide — emits warning suffix)</item>
-        ///   <item><c>text</c> — visible inner text / Name fallback</item>
-        ///   <item><c>cssSelector</c> / <c>xpath</c> — web-only; blocked by <see cref="CheckWebOnlyLocators"/> before reaching here</item>
-        /// </list>
-        /// When multiple fields are present, higher-priority fields are preferred. <c>name</c> and
-        /// <c>controlType</c>/<c>role</c> are AND-combined with each other for precision when both
-        /// are present alongside a higher-priority anchor (e.g. automationId + name = more specific match).
-        /// </summary>
-        private AutomationElement? TryFindElement(Window window, IReadOnlyDictionary<string, string> inputs)
-        {
-            ConditionBase? condition = null;
-            var factory = _automation.ConditionFactory;
-
-            // Priority 1: automationId — direct UIA AutomationId (highest precision)
-            if (inputs.TryGetValue("automationId", out var automationId) && !string.IsNullOrWhiteSpace(automationId))
-            {
-                condition = factory.ByAutomationId(automationId);
-            }
-
-            // Priority 2: testId — first-class desktop alias for automationId (V2)
-            // When testId and cssSelector both present, testId is used silently (cssSelector blocked earlier).
-            if (condition is null
-                && inputs.TryGetValue("testId", out var testId) && !string.IsNullOrWhiteSpace(testId))
-            {
-                condition = factory.ByAutomationId(testId);
-            }
-
-            // Priority 3/4: name — UIA Name; AND-combined with existing condition for precision
-            if (inputs.TryGetValue("name", out var name) && !string.IsNullOrWhiteSpace(name))
-            {
-                condition = condition is null ? factory.ByName(name) : condition.And(factory.ByName(name));
-            }
-
-            // controlType — explicit UIA ControlType; AND-combined for precision
-            if (inputs.TryGetValue("controlType", out var controlTypeName)
-                && TryResolveControlType(controlTypeName, out var controlType))
-            {
-                condition = condition is null ? factory.ByControlType(controlType) : condition.And(factory.ByControlType(controlType));
-            }
-
-            // role — cross-platform alias for controlType (V2 first-class); only applied when controlType absent.
-            // When role is the sole locator (no automationId/testId/name), the match is wide — returns first element
-            // of the given ControlType. See summary for warning.
-            if (!inputs.ContainsKey("controlType")
-                && inputs.TryGetValue("role", out var roleName)
-                && TryResolveControlType(roleName, out var roleControlType))
-            {
-                condition = condition is null ? factory.ByControlType(roleControlType) : condition.And(factory.ByControlType(roleControlType));
-            }
-
-            if (condition is not null)
-            {
-                return window.FindFirstDescendant(condition);
-            }
-
-            // Priority 5: label — UIA LabeledBy relation if available; falls back to Name search.
-            // Note: true UIA LabeledBy traversal requires element.Properties.LabeledBy, which is only
-            // available via the element itself, not as a tree condition. We use Name search as the
-            // practical desktop equivalent (sufficient for most labelled controls).
-            if (inputs.TryGetValue("label", out var label) && !string.IsNullOrWhiteSpace(label))
-            {
-                // First try: find a Text/Label element whose Name matches, then return its LabeledBy target.
-                var labelElement = window.FindFirstDescendant(factory.ByName(label));
-                if (labelElement is not null)
-                {
-                    try
-                    {
-                        var labeledBy = labelElement.Properties.LabeledBy.Value;
-                        if (labeledBy is not null)
-                        {
-                            return labeledBy;
-                        }
-                    }
-                    catch
-                    {
-                        // LabeledBy not supported on this element; fall through to direct Name match.
-                    }
-
-                    return labelElement;
-                }
-
-                return window.FindFirstDescendant(factory.ByName(label));
-            }
-
-            // Priority 6: text — visible content / Name fallback
-            if (inputs.TryGetValue("text", out var text) && !string.IsNullOrWhiteSpace(text))
-            {
-                return window.FindFirstDescendant(factory.ByName(text));
-            }
-
-            // cssSelector / xpath — web-only; handled by CheckWebOnlyLocators before we reach here
-            return null;
-        }
-
-        private Window? EnsureWindow()
-        {
-            if (_window is not null)
-            {
-                return _window;
-            }
-
-            if (_application is null)
-            {
-                return null;
-            }
-
-            _window = WaitForWindow(_context.EffectiveConfig.Profile.FlaUi?.WindowTitle, ResolveTimeoutMs(null));
-            return _window;
-        }
-
-        private Window? WaitForWindow(string? expectedTitle, int timeoutMs)
-        {
-            if (_application is null)
-            {
-                return null;
-            }
-
-            var until = DateTime.UtcNow.AddMilliseconds(timeoutMs);
-            do
-            {
-                var window = _application.GetMainWindow(_automation);
-                if (window is not null
-                    && (string.IsNullOrWhiteSpace(expectedTitle)
-                        || window.Title.Contains(expectedTitle, StringComparison.OrdinalIgnoreCase)))
-                {
-                    return window;
-                }
-
-                Thread.Sleep(200);
-            }
-            while (DateTime.UtcNow < until);
-
-            return null;
-        }
-
-        private string? ResolveApplicationPath(PlanAction action)
-        {
-            var candidate = GetInput(action.Inputs, "application", "path", "executable")
-                ?? _context.EffectiveConfig.Profile.FlaUi?.ApplicationPath;
-            return string.IsNullOrWhiteSpace(candidate)
-                ? null
-                : ResolveConfiguredPath(_context.ProjectRoot, candidate);
-        }
-
-        private string? GetWindowTitle(PlanAction action)
-            => GetInput(action.Inputs, "windowTitle", "title") ?? _context.EffectiveConfig.Profile.FlaUi?.WindowTitle;
-
-        private int ResolveTimeoutMs(PlanAction? action)
-        {
-            if (action is not null
-                && action.Inputs.TryGetValue("timeoutMs", out var timeoutValue)
-                && int.TryParse(timeoutValue, out var explicitTimeout)
-                && explicitTimeout > 0)
-            {
-                return explicitTimeout;
-            }
-
-            return _context.EffectiveConfig.Profile.FlaUi?.LaunchTimeoutMs
-                ?? _context.EffectiveConfig.Profile.Timeouts?.Driver
-                ?? 10000;
+            return Success("Application closed.");
         }
 
         private DriverExecutionResult CaptureScreenshot(string name, string description)
@@ -697,120 +427,233 @@ public sealed class FlaUiRuntimeDriver : IRuntimeDriver
                 return Failure("FlaUI could not locate the application window for screenshot capture.", "window-not-found");
             }
 
-            var relativePath = _context.EvidenceStore.MakeRelativePath("screenshots", $"{++_sequence:D3}-{name}.png");
-            var artifact = _context.EvidenceStore.WriteFile(relativePath, path =>
-            {
-                using var image = Capture.Element(window);
-                image.ToFile(path);
-            }, "screenshots", description);
-
-            return new DriverExecutionResult
-            {
-                Outcome = RunOutcome.Passed,
-                Message = $"Captured screenshot '{Path.GetFileName(relativePath)}'.",
-                Artifacts = [artifact]
-            };
+            Directory.CreateDirectory(_context.ArtifactRoot);
+            var fileName = $"{Sanitize(name)}-{Interlocked.Increment(ref _sequence):D3}.png";
+            var fullPath = Path.Combine(_context.ArtifactRoot, fileName);
+            Capture.Element(window).ToFile(fullPath);
+            return Success(description, [
+                new EvidenceArtifact
+                {
+                    Category = "screenshot",
+                    RelativePath = fileName,
+                    Description = description,
+                    MediaType = "image/png",
+                    SizeBytes = new FileInfo(fullPath).Length
+                }
+            ]);
         }
 
         private DriverExecutionResult AttachFailureScreenshot(PlanAction action, DriverExecutionResult result)
         {
-            if (!ShouldCaptureFailureScreenshots() || EnsureWindow() is null)
+            if (!ShouldCaptureFailureEvidence() || EnsureWindow() is null)
             {
                 return result;
             }
 
-            try
-            {
-                var screenshot = CaptureScreenshot($"{action.Name}-failure", $"Failure screenshot for {action.Name}");
-                return result with
-                {
-                    Artifacts = result.Artifacts.Concat(screenshot.Artifacts).ToList()
-                };
-            }
-            catch
+            var screenshot = CaptureScreenshot(action.Name, $"Failure screenshot for {action.Name}");
+            if (screenshot.Outcome != RunOutcome.Passed)
             {
                 return result;
             }
+
+            return result with
+            {
+                Artifacts = result.Artifacts.Concat(screenshot.Artifacts).ToList()
+            };
         }
 
-        private bool ShouldCaptureFailureScreenshots()
-            => _context.EffectiveConfig.Profile.Evidence?.Screenshots
-                ?? !string.Equals(_context.EffectiveConfig.Profile.Evidence?.Mode, "minimal", StringComparison.OrdinalIgnoreCase);
+        private bool ShouldCaptureFailureEvidence()
+            => string.Equals(_context.EffectiveConfig.Profile.Evidence?.Screenshots?.ToString(), bool.TrueString, StringComparison.OrdinalIgnoreCase)
+                || string.Equals(_context.EffectiveConfig.Profile.Evidence?.ScreenshotPolicy, "on-failure", StringComparison.OrdinalIgnoreCase)
+                || string.Equals(_context.EffectiveConfig.Profile.Evidence?.Mode, "full", StringComparison.OrdinalIgnoreCase);
 
         private bool ShouldCaptureFinalEvidence()
-            => string.Equals(_context.EffectiveConfig.Profile.Evidence?.Mode, "full", StringComparison.OrdinalIgnoreCase);
+            => string.Equals(_context.EffectiveConfig.Profile.Evidence?.Screenshots?.ToString(), bool.TrueString, StringComparison.OrdinalIgnoreCase)
+                || string.Equals(_context.EffectiveConfig.Profile.Evidence?.Mode, "full", StringComparison.OrdinalIgnoreCase);
 
-        private static bool HasLocator(IReadOnlyDictionary<string, string> inputs)
-            => (inputs.TryGetValue("automationId", out var aid) && !string.IsNullOrWhiteSpace(aid))
-                || (inputs.TryGetValue("name", out var nm) && !string.IsNullOrWhiteSpace(nm))
-                || (inputs.TryGetValue("controlType", out var ct) && !string.IsNullOrWhiteSpace(ct))
-                || (inputs.TryGetValue("testId", out var tid) && !string.IsNullOrWhiteSpace(tid))
-                || (inputs.TryGetValue("role", out var role) && !string.IsNullOrWhiteSpace(role))
-                || (inputs.TryGetValue("label", out var lbl) && !string.IsNullOrWhiteSpace(lbl))
-                || (inputs.TryGetValue("text", out var txt) && !string.IsNullOrWhiteSpace(txt))
-                || (inputs.TryGetValue("cssSelector", out var css) && !string.IsNullOrWhiteSpace(css))
-                || (inputs.TryGetValue("xpath", out var xp) && !string.IsNullOrWhiteSpace(xp));
+        private Window? EnsureWindow()
+            => _window ??= WaitForWindow(_context.EffectiveConfig.Profile.FlaUi?.WindowTitle, _context.EffectiveConfig.Profile.FlaUi?.LaunchTimeoutMs ?? 10000);
 
-        private static string? GetInput(IReadOnlyDictionary<string, string> inputs, params string[] names)
+        private Window? WaitForWindow(string? expectedTitle, int timeoutMs)
         {
-            foreach (var name in names)
+            if (_application is null)
             {
-                if (inputs.TryGetValue(name, out var value) && !string.IsNullOrWhiteSpace(value))
+                return null;
+            }
+
+            var end = DateTime.UtcNow.AddMilliseconds(timeoutMs <= 0 ? 10000 : timeoutMs);
+            while (DateTime.UtcNow < end)
+            {
+                var windows = _application.GetAllTopLevelWindows(_automation);
+                var window = string.IsNullOrWhiteSpace(expectedTitle)
+                    ? windows.FirstOrDefault()
+                    : windows.FirstOrDefault(candidate => candidate.Title.Contains(expectedTitle, StringComparison.OrdinalIgnoreCase));
+                if (window is not null)
                 {
-                    return value;
+                    return window;
                 }
+
+                Thread.Sleep(250);
             }
 
             return null;
         }
 
-        private static string DescribeElement(AutomationElement element)
-            => !string.IsNullOrWhiteSpace(element.AutomationId)
-                ? element.AutomationId
-                : !string.IsNullOrWhiteSpace(element.Name)
-                    ? element.Name
-                    : element.ControlType.ToString();
-
-        private static bool TryResolveControlType(string value, out ControlType controlType)
+        private AutomationElement? FindElement(PlanAction action)
         {
-            switch (value.Trim().ToLowerInvariant())
+            var window = EnsureWindow();
+            if (window is null)
             {
-                case "button":
-                    controlType = ControlType.Button;
-                    return true;
-                case "edit":
-                case "textbox":
-                case "text-box":
-                    controlType = ControlType.Edit;
-                    return true;
-                case "text":
-                case "label":
-                    controlType = ControlType.Text;
-                    return true;
-                case "window":
-                    controlType = ControlType.Window;
-                    return true;
-                case "checkbox":
-                case "check-box":
-                    controlType = ControlType.CheckBox;
-                    return true;
-                default:
-                    controlType = ControlType.Custom;
-                    return false;
+                return null;
             }
+
+            var conditionFactory = _automation.ConditionFactory;
+            var conditions = new List<ConditionBase>();
+
+            if (TryGetInput(action.Inputs, out var automationId, "automationId"))
+            {
+                conditions.Add(conditionFactory.ByAutomationId(automationId));
+            }
+
+            if (TryGetInput(action.Inputs, out var name, "name", "label", "text"))
+            {
+                conditions.Add(conditionFactory.ByName(name));
+            }
+
+            if (TryGetInput(action.Inputs, out var controlTypeValue, "controlType", "role") && TryMapControlType(controlTypeValue, out var controlType))
+            {
+                conditions.Add(conditionFactory.ByControlType(controlType));
+            }
+
+            if (conditions.Count == 0)
+            {
+                return null;
+            }
+
+            var combined = conditions.Count == 1
+                ? conditions[0]
+                : conditions.Skip(1).Aggregate(conditions[0], (current, next) => current.And(next));
+
+            return window.FindFirstDescendant(combined);
         }
 
-        private static DriverExecutionResult Success(string message) => new()
+        private DriverExecutionResult? CheckWebOnlyLocators(IReadOnlyDictionary<string, string> inputs)
         {
-            Outcome = RunOutcome.Passed,
-            Message = message
-        };
+            if (inputs.ContainsKey("cssSelector") || inputs.ContainsKey("xpath"))
+            {
+                return Failure("FlaUI does not support cssSelector or xpath locators. Use automationId, name, label, or controlType.", "unsupported-locator");
+            }
 
-        private static DriverExecutionResult Failure(string message, string classification) => new()
+            return null;
+        }
+
+        private string? ResolveApplicationPath(PlanAction action)
         {
-            Outcome = RunOutcome.Failed,
-            Message = message,
-            FailureClassification = classification
-        };
+            var candidate = GetInput(action.Inputs, "application", "applicationPath", "path")
+                ?? _context.EffectiveConfig.Profile.FlaUi?.ApplicationPath;
+
+            return string.IsNullOrWhiteSpace(candidate)
+                ? null
+                : ResolveConfiguredPath(_context.ProjectRoot, candidate);
+        }
+
+        private string? GetWindowTitle(PlanAction action)
+            => GetInput(action.Inputs, "windowTitle", "title") ?? _context.EffectiveConfig.Profile.FlaUi?.WindowTitle;
+
+        private int ResolveTimeoutMs(PlanAction action)
+        {
+            if (TryGetInput(action.Inputs, out var timeoutValue, "timeoutMs", "timeout") && int.TryParse(timeoutValue, out var timeout))
+            {
+                return timeout;
+            }
+
+            return _context.EffectiveConfig.Profile.FlaUi?.LaunchTimeoutMs
+                ?? _context.EffectiveConfig.Profile.Timeouts?.Driver
+                ?? 10000;
+        }
+
+        private static bool ContainsOrEquals(string actual, string expected)
+            => actual.Contains(expected, StringComparison.OrdinalIgnoreCase)
+                || string.Equals(actual, expected, StringComparison.OrdinalIgnoreCase);
+
+        private static string ReadElementText(AutomationElement element)
+        {
+            if (element.Patterns.Value.IsSupported)
+            {
+                return element.Patterns.Value.Pattern.Value ?? string.Empty;
+            }
+
+            if (element.Patterns.Text.IsSupported)
+            {
+                return element.Patterns.Text.Pattern.DocumentRange.GetText(-1);
+            }
+
+            return element.Name ?? string.Empty;
+        }
+
+        private static bool TryGetWindowAssertion(PlanAction action, out bool usesWindow)
+        {
+            usesWindow = action.Inputs.TryGetValue("window", out var windowFlag)
+                && bool.TryParse(windowFlag, out var isWindow)
+                && isWindow;
+            return usesWindow;
+        }
+
+        private static bool TryMapControlType(string value, out ControlType controlType)
+        {
+            var normalized = value.Trim().Replace(" ", string.Empty, StringComparison.OrdinalIgnoreCase);
+            var property = typeof(ControlType).GetProperties()
+                .FirstOrDefault(candidate => string.Equals(candidate.Name, normalized, StringComparison.OrdinalIgnoreCase));
+            if (property?.GetValue(null) is ControlType mapped)
+            {
+                controlType = mapped;
+                return true;
+            }
+
+            controlType = ControlType.Custom;
+            return false;
+        }
+
+        private static bool TryGetInput(IReadOnlyDictionary<string, string> inputs, out string value, params string[] keys)
+        {
+            foreach (var key in keys)
+            {
+                if (inputs.TryGetValue(key, out var candidate) && !string.IsNullOrWhiteSpace(candidate))
+                {
+                    value = candidate;
+                    return true;
+                }
+            }
+
+            value = string.Empty;
+            return false;
+        }
+
+        private static string? GetInput(IReadOnlyDictionary<string, string> inputs, params string[] keys)
+            => TryGetInput(inputs, out var value, keys) ? value : null;
+
+        private static string DescribeElement(AutomationElement element)
+            => string.IsNullOrWhiteSpace(element.Name)
+                ? element.AutomationId
+                : element.Name;
+
+        private static string Sanitize(string value)
+            => string.Concat(value.Select(ch => char.IsLetterOrDigit(ch) ? ch : '-')).Trim('-');
+
+        private static DriverExecutionResult Success(string message, IReadOnlyList<EvidenceArtifact>? artifacts = null)
+            => new()
+            {
+                Outcome = RunOutcome.Passed,
+                Message = message,
+                Artifacts = artifacts ?? []
+            };
+
+        private static DriverExecutionResult Failure(string message, string classification)
+            => new()
+            {
+                Outcome = RunOutcome.Failed,
+                Message = message,
+                FailureClassification = classification
+            };
     }
 }

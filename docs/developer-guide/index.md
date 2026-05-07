@@ -9,6 +9,7 @@ The developer guide is for contributors who need to understand the solution stru
 - [Extensibility](extensibility.md)
 - [Test framework integrations](test-framework-integrations.md)
 - [Framework demos and development-cycle integration](test-framework-demos.md)
+- [GitHub Actions integration](github-actions-integration.md)
 - [Environment orchestration](environment-orchestration.md)
 - [Designing for automation](designing-for-automation.md)
 - [Docs and CI](docs-and-ci.md)

@@ -31,6 +31,8 @@ This works well for:
 | Output assertions | follow-up plugin assertions, generated artifacts, or HTTP/UI verification |
 | Evidence | Cress run artifacts, logs, generated files, HTML/JSON/JUnit reports |
 
+![Project loaded in Studio](../images/studio/project-loaded.png)
+
 ## Getting started
 
 ### 1. Initialize a project
@@ -97,6 +99,10 @@ public sealed class ReleaseCliModule : ICressPluginModule
 ```
 
 Inside `ExecuteAsync`, run the process, capture stdout/stderr, and return them through `StepExecutionResult.Outputs`.
+
+If you want authors to refine or review the resulting flow from the GUI side, the same project can still be opened in Studio or Studio Web and edited in Source view.
+
+![Source tab](../images/studio/source-tab.png)
 
 ## Realistic example
 
@@ -230,6 +236,10 @@ dotnet run --project src\Cress.Cli\Cress.Cli.csproj -- export mstest demos\cmd-s
 ```
 
 Those generated tests call the Cress engine directly, so designers can keep working in Studio and YAML while engineering teams check the same flows into product test projects and CI pipelines.
+
+Use the results view to review evidence when those exported tests fail in a developer run.
+
+![Results panel](../images/studio/results-panel.png)
 
 ## Good use cases
 

@@ -17,6 +17,8 @@ That means a project can evolve from simple manifest-driven steps into richer pl
 
 Use manifests when you want to declare reusable steps and bind them to existing driver operations.
 
+![Source tab](../images/studio/source-tab.png)
+
 ### Plugins
 
 Use plugins when you need custom runtime behavior that is not already covered by the built-in drivers.
@@ -33,6 +35,10 @@ The CLI already includes:
 - `export selenium-ide`
 
 These commands are useful reference points when adding another interchange format.
+
+The same extension points now also support generated .NET test exports, which makes the exporter layer a bridge between source-authored flows and framework-native suites.
+
+![Results panel](../images/studio/results-panel.png)
 
 ## Helpful diagnostics while extending
 

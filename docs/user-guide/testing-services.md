@@ -28,6 +28,8 @@ Pair the HTTP driver with plugin-backed fixtures or steps when you also need:
 | Diagnostics | `validate`, `doctor`, `discover`, `run --dry-run` |
 | Reporting | HTML, JSON, JUnit, living docs |
 
+![Project loaded in Studio](../images/studio/project-loaded.png)
+
 ## Getting started
 
 ### 1. Start from the HTTP sample
@@ -81,6 +83,8 @@ steps:
     implementation:
       operation: assert-status
 ```
+
+![Source tab](../images/studio/source-tab.png)
 
 ## Realistic examples
 
@@ -196,6 +200,8 @@ Once the health flow is stable:
 2. move environment-specific URLs and tokens into profiles
 3. export JUnit for CI dashboards
 4. combine service setup with web or desktop verification when the system spans multiple surfaces
+
+![Results panel](../images/studio/results-panel.png)
 
 ## Common service-testing patterns
 

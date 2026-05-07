@@ -11,6 +11,8 @@ This integration is designed for teams that want all of these at the same time:
 3. product-owned test projects that already use xUnit, NUnit, or MSTest
 4. pipeline-native execution, filtering, and reporting
 
+![Project loaded in Studio](../images/studio/project-loaded.png)
+
 ## Supported export commands
 
 Each command generates a C# test file for one flow:
@@ -59,6 +61,90 @@ Generated files are intentionally small. The host test project owns package refe
   </ItemGroup>
 </Project>
 ```
+
+## Framework-specific integration patterns
+
+The generated test files stay intentionally thin. Put environment setup and orchestration in the host framework's normal lifecycle hooks.
+
+### xUnit: collection fixtures and shared environment setup
+
+Use xUnit when your team already uses collection fixtures or test-host patterns to stand up shared dependencies for a suite.
+
+Typical ownership split:
+
+1. Studio authors create or refine the Cress flow
+2. engineers export the flow to xUnit
+3. an xUnit fixture starts shared services, AppHost, or seed data
+4. the generated test runs the flow through `CressTestEngine`
+
+Example fixture shape:
+
+```csharp
+public sealed class PortalEnvironmentFixture : IAsyncLifetime
+{
+    public Task InitializeAsync()
+    {
+        // Start AppHost, seed data, or ensure dependent services are ready.
+        return Task.CompletedTask;
+    }
+
+    public Task DisposeAsync() => Task.CompletedTask;
+}
+```
+
+This pattern works well for:
+
+- service suites with one shared environment
+- web suites that need a seeded backend before browser tests run
+- mixed UI/API suites that should execute under `dotnet test`
+
+### NUnit: one-time setup for desktop or integration suites
+
+Use NUnit when the repository already organizes integration or desktop tests around fixtures and setup/teardown hooks.
+
+Typical pattern:
+
+```csharp
+[SetUpFixture]
+public sealed class DesktopEnvironmentSetup
+{
+    [OneTimeSetUp]
+    public void StartEnvironment()
+    {
+        // Start prerequisites, verify desktop dependencies, or prepare test data.
+    }
+}
+```
+
+This is a strong fit for:
+
+- desktop automation on dedicated Windows agents
+- hybrid desktop/service suites
+- longer-lived integration environments where setup cost should be amortized
+
+### MSTest: class initialize for tooling and enterprise suites
+
+Use MSTest when the surrounding product or enterprise tooling stack already standardizes on MSTest discovery and execution.
+
+Typical pattern:
+
+```csharp
+[TestClass]
+public sealed class EnvironmentSetup
+{
+    [ClassInitialize]
+    public static void Initialize(TestContext context)
+    {
+        // Prepare CLI dependencies, configuration, or test hosts.
+    }
+}
+```
+
+This works especially well for:
+
+- internal admin or tooling validation suites
+- enterprise repositories with MSTest conventions
+- command-line or installer verification flows
 
 ### NUnit
 
@@ -133,6 +219,8 @@ The generated test will:
 3. call `CressTestEngine.RunFlowAsync(...)`
 4. fail the test with a framework-native assertion failure if the Cress run fails
 
+If the environment needs shared startup, keep that logic in a fixture and let the generated test remain business-scenario focused.
+
 ### 4. Run it with the rest of the suite
 
 ```powershell
@@ -170,6 +258,19 @@ while also gaining:
 - normal `dotnet test` execution
 - easy pipeline adoption on existing agents
 
+For CLI-heavy suites, keep machine configuration, temporary directories, and service bootstrap logic in MSTest setup rather than hardcoding them into the flow.
+
+## GUI-based and code-based orchestration together
+
+The most reusable pattern is:
+
+1. use Studio or Studio Web to author and refine the flow
+2. keep environment addresses, credentials strategy, and variants in profiles
+3. use xUnit, NUnit, or MSTest lifecycle hooks for startup and teardown
+4. let the generated test call the Cress engine for the actual scenario execution
+
+That way the GUI side owns authoring and evidence review, while the code side owns suite wiring and environment orchestration.
+
 ## Example generated shape
 
 An xUnit export from `specs\httpbin-smoke` looks like this:
@@ -192,6 +293,10 @@ public sealed class HttpbinGetSmokeXunitTests
     }
 }
 ```
+
+This is the key bridge: the flow still originates in the GUI and source-authoring experience, but the execution surface can be `dotnet test`.
+
+![Source tab](../images/studio/source-tab.png)
 
 ## How the generated tests work
 
@@ -222,6 +327,8 @@ For pipeline use:
 2. pass `--profile ci` during export when the pipeline should pin a known environment profile
 3. publish standard framework test results and Cress evidence artifacts together
 4. run desktop flows on Windows agents with the right UI automation prerequisites
+
+![Results panel](../images/studio/results-panel.png)
 
 ## When to use this instead of plain `cress run`
 

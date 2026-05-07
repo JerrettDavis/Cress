@@ -15,6 +15,9 @@ public sealed class HomeTabSwitchingTests : TestContext
         Services.AddCressStudioBackend();
         Services.AddSingleton<StudioWorkspaceState>();
         JSInterop.SetupVoid("navigator.clipboard.writeText", _ => true);
+        JSInterop.Setup<string[]>("cressStudio.getRecentWorkspaces").SetResult([]);
+        JSInterop.SetupVoid("cressStudio.setRecentWorkspaces", _ => true);
+        JSInterop.SetupVoid("cressStudio.scrollSectionIntoView", _ => true);
         JSInterop.Setup<string>("getTheme").SetResult("system");
         JSInterop.SetupVoid("setTheme", _ => true);
         return Services.GetRequiredService<StudioWorkspaceState>();

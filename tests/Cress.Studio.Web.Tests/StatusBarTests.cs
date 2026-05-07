@@ -24,7 +24,7 @@ public sealed class StatusBarTests : TestContext
         var cut = RenderComponent<Cress.Studio.Web.Components.Studio.StatusBar>();
 
         Assert.Contains("Status", cut.Markup);
-        Assert.Contains("Ready.", cut.Markup);
+        Assert.Contains(state.StatusMessage, cut.Markup);
         Assert.Contains("Live run", cut.Markup);
         Assert.Contains("No run in progress.", cut.Markup);
         Assert.Contains("Selection", cut.Markup);

@@ -1,6 +1,7 @@
 using System.Text;
 using Cress.Core.Models;
 using Cress.Execution;
+using Cress.ProjectSystem;
 using Cress.Recorder;
 using Cress.Recorder.Inference;
 using Cress.Studio.Services;
@@ -18,6 +19,7 @@ public sealed class StudioWorkspaceState : IDisposable
     private readonly StudioRunInsightsService _runInsightsService;
     private readonly RunMetricsService _runMetricsService;
     private readonly IStudioRecorderService _recorderService;
+    private readonly ProjectLocator _projectLocator;
 
     private static readonly MetricsOptions DefaultMetricsOptions = new(TimeSpan.FromDays(30), 100);
 
@@ -29,7 +31,8 @@ public sealed class StudioWorkspaceState : IDisposable
         StudioAuthoringService authoringService,
         StudioRunInsightsService runInsightsService,
         RunMetricsService runMetricsService,
-        IStudioRecorderService recorderService)
+        IStudioRecorderService recorderService,
+        ProjectLocator projectLocator)
     {
         _projectService = projectService;
         _flowDocumentService = flowDocumentService;
@@ -39,8 +42,20 @@ public sealed class StudioWorkspaceState : IDisposable
         _runInsightsService = runInsightsService;
         _runMetricsService = runMetricsService;
         _recorderService = recorderService;
+        _projectLocator = projectLocator;
 
         _recorderService.StateChanged += OnRecorderStateChanged;
+
+        SuggestedWorkspacePath = ResolveSuggestedWorkspacePath(projectLocator) ?? string.Empty;
+        if (!string.IsNullOrWhiteSpace(SuggestedWorkspacePath))
+        {
+            ProjectPathInput = SuggestedWorkspacePath;
+            StatusMessage = "Suggested workspace ready. Load it, browse for another folder, or open a demo.";
+        }
+
+        DemoWorkspaces = BuildDemoWorkspaces();
+        RunnerNodes = BuildRunnerNodes();
+        SelectedRunnerNodeId = RunnerNodes.FirstOrDefault()?.Id ?? StudioRunnerNode.LocalNodeId;
     }
 
     public event Action? Changed;
@@ -73,6 +88,20 @@ public sealed class StudioWorkspaceState : IDisposable
     /// Non-null when the last recording operation failed. Auto-clears after 8 seconds.
     /// </summary>
     public string? RecordingError { get; private set; }
+
+    public string SuggestedWorkspacePath { get; }
+    public List<string> RecentWorkspaces { get; } = [];
+    public IReadOnlyList<StudioDemoWorkspace> DemoWorkspaces { get; }
+    public IReadOnlyList<StudioRunnerNode> RunnerNodes { get; private set; }
+    public string SelectedRunnerNodeId { get; set; } = StudioRunnerNode.LocalNodeId;
+    public StudioRunnerNode? SelectedRunnerNode
+        => RunnerNodes.FirstOrDefault(node => string.Equals(node.Id, SelectedRunnerNodeId, StringComparison.OrdinalIgnoreCase));
+
+    public bool IsWorkspacePickerOpen { get; private set; }
+    public string WorkspaceBrowserCurrentPath { get; private set; } = string.Empty;
+    public string WorkspaceBrowserLocationLabel { get; private set; } = "This machine";
+    public string? WorkspaceBrowserError { get; private set; }
+    public List<StudioDirectoryEntry> WorkspaceBrowserEntries { get; } = [];
 
     // Used to cancel the auto-clear timer when a new error arrives before the 8 s expires.
     private CancellationTokenSource? _errorClearCts;
@@ -256,6 +285,7 @@ public sealed class StudioWorkspaceState : IDisposable
     public bool HasLoadedProject => Snapshot is not null;
     public bool HasSelectedFlow => SelectedFlow is not null;
     public bool HasSelectedSuite => SelectedSuite is not null;
+    public bool HasRecentWorkspaces => RecentWorkspaces.Count > 0;
     public int FlowCount => Snapshot?.Catalog.NormalizedFlows.Count ?? 0;
     public int CapabilityCount => Snapshot?.Catalog.Capabilities.Count ?? 0;
     public int FixtureCount => Snapshot?.Catalog.FixtureDefinitions.Count ?? 0;
@@ -270,7 +300,14 @@ public sealed class StudioWorkspaceState : IDisposable
 
     public void LoadProject()
     {
-        var startDirectory = string.IsNullOrWhiteSpace(ProjectPathInput) ? Environment.CurrentDirectory : ProjectPathInput;
+        var startDirectory = ResolveProjectStartDirectory();
+        if (string.IsNullOrWhiteSpace(startDirectory))
+        {
+            StatusMessage = "Choose a workspace path, browse for a folder, or load one of the demos to continue.";
+            NotifyChanged();
+            return;
+        }
+
         LoadProjectCore(startDirectory, string.IsNullOrWhiteSpace(SelectedProfile) ? null : SelectedProfile, SelectedFlow?.FilePath, SelectedSuite?.FilePath);
     }
 
@@ -368,6 +405,167 @@ public sealed class StudioWorkspaceState : IDisposable
         SelectionHeadline = run.Result.Metadata.RunId;
         PopulateArtifacts();
         UpdateRunComparison();
+        NotifyChanged();
+    }
+
+    public void SetProjectPath(string? path)
+    {
+        ProjectPathInput = string.IsNullOrWhiteSpace(path)
+            ? string.Empty
+            : Path.GetFullPath(path.Trim());
+        StatusMessage = string.IsNullOrWhiteSpace(ProjectPathInput)
+            ? "Choose a workspace path, browse for a folder, or open a demo."
+            : $"Ready to load {ProjectPathInput}.";
+        NotifyChanged();
+    }
+
+    public void SetRecentWorkspaces(IEnumerable<string> paths)
+    {
+        RecentWorkspaces.Clear();
+        foreach (var path in paths
+                     .Where(path => !string.IsNullOrWhiteSpace(path))
+                     .Select(path => Path.GetFullPath(path.Trim()))
+                     .Distinct(StringComparer.OrdinalIgnoreCase)
+                     .Where(Directory.Exists)
+                     .Take(8))
+        {
+            RecentWorkspaces.Add(path);
+        }
+
+        if (string.IsNullOrWhiteSpace(ProjectPathInput))
+        {
+            ProjectPathInput = RecentWorkspaces.FirstOrDefault() ?? SuggestedWorkspacePath;
+        }
+
+        NotifyChanged();
+    }
+
+    public void UseSuggestedWorkspace()
+    {
+        if (!string.IsNullOrWhiteSpace(SuggestedWorkspacePath))
+        {
+            SetProjectPath(SuggestedWorkspacePath);
+        }
+    }
+
+    public void LoadRecentWorkspace(string path)
+    {
+        SetProjectPath(path);
+        LoadProject();
+    }
+
+    public void LoadDemoWorkspace(string demoId)
+    {
+        var demo = DemoWorkspaces.FirstOrDefault(item => string.Equals(item.Id, demoId, StringComparison.OrdinalIgnoreCase));
+        if (demo is null)
+        {
+            StatusMessage = $"Demo '{demoId}' is not available on this machine.";
+            NotifyChanged();
+            return;
+        }
+
+        if (!string.IsNullOrWhiteSpace(demo.PreferredProfile))
+        {
+            SelectedProfile = demo.PreferredProfile;
+        }
+
+        ProjectPathInput = demo.ProjectPath;
+        LoadProjectCore(demo.ProjectPath, string.IsNullOrWhiteSpace(SelectedProfile) ? null : SelectedProfile, null, null);
+    }
+
+    public void OpenWorkspacePicker()
+    {
+        IsWorkspacePickerOpen = true;
+        BrowseWorkspacePath(DetermineWorkspaceBrowserStartPath());
+    }
+
+    public void CloseWorkspacePicker()
+    {
+        IsWorkspacePickerOpen = false;
+        WorkspaceBrowserError = null;
+        NotifyChanged();
+    }
+
+    public void BrowseWorkspacePath(string? path)
+    {
+        WorkspaceBrowserEntries.Clear();
+        WorkspaceBrowserError = null;
+
+        if (string.IsNullOrWhiteSpace(path))
+        {
+            WorkspaceBrowserCurrentPath = string.Empty;
+            WorkspaceBrowserLocationLabel = "This machine";
+            foreach (var drive in DriveInfo.GetDrives().Where(drive => drive.IsReady).OrderBy(drive => drive.Name, StringComparer.OrdinalIgnoreCase))
+            {
+                WorkspaceBrowserEntries.Add(new StudioDirectoryEntry(
+                    drive.Name,
+                    drive.RootDirectory.FullName,
+                    IsCressWorkspace: Directory.Exists(Path.Combine(drive.RootDirectory.FullName, ".cress")),
+                    ItemCountLabel: drive.VolumeLabel));
+            }
+
+            NotifyChanged();
+            return;
+        }
+
+        try
+        {
+            var fullPath = Path.GetFullPath(path);
+            if (!Directory.Exists(fullPath))
+            {
+                WorkspaceBrowserError = $"The directory '{fullPath}' no longer exists.";
+                NotifyChanged();
+                return;
+            }
+
+            WorkspaceBrowserCurrentPath = fullPath;
+            WorkspaceBrowserLocationLabel = fullPath;
+            foreach (var directory in Directory.GetDirectories(fullPath).OrderBy(item => item, StringComparer.OrdinalIgnoreCase))
+            {
+                var name = Path.GetFileName(directory);
+                if (string.IsNullOrWhiteSpace(name))
+                {
+                    name = directory;
+                }
+
+                WorkspaceBrowserEntries.Add(new StudioDirectoryEntry(
+                    name,
+                    directory,
+                    IsCressWorkspace: File.Exists(Path.Combine(directory, ".cress", "config.yaml")),
+                    ItemCountLabel: BuildChildCountLabel(directory)));
+            }
+        }
+        catch (Exception ex)
+        {
+            WorkspaceBrowserError = $"Could not open '{path}': {ex.Message}";
+        }
+
+        NotifyChanged();
+    }
+
+    public void BrowseWorkspaceParent()
+    {
+        if (string.IsNullOrWhiteSpace(WorkspaceBrowserCurrentPath))
+        {
+            return;
+        }
+
+        var parent = Directory.GetParent(WorkspaceBrowserCurrentPath);
+        BrowseWorkspacePath(parent?.FullName);
+    }
+
+    public void ChooseWorkspaceFromPicker(string path, bool loadImmediately)
+    {
+        SetProjectPath(path);
+        IsWorkspacePickerOpen = false;
+        WorkspaceBrowserError = null;
+
+        if (loadImmediately)
+        {
+            LoadProject();
+            return;
+        }
+
         NotifyChanged();
     }
 
@@ -760,7 +958,7 @@ public sealed class StudioWorkspaceState : IDisposable
         }
 
         IsBusy = true;
-        LiveRunHeadline = "Run in progress...";
+        LiveRunHeadline = $"Dispatching run to {(SelectedRunnerNode?.DisplayName ?? "local embedded node")}...";
         NotifyChanged();
 
         try
@@ -786,7 +984,7 @@ public sealed class StudioWorkspaceState : IDisposable
             LiveRunHeadline = result.Passed
                 ? $"{result.Metadata.RunId} passed"
                 : $"{result.Metadata.RunId} finished with failures";
-            StatusMessage = $"Completed run {result.Metadata.RunId}.";
+            StatusMessage = $"Completed run {result.Metadata.RunId} on {(SelectedRunnerNode?.DisplayName ?? "local embedded node")}.";
 
             if (reloadAtEnd)
             {
@@ -829,6 +1027,7 @@ public sealed class StudioWorkspaceState : IDisposable
 
         Snapshot = result.Value;
         ProjectPathInput = Snapshot.Catalog.ProjectRoot;
+        RememberWorkspace(Snapshot.Catalog.ProjectRoot);
         SelectedProfile = Snapshot.Catalog.EffectiveConfig.ActiveProfile;
         RetryCountOverrideText = Snapshot.Catalog.EffectiveConfig.Config.Defaults.Retries.ToString(System.Globalization.CultureInfo.InvariantCulture);
         ScreenshotPolicy = Snapshot.Catalog.EffectiveConfig.Profile.Evidence?.ScreenshotPolicy ?? "on-failure";
@@ -1001,6 +1200,178 @@ public sealed class StudioWorkspaceState : IDisposable
     private void NotifyChanged()
         => Changed?.Invoke();
 
+    private string? ResolveProjectStartDirectory()
+    {
+        if (!string.IsNullOrWhiteSpace(ProjectPathInput))
+        {
+            return ProjectPathInput;
+        }
+
+        if (RecentWorkspaces.Count > 0)
+        {
+            return RecentWorkspaces[0];
+        }
+
+        if (!string.IsNullOrWhiteSpace(SuggestedWorkspacePath))
+        {
+            return SuggestedWorkspacePath;
+        }
+
+        return null;
+    }
+
+    private string? DetermineWorkspaceBrowserStartPath()
+    {
+        var candidate = ResolveProjectStartDirectory();
+        if (!string.IsNullOrWhiteSpace(candidate))
+        {
+            if (Directory.Exists(candidate))
+            {
+                return candidate;
+            }
+
+            var parent = Path.GetDirectoryName(candidate);
+            if (!string.IsNullOrWhiteSpace(parent) && Directory.Exists(parent))
+            {
+                return parent;
+            }
+        }
+
+        var home = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+        return Directory.Exists(home) ? home : null;
+    }
+
+    private void RememberWorkspace(string projectRoot)
+    {
+        if (string.IsNullOrWhiteSpace(projectRoot))
+        {
+            return;
+        }
+
+        var normalized = Path.GetFullPath(projectRoot);
+        RecentWorkspaces.RemoveAll(path => string.Equals(path, normalized, StringComparison.OrdinalIgnoreCase));
+        RecentWorkspaces.Insert(0, normalized);
+        if (RecentWorkspaces.Count > 8)
+        {
+            RecentWorkspaces.RemoveRange(8, RecentWorkspaces.Count - 8);
+        }
+    }
+
+    private static IReadOnlyList<StudioDemoWorkspace> BuildDemoWorkspaces()
+    {
+        var demos = new List<StudioDemoWorkspace>();
+
+        AddDemo(demos,
+            id: "httpbin-smoke",
+            relativeConfigPath: Path.Combine("specs", "httpbin-smoke", ".cress", "config.yaml"),
+            title: "HTTP smoke demo",
+            description: "Start with the built-in service smoke tests to validate the CLI, reports, and end-to-end project wiring.",
+            tags: ["service", "smoke", "onboarding"]);
+
+        AddDemo(demos,
+            id: "web-smoke",
+            relativeConfigPath: Path.Combine("specs", "web-smoke", ".cress", "config.yaml"),
+            title: "Browser search-style demo",
+            description: "Explore a browser workflow with login, search, and navigation steps authored in the same Studio surface used for Playwright-backed tests.",
+            tags: ["web", "playwright", "search"]);
+
+        AddDemo(demos,
+            id: "calc-smoke",
+            relativeConfigPath: Path.Combine("specs", "calc-smoke", ".cress", "config.yaml"),
+            title: "Calculator desktop demo",
+            description: "Load the Windows desktop sample to inspect Calculator-style attach/invoke flows and desktop evidence patterns.",
+            tags: ["desktop", "calculator", "flaui"],
+            preferredProfile: "local");
+
+        return demos;
+    }
+
+    private static void AddDemo(
+        ICollection<StudioDemoWorkspace> demos,
+        string id,
+        string relativeConfigPath,
+        string title,
+        string description,
+        IReadOnlyList<string> tags,
+        string? preferredProfile = null)
+    {
+        var configPath = FindRepositoryAsset(relativeConfigPath);
+        var projectPath = configPath is null
+            ? null
+            : new FileInfo(configPath).Directory?.Parent?.FullName;
+        if (string.IsNullOrWhiteSpace(projectPath))
+        {
+            return;
+        }
+
+        demos.Add(new StudioDemoWorkspace(id, title, description, projectPath, tags, preferredProfile));
+    }
+
+    private static IReadOnlyList<StudioRunnerNode> BuildRunnerNodes()
+    {
+        var capabilities = new List<string> { "http", "playwright", "plugins" };
+        if (OperatingSystem.IsWindows())
+        {
+            capabilities.Add("flaui");
+        }
+
+        return
+        [
+            new StudioRunnerNode(
+                StudioRunnerNode.LocalNodeId,
+                "Local embedded node",
+                $"{Environment.MachineName} • in-process",
+                "Runs flows on the same machine as Studio Web. This is the development node that future remote runners will mirror.",
+                capabilities)
+        ];
+    }
+
+    private static string BuildChildCountLabel(string directory)
+    {
+        try
+        {
+            var count = Directory.EnumerateDirectories(directory).Take(100).Count();
+            return count == 0 ? "empty" : $"{count}+ folders";
+        }
+        catch
+        {
+            return "restricted";
+        }
+    }
+
+    private static string? ResolveSuggestedWorkspacePath(ProjectLocator projectLocator)
+    {
+        var currentRoot = projectLocator.FindProjectRoot(Environment.CurrentDirectory);
+        if (!string.IsNullOrWhiteSpace(currentRoot))
+        {
+            return currentRoot;
+        }
+
+        var knownConfig = FindRepositoryAsset(Path.Combine("specs", "httpbin-smoke", ".cress", "config.yaml"))
+            ?? FindRepositoryAsset(Path.Combine("specs", "web-smoke", ".cress", "config.yaml"))
+            ?? FindRepositoryAsset(Path.Combine("specs", "calc-smoke", ".cress", "config.yaml"));
+        return knownConfig is null
+            ? null
+            : new FileInfo(knownConfig).Directory?.Parent?.FullName;
+    }
+
+    private static string? FindRepositoryAsset(string relativePath)
+    {
+        var directory = new DirectoryInfo(AppContext.BaseDirectory);
+        while (directory is not null)
+        {
+            var candidate = Path.Combine(directory.FullName, relativePath);
+            if (File.Exists(candidate) || Directory.Exists(candidate))
+            {
+                return candidate;
+            }
+
+            directory = directory.Parent;
+        }
+
+        return null;
+    }
+
     private int? ParseRetryOverride()
         => int.TryParse(RetryCountOverrideText, out var value) && value >= 0
             ? value
@@ -1083,6 +1454,26 @@ public sealed class StudioWorkspaceState : IDisposable
 }
 
 public sealed record StudioArtifactItem(string DisplayName, string Detail, string Path);
+
+public sealed record StudioDirectoryEntry(string Name, string Path, bool IsCressWorkspace, string? ItemCountLabel);
+
+public sealed record StudioDemoWorkspace(
+    string Id,
+    string Title,
+    string Description,
+    string ProjectPath,
+    IReadOnlyList<string> Tags,
+    string? PreferredProfile = null);
+
+public sealed record StudioRunnerNode(
+    string Id,
+    string Name,
+    string DisplayName,
+    string Description,
+    IReadOnlyList<string> Capabilities)
+{
+    public const string LocalNodeId = "local-embedded";
+}
 
 public sealed class StudioSuiteEditorModel
 {

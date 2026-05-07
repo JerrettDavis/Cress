@@ -1,0 +1,111 @@
+@inject StudioWorkspaceState State
+@implements IDisposable
+
+@if (State.IsWorkspacePickerOpen)
+{
+    <div class="modal-backdrop" @onclick="Close" role="presentation"></div>
+    <div class="modal-dialog modal-dialog--wide" role="dialog" aria-modal="true" aria-labelledby="workspace-picker-title">
+        <div class="modal-header">
+            <h3 id="workspace-picker-title">Browse for a workspace</h3>
+            <button type="button" class="action-button" @onclick="Close" aria-label="Close">&#x2715;</button>
+        </div>
+
+        <div class="modal-body workspace-picker-body">
+            <div class="workspace-picker-toolbar">
+                <div class="field-stack workspace-picker-location">
+                    <label for="workspace-picker-location">Current location</label>
+                    <input id="workspace-picker-location" class="text-input" value="@State.WorkspaceBrowserLocationLabel" readonly />
+                </div>
+
+                <div class="workspace-picker-actions">
+                    <button type="button" class="action-button" @onclick="BrowseParent" disabled="@string.IsNullOrWhiteSpace(State.WorkspaceBrowserCurrentPath)">Up</button>
+                    <button type="button" class="action-button" @onclick="BrowseComputer">This machine</button>
+                    <button type="button" class="action-button primary" @onclick="SelectCurrentFolder" disabled="@string.IsNullOrWhiteSpace(State.WorkspaceBrowserCurrentPath)">Use this folder</button>
+                    <button type="button" class="action-button success" @onclick="LoadCurrentFolder" disabled="@string.IsNullOrWhiteSpace(State.WorkspaceBrowserCurrentPath)">Load this folder</button>
+                </div>
+            </div>
+
+            @if (!string.IsNullOrWhiteSpace(State.WorkspaceBrowserError))
+            {
+                <div class="workspace-picker-error">@State.WorkspaceBrowserError</div>
+            }
+
+            @if (State.WorkspaceBrowserEntries.Count == 0)
+            {
+                <p class="subpanel-empty">No folders are available here. Move up a level or choose another root.</p>
+            }
+            else
+            {
+                <div class="workspace-picker-list">
+                    @foreach (var entry in State.WorkspaceBrowserEntries)
+                    {
+                        <div class="workspace-picker-row">
+                            <div class="workspace-picker-entry">
+                                <strong>@entry.Name</strong>
+                                <span>@entry.Path</span>
+                                <div class="workspace-picker-meta">
+                                    @if (!string.IsNullOrWhiteSpace(entry.ItemCountLabel))
+                                    {
+                                        <span class="pill">@entry.ItemCountLabel</span>
+                                    }
+                                    @if (entry.IsCressWorkspace)
+                                    {
+                                        <span class="pill workspace-pill">Cress workspace</span>
+                                    }
+                                </div>
+                            </div>
+                            <div class="workspace-picker-row-actions">
+                                <button type="button" class="action-button" @onclick="() => Browse(entry.Path)">Open</button>
+                                <button type="button" class="action-button" @onclick="() => Select(entry.Path)">Select</button>
+                                <button type="button" class="action-button success" @onclick="() => Load(entry.Path)">Load</button>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="action-button" @onclick="Close">Cancel</button>
+        </div>
+    </div>
+}
+
+@code {
+    protected override void OnInitialized()
+    {
+        State.Changed += HandleStateChanged;
+    }
+
+    public void Dispose()
+    {
+        State.Changed -= HandleStateChanged;
+    }
+
+    private void HandleStateChanged()
+        => InvokeAsync(StateHasChanged);
+
+    private void Close()
+        => State.CloseWorkspacePicker();
+
+    private void Browse(string path)
+        => State.BrowseWorkspacePath(path);
+
+    private void BrowseParent()
+        => State.BrowseWorkspaceParent();
+
+    private void BrowseComputer()
+        => State.BrowseWorkspacePath(null);
+
+    private void Select(string path)
+        => State.ChooseWorkspaceFromPicker(path, loadImmediately: false);
+
+    private void Load(string path)
+        => State.ChooseWorkspaceFromPicker(path, loadImmediately: true);
+
+    private void SelectCurrentFolder()
+        => State.ChooseWorkspaceFromPicker(State.WorkspaceBrowserCurrentPath, loadImmediately: false);
+
+    private void LoadCurrentFolder()
+        => State.ChooseWorkspaceFromPicker(State.WorkspaceBrowserCurrentPath, loadImmediately: true);
+}

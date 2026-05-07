@@ -17,8 +17,8 @@ The repository now includes a **DocFX-powered documentation site** with:
 | Section | What it covers |
 | --- | --- |
 | [Getting started](getting-started/index.md) | prerequisites, onboarding path selection, and first-run quickstarts |
-| [User guide](user-guide/index.md) | Studio walkthroughs, recording flows, authoring guidance, and debugging |
-| [Developer guide](developer-guide/index.md) | repository structure, local development, extensibility, and docs/CI |
+| [User guide](user-guide/index.md) | Studio walkthroughs, recording flows, authoring guidance, debugging, target-specific guides for CLI, service, web, and desktop testing, and step-by-step familiar-app walkthroughs |
+| [Developer guide](developer-guide/index.md) | repository structure, local development, extensibility, native xUnit/NUnit/MSTest integration, framework demos, development-cycle adoption guidance, and docs/CI |
 | [API guide](api/index.md) | CLI command reference, project schema, and generated API reference |
 
 ## Built-in demo material

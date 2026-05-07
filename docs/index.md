@@ -11,6 +11,7 @@ Cress is a workflow-first end-to-end testing platform for Windows teams that nee
 - author flows through Studio, Studio Web, or source-first YAML editing
 - record browser and desktop steps, then normalize them into durable locators
 - run flows locally or in CI with profiles, reports, screenshots, and diagnostics
+- export framework-native xUnit, NUnit, and MSTest tests that still execute through the Cress engine
 - publish living docs and generated API reference from the same repository
 
 ## Product surfaces
@@ -49,6 +50,22 @@ Cress is a workflow-first end-to-end testing platform for Windows teams that nee
 2. [Set up local development](developer-guide/local-development.md)
 3. [Extend Cress with steps, plugins, and import/export paths](developer-guide/extensibility.md)
 4. [Build and publish the docs site](developer-guide/docs-and-ci.md)
+
+## Common testing targets
+
+| Target | Primary approach | Guide |
+| --- | --- | --- |
+| CLI tools | plugin-backed steps and process assertions | [Testing CLI apps](user-guide/testing-cli-apps.md) |
+| Services and APIs | built-in HTTP driver plus JSON assertions | [Testing services](user-guide/testing-services.md) |
+| Web apps | Playwright-backed browser flows with Studio recording | [Testing web apps](user-guide/testing-web-apps.md) |
+| Desktop apps | FlaUI-backed Windows flows with Studio authoring | [Testing desktop apps](user-guide/testing-desktop-apps.md) |
+
+## Native test framework integration
+
+Cress can now generate framework-native tests for teams that want Cress-authored flows to live inside existing .NET test projects and CI suites:
+
+- [xUnit, NUnit, and MSTest integration guide](developer-guide/test-framework-integrations.md)
+- [Framework demos and development-cycle integration](developer-guide/test-framework-demos.md)
 
 ## Studio at a glance
 

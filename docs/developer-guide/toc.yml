@@ -6,6 +6,10 @@
   href: local-development.md
 - name: Extensibility
   href: extensibility.md
+- name: Test framework integrations
+  href: test-framework-integrations.md
+- name: Framework demos and development-cycle integration
+  href: test-framework-demos.md
 - name: Designing for automation
   href: designing-for-automation.md
 - name: Docs and CI

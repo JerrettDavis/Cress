@@ -14,7 +14,7 @@ The `cress` CLI is the main entry point for project creation, validation, execut
 | `run` | execute one or more flows |
 | `report` | list, open, or summarize generated reports |
 | `generate` | generate project assets such as missing step stubs |
-| `export` | emit flows to Gherkin, Cypress, or Selenium IDE |
+| `export` | emit flows to Gherkin, Cypress, Selenium IDE, or framework-native xUnit / NUnit / MSTest tests |
 | `import` | bring in Gherkin, Playwright codegen, or Postman collections |
 | `doctor` | check environment readiness and driver health |
 | `metrics` | summarize run history trends |
@@ -137,6 +137,64 @@ Use these when you need to bootstrap a flow from an existing artifact or share i
 - `export gherkin`
 - `export cypress`
 - `export selenium-ide`
+- `export xunit`
+- `export nunit`
+- `export mstest`
+
+### Framework-native test exports
+
+Use these commands when you want a Cress-authored flow to run inside an existing .NET test suite instead of through a standalone `cress run`.
+
+#### xUnit
+
+```text
+Usage:
+  cress export xunit [<project>] [options]
+```
+
+Common options:
+
+- `--flow <flow>`
+- `--output <output>`
+- `--namespace <namespace>`
+- `--class-name <class-name>`
+- `--profile <profile>`
+
+Example:
+
+```powershell
+dotnet run --project src\Cress.Cli\Cress.Cli.csproj -- export xunit specs\httpbin-smoke --flow httpbin-get-smoke --output tests\Contoso.Api.Tests\Generated\HttpbinSmokeTests.cs --profile ci
+```
+
+#### NUnit
+
+```text
+Usage:
+  cress export nunit [<project>] [options]
+```
+
+Example:
+
+```powershell
+dotnet run --project src\Cress.Cli\Cress.Cli.csproj -- export nunit specs\calc-smoke --flow calc.add-two-plus-two --output tests\Contoso.Desktop.Tests\Generated\CalculatorSmokeTests.cs --profile local
+```
+
+#### MSTest
+
+```text
+Usage:
+  cress export mstest [<project>] [options]
+```
+
+Example:
+
+```powershell
+dotnet run --project src\Cress.Cli\Cress.Cli.csproj -- export mstest demos\cmd-smoke --flow cmd.echo --output tests\Contoso.Tools.Tests\Generated\CmdSmokeTests.cs --profile ci
+```
+
+Generated test files call `CressTestEngine.RunFlowAsync(...)`, so the host framework owns discovery and filtering while Cress still owns flow execution, profiles, and evidence.
+
+In this example, `demos\cmd-smoke` is the demo project created in the CLI testing walkthrough rather than a built-in repository sample.
 
 ## Diagnostic commands for mature suites
 

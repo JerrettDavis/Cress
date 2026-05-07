@@ -7,6 +7,8 @@ The developer guide is for contributors who need to understand the solution stru
 - [Repository overview](repository-overview.md)
 - [Local development](local-development.md)
 - [Extensibility](extensibility.md)
+- [Test framework integrations](test-framework-integrations.md)
+- [Framework demos and development-cycle integration](test-framework-demos.md)
 - [Designing for automation](designing-for-automation.md)
 - [Docs and CI](docs-and-ci.md)
 

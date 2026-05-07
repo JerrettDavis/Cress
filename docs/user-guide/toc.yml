@@ -8,3 +8,11 @@
   href: authoring-flows.md
 - name: Running and debugging
   href: running-and-debugging.md
+- name: Testing CLI apps
+  href: testing-cli-apps.md
+- name: Testing services
+  href: testing-services.md
+- name: Testing web apps
+  href: testing-web-apps.md
+- name: Testing desktop apps
+  href: testing-desktop-apps.md

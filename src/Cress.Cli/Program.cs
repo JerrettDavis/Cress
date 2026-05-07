@@ -10,27 +10,11 @@ using Microsoft.Extensions.DependencyInjection;
 using System.CommandLine;
 
 var services = new ServiceCollection()
-    .AddSingleton<ProjectLocator>()
-    .AddSingleton<ConfigLoader>()
-    .AddSingleton<ProfileLoader>()
-    .AddSingleton<FlowParser>()
-    .AddSingleton<FlowNormalizer>()
-    .AddSingleton<CapabilityParser>()
-    .AddSingleton<StepManifestParser>()
-    .AddSingleton<FixtureManifestParser>()
+    .AddCressRuntime()
     .AddSingleton<ProjectValidator>()
-    .AddSingleton<StepRegistry>()
-    .AddSingleton<ProjectCatalogService>()
-    .AddSingleton<PlanGenerator>()
-    .AddSingleton<PluginHost>()
     .AddSingleton<StepStubGenerator>()
-    .AddSingleton<ReportGenerator>()
     .AddSingleton<RunResultRepository>()
     .AddSingleton<RunMetricsService>()
-    .AddSingleton<RuntimeOrchestrator>()
-    .AddSingleton<IRuntimeDriver, HttpRuntimeDriver>()
-    .AddSingleton<IRuntimeDriver, FlaUiRuntimeDriver>()
-    .AddSingleton<IRuntimeDriver, PlaywrightRuntimeDriver>()
     .BuildServiceProvider();
 
 var rootCommand = new RootCommand("Cress end-to-end testing CLI");

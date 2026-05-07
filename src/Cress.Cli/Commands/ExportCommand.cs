@@ -4,6 +4,7 @@ using Cress.Core.Models;
 using Cress.Execution;
 using Cress.Exporters.Cypress;
 using Cress.Exporters.SeleniumIde;
+using Cress.Exporters.TestFrameworks;
 using Cress.Gherkin;
 using Cress.Gherkin.Phrases;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,6 +19,9 @@ public static class ExportCommand
         command.AddCommand(CreateGherkinCommand(services));
         command.AddCommand(CreateCypressCommand(services));
         command.AddCommand(CreateSeleniumIdeCommand(services));
+        command.AddCommand(CreateXunitCommand(services));
+        command.AddCommand(CreateNUnitCommand(services));
+        command.AddCommand(CreateMsTestCommand(services));
         return command;
     }
 
@@ -237,6 +241,42 @@ public static class ExportCommand
         return command;
     }
 
+    private static Command CreateXunitCommand(IServiceProvider services)
+    {
+        var command = new Command("xunit", "Export a flow to an xUnit C# test backed by the Cress engine");
+        ConfigureDotNetTestExportCommand(
+            services,
+            command,
+            defaultExtension: ".xunit.cs",
+            defaultNamespace: "Cress.Generated.Xunit",
+            export: (flow, catalog, options) => new XunitExporter().Export(flow, catalog.ProjectRoot, options));
+        return command;
+    }
+
+    private static Command CreateNUnitCommand(IServiceProvider services)
+    {
+        var command = new Command("nunit", "Export a flow to an NUnit C# test backed by the Cress engine");
+        ConfigureDotNetTestExportCommand(
+            services,
+            command,
+            defaultExtension: ".nunit.cs",
+            defaultNamespace: "Cress.Generated.NUnit",
+            export: (flow, catalog, options) => new NUnitExporter().Export(flow, catalog.ProjectRoot, options));
+        return command;
+    }
+
+    private static Command CreateMsTestCommand(IServiceProvider services)
+    {
+        var command = new Command("mstest", "Export a flow to an MSTest C# test backed by the Cress engine");
+        ConfigureDotNetTestExportCommand(
+            services,
+            command,
+            defaultExtension: ".mstest.cs",
+            defaultNamespace: "Cress.Generated.MSTest",
+            export: (flow, catalog, options) => new MsTestExporter().Export(flow, catalog.ProjectRoot, options));
+        return command;
+    }
+
     // -------------------------------------------------------------------------
     // Shared helpers
     // -------------------------------------------------------------------------
@@ -328,5 +368,96 @@ public static class ExportCommand
             File.WriteAllText(outputPath, content);
             Console.Out.WriteLine($"Exported: {outputPath}");
         }
+    }
+
+    private static void ConfigureDotNetTestExportCommand(
+        IServiceProvider services,
+        Command command,
+        string defaultExtension,
+        string defaultNamespace,
+        Func<NormalizedFlow, ProjectCatalog, DotNetTestExportOptions, string> export)
+    {
+        var projectArgument = new Argument<string?>("project")
+        {
+            Description = "Path to the Cress project directory",
+            Arity = ArgumentArity.ZeroOrOne
+        };
+        var flowOption = new Option<string?>("--flow") { Description = "Flow id to export (partial match supported)" };
+        var outputOption = new Option<string?>("--output") { Description = $"Output {defaultExtension} file path (default: <project>/exports/<flowId>{defaultExtension})" };
+        var namespaceOption = new Option<string?>("--namespace") { Description = $"Namespace for the generated test class (default: {defaultNamespace})" };
+        var classNameOption = new Option<string?>("--class-name") { Description = "Class name for the generated test type" };
+        var profileOption = new Option<string?>("--profile") { Description = "Optional profile to embed in the generated test" };
+
+        command.AddArgument(projectArgument);
+        command.AddOption(flowOption);
+        command.AddOption(outputOption);
+        command.AddOption(namespaceOption);
+        command.AddOption(classNameOption);
+        command.AddOption(profileOption);
+
+        command.SetHandler((InvocationContext context) =>
+        {
+            var projectPath = context.ParseResult.GetValueForArgument(projectArgument);
+            var flowId = context.ParseResult.GetValueForOption(flowOption);
+            var outputPath = context.ParseResult.GetValueForOption(outputOption);
+            var namespaceValue = context.ParseResult.GetValueForOption(namespaceOption) ?? defaultNamespace;
+            var className = context.ParseResult.GetValueForOption(classNameOption);
+            var profile = context.ParseResult.GetValueForOption(profileOption);
+
+            var flow = ResolveFlow(services, projectPath, flowId, context, out var catalog);
+            if (flow is null || catalog is null)
+            {
+                return;
+            }
+
+            var projectLiteral = DetermineProjectPathLiteral(projectPath, catalog.ProjectRoot);
+            var content = export(flow, catalog, new DotNetTestExportOptions
+            {
+                Namespace = namespaceValue,
+                ClassName = className,
+                Profile = profile,
+                ProjectPath = projectLiteral
+            });
+
+            if (string.IsNullOrWhiteSpace(outputPath))
+            {
+                var safeId = flow.FlowId.Replace('/', '-').Replace('\\', '-').Replace(':', '-');
+                var exportsDir = Path.Combine(catalog.ProjectRoot, "exports");
+                Directory.CreateDirectory(exportsDir);
+                outputPath = Path.Combine(exportsDir, $"{safeId}{defaultExtension}");
+            }
+
+            WriteOrPrint(outputPath, content);
+            context.ExitCode = 0;
+        });
+    }
+
+    private static string DetermineProjectPathLiteral(string? projectPath, string projectRoot)
+    {
+        if (!string.IsNullOrWhiteSpace(projectPath))
+        {
+            return projectPath;
+        }
+
+        var repositoryRoot = FindRepositoryRoot(projectRoot);
+        return repositoryRoot is null
+            ? Path.GetFileName(projectRoot)
+            : Path.GetRelativePath(repositoryRoot, projectRoot);
+    }
+
+    private static string? FindRepositoryRoot(string startPath)
+    {
+        var current = new DirectoryInfo(startPath);
+        while (current is not null)
+        {
+            if (Directory.Exists(Path.Combine(current.FullName, ".git")))
+            {
+                return current.FullName;
+            }
+
+            current = current.Parent;
+        }
+
+        return null;
     }
 }

@@ -52,7 +52,6 @@
         ]
       }
     ],
-    "dest": "_site",
     "globalMetadata": {
       "_appTitle": "Cress documentation",
       "_appName": "Cress",

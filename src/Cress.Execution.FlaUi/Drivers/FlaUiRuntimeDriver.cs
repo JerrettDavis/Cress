@@ -510,7 +510,7 @@ public sealed class FlaUiRuntimeDriver : IRuntimeDriver
             var conditionFactory = _automation.ConditionFactory;
             var conditions = new List<ConditionBase>();
 
-            if (TryGetInput(action.Inputs, out var automationId, "automationId"))
+            if (TryGetInput(action.Inputs, out var automationId, "automationId", "testId"))
             {
                 conditions.Add(conditionFactory.ByAutomationId(automationId));
             }
@@ -539,12 +539,30 @@ public sealed class FlaUiRuntimeDriver : IRuntimeDriver
 
         private DriverExecutionResult? CheckWebOnlyLocators(IReadOnlyDictionary<string, string> inputs)
         {
-            if (inputs.ContainsKey("cssSelector") || inputs.ContainsKey("xpath"))
+            var hasCssSelector = TryGetInput(inputs, out _, "cssSelector");
+            var hasXPath = TryGetInput(inputs, out _, "xpath");
+            if (!hasCssSelector && !hasXPath)
             {
-                return Failure("FlaUI does not support cssSelector or xpath locators. Use automationId, name, label, or controlType.", "unsupported-locator");
+                return null;
             }
 
-            return null;
+            var hasDesktopLocator =
+                TryGetInput(inputs, out _, "automationId", "testId") ||
+                TryGetInput(inputs, out _, "name", "label", "text") ||
+                TryGetInput(inputs, out _, "controlType", "role");
+
+            if (hasDesktopLocator)
+            {
+                return null;
+            }
+
+            var unsupportedLocator = hasCssSelector
+                ? "cssSelector"
+                : "xpath";
+
+            return Failure(
+                $"The {unsupportedLocator} locator strategy is not supported by the desktop driver when no desktop locator is provided. Use testId, automationId, name, label, text, role, or controlType.",
+                "locator-strategy-not-supported");
         }
 
         private string? ResolveApplicationPath(PlanAction action)

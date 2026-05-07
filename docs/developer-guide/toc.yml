@@ -1,0 +1,12 @@
+- name: Developer guide
+  href: index.md
+- name: Repository overview
+  href: repository-overview.md
+- name: Local development
+  href: local-development.md
+- name: Extensibility
+  href: extensibility.md
+- name: Designing for automation
+  href: designing-for-automation.md
+- name: Docs and CI
+  href: docs-and-ci.md

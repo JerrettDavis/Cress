@@ -24,6 +24,5 @@ public static class ServiceCollectionExtensions
             .AddSingleton<ReportGenerator>()
             .AddSingleton<RuntimeOrchestrator>()
             .AddSingleton<IRuntimeDriver, HttpRuntimeDriver>()
-            .AddSingleton<IRuntimeDriver, FlaUiRuntimeDriver>()
             .AddSingleton<IRuntimeDriver, PlaywrightRuntimeDriver>();
 }

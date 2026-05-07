@@ -1,5 +1,7 @@
 - name: Getting started
   href: index.md
+- name: Fastest first run
+  href: quickstart-first-run.md
 - name: HTTP quickstart
   href: quickstart-http.md
 - name: Web quickstart

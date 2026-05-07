@@ -12,6 +12,7 @@ Cress is a workflow-first end-to-end testing platform for Windows teams that nee
 - record browser and desktop steps, then normalize them into durable locators
 - run flows locally or in CI with profiles, reports, screenshots, and diagnostics
 - export framework-native xUnit, NUnit, and MSTest tests that still execute through the Cress engine
+- run Cress from a reusable GitHub Action that packs and installs the CLI on the runner
 - publish living docs and generated API reference from the same repository
 
 ## Product surfaces
@@ -28,7 +29,7 @@ Cress is a workflow-first end-to-end testing platform for Windows teams that nee
 ### New users
 
 1. [Install prerequisites and choose a quickstart](getting-started/index.md)
-2. [Run the HTTP sample](getting-started/quickstart-http.md)
+2. [Use the fastest first-run path](getting-started/quickstart-first-run.md)
 3. [Walk through Studio](user-guide/studio-overview.md)
 4. [Run and debug flows](user-guide/running-and-debugging.md)
 
@@ -66,6 +67,7 @@ Cress can now generate framework-native tests for teams that want Cress-authored
 
 - [xUnit, NUnit, and MSTest integration guide](developer-guide/test-framework-integrations.md)
 - [Framework demos and development-cycle integration](developer-guide/test-framework-demos.md)
+- [GitHub Actions integration](developer-guide/github-actions-integration.md)
 - [Environment orchestration](developer-guide/environment-orchestration.md)
 
 ## Studio at a glance

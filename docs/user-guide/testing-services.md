@@ -52,7 +52,7 @@ drivers:
     enabled: true
   playwright:
     enabled: false
-  flaui:
+  flawright:
     enabled: false
 ```
 

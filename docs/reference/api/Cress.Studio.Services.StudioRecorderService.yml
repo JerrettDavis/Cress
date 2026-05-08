@@ -1,0 +1,1629 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Studio.Services.StudioRecorderService
+  commentId: T:Cress.Studio.Services.StudioRecorderService
+  id: StudioRecorderService
+  parent: Cress.Studio.Services
+  children:
+  - Cress.Studio.Services.StudioRecorderService.#ctor(Cress.Execution.RuntimeOrchestrator)
+  - Cress.Studio.Services.StudioRecorderService.CapturedEventCount
+  - Cress.Studio.Services.StudioRecorderService.CurrentEvents
+  - Cress.Studio.Services.StudioRecorderService.CurrentInferredSteps
+  - Cress.Studio.Services.StudioRecorderService.CurrentTarget
+  - Cress.Studio.Services.StudioRecorderService.Dispose
+  - Cress.Studio.Services.StudioRecorderService.Elapsed
+  - Cress.Studio.Services.StudioRecorderService.IsRecording
+  - Cress.Studio.Services.StudioRecorderService.ListAvailableTargetsAsync
+  - Cress.Studio.Services.StudioRecorderService.ReplayRecordedFlowAsync(System.String,System.String)
+  - Cress.Studio.Services.StudioRecorderService.StartRecordingAsync(System.Int32)
+  - Cress.Studio.Services.StudioRecorderService.StartWebRecordingAsync(System.String,System.String,System.Threading.CancellationToken)
+  - Cress.Studio.Services.StudioRecorderService.StateChanged
+  - Cress.Studio.Services.StudioRecorderService.StopRecordingAsync
+  langs:
+  - csharp
+  - vb
+  name: StudioRecorderService
+  nameWithType: StudioRecorderService
+  fullName: Cress.Studio.Services.StudioRecorderService
+  type: Class
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/StudioRecorderService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: StudioRecorderService
+    path: ../src/Cress.Studio.Core/Services/StudioRecorderService.cs
+    startLine: 16
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  summary: >-
+    Wraps <xref href="Cress.Recorder.RecordingSession" data-throw-if-not-resolved="false"></xref> (desktop) and <xref href="Cress.Studio.Services.WebRecorderClient" data-throw-if-not-resolved="false"></xref> (web)
+
+    and exposes recording state for the Blazor Studio.
+
+    Registered as <code>Scoped</code> — one instance per Blazor circuit (one per browser tab).
+
+    Thread-safe: UIA events fire on COM background threads; all state writes are guarded by
+
+    <xref href="System.Threading.Interlocked" data-throw-if-not-resolved="false"></xref> / volatile / <xref href="System.Threading.Lock" data-throw-if-not-resolved="false"></xref>.
+  example: []
+  syntax:
+    content: 'public sealed class StudioRecorderService : IStudioRecorderService, IDisposable'
+    content.vb: Public NotInheritable Class StudioRecorderService Implements IStudioRecorderService, IDisposable
+  inheritance:
+  - System.Object
+  implements:
+  - Cress.Studio.Services.IStudioRecorderService
+  - System.IDisposable
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Cress.Studio.Services.StudioRecorderService.IsRecording
+  commentId: P:Cress.Studio.Services.StudioRecorderService.IsRecording
+  id: IsRecording
+  parent: Cress.Studio.Services.StudioRecorderService
+  langs:
+  - csharp
+  - vb
+  name: IsRecording
+  nameWithType: StudioRecorderService.IsRecording
+  fullName: Cress.Studio.Services.StudioRecorderService.IsRecording
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/StudioRecorderService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: IsRecording
+    path: ../src/Cress.Studio.Core/Services/StudioRecorderService.cs
+    startLine: 46
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  summary: True while a recording session is active.
+  example: []
+  syntax:
+    content: public bool IsRecording { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsRecording As Boolean
+  overload: Cress.Studio.Services.StudioRecorderService.IsRecording*
+  implements:
+  - Cress.Studio.Services.IStudioRecorderService.IsRecording
+- uid: Cress.Studio.Services.StudioRecorderService.CurrentTarget
+  commentId: P:Cress.Studio.Services.StudioRecorderService.CurrentTarget
+  id: CurrentTarget
+  parent: Cress.Studio.Services.StudioRecorderService
+  langs:
+  - csharp
+  - vb
+  name: CurrentTarget
+  nameWithType: StudioRecorderService.CurrentTarget
+  fullName: Cress.Studio.Services.StudioRecorderService.CurrentTarget
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/StudioRecorderService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: CurrentTarget
+    path: ../src/Cress.Studio.Core/Services/StudioRecorderService.cs
+    startLine: 47
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  summary: The target that is currently being (or was last) recorded.
+  example: []
+  syntax:
+    content: public RecordingTargetInfo? CurrentTarget { get; }
+    parameters: []
+    return:
+      type: Cress.Studio.Services.RecordingTargetInfo
+    content.vb: Public ReadOnly Property CurrentTarget As RecordingTargetInfo
+  overload: Cress.Studio.Services.StudioRecorderService.CurrentTarget*
+  implements:
+  - Cress.Studio.Services.IStudioRecorderService.CurrentTarget
+- uid: Cress.Studio.Services.StudioRecorderService.CapturedEventCount
+  commentId: P:Cress.Studio.Services.StudioRecorderService.CapturedEventCount
+  id: CapturedEventCount
+  parent: Cress.Studio.Services.StudioRecorderService
+  langs:
+  - csharp
+  - vb
+  name: CapturedEventCount
+  nameWithType: StudioRecorderService.CapturedEventCount
+  fullName: Cress.Studio.Services.StudioRecorderService.CapturedEventCount
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/StudioRecorderService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: CapturedEventCount
+    path: ../src/Cress.Studio.Core/Services/StudioRecorderService.cs
+    startLine: 48
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  summary: Number of events captured in the active session so far.
+  example: []
+  syntax:
+    content: public int CapturedEventCount { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property CapturedEventCount As Integer
+  overload: Cress.Studio.Services.StudioRecorderService.CapturedEventCount*
+  implements:
+  - Cress.Studio.Services.IStudioRecorderService.CapturedEventCount
+- uid: Cress.Studio.Services.StudioRecorderService.Elapsed
+  commentId: P:Cress.Studio.Services.StudioRecorderService.Elapsed
+  id: Elapsed
+  parent: Cress.Studio.Services.StudioRecorderService
+  langs:
+  - csharp
+  - vb
+  name: Elapsed
+  nameWithType: StudioRecorderService.Elapsed
+  fullName: Cress.Studio.Services.StudioRecorderService.Elapsed
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/StudioRecorderService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Elapsed
+    path: ../src/Cress.Studio.Core/Services/StudioRecorderService.cs
+    startLine: 49
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  summary: Elapsed time since recording started.
+  example: []
+  syntax:
+    content: public TimeSpan Elapsed { get; }
+    parameters: []
+    return:
+      type: System.TimeSpan
+    content.vb: Public ReadOnly Property Elapsed As TimeSpan
+  overload: Cress.Studio.Services.StudioRecorderService.Elapsed*
+  implements:
+  - Cress.Studio.Services.IStudioRecorderService.Elapsed
+- uid: Cress.Studio.Services.StudioRecorderService.CurrentEvents
+  commentId: P:Cress.Studio.Services.StudioRecorderService.CurrentEvents
+  id: CurrentEvents
+  parent: Cress.Studio.Services.StudioRecorderService
+  langs:
+  - csharp
+  - vb
+  name: CurrentEvents
+  nameWithType: StudioRecorderService.CurrentEvents
+  fullName: Cress.Studio.Services.StudioRecorderService.CurrentEvents
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/StudioRecorderService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: CurrentEvents
+    path: ../src/Cress.Studio.Core/Services/StudioRecorderService.cs
+    startLine: 53
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  summary: >-
+    The raw events captured so far in the active session.
+
+    Empty when not recording. Thread-safe snapshot on each access.
+  example: []
+  syntax:
+    content: public IReadOnlyList<RecordedEvent> CurrentEvents { get; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.IReadOnlyList{Cress.Recorder.RecordedEvent}
+    content.vb: Public ReadOnly Property CurrentEvents As IReadOnlyList(Of RecordedEvent)
+  overload: Cress.Studio.Services.StudioRecorderService.CurrentEvents*
+  implements:
+  - Cress.Studio.Services.IStudioRecorderService.CurrentEvents
+- uid: Cress.Studio.Services.StudioRecorderService.CurrentInferredSteps
+  commentId: P:Cress.Studio.Services.StudioRecorderService.CurrentInferredSteps
+  id: CurrentInferredSteps
+  parent: Cress.Studio.Services.StudioRecorderService
+  langs:
+  - csharp
+  - vb
+  name: CurrentInferredSteps
+  nameWithType: StudioRecorderService.CurrentInferredSteps
+  fullName: Cress.Studio.Services.StudioRecorderService.CurrentInferredSteps
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/StudioRecorderService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: CurrentInferredSteps
+    path: ../src/Cress.Studio.Core/Services/StudioRecorderService.cs
+    startLine: 64
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  summary: >-
+    Live inference applied to <xref href="Cress.Studio.Services.IStudioRecorderService.CurrentEvents" data-throw-if-not-resolved="false"></xref>.
+
+    Recomputed on each <xref href="Cress.Studio.Services.IStudioRecorderService.StateChanged" data-throw-if-not-resolved="false"></xref> tick (~250 ms debounce).
+
+    Empty when not recording.
+  example: []
+  syntax:
+    content: public IReadOnlyList<InferredStep> CurrentInferredSteps { get; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.IReadOnlyList{Cress.Recorder.Inference.InferredStep}
+    content.vb: Public ReadOnly Property CurrentInferredSteps As IReadOnlyList(Of InferredStep)
+  overload: Cress.Studio.Services.StudioRecorderService.CurrentInferredSteps*
+  implements:
+  - Cress.Studio.Services.IStudioRecorderService.CurrentInferredSteps
+- uid: Cress.Studio.Services.StudioRecorderService.StateChanged
+  commentId: E:Cress.Studio.Services.StudioRecorderService.StateChanged
+  id: StateChanged
+  parent: Cress.Studio.Services.StudioRecorderService
+  langs:
+  - csharp
+  - vb
+  name: StateChanged
+  nameWithType: StudioRecorderService.StateChanged
+  fullName: Cress.Studio.Services.StudioRecorderService.StateChanged
+  type: Event
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/StudioRecorderService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: StateChanged
+    path: ../src/Cress.Studio.Core/Services/StudioRecorderService.cs
+    startLine: 66
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  summary: >-
+    Fires when recording state changes (start/stop/new event).
+
+    Debounced to ~250 ms so rapid UIA event streams don't spam Blazor renders.
+  example: []
+  syntax:
+    content: public event Action? StateChanged
+    return:
+      type: System.Action
+    content.vb: Public Event StateChanged As Action
+  implements:
+  - Cress.Studio.Services.IStudioRecorderService.StateChanged
+- uid: Cress.Studio.Services.StudioRecorderService.#ctor(Cress.Execution.RuntimeOrchestrator)
+  commentId: M:Cress.Studio.Services.StudioRecorderService.#ctor(Cress.Execution.RuntimeOrchestrator)
+  id: '#ctor(Cress.Execution.RuntimeOrchestrator)'
+  parent: Cress.Studio.Services.StudioRecorderService
+  langs:
+  - csharp
+  - vb
+  name: StudioRecorderService(RuntimeOrchestrator)
+  nameWithType: StudioRecorderService.StudioRecorderService(RuntimeOrchestrator)
+  fullName: Cress.Studio.Services.StudioRecorderService.StudioRecorderService(Cress.Execution.RuntimeOrchestrator)
+  type: Constructor
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/StudioRecorderService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: .ctor
+    path: ../src/Cress.Studio.Core/Services/StudioRecorderService.cs
+    startLine: 68
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  syntax:
+    content: public StudioRecorderService(RuntimeOrchestrator orchestrator)
+    parameters:
+    - id: orchestrator
+      type: Cress.Execution.RuntimeOrchestrator
+    content.vb: Public Sub New(orchestrator As RuntimeOrchestrator)
+  overload: Cress.Studio.Services.StudioRecorderService.#ctor*
+  nameWithType.vb: StudioRecorderService.New(RuntimeOrchestrator)
+  fullName.vb: Cress.Studio.Services.StudioRecorderService.New(Cress.Execution.RuntimeOrchestrator)
+  name.vb: New(RuntimeOrchestrator)
+- uid: Cress.Studio.Services.StudioRecorderService.ListAvailableTargetsAsync
+  commentId: M:Cress.Studio.Services.StudioRecorderService.ListAvailableTargetsAsync
+  id: ListAvailableTargetsAsync
+  parent: Cress.Studio.Services.StudioRecorderService
+  langs:
+  - csharp
+  - vb
+  name: ListAvailableTargetsAsync()
+  nameWithType: StudioRecorderService.ListAvailableTargetsAsync()
+  fullName: Cress.Studio.Services.StudioRecorderService.ListAvailableTargetsAsync()
+  type: Method
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/StudioRecorderService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: ListAvailableTargetsAsync
+    path: ../src/Cress.Studio.Core/Services/StudioRecorderService.cs
+    startLine: 78
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  summary: >-
+    Returns running processes that have a visible main window and can be attached to.
+
+    Silently skips elevated/protected processes.
+  example: []
+  syntax:
+    content: public Task<IReadOnlyList<RecordingTargetInfo>> ListAvailableTargetsAsync()
+    return:
+      type: System.Threading.Tasks.Task{System.Collections.Generic.IReadOnlyList{Cress.Studio.Services.RecordingTargetInfo}}
+    content.vb: Public Function ListAvailableTargetsAsync() As Task(Of IReadOnlyList(Of RecordingTargetInfo))
+  overload: Cress.Studio.Services.StudioRecorderService.ListAvailableTargetsAsync*
+  implements:
+  - Cress.Studio.Services.IStudioRecorderService.ListAvailableTargetsAsync
+- uid: Cress.Studio.Services.StudioRecorderService.StartRecordingAsync(System.Int32)
+  commentId: M:Cress.Studio.Services.StudioRecorderService.StartRecordingAsync(System.Int32)
+  id: StartRecordingAsync(System.Int32)
+  parent: Cress.Studio.Services.StudioRecorderService
+  langs:
+  - csharp
+  - vb
+  name: StartRecordingAsync(int)
+  nameWithType: StudioRecorderService.StartRecordingAsync(int)
+  fullName: Cress.Studio.Services.StudioRecorderService.StartRecordingAsync(int)
+  type: Method
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/StudioRecorderService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: StartRecordingAsync
+    path: ../src/Cress.Studio.Core/Services/StudioRecorderService.cs
+    startLine: 138
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  summary: Attaches to <code class="paramref">processId</code> and starts capturing events.
+  example: []
+  syntax:
+    content: public Task StartRecordingAsync(int processId)
+    parameters:
+    - id: processId
+      type: System.Int32
+    return:
+      type: System.Threading.Tasks.Task
+    content.vb: Public Function StartRecordingAsync(processId As Integer) As Task
+  overload: Cress.Studio.Services.StudioRecorderService.StartRecordingAsync*
+  implements:
+  - Cress.Studio.Services.IStudioRecorderService.StartRecordingAsync(System.Int32)
+  nameWithType.vb: StudioRecorderService.StartRecordingAsync(Integer)
+  fullName.vb: Cress.Studio.Services.StudioRecorderService.StartRecordingAsync(Integer)
+  name.vb: StartRecordingAsync(Integer)
+- uid: Cress.Studio.Services.StudioRecorderService.StartWebRecordingAsync(System.String,System.String,System.Threading.CancellationToken)
+  commentId: M:Cress.Studio.Services.StudioRecorderService.StartWebRecordingAsync(System.String,System.String,System.Threading.CancellationToken)
+  id: StartWebRecordingAsync(System.String,System.String,System.Threading.CancellationToken)
+  parent: Cress.Studio.Services.StudioRecorderService
+  langs:
+  - csharp
+  - vb
+  name: StartWebRecordingAsync(string, string, CancellationToken)
+  nameWithType: StudioRecorderService.StartWebRecordingAsync(string, string, CancellationToken)
+  fullName: Cress.Studio.Services.StudioRecorderService.StartWebRecordingAsync(string, string, System.Threading.CancellationToken)
+  type: Method
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/StudioRecorderService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: StartWebRecordingAsync
+    path: ../src/Cress.Studio.Core/Services/StudioRecorderService.cs
+    startLine: 175
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  summary: >-
+    Spawns the Node.js web recorder, opens a browser at <code class="paramref">url</code>,
+
+    and starts streaming web events.
+  example: []
+  syntax:
+    content: public Task StartWebRecordingAsync(string url, string browserType, CancellationToken ct = default)
+    parameters:
+    - id: url
+      type: System.String
+      description: Initial URL to navigate to (must be a valid absolute URL).
+    - id: browserType
+      type: System.String
+      description: 'Browser to launch: "chromium", "firefox", or "webkit".'
+    - id: ct
+      type: System.Threading.CancellationToken
+      description: Optional cancellation token.
+    return:
+      type: System.Threading.Tasks.Task
+    content.vb: Public Function StartWebRecordingAsync(url As String, browserType As String, ct As CancellationToken = Nothing) As Task
+  overload: Cress.Studio.Services.StudioRecorderService.StartWebRecordingAsync*
+  implements:
+  - Cress.Studio.Services.IStudioRecorderService.StartWebRecordingAsync(System.String,System.String,System.Threading.CancellationToken)
+  nameWithType.vb: StudioRecorderService.StartWebRecordingAsync(String, String, CancellationToken)
+  fullName.vb: Cress.Studio.Services.StudioRecorderService.StartWebRecordingAsync(String, String, System.Threading.CancellationToken)
+  name.vb: StartWebRecordingAsync(String, String, CancellationToken)
+- uid: Cress.Studio.Services.StudioRecorderService.StopRecordingAsync
+  commentId: M:Cress.Studio.Services.StudioRecorderService.StopRecordingAsync
+  id: StopRecordingAsync
+  parent: Cress.Studio.Services.StudioRecorderService
+  langs:
+  - csharp
+  - vb
+  name: StopRecordingAsync()
+  nameWithType: StudioRecorderService.StopRecordingAsync()
+  fullName: Cress.Studio.Services.StudioRecorderService.StopRecordingAsync()
+  type: Method
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/StudioRecorderService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: StopRecordingAsync
+    path: ../src/Cress.Studio.Core/Services/StudioRecorderService.cs
+    startLine: 209
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  summary: Stops the active session and returns the inferred steps plus raw events.
+  example: []
+  syntax:
+    content: public Task<RecordingResult> StopRecordingAsync()
+    return:
+      type: System.Threading.Tasks.Task{Cress.Studio.Services.RecordingResult}
+    content.vb: Public Function StopRecordingAsync() As Task(Of RecordingResult)
+  overload: Cress.Studio.Services.StudioRecorderService.StopRecordingAsync*
+  implements:
+  - Cress.Studio.Services.IStudioRecorderService.StopRecordingAsync
+- uid: Cress.Studio.Services.StudioRecorderService.ReplayRecordedFlowAsync(System.String,System.String)
+  commentId: M:Cress.Studio.Services.StudioRecorderService.ReplayRecordedFlowAsync(System.String,System.String)
+  id: ReplayRecordedFlowAsync(System.String,System.String)
+  parent: Cress.Studio.Services.StudioRecorderService
+  langs:
+  - csharp
+  - vb
+  name: ReplayRecordedFlowAsync(string, string)
+  nameWithType: StudioRecorderService.ReplayRecordedFlowAsync(string, string)
+  fullName: Cress.Studio.Services.StudioRecorderService.ReplayRecordedFlowAsync(string, string)
+  type: Method
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/StudioRecorderService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: ReplayRecordedFlowAsync
+    path: ../src/Cress.Studio.Core/Services/StudioRecorderService.cs
+    startLine: 282
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  summary: >-
+    Loads the flow at <code class="paramref">flowFilePath</code> and executes it in-process using the
+
+    project rooted at <code class="paramref">projectPath</code>.  Returns pass/fail + step summary.
+
+    Never spawns an external process.
+  example: []
+  syntax:
+    content: public Task<RecordingReplayResult> ReplayRecordedFlowAsync(string flowFilePath, string projectPath)
+    parameters:
+    - id: flowFilePath
+      type: System.String
+    - id: projectPath
+      type: System.String
+    return:
+      type: System.Threading.Tasks.Task{Cress.Studio.Services.RecordingReplayResult}
+    content.vb: Public Function ReplayRecordedFlowAsync(flowFilePath As String, projectPath As String) As Task(Of RecordingReplayResult)
+  overload: Cress.Studio.Services.StudioRecorderService.ReplayRecordedFlowAsync*
+  implements:
+  - Cress.Studio.Services.IStudioRecorderService.ReplayRecordedFlowAsync(System.String,System.String)
+  nameWithType.vb: StudioRecorderService.ReplayRecordedFlowAsync(String, String)
+  fullName.vb: Cress.Studio.Services.StudioRecorderService.ReplayRecordedFlowAsync(String, String)
+  name.vb: ReplayRecordedFlowAsync(String, String)
+- uid: Cress.Studio.Services.StudioRecorderService.Dispose
+  commentId: M:Cress.Studio.Services.StudioRecorderService.Dispose
+  id: Dispose
+  parent: Cress.Studio.Services.StudioRecorderService
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: StudioRecorderService.Dispose()
+  fullName: Cress.Studio.Services.StudioRecorderService.Dispose()
+  type: Method
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/StudioRecorderService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Dispose
+    path: ../src/Cress.Studio.Core/Services/StudioRecorderService.cs
+    startLine: 330
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  summary: Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+  example: []
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: Cress.Studio.Services.StudioRecorderService.Dispose*
+  implements:
+  - System.IDisposable.Dispose
+references:
+- uid: Cress.Recorder.RecordingSession
+  commentId: T:Cress.Recorder.RecordingSession
+  parent: Cress.Recorder
+  href: Cress.Recorder.RecordingSession.html
+  name: RecordingSession
+  nameWithType: RecordingSession
+  fullName: Cress.Recorder.RecordingSession
+- uid: Cress.Studio.Services.WebRecorderClient
+  commentId: T:Cress.Studio.Services.WebRecorderClient
+  href: Cress.Studio.Services.WebRecorderClient.html
+  name: WebRecorderClient
+  nameWithType: WebRecorderClient
+  fullName: Cress.Studio.Services.WebRecorderClient
+- uid: System.Threading.Interlocked
+  commentId: T:System.Threading.Interlocked
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.interlocked
+  name: Interlocked
+  nameWithType: Interlocked
+  fullName: System.Threading.Interlocked
+- uid: System.Threading.Lock
+  commentId: T:System.Threading.Lock
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.lock
+  name: Lock
+  nameWithType: Lock
+  fullName: System.Threading.Lock
+- uid: Cress.Studio.Services
+  commentId: N:Cress.Studio.Services
+  href: Cress.html
+  name: Cress.Studio.Services
+  nameWithType: Cress.Studio.Services
+  fullName: Cress.Studio.Services
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Studio
+    name: Studio
+    href: Cress.Studio.html
+  - name: .
+  - uid: Cress.Studio.Services
+    name: Services
+    href: Cress.Studio.Services.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Studio
+    name: Studio
+    href: Cress.Studio.html
+  - name: .
+  - uid: Cress.Studio.Services
+    name: Services
+    href: Cress.Studio.Services.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: Cress.Studio.Services.IStudioRecorderService
+  commentId: T:Cress.Studio.Services.IStudioRecorderService
+  parent: Cress.Studio.Services
+  href: Cress.Studio.Services.IStudioRecorderService.html
+  name: IStudioRecorderService
+  nameWithType: IStudioRecorderService
+  fullName: Cress.Studio.Services.IStudioRecorderService
+- uid: System.IDisposable
+  commentId: T:System.IDisposable
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.idisposable
+  name: IDisposable
+  nameWithType: IDisposable
+  fullName: System.IDisposable
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: Cress.Recorder
+  commentId: N:Cress.Recorder
+  href: Cress.html
+  name: Cress.Recorder
+  nameWithType: Cress.Recorder
+  fullName: Cress.Recorder
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Recorder
+    name: Recorder
+    href: Cress.Recorder.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Recorder
+    name: Recorder
+    href: Cress.Recorder.html
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Cress.Studio.Services.StudioRecorderService.IsRecording*
+  commentId: Overload:Cress.Studio.Services.StudioRecorderService.IsRecording
+  href: Cress.Studio.Services.StudioRecorderService.html#Cress_Studio_Services_StudioRecorderService_IsRecording
+  name: IsRecording
+  nameWithType: StudioRecorderService.IsRecording
+  fullName: Cress.Studio.Services.StudioRecorderService.IsRecording
+- uid: Cress.Studio.Services.IStudioRecorderService.IsRecording
+  commentId: P:Cress.Studio.Services.IStudioRecorderService.IsRecording
+  parent: Cress.Studio.Services.IStudioRecorderService
+  href: Cress.Studio.Services.IStudioRecorderService.html#Cress_Studio_Services_IStudioRecorderService_IsRecording
+  name: IsRecording
+  nameWithType: IStudioRecorderService.IsRecording
+  fullName: Cress.Studio.Services.IStudioRecorderService.IsRecording
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Cress.Studio.Services.StudioRecorderService.CurrentTarget*
+  commentId: Overload:Cress.Studio.Services.StudioRecorderService.CurrentTarget
+  href: Cress.Studio.Services.StudioRecorderService.html#Cress_Studio_Services_StudioRecorderService_CurrentTarget
+  name: CurrentTarget
+  nameWithType: StudioRecorderService.CurrentTarget
+  fullName: Cress.Studio.Services.StudioRecorderService.CurrentTarget
+- uid: Cress.Studio.Services.IStudioRecorderService.CurrentTarget
+  commentId: P:Cress.Studio.Services.IStudioRecorderService.CurrentTarget
+  parent: Cress.Studio.Services.IStudioRecorderService
+  href: Cress.Studio.Services.IStudioRecorderService.html#Cress_Studio_Services_IStudioRecorderService_CurrentTarget
+  name: CurrentTarget
+  nameWithType: IStudioRecorderService.CurrentTarget
+  fullName: Cress.Studio.Services.IStudioRecorderService.CurrentTarget
+- uid: Cress.Studio.Services.RecordingTargetInfo
+  commentId: T:Cress.Studio.Services.RecordingTargetInfo
+  parent: Cress.Studio.Services
+  href: Cress.Studio.Services.RecordingTargetInfo.html
+  name: RecordingTargetInfo
+  nameWithType: RecordingTargetInfo
+  fullName: Cress.Studio.Services.RecordingTargetInfo
+- uid: Cress.Studio.Services.StudioRecorderService.CapturedEventCount*
+  commentId: Overload:Cress.Studio.Services.StudioRecorderService.CapturedEventCount
+  href: Cress.Studio.Services.StudioRecorderService.html#Cress_Studio_Services_StudioRecorderService_CapturedEventCount
+  name: CapturedEventCount
+  nameWithType: StudioRecorderService.CapturedEventCount
+  fullName: Cress.Studio.Services.StudioRecorderService.CapturedEventCount
+- uid: Cress.Studio.Services.IStudioRecorderService.CapturedEventCount
+  commentId: P:Cress.Studio.Services.IStudioRecorderService.CapturedEventCount
+  parent: Cress.Studio.Services.IStudioRecorderService
+  href: Cress.Studio.Services.IStudioRecorderService.html#Cress_Studio_Services_IStudioRecorderService_CapturedEventCount
+  name: CapturedEventCount
+  nameWithType: IStudioRecorderService.CapturedEventCount
+  fullName: Cress.Studio.Services.IStudioRecorderService.CapturedEventCount
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Cress.Studio.Services.StudioRecorderService.Elapsed*
+  commentId: Overload:Cress.Studio.Services.StudioRecorderService.Elapsed
+  href: Cress.Studio.Services.StudioRecorderService.html#Cress_Studio_Services_StudioRecorderService_Elapsed
+  name: Elapsed
+  nameWithType: StudioRecorderService.Elapsed
+  fullName: Cress.Studio.Services.StudioRecorderService.Elapsed
+- uid: Cress.Studio.Services.IStudioRecorderService.Elapsed
+  commentId: P:Cress.Studio.Services.IStudioRecorderService.Elapsed
+  parent: Cress.Studio.Services.IStudioRecorderService
+  href: Cress.Studio.Services.IStudioRecorderService.html#Cress_Studio_Services_IStudioRecorderService_Elapsed
+  name: Elapsed
+  nameWithType: IStudioRecorderService.Elapsed
+  fullName: Cress.Studio.Services.IStudioRecorderService.Elapsed
+- uid: System.TimeSpan
+  commentId: T:System.TimeSpan
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.timespan
+  name: TimeSpan
+  nameWithType: TimeSpan
+  fullName: System.TimeSpan
+- uid: Cress.Studio.Services.StudioRecorderService.CurrentEvents*
+  commentId: Overload:Cress.Studio.Services.StudioRecorderService.CurrentEvents
+  href: Cress.Studio.Services.StudioRecorderService.html#Cress_Studio_Services_StudioRecorderService_CurrentEvents
+  name: CurrentEvents
+  nameWithType: StudioRecorderService.CurrentEvents
+  fullName: Cress.Studio.Services.StudioRecorderService.CurrentEvents
+- uid: Cress.Studio.Services.IStudioRecorderService.CurrentEvents
+  commentId: P:Cress.Studio.Services.IStudioRecorderService.CurrentEvents
+  parent: Cress.Studio.Services.IStudioRecorderService
+  href: Cress.Studio.Services.IStudioRecorderService.html#Cress_Studio_Services_IStudioRecorderService_CurrentEvents
+  name: CurrentEvents
+  nameWithType: IStudioRecorderService.CurrentEvents
+  fullName: Cress.Studio.Services.IStudioRecorderService.CurrentEvents
+- uid: System.Collections.Generic.IReadOnlyList{Cress.Recorder.RecordedEvent}
+  commentId: T:System.Collections.Generic.IReadOnlyList{Cress.Recorder.RecordedEvent}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IReadOnlyList`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  name: IReadOnlyList<RecordedEvent>
+  nameWithType: IReadOnlyList<RecordedEvent>
+  fullName: System.Collections.Generic.IReadOnlyList<Cress.Recorder.RecordedEvent>
+  nameWithType.vb: IReadOnlyList(Of RecordedEvent)
+  fullName.vb: System.Collections.Generic.IReadOnlyList(Of Cress.Recorder.RecordedEvent)
+  name.vb: IReadOnlyList(Of RecordedEvent)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: <
+  - uid: Cress.Recorder.RecordedEvent
+    name: RecordedEvent
+    href: Cress.Recorder.RecordedEvent.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Cress.Recorder.RecordedEvent
+    name: RecordedEvent
+    href: Cress.Recorder.RecordedEvent.html
+  - name: )
+- uid: System.Collections.Generic.IReadOnlyList`1
+  commentId: T:System.Collections.Generic.IReadOnlyList`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  name: IReadOnlyList<T>
+  nameWithType: IReadOnlyList<T>
+  fullName: System.Collections.Generic.IReadOnlyList<T>
+  nameWithType.vb: IReadOnlyList(Of T)
+  fullName.vb: System.Collections.Generic.IReadOnlyList(Of T)
+  name.vb: IReadOnlyList(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: Cress.Studio.Services.IStudioRecorderService.StateChanged
+  commentId: E:Cress.Studio.Services.IStudioRecorderService.StateChanged
+  parent: Cress.Studio.Services.IStudioRecorderService
+  href: Cress.Studio.Services.IStudioRecorderService.html#Cress_Studio_Services_IStudioRecorderService_StateChanged
+  name: StateChanged
+  nameWithType: IStudioRecorderService.StateChanged
+  fullName: Cress.Studio.Services.IStudioRecorderService.StateChanged
+- uid: Cress.Studio.Services.StudioRecorderService.CurrentInferredSteps*
+  commentId: Overload:Cress.Studio.Services.StudioRecorderService.CurrentInferredSteps
+  href: Cress.Studio.Services.StudioRecorderService.html#Cress_Studio_Services_StudioRecorderService_CurrentInferredSteps
+  name: CurrentInferredSteps
+  nameWithType: StudioRecorderService.CurrentInferredSteps
+  fullName: Cress.Studio.Services.StudioRecorderService.CurrentInferredSteps
+- uid: Cress.Studio.Services.IStudioRecorderService.CurrentInferredSteps
+  commentId: P:Cress.Studio.Services.IStudioRecorderService.CurrentInferredSteps
+  parent: Cress.Studio.Services.IStudioRecorderService
+  href: Cress.Studio.Services.IStudioRecorderService.html#Cress_Studio_Services_IStudioRecorderService_CurrentInferredSteps
+  name: CurrentInferredSteps
+  nameWithType: IStudioRecorderService.CurrentInferredSteps
+  fullName: Cress.Studio.Services.IStudioRecorderService.CurrentInferredSteps
+- uid: System.Collections.Generic.IReadOnlyList{Cress.Recorder.Inference.InferredStep}
+  commentId: T:System.Collections.Generic.IReadOnlyList{Cress.Recorder.Inference.InferredStep}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IReadOnlyList`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  name: IReadOnlyList<InferredStep>
+  nameWithType: IReadOnlyList<InferredStep>
+  fullName: System.Collections.Generic.IReadOnlyList<Cress.Recorder.Inference.InferredStep>
+  nameWithType.vb: IReadOnlyList(Of InferredStep)
+  fullName.vb: System.Collections.Generic.IReadOnlyList(Of Cress.Recorder.Inference.InferredStep)
+  name.vb: IReadOnlyList(Of InferredStep)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: <
+  - uid: Cress.Recorder.Inference.InferredStep
+    name: InferredStep
+    href: Cress.Recorder.Inference.InferredStep.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Cress.Recorder.Inference.InferredStep
+    name: InferredStep
+    href: Cress.Recorder.Inference.InferredStep.html
+  - name: )
+- uid: System.Action
+  commentId: T:System.Action
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.action
+  name: Action
+  nameWithType: Action
+  fullName: System.Action
+- uid: Cress.Studio.Services.StudioRecorderService.#ctor*
+  commentId: Overload:Cress.Studio.Services.StudioRecorderService.#ctor
+  href: Cress.Studio.Services.StudioRecorderService.html#Cress_Studio_Services_StudioRecorderService__ctor_Cress_Execution_RuntimeOrchestrator_
+  name: StudioRecorderService
+  nameWithType: StudioRecorderService.StudioRecorderService
+  fullName: Cress.Studio.Services.StudioRecorderService.StudioRecorderService
+  nameWithType.vb: StudioRecorderService.New
+  fullName.vb: Cress.Studio.Services.StudioRecorderService.New
+  name.vb: New
+- uid: Cress.Execution.RuntimeOrchestrator
+  commentId: T:Cress.Execution.RuntimeOrchestrator
+  parent: Cress.Execution
+  href: Cress.Execution.RuntimeOrchestrator.html
+  name: RuntimeOrchestrator
+  nameWithType: RuntimeOrchestrator
+  fullName: Cress.Execution.RuntimeOrchestrator
+- uid: Cress.Execution
+  commentId: N:Cress.Execution
+  href: Cress.html
+  name: Cress.Execution
+  nameWithType: Cress.Execution
+  fullName: Cress.Execution
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Execution
+    name: Execution
+    href: Cress.Execution.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Execution
+    name: Execution
+    href: Cress.Execution.html
+- uid: Cress.Studio.Services.StudioRecorderService.ListAvailableTargetsAsync*
+  commentId: Overload:Cress.Studio.Services.StudioRecorderService.ListAvailableTargetsAsync
+  href: Cress.Studio.Services.StudioRecorderService.html#Cress_Studio_Services_StudioRecorderService_ListAvailableTargetsAsync
+  name: ListAvailableTargetsAsync
+  nameWithType: StudioRecorderService.ListAvailableTargetsAsync
+  fullName: Cress.Studio.Services.StudioRecorderService.ListAvailableTargetsAsync
+- uid: Cress.Studio.Services.IStudioRecorderService.ListAvailableTargetsAsync
+  commentId: M:Cress.Studio.Services.IStudioRecorderService.ListAvailableTargetsAsync
+  parent: Cress.Studio.Services.IStudioRecorderService
+  href: Cress.Studio.Services.IStudioRecorderService.html#Cress_Studio_Services_IStudioRecorderService_ListAvailableTargetsAsync
+  name: ListAvailableTargetsAsync()
+  nameWithType: IStudioRecorderService.ListAvailableTargetsAsync()
+  fullName: Cress.Studio.Services.IStudioRecorderService.ListAvailableTargetsAsync()
+  spec.csharp:
+  - uid: Cress.Studio.Services.IStudioRecorderService.ListAvailableTargetsAsync
+    name: ListAvailableTargetsAsync
+    href: Cress.Studio.Services.IStudioRecorderService.html#Cress_Studio_Services_IStudioRecorderService_ListAvailableTargetsAsync
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Cress.Studio.Services.IStudioRecorderService.ListAvailableTargetsAsync
+    name: ListAvailableTargetsAsync
+    href: Cress.Studio.Services.IStudioRecorderService.html#Cress_Studio_Services_IStudioRecorderService_ListAvailableTargetsAsync
+  - name: (
+  - name: )
+- uid: System.Threading.Tasks.Task{System.Collections.Generic.IReadOnlyList{Cress.Studio.Services.RecordingTargetInfo}}
+  commentId: T:System.Threading.Tasks.Task{System.Collections.Generic.IReadOnlyList{Cress.Studio.Services.RecordingTargetInfo}}
+  parent: System.Threading.Tasks
+  definition: System.Threading.Tasks.Task`1
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<IReadOnlyList<RecordingTargetInfo>>
+  nameWithType: Task<IReadOnlyList<RecordingTargetInfo>>
+  fullName: System.Threading.Tasks.Task<System.Collections.Generic.IReadOnlyList<Cress.Studio.Services.RecordingTargetInfo>>
+  nameWithType.vb: Task(Of IReadOnlyList(Of RecordingTargetInfo))
+  fullName.vb: System.Threading.Tasks.Task(Of System.Collections.Generic.IReadOnlyList(Of Cress.Studio.Services.RecordingTargetInfo))
+  name.vb: Task(Of IReadOnlyList(Of RecordingTargetInfo))
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: <
+  - uid: Cress.Studio.Services.RecordingTargetInfo
+    name: RecordingTargetInfo
+    href: Cress.Studio.Services.RecordingTargetInfo.html
+  - name: '>'
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Cress.Studio.Services.RecordingTargetInfo
+    name: RecordingTargetInfo
+    href: Cress.Studio.Services.RecordingTargetInfo.html
+  - name: )
+  - name: )
+- uid: System.Threading.Tasks.Task`1
+  commentId: T:System.Threading.Tasks.Task`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<TResult>
+  nameWithType: Task<TResult>
+  fullName: System.Threading.Tasks.Task<TResult>
+  nameWithType.vb: Task(Of TResult)
+  fullName.vb: System.Threading.Tasks.Task(Of TResult)
+  name.vb: Task(Of TResult)
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - name: TResult
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TResult
+  - name: )
+- uid: System.Threading.Tasks
+  commentId: N:System.Threading.Tasks
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Threading.Tasks
+  nameWithType: System.Threading.Tasks
+  fullName: System.Threading.Tasks
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+- uid: Cress.Studio.Services.StudioRecorderService.StartRecordingAsync*
+  commentId: Overload:Cress.Studio.Services.StudioRecorderService.StartRecordingAsync
+  href: Cress.Studio.Services.StudioRecorderService.html#Cress_Studio_Services_StudioRecorderService_StartRecordingAsync_System_Int32_
+  name: StartRecordingAsync
+  nameWithType: StudioRecorderService.StartRecordingAsync
+  fullName: Cress.Studio.Services.StudioRecorderService.StartRecordingAsync
+- uid: Cress.Studio.Services.IStudioRecorderService.StartRecordingAsync(System.Int32)
+  commentId: M:Cress.Studio.Services.IStudioRecorderService.StartRecordingAsync(System.Int32)
+  parent: Cress.Studio.Services.IStudioRecorderService
+  isExternal: true
+  href: Cress.Studio.Services.IStudioRecorderService.html#Cress_Studio_Services_IStudioRecorderService_StartRecordingAsync_System_Int32_
+  name: StartRecordingAsync(int)
+  nameWithType: IStudioRecorderService.StartRecordingAsync(int)
+  fullName: Cress.Studio.Services.IStudioRecorderService.StartRecordingAsync(int)
+  nameWithType.vb: IStudioRecorderService.StartRecordingAsync(Integer)
+  fullName.vb: Cress.Studio.Services.IStudioRecorderService.StartRecordingAsync(Integer)
+  name.vb: StartRecordingAsync(Integer)
+  spec.csharp:
+  - uid: Cress.Studio.Services.IStudioRecorderService.StartRecordingAsync(System.Int32)
+    name: StartRecordingAsync
+    href: Cress.Studio.Services.IStudioRecorderService.html#Cress_Studio_Services_IStudioRecorderService_StartRecordingAsync_System_Int32_
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+  spec.vb:
+  - uid: Cress.Studio.Services.IStudioRecorderService.StartRecordingAsync(System.Int32)
+    name: StartRecordingAsync
+    href: Cress.Studio.Services.IStudioRecorderService.html#Cress_Studio_Services_IStudioRecorderService_StartRecordingAsync_System_Int32_
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+- uid: System.Threading.Tasks.Task
+  commentId: T:System.Threading.Tasks.Task
+  parent: System.Threading.Tasks
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task
+  name: Task
+  nameWithType: Task
+  fullName: System.Threading.Tasks.Task
+- uid: Cress.Studio.Services.StudioRecorderService.StartWebRecordingAsync*
+  commentId: Overload:Cress.Studio.Services.StudioRecorderService.StartWebRecordingAsync
+  href: Cress.Studio.Services.StudioRecorderService.html#Cress_Studio_Services_StudioRecorderService_StartWebRecordingAsync_System_String_System_String_System_Threading_CancellationToken_
+  name: StartWebRecordingAsync
+  nameWithType: StudioRecorderService.StartWebRecordingAsync
+  fullName: Cress.Studio.Services.StudioRecorderService.StartWebRecordingAsync
+- uid: Cress.Studio.Services.IStudioRecorderService.StartWebRecordingAsync(System.String,System.String,System.Threading.CancellationToken)
+  commentId: M:Cress.Studio.Services.IStudioRecorderService.StartWebRecordingAsync(System.String,System.String,System.Threading.CancellationToken)
+  parent: Cress.Studio.Services.IStudioRecorderService
+  isExternal: true
+  href: Cress.Studio.Services.IStudioRecorderService.html#Cress_Studio_Services_IStudioRecorderService_StartWebRecordingAsync_System_String_System_String_System_Threading_CancellationToken_
+  name: StartWebRecordingAsync(string, string, CancellationToken)
+  nameWithType: IStudioRecorderService.StartWebRecordingAsync(string, string, CancellationToken)
+  fullName: Cress.Studio.Services.IStudioRecorderService.StartWebRecordingAsync(string, string, System.Threading.CancellationToken)
+  nameWithType.vb: IStudioRecorderService.StartWebRecordingAsync(String, String, CancellationToken)
+  fullName.vb: Cress.Studio.Services.IStudioRecorderService.StartWebRecordingAsync(String, String, System.Threading.CancellationToken)
+  name.vb: StartWebRecordingAsync(String, String, CancellationToken)
+  spec.csharp:
+  - uid: Cress.Studio.Services.IStudioRecorderService.StartWebRecordingAsync(System.String,System.String,System.Threading.CancellationToken)
+    name: StartWebRecordingAsync
+    href: Cress.Studio.Services.IStudioRecorderService.html#Cress_Studio_Services_IStudioRecorderService_StartWebRecordingAsync_System_String_System_String_System_Threading_CancellationToken_
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.Threading.CancellationToken
+    name: CancellationToken
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken
+  - name: )
+  spec.vb:
+  - uid: Cress.Studio.Services.IStudioRecorderService.StartWebRecordingAsync(System.String,System.String,System.Threading.CancellationToken)
+    name: StartWebRecordingAsync
+    href: Cress.Studio.Services.IStudioRecorderService.html#Cress_Studio_Services_IStudioRecorderService_StartWebRecordingAsync_System_String_System_String_System_Threading_CancellationToken_
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.Threading.CancellationToken
+    name: CancellationToken
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken
+  - name: )
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: System.Threading.CancellationToken
+  commentId: T:System.Threading.CancellationToken
+  parent: System.Threading
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken
+  name: CancellationToken
+  nameWithType: CancellationToken
+  fullName: System.Threading.CancellationToken
+- uid: System.Threading
+  commentId: N:System.Threading
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Threading
+  nameWithType: System.Threading
+  fullName: System.Threading
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+- uid: Cress.Studio.Services.StudioRecorderService.StopRecordingAsync*
+  commentId: Overload:Cress.Studio.Services.StudioRecorderService.StopRecordingAsync
+  href: Cress.Studio.Services.StudioRecorderService.html#Cress_Studio_Services_StudioRecorderService_StopRecordingAsync
+  name: StopRecordingAsync
+  nameWithType: StudioRecorderService.StopRecordingAsync
+  fullName: Cress.Studio.Services.StudioRecorderService.StopRecordingAsync
+- uid: Cress.Studio.Services.IStudioRecorderService.StopRecordingAsync
+  commentId: M:Cress.Studio.Services.IStudioRecorderService.StopRecordingAsync
+  parent: Cress.Studio.Services.IStudioRecorderService
+  href: Cress.Studio.Services.IStudioRecorderService.html#Cress_Studio_Services_IStudioRecorderService_StopRecordingAsync
+  name: StopRecordingAsync()
+  nameWithType: IStudioRecorderService.StopRecordingAsync()
+  fullName: Cress.Studio.Services.IStudioRecorderService.StopRecordingAsync()
+  spec.csharp:
+  - uid: Cress.Studio.Services.IStudioRecorderService.StopRecordingAsync
+    name: StopRecordingAsync
+    href: Cress.Studio.Services.IStudioRecorderService.html#Cress_Studio_Services_IStudioRecorderService_StopRecordingAsync
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Cress.Studio.Services.IStudioRecorderService.StopRecordingAsync
+    name: StopRecordingAsync
+    href: Cress.Studio.Services.IStudioRecorderService.html#Cress_Studio_Services_IStudioRecorderService_StopRecordingAsync
+  - name: (
+  - name: )
+- uid: System.Threading.Tasks.Task{Cress.Studio.Services.RecordingResult}
+  commentId: T:System.Threading.Tasks.Task{Cress.Studio.Services.RecordingResult}
+  parent: System.Threading.Tasks
+  definition: System.Threading.Tasks.Task`1
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<RecordingResult>
+  nameWithType: Task<RecordingResult>
+  fullName: System.Threading.Tasks.Task<Cress.Studio.Services.RecordingResult>
+  nameWithType.vb: Task(Of RecordingResult)
+  fullName.vb: System.Threading.Tasks.Task(Of Cress.Studio.Services.RecordingResult)
+  name.vb: Task(Of RecordingResult)
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - uid: Cress.Studio.Services.RecordingResult
+    name: RecordingResult
+    href: Cress.Studio.Services.RecordingResult.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Cress.Studio.Services.RecordingResult
+    name: RecordingResult
+    href: Cress.Studio.Services.RecordingResult.html
+  - name: )
+- uid: Cress.Studio.Services.StudioRecorderService.ReplayRecordedFlowAsync*
+  commentId: Overload:Cress.Studio.Services.StudioRecorderService.ReplayRecordedFlowAsync
+  href: Cress.Studio.Services.StudioRecorderService.html#Cress_Studio_Services_StudioRecorderService_ReplayRecordedFlowAsync_System_String_System_String_
+  name: ReplayRecordedFlowAsync
+  nameWithType: StudioRecorderService.ReplayRecordedFlowAsync
+  fullName: Cress.Studio.Services.StudioRecorderService.ReplayRecordedFlowAsync
+- uid: Cress.Studio.Services.IStudioRecorderService.ReplayRecordedFlowAsync(System.String,System.String)
+  commentId: M:Cress.Studio.Services.IStudioRecorderService.ReplayRecordedFlowAsync(System.String,System.String)
+  parent: Cress.Studio.Services.IStudioRecorderService
+  isExternal: true
+  href: Cress.Studio.Services.IStudioRecorderService.html#Cress_Studio_Services_IStudioRecorderService_ReplayRecordedFlowAsync_System_String_System_String_
+  name: ReplayRecordedFlowAsync(string, string)
+  nameWithType: IStudioRecorderService.ReplayRecordedFlowAsync(string, string)
+  fullName: Cress.Studio.Services.IStudioRecorderService.ReplayRecordedFlowAsync(string, string)
+  nameWithType.vb: IStudioRecorderService.ReplayRecordedFlowAsync(String, String)
+  fullName.vb: Cress.Studio.Services.IStudioRecorderService.ReplayRecordedFlowAsync(String, String)
+  name.vb: ReplayRecordedFlowAsync(String, String)
+  spec.csharp:
+  - uid: Cress.Studio.Services.IStudioRecorderService.ReplayRecordedFlowAsync(System.String,System.String)
+    name: ReplayRecordedFlowAsync
+    href: Cress.Studio.Services.IStudioRecorderService.html#Cress_Studio_Services_IStudioRecorderService_ReplayRecordedFlowAsync_System_String_System_String_
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+  spec.vb:
+  - uid: Cress.Studio.Services.IStudioRecorderService.ReplayRecordedFlowAsync(System.String,System.String)
+    name: ReplayRecordedFlowAsync
+    href: Cress.Studio.Services.IStudioRecorderService.html#Cress_Studio_Services_IStudioRecorderService_ReplayRecordedFlowAsync_System_String_System_String_
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+- uid: System.Threading.Tasks.Task{Cress.Studio.Services.RecordingReplayResult}
+  commentId: T:System.Threading.Tasks.Task{Cress.Studio.Services.RecordingReplayResult}
+  parent: System.Threading.Tasks
+  definition: System.Threading.Tasks.Task`1
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<RecordingReplayResult>
+  nameWithType: Task<RecordingReplayResult>
+  fullName: System.Threading.Tasks.Task<Cress.Studio.Services.RecordingReplayResult>
+  nameWithType.vb: Task(Of RecordingReplayResult)
+  fullName.vb: System.Threading.Tasks.Task(Of Cress.Studio.Services.RecordingReplayResult)
+  name.vb: Task(Of RecordingReplayResult)
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - uid: Cress.Studio.Services.RecordingReplayResult
+    name: RecordingReplayResult
+    href: Cress.Studio.Services.RecordingReplayResult.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Cress.Studio.Services.RecordingReplayResult
+    name: RecordingReplayResult
+    href: Cress.Studio.Services.RecordingReplayResult.html
+  - name: )
+- uid: Cress.Studio.Services.StudioRecorderService.Dispose*
+  commentId: Overload:Cress.Studio.Services.StudioRecorderService.Dispose
+  href: Cress.Studio.Services.StudioRecorderService.html#Cress_Studio_Services_StudioRecorderService_Dispose
+  name: Dispose
+  nameWithType: StudioRecorderService.Dispose
+  fullName: Cress.Studio.Services.StudioRecorderService.Dispose
+- uid: System.IDisposable.Dispose
+  commentId: M:System.IDisposable.Dispose
+  parent: System.IDisposable
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
+  name: Dispose()
+  nameWithType: IDisposable.Dispose()
+  fullName: System.IDisposable.Dispose()
+  spec.csharp:
+  - uid: System.IDisposable.Dispose
+    name: Dispose
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.IDisposable.Dispose
+    name: Dispose
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
+  - name: (
+  - name: )

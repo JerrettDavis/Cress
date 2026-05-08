@@ -3,7 +3,7 @@ steps:
   - name: ui.attach
     description: Attach to a running desktop application by process name or ID.
     drivers:
-      - flaui
+      - flawright
     inputs:
       processName:
         type: string
@@ -23,7 +23,7 @@ steps:
   - name: ui.launch
     description: Launch a desktop application from an executable path.
     drivers:
-      - flaui
+      - flawright
     inputs:
       application:
         type: string
@@ -43,7 +43,7 @@ steps:
   - name: ui.invoke
     description: Click or invoke a UI element identified by automationId, name, controlType, or V1 locator fields.
     drivers:
-      - flaui
+      - flawright
     inputs:
       automationId:
         type: string
@@ -91,7 +91,7 @@ steps:
   - name: ui.fill
     description: Set the text value of an editable control (text box, combo box, etc.).
     drivers:
-      - flaui
+      - flawright
     inputs:
       automationId:
         type: string
@@ -131,7 +131,7 @@ steps:
   - name: ui.press-key
     description: Simulate a keyboard key press (e.g. Enter, Escape, Tab).
     drivers:
-      - flaui
+      - flawright
     inputs:
       key:
         type: string
@@ -143,7 +143,7 @@ steps:
   - name: ui.wait-for-window
     description: Wait for a window with a given title to appear, then assert it.
     drivers:
-      - flaui
+      - flawright
     inputs:
       title:
         type: string
@@ -155,7 +155,7 @@ steps:
   - name: ui.assert-text
     description: Assert that a UI element's accessible Name matches an expected string.
     drivers:
-      - flaui
+      - flawright
     inputs:
       automationId:
         type: string
@@ -195,7 +195,7 @@ steps:
   - name: ui.assert-window-title
     description: Assert that the current window title matches an expected value.
     drivers:
-      - flaui
+      - flawright
     inputs:
       title:
         type: string
@@ -207,7 +207,7 @@ steps:
   - name: ui.screenshot
     description: Capture a screenshot of the current application window.
     drivers:
-      - flaui
+      - flawright
     inputs:
       name:
         type: string
@@ -219,7 +219,7 @@ steps:
   - name: ui.close
     description: Close the desktop application under test.
     drivers:
-      - flaui
+      - flawright
     inputs: {}
     implementation:
       operation: close

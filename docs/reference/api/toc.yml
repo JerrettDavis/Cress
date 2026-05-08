@@ -1,0 +1,714 @@
+### YamlMime:TableOfContent
+items:
+- uid: Cress.Cli.Commands
+  name: Cress.Cli.Commands
+  type: Namespace
+  items:
+  - uid: Cress.Cli.Commands.ConfigCommand
+    name: ConfigCommand
+    type: Class
+  - uid: Cress.Cli.Commands.DiscoverCommand
+    name: DiscoverCommand
+    type: Class
+  - uid: Cress.Cli.Commands.DocCommand
+    name: DocCommand
+    type: Class
+  - uid: Cress.Cli.Commands.DoctorCommand
+    name: DoctorCommand
+    type: Class
+  - uid: Cress.Cli.Commands.ExportCommand
+    name: ExportCommand
+    type: Class
+  - uid: Cress.Cli.Commands.FlakeReportCommand
+    name: FlakeReportCommand
+    type: Class
+  - uid: Cress.Cli.Commands.GenerateCommand
+    name: GenerateCommand
+    type: Class
+  - uid: Cress.Cli.Commands.ImportCommand
+    name: ImportCommand
+    type: Class
+  - uid: Cress.Cli.Commands.InitCommand
+    name: InitCommand
+    type: Class
+  - uid: Cress.Cli.Commands.MetricsCommand
+    name: MetricsCommand
+    type: Class
+  - uid: Cress.Cli.Commands.PlanCommand
+    name: PlanCommand
+    type: Class
+  - uid: Cress.Cli.Commands.ReportCommand
+    name: ReportCommand
+    type: Class
+  - uid: Cress.Cli.Commands.RunCommand
+    name: RunCommand
+    type: Class
+  - uid: Cress.Cli.Commands.ValidateCommand
+    name: ValidateCommand
+    type: Class
+- uid: Cress.Core.Models
+  name: Cress.Core.Models
+  type: Namespace
+  items:
+  - uid: Cress.Core.Models.AcceptanceCriterion
+    name: AcceptanceCriterion
+    type: Class
+  - uid: Cress.Core.Models.ArtifactIndex
+    name: ArtifactIndex
+    type: Class
+  - uid: Cress.Core.Models.AuthenticationConfig
+    name: AuthenticationConfig
+    type: Class
+  - uid: Cress.Core.Models.CressCapability
+    name: CressCapability
+    type: Class
+  - uid: Cress.Core.Models.CressConfig
+    name: CressConfig
+    type: Class
+  - uid: Cress.Core.Models.CressFlow
+    name: CressFlow
+    type: Class
+  - uid: Cress.Core.Models.CressProfile
+    name: CressProfile
+    type: Class
+  - uid: Cress.Core.Models.DefaultsConfig
+    name: DefaultsConfig
+    type: Class
+  - uid: Cress.Core.Models.Diagnostic
+    name: Diagnostic
+    type: Class
+  - uid: Cress.Core.Models.DiagnosticSeverity
+    name: DiagnosticSeverity
+    type: Enum
+  - uid: Cress.Core.Models.DriverConfig
+    name: DriverConfig
+    type: Class
+  - uid: Cress.Core.Models.DriverExecutionResult
+    name: DriverExecutionResult
+    type: Class
+  - uid: Cress.Core.Models.EffectiveConfig
+    name: EffectiveConfig
+    type: Class
+  - uid: Cress.Core.Models.EvidenceArtifact
+    name: EvidenceArtifact
+    type: Class
+  - uid: Cress.Core.Models.EvidenceProfileConfig
+    name: EvidenceProfileConfig
+    type: Class
+  - uid: Cress.Core.Models.ExecutionPlan
+    name: ExecutionPlan
+    type: Class
+  - uid: Cress.Core.Models.FixtureDefinition
+    name: FixtureDefinition
+    type: Class
+  - uid: Cress.Core.Models.FixtureManifest
+    name: FixtureManifest
+    type: Class
+  - uid: Cress.Core.Models.FixtureProviderBinding
+    name: FixtureProviderBinding
+    type: Class
+  - uid: Cress.Core.Models.FlakeConfig
+    name: FlakeConfig
+    type: Class
+  - uid: Cress.Core.Models.FlakeProfileConfig
+    name: FlakeProfileConfig
+    type: Class
+  - uid: Cress.Core.Models.FlawrightProfileConfig
+    name: FlawrightProfileConfig
+    type: Class
+  - uid: Cress.Core.Models.FlowAction
+    name: FlowAction
+    type: Class
+  - uid: Cress.Core.Models.FlowExpectation
+    name: FlowExpectation
+    type: Class
+  - uid: Cress.Core.Models.FlowFixtureRef
+    name: FlowFixtureRef
+    type: Class
+  - uid: Cress.Core.Models.FlowRunResult
+    name: FlowRunResult
+    type: Class
+  - uid: Cress.Core.Models.NormalizedExecutable
+    name: NormalizedExecutable
+    type: Class
+  - uid: Cress.Core.Models.NormalizedFixture
+    name: NormalizedFixture
+    type: Class
+  - uid: Cress.Core.Models.NormalizedFlow
+    name: NormalizedFlow
+    type: Class
+  - uid: Cress.Core.Models.OperationResult`1
+    name: OperationResult<T>
+    type: Class
+  - uid: Cress.Core.Models.PathsConfig
+    name: PathsConfig
+    type: Class
+  - uid: Cress.Core.Models.PlanAction
+    name: PlanAction
+    type: Class
+  - uid: Cress.Core.Models.PlanCollection
+    name: PlanCollection
+    type: Class
+  - uid: Cress.Core.Models.PlaywrightProfileConfig
+    name: PlaywrightProfileConfig
+    type: Class
+  - uid: Cress.Core.Models.PluginsConfig
+    name: PluginsConfig
+    type: Class
+  - uid: Cress.Core.Models.ProjectConfig
+    name: ProjectConfig
+    type: Class
+  - uid: Cress.Core.Models.ResolvedFixture
+    name: ResolvedFixture
+    type: Class
+  - uid: Cress.Core.Models.RunInvocation
+    name: RunInvocation
+    type: Class
+  - uid: Cress.Core.Models.RunMetadata
+    name: RunMetadata
+    type: Class
+  - uid: Cress.Core.Models.RunOptions
+    name: RunOptions
+    type: Class
+  - uid: Cress.Core.Models.RunOutcome
+    name: RunOutcome
+    type: Enum
+  - uid: Cress.Core.Models.RunResult
+    name: RunResult
+    type: Class
+  - uid: Cress.Core.Models.SecretsConfig
+    name: SecretsConfig
+    type: Class
+  - uid: Cress.Core.Models.SourceReference
+    name: SourceReference
+    type: Class
+  - uid: Cress.Core.Models.StepContractField
+    name: StepContractField
+    type: Class
+  - uid: Cress.Core.Models.StepDefinition
+    name: StepDefinition
+    type: Class
+  - uid: Cress.Core.Models.StepImplementationBinding
+    name: StepImplementationBinding
+    type: Class
+  - uid: Cress.Core.Models.StepManifest
+    name: StepManifest
+    type: Class
+  - uid: Cress.Core.Models.StepRunResult
+    name: StepRunResult
+    type: Class
+  - uid: Cress.Core.Models.TimeoutsConfig
+    name: TimeoutsConfig
+    type: Class
+  - uid: Cress.Core.Models.TraceabilityInfo
+    name: TraceabilityInfo
+    type: Class
+  - uid: Cress.Core.Models.ValidationResult
+    name: ValidationResult
+    type: Class
+- uid: Cress.Execution
+  name: Cress.Execution
+  type: Namespace
+  items:
+  - uid: Cress.Execution.DriverSessionStartContext
+    name: DriverSessionStartContext
+    type: Class
+  - uid: Cress.Execution.EvidenceStore
+    name: EvidenceStore
+    type: Class
+  - uid: Cress.Execution.FlawrightServiceCollectionExtensions
+    name: FlawrightServiceCollectionExtensions
+    type: Class
+  - uid: Cress.Execution.FlowExecutionContext
+    name: FlowExecutionContext
+    type: Class
+  - uid: Cress.Execution.GeneratedStubSet
+    name: GeneratedStubSet
+    type: Class
+  - uid: Cress.Execution.IDriverSession
+    name: IDriverSession
+    type: Interface
+  - uid: Cress.Execution.IRuntimeDriver
+    name: IRuntimeDriver
+    type: Interface
+  - uid: Cress.Execution.PlanGenerator
+    name: PlanGenerator
+    type: Class
+  - uid: Cress.Execution.PluginHost
+    name: PluginHost
+    type: Class
+  - uid: Cress.Execution.ProjectCatalog
+    name: ProjectCatalog
+    type: Class
+  - uid: Cress.Execution.ProjectCatalogService
+    name: ProjectCatalogService
+    type: Class
+  - uid: Cress.Execution.ReportGenerator
+    name: ReportGenerator
+    type: Class
+  - uid: Cress.Execution.RunResultRepository
+    name: RunResultRepository
+    type: Class
+  - uid: Cress.Execution.RuntimeOrchestrator
+    name: RuntimeOrchestrator
+    type: Class
+  - uid: Cress.Execution.RuntimeProgressKind
+    name: RuntimeProgressKind
+    type: Enum
+  - uid: Cress.Execution.RuntimeProgressUpdate
+    name: RuntimeProgressUpdate
+    type: Class
+  - uid: Cress.Execution.ServiceCollectionExtensions
+    name: ServiceCollectionExtensions
+    type: Class
+  - uid: Cress.Execution.StepRegistry
+    name: StepRegistry
+    type: Class
+  - uid: Cress.Execution.StepRegistrySnapshot
+    name: StepRegistrySnapshot
+    type: Class
+  - uid: Cress.Execution.StepStubGenerator
+    name: StepStubGenerator
+    type: Class
+  - uid: Cress.Execution.StoredRunResult
+    name: StoredRunResult
+    type: Class
+- uid: Cress.Execution.Drivers
+  name: Cress.Execution.Drivers
+  type: Namespace
+  items:
+  - uid: Cress.Execution.Drivers.FlawrightRuntimeDriver
+    name: FlawrightRuntimeDriver
+    type: Class
+  - uid: Cress.Execution.Drivers.HttpRuntimeDriver
+    name: HttpRuntimeDriver
+    type: Class
+  - uid: Cress.Execution.Drivers.PlaywrightRuntimeDriver
+    name: PlaywrightRuntimeDriver
+    type: Class
+- uid: Cress.Exporters.Cypress
+  name: Cress.Exporters.Cypress
+  type: Namespace
+  items:
+  - uid: Cress.Exporters.Cypress.CypressExporter
+    name: CypressExporter
+    type: Class
+- uid: Cress.Exporters.SeleniumIde
+  name: Cress.Exporters.SeleniumIde
+  type: Namespace
+  items:
+  - uid: Cress.Exporters.SeleniumIde.SeleniumIdeExporter
+    name: SeleniumIdeExporter
+    type: Class
+- uid: Cress.Exporters.TestFrameworks
+  name: Cress.Exporters.TestFrameworks
+  type: Namespace
+  items:
+  - uid: Cress.Exporters.TestFrameworks.DotNetTestExportOptions
+    name: DotNetTestExportOptions
+    type: Class
+  - uid: Cress.Exporters.TestFrameworks.MsTestExporter
+    name: MsTestExporter
+    type: Class
+  - uid: Cress.Exporters.TestFrameworks.NUnitExporter
+    name: NUnitExporter
+    type: Class
+  - uid: Cress.Exporters.TestFrameworks.XunitExporter
+    name: XunitExporter
+    type: Class
+- uid: Cress.Gherkin
+  name: Cress.Gherkin
+  type: Namespace
+  items:
+  - uid: Cress.Gherkin.FlowToGherkinConverter
+    name: FlowToGherkinConverter
+    type: Class
+  - uid: Cress.Gherkin.GherkinIngester
+    name: GherkinIngester
+    type: Class
+- uid: Cress.Gherkin.Phrases
+  name: Cress.Gherkin.Phrases
+  type: Namespace
+  items:
+  - uid: Cress.Gherkin.Phrases.GherkinKeyword
+    name: GherkinKeyword
+    type: Enum
+  - uid: Cress.Gherkin.Phrases.PhraseLibrary
+    name: PhraseLibrary
+    type: Class
+  - uid: Cress.Gherkin.Phrases.StepPhrase
+    name: StepPhrase
+    type: Class
+- uid: Cress.Importers.Playwright
+  name: Cress.Importers.Playwright
+  type: Namespace
+  items:
+  - uid: Cress.Importers.Playwright.PlaywrightCodegenImporter
+    name: PlaywrightCodegenImporter
+    type: Class
+- uid: Cress.Importers.Postman
+  name: Cress.Importers.Postman
+  type: Namespace
+  items:
+  - uid: Cress.Importers.Postman.PostmanImporter
+    name: PostmanImporter
+    type: Class
+- uid: Cress.LivingDocs
+  name: Cress.LivingDocs
+  type: Namespace
+  items:
+  - uid: Cress.LivingDocs.DiagnosticEntry
+    name: DiagnosticEntry
+    type: Class
+  - uid: Cress.LivingDocs.DocumentBranding
+    name: DocumentBranding
+    type: Class
+  - uid: Cress.LivingDocs.DocumentBuildOptions
+    name: DocumentBuildOptions
+    type: Class
+  - uid: Cress.LivingDocs.DocumentBuilder
+    name: DocumentBuilder
+    type: Class
+  - uid: Cress.LivingDocs.DocumentMeta
+    name: DocumentMeta
+    type: Class
+  - uid: Cress.LivingDocs.DocumentModel
+    name: DocumentModel
+    type: Class
+  - uid: Cress.LivingDocs.FlowSummary
+    name: FlowSummary
+    type: Class
+  - uid: Cress.LivingDocs.RunHistoryEntry
+    name: RunHistoryEntry
+    type: Class
+  - uid: Cress.LivingDocs.ScreenshotEvidence
+    name: ScreenshotEvidence
+    type: Class
+  - uid: Cress.LivingDocs.SuiteSummary
+    name: SuiteSummary
+    type: Class
+  - uid: Cress.LivingDocs.TemplateRenderer
+    name: TemplateRenderer
+    type: Class
+- uid: Cress.ProjectSystem
+  name: Cress.ProjectSystem
+  type: Namespace
+  items:
+  - uid: Cress.ProjectSystem.ConfigLoader
+    name: ConfigLoader
+    type: Class
+  - uid: Cress.ProjectSystem.ProfileLoader
+    name: ProfileLoader
+    type: Class
+  - uid: Cress.ProjectSystem.ProjectLocator
+    name: ProjectLocator
+    type: Class
+- uid: Cress.Recorder
+  name: Cress.Recorder
+  type: Namespace
+  items:
+  - uid: Cress.Recorder.ElementInfo
+    name: ElementInfo
+    type: Class
+  - uid: Cress.Recorder.EventKind
+    name: EventKind
+    type: Enum
+  - uid: Cress.Recorder.RecordedEvent
+    name: RecordedEvent
+    type: Class
+  - uid: Cress.Recorder.RecordingSession
+    name: RecordingSession
+    type: Class
+- uid: Cress.Recorder.Inference
+  name: Cress.Recorder.Inference
+  type: Namespace
+  items:
+  - uid: Cress.Recorder.Inference.InferenceDomain
+    name: InferenceDomain
+    type: Enum
+  - uid: Cress.Recorder.Inference.InferenceOptions
+    name: InferenceOptions
+    type: Class
+  - uid: Cress.Recorder.Inference.InferredStep
+    name: InferredStep
+    type: Class
+  - uid: Cress.Recorder.Inference.Locator
+    name: Locator
+    type: Class
+  - uid: Cress.Recorder.Inference.StepInferenceEngine
+    name: StepInferenceEngine
+    type: Class
+  - uid: Cress.Recorder.Inference.StepKind
+    name: StepKind
+    type: Enum
+- uid: Cress.Recorder.Serialization
+  name: Cress.Recorder.Serialization
+  type: Namespace
+  items:
+  - uid: Cress.Recorder.Serialization.RecordedFlowSerializer
+    name: RecordedFlowSerializer
+    type: Class
+  - uid: Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata
+    name: RecordedFlowSerializer.RecordedFlowMetadata
+    type: Class
+- uid: Cress.Sdk
+  name: Cress.Sdk
+  type: Namespace
+  items:
+  - uid: Cress.Sdk.FixtureExecutionContext
+    name: FixtureExecutionContext
+    type: Class
+  - uid: Cress.Sdk.FixtureExecutionResult
+    name: FixtureExecutionResult
+    type: Class
+  - uid: Cress.Sdk.FixtureProviderRegistration
+    name: FixtureProviderRegistration
+    type: Class
+  - uid: Cress.Sdk.ICressLogger
+    name: ICressLogger
+    type: Interface
+  - uid: Cress.Sdk.ICressPluginModule
+    name: ICressPluginModule
+    type: Interface
+  - uid: Cress.Sdk.IDriverAccessor
+    name: IDriverAccessor
+    type: Interface
+  - uid: Cress.Sdk.NullCressLogger
+    name: NullCressLogger
+    type: Class
+  - uid: Cress.Sdk.NullDriverAccessor
+    name: NullDriverAccessor
+    type: Class
+  - uid: Cress.Sdk.StepExecutionContext
+    name: StepExecutionContext
+    type: Class
+  - uid: Cress.Sdk.StepExecutionResult
+    name: StepExecutionResult
+    type: Class
+  - uid: Cress.Sdk.StepHandlerRegistration
+    name: StepHandlerRegistration
+    type: Class
+- uid: Cress.ServiceDefaults
+  name: Cress.ServiceDefaults
+  type: Namespace
+  items:
+  - uid: Cress.ServiceDefaults.Extensions
+    name: Extensions
+    type: Class
+- uid: Cress.Specs
+  name: Cress.Specs
+  type: Namespace
+  items:
+  - uid: Cress.Specs.CapabilityParser
+    name: CapabilityParser
+    type: Class
+  - uid: Cress.Specs.FixtureManifestParser
+    name: FixtureManifestParser
+    type: Class
+  - uid: Cress.Specs.FlowNormalizer
+    name: FlowNormalizer
+    type: Class
+  - uid: Cress.Specs.FlowParser
+    name: FlowParser
+    type: Class
+  - uid: Cress.Specs.StepManifestParser
+    name: StepManifestParser
+    type: Class
+- uid: Cress.Studio
+  name: Cress.Studio
+  type: Namespace
+  items:
+  - uid: Cress.Studio.ServiceCollectionExtensions
+    name: ServiceCollectionExtensions
+    type: Class
+- uid: Cress.Studio.Services
+  name: Cress.Studio.Services
+  type: Namespace
+  items:
+  - uid: Cress.Studio.Services.EditableExecutable
+    name: EditableExecutable
+    type: Class
+  - uid: Cress.Studio.Services.EditableFixture
+    name: EditableFixture
+    type: Class
+  - uid: Cress.Studio.Services.FlowDocumentService
+    name: FlowDocumentService
+    type: Class
+  - uid: Cress.Studio.Services.FlowEditorAnalysis
+    name: FlowEditorAnalysis
+    type: Class
+  - uid: Cress.Studio.Services.FlowEditorDiagnostic
+    name: FlowEditorDiagnostic
+    type: Class
+  - uid: Cress.Studio.Services.FlowEditorDocument
+    name: FlowEditorDocument
+    type: Class
+  - uid: Cress.Studio.Services.FlowGherkinPreviewBuilder
+    name: FlowGherkinPreviewBuilder
+    type: Class
+  - uid: Cress.Studio.Services.FlowGraphBuilder
+    name: FlowGraphBuilder
+    type: Class
+  - uid: Cress.Studio.Services.FlowGraphEdge
+    name: FlowGraphEdge
+    type: Class
+  - uid: Cress.Studio.Services.FlowGraphModel
+    name: FlowGraphModel
+    type: Class
+  - uid: Cress.Studio.Services.FlowGraphNode
+    name: FlowGraphNode
+    type: Class
+  - uid: Cress.Studio.Services.FlowGraphNodeKind
+    name: FlowGraphNodeKind
+    type: Enum
+  - uid: Cress.Studio.Services.FlowMetrics
+    name: FlowMetrics
+    type: Class
+  - uid: Cress.Studio.Services.FlowQuickAction
+    name: FlowQuickAction
+    type: Class
+  - uid: Cress.Studio.Services.IStudioRecorderService
+    name: IStudioRecorderService
+    type: Interface
+  - uid: Cress.Studio.Services.IStudioRunnerExecutor
+    name: IStudioRunnerExecutor
+    type: Interface
+  - uid: Cress.Studio.Services.IStudioRunnerNode
+    name: IStudioRunnerNode
+    type: Interface
+  - uid: Cress.Studio.Services.IStudioRunnerService
+    name: IStudioRunnerService
+    type: Interface
+  - uid: Cress.Studio.Services.MetricsOptions
+    name: MetricsOptions
+    type: Class
+  - uid: Cress.Studio.Services.RecordingReplayResult
+    name: RecordingReplayResult
+    type: Class
+  - uid: Cress.Studio.Services.RecordingResult
+    name: RecordingResult
+    type: Class
+  - uid: Cress.Studio.Services.RecordingTargetInfo
+    name: RecordingTargetInfo
+    type: Class
+  - uid: Cress.Studio.Services.RunMetrics
+    name: RunMetrics
+    type: Class
+  - uid: Cress.Studio.Services.RunMetricsService
+    name: RunMetricsService
+    type: Class
+  - uid: Cress.Studio.Services.StepInstability
+    name: StepInstability
+    type: Class
+  - uid: Cress.Studio.Services.StepMetrics
+    name: StepMetrics
+    type: Class
+  - uid: Cress.Studio.Services.StudioAuthoringService
+    name: StudioAuthoringService
+    type: Class
+  - uid: Cress.Studio.Services.StudioCapabilityCoverage
+    name: StudioCapabilityCoverage
+    type: Class
+  - uid: Cress.Studio.Services.StudioEmbeddedRunnerNode
+    name: StudioEmbeddedRunnerNode
+    type: Class
+  - uid: Cress.Studio.Services.StudioFlowHealthItem
+    name: StudioFlowHealthItem
+    type: Class
+  - uid: Cress.Studio.Services.StudioProjectService
+    name: StudioProjectService
+    type: Class
+  - uid: Cress.Studio.Services.StudioProjectSnapshot
+    name: StudioProjectSnapshot
+    type: Class
+  - uid: Cress.Studio.Services.StudioRecentActivityItem
+    name: StudioRecentActivityItem
+    type: Class
+  - uid: Cress.Studio.Services.StudioRecorderService
+    name: StudioRecorderService
+    type: Class
+  - uid: Cress.Studio.Services.StudioRunComparison
+    name: StudioRunComparison
+    type: Class
+  - uid: Cress.Studio.Services.StudioRunComparisonItem
+    name: StudioRunComparisonItem
+    type: Class
+  - uid: Cress.Studio.Services.StudioRunInsights
+    name: StudioRunInsights
+    type: Class
+  - uid: Cress.Studio.Services.StudioRunInsightsService
+    name: StudioRunInsightsService
+    type: Class
+  - uid: Cress.Studio.Services.StudioRunnerDispatchRequest
+    name: StudioRunnerDispatchRequest
+    type: Class
+  - uid: Cress.Studio.Services.StudioRunnerDispatchResult
+    name: StudioRunnerDispatchResult
+    type: Class
+  - uid: Cress.Studio.Services.StudioRunnerNodeSnapshot
+    name: StudioRunnerNodeSnapshot
+    type: Class
+  - uid: Cress.Studio.Services.StudioRunnerNodeStatus
+    name: StudioRunnerNodeStatus
+    type: Enum
+  - uid: Cress.Studio.Services.StudioRunnerService
+    name: StudioRunnerService
+    type: Class
+  - uid: Cress.Studio.Services.StudioRunnerTransportKind
+    name: StudioRunnerTransportKind
+    type: Enum
+  - uid: Cress.Studio.Services.StudioRuntimeRunnerExecutor
+    name: StudioRuntimeRunnerExecutor
+    type: Class
+  - uid: Cress.Studio.Services.StudioSuiteDocument
+    name: StudioSuiteDocument
+    type: Class
+  - uid: Cress.Studio.Services.StudioSuiteService
+    name: StudioSuiteService
+    type: Class
+  - uid: Cress.Studio.Services.SuiteMetrics
+    name: SuiteMetrics
+    type: Class
+  - uid: Cress.Studio.Services.TrendPoint
+    name: TrendPoint
+    type: Class
+  - uid: Cress.Studio.Services.WebRecorderClient
+    name: WebRecorderClient
+    type: Class
+- uid: Cress.Studio.ViewModels
+  name: Cress.Studio.ViewModels
+  type: Namespace
+  items:
+  - uid: Cress.Studio.ViewModels.FlowDocumentViewModel
+    name: FlowDocumentViewModel
+    type: Class
+  - uid: Cress.Studio.ViewModels.FlowDocumentViewModel.EditableExecutableRow
+    name: FlowDocumentViewModel.EditableExecutableRow
+    type: Class
+  - uid: Cress.Studio.ViewModels.FlowDocumentViewModel.EditableFixtureRow
+    name: FlowDocumentViewModel.EditableFixtureRow
+    type: Class
+  - uid: Cress.Studio.ViewModels.ObservableObject
+    name: ObservableObject
+    type: Class
+- uid: Cress.Testing
+  name: Cress.Testing
+  type: Namespace
+  items:
+  - uid: Cress.Testing.CressTestEngine
+    name: CressTestEngine
+    type: Class
+  - uid: Cress.Testing.CressTestFailureException
+    name: CressTestFailureException
+    type: Class
+  - uid: Cress.Testing.CressTestPaths
+    name: CressTestPaths
+    type: Class
+- uid: Cress.Validation
+  name: Cress.Validation
+  type: Namespace
+  items:
+  - uid: Cress.Validation.ProjectValidator
+    name: ProjectValidator
+    type: Class
+memberLayout: SamePage

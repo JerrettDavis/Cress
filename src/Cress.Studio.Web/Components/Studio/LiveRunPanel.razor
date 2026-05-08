@@ -1,0 +1,131 @@
+@implements IDisposable
+@inject StudioWorkspaceState State
+
+<section class="subpanel live-run-panel" aria-labelledby="@TitleId" data-testid="live-run-panel">
+    <div class="subpanel-header">
+        <div>
+            <h3 id="@TitleId">Live run monitor</h3>
+            <p>Track the active flow, current step, and timeline while execution is in flight.</p>
+        </div>
+        <div class="live-run-panel-actions">
+            @if (!Compact)
+            {
+                <button type="button"
+                        class="action-button"
+                        @onclick="State.ToggleLiveLogVisibility"
+                        data-testid="toggle-live-log">
+                    @(State.IsLiveLogVisible ? "Hide live log" : "Show live log")
+                </button>
+            }
+            <button type="button"
+                    class="action-button danger"
+                    @onclick="State.StopActiveRun"
+                    disabled="@(!State.CanStopRun)"
+                    data-testid="stop-live-run">
+                Stop run
+            </button>
+        </div>
+    </div>
+
+    <div class="live-run-summary">
+        <div class="summary-card">
+            <span>Status</span>
+            <strong data-testid="live-run-status">@State.LiveRunStatus</strong>
+            <div class="muted">@State.LiveRunHeadline</div>
+        </div>
+        <div class="summary-card">
+            <span>Flow</span>
+            <strong data-testid="live-run-flow">@State.LiveCurrentFlow</strong>
+            <div class="muted">
+                @if (State.LiveTotalFlows > 0)
+                {
+                    <text>Flow @Math.Max(State.LiveCurrentFlowIndex, State.LiveCompletedFlows + (State.IsBusy ? 1 : 0)) / @State.LiveTotalFlows</text>
+                }
+                else
+                {
+                    <text>No flow selected</text>
+                }
+            </div>
+        </div>
+        <div class="summary-card">
+            <span>Step</span>
+            <strong data-testid="live-run-step">@State.LiveCurrentStep</strong>
+            <div class="muted">@BuildStepLabel()</div>
+        </div>
+        <div class="summary-card">
+            <span>Elapsed</span>
+            <strong data-testid="live-run-elapsed">@FormatElapsed(State.LiveStepElapsed)</strong>
+            <div class="muted">@State.LiveCurrentStepMessage</div>
+        </div>
+    </div>
+
+    <div class="live-run-progress-grid">
+        <div class="field-stack">
+            <label>Run progress</label>
+            <progress max="@(Math.Max(1, State.LiveTotalFlows))" value="@Math.Min(State.LiveCompletedFlows, Math.Max(1, State.LiveTotalFlows))" data-testid="live-run-flow-progress"></progress>
+            <span class="field-hint">@State.LiveCompletedFlows / @State.LiveTotalFlows flows completed</span>
+        </div>
+        <div class="field-stack">
+            <label>Step progress</label>
+            <progress max="@(Math.Max(1, State.LiveTotalSteps))" value="@Math.Min(State.LiveCompletedSteps, Math.Max(1, State.LiveTotalSteps))" data-testid="live-run-step-progress"></progress>
+            <span class="field-hint">@State.LiveCompletedSteps / @State.LiveTotalSteps steps completed</span>
+        </div>
+    </div>
+
+    @if (!Compact && State.IsLiveLogVisible)
+    {
+        <div class="field-stack">
+            <label>Live timeline</label>
+            @if (State.LiveEvents.Count == 0)
+            {
+                <div class="subpanel-empty" data-testid="live-run-log-empty">No live events yet.</div>
+            }
+            else
+            {
+                <ol class="live-run-log" data-testid="live-run-log">
+                    @foreach (var entry in State.LiveEvents.Take(40))
+                    {
+                        <li>@entry</li>
+                    }
+                </ol>
+            }
+        </div>
+    }
+</section>
+
+@code {
+    [Parameter]
+    public bool Compact { get; set; }
+
+    private string TitleId => Compact ? "designer-live-run-title" : "workspace-live-run-title";
+
+    protected override void OnInitialized()
+    {
+        State.Changed += HandleStateChanged;
+    }
+
+    public void Dispose()
+    {
+        State.Changed -= HandleStateChanged;
+    }
+
+    private void HandleStateChanged()
+        => InvokeAsync(StateHasChanged);
+
+    private string BuildStepLabel()
+    {
+        if (State.LiveCurrentFlowStepCount <= 0)
+        {
+            return State.LiveCurrentStepMessage;
+        }
+
+        return $"Step {Math.Max(State.LiveCurrentFlowStepIndex, 0)} / {State.LiveCurrentFlowStepCount}";
+    }
+
+    private static string FormatElapsed(TimeSpan elapsed)
+        => elapsed <= TimeSpan.Zero
+            ? "—"
+            : elapsed.TotalHours >= 1
+                ? elapsed.ToString(@"hh\:mm\:ss")
+                : elapsed.ToString(@"mm\:ss");
+}

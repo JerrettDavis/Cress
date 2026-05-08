@@ -20,7 +20,7 @@ steps:
     description: Click (invoke) an interactive element identified by a Cress locator.
     drivers:
       - playwright
-      - flaui
+      - flawright
     inputs:
       testId:
         type: string
@@ -61,7 +61,7 @@ steps:
     description: Type text into a form input element.
     drivers:
       - playwright
-      - flaui
+      - flawright
     inputs:
       testId:
         type: string
@@ -94,7 +94,7 @@ steps:
     description: Simulate a keyboard key press.
     drivers:
       - playwright
-      - flaui
+      - flawright
     inputs:
       key:
         type: string
@@ -107,7 +107,7 @@ steps:
     description: Assert that a text element displays the expected string.
     drivers:
       - playwright
-      - flaui
+      - flawright
     inputs:
       testId:
         type: string

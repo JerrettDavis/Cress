@@ -1,0 +1,458 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Execution.PlanGenerator
+  commentId: T:Cress.Execution.PlanGenerator
+  id: PlanGenerator
+  parent: Cress.Execution
+  children:
+  - Cress.Execution.PlanGenerator.Generate(Cress.Execution.ProjectCatalog,System.Collections.Generic.IEnumerable{Cress.Core.Models.NormalizedFlow})
+  langs:
+  - csharp
+  - vb
+  name: PlanGenerator
+  nameWithType: PlanGenerator
+  fullName: Cress.Execution.PlanGenerator
+  type: Class
+  source:
+    remote:
+      path: src/Cress.Execution/PlanGenerator.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: PlanGenerator
+    path: ../src/Cress.Execution/PlanGenerator.cs
+    startLine: 4
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Execution
+  syntax:
+    content: public sealed class PlanGenerator
+    content.vb: Public NotInheritable Class PlanGenerator
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Cress.Execution.PlanGenerator.Generate(Cress.Execution.ProjectCatalog,System.Collections.Generic.IEnumerable{Cress.Core.Models.NormalizedFlow})
+  commentId: M:Cress.Execution.PlanGenerator.Generate(Cress.Execution.ProjectCatalog,System.Collections.Generic.IEnumerable{Cress.Core.Models.NormalizedFlow})
+  id: Generate(Cress.Execution.ProjectCatalog,System.Collections.Generic.IEnumerable{Cress.Core.Models.NormalizedFlow})
+  parent: Cress.Execution.PlanGenerator
+  langs:
+  - csharp
+  - vb
+  name: Generate(ProjectCatalog, IEnumerable<NormalizedFlow>)
+  nameWithType: PlanGenerator.Generate(ProjectCatalog, IEnumerable<NormalizedFlow>)
+  fullName: Cress.Execution.PlanGenerator.Generate(Cress.Execution.ProjectCatalog, System.Collections.Generic.IEnumerable<Cress.Core.Models.NormalizedFlow>)
+  type: Method
+  source:
+    remote:
+      path: src/Cress.Execution/PlanGenerator.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Generate
+    path: ../src/Cress.Execution/PlanGenerator.cs
+    startLine: 6
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Execution
+  syntax:
+    content: public PlanCollection Generate(ProjectCatalog catalog, IEnumerable<NormalizedFlow> flows)
+    parameters:
+    - id: catalog
+      type: Cress.Execution.ProjectCatalog
+    - id: flows
+      type: System.Collections.Generic.IEnumerable{Cress.Core.Models.NormalizedFlow}
+    return:
+      type: Cress.Core.Models.PlanCollection
+    content.vb: Public Function Generate(catalog As ProjectCatalog, flows As IEnumerable(Of NormalizedFlow)) As PlanCollection
+  overload: Cress.Execution.PlanGenerator.Generate*
+  nameWithType.vb: PlanGenerator.Generate(ProjectCatalog, IEnumerable(Of NormalizedFlow))
+  fullName.vb: Cress.Execution.PlanGenerator.Generate(Cress.Execution.ProjectCatalog, System.Collections.Generic.IEnumerable(Of Cress.Core.Models.NormalizedFlow))
+  name.vb: Generate(ProjectCatalog, IEnumerable(Of NormalizedFlow))
+references:
+- uid: Cress.Execution
+  commentId: N:Cress.Execution
+  href: Cress.html
+  name: Cress.Execution
+  nameWithType: Cress.Execution
+  fullName: Cress.Execution
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Execution
+    name: Execution
+    href: Cress.Execution.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Execution
+    name: Execution
+    href: Cress.Execution.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Cress.Execution.PlanGenerator.Generate*
+  commentId: Overload:Cress.Execution.PlanGenerator.Generate
+  href: Cress.Execution.PlanGenerator.html#Cress_Execution_PlanGenerator_Generate_Cress_Execution_ProjectCatalog_System_Collections_Generic_IEnumerable_Cress_Core_Models_NormalizedFlow__
+  name: Generate
+  nameWithType: PlanGenerator.Generate
+  fullName: Cress.Execution.PlanGenerator.Generate
+- uid: Cress.Execution.ProjectCatalog
+  commentId: T:Cress.Execution.ProjectCatalog
+  parent: Cress.Execution
+  href: Cress.Execution.ProjectCatalog.html
+  name: ProjectCatalog
+  nameWithType: ProjectCatalog
+  fullName: Cress.Execution.ProjectCatalog
+- uid: System.Collections.Generic.IEnumerable{Cress.Core.Models.NormalizedFlow}
+  commentId: T:System.Collections.Generic.IEnumerable{Cress.Core.Models.NormalizedFlow}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IEnumerable`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  name: IEnumerable<NormalizedFlow>
+  nameWithType: IEnumerable<NormalizedFlow>
+  fullName: System.Collections.Generic.IEnumerable<Cress.Core.Models.NormalizedFlow>
+  nameWithType.vb: IEnumerable(Of NormalizedFlow)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of Cress.Core.Models.NormalizedFlow)
+  name.vb: IEnumerable(Of NormalizedFlow)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - uid: Cress.Core.Models.NormalizedFlow
+    name: NormalizedFlow
+    href: Cress.Core.Models.NormalizedFlow.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Cress.Core.Models.NormalizedFlow
+    name: NormalizedFlow
+    href: Cress.Core.Models.NormalizedFlow.html
+  - name: )
+- uid: Cress.Core.Models.PlanCollection
+  commentId: T:Cress.Core.Models.PlanCollection
+  parent: Cress.Core.Models
+  href: Cress.Core.Models.PlanCollection.html
+  name: PlanCollection
+  nameWithType: PlanCollection
+  fullName: Cress.Core.Models.PlanCollection
+- uid: System.Collections.Generic.IEnumerable`1
+  commentId: T:System.Collections.Generic.IEnumerable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  name: IEnumerable<T>
+  nameWithType: IEnumerable<T>
+  fullName: System.Collections.Generic.IEnumerable<T>
+  nameWithType.vb: IEnumerable(Of T)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of T)
+  name.vb: IEnumerable(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: Cress.Core.Models
+  commentId: N:Cress.Core.Models
+  href: Cress.html
+  name: Cress.Core.Models
+  nameWithType: Cress.Core.Models
+  fullName: Cress.Core.Models
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Core
+    name: Core
+    href: Cress.Core.html
+  - name: .
+  - uid: Cress.Core.Models
+    name: Models
+    href: Cress.Core.Models.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Core
+    name: Core
+    href: Cress.Core.html
+  - name: .
+  - uid: Cress.Core.Models
+    name: Models
+    href: Cress.Core.Models.html

@@ -1,0 +1,712 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Sdk.NullDriverAccessor
+  commentId: T:Cress.Sdk.NullDriverAccessor
+  id: NullDriverAccessor
+  parent: Cress.Sdk
+  children:
+  - Cress.Sdk.NullDriverAccessor.Instance
+  - Cress.Sdk.NullDriverAccessor.Snapshot
+  - Cress.Sdk.NullDriverAccessor.TryGetMetadata(System.String,System.Collections.Generic.IReadOnlyDictionary{System.String,System.String}@)
+  langs:
+  - csharp
+  - vb
+  name: NullDriverAccessor
+  nameWithType: NullDriverAccessor
+  fullName: Cress.Sdk.NullDriverAccessor
+  type: Class
+  source:
+    remote:
+      path: src/Cress.Sdk/PluginAbstractions.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: NullDriverAccessor
+    path: ../src/Cress.Sdk/PluginAbstractions.cs
+    startLine: 99
+  assemblies:
+  - Cress.Sdk
+  namespace: Cress.Sdk
+  syntax:
+    content: 'public sealed class NullDriverAccessor : IDriverAccessor'
+    content.vb: Public NotInheritable Class NullDriverAccessor Implements IDriverAccessor
+  inheritance:
+  - System.Object
+  implements:
+  - Cress.Sdk.IDriverAccessor
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Cress.Sdk.NullDriverAccessor.Instance
+  commentId: P:Cress.Sdk.NullDriverAccessor.Instance
+  id: Instance
+  parent: Cress.Sdk.NullDriverAccessor
+  langs:
+  - csharp
+  - vb
+  name: Instance
+  nameWithType: NullDriverAccessor.Instance
+  fullName: Cress.Sdk.NullDriverAccessor.Instance
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Sdk/PluginAbstractions.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Instance
+    path: ../src/Cress.Sdk/PluginAbstractions.cs
+    startLine: 101
+  assemblies:
+  - Cress.Sdk
+  namespace: Cress.Sdk
+  syntax:
+    content: public static NullDriverAccessor Instance { get; }
+    parameters: []
+    return:
+      type: Cress.Sdk.NullDriverAccessor
+    content.vb: Public Shared ReadOnly Property Instance As NullDriverAccessor
+  overload: Cress.Sdk.NullDriverAccessor.Instance*
+- uid: Cress.Sdk.NullDriverAccessor.TryGetMetadata(System.String,System.Collections.Generic.IReadOnlyDictionary{System.String,System.String}@)
+  commentId: M:Cress.Sdk.NullDriverAccessor.TryGetMetadata(System.String,System.Collections.Generic.IReadOnlyDictionary{System.String,System.String}@)
+  id: TryGetMetadata(System.String,System.Collections.Generic.IReadOnlyDictionary{System.String,System.String}@)
+  parent: Cress.Sdk.NullDriverAccessor
+  langs:
+  - csharp
+  - vb
+  name: TryGetMetadata(string, out IReadOnlyDictionary<string, string>?)
+  nameWithType: NullDriverAccessor.TryGetMetadata(string, out IReadOnlyDictionary<string, string>?)
+  fullName: Cress.Sdk.NullDriverAccessor.TryGetMetadata(string, out System.Collections.Generic.IReadOnlyDictionary<string, string>?)
+  type: Method
+  source:
+    remote:
+      path: src/Cress.Sdk/PluginAbstractions.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: TryGetMetadata
+    path: ../src/Cress.Sdk/PluginAbstractions.cs
+    startLine: 103
+  assemblies:
+  - Cress.Sdk
+  namespace: Cress.Sdk
+  example: []
+  syntax:
+    content: public bool TryGetMetadata(string driverName, out IReadOnlyDictionary<string, string>? metadata)
+    parameters:
+    - id: driverName
+      type: System.String
+    - id: metadata
+      type: System.Collections.Generic.IReadOnlyDictionary{System.String,System.String}
+    return:
+      type: System.Boolean
+    content.vb: Public Function TryGetMetadata(driverName As String, metadata As IReadOnlyDictionary(Of String, String)) As Boolean
+  overload: Cress.Sdk.NullDriverAccessor.TryGetMetadata*
+  implements:
+  - Cress.Sdk.IDriverAccessor.TryGetMetadata(System.String,System.Collections.Generic.IReadOnlyDictionary{System.String,System.String}@)
+  nameWithType.vb: NullDriverAccessor.TryGetMetadata(String, IReadOnlyDictionary(Of String, String))
+  fullName.vb: Cress.Sdk.NullDriverAccessor.TryGetMetadata(String, System.Collections.Generic.IReadOnlyDictionary(Of String, String))
+  name.vb: TryGetMetadata(String, IReadOnlyDictionary(Of String, String))
+- uid: Cress.Sdk.NullDriverAccessor.Snapshot
+  commentId: M:Cress.Sdk.NullDriverAccessor.Snapshot
+  id: Snapshot
+  parent: Cress.Sdk.NullDriverAccessor
+  langs:
+  - csharp
+  - vb
+  name: Snapshot()
+  nameWithType: NullDriverAccessor.Snapshot()
+  fullName: Cress.Sdk.NullDriverAccessor.Snapshot()
+  type: Method
+  source:
+    remote:
+      path: src/Cress.Sdk/PluginAbstractions.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Snapshot
+    path: ../src/Cress.Sdk/PluginAbstractions.cs
+    startLine: 109
+  assemblies:
+  - Cress.Sdk
+  namespace: Cress.Sdk
+  example: []
+  syntax:
+    content: public IReadOnlyDictionary<string, IReadOnlyDictionary<string, string>> Snapshot()
+    return:
+      type: System.Collections.Generic.IReadOnlyDictionary{System.String,System.Collections.Generic.IReadOnlyDictionary{System.String,System.String}}
+    content.vb: Public Function Snapshot() As IReadOnlyDictionary(Of String, IReadOnlyDictionary(Of String, String))
+  overload: Cress.Sdk.NullDriverAccessor.Snapshot*
+  implements:
+  - Cress.Sdk.IDriverAccessor.Snapshot
+references:
+- uid: Cress.Sdk
+  commentId: N:Cress.Sdk
+  href: Cress.html
+  name: Cress.Sdk
+  nameWithType: Cress.Sdk
+  fullName: Cress.Sdk
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Sdk
+    name: Sdk
+    href: Cress.Sdk.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Sdk
+    name: Sdk
+    href: Cress.Sdk.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: Cress.Sdk.IDriverAccessor
+  commentId: T:Cress.Sdk.IDriverAccessor
+  parent: Cress.Sdk
+  href: Cress.Sdk.IDriverAccessor.html
+  name: IDriverAccessor
+  nameWithType: IDriverAccessor
+  fullName: Cress.Sdk.IDriverAccessor
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Cress.Sdk.NullDriverAccessor.Instance*
+  commentId: Overload:Cress.Sdk.NullDriverAccessor.Instance
+  href: Cress.Sdk.NullDriverAccessor.html#Cress_Sdk_NullDriverAccessor_Instance
+  name: Instance
+  nameWithType: NullDriverAccessor.Instance
+  fullName: Cress.Sdk.NullDriverAccessor.Instance
+- uid: Cress.Sdk.NullDriverAccessor
+  commentId: T:Cress.Sdk.NullDriverAccessor
+  parent: Cress.Sdk
+  href: Cress.Sdk.NullDriverAccessor.html
+  name: NullDriverAccessor
+  nameWithType: NullDriverAccessor
+  fullName: Cress.Sdk.NullDriverAccessor
+- uid: Cress.Sdk.NullDriverAccessor.TryGetMetadata*
+  commentId: Overload:Cress.Sdk.NullDriverAccessor.TryGetMetadata
+  href: Cress.Sdk.NullDriverAccessor.html#Cress_Sdk_NullDriverAccessor_TryGetMetadata_System_String_System_Collections_Generic_IReadOnlyDictionary_System_String_System_String___
+  name: TryGetMetadata
+  nameWithType: NullDriverAccessor.TryGetMetadata
+  fullName: Cress.Sdk.NullDriverAccessor.TryGetMetadata
+- uid: Cress.Sdk.IDriverAccessor.TryGetMetadata(System.String,System.Collections.Generic.IReadOnlyDictionary{System.String,System.String}@)
+  commentId: M:Cress.Sdk.IDriverAccessor.TryGetMetadata(System.String,System.Collections.Generic.IReadOnlyDictionary{System.String,System.String}@)
+  parent: Cress.Sdk.IDriverAccessor
+  isExternal: true
+  href: Cress.Sdk.IDriverAccessor.html#Cress_Sdk_IDriverAccessor_TryGetMetadata_System_String_System_Collections_Generic_IReadOnlyDictionary_System_String_System_String___
+  name: TryGetMetadata(string, out IReadOnlyDictionary<string, string>)
+  nameWithType: IDriverAccessor.TryGetMetadata(string, out IReadOnlyDictionary<string, string>)
+  fullName: Cress.Sdk.IDriverAccessor.TryGetMetadata(string, out System.Collections.Generic.IReadOnlyDictionary<string, string>)
+  nameWithType.vb: IDriverAccessor.TryGetMetadata(String, IReadOnlyDictionary(Of String, String))
+  fullName.vb: Cress.Sdk.IDriverAccessor.TryGetMetadata(String, System.Collections.Generic.IReadOnlyDictionary(Of String, String))
+  name.vb: TryGetMetadata(String, IReadOnlyDictionary(Of String, String))
+  spec.csharp:
+  - uid: Cress.Sdk.IDriverAccessor.TryGetMetadata(System.String,System.Collections.Generic.IReadOnlyDictionary{System.String,System.String}@)
+    name: TryGetMetadata
+    href: Cress.Sdk.IDriverAccessor.html#Cress_Sdk_IDriverAccessor_TryGetMetadata_System_String_System_Collections_Generic_IReadOnlyDictionary_System_String_System_String___
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - name: out
+  - name: " "
+  - uid: System.Collections.Generic.IReadOnlyDictionary`2
+    name: IReadOnlyDictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: '>'
+  - name: )
+  spec.vb:
+  - uid: Cress.Sdk.IDriverAccessor.TryGetMetadata(System.String,System.Collections.Generic.IReadOnlyDictionary{System.String,System.String}@)
+    name: TryGetMetadata
+    href: Cress.Sdk.IDriverAccessor.html#Cress_Sdk_IDriverAccessor_TryGetMetadata_System_String_System_Collections_Generic_IReadOnlyDictionary_System_String_System_String___
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Generic.IReadOnlyDictionary`2
+    name: IReadOnlyDictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+  - name: )
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: System.Collections.Generic.IReadOnlyDictionary{System.String,System.String}
+  commentId: T:System.Collections.Generic.IReadOnlyDictionary{System.String,System.String}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IReadOnlyDictionary`2
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2
+  name: IReadOnlyDictionary<string, string>
+  nameWithType: IReadOnlyDictionary<string, string>
+  fullName: System.Collections.Generic.IReadOnlyDictionary<string, string>
+  nameWithType.vb: IReadOnlyDictionary(Of String, String)
+  fullName.vb: System.Collections.Generic.IReadOnlyDictionary(Of String, String)
+  name.vb: IReadOnlyDictionary(Of String, String)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyDictionary`2
+    name: IReadOnlyDictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyDictionary`2
+    name: IReadOnlyDictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System.Collections.Generic.IReadOnlyDictionary`2
+  commentId: T:System.Collections.Generic.IReadOnlyDictionary`2
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2
+  name: IReadOnlyDictionary<TKey, TValue>
+  nameWithType: IReadOnlyDictionary<TKey, TValue>
+  fullName: System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>
+  nameWithType.vb: IReadOnlyDictionary(Of TKey, TValue)
+  fullName.vb: System.Collections.Generic.IReadOnlyDictionary(Of TKey, TValue)
+  name.vb: IReadOnlyDictionary(Of TKey, TValue)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyDictionary`2
+    name: IReadOnlyDictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyDictionary`2
+    name: IReadOnlyDictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: Cress.Sdk.NullDriverAccessor.Snapshot*
+  commentId: Overload:Cress.Sdk.NullDriverAccessor.Snapshot
+  href: Cress.Sdk.NullDriverAccessor.html#Cress_Sdk_NullDriverAccessor_Snapshot
+  name: Snapshot
+  nameWithType: NullDriverAccessor.Snapshot
+  fullName: Cress.Sdk.NullDriverAccessor.Snapshot
+- uid: Cress.Sdk.IDriverAccessor.Snapshot
+  commentId: M:Cress.Sdk.IDriverAccessor.Snapshot
+  parent: Cress.Sdk.IDriverAccessor
+  href: Cress.Sdk.IDriverAccessor.html#Cress_Sdk_IDriverAccessor_Snapshot
+  name: Snapshot()
+  nameWithType: IDriverAccessor.Snapshot()
+  fullName: Cress.Sdk.IDriverAccessor.Snapshot()
+  spec.csharp:
+  - uid: Cress.Sdk.IDriverAccessor.Snapshot
+    name: Snapshot
+    href: Cress.Sdk.IDriverAccessor.html#Cress_Sdk_IDriverAccessor_Snapshot
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Cress.Sdk.IDriverAccessor.Snapshot
+    name: Snapshot
+    href: Cress.Sdk.IDriverAccessor.html#Cress_Sdk_IDriverAccessor_Snapshot
+  - name: (
+  - name: )
+- uid: System.Collections.Generic.IReadOnlyDictionary{System.String,System.Collections.Generic.IReadOnlyDictionary{System.String,System.String}}
+  commentId: T:System.Collections.Generic.IReadOnlyDictionary{System.String,System.Collections.Generic.IReadOnlyDictionary{System.String,System.String}}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IReadOnlyDictionary`2
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2
+  name: IReadOnlyDictionary<string, IReadOnlyDictionary<string, string>>
+  nameWithType: IReadOnlyDictionary<string, IReadOnlyDictionary<string, string>>
+  fullName: System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IReadOnlyDictionary<string, string>>
+  nameWithType.vb: IReadOnlyDictionary(Of String, IReadOnlyDictionary(Of String, String))
+  fullName.vb: System.Collections.Generic.IReadOnlyDictionary(Of String, System.Collections.Generic.IReadOnlyDictionary(Of String, String))
+  name.vb: IReadOnlyDictionary(Of String, IReadOnlyDictionary(Of String, String))
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyDictionary`2
+    name: IReadOnlyDictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Generic.IReadOnlyDictionary`2
+    name: IReadOnlyDictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: '>'
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyDictionary`2
+    name: IReadOnlyDictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Generic.IReadOnlyDictionary`2
+    name: IReadOnlyDictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+  - name: )

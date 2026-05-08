@@ -4,10 +4,10 @@
 @if (State.IsRecorderPickerOpen)
 {
     <div class="modal-backdrop" @onclick="Cancel" role="presentation"></div>
-    <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="picker-title">
+    <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="picker-title" data-testid="recording-target-picker">
         <div class="modal-header">
             <h3 id="picker-title">Choose recording target</h3>
-            <button type="button" class="action-button" @onclick="Cancel" aria-label="Close">&#x2715;</button>
+            <button type="button" class="action-button" data-testid="recording-picker-close" @onclick="Cancel" aria-label="Close">&#x2715;</button>
         </div>
 
         @* ── Tab bar ──────────────────────────────────────────────────────── *@
@@ -15,6 +15,7 @@
             <button type="button"
                     role="tab"
                     class="picker-tab @(_activeTab == Tab.Desktop ? "picker-tab--active" : string.Empty)"
+                    data-testid="recording-picker-tab-desktop"
                     aria-selected="@(_activeTab == Tab.Desktop)"
                     aria-controls="picker-panel-desktop"
                     id="picker-tab-desktop"
@@ -24,6 +25,7 @@
             <button type="button"
                     role="tab"
                     class="picker-tab @(_activeTab == Tab.Web ? "picker-tab--active" : string.Empty)"
+                    data-testid="recording-picker-tab-web"
                     aria-selected="@(_activeTab == Tab.Web)"
                     aria-controls="picker-panel-web"
                     id="picker-tab-web"
@@ -38,7 +40,8 @@
             <div id="picker-panel-desktop"
                  role="tabpanel"
                  aria-labelledby="picker-tab-desktop"
-                 class="modal-body">
+                 class="modal-body"
+                 data-testid="recording-picker-panel-desktop">
                 @if (_loading)
                 {
                     <p class="muted">Enumerating running processes...</p>
@@ -88,14 +91,16 @@
             <div id="picker-panel-web"
                  role="tabpanel"
                  aria-labelledby="picker-tab-web"
-                 class="modal-body">
+                 class="modal-body"
+                 data-testid="recording-picker-panel-web">
 
                 <div class="field-stack">
                     <label for="web-url">URL</label>
                     <input id="web-url"
-                           type="url"
-                           class="text-input"
-                           placeholder="https://example.com"
+                            type="url"
+                            class="text-input"
+                            data-testid="recording-picker-web-url"
+                            placeholder="https://example.com"
                            @bind="_webUrl"
                            @bind:event="oninput"
                            autocomplete="url"
@@ -118,6 +123,7 @@
                 <div style="margin-top:0.75rem">
                     <button type="button"
                             class="action-button success"
+                            data-testid="recording-picker-web-start"
                             disabled="@(!IsWebUrlValid())"
                             title="@(IsWebUrlValid() ? "Start recording in browser" : "Enter a valid URL to start")"
                             @onclick="StartWebRecordingAsync">
@@ -132,7 +138,7 @@
             {
                 <button type="button" class="action-button" @onclick="RefreshAsync">Refresh</button>
             }
-            <button type="button" class="action-button" @onclick="Cancel">Cancel</button>
+            <button type="button" class="action-button" data-testid="recording-picker-cancel" @onclick="Cancel">Cancel</button>
         </div>
     </div>
 }

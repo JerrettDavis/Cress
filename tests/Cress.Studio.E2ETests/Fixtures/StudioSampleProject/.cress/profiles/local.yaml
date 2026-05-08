@@ -4,9 +4,9 @@ timeouts:
 evidence:
   mode: full
   screenshots: true
-flaui:
+flawright:
   applicationPath: __FLAUI_TEST_APP__
-  windowTitle: Cress FlaUI Test App
+  windowTitle: Cress Flawright Test App
   launchTimeoutMs: 15000
 variables:
   environment: studio-e2e

@@ -112,6 +112,16 @@ then:
         Assert.True(result.Value!.When[0].With!.ContainsKey("xpath"), "xpath key must be present");
     }
 
+    [Fact]
+    public void Parse_WithSelector_ParsesWithoutError()
+    {
+        var yaml = FlowWith("      selector: \"#clearButton\"");
+        var result = Parser.Parse(yaml);
+
+        Assert.True(result.Success, Diags(result));
+        Assert.Equal("#clearButton", result.Value!.When[0].With!["selector"]);
+    }
+
     // -------------------------------------------------------------------------
     // V1-7: mix of new + legacy locator fields all parse together
     // -------------------------------------------------------------------------
@@ -127,6 +137,7 @@ then:
       testId: ok-btn
       label: OK button
       text: OK
+      selector: "#ok-btn"
       cssSelector: button.ok
       xpath: "//button[@id='ok']"
 """;
@@ -143,6 +154,7 @@ then:
         Assert.Equal("ok-btn",    with["testId"]);
         Assert.Equal("OK button", with["label"]);
         Assert.Equal("OK",        with["text"]);
+        Assert.Equal("#ok-btn",   with["selector"]);
         Assert.Equal("button.ok", with["cssSelector"]);
         Assert.True(with.ContainsKey("xpath"));
     }

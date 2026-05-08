@@ -1,0 +1,661 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Sdk.FixtureExecutionContext
+  commentId: T:Cress.Sdk.FixtureExecutionContext
+  id: FixtureExecutionContext
+  parent: Cress.Sdk
+  children:
+  - Cress.Sdk.FixtureExecutionContext.ArtifactDirectory
+  - Cress.Sdk.FixtureExecutionContext.Bindings
+  - Cress.Sdk.FixtureExecutionContext.FixtureAlias
+  - Cress.Sdk.FixtureExecutionContext.FixtureName
+  - Cress.Sdk.FixtureExecutionContext.FlowId
+  - Cress.Sdk.FixtureExecutionContext.Logger
+  - Cress.Sdk.FixtureExecutionContext.Variables
+  langs:
+  - csharp
+  - vb
+  name: FixtureExecutionContext
+  nameWithType: FixtureExecutionContext
+  fullName: Cress.Sdk.FixtureExecutionContext
+  type: Class
+  source:
+    remote:
+      path: src/Cress.Sdk/PluginAbstractions.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: FixtureExecutionContext
+    path: ../src/Cress.Sdk/PluginAbstractions.cs
+    startLine: 41
+  assemblies:
+  - Cress.Sdk
+  namespace: Cress.Sdk
+  syntax:
+    content: public sealed class FixtureExecutionContext
+    content.vb: Public NotInheritable Class FixtureExecutionContext
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Cress.Sdk.FixtureExecutionContext.FlowId
+  commentId: P:Cress.Sdk.FixtureExecutionContext.FlowId
+  id: FlowId
+  parent: Cress.Sdk.FixtureExecutionContext
+  langs:
+  - csharp
+  - vb
+  name: FlowId
+  nameWithType: FixtureExecutionContext.FlowId
+  fullName: Cress.Sdk.FixtureExecutionContext.FlowId
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Sdk/PluginAbstractions.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: FlowId
+    path: ../src/Cress.Sdk/PluginAbstractions.cs
+    startLine: 43
+  assemblies:
+  - Cress.Sdk
+  namespace: Cress.Sdk
+  syntax:
+    content: public string FlowId { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property FlowId As String
+  overload: Cress.Sdk.FixtureExecutionContext.FlowId*
+- uid: Cress.Sdk.FixtureExecutionContext.FixtureAlias
+  commentId: P:Cress.Sdk.FixtureExecutionContext.FixtureAlias
+  id: FixtureAlias
+  parent: Cress.Sdk.FixtureExecutionContext
+  langs:
+  - csharp
+  - vb
+  name: FixtureAlias
+  nameWithType: FixtureExecutionContext.FixtureAlias
+  fullName: Cress.Sdk.FixtureExecutionContext.FixtureAlias
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Sdk/PluginAbstractions.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: FixtureAlias
+    path: ../src/Cress.Sdk/PluginAbstractions.cs
+    startLine: 44
+  assemblies:
+  - Cress.Sdk
+  namespace: Cress.Sdk
+  syntax:
+    content: public string FixtureAlias { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property FixtureAlias As String
+  overload: Cress.Sdk.FixtureExecutionContext.FixtureAlias*
+- uid: Cress.Sdk.FixtureExecutionContext.FixtureName
+  commentId: P:Cress.Sdk.FixtureExecutionContext.FixtureName
+  id: FixtureName
+  parent: Cress.Sdk.FixtureExecutionContext
+  langs:
+  - csharp
+  - vb
+  name: FixtureName
+  nameWithType: FixtureExecutionContext.FixtureName
+  fullName: Cress.Sdk.FixtureExecutionContext.FixtureName
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Sdk/PluginAbstractions.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: FixtureName
+    path: ../src/Cress.Sdk/PluginAbstractions.cs
+    startLine: 45
+  assemblies:
+  - Cress.Sdk
+  namespace: Cress.Sdk
+  syntax:
+    content: public string FixtureName { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property FixtureName As String
+  overload: Cress.Sdk.FixtureExecutionContext.FixtureName*
+- uid: Cress.Sdk.FixtureExecutionContext.ArtifactDirectory
+  commentId: P:Cress.Sdk.FixtureExecutionContext.ArtifactDirectory
+  id: ArtifactDirectory
+  parent: Cress.Sdk.FixtureExecutionContext
+  langs:
+  - csharp
+  - vb
+  name: ArtifactDirectory
+  nameWithType: FixtureExecutionContext.ArtifactDirectory
+  fullName: Cress.Sdk.FixtureExecutionContext.ArtifactDirectory
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Sdk/PluginAbstractions.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: ArtifactDirectory
+    path: ../src/Cress.Sdk/PluginAbstractions.cs
+    startLine: 46
+  assemblies:
+  - Cress.Sdk
+  namespace: Cress.Sdk
+  syntax:
+    content: public string ArtifactDirectory { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property ArtifactDirectory As String
+  overload: Cress.Sdk.FixtureExecutionContext.ArtifactDirectory*
+- uid: Cress.Sdk.FixtureExecutionContext.Bindings
+  commentId: P:Cress.Sdk.FixtureExecutionContext.Bindings
+  id: Bindings
+  parent: Cress.Sdk.FixtureExecutionContext
+  langs:
+  - csharp
+  - vb
+  name: Bindings
+  nameWithType: FixtureExecutionContext.Bindings
+  fullName: Cress.Sdk.FixtureExecutionContext.Bindings
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Sdk/PluginAbstractions.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Bindings
+    path: ../src/Cress.Sdk/PluginAbstractions.cs
+    startLine: 47
+  assemblies:
+  - Cress.Sdk
+  namespace: Cress.Sdk
+  syntax:
+    content: public IReadOnlyDictionary<string, string> Bindings { get; init; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.IReadOnlyDictionary{System.String,System.String}
+    content.vb: Public Property Bindings As IReadOnlyDictionary(Of String, String)
+  overload: Cress.Sdk.FixtureExecutionContext.Bindings*
+- uid: Cress.Sdk.FixtureExecutionContext.Variables
+  commentId: P:Cress.Sdk.FixtureExecutionContext.Variables
+  id: Variables
+  parent: Cress.Sdk.FixtureExecutionContext
+  langs:
+  - csharp
+  - vb
+  name: Variables
+  nameWithType: FixtureExecutionContext.Variables
+  fullName: Cress.Sdk.FixtureExecutionContext.Variables
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Sdk/PluginAbstractions.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Variables
+    path: ../src/Cress.Sdk/PluginAbstractions.cs
+    startLine: 48
+  assemblies:
+  - Cress.Sdk
+  namespace: Cress.Sdk
+  syntax:
+    content: public IReadOnlyDictionary<string, string> Variables { get; init; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.IReadOnlyDictionary{System.String,System.String}
+    content.vb: Public Property Variables As IReadOnlyDictionary(Of String, String)
+  overload: Cress.Sdk.FixtureExecutionContext.Variables*
+- uid: Cress.Sdk.FixtureExecutionContext.Logger
+  commentId: P:Cress.Sdk.FixtureExecutionContext.Logger
+  id: Logger
+  parent: Cress.Sdk.FixtureExecutionContext
+  langs:
+  - csharp
+  - vb
+  name: Logger
+  nameWithType: FixtureExecutionContext.Logger
+  fullName: Cress.Sdk.FixtureExecutionContext.Logger
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Sdk/PluginAbstractions.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Logger
+    path: ../src/Cress.Sdk/PluginAbstractions.cs
+    startLine: 49
+  assemblies:
+  - Cress.Sdk
+  namespace: Cress.Sdk
+  syntax:
+    content: public ICressLogger Logger { get; init; }
+    parameters: []
+    return:
+      type: Cress.Sdk.ICressLogger
+    content.vb: Public Property Logger As ICressLogger
+  overload: Cress.Sdk.FixtureExecutionContext.Logger*
+references:
+- uid: Cress.Sdk
+  commentId: N:Cress.Sdk
+  href: Cress.html
+  name: Cress.Sdk
+  nameWithType: Cress.Sdk
+  fullName: Cress.Sdk
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Sdk
+    name: Sdk
+    href: Cress.Sdk.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Sdk
+    name: Sdk
+    href: Cress.Sdk.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Cress.Sdk.FixtureExecutionContext.FlowId*
+  commentId: Overload:Cress.Sdk.FixtureExecutionContext.FlowId
+  href: Cress.Sdk.FixtureExecutionContext.html#Cress_Sdk_FixtureExecutionContext_FlowId
+  name: FlowId
+  nameWithType: FixtureExecutionContext.FlowId
+  fullName: Cress.Sdk.FixtureExecutionContext.FlowId
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Cress.Sdk.FixtureExecutionContext.FixtureAlias*
+  commentId: Overload:Cress.Sdk.FixtureExecutionContext.FixtureAlias
+  href: Cress.Sdk.FixtureExecutionContext.html#Cress_Sdk_FixtureExecutionContext_FixtureAlias
+  name: FixtureAlias
+  nameWithType: FixtureExecutionContext.FixtureAlias
+  fullName: Cress.Sdk.FixtureExecutionContext.FixtureAlias
+- uid: Cress.Sdk.FixtureExecutionContext.FixtureName*
+  commentId: Overload:Cress.Sdk.FixtureExecutionContext.FixtureName
+  href: Cress.Sdk.FixtureExecutionContext.html#Cress_Sdk_FixtureExecutionContext_FixtureName
+  name: FixtureName
+  nameWithType: FixtureExecutionContext.FixtureName
+  fullName: Cress.Sdk.FixtureExecutionContext.FixtureName
+- uid: Cress.Sdk.FixtureExecutionContext.ArtifactDirectory*
+  commentId: Overload:Cress.Sdk.FixtureExecutionContext.ArtifactDirectory
+  href: Cress.Sdk.FixtureExecutionContext.html#Cress_Sdk_FixtureExecutionContext_ArtifactDirectory
+  name: ArtifactDirectory
+  nameWithType: FixtureExecutionContext.ArtifactDirectory
+  fullName: Cress.Sdk.FixtureExecutionContext.ArtifactDirectory
+- uid: Cress.Sdk.FixtureExecutionContext.Bindings*
+  commentId: Overload:Cress.Sdk.FixtureExecutionContext.Bindings
+  href: Cress.Sdk.FixtureExecutionContext.html#Cress_Sdk_FixtureExecutionContext_Bindings
+  name: Bindings
+  nameWithType: FixtureExecutionContext.Bindings
+  fullName: Cress.Sdk.FixtureExecutionContext.Bindings
+- uid: System.Collections.Generic.IReadOnlyDictionary{System.String,System.String}
+  commentId: T:System.Collections.Generic.IReadOnlyDictionary{System.String,System.String}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IReadOnlyDictionary`2
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2
+  name: IReadOnlyDictionary<string, string>
+  nameWithType: IReadOnlyDictionary<string, string>
+  fullName: System.Collections.Generic.IReadOnlyDictionary<string, string>
+  nameWithType.vb: IReadOnlyDictionary(Of String, String)
+  fullName.vb: System.Collections.Generic.IReadOnlyDictionary(Of String, String)
+  name.vb: IReadOnlyDictionary(Of String, String)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyDictionary`2
+    name: IReadOnlyDictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyDictionary`2
+    name: IReadOnlyDictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+- uid: System.Collections.Generic.IReadOnlyDictionary`2
+  commentId: T:System.Collections.Generic.IReadOnlyDictionary`2
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2
+  name: IReadOnlyDictionary<TKey, TValue>
+  nameWithType: IReadOnlyDictionary<TKey, TValue>
+  fullName: System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>
+  nameWithType.vb: IReadOnlyDictionary(Of TKey, TValue)
+  fullName.vb: System.Collections.Generic.IReadOnlyDictionary(Of TKey, TValue)
+  name.vb: IReadOnlyDictionary(Of TKey, TValue)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyDictionary`2
+    name: IReadOnlyDictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyDictionary`2
+    name: IReadOnlyDictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: Cress.Sdk.FixtureExecutionContext.Variables*
+  commentId: Overload:Cress.Sdk.FixtureExecutionContext.Variables
+  href: Cress.Sdk.FixtureExecutionContext.html#Cress_Sdk_FixtureExecutionContext_Variables
+  name: Variables
+  nameWithType: FixtureExecutionContext.Variables
+  fullName: Cress.Sdk.FixtureExecutionContext.Variables
+- uid: Cress.Sdk.FixtureExecutionContext.Logger*
+  commentId: Overload:Cress.Sdk.FixtureExecutionContext.Logger
+  href: Cress.Sdk.FixtureExecutionContext.html#Cress_Sdk_FixtureExecutionContext_Logger
+  name: Logger
+  nameWithType: FixtureExecutionContext.Logger
+  fullName: Cress.Sdk.FixtureExecutionContext.Logger
+- uid: Cress.Sdk.ICressLogger
+  commentId: T:Cress.Sdk.ICressLogger
+  parent: Cress.Sdk
+  href: Cress.Sdk.ICressLogger.html
+  name: ICressLogger
+  nameWithType: ICressLogger
+  fullName: Cress.Sdk.ICressLogger

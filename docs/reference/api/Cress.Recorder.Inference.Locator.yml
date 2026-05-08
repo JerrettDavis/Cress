@@ -1,0 +1,746 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Recorder.Inference.Locator
+  commentId: T:Cress.Recorder.Inference.Locator
+  id: Locator
+  parent: Cress.Recorder.Inference
+  children:
+  - Cress.Recorder.Inference.Locator.AutomationId
+  - Cress.Recorder.Inference.Locator.ClassName
+  - Cress.Recorder.Inference.Locator.ControlType
+  - Cress.Recorder.Inference.Locator.CssSelector
+  - Cress.Recorder.Inference.Locator.Label
+  - Cress.Recorder.Inference.Locator.Name
+  - Cress.Recorder.Inference.Locator.Role
+  - Cress.Recorder.Inference.Locator.TestId
+  - Cress.Recorder.Inference.Locator.Text
+  - Cress.Recorder.Inference.Locator.XPath
+  langs:
+  - csharp
+  - vb
+  name: Locator
+  nameWithType: Locator
+  fullName: Cress.Recorder.Inference.Locator
+  type: Class
+  source:
+    remote:
+      path: src/Cress.Recorder/Inference/InferredStep.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Locator
+    path: ../src/Cress.Recorder/Inference/InferredStep.cs
+    startLine: 32
+  assemblies:
+  - Cress.Recorder
+  namespace: Cress.Recorder.Inference
+  summary: >-
+    Describes which element to act on.
+
+    All fields are nullable; at least one of <xref href="Cress.Recorder.Inference.Locator.AutomationId" data-throw-if-not-resolved="false"></xref> or <xref href="Cress.Recorder.Inference.Locator.Name" data-throw-if-not-resolved="false"></xref>
+
+    should be non-null for the locator to be useful at replay time.
+  example: []
+  syntax:
+    content: 'public sealed record Locator : IEquatable<Locator>'
+    content.vb: Public NotInheritable Class Locator Implements IEquatable(Of Locator)
+  inheritance:
+  - System.Object
+  implements:
+  - System.IEquatable{Cress.Recorder.Inference.Locator}
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Cress.Recorder.Inference.Locator.Name
+  commentId: P:Cress.Recorder.Inference.Locator.Name
+  id: Name
+  parent: Cress.Recorder.Inference.Locator
+  langs:
+  - csharp
+  - vb
+  name: Name
+  nameWithType: Locator.Name
+  fullName: Cress.Recorder.Inference.Locator.Name
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Recorder/Inference/InferredStep.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Name
+    path: ../src/Cress.Recorder/Inference/InferredStep.cs
+    startLine: 35
+  assemblies:
+  - Cress.Recorder
+  namespace: Cress.Recorder.Inference
+  syntax:
+    content: public string? Name { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Name As String
+  overload: Cress.Recorder.Inference.Locator.Name*
+- uid: Cress.Recorder.Inference.Locator.AutomationId
+  commentId: P:Cress.Recorder.Inference.Locator.AutomationId
+  id: AutomationId
+  parent: Cress.Recorder.Inference.Locator
+  langs:
+  - csharp
+  - vb
+  name: AutomationId
+  nameWithType: Locator.AutomationId
+  fullName: Cress.Recorder.Inference.Locator.AutomationId
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Recorder/Inference/InferredStep.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: AutomationId
+    path: ../src/Cress.Recorder/Inference/InferredStep.cs
+    startLine: 36
+  assemblies:
+  - Cress.Recorder
+  namespace: Cress.Recorder.Inference
+  syntax:
+    content: public string? AutomationId { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property AutomationId As String
+  overload: Cress.Recorder.Inference.Locator.AutomationId*
+- uid: Cress.Recorder.Inference.Locator.ControlType
+  commentId: P:Cress.Recorder.Inference.Locator.ControlType
+  id: ControlType
+  parent: Cress.Recorder.Inference.Locator
+  langs:
+  - csharp
+  - vb
+  name: ControlType
+  nameWithType: Locator.ControlType
+  fullName: Cress.Recorder.Inference.Locator.ControlType
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Recorder/Inference/InferredStep.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: ControlType
+    path: ../src/Cress.Recorder/Inference/InferredStep.cs
+    startLine: 37
+  assemblies:
+  - Cress.Recorder
+  namespace: Cress.Recorder.Inference
+  syntax:
+    content: public string? ControlType { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property ControlType As String
+  overload: Cress.Recorder.Inference.Locator.ControlType*
+- uid: Cress.Recorder.Inference.Locator.ClassName
+  commentId: P:Cress.Recorder.Inference.Locator.ClassName
+  id: ClassName
+  parent: Cress.Recorder.Inference.Locator
+  langs:
+  - csharp
+  - vb
+  name: ClassName
+  nameWithType: Locator.ClassName
+  fullName: Cress.Recorder.Inference.Locator.ClassName
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Recorder/Inference/InferredStep.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: ClassName
+    path: ../src/Cress.Recorder/Inference/InferredStep.cs
+    startLine: 38
+  assemblies:
+  - Cress.Recorder
+  namespace: Cress.Recorder.Inference
+  syntax:
+    content: public string? ClassName { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property ClassName As String
+  overload: Cress.Recorder.Inference.Locator.ClassName*
+- uid: Cress.Recorder.Inference.Locator.Role
+  commentId: P:Cress.Recorder.Inference.Locator.Role
+  id: Role
+  parent: Cress.Recorder.Inference.Locator
+  langs:
+  - csharp
+  - vb
+  name: Role
+  nameWithType: Locator.Role
+  fullName: Cress.Recorder.Inference.Locator.Role
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Recorder/Inference/InferredStep.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Role
+    path: ../src/Cress.Recorder/Inference/InferredStep.cs
+    startLine: 43
+  assemblies:
+  - Cress.Recorder
+  namespace: Cress.Recorder.Inference
+  summary: ARIA role / UIA ControlType cross-platform alias (e.g. "button", "textbox").
+  example: []
+  syntax:
+    content: public string? Role { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Role As String
+  overload: Cress.Recorder.Inference.Locator.Role*
+- uid: Cress.Recorder.Inference.Locator.TestId
+  commentId: P:Cress.Recorder.Inference.Locator.TestId
+  id: TestId
+  parent: Cress.Recorder.Inference.Locator
+  langs:
+  - csharp
+  - vb
+  name: TestId
+  nameWithType: Locator.TestId
+  fullName: Cress.Recorder.Inference.Locator.TestId
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Recorder/Inference/InferredStep.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: TestId
+    path: ../src/Cress.Recorder/Inference/InferredStep.cs
+    startLine: 46
+  assemblies:
+  - Cress.Recorder
+  namespace: Cress.Recorder.Inference
+  summary: Test data-attribute value (e.g. data-testid); maps to AutomationId for UIA.
+  example: []
+  syntax:
+    content: public string? TestId { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property TestId As String
+  overload: Cress.Recorder.Inference.Locator.TestId*
+- uid: Cress.Recorder.Inference.Locator.Label
+  commentId: P:Cress.Recorder.Inference.Locator.Label
+  id: Label
+  parent: Cress.Recorder.Inference.Locator
+  langs:
+  - csharp
+  - vb
+  name: Label
+  nameWithType: Locator.Label
+  fullName: Cress.Recorder.Inference.Locator.Label
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Recorder/Inference/InferredStep.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Label
+    path: ../src/Cress.Recorder/Inference/InferredStep.cs
+    startLine: 49
+  assemblies:
+  - Cress.Recorder
+  namespace: Cress.Recorder.Inference
+  summary: Accessible label / aria-label / UIA Name-equivalent for labelled elements.
+  example: []
+  syntax:
+    content: public string? Label { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Label As String
+  overload: Cress.Recorder.Inference.Locator.Label*
+- uid: Cress.Recorder.Inference.Locator.Text
+  commentId: P:Cress.Recorder.Inference.Locator.Text
+  id: Text
+  parent: Cress.Recorder.Inference.Locator
+  langs:
+  - csharp
+  - vb
+  name: Text
+  nameWithType: Locator.Text
+  fullName: Cress.Recorder.Inference.Locator.Text
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Recorder/Inference/InferredStep.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Text
+    path: ../src/Cress.Recorder/Inference/InferredStep.cs
+    startLine: 52
+  assemblies:
+  - Cress.Recorder
+  namespace: Cress.Recorder.Inference
+  summary: Visible text content of the element.
+  example: []
+  syntax:
+    content: public string? Text { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Text As String
+  overload: Cress.Recorder.Inference.Locator.Text*
+- uid: Cress.Recorder.Inference.Locator.CssSelector
+  commentId: P:Cress.Recorder.Inference.Locator.CssSelector
+  id: CssSelector
+  parent: Cress.Recorder.Inference.Locator
+  langs:
+  - csharp
+  - vb
+  name: CssSelector
+  nameWithType: Locator.CssSelector
+  fullName: Cress.Recorder.Inference.Locator.CssSelector
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Recorder/Inference/InferredStep.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: CssSelector
+    path: ../src/Cress.Recorder/Inference/InferredStep.cs
+    startLine: 55
+  assemblies:
+  - Cress.Recorder
+  namespace: Cress.Recorder.Inference
+  summary: Raw CSS selector (web only; ignored by desktop drivers).
+  example: []
+  syntax:
+    content: public string? CssSelector { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property CssSelector As String
+  overload: Cress.Recorder.Inference.Locator.CssSelector*
+- uid: Cress.Recorder.Inference.Locator.XPath
+  commentId: P:Cress.Recorder.Inference.Locator.XPath
+  id: XPath
+  parent: Cress.Recorder.Inference.Locator
+  langs:
+  - csharp
+  - vb
+  name: XPath
+  nameWithType: Locator.XPath
+  fullName: Cress.Recorder.Inference.Locator.XPath
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Recorder/Inference/InferredStep.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: XPath
+    path: ../src/Cress.Recorder/Inference/InferredStep.cs
+    startLine: 58
+  assemblies:
+  - Cress.Recorder
+  namespace: Cress.Recorder.Inference
+  summary: Raw XPath expression (web only; ignored by desktop drivers).
+  example: []
+  syntax:
+    content: public string? XPath { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property XPath As String
+  overload: Cress.Recorder.Inference.Locator.XPath*
+references:
+- uid: Cress.Recorder.Inference.Locator.AutomationId
+  commentId: P:Cress.Recorder.Inference.Locator.AutomationId
+  href: Cress.Recorder.Inference.Locator.html#Cress_Recorder_Inference_Locator_AutomationId
+  name: AutomationId
+  nameWithType: Locator.AutomationId
+  fullName: Cress.Recorder.Inference.Locator.AutomationId
+- uid: Cress.Recorder.Inference.Locator.Name
+  commentId: P:Cress.Recorder.Inference.Locator.Name
+  href: Cress.Recorder.Inference.Locator.html#Cress_Recorder_Inference_Locator_Name
+  name: Name
+  nameWithType: Locator.Name
+  fullName: Cress.Recorder.Inference.Locator.Name
+- uid: Cress.Recorder.Inference
+  commentId: N:Cress.Recorder.Inference
+  href: Cress.html
+  name: Cress.Recorder.Inference
+  nameWithType: Cress.Recorder.Inference
+  fullName: Cress.Recorder.Inference
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Recorder
+    name: Recorder
+    href: Cress.Recorder.html
+  - name: .
+  - uid: Cress.Recorder.Inference
+    name: Inference
+    href: Cress.Recorder.Inference.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Recorder
+    name: Recorder
+    href: Cress.Recorder.html
+  - name: .
+  - uid: Cress.Recorder.Inference
+    name: Inference
+    href: Cress.Recorder.Inference.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.IEquatable{Cress.Recorder.Inference.Locator}
+  commentId: T:System.IEquatable{Cress.Recorder.Inference.Locator}
+  parent: System
+  definition: System.IEquatable`1
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<Locator>
+  nameWithType: IEquatable<Locator>
+  fullName: System.IEquatable<Cress.Recorder.Inference.Locator>
+  nameWithType.vb: IEquatable(Of Locator)
+  fullName.vb: System.IEquatable(Of Cress.Recorder.Inference.Locator)
+  name.vb: IEquatable(Of Locator)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - uid: Cress.Recorder.Inference.Locator
+    name: Locator
+    href: Cress.Recorder.Inference.Locator.html
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Cress.Recorder.Inference.Locator
+    name: Locator
+    href: Cress.Recorder.Inference.Locator.html
+  - name: )
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.IEquatable`1
+  commentId: T:System.IEquatable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<T>
+  nameWithType: IEquatable<T>
+  fullName: System.IEquatable<T>
+  nameWithType.vb: IEquatable(Of T)
+  fullName.vb: System.IEquatable(Of T)
+  name.vb: IEquatable(Of T)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Cress.Recorder.Inference.Locator.Name*
+  commentId: Overload:Cress.Recorder.Inference.Locator.Name
+  href: Cress.Recorder.Inference.Locator.html#Cress_Recorder_Inference_Locator_Name
+  name: Name
+  nameWithType: Locator.Name
+  fullName: Cress.Recorder.Inference.Locator.Name
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Cress.Recorder.Inference.Locator.AutomationId*
+  commentId: Overload:Cress.Recorder.Inference.Locator.AutomationId
+  href: Cress.Recorder.Inference.Locator.html#Cress_Recorder_Inference_Locator_AutomationId
+  name: AutomationId
+  nameWithType: Locator.AutomationId
+  fullName: Cress.Recorder.Inference.Locator.AutomationId
+- uid: Cress.Recorder.Inference.Locator.ControlType*
+  commentId: Overload:Cress.Recorder.Inference.Locator.ControlType
+  href: Cress.Recorder.Inference.Locator.html#Cress_Recorder_Inference_Locator_ControlType
+  name: ControlType
+  nameWithType: Locator.ControlType
+  fullName: Cress.Recorder.Inference.Locator.ControlType
+- uid: Cress.Recorder.Inference.Locator.ClassName*
+  commentId: Overload:Cress.Recorder.Inference.Locator.ClassName
+  href: Cress.Recorder.Inference.Locator.html#Cress_Recorder_Inference_Locator_ClassName
+  name: ClassName
+  nameWithType: Locator.ClassName
+  fullName: Cress.Recorder.Inference.Locator.ClassName
+- uid: Cress.Recorder.Inference.Locator.Role*
+  commentId: Overload:Cress.Recorder.Inference.Locator.Role
+  href: Cress.Recorder.Inference.Locator.html#Cress_Recorder_Inference_Locator_Role
+  name: Role
+  nameWithType: Locator.Role
+  fullName: Cress.Recorder.Inference.Locator.Role
+- uid: Cress.Recorder.Inference.Locator.TestId*
+  commentId: Overload:Cress.Recorder.Inference.Locator.TestId
+  href: Cress.Recorder.Inference.Locator.html#Cress_Recorder_Inference_Locator_TestId
+  name: TestId
+  nameWithType: Locator.TestId
+  fullName: Cress.Recorder.Inference.Locator.TestId
+- uid: Cress.Recorder.Inference.Locator.Label*
+  commentId: Overload:Cress.Recorder.Inference.Locator.Label
+  href: Cress.Recorder.Inference.Locator.html#Cress_Recorder_Inference_Locator_Label
+  name: Label
+  nameWithType: Locator.Label
+  fullName: Cress.Recorder.Inference.Locator.Label
+- uid: Cress.Recorder.Inference.Locator.Text*
+  commentId: Overload:Cress.Recorder.Inference.Locator.Text
+  href: Cress.Recorder.Inference.Locator.html#Cress_Recorder_Inference_Locator_Text
+  name: Text
+  nameWithType: Locator.Text
+  fullName: Cress.Recorder.Inference.Locator.Text
+- uid: Cress.Recorder.Inference.Locator.CssSelector*
+  commentId: Overload:Cress.Recorder.Inference.Locator.CssSelector
+  href: Cress.Recorder.Inference.Locator.html#Cress_Recorder_Inference_Locator_CssSelector
+  name: CssSelector
+  nameWithType: Locator.CssSelector
+  fullName: Cress.Recorder.Inference.Locator.CssSelector
+- uid: Cress.Recorder.Inference.Locator.XPath*
+  commentId: Overload:Cress.Recorder.Inference.Locator.XPath
+  href: Cress.Recorder.Inference.Locator.html#Cress_Recorder_Inference_Locator_XPath
+  name: XPath
+  nameWithType: Locator.XPath
+  fullName: Cress.Recorder.Inference.Locator.XPath

@@ -104,25 +104,34 @@ public sealed class PhraseLibrary
     [
         // UI — attachment / launch
         new("ui.attach",      GherkinKeyword.Given, "the {processName} application is open"),
-        new("ui.launch",      GherkinKeyword.Given, "I launch {path}"),
+        new("ui.launch",      GherkinKeyword.Given, "I launch the \"{application}\" application", ["application"]),
+        new("ui.launch",      GherkinKeyword.Given, "I launch {path}", ["path"]),
         new("ui.close",       GherkinKeyword.When,  "I close the application"),
 
         // UI — interactions (most specific first via RequiredKeys)
         new("ui.click",       GherkinKeyword.When,  "I click the \"{testId}\" element",     ["testId"]),
         new("ui.click",       GherkinKeyword.When,  "I click the {role} \"{label}\"",        ["role", "label"]),
         new("ui.click",       GherkinKeyword.When,  "I click {automationId}"),
+        new("ui.click",       GherkinKeyword.When,  "I click {selector}",                    ["selector"]),
 
         new("ui.invoke",      GherkinKeyword.When,  "I invoke {automationId}"),
+        new("ui.invoke",      GherkinKeyword.When,  "I invoke {selector}",                   ["selector"]),
 
         new("ui.fill",        GherkinKeyword.When,  "I fill \"{testId}\" with \"{value}\"",  ["testId"]),
         new("ui.fill",        GherkinKeyword.When,  "I fill {automationId} with \"{value}\""),
+        new("ui.fill",        GherkinKeyword.When,  "I fill {selector} with \"{value}\"",    ["selector", "value"]),
 
         new("ui.press-key",   GherkinKeyword.When,  "I press {key}"),
         new("ui.screenshot",  GherkinKeyword.When,  "I take a screenshot"),
 
         // UI — assertions (most specific first)
+        new("ui.assert-text", GherkinKeyword.Then,  "the \"{testId}\" element should show \"{expected}\"", ["testId", "expected"]),
+        new("ui.assert-text", GherkinKeyword.Then,  "the \"{testId}\" element should show \"{text}\"", ["testId", "text"]),
         new("ui.assert-text", GherkinKeyword.Then,  "the \"{testId}\" element should show \"{expected}\"", ["testId"]),
+        new("ui.assert-text", GherkinKeyword.Then,  "{automationId} should display \"{text}\"", ["automationId", "text"]),
         new("ui.assert-text", GherkinKeyword.Then,  "{automationId} should display \"{expected}\""),
+        new("ui.assert-text", GherkinKeyword.Then,  "{selector} should display \"{expected}\"", ["selector", "expected"]),
+        new("ui.assert-text", GherkinKeyword.Then,  "{selector} should display \"{text}\"", ["selector", "text"]),
 
         new("ui.assert-window-title", GherkinKeyword.Then, "the window title should be \"{title}\""),
 

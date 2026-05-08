@@ -1,7 +1,7 @@
 @implements IDisposable
 @inject StudioWorkspaceState State
 
-<aside class="card explorer-panel" aria-labelledby="explorer-title">
+<aside class="card explorer-panel" aria-labelledby="explorer-title" data-testid="explorer-panel">
     <div class="panel-header">
         <div class="panel-heading">
             <h2 id="explorer-title">Explorer</h2>
@@ -15,7 +15,7 @@
 
     @if (!State.HasLoadedProject)
     {
-        <div class="empty-panel">Load a Cress workspace to browse flows, suites, steps, fixtures, capabilities, runs, and reports.</div>
+        <div class="empty-panel" data-testid="explorer-empty">Load a Cress workspace to browse flows, suites, steps, fixtures, capabilities, runs, and reports.</div>
     }
     else
     {
@@ -27,7 +27,7 @@
                         <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
                     </svg>
                 </span>
-                <input id="explorerFilter" class="text-input explorer-search-input" @bind="State.ExplorerFilter" @bind:event="oninput" placeholder="Find a flow, suite, or capability" />
+                <input id="explorerFilter" class="text-input explorer-search-input" @bind="State.ExplorerFilter" @bind:event="oninput" placeholder="Find a flow, suite, or capability" data-testid="explorer-filter" />
                 @if (!string.IsNullOrEmpty(State.ExplorerFilter))
                 {
                     <button type="button" class="explorer-search-clear" aria-label="Clear filter" @onclick="ClearFilter">
@@ -46,7 +46,7 @@
                 </span>
                 Flows <span class="summary-count">(@State.FlowCount)</span>
             </summary>
-            <div class="explorer-group">
+            <div class="explorer-group" data-testid="explorer-flows">
                 @{
                     var flows = State.Snapshot!.Catalog.NormalizedFlows
                         .Where(item => string.IsNullOrWhiteSpace(State.ExplorerFilter)
@@ -63,7 +63,7 @@
                 {
                     @foreach (var flow in flows)
                     {
-                        <button type="button" class="@GetExplorerButtonClass(State.SelectedFlow?.FilePath == flow.SourceFile)" @onclick="() => SelectFlow(flow.SourceFile)">
+                        <button type="button" class="@GetExplorerButtonClass(State.SelectedFlow?.FilePath == flow.SourceFile)" @onclick="() => SelectFlow(flow.SourceFile)" data-testid="@($"explorer-flow-{ToTestIdSegment(flow.FlowId)}")">
                             <strong>@flow.Name</strong>
                             <span>@flow.FlowId</span>
                         </button>
@@ -79,7 +79,7 @@
                 </span>
                 Suites <span class="summary-count">(@State.Suites.Count)</span>
             </summary>
-            <div class="explorer-group">
+            <div class="explorer-group" data-testid="explorer-suites">
                 @{
                     var suites = State.Suites
                         .Where(item => string.IsNullOrWhiteSpace(State.ExplorerFilter)
@@ -100,7 +100,7 @@
                 {
                     @foreach (var suite in suites)
                     {
-                        <button type="button" class="@GetExplorerButtonClass(State.SelectedSuite?.FilePath == suite.FilePath)" @onclick="() => SelectSuite(suite)">
+                        <button type="button" class="@GetExplorerButtonClass(State.SelectedSuite?.FilePath == suite.FilePath)" @onclick="() => SelectSuite(suite)" data-testid="@($"explorer-suite-{ToTestIdSegment(suite.Id)}")">
                             <strong>@suite.Name</strong>
                             <span>@suite.Id</span>
                         </button>
@@ -257,6 +257,32 @@
     private void ClearFilter()
     {
         State.ExplorerFilter = string.Empty;
+    }
+
+    private static string ToTestIdSegment(string? value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            return "empty";
+        }
+
+        var builder = new System.Text.StringBuilder(value.Length);
+        var lastWasDash = false;
+        foreach (var ch in value)
+        {
+            if (char.IsLetterOrDigit(ch))
+            {
+                builder.Append(char.ToLowerInvariant(ch));
+                lastWasDash = false;
+            }
+            else if (!lastWasDash)
+            {
+                builder.Append('-');
+                lastWasDash = true;
+            }
+        }
+
+        return builder.ToString().Trim('-');
     }
 
     private void SelectFlow(string? path)

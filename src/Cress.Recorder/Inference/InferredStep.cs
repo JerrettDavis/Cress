@@ -2,7 +2,7 @@ namespace Cress.Recorder.Inference;
 
 /// <summary>
 /// The vocabulary of step kinds the inference engine can produce.
-/// Maps directly to operations supported by <c>FlaUiRuntimeDriver</c>.
+/// Maps directly to operations supported by <c>FlawrightRuntimeDriver</c>.
 /// </summary>
 public enum StepKind
 {

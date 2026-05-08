@@ -1,0 +1,245 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Recorder.Inference.StepKind
+  commentId: T:Cress.Recorder.Inference.StepKind
+  id: StepKind
+  parent: Cress.Recorder.Inference
+  children:
+  - Cress.Recorder.Inference.StepKind.AssertText
+  - Cress.Recorder.Inference.StepKind.Click
+  - Cress.Recorder.Inference.StepKind.Navigate
+  - Cress.Recorder.Inference.StepKind.PressKey
+  - Cress.Recorder.Inference.StepKind.SetValue
+  - Cress.Recorder.Inference.StepKind.WaitForWindow
+  langs:
+  - csharp
+  - vb
+  name: StepKind
+  nameWithType: StepKind
+  fullName: Cress.Recorder.Inference.StepKind
+  type: Enum
+  source:
+    remote:
+      path: src/Cress.Recorder/Inference/InferredStep.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: StepKind
+    path: ../src/Cress.Recorder/Inference/InferredStep.cs
+    startLine: 6
+  assemblies:
+  - Cress.Recorder
+  namespace: Cress.Recorder.Inference
+  summary: >-
+    The vocabulary of step kinds the inference engine can produce.
+
+    Maps directly to operations supported by <code>FlawrightRuntimeDriver</code>.
+  example: []
+  syntax:
+    content: public enum StepKind
+    content.vb: Public Enum StepKind
+- uid: Cress.Recorder.Inference.StepKind.Click
+  commentId: F:Cress.Recorder.Inference.StepKind.Click
+  id: Click
+  parent: Cress.Recorder.Inference.StepKind
+  langs:
+  - csharp
+  - vb
+  name: Click
+  nameWithType: StepKind.Click
+  fullName: Cress.Recorder.Inference.StepKind.Click
+  type: Field
+  source:
+    remote:
+      path: src/Cress.Recorder/Inference/InferredStep.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Click
+    path: ../src/Cress.Recorder/Inference/InferredStep.cs
+    startLine: 9
+  assemblies:
+  - Cress.Recorder
+  namespace: Cress.Recorder.Inference
+  summary: Invoke/click a UI element (button, menu item, etc.).
+  example: []
+  syntax:
+    content: Click = 0
+    return:
+      type: Cress.Recorder.Inference.StepKind
+- uid: Cress.Recorder.Inference.StepKind.AssertText
+  commentId: F:Cress.Recorder.Inference.StepKind.AssertText
+  id: AssertText
+  parent: Cress.Recorder.Inference.StepKind
+  langs:
+  - csharp
+  - vb
+  name: AssertText
+  nameWithType: StepKind.AssertText
+  fullName: Cress.Recorder.Inference.StepKind.AssertText
+  type: Field
+  source:
+    remote:
+      path: src/Cress.Recorder/Inference/InferredStep.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: AssertText
+    path: ../src/Cress.Recorder/Inference/InferredStep.cs
+    startLine: 12
+  assemblies:
+  - Cress.Recorder
+  namespace: Cress.Recorder.Inference
+  summary: Assert that a text element displays a specific value.
+  example: []
+  syntax:
+    content: AssertText = 1
+    return:
+      type: Cress.Recorder.Inference.StepKind
+- uid: Cress.Recorder.Inference.StepKind.PressKey
+  commentId: F:Cress.Recorder.Inference.StepKind.PressKey
+  id: PressKey
+  parent: Cress.Recorder.Inference.StepKind
+  langs:
+  - csharp
+  - vb
+  name: PressKey
+  nameWithType: StepKind.PressKey
+  fullName: Cress.Recorder.Inference.StepKind.PressKey
+  type: Field
+  source:
+    remote:
+      path: src/Cress.Recorder/Inference/InferredStep.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: PressKey
+    path: ../src/Cress.Recorder/Inference/InferredStep.cs
+    startLine: 15
+  assemblies:
+  - Cress.Recorder
+  namespace: Cress.Recorder.Inference
+  summary: Simulate a keyboard key press.
+  example: []
+  syntax:
+    content: PressKey = 2
+    return:
+      type: Cress.Recorder.Inference.StepKind
+- uid: Cress.Recorder.Inference.StepKind.WaitForWindow
+  commentId: F:Cress.Recorder.Inference.StepKind.WaitForWindow
+  id: WaitForWindow
+  parent: Cress.Recorder.Inference.StepKind
+  langs:
+  - csharp
+  - vb
+  name: WaitForWindow
+  nameWithType: StepKind.WaitForWindow
+  fullName: Cress.Recorder.Inference.StepKind.WaitForWindow
+  type: Field
+  source:
+    remote:
+      path: src/Cress.Recorder/Inference/InferredStep.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: WaitForWindow
+    path: ../src/Cress.Recorder/Inference/InferredStep.cs
+    startLine: 18
+  assemblies:
+  - Cress.Recorder
+  namespace: Cress.Recorder.Inference
+  summary: Wait for a window with a given title to appear.
+  example: []
+  syntax:
+    content: WaitForWindow = 3
+    return:
+      type: Cress.Recorder.Inference.StepKind
+- uid: Cress.Recorder.Inference.StepKind.SetValue
+  commentId: F:Cress.Recorder.Inference.StepKind.SetValue
+  id: SetValue
+  parent: Cress.Recorder.Inference.StepKind
+  langs:
+  - csharp
+  - vb
+  name: SetValue
+  nameWithType: StepKind.SetValue
+  fullName: Cress.Recorder.Inference.StepKind.SetValue
+  type: Field
+  source:
+    remote:
+      path: src/Cress.Recorder/Inference/InferredStep.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: SetValue
+    path: ../src/Cress.Recorder/Inference/InferredStep.cs
+    startLine: 21
+  assemblies:
+  - Cress.Recorder
+  namespace: Cress.Recorder.Inference
+  summary: Set the value of an editable element.
+  example: []
+  syntax:
+    content: SetValue = 4
+    return:
+      type: Cress.Recorder.Inference.StepKind
+- uid: Cress.Recorder.Inference.StepKind.Navigate
+  commentId: F:Cress.Recorder.Inference.StepKind.Navigate
+  id: Navigate
+  parent: Cress.Recorder.Inference.StepKind
+  langs:
+  - csharp
+  - vb
+  name: Navigate
+  nameWithType: StepKind.Navigate
+  fullName: Cress.Recorder.Inference.StepKind.Navigate
+  type: Field
+  source:
+    remote:
+      path: src/Cress.Recorder/Inference/InferredStep.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Navigate
+    path: ../src/Cress.Recorder/Inference/InferredStep.cs
+    startLine: 24
+  assemblies:
+  - Cress.Recorder
+  namespace: Cress.Recorder.Inference
+  summary: Navigate a browser to a URL (web recorder only).
+  example: []
+  syntax:
+    content: Navigate = 5
+    return:
+      type: Cress.Recorder.Inference.StepKind
+references:
+- uid: Cress.Recorder.Inference
+  commentId: N:Cress.Recorder.Inference
+  href: Cress.html
+  name: Cress.Recorder.Inference
+  nameWithType: Cress.Recorder.Inference
+  fullName: Cress.Recorder.Inference
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Recorder
+    name: Recorder
+    href: Cress.Recorder.html
+  - name: .
+  - uid: Cress.Recorder.Inference
+    name: Inference
+    href: Cress.Recorder.Inference.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Recorder
+    name: Recorder
+    href: Cress.Recorder.html
+  - name: .
+  - uid: Cress.Recorder.Inference
+    name: Inference
+    href: Cress.Recorder.Inference.html
+- uid: Cress.Recorder.Inference.StepKind
+  commentId: T:Cress.Recorder.Inference.StepKind
+  parent: Cress.Recorder.Inference
+  href: Cress.Recorder.Inference.StepKind.html
+  name: StepKind
+  nameWithType: StepKind
+  fullName: Cress.Recorder.Inference.StepKind

@@ -2,7 +2,6 @@
 @page "/workspace"
 @page "/designer"
 @page "/results"
-@rendermode InteractiveServer
 @implements IDisposable
 @inject StudioWorkspaceState State
 @inject IJSRuntime JS
@@ -10,10 +9,10 @@
 
 <PageTitle>Cress Studio Web</PageTitle>
 
-<div class="studio-shell">
+<div class="studio-shell" data-testid="studio-shell">
     @if (!State.HasLoadedProject)
     {
-        <section class="card hero-panel" aria-labelledby="studio-home-title">
+        <section class="card hero-panel" aria-labelledby="studio-home-title" data-testid="hero-panel">
             <div class="hero-header">
                 <div>
                     <h1 id="studio-home-title">Test automation studio</h1>
@@ -34,7 +33,7 @@
 
     @if (!State.HasLoadedProject)
     {
-        <section class="card onboarding-panel" aria-labelledby="studio-quickstart-title">
+        <section class="card onboarding-panel" aria-labelledby="studio-quickstart-title" data-testid="onboarding-panel">
             <div class="panel-header">
                 <div class="panel-heading">
                     <h2 id="studio-quickstart-title">Start with a real workspace</h2>
@@ -43,7 +42,7 @@
             </div>
 
             <div class="onboarding-grid">
-                <section class="subpanel">
+                <section class="subpanel" data-testid="suggested-workspace-panel">
                     <div class="subpanel-header">
                         <div>
                             <h3>Suggested workspace</h3>
@@ -57,18 +56,18 @@
                     }
                     else
                     {
-                        <div class="workspace-chip">
+                        <div class="workspace-chip" data-testid="suggested-workspace-path">
                             <strong>@State.SuggestedWorkspacePath</strong>
                         </div>
                         <div class="helper-actions">
-                            <button type="button" class="action-button primary" @onclick="UseSuggestedWorkspace">Use suggested</button>
-                            <button type="button" class="action-button success" @onclick="LoadSuggestedWorkspace">Load suggested</button>
-                            <button type="button" class="action-button" @onclick="OpenWorkspacePicker">Browse folders</button>
+                            <button type="button" class="action-button primary" @onclick="UseSuggestedWorkspace" data-testid="use-suggested-workspace">Use suggested</button>
+                            <button type="button" class="action-button success" @onclick="LoadSuggestedWorkspace" data-testid="load-suggested-workspace">Load suggested</button>
+                            <button type="button" class="action-button" @onclick="OpenWorkspacePicker" data-testid="open-workspace-picker-from-suggested">Browse folders</button>
                         </div>
                     }
                 </section>
 
-                <section class="subpanel">
+                <section class="subpanel" data-testid="recent-workspaces-panel">
                     <div class="subpanel-header">
                         <div>
                             <h3>Recent workspaces</h3>
@@ -82,10 +81,10 @@
                     }
                     else
                     {
-                        <div class="workspace-list">
+                        <div class="workspace-list" data-testid="recent-workspaces-list">
                             @foreach (var recent in State.RecentWorkspaces)
                             {
-                                <button type="button" class="explorer-button workspace-list-button" @onclick="@(() => LoadRecentWorkspace(recent))">
+                                <button type="button" class="explorer-button workspace-list-button" @onclick="@(() => LoadRecentWorkspace(recent))" data-testid="@($"recent-workspace-{ToTestIdSegment(recent)}")">
                                     <strong>@Path.GetFileName(recent)</strong>
                                     <span>@recent</span>
                                 </button>
@@ -94,7 +93,7 @@
                     }
                 </section>
 
-                <section class="subpanel">
+                <section class="subpanel" data-testid="demo-workspaces-panel">
                     <div class="subpanel-header">
                         <div>
                             <h3>Built-in demos</h3>
@@ -102,10 +101,10 @@
                         </div>
                     </div>
 
-                    <div class="demo-card-list">
+                    <div class="demo-card-list" data-testid="demo-workspaces-list">
                         @foreach (var demo in State.DemoWorkspaces)
                         {
-                            <article class="demo-card">
+                            <article class="demo-card" data-testid="@($"demo-card-{ToTestIdSegment(demo.Id)}")">
                                 <div class="demo-card-copy">
                                     <strong>@demo.Title</strong>
                                     <p>@demo.Description</p>
@@ -117,15 +116,15 @@
                                     </div>
                                 </div>
                                 <div class="helper-actions">
-                                    <button type="button" class="action-button success" @onclick="@(() => LoadDemoWorkspace(demo.Id))">Load demo</button>
-                                    <button type="button" class="action-button" @onclick="@(() => UseDemoWorkspace(demo.Id))">Use path</button>
+                                    <button type="button" class="action-button success" @onclick="@(() => LoadDemoWorkspace(demo.Id))" data-testid="@($"load-demo-{ToTestIdSegment(demo.Id)}")">Load demo</button>
+                                    <button type="button" class="action-button" @onclick="@(() => UseDemoWorkspace(demo.Id))" data-testid="@($"use-demo-path-{ToTestIdSegment(demo.Id)}")">Use path</button>
                                 </div>
                             </article>
                         }
                     </div>
                 </section>
 
-                <section class="subpanel">
+                <section class="subpanel" data-testid="runner-nodes-panel">
                     <div class="subpanel-header">
                         <div>
                             <h3>Execution nodes</h3>
@@ -133,21 +132,28 @@
                         </div>
                     </div>
 
-                    <div class="workspace-list">
+                    <div class="workspace-list" data-testid="runner-nodes-list">
                         @foreach (var node in State.RunnerNodes)
                         {
-                            <div class="node-card @(State.SelectedRunnerNodeId == node.Id ? "node-card--selected" : string.Empty)">
+                            <div class="node-card @(State.SelectedRunnerNodeId == node.Id ? "node-card--selected" : string.Empty)" data-testid="@($"runner-node-{ToTestIdSegment(node.Id)}")">
                                 <div>
                                     <strong>@node.Name</strong>
-                                    <div class="muted">@node.DisplayName</div>
+                                    <div class="muted" data-testid="@($"runner-node-display-{ToTestIdSegment(node.Id)}")">@node.DisplayName</div>
+                                    <div class="muted" data-testid="@($"runner-node-status-{ToTestIdSegment(node.Id)}")">Status: @FormatNodeStatus(node) • Heartbeat @FormatRelativeTime(node.LastHeartbeatUtc)</div>
                                 </div>
                                 <p>@node.Description</p>
                                 <div class="demo-card-tags">
+                                    <span class="pill">@node.Transport</span>
+                                    <span class="pill">@node.Location</span>
                                     @foreach (var capability in node.Capabilities)
                                     {
                                         <span class="pill">@capability</span>
                                     }
                                 </div>
+                                @if (!string.IsNullOrWhiteSpace(node.LastError))
+                                {
+                                    <div class="workspace-picker-error">@node.LastError</div>
+                                }
                             </div>
                         }
                     </div>
@@ -156,7 +162,7 @@
         </section>
     }
 
-    <section id="workspace" class="@GetSectionClass("workspace", "card toolbar-panel")" aria-labelledby="workspace-setup-title">
+    <section id="workspace" class="@GetSectionClass("workspace", "card toolbar-panel")" aria-labelledby="workspace-setup-title" data-testid="workspace-section">
         <div class="panel-header">
             <div class="panel-heading">
                 <h2 id="workspace-setup-title">Workspace setup</h2>
@@ -173,14 +179,14 @@
                 <div class="field-stack">
                     <label for="workspacePath">Workspace or project path</label>
                     <div class="workspace-path-row">
-                        <input id="workspacePath" class="text-input" @bind="State.ProjectPathInput" placeholder="C:\path\to\project or workspace" />
-                        <button type="button" class="action-button" @onclick="OpenWorkspacePicker" title="Browse folders on the host machine">Browse</button>
+                        <input id="workspacePath" class="text-input" @bind="State.ProjectPathInput" placeholder="C:\path\to\project or workspace" data-testid="workspace-path-input" />
+                        <button type="button" class="action-button" @onclick="OpenWorkspacePicker" title="Browse folders on the host machine" data-testid="open-workspace-picker">Browse</button>
                     </div>
                     <span class="field-hint">Use a project or workspace root so flows, suites, reports, and artifacts stay connected. Blank paths no longer fall back to the web app folder.</span>
                 </div>
                 <div class="field-stack">
                     <label for="profileSelect">Profile</label>
-                    <select id="profileSelect" class="text-input" @bind="State.SelectedProfile">
+                    <select id="profileSelect" class="text-input" @bind="State.SelectedProfile" data-testid="profile-select">
                         @foreach (var profile in State.AvailableProfiles)
                         {
                             <option value="@profile">@profile</option>
@@ -193,12 +199,12 @@
             <div class="toolbar-grid">
                 <div class="field-stack">
                     <label for="retryOverride">Retry override</label>
-                    <input id="retryOverride" class="text-input" @bind="State.RetryCountOverrideText" />
+                    <input id="retryOverride" class="text-input" @bind="State.RetryCountOverrideText" data-testid="retry-override-input" />
                     <span class="field-hint">Increase retries for flake investigation without editing the saved suite or flow definition.</span>
                 </div>
                 <div class="field-stack">
                     <label for="screenshotPolicy">Screenshot policy</label>
-                    <select id="screenshotPolicy" class="text-input" @bind="State.ScreenshotPolicy">
+                    <select id="screenshotPolicy" class="text-input" @bind="State.ScreenshotPolicy" data-testid="screenshot-policy-select">
                         <option value="on-failure">On failure</option>
                         <option value="every-step">Every step</option>
                         <option value="off">Off</option>
@@ -210,7 +216,7 @@
             <div class="toolbar-grid">
                 <div class="field-stack">
                     <label for="runnerNode">Execution node</label>
-                    <select id="runnerNode" class="text-input" @bind="State.SelectedRunnerNodeId">
+                    <select id="runnerNode" class="text-input" @bind="State.SelectedRunnerNodeId" data-testid="runner-node-select">
                         @foreach (var node in State.RunnerNodes)
                         {
                             <option value="@node.Id">@node.DisplayName</option>
@@ -221,9 +227,9 @@
                 <div class="field-stack">
                     <label>Quick workspace actions</label>
                     <div class="helper-actions">
-                        <button type="button" class="action-button" @onclick="UseSuggestedWorkspace" disabled="@string.IsNullOrWhiteSpace(State.SuggestedWorkspacePath)">Use suggested path</button>
-                        <button type="button" class="action-button" @onclick="OpenWorkspacePicker">Browse folders</button>
-                        <button type="button" class="action-button" @onclick="LoadFirstDemo" disabled="@(State.DemoWorkspaces.Count == 0)">Load first demo</button>
+                        <button type="button" class="action-button" @onclick="UseSuggestedWorkspace" disabled="@string.IsNullOrWhiteSpace(State.SuggestedWorkspacePath)" data-testid="quick-use-suggested-path">Use suggested path</button>
+                        <button type="button" class="action-button" @onclick="OpenWorkspacePicker" data-testid="quick-open-workspace-picker">Browse folders</button>
+                        <button type="button" class="action-button" @onclick="LoadFirstDemo" disabled="@(State.DemoWorkspaces.Count == 0)" data-testid="quick-load-first-demo">Load first demo</button>
                     </div>
                     <span class="field-hint">Use demos and recent folders to get into the designer quickly instead of typing paths from memory.</span>
                 </div>
@@ -233,36 +239,36 @@
         <div class="toolbar-actions" aria-label="Workspace actions">
             <div class="toolbar-primary">
                 @* Load project: single primary CTA on this surface (filled accent) *@
-                <button type="button" class="action-button primary" @onclick="LoadProjectAsync" disabled="@State.IsBusy"
+                <button type="button" class="action-button primary" @onclick="LoadProjectAsync" disabled="@State.IsBusy" data-testid="load-project"
                         title="Load the workspace or project at the configured path">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
                     Load project
                 </button>
-                <button type="button" class="action-button" @onclick="RefreshProjectAsync" disabled="@(!State.HasLoadedProject || State.IsBusy)"
+                <button type="button" class="action-button" @onclick="RefreshProjectAsync" disabled="@(!State.HasLoadedProject || State.IsBusy)" data-testid="refresh-project"
                         title="Re-scan the project directory and rebuild the snapshot">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
                     Refresh
                 </button>
                 <span class="toolbar-divider" aria-hidden="true"></span>
-                <button type="button" class="action-button success" @onclick="RunAllAsync" disabled="@(!State.HasLoadedProject || State.IsBusy)"
+                <button type="button" class="action-button success" @onclick="RunAllAsync" disabled="@(!State.HasLoadedProject || State.IsBusy)" data-testid="run-all"
                         title="Execute every flow in the loaded project">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
                     Run all
                 </button>
-                <button type="button" class="action-button success" @onclick="RunSelectedAsync" disabled="@(!State.HasSelectedFlow || State.IsBusy)"
+                <button type="button" class="action-button success" @onclick="RunSelectedAsync" disabled="@(!State.HasSelectedFlow || State.IsBusy)" data-testid="run-flow"
                         title="Run the currently selected flow">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/><line x1="19" y1="3" x2="19" y2="21"/></svg>
                     Run flow
                 </button>
-                <button type="button" class="action-button success" @onclick="RunSuiteAsync" disabled="@(!State.HasSelectedSuite || State.IsBusy)"
+                <button type="button" class="action-button success" @onclick="RunSuiteAsync" disabled="@(!State.HasSelectedSuite || State.IsBusy)" data-testid="run-suite"
                         title="Run the currently selected suite">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
                     Run suite
                 </button>
                 <span class="toolbar-divider" aria-hidden="true"></span>
-                <button type="button" class="action-button" @onclick="OpenFileAsync" disabled="@(string.IsNullOrEmpty(State.SelectedFlow?.FilePath))"
+                <button type="button" class="action-button" @onclick="OpenFileAsync" disabled="@(string.IsNullOrEmpty(State.SelectedFlow?.FilePath))" data-testid="open-selected-file"
                         title="Copy the selected flow's file path to the clipboard">Open file</button>
-                <button type="button" class="action-button" @onclick="SaveFlowAsync" disabled="@(!State.HasSelectedFlow || State.IsBusy)"
+                <button type="button" class="action-button" @onclick="SaveFlowAsync" disabled="@(!State.HasSelectedFlow || State.IsBusy)" data-testid="save-flow"
                         title="Persist the current flow edits to disk">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
                     Save flow
@@ -272,9 +278,9 @@
                 <QuickActionSelector />
             </div>
             <details class="toolbar-more">
-                <summary class="action-button" aria-label="More actions">More actions</summary>
+                <summary class="action-button" aria-label="More actions" data-testid="more-actions">More actions</summary>
                 <div class="toolbar-more-panel">
-                    <button type="button" class="action-button" @onclick="CreateFlowAsync" disabled="@(!State.HasLoadedProject || State.IsBusy)">New flow</button>
+                    <button type="button" class="action-button" @onclick="CreateFlowAsync" disabled="@(!State.HasLoadedProject || State.IsBusy)" data-testid="new-flow">New flow</button>
                     <button type="button" class="action-button" @onclick="ApplySourceAsync" disabled="@(!State.HasSelectedFlow || State.IsBusy)">Apply source</button>
                     <button type="button" class="action-button" @onclick="RebuildSourceAsync" disabled="@(!State.HasSelectedFlow || State.IsBusy)">Rebuild source</button>
                     <button type="button" class="action-button" @onclick="CreateSuiteAsync" disabled="@(!State.HasLoadedProject || State.IsBusy)">New suite</button>
@@ -285,23 +291,25 @@
                 </div>
             </details>
         </div>
+
+        <LiveRunPanel />
     </section>
 
     <div class="studio-grid">
         <ExplorerPanel />
 
-        <section id="designer" class="@GetSectionClass("designer", "card editor-panel")" aria-labelledby="designer-title">
+        <section id="designer" class="@GetSectionClass("designer", "card editor-panel")" aria-labelledby="designer-title" data-testid="designer-section">
             <div class="panel-header">
                 <div class="panel-heading">
                     <h2 id="designer-title">Designer</h2>
                     <p>Switch between overview, editable flow metadata, suite composition, and raw source without losing context.</p>
                 </div>
                 <div class="tab-row" role="tablist" aria-label="Designer views">
-                    <button type="button" class="@GetTabClass("overview")" @onclick='() => SetEditorTab("overview")'>Overview</button>
-                    <button type="button" class="@GetTabClass("flow")" @onclick='() => SetEditorTab("flow")'>Flow editor</button>
-                    <button type="button" class="@GetTabClass("suite")" @onclick='() => SetEditorTab("suite")'>Suite editor</button>
-                    <button type="button" class="@GetTabClass("source")" @onclick='() => SetEditorTab("source")'>Source</button>
-                    <button type="button" class="@GetTabClass("metrics")" @onclick='() => SetEditorTab("metrics")'>Metrics</button>
+                    <button type="button" class="@GetTabClass("overview")" @onclick='() => SetEditorTab("overview")' data-testid="designer-tab-overview">Overview</button>
+                    <button type="button" class="@GetTabClass("flow")" @onclick='() => SetEditorTab("flow")' data-testid="designer-tab-flow">Flow editor</button>
+                    <button type="button" class="@GetTabClass("suite")" @onclick='() => SetEditorTab("suite")' data-testid="designer-tab-suite">Suite editor</button>
+                    <button type="button" class="@GetTabClass("source")" @onclick='() => SetEditorTab("source")' data-testid="designer-tab-source">Source</button>
+                    <button type="button" class="@GetTabClass("metrics")" @onclick='() => SetEditorTab("metrics")' data-testid="designer-tab-metrics">Metrics</button>
                 </div>
             </div>
 
@@ -326,7 +334,7 @@
                 case "source":
                     <div class="field-stack">
                         <label>Selected source</label>
-                        <textarea class="text-input source-input" @bind="State.SourceEditorText" readonly="@(State.SelectedFlow is null)"></textarea>
+                        <textarea class="text-input source-input" data-testid="designer-source-editor" @bind="State.SourceEditorText" readonly="@(State.SelectedFlow is null)"></textarea>
                         <span class="field-hint">Source editing writes directly through the shared flow document service and can be round-tripped back into the form designer.</span>
                     </div>
                     break;
@@ -384,18 +392,19 @@
                                     </tbody>
                                 </table>
                             </section>
-                            <section class="subpanel">
-                                <div class="subpanel-header">
-                                    <div>
-                                        <h3>Selected asset</h3>
-                                        <p>Keep path, metadata, and summary context visible while switching tabs.</p>
-                                    </div>
-                                </div>
-                                <pre class="summary-pre">@State.SelectedAssetSummary</pre>
-                            </section>
-                            <RunInsightsPanel />
-                        </div>
-                    </div>
+                             <section class="subpanel">
+                                 <div class="subpanel-header">
+                                     <div>
+                                         <h3>Selected asset</h3>
+                                         <p>Keep path, metadata, and summary context visible while switching tabs.</p>
+                                     </div>
+                                 </div>
+                                 <pre class="summary-pre">@State.SelectedAssetSummary</pre>
+                             </section>
+                             <LiveRunPanel Compact="true" />
+                             <RunInsightsPanel />
+                         </div>
+                     </div>
                     break;
             }
         </section>
@@ -614,4 +623,61 @@
         => string.Equals(_shellSection, section, StringComparison.OrdinalIgnoreCase)
             ? $"{baseClass} panel-focus"
             : baseClass;
+
+    private static string FormatNodeStatus(StudioRunnerNodeSnapshot node)
+        => node.Status switch
+        {
+            StudioRunnerNodeStatus.Busy when !string.IsNullOrWhiteSpace(node.ActiveRunId) => $"Busy ({node.ActiveRunId})",
+            StudioRunnerNodeStatus.Busy => "Busy",
+            StudioRunnerNodeStatus.Degraded => "Degraded",
+            StudioRunnerNodeStatus.Offline => "Offline",
+            _ => "Healthy"
+        };
+
+    private static string FormatRelativeTime(DateTimeOffset timestamp)
+    {
+        var elapsed = DateTimeOffset.UtcNow - timestamp;
+        if (elapsed < TimeSpan.FromSeconds(10))
+        {
+            return "just now";
+        }
+
+        if (elapsed < TimeSpan.FromMinutes(1))
+        {
+            return $"{Math.Max(1, (int)elapsed.TotalSeconds)}s ago";
+        }
+
+        if (elapsed < TimeSpan.FromHours(1))
+        {
+            return $"{Math.Max(1, (int)elapsed.TotalMinutes)}m ago";
+        }
+
+        return $"{Math.Max(1, (int)elapsed.TotalHours)}h ago";
+    }
+
+    private static string ToTestIdSegment(string? value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            return "empty";
+        }
+
+        var builder = new System.Text.StringBuilder(value.Length);
+        var lastWasDash = false;
+        foreach (var ch in value)
+        {
+            if (char.IsLetterOrDigit(ch))
+            {
+                builder.Append(char.ToLowerInvariant(ch));
+                lastWasDash = false;
+            }
+            else if (!lastWasDash)
+            {
+                builder.Append('-');
+                lastWasDash = true;
+            }
+        }
+
+        return builder.ToString().Trim('-');
+    }
 }

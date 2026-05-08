@@ -1,0 +1,23 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Exporters.Cypress
+  commentId: N:Cress.Exporters.Cypress
+  id: Cress.Exporters.Cypress
+  children:
+  - Cress.Exporters.Cypress.CypressExporter
+  langs:
+  - csharp
+  - vb
+  name: Cress.Exporters.Cypress
+  nameWithType: Cress.Exporters.Cypress
+  fullName: Cress.Exporters.Cypress
+  type: Namespace
+  assemblies:
+  - Cress.Exporters
+references:
+- uid: Cress.Exporters.Cypress.CypressExporter
+  commentId: T:Cress.Exporters.Cypress.CypressExporter
+  href: Cress.Exporters.Cypress.CypressExporter.html
+  name: CypressExporter
+  nameWithType: CypressExporter
+  fullName: Cress.Exporters.Cypress.CypressExporter

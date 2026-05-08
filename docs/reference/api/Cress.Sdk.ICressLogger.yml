@@ -1,0 +1,310 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Sdk.ICressLogger
+  commentId: T:Cress.Sdk.ICressLogger
+  id: ICressLogger
+  parent: Cress.Sdk
+  children:
+  - Cress.Sdk.ICressLogger.Error(System.String,System.Collections.Generic.IReadOnlyDictionary{System.String,System.String})
+  - Cress.Sdk.ICressLogger.Info(System.String,System.Collections.Generic.IReadOnlyDictionary{System.String,System.String})
+  - Cress.Sdk.ICressLogger.Warning(System.String,System.Collections.Generic.IReadOnlyDictionary{System.String,System.String})
+  langs:
+  - csharp
+  - vb
+  name: ICressLogger
+  nameWithType: ICressLogger
+  fullName: Cress.Sdk.ICressLogger
+  type: Interface
+  source:
+    remote:
+      path: src/Cress.Sdk/PluginAbstractions.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: ICressLogger
+    path: ../src/Cress.Sdk/PluginAbstractions.cs
+    startLine: 69
+  assemblies:
+  - Cress.Sdk
+  namespace: Cress.Sdk
+  syntax:
+    content: public interface ICressLogger
+    content.vb: Public Interface ICressLogger
+- uid: Cress.Sdk.ICressLogger.Info(System.String,System.Collections.Generic.IReadOnlyDictionary{System.String,System.String})
+  commentId: M:Cress.Sdk.ICressLogger.Info(System.String,System.Collections.Generic.IReadOnlyDictionary{System.String,System.String})
+  id: Info(System.String,System.Collections.Generic.IReadOnlyDictionary{System.String,System.String})
+  parent: Cress.Sdk.ICressLogger
+  langs:
+  - csharp
+  - vb
+  name: Info(string, IReadOnlyDictionary<string, string>?)
+  nameWithType: ICressLogger.Info(string, IReadOnlyDictionary<string, string>?)
+  fullName: Cress.Sdk.ICressLogger.Info(string, System.Collections.Generic.IReadOnlyDictionary<string, string>?)
+  type: Method
+  source:
+    remote:
+      path: src/Cress.Sdk/PluginAbstractions.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Info
+    path: ../src/Cress.Sdk/PluginAbstractions.cs
+    startLine: 71
+  assemblies:
+  - Cress.Sdk
+  namespace: Cress.Sdk
+  syntax:
+    content: void Info(string message, IReadOnlyDictionary<string, string>? data = null)
+    parameters:
+    - id: message
+      type: System.String
+    - id: data
+      type: System.Collections.Generic.IReadOnlyDictionary{System.String,System.String}
+    content.vb: Sub Info(message As String, data As IReadOnlyDictionary(Of String, String) = Nothing)
+  overload: Cress.Sdk.ICressLogger.Info*
+  nameWithType.vb: ICressLogger.Info(String, IReadOnlyDictionary(Of String, String))
+  fullName.vb: Cress.Sdk.ICressLogger.Info(String, System.Collections.Generic.IReadOnlyDictionary(Of String, String))
+  name.vb: Info(String, IReadOnlyDictionary(Of String, String))
+- uid: Cress.Sdk.ICressLogger.Warning(System.String,System.Collections.Generic.IReadOnlyDictionary{System.String,System.String})
+  commentId: M:Cress.Sdk.ICressLogger.Warning(System.String,System.Collections.Generic.IReadOnlyDictionary{System.String,System.String})
+  id: Warning(System.String,System.Collections.Generic.IReadOnlyDictionary{System.String,System.String})
+  parent: Cress.Sdk.ICressLogger
+  langs:
+  - csharp
+  - vb
+  name: Warning(string, IReadOnlyDictionary<string, string>?)
+  nameWithType: ICressLogger.Warning(string, IReadOnlyDictionary<string, string>?)
+  fullName: Cress.Sdk.ICressLogger.Warning(string, System.Collections.Generic.IReadOnlyDictionary<string, string>?)
+  type: Method
+  source:
+    remote:
+      path: src/Cress.Sdk/PluginAbstractions.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Warning
+    path: ../src/Cress.Sdk/PluginAbstractions.cs
+    startLine: 72
+  assemblies:
+  - Cress.Sdk
+  namespace: Cress.Sdk
+  syntax:
+    content: void Warning(string message, IReadOnlyDictionary<string, string>? data = null)
+    parameters:
+    - id: message
+      type: System.String
+    - id: data
+      type: System.Collections.Generic.IReadOnlyDictionary{System.String,System.String}
+    content.vb: Sub Warning(message As String, data As IReadOnlyDictionary(Of String, String) = Nothing)
+  overload: Cress.Sdk.ICressLogger.Warning*
+  nameWithType.vb: ICressLogger.Warning(String, IReadOnlyDictionary(Of String, String))
+  fullName.vb: Cress.Sdk.ICressLogger.Warning(String, System.Collections.Generic.IReadOnlyDictionary(Of String, String))
+  name.vb: Warning(String, IReadOnlyDictionary(Of String, String))
+- uid: Cress.Sdk.ICressLogger.Error(System.String,System.Collections.Generic.IReadOnlyDictionary{System.String,System.String})
+  commentId: M:Cress.Sdk.ICressLogger.Error(System.String,System.Collections.Generic.IReadOnlyDictionary{System.String,System.String})
+  id: Error(System.String,System.Collections.Generic.IReadOnlyDictionary{System.String,System.String})
+  parent: Cress.Sdk.ICressLogger
+  langs:
+  - csharp
+  - vb
+  name: Error(string, IReadOnlyDictionary<string, string>?)
+  nameWithType: ICressLogger.Error(string, IReadOnlyDictionary<string, string>?)
+  fullName: Cress.Sdk.ICressLogger.Error(string, System.Collections.Generic.IReadOnlyDictionary<string, string>?)
+  type: Method
+  source:
+    remote:
+      path: src/Cress.Sdk/PluginAbstractions.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Error
+    path: ../src/Cress.Sdk/PluginAbstractions.cs
+    startLine: 73
+  assemblies:
+  - Cress.Sdk
+  namespace: Cress.Sdk
+  syntax:
+    content: void Error(string message, IReadOnlyDictionary<string, string>? data = null)
+    parameters:
+    - id: message
+      type: System.String
+    - id: data
+      type: System.Collections.Generic.IReadOnlyDictionary{System.String,System.String}
+    content.vb: Sub [Error](message As String, data As IReadOnlyDictionary(Of String, String) = Nothing)
+  overload: Cress.Sdk.ICressLogger.Error*
+  nameWithType.vb: ICressLogger.Error(String, IReadOnlyDictionary(Of String, String))
+  fullName.vb: Cress.Sdk.ICressLogger.Error(String, System.Collections.Generic.IReadOnlyDictionary(Of String, String))
+  name.vb: Error(String, IReadOnlyDictionary(Of String, String))
+references:
+- uid: Cress.Sdk
+  commentId: N:Cress.Sdk
+  href: Cress.html
+  name: Cress.Sdk
+  nameWithType: Cress.Sdk
+  fullName: Cress.Sdk
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Sdk
+    name: Sdk
+    href: Cress.Sdk.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Sdk
+    name: Sdk
+    href: Cress.Sdk.html
+- uid: Cress.Sdk.ICressLogger.Info*
+  commentId: Overload:Cress.Sdk.ICressLogger.Info
+  href: Cress.Sdk.ICressLogger.html#Cress_Sdk_ICressLogger_Info_System_String_System_Collections_Generic_IReadOnlyDictionary_System_String_System_String__
+  name: Info
+  nameWithType: ICressLogger.Info
+  fullName: Cress.Sdk.ICressLogger.Info
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: System.Collections.Generic.IReadOnlyDictionary{System.String,System.String}
+  commentId: T:System.Collections.Generic.IReadOnlyDictionary{System.String,System.String}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IReadOnlyDictionary`2
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2
+  name: IReadOnlyDictionary<string, string>
+  nameWithType: IReadOnlyDictionary<string, string>
+  fullName: System.Collections.Generic.IReadOnlyDictionary<string, string>
+  nameWithType.vb: IReadOnlyDictionary(Of String, String)
+  fullName.vb: System.Collections.Generic.IReadOnlyDictionary(Of String, String)
+  name.vb: IReadOnlyDictionary(Of String, String)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyDictionary`2
+    name: IReadOnlyDictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyDictionary`2
+    name: IReadOnlyDictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Collections.Generic.IReadOnlyDictionary`2
+  commentId: T:System.Collections.Generic.IReadOnlyDictionary`2
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2
+  name: IReadOnlyDictionary<TKey, TValue>
+  nameWithType: IReadOnlyDictionary<TKey, TValue>
+  fullName: System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>
+  nameWithType.vb: IReadOnlyDictionary(Of TKey, TValue)
+  fullName.vb: System.Collections.Generic.IReadOnlyDictionary(Of TKey, TValue)
+  name.vb: IReadOnlyDictionary(Of TKey, TValue)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyDictionary`2
+    name: IReadOnlyDictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyDictionary`2
+    name: IReadOnlyDictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: Cress.Sdk.ICressLogger.Warning*
+  commentId: Overload:Cress.Sdk.ICressLogger.Warning
+  href: Cress.Sdk.ICressLogger.html#Cress_Sdk_ICressLogger_Warning_System_String_System_Collections_Generic_IReadOnlyDictionary_System_String_System_String__
+  name: Warning
+  nameWithType: ICressLogger.Warning
+  fullName: Cress.Sdk.ICressLogger.Warning
+- uid: Cress.Sdk.ICressLogger.Error*
+  commentId: Overload:Cress.Sdk.ICressLogger.Error
+  href: Cress.Sdk.ICressLogger.html#Cress_Sdk_ICressLogger_Error_System_String_System_Collections_Generic_IReadOnlyDictionary_System_String_System_String__
+  name: Error
+  nameWithType: ICressLogger.Error
+  fullName: Cress.Sdk.ICressLogger.Error

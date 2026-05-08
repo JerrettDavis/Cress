@@ -1,0 +1,783 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Core.Models.CressConfig
+  commentId: T:Cress.Core.Models.CressConfig
+  id: CressConfig
+  parent: Cress.Core.Models
+  children:
+  - Cress.Core.Models.CressConfig.Defaults
+  - Cress.Core.Models.CressConfig.Drivers
+  - Cress.Core.Models.CressConfig.Flake
+  - Cress.Core.Models.CressConfig.Paths
+  - Cress.Core.Models.CressConfig.Plugins
+  - Cress.Core.Models.CressConfig.Project
+  - Cress.Core.Models.CressConfig.Version
+  langs:
+  - csharp
+  - vb
+  name: CressConfig
+  nameWithType: CressConfig
+  fullName: Cress.Core.Models.CressConfig
+  type: Class
+  source:
+    remote:
+      path: src/Cress.Core/Models/ConfigurationModels.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: CressConfig
+    path: ../src/Cress.Core/Models/ConfigurationModels.cs
+    startLine: 4
+  assemblies:
+  - Cress.Core
+  namespace: Cress.Core.Models
+  syntax:
+    content: 'public record CressConfig : IEquatable<CressConfig>'
+    content.vb: Public Class CressConfig Implements IEquatable(Of CressConfig)
+  inheritance:
+  - System.Object
+  implements:
+  - System.IEquatable{Cress.Core.Models.CressConfig}
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Cress.Core.Models.CressConfig.Version
+  commentId: P:Cress.Core.Models.CressConfig.Version
+  id: Version
+  parent: Cress.Core.Models.CressConfig
+  langs:
+  - csharp
+  - vb
+  name: Version
+  nameWithType: CressConfig.Version
+  fullName: Cress.Core.Models.CressConfig.Version
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Core/Models/ConfigurationModels.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Version
+    path: ../src/Cress.Core/Models/ConfigurationModels.cs
+    startLine: 6
+  assemblies:
+  - Cress.Core
+  namespace: Cress.Core.Models
+  syntax:
+    content: public int Version { get; init; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property Version As Integer
+  overload: Cress.Core.Models.CressConfig.Version*
+- uid: Cress.Core.Models.CressConfig.Project
+  commentId: P:Cress.Core.Models.CressConfig.Project
+  id: Project
+  parent: Cress.Core.Models.CressConfig
+  langs:
+  - csharp
+  - vb
+  name: Project
+  nameWithType: CressConfig.Project
+  fullName: Cress.Core.Models.CressConfig.Project
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Core/Models/ConfigurationModels.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Project
+    path: ../src/Cress.Core/Models/ConfigurationModels.cs
+    startLine: 7
+  assemblies:
+  - Cress.Core
+  namespace: Cress.Core.Models
+  syntax:
+    content: public ProjectConfig Project { get; init; }
+    parameters: []
+    return:
+      type: Cress.Core.Models.ProjectConfig
+    content.vb: Public Property Project As ProjectConfig
+  overload: Cress.Core.Models.CressConfig.Project*
+- uid: Cress.Core.Models.CressConfig.Paths
+  commentId: P:Cress.Core.Models.CressConfig.Paths
+  id: Paths
+  parent: Cress.Core.Models.CressConfig
+  langs:
+  - csharp
+  - vb
+  name: Paths
+  nameWithType: CressConfig.Paths
+  fullName: Cress.Core.Models.CressConfig.Paths
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Core/Models/ConfigurationModels.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Paths
+    path: ../src/Cress.Core/Models/ConfigurationModels.cs
+    startLine: 8
+  assemblies:
+  - Cress.Core
+  namespace: Cress.Core.Models
+  syntax:
+    content: public PathsConfig Paths { get; init; }
+    parameters: []
+    return:
+      type: Cress.Core.Models.PathsConfig
+    content.vb: Public Property Paths As PathsConfig
+  overload: Cress.Core.Models.CressConfig.Paths*
+- uid: Cress.Core.Models.CressConfig.Defaults
+  commentId: P:Cress.Core.Models.CressConfig.Defaults
+  id: Defaults
+  parent: Cress.Core.Models.CressConfig
+  langs:
+  - csharp
+  - vb
+  name: Defaults
+  nameWithType: CressConfig.Defaults
+  fullName: Cress.Core.Models.CressConfig.Defaults
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Core/Models/ConfigurationModels.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Defaults
+    path: ../src/Cress.Core/Models/ConfigurationModels.cs
+    startLine: 9
+  assemblies:
+  - Cress.Core
+  namespace: Cress.Core.Models
+  syntax:
+    content: public DefaultsConfig Defaults { get; init; }
+    parameters: []
+    return:
+      type: Cress.Core.Models.DefaultsConfig
+    content.vb: Public Property Defaults As DefaultsConfig
+  overload: Cress.Core.Models.CressConfig.Defaults*
+- uid: Cress.Core.Models.CressConfig.Flake
+  commentId: P:Cress.Core.Models.CressConfig.Flake
+  id: Flake
+  parent: Cress.Core.Models.CressConfig
+  langs:
+  - csharp
+  - vb
+  name: Flake
+  nameWithType: CressConfig.Flake
+  fullName: Cress.Core.Models.CressConfig.Flake
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Core/Models/ConfigurationModels.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Flake
+    path: ../src/Cress.Core/Models/ConfigurationModels.cs
+    startLine: 10
+  assemblies:
+  - Cress.Core
+  namespace: Cress.Core.Models
+  syntax:
+    content: public FlakeConfig Flake { get; init; }
+    parameters: []
+    return:
+      type: Cress.Core.Models.FlakeConfig
+    content.vb: Public Property Flake As FlakeConfig
+  overload: Cress.Core.Models.CressConfig.Flake*
+- uid: Cress.Core.Models.CressConfig.Plugins
+  commentId: P:Cress.Core.Models.CressConfig.Plugins
+  id: Plugins
+  parent: Cress.Core.Models.CressConfig
+  langs:
+  - csharp
+  - vb
+  name: Plugins
+  nameWithType: CressConfig.Plugins
+  fullName: Cress.Core.Models.CressConfig.Plugins
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Core/Models/ConfigurationModels.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Plugins
+    path: ../src/Cress.Core/Models/ConfigurationModels.cs
+    startLine: 11
+  assemblies:
+  - Cress.Core
+  namespace: Cress.Core.Models
+  syntax:
+    content: public PluginsConfig Plugins { get; init; }
+    parameters: []
+    return:
+      type: Cress.Core.Models.PluginsConfig
+    content.vb: Public Property Plugins As PluginsConfig
+  overload: Cress.Core.Models.CressConfig.Plugins*
+- uid: Cress.Core.Models.CressConfig.Drivers
+  commentId: P:Cress.Core.Models.CressConfig.Drivers
+  id: Drivers
+  parent: Cress.Core.Models.CressConfig
+  langs:
+  - csharp
+  - vb
+  name: Drivers
+  nameWithType: CressConfig.Drivers
+  fullName: Cress.Core.Models.CressConfig.Drivers
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Core/Models/ConfigurationModels.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Drivers
+    path: ../src/Cress.Core/Models/ConfigurationModels.cs
+    startLine: 12
+  assemblies:
+  - Cress.Core
+  namespace: Cress.Core.Models
+  syntax:
+    content: public Dictionary<string, DriverConfig> Drivers { get; init; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.Dictionary{System.String,Cress.Core.Models.DriverConfig}
+    content.vb: Public Property Drivers As Dictionary(Of String, DriverConfig)
+  overload: Cress.Core.Models.CressConfig.Drivers*
+references:
+- uid: Cress.Core.Models
+  commentId: N:Cress.Core.Models
+  href: Cress.html
+  name: Cress.Core.Models
+  nameWithType: Cress.Core.Models
+  fullName: Cress.Core.Models
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Core
+    name: Core
+    href: Cress.Core.html
+  - name: .
+  - uid: Cress.Core.Models
+    name: Models
+    href: Cress.Core.Models.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Core
+    name: Core
+    href: Cress.Core.html
+  - name: .
+  - uid: Cress.Core.Models
+    name: Models
+    href: Cress.Core.Models.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.IEquatable{Cress.Core.Models.CressConfig}
+  commentId: T:System.IEquatable{Cress.Core.Models.CressConfig}
+  parent: System
+  definition: System.IEquatable`1
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<CressConfig>
+  nameWithType: IEquatable<CressConfig>
+  fullName: System.IEquatable<Cress.Core.Models.CressConfig>
+  nameWithType.vb: IEquatable(Of CressConfig)
+  fullName.vb: System.IEquatable(Of Cress.Core.Models.CressConfig)
+  name.vb: IEquatable(Of CressConfig)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - uid: Cress.Core.Models.CressConfig
+    name: CressConfig
+    href: Cress.Core.Models.CressConfig.html
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Cress.Core.Models.CressConfig
+    name: CressConfig
+    href: Cress.Core.Models.CressConfig.html
+  - name: )
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.IEquatable`1
+  commentId: T:System.IEquatable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<T>
+  nameWithType: IEquatable<T>
+  fullName: System.IEquatable<T>
+  nameWithType.vb: IEquatable(Of T)
+  fullName.vb: System.IEquatable(Of T)
+  name.vb: IEquatable(Of T)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Cress.Core.Models.CressConfig.Version*
+  commentId: Overload:Cress.Core.Models.CressConfig.Version
+  href: Cress.Core.Models.CressConfig.html#Cress_Core_Models_CressConfig_Version
+  name: Version
+  nameWithType: CressConfig.Version
+  fullName: Cress.Core.Models.CressConfig.Version
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Cress.Core.Models.CressConfig.Project*
+  commentId: Overload:Cress.Core.Models.CressConfig.Project
+  href: Cress.Core.Models.CressConfig.html#Cress_Core_Models_CressConfig_Project
+  name: Project
+  nameWithType: CressConfig.Project
+  fullName: Cress.Core.Models.CressConfig.Project
+- uid: Cress.Core.Models.ProjectConfig
+  commentId: T:Cress.Core.Models.ProjectConfig
+  parent: Cress.Core.Models
+  href: Cress.Core.Models.ProjectConfig.html
+  name: ProjectConfig
+  nameWithType: ProjectConfig
+  fullName: Cress.Core.Models.ProjectConfig
+- uid: Cress.Core.Models.CressConfig.Paths*
+  commentId: Overload:Cress.Core.Models.CressConfig.Paths
+  href: Cress.Core.Models.CressConfig.html#Cress_Core_Models_CressConfig_Paths
+  name: Paths
+  nameWithType: CressConfig.Paths
+  fullName: Cress.Core.Models.CressConfig.Paths
+- uid: Cress.Core.Models.PathsConfig
+  commentId: T:Cress.Core.Models.PathsConfig
+  parent: Cress.Core.Models
+  href: Cress.Core.Models.PathsConfig.html
+  name: PathsConfig
+  nameWithType: PathsConfig
+  fullName: Cress.Core.Models.PathsConfig
+- uid: Cress.Core.Models.CressConfig.Defaults*
+  commentId: Overload:Cress.Core.Models.CressConfig.Defaults
+  href: Cress.Core.Models.CressConfig.html#Cress_Core_Models_CressConfig_Defaults
+  name: Defaults
+  nameWithType: CressConfig.Defaults
+  fullName: Cress.Core.Models.CressConfig.Defaults
+- uid: Cress.Core.Models.DefaultsConfig
+  commentId: T:Cress.Core.Models.DefaultsConfig
+  parent: Cress.Core.Models
+  href: Cress.Core.Models.DefaultsConfig.html
+  name: DefaultsConfig
+  nameWithType: DefaultsConfig
+  fullName: Cress.Core.Models.DefaultsConfig
+- uid: Cress.Core.Models.CressConfig.Flake*
+  commentId: Overload:Cress.Core.Models.CressConfig.Flake
+  href: Cress.Core.Models.CressConfig.html#Cress_Core_Models_CressConfig_Flake
+  name: Flake
+  nameWithType: CressConfig.Flake
+  fullName: Cress.Core.Models.CressConfig.Flake
+- uid: Cress.Core.Models.FlakeConfig
+  commentId: T:Cress.Core.Models.FlakeConfig
+  parent: Cress.Core.Models
+  href: Cress.Core.Models.FlakeConfig.html
+  name: FlakeConfig
+  nameWithType: FlakeConfig
+  fullName: Cress.Core.Models.FlakeConfig
+- uid: Cress.Core.Models.CressConfig.Plugins*
+  commentId: Overload:Cress.Core.Models.CressConfig.Plugins
+  href: Cress.Core.Models.CressConfig.html#Cress_Core_Models_CressConfig_Plugins
+  name: Plugins
+  nameWithType: CressConfig.Plugins
+  fullName: Cress.Core.Models.CressConfig.Plugins
+- uid: Cress.Core.Models.PluginsConfig
+  commentId: T:Cress.Core.Models.PluginsConfig
+  parent: Cress.Core.Models
+  href: Cress.Core.Models.PluginsConfig.html
+  name: PluginsConfig
+  nameWithType: PluginsConfig
+  fullName: Cress.Core.Models.PluginsConfig
+- uid: Cress.Core.Models.CressConfig.Drivers*
+  commentId: Overload:Cress.Core.Models.CressConfig.Drivers
+  href: Cress.Core.Models.CressConfig.html#Cress_Core_Models_CressConfig_Drivers
+  name: Drivers
+  nameWithType: CressConfig.Drivers
+  fullName: Cress.Core.Models.CressConfig.Drivers
+- uid: System.Collections.Generic.Dictionary{System.String,Cress.Core.Models.DriverConfig}
+  commentId: T:System.Collections.Generic.Dictionary{System.String,Cress.Core.Models.DriverConfig}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.Dictionary`2
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  name: Dictionary<string, DriverConfig>
+  nameWithType: Dictionary<string, DriverConfig>
+  fullName: System.Collections.Generic.Dictionary<string, Cress.Core.Models.DriverConfig>
+  nameWithType.vb: Dictionary(Of String, DriverConfig)
+  fullName.vb: System.Collections.Generic.Dictionary(Of String, Cress.Core.Models.DriverConfig)
+  name.vb: Dictionary(Of String, DriverConfig)
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: Cress.Core.Models.DriverConfig
+    name: DriverConfig
+    href: Cress.Core.Models.DriverConfig.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: Cress.Core.Models.DriverConfig
+    name: DriverConfig
+    href: Cress.Core.Models.DriverConfig.html
+  - name: )
+- uid: System.Collections.Generic.Dictionary`2
+  commentId: T:System.Collections.Generic.Dictionary`2
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  name: Dictionary<TKey, TValue>
+  nameWithType: Dictionary<TKey, TValue>
+  fullName: System.Collections.Generic.Dictionary<TKey, TValue>
+  nameWithType.vb: Dictionary(Of TKey, TValue)
+  fullName.vb: System.Collections.Generic.Dictionary(Of TKey, TValue)
+  name.vb: Dictionary(Of TKey, TValue)
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic

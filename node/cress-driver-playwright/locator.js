@@ -15,8 +15,8 @@
  * When multiple fields are present the highest-priority one wins. Others are ignored
  * (no AND-chaining — simpler and avoids Playwright strict-mode failures on multi-match).
  *
- * Web-only note: cssSelector and xpath are fully supported here. FlaUI driver blocks
- * them when no desktop-native locator is also present (see FlaUiRuntimeDriver).
+ * Web-only note: cssSelector and xpath are fully supported here. Flawright blocks
+ * them when no desktop-native locator is also present (see FlawrightRuntimeDriver).
  *
  * @param {import('playwright').Page} page
  * @param {Record<string, string>} inputs

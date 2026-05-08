@@ -57,7 +57,7 @@ public sealed class StudioEndToEndTests
         var (runDirectory, result) = studio.WaitForLatestRunResult();
         Assert.True(result.Passed, "Studio-triggered run did not pass.");
         Assert.Single(result.Flows);
-        Assert.Contains("flaui", result.Flows[0].Drivers, StringComparer.OrdinalIgnoreCase);
+        Assert.Contains("flawright", result.Flows[0].Drivers, StringComparer.OrdinalIgnoreCase);
 
         var screenshotDirectory = Path.Combine(runDirectory, "screenshots");
         studio.WaitForCondition(

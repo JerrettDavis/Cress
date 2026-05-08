@@ -1,0 +1,87 @@
+@if (Graph.Nodes.Count == 0)
+{
+    <p class="subpanel-empty">No visual flow map yet. Add fixtures, actions, or expectations to build the execution path.</p>
+}
+else
+{
+    <section class="subpanel flow-graph-panel" data-testid="flow-graph">
+        <div class="subpanel-header">
+            <h3>Flow map</h3>
+            <div class="flow-graph-summary">
+                <span class="tag-chip">Schema-backed</span>
+                <span class="tag-chip">@ExecutableCount executable @(ExecutableCount == 1 ? "node" : "nodes")</span>
+                <span class="tag-chip">Branch-ready model</span>
+            </div>
+        </div>
+
+        <div class="toolbar-actions">
+            <button class="action-button" type="button" data-testid="flow-graph-add-fixture" @onclick="() => OnAddFixture.InvokeAsync()">Add fixture</button>
+            <button class="action-button" type="button" data-testid="flow-graph-add-action" @onclick="() => OnAddAction.InvokeAsync()">Add action</button>
+            <button class="action-button" type="button" data-testid="flow-graph-add-expectation" @onclick="() => OnAddExpectation.InvokeAsync()">Add expectation</button>
+        </div>
+
+        <div class="flow-graph-sequence">
+            @for (var index = 0; index < Graph.Nodes.Count; index++)
+            {
+                var node = Graph.Nodes[index];
+                <article class="flow-graph-node @GetNodeClass(node.Kind)" data-testid="@($"flow-graph-node-{node.Id}")">
+                    <span class="flow-graph-node-kind">@GetKindLabel(node.Kind)</span>
+                    <strong class="flow-graph-node-title">@node.Title</strong>
+                    @if (!string.IsNullOrWhiteSpace(node.Subtitle))
+                    {
+                        <span class="flow-graph-node-subtitle">@node.Subtitle</span>
+                    }
+                    @if (!string.IsNullOrWhiteSpace(node.Detail))
+                    {
+                        <small class="flow-graph-node-detail">@node.Detail</small>
+                    }
+                </article>
+
+                @if (index < Graph.Edges.Count)
+                {
+                    var edge = Graph.Edges[index];
+                    <div class="flow-graph-edge" data-testid="@($"flow-graph-edge-{edge.Id}")">
+                        <span class="flow-graph-edge-arrow" aria-hidden="true">→</span>
+                        <small class="flow-graph-edge-label">@edge.Label</small>
+                    </div>
+                }
+            }
+        </div>
+    </section>
+}
+
+@code {
+    [Parameter] public FlowGraphModel Graph { get; set; } = new();
+    [Parameter] public EventCallback OnAddFixture { get; set; }
+    [Parameter] public EventCallback OnAddAction { get; set; }
+    [Parameter] public EventCallback OnAddExpectation { get; set; }
+
+    private int ExecutableCount
+        => Graph.Nodes.Count(node => node.Kind is FlowGraphNodeKind.Action or FlowGraphNodeKind.Expectation);
+
+    private static string GetKindLabel(FlowGraphNodeKind kind)
+        => kind switch
+        {
+            FlowGraphNodeKind.Start => "Start",
+            FlowGraphNodeKind.Fixture => "Fixture",
+            FlowGraphNodeKind.Action => "Action",
+            FlowGraphNodeKind.Decision => "Decision",
+            FlowGraphNodeKind.Scenario => "Scenario",
+            FlowGraphNodeKind.Expectation => "Expectation",
+            FlowGraphNodeKind.End => "End",
+            _ => "Node"
+        };
+
+    private static string GetNodeClass(FlowGraphNodeKind kind)
+        => kind switch
+        {
+            FlowGraphNodeKind.Start => "flow-graph-node--start",
+            FlowGraphNodeKind.Fixture => "flow-graph-node--fixture",
+            FlowGraphNodeKind.Action => "flow-graph-node--action",
+            FlowGraphNodeKind.Decision => "flow-graph-node--decision",
+            FlowGraphNodeKind.Scenario => "flow-graph-node--scenario",
+            FlowGraphNodeKind.Expectation => "flow-graph-node--expectation",
+            FlowGraphNodeKind.End => "flow-graph-node--end",
+            _ => string.Empty
+        };
+}

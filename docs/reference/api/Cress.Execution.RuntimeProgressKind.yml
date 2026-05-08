@@ -1,0 +1,247 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Execution.RuntimeProgressKind
+  commentId: T:Cress.Execution.RuntimeProgressKind
+  id: RuntimeProgressKind
+  parent: Cress.Execution
+  children:
+  - Cress.Execution.RuntimeProgressKind.FlowCompleted
+  - Cress.Execution.RuntimeProgressKind.FlowStarted
+  - Cress.Execution.RuntimeProgressKind.Log
+  - Cress.Execution.RuntimeProgressKind.RunCompleted
+  - Cress.Execution.RuntimeProgressKind.RunStarted
+  - Cress.Execution.RuntimeProgressKind.StepCompleted
+  - Cress.Execution.RuntimeProgressKind.StepStarted
+  langs:
+  - csharp
+  - vb
+  name: RuntimeProgressKind
+  nameWithType: RuntimeProgressKind
+  fullName: Cress.Execution.RuntimeProgressKind
+  type: Enum
+  source:
+    remote:
+      path: src/Cress.Execution/RuntimeProgressUpdate.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: RuntimeProgressKind
+    path: ../src/Cress.Execution/RuntimeProgressUpdate.cs
+    startLine: 4
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Execution
+  syntax:
+    content: public enum RuntimeProgressKind
+    content.vb: Public Enum RuntimeProgressKind
+- uid: Cress.Execution.RuntimeProgressKind.RunStarted
+  commentId: F:Cress.Execution.RuntimeProgressKind.RunStarted
+  id: RunStarted
+  parent: Cress.Execution.RuntimeProgressKind
+  langs:
+  - csharp
+  - vb
+  name: RunStarted
+  nameWithType: RuntimeProgressKind.RunStarted
+  fullName: Cress.Execution.RuntimeProgressKind.RunStarted
+  type: Field
+  source:
+    remote:
+      path: src/Cress.Execution/RuntimeProgressUpdate.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: RunStarted
+    path: ../src/Cress.Execution/RuntimeProgressUpdate.cs
+    startLine: 6
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Execution
+  syntax:
+    content: RunStarted = 0
+    return:
+      type: Cress.Execution.RuntimeProgressKind
+- uid: Cress.Execution.RuntimeProgressKind.FlowStarted
+  commentId: F:Cress.Execution.RuntimeProgressKind.FlowStarted
+  id: FlowStarted
+  parent: Cress.Execution.RuntimeProgressKind
+  langs:
+  - csharp
+  - vb
+  name: FlowStarted
+  nameWithType: RuntimeProgressKind.FlowStarted
+  fullName: Cress.Execution.RuntimeProgressKind.FlowStarted
+  type: Field
+  source:
+    remote:
+      path: src/Cress.Execution/RuntimeProgressUpdate.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: FlowStarted
+    path: ../src/Cress.Execution/RuntimeProgressUpdate.cs
+    startLine: 7
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Execution
+  syntax:
+    content: FlowStarted = 1
+    return:
+      type: Cress.Execution.RuntimeProgressKind
+- uid: Cress.Execution.RuntimeProgressKind.StepStarted
+  commentId: F:Cress.Execution.RuntimeProgressKind.StepStarted
+  id: StepStarted
+  parent: Cress.Execution.RuntimeProgressKind
+  langs:
+  - csharp
+  - vb
+  name: StepStarted
+  nameWithType: RuntimeProgressKind.StepStarted
+  fullName: Cress.Execution.RuntimeProgressKind.StepStarted
+  type: Field
+  source:
+    remote:
+      path: src/Cress.Execution/RuntimeProgressUpdate.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: StepStarted
+    path: ../src/Cress.Execution/RuntimeProgressUpdate.cs
+    startLine: 8
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Execution
+  syntax:
+    content: StepStarted = 2
+    return:
+      type: Cress.Execution.RuntimeProgressKind
+- uid: Cress.Execution.RuntimeProgressKind.StepCompleted
+  commentId: F:Cress.Execution.RuntimeProgressKind.StepCompleted
+  id: StepCompleted
+  parent: Cress.Execution.RuntimeProgressKind
+  langs:
+  - csharp
+  - vb
+  name: StepCompleted
+  nameWithType: RuntimeProgressKind.StepCompleted
+  fullName: Cress.Execution.RuntimeProgressKind.StepCompleted
+  type: Field
+  source:
+    remote:
+      path: src/Cress.Execution/RuntimeProgressUpdate.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: StepCompleted
+    path: ../src/Cress.Execution/RuntimeProgressUpdate.cs
+    startLine: 9
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Execution
+  syntax:
+    content: StepCompleted = 3
+    return:
+      type: Cress.Execution.RuntimeProgressKind
+- uid: Cress.Execution.RuntimeProgressKind.Log
+  commentId: F:Cress.Execution.RuntimeProgressKind.Log
+  id: Log
+  parent: Cress.Execution.RuntimeProgressKind
+  langs:
+  - csharp
+  - vb
+  name: Log
+  nameWithType: RuntimeProgressKind.Log
+  fullName: Cress.Execution.RuntimeProgressKind.Log
+  type: Field
+  source:
+    remote:
+      path: src/Cress.Execution/RuntimeProgressUpdate.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Log
+    path: ../src/Cress.Execution/RuntimeProgressUpdate.cs
+    startLine: 10
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Execution
+  syntax:
+    content: Log = 4
+    return:
+      type: Cress.Execution.RuntimeProgressKind
+- uid: Cress.Execution.RuntimeProgressKind.FlowCompleted
+  commentId: F:Cress.Execution.RuntimeProgressKind.FlowCompleted
+  id: FlowCompleted
+  parent: Cress.Execution.RuntimeProgressKind
+  langs:
+  - csharp
+  - vb
+  name: FlowCompleted
+  nameWithType: RuntimeProgressKind.FlowCompleted
+  fullName: Cress.Execution.RuntimeProgressKind.FlowCompleted
+  type: Field
+  source:
+    remote:
+      path: src/Cress.Execution/RuntimeProgressUpdate.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: FlowCompleted
+    path: ../src/Cress.Execution/RuntimeProgressUpdate.cs
+    startLine: 11
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Execution
+  syntax:
+    content: FlowCompleted = 5
+    return:
+      type: Cress.Execution.RuntimeProgressKind
+- uid: Cress.Execution.RuntimeProgressKind.RunCompleted
+  commentId: F:Cress.Execution.RuntimeProgressKind.RunCompleted
+  id: RunCompleted
+  parent: Cress.Execution.RuntimeProgressKind
+  langs:
+  - csharp
+  - vb
+  name: RunCompleted
+  nameWithType: RuntimeProgressKind.RunCompleted
+  fullName: Cress.Execution.RuntimeProgressKind.RunCompleted
+  type: Field
+  source:
+    remote:
+      path: src/Cress.Execution/RuntimeProgressUpdate.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: RunCompleted
+    path: ../src/Cress.Execution/RuntimeProgressUpdate.cs
+    startLine: 12
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Execution
+  syntax:
+    content: RunCompleted = 6
+    return:
+      type: Cress.Execution.RuntimeProgressKind
+references:
+- uid: Cress.Execution
+  commentId: N:Cress.Execution
+  href: Cress.html
+  name: Cress.Execution
+  nameWithType: Cress.Execution
+  fullName: Cress.Execution
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Execution
+    name: Execution
+    href: Cress.Execution.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Execution
+    name: Execution
+    href: Cress.Execution.html
+- uid: Cress.Execution.RuntimeProgressKind
+  commentId: T:Cress.Execution.RuntimeProgressKind
+  parent: Cress.Execution
+  href: Cress.Execution.RuntimeProgressKind.html
+  name: RuntimeProgressKind
+  nameWithType: RuntimeProgressKind
+  fullName: Cress.Execution.RuntimeProgressKind

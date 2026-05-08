@@ -1,0 +1,30 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Gherkin
+  commentId: N:Cress.Gherkin
+  id: Cress.Gherkin
+  children:
+  - Cress.Gherkin.FlowToGherkinConverter
+  - Cress.Gherkin.GherkinIngester
+  langs:
+  - csharp
+  - vb
+  name: Cress.Gherkin
+  nameWithType: Cress.Gherkin
+  fullName: Cress.Gherkin
+  type: Namespace
+  assemblies:
+  - Cress.Gherkin
+references:
+- uid: Cress.Gherkin.FlowToGherkinConverter
+  commentId: T:Cress.Gherkin.FlowToGherkinConverter
+  href: Cress.Gherkin.FlowToGherkinConverter.html
+  name: FlowToGherkinConverter
+  nameWithType: FlowToGherkinConverter
+  fullName: Cress.Gherkin.FlowToGherkinConverter
+- uid: Cress.Gherkin.GherkinIngester
+  commentId: T:Cress.Gherkin.GherkinIngester
+  href: Cress.Gherkin.GherkinIngester.html
+  name: GherkinIngester
+  nameWithType: GherkinIngester
+  fullName: Cress.Gherkin.GherkinIngester

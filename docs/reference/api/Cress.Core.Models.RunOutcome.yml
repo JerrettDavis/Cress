@@ -1,0 +1,201 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Core.Models.RunOutcome
+  commentId: T:Cress.Core.Models.RunOutcome
+  id: RunOutcome
+  parent: Cress.Core.Models
+  children:
+  - Cress.Core.Models.RunOutcome.Blocked
+  - Cress.Core.Models.RunOutcome.Errored
+  - Cress.Core.Models.RunOutcome.Failed
+  - Cress.Core.Models.RunOutcome.Passed
+  - Cress.Core.Models.RunOutcome.Skipped
+  langs:
+  - csharp
+  - vb
+  name: RunOutcome
+  nameWithType: RunOutcome
+  fullName: Cress.Core.Models.RunOutcome
+  type: Enum
+  source:
+    remote:
+      path: src/Cress.Core/Models/ExecutionModels.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: RunOutcome
+    path: ../src/Cress.Core/Models/ExecutionModels.cs
+    startLine: 2
+  assemblies:
+  - Cress.Core
+  namespace: Cress.Core.Models
+  syntax:
+    content: public enum RunOutcome
+    content.vb: Public Enum RunOutcome
+- uid: Cress.Core.Models.RunOutcome.Passed
+  commentId: F:Cress.Core.Models.RunOutcome.Passed
+  id: Passed
+  parent: Cress.Core.Models.RunOutcome
+  langs:
+  - csharp
+  - vb
+  name: Passed
+  nameWithType: RunOutcome.Passed
+  fullName: Cress.Core.Models.RunOutcome.Passed
+  type: Field
+  source:
+    remote:
+      path: src/Cress.Core/Models/ExecutionModels.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Passed
+    path: ../src/Cress.Core/Models/ExecutionModels.cs
+    startLine: 4
+  assemblies:
+  - Cress.Core
+  namespace: Cress.Core.Models
+  syntax:
+    content: Passed = 0
+    return:
+      type: Cress.Core.Models.RunOutcome
+- uid: Cress.Core.Models.RunOutcome.Failed
+  commentId: F:Cress.Core.Models.RunOutcome.Failed
+  id: Failed
+  parent: Cress.Core.Models.RunOutcome
+  langs:
+  - csharp
+  - vb
+  name: Failed
+  nameWithType: RunOutcome.Failed
+  fullName: Cress.Core.Models.RunOutcome.Failed
+  type: Field
+  source:
+    remote:
+      path: src/Cress.Core/Models/ExecutionModels.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Failed
+    path: ../src/Cress.Core/Models/ExecutionModels.cs
+    startLine: 5
+  assemblies:
+  - Cress.Core
+  namespace: Cress.Core.Models
+  syntax:
+    content: Failed = 1
+    return:
+      type: Cress.Core.Models.RunOutcome
+- uid: Cress.Core.Models.RunOutcome.Skipped
+  commentId: F:Cress.Core.Models.RunOutcome.Skipped
+  id: Skipped
+  parent: Cress.Core.Models.RunOutcome
+  langs:
+  - csharp
+  - vb
+  name: Skipped
+  nameWithType: RunOutcome.Skipped
+  fullName: Cress.Core.Models.RunOutcome.Skipped
+  type: Field
+  source:
+    remote:
+      path: src/Cress.Core/Models/ExecutionModels.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Skipped
+    path: ../src/Cress.Core/Models/ExecutionModels.cs
+    startLine: 6
+  assemblies:
+  - Cress.Core
+  namespace: Cress.Core.Models
+  syntax:
+    content: Skipped = 2
+    return:
+      type: Cress.Core.Models.RunOutcome
+- uid: Cress.Core.Models.RunOutcome.Blocked
+  commentId: F:Cress.Core.Models.RunOutcome.Blocked
+  id: Blocked
+  parent: Cress.Core.Models.RunOutcome
+  langs:
+  - csharp
+  - vb
+  name: Blocked
+  nameWithType: RunOutcome.Blocked
+  fullName: Cress.Core.Models.RunOutcome.Blocked
+  type: Field
+  source:
+    remote:
+      path: src/Cress.Core/Models/ExecutionModels.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Blocked
+    path: ../src/Cress.Core/Models/ExecutionModels.cs
+    startLine: 7
+  assemblies:
+  - Cress.Core
+  namespace: Cress.Core.Models
+  syntax:
+    content: Blocked = 3
+    return:
+      type: Cress.Core.Models.RunOutcome
+- uid: Cress.Core.Models.RunOutcome.Errored
+  commentId: F:Cress.Core.Models.RunOutcome.Errored
+  id: Errored
+  parent: Cress.Core.Models.RunOutcome
+  langs:
+  - csharp
+  - vb
+  name: Errored
+  nameWithType: RunOutcome.Errored
+  fullName: Cress.Core.Models.RunOutcome.Errored
+  type: Field
+  source:
+    remote:
+      path: src/Cress.Core/Models/ExecutionModels.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Errored
+    path: ../src/Cress.Core/Models/ExecutionModels.cs
+    startLine: 8
+  assemblies:
+  - Cress.Core
+  namespace: Cress.Core.Models
+  syntax:
+    content: Errored = 4
+    return:
+      type: Cress.Core.Models.RunOutcome
+references:
+- uid: Cress.Core.Models
+  commentId: N:Cress.Core.Models
+  href: Cress.html
+  name: Cress.Core.Models
+  nameWithType: Cress.Core.Models
+  fullName: Cress.Core.Models
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Core
+    name: Core
+    href: Cress.Core.html
+  - name: .
+  - uid: Cress.Core.Models
+    name: Models
+    href: Cress.Core.Models.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Core
+    name: Core
+    href: Cress.Core.html
+  - name: .
+  - uid: Cress.Core.Models
+    name: Models
+    href: Cress.Core.Models.html
+- uid: Cress.Core.Models.RunOutcome
+  commentId: T:Cress.Core.Models.RunOutcome
+  parent: Cress.Core.Models
+  href: Cress.Core.Models.RunOutcome.html
+  name: RunOutcome
+  nameWithType: RunOutcome
+  fullName: Cress.Core.Models.RunOutcome

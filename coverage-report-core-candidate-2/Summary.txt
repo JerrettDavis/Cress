@@ -1,0 +1,130 @@
+Summary
+  Generated on: 5/7/2026 - 9:25:49 PM
+  Coverage date: 5/7/2026 - 9:11:51 PM - 5/7/2026 - 9:12:02 PM
+  Parser: MultiReport (10x Cobertura)
+  Assemblies: 7
+  Classes: 96
+  Files: 34
+  Line coverage: 89.4%
+  Covered lines: 2978
+  Uncovered lines: 353
+  Coverable lines: 3331
+  Total lines: 5092
+  Branch coverage: 72.8% (866 of 1188)
+  Covered branches: 866
+  Total branches: 1188
+  Method coverage: 91.4% (656 of 717)
+  Full method coverage: 84.2% (604 of 717)
+  Covered methods: 656
+  Fully covered methods: 604
+  Total methods: 717
+
+Cress.Core                                                                                                                     93.1%
+  Cress.Core.Models.AcceptanceCriterion                                                                                         100%
+  Cress.Core.Models.ArtifactIndex                                                                                               100%
+  Cress.Core.Models.CressCapability                                                                                             100%
+  Cress.Core.Models.CressConfig                                                                                                 100%
+  Cress.Core.Models.CressFlow                                                                                                   100%
+  Cress.Core.Models.DefaultsConfig                                                                                              100%
+  Cress.Core.Models.DriverConfig                                                                                                100%
+  Cress.Core.Models.DriverExecutionResult                                                                                       100%
+  Cress.Core.Models.EffectiveConfig                                                                                             100%
+  Cress.Core.Models.EvidenceArtifact                                                                                            100%
+  Cress.Core.Models.ExecutionPlan                                                                                               100%
+  Cress.Core.Models.FixtureDefinition                                                                                           100%
+  Cress.Core.Models.FixtureManifest                                                                                             100%
+  Cress.Core.Models.FixtureProviderBinding                                                                                        0%
+  Cress.Core.Models.FlakeConfig                                                                                                 100%
+  Cress.Core.Models.FlowAction                                                                                                  100%
+  Cress.Core.Models.FlowExpectation                                                                                             100%
+  Cress.Core.Models.FlowFixtureRef                                                                                              100%
+  Cress.Core.Models.FlowRunResult                                                                                               100%
+  Cress.Core.Models.NormalizedExecutable                                                                                        100%
+  Cress.Core.Models.NormalizedFixture                                                                                           100%
+  Cress.Core.Models.NormalizedFlow                                                                                              100%
+  Cress.Core.Models.PathsConfig                                                                                                 100%
+  Cress.Core.Models.PlanAction                                                                                                  100%
+  Cress.Core.Models.PlanCollection                                                                                             66.6%
+  Cress.Core.Models.PluginsConfig                                                                                               100%
+  Cress.Core.Models.ProjectConfig                                                                                               100%
+  Cress.Core.Models.ResolvedFixture                                                                                             100%
+  Cress.Core.Models.RunInvocation                                                                                               100%
+  Cress.Core.Models.RunMetadata                                                                                                 100%
+  Cress.Core.Models.RunOptions                                                                                                 92.3%
+  Cress.Core.Models.RunResult                                                                                                   100%
+  Cress.Core.Models.SourceReference                                                                                             100%
+  Cress.Core.Models.StepContractField                                                                                          66.6%
+  Cress.Core.Models.StepDefinition                                                                                             53.3%
+  Cress.Core.Models.StepImplementationBinding                                                                                   100%
+  Cress.Core.Models.StepManifest                                                                                                100%
+  Cress.Core.Models.StepRunResult                                                                                               100%
+  Cress.Core.Models.TraceabilityInfo                                                                                              0%
+
+Cress.Execution                                                                                                                89.2%
+  Cress.Execution.Drivers.PlaywrightRuntimeDriver                                                                              97.1%
+  Cress.Execution.DriverSessionStartContext                                                                                     100%
+  Cress.Execution.EvidenceStore                                                                                                85.7%
+  Cress.Execution.ExecutionJson                                                                                                 100%
+  Cress.Execution.FlowExecutionContext                                                                                          100%
+  Cress.Execution.GeneratedStubSet                                                                                              100%
+  Cress.Execution.PlanGenerator                                                                                                84.8%
+  Cress.Execution.ReportGenerator                                                                                              91.1%
+  Cress.Execution.RunResultRepository                                                                                          83.3%
+  Cress.Execution.RuntimeOrchestrator                                                                                          80.3%
+  Cress.Execution.RuntimeProgressUpdate                                                                                         100%
+  Cress.Execution.ServiceCollectionExtensions                                                                                   100%
+  Cress.Execution.StepStubGenerator                                                                                            86.8%
+  Cress.Execution.StoredRunResult                                                                                               100%
+  Cress.Studio.Services                                                                                                        92.6%
+  Cress.Studio.Services.<RunMetricsService>F6C2A98E2AB875B5471B4C4847244FFA822EF4B2A6E53C438550C61F809BB66D6__TupleKeyHelper    100%
+  Cress.Studio.Services.FlowMetrics                                                                                            83.3%
+  Cress.Studio.Services.MetricsOptions                                                                                          100%
+  Cress.Studio.Services.RunMetrics                                                                                              100%
+  Cress.Studio.Services.RunMetricsService                                                                                      99.3%
+  Cress.Studio.Services.StepInstability                                                                                         100%
+  Cress.Studio.Services.StepMetrics                                                                                             100%
+  Cress.Studio.Services.StudioEmbeddedRunnerNode                                                                               81.3%
+  Cress.Studio.Services.StudioFlowHealthItem                                                                                    100%
+  Cress.Studio.Services.StudioRecentActivityItem                                                                                100%
+  Cress.Studio.Services.StudioRunComparison                                                                                     100%
+  Cress.Studio.Services.StudioRunComparisonItem                                                                                 100%
+  Cress.Studio.Services.StudioRunInsights                                                                                       100%
+  Cress.Studio.Services.StudioRunInsightsService                                                                               92.8%
+  Cress.Studio.Services.StudioRunnerDispatchRequest                                                                            92.8%
+  Cress.Studio.Services.StudioRunnerDispatchResult                                                                               50%
+  Cress.Studio.Services.StudioRunnerNodeSnapshot                                                                                100%
+  Cress.Studio.Services.StudioRunnerService                                                                                    84.6%
+  Cress.Studio.Services.StudioRuntimeRunnerExecutor                                                                              50%
+  Cress.Studio.Services.SuiteMetrics                                                                                            100%
+  Cress.Studio.Services.TrendPoint                                                                                               80%
+
+Cress.Exporters                                                                                                                93.4%
+  Cress.Exporters.TestFrameworks.DotNetTestExporterSupport                                                                       90%
+  Cress.Exporters.TestFrameworks.DotNetTestExportOptions                                                                        100%
+  Cress.Exporters.TestFrameworks.MsTestExporter                                                                                92.8%
+  Cress.Exporters.TestFrameworks.NUnitExporter                                                                                 92.8%
+  Cress.Exporters.TestFrameworks.XunitExporter                                                                                 96.2%
+
+Cress.Gherkin                                                                                                                  93.7%
+  Cress.Gherkin.FlowToGherkinConverter                                                                                           84%
+  Cress.Gherkin.GherkinIngester                                                                                                93.6%
+  Cress.Gherkin.Phrases.PhraseLibrary                                                                                          98.9%
+  Cress.Gherkin.Phrases.StepPhrase                                                                                              100%
+
+Cress.Importers                                                                                                                87.7%
+  Cress.Importers.Playwright.PlaywrightCodegenImporter                                                                         87.3%
+  Cress.Importers.Postman.PostmanImporter                                                                                      88.4%
+
+Cress.Sdk                                                                                                                        50%
+  Cress.Sdk.FixtureExecutionContext                                                                                               0%
+  Cress.Sdk.FixtureExecutionResult                                                                                                0%
+  Cress.Sdk.FixtureProviderRegistration                                                                                           0%
+  Cress.Sdk.ICressPluginModule                                                                                                    0%
+  Cress.Sdk.NullCressLogger                                                                                                      25%
+  Cress.Sdk.NullDriverAccessor                                                                                                   25%
+  Cress.Sdk.StepExecutionContext                                                                                               92.3%
+  Cress.Sdk.StepExecutionResult                                                                                                 100%
+  Cress.Sdk.StepHandlerRegistration                                                                                             100%
+
+Cress.ServiceDefaults                                                                                                          95.5%
+  Cress.ServiceDefaults.Extensions                                                                                             95.5%

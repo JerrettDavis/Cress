@@ -1,0 +1,716 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Studio.Services.StudioRunnerDispatchRequest
+  commentId: T:Cress.Studio.Services.StudioRunnerDispatchRequest
+  id: StudioRunnerDispatchRequest
+  parent: Cress.Studio.Services
+  children:
+  - Cress.Studio.Services.StudioRunnerDispatchRequest.#ctor(System.String,System.String,Cress.Core.Models.RunOptions,System.String,System.String,System.String)
+  - Cress.Studio.Services.StudioRunnerDispatchRequest.Create(System.String,System.String,Cress.Core.Models.RunOptions,System.String,System.String)
+  - Cress.Studio.Services.StudioRunnerDispatchRequest.DispatchId
+  - Cress.Studio.Services.StudioRunnerDispatchRequest.NodeId
+  - Cress.Studio.Services.StudioRunnerDispatchRequest.Options
+  - Cress.Studio.Services.StudioRunnerDispatchRequest.ProjectRoot
+  - Cress.Studio.Services.StudioRunnerDispatchRequest.RequestedBy
+  - Cress.Studio.Services.StudioRunnerDispatchRequest.RequestedFrom
+  langs:
+  - csharp
+  - vb
+  name: StudioRunnerDispatchRequest
+  nameWithType: StudioRunnerDispatchRequest
+  fullName: Cress.Studio.Services.StudioRunnerDispatchRequest
+  type: Class
+  source:
+    remote:
+      path: src/Cress.Execution/StudioRunnerService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: StudioRunnerDispatchRequest
+    path: ../src/Cress.Execution/StudioRunnerService.cs
+    startLine: 229
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Studio.Services
+  syntax:
+    content: 'public sealed record StudioRunnerDispatchRequest : IEquatable<StudioRunnerDispatchRequest>'
+    content.vb: Public NotInheritable Class StudioRunnerDispatchRequest Implements IEquatable(Of StudioRunnerDispatchRequest)
+  inheritance:
+  - System.Object
+  implements:
+  - System.IEquatable{Cress.Studio.Services.StudioRunnerDispatchRequest}
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Cress.Studio.Services.StudioRunnerDispatchRequest.#ctor(System.String,System.String,Cress.Core.Models.RunOptions,System.String,System.String,System.String)
+  commentId: M:Cress.Studio.Services.StudioRunnerDispatchRequest.#ctor(System.String,System.String,Cress.Core.Models.RunOptions,System.String,System.String,System.String)
+  id: '#ctor(System.String,System.String,Cress.Core.Models.RunOptions,System.String,System.String,System.String)'
+  parent: Cress.Studio.Services.StudioRunnerDispatchRequest
+  langs:
+  - csharp
+  - vb
+  name: StudioRunnerDispatchRequest(string, string, RunOptions, string, string, string)
+  nameWithType: StudioRunnerDispatchRequest.StudioRunnerDispatchRequest(string, string, RunOptions, string, string, string)
+  fullName: Cress.Studio.Services.StudioRunnerDispatchRequest.StudioRunnerDispatchRequest(string, string, Cress.Core.Models.RunOptions, string, string, string)
+  type: Constructor
+  source:
+    remote:
+      path: src/Cress.Execution/StudioRunnerService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: .ctor
+    path: ../src/Cress.Execution/StudioRunnerService.cs
+    startLine: 229
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Studio.Services
+  syntax:
+    content: public StudioRunnerDispatchRequest(string NodeId, string ProjectRoot, RunOptions Options, string DispatchId, string RequestedBy, string RequestedFrom)
+    parameters:
+    - id: NodeId
+      type: System.String
+    - id: ProjectRoot
+      type: System.String
+    - id: Options
+      type: Cress.Core.Models.RunOptions
+    - id: DispatchId
+      type: System.String
+    - id: RequestedBy
+      type: System.String
+    - id: RequestedFrom
+      type: System.String
+    content.vb: Public Sub New(NodeId As String, ProjectRoot As String, Options As RunOptions, DispatchId As String, RequestedBy As String, RequestedFrom As String)
+  overload: Cress.Studio.Services.StudioRunnerDispatchRequest.#ctor*
+  nameWithType.vb: StudioRunnerDispatchRequest.New(String, String, RunOptions, String, String, String)
+  fullName.vb: Cress.Studio.Services.StudioRunnerDispatchRequest.New(String, String, Cress.Core.Models.RunOptions, String, String, String)
+  name.vb: New(String, String, RunOptions, String, String, String)
+- uid: Cress.Studio.Services.StudioRunnerDispatchRequest.NodeId
+  commentId: P:Cress.Studio.Services.StudioRunnerDispatchRequest.NodeId
+  id: NodeId
+  parent: Cress.Studio.Services.StudioRunnerDispatchRequest
+  langs:
+  - csharp
+  - vb
+  name: NodeId
+  nameWithType: StudioRunnerDispatchRequest.NodeId
+  fullName: Cress.Studio.Services.StudioRunnerDispatchRequest.NodeId
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Execution/StudioRunnerService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: NodeId
+    path: ../src/Cress.Execution/StudioRunnerService.cs
+    startLine: 230
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Studio.Services
+  syntax:
+    content: public string NodeId { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property NodeId As String
+  overload: Cress.Studio.Services.StudioRunnerDispatchRequest.NodeId*
+- uid: Cress.Studio.Services.StudioRunnerDispatchRequest.ProjectRoot
+  commentId: P:Cress.Studio.Services.StudioRunnerDispatchRequest.ProjectRoot
+  id: ProjectRoot
+  parent: Cress.Studio.Services.StudioRunnerDispatchRequest
+  langs:
+  - csharp
+  - vb
+  name: ProjectRoot
+  nameWithType: StudioRunnerDispatchRequest.ProjectRoot
+  fullName: Cress.Studio.Services.StudioRunnerDispatchRequest.ProjectRoot
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Execution/StudioRunnerService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: ProjectRoot
+    path: ../src/Cress.Execution/StudioRunnerService.cs
+    startLine: 231
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Studio.Services
+  syntax:
+    content: public string ProjectRoot { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property ProjectRoot As String
+  overload: Cress.Studio.Services.StudioRunnerDispatchRequest.ProjectRoot*
+- uid: Cress.Studio.Services.StudioRunnerDispatchRequest.Options
+  commentId: P:Cress.Studio.Services.StudioRunnerDispatchRequest.Options
+  id: Options
+  parent: Cress.Studio.Services.StudioRunnerDispatchRequest
+  langs:
+  - csharp
+  - vb
+  name: Options
+  nameWithType: StudioRunnerDispatchRequest.Options
+  fullName: Cress.Studio.Services.StudioRunnerDispatchRequest.Options
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Execution/StudioRunnerService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Options
+    path: ../src/Cress.Execution/StudioRunnerService.cs
+    startLine: 232
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Studio.Services
+  syntax:
+    content: public RunOptions Options { get; init; }
+    parameters: []
+    return:
+      type: Cress.Core.Models.RunOptions
+    content.vb: Public Property Options As RunOptions
+  overload: Cress.Studio.Services.StudioRunnerDispatchRequest.Options*
+- uid: Cress.Studio.Services.StudioRunnerDispatchRequest.DispatchId
+  commentId: P:Cress.Studio.Services.StudioRunnerDispatchRequest.DispatchId
+  id: DispatchId
+  parent: Cress.Studio.Services.StudioRunnerDispatchRequest
+  langs:
+  - csharp
+  - vb
+  name: DispatchId
+  nameWithType: StudioRunnerDispatchRequest.DispatchId
+  fullName: Cress.Studio.Services.StudioRunnerDispatchRequest.DispatchId
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Execution/StudioRunnerService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: DispatchId
+    path: ../src/Cress.Execution/StudioRunnerService.cs
+    startLine: 233
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Studio.Services
+  syntax:
+    content: public string DispatchId { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property DispatchId As String
+  overload: Cress.Studio.Services.StudioRunnerDispatchRequest.DispatchId*
+- uid: Cress.Studio.Services.StudioRunnerDispatchRequest.RequestedBy
+  commentId: P:Cress.Studio.Services.StudioRunnerDispatchRequest.RequestedBy
+  id: RequestedBy
+  parent: Cress.Studio.Services.StudioRunnerDispatchRequest
+  langs:
+  - csharp
+  - vb
+  name: RequestedBy
+  nameWithType: StudioRunnerDispatchRequest.RequestedBy
+  fullName: Cress.Studio.Services.StudioRunnerDispatchRequest.RequestedBy
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Execution/StudioRunnerService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: RequestedBy
+    path: ../src/Cress.Execution/StudioRunnerService.cs
+    startLine: 234
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Studio.Services
+  syntax:
+    content: public string RequestedBy { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property RequestedBy As String
+  overload: Cress.Studio.Services.StudioRunnerDispatchRequest.RequestedBy*
+- uid: Cress.Studio.Services.StudioRunnerDispatchRequest.RequestedFrom
+  commentId: P:Cress.Studio.Services.StudioRunnerDispatchRequest.RequestedFrom
+  id: RequestedFrom
+  parent: Cress.Studio.Services.StudioRunnerDispatchRequest
+  langs:
+  - csharp
+  - vb
+  name: RequestedFrom
+  nameWithType: StudioRunnerDispatchRequest.RequestedFrom
+  fullName: Cress.Studio.Services.StudioRunnerDispatchRequest.RequestedFrom
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Execution/StudioRunnerService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: RequestedFrom
+    path: ../src/Cress.Execution/StudioRunnerService.cs
+    startLine: 235
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Studio.Services
+  syntax:
+    content: public string RequestedFrom { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property RequestedFrom As String
+  overload: Cress.Studio.Services.StudioRunnerDispatchRequest.RequestedFrom*
+- uid: Cress.Studio.Services.StudioRunnerDispatchRequest.Create(System.String,System.String,Cress.Core.Models.RunOptions,System.String,System.String)
+  commentId: M:Cress.Studio.Services.StudioRunnerDispatchRequest.Create(System.String,System.String,Cress.Core.Models.RunOptions,System.String,System.String)
+  id: Create(System.String,System.String,Cress.Core.Models.RunOptions,System.String,System.String)
+  parent: Cress.Studio.Services.StudioRunnerDispatchRequest
+  langs:
+  - csharp
+  - vb
+  name: Create(string, string, RunOptions, string, string)
+  nameWithType: StudioRunnerDispatchRequest.Create(string, string, RunOptions, string, string)
+  fullName: Cress.Studio.Services.StudioRunnerDispatchRequest.Create(string, string, Cress.Core.Models.RunOptions, string, string)
+  type: Method
+  source:
+    remote:
+      path: src/Cress.Execution/StudioRunnerService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Create
+    path: ../src/Cress.Execution/StudioRunnerService.cs
+    startLine: 237
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Studio.Services
+  syntax:
+    content: public static StudioRunnerDispatchRequest Create(string nodeId, string projectRoot, RunOptions options, string requestedBy, string requestedFrom)
+    parameters:
+    - id: nodeId
+      type: System.String
+    - id: projectRoot
+      type: System.String
+    - id: options
+      type: Cress.Core.Models.RunOptions
+    - id: requestedBy
+      type: System.String
+    - id: requestedFrom
+      type: System.String
+    return:
+      type: Cress.Studio.Services.StudioRunnerDispatchRequest
+    content.vb: Public Shared Function Create(nodeId As String, projectRoot As String, options As RunOptions, requestedBy As String, requestedFrom As String) As StudioRunnerDispatchRequest
+  overload: Cress.Studio.Services.StudioRunnerDispatchRequest.Create*
+  nameWithType.vb: StudioRunnerDispatchRequest.Create(String, String, RunOptions, String, String)
+  fullName.vb: Cress.Studio.Services.StudioRunnerDispatchRequest.Create(String, String, Cress.Core.Models.RunOptions, String, String)
+  name.vb: Create(String, String, RunOptions, String, String)
+references:
+- uid: Cress.Studio.Services
+  commentId: N:Cress.Studio.Services
+  href: Cress.html
+  name: Cress.Studio.Services
+  nameWithType: Cress.Studio.Services
+  fullName: Cress.Studio.Services
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Studio
+    name: Studio
+    href: Cress.Studio.html
+  - name: .
+  - uid: Cress.Studio.Services
+    name: Services
+    href: Cress.Studio.Services.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Studio
+    name: Studio
+    href: Cress.Studio.html
+  - name: .
+  - uid: Cress.Studio.Services
+    name: Services
+    href: Cress.Studio.Services.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.IEquatable{Cress.Studio.Services.StudioRunnerDispatchRequest}
+  commentId: T:System.IEquatable{Cress.Studio.Services.StudioRunnerDispatchRequest}
+  parent: System
+  definition: System.IEquatable`1
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<StudioRunnerDispatchRequest>
+  nameWithType: IEquatable<StudioRunnerDispatchRequest>
+  fullName: System.IEquatable<Cress.Studio.Services.StudioRunnerDispatchRequest>
+  nameWithType.vb: IEquatable(Of StudioRunnerDispatchRequest)
+  fullName.vb: System.IEquatable(Of Cress.Studio.Services.StudioRunnerDispatchRequest)
+  name.vb: IEquatable(Of StudioRunnerDispatchRequest)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - uid: Cress.Studio.Services.StudioRunnerDispatchRequest
+    name: StudioRunnerDispatchRequest
+    href: Cress.Studio.Services.StudioRunnerDispatchRequest.html
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Cress.Studio.Services.StudioRunnerDispatchRequest
+    name: StudioRunnerDispatchRequest
+    href: Cress.Studio.Services.StudioRunnerDispatchRequest.html
+  - name: )
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.IEquatable`1
+  commentId: T:System.IEquatable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<T>
+  nameWithType: IEquatable<T>
+  fullName: System.IEquatable<T>
+  nameWithType.vb: IEquatable(Of T)
+  fullName.vb: System.IEquatable(Of T)
+  name.vb: IEquatable(Of T)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Cress.Studio.Services.StudioRunnerDispatchRequest.#ctor*
+  commentId: Overload:Cress.Studio.Services.StudioRunnerDispatchRequest.#ctor
+  href: Cress.Studio.Services.StudioRunnerDispatchRequest.html#Cress_Studio_Services_StudioRunnerDispatchRequest__ctor_System_String_System_String_Cress_Core_Models_RunOptions_System_String_System_String_System_String_
+  name: StudioRunnerDispatchRequest
+  nameWithType: StudioRunnerDispatchRequest.StudioRunnerDispatchRequest
+  fullName: Cress.Studio.Services.StudioRunnerDispatchRequest.StudioRunnerDispatchRequest
+  nameWithType.vb: StudioRunnerDispatchRequest.New
+  fullName.vb: Cress.Studio.Services.StudioRunnerDispatchRequest.New
+  name.vb: New
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Cress.Core.Models.RunOptions
+  commentId: T:Cress.Core.Models.RunOptions
+  parent: Cress.Core.Models
+  href: Cress.Core.Models.RunOptions.html
+  name: RunOptions
+  nameWithType: RunOptions
+  fullName: Cress.Core.Models.RunOptions
+- uid: Cress.Core.Models
+  commentId: N:Cress.Core.Models
+  href: Cress.html
+  name: Cress.Core.Models
+  nameWithType: Cress.Core.Models
+  fullName: Cress.Core.Models
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Core
+    name: Core
+    href: Cress.Core.html
+  - name: .
+  - uid: Cress.Core.Models
+    name: Models
+    href: Cress.Core.Models.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Core
+    name: Core
+    href: Cress.Core.html
+  - name: .
+  - uid: Cress.Core.Models
+    name: Models
+    href: Cress.Core.Models.html
+- uid: Cress.Studio.Services.StudioRunnerDispatchRequest.NodeId*
+  commentId: Overload:Cress.Studio.Services.StudioRunnerDispatchRequest.NodeId
+  href: Cress.Studio.Services.StudioRunnerDispatchRequest.html#Cress_Studio_Services_StudioRunnerDispatchRequest_NodeId
+  name: NodeId
+  nameWithType: StudioRunnerDispatchRequest.NodeId
+  fullName: Cress.Studio.Services.StudioRunnerDispatchRequest.NodeId
+- uid: Cress.Studio.Services.StudioRunnerDispatchRequest.ProjectRoot*
+  commentId: Overload:Cress.Studio.Services.StudioRunnerDispatchRequest.ProjectRoot
+  href: Cress.Studio.Services.StudioRunnerDispatchRequest.html#Cress_Studio_Services_StudioRunnerDispatchRequest_ProjectRoot
+  name: ProjectRoot
+  nameWithType: StudioRunnerDispatchRequest.ProjectRoot
+  fullName: Cress.Studio.Services.StudioRunnerDispatchRequest.ProjectRoot
+- uid: Cress.Studio.Services.StudioRunnerDispatchRequest.Options*
+  commentId: Overload:Cress.Studio.Services.StudioRunnerDispatchRequest.Options
+  href: Cress.Studio.Services.StudioRunnerDispatchRequest.html#Cress_Studio_Services_StudioRunnerDispatchRequest_Options
+  name: Options
+  nameWithType: StudioRunnerDispatchRequest.Options
+  fullName: Cress.Studio.Services.StudioRunnerDispatchRequest.Options
+- uid: Cress.Studio.Services.StudioRunnerDispatchRequest.DispatchId*
+  commentId: Overload:Cress.Studio.Services.StudioRunnerDispatchRequest.DispatchId
+  href: Cress.Studio.Services.StudioRunnerDispatchRequest.html#Cress_Studio_Services_StudioRunnerDispatchRequest_DispatchId
+  name: DispatchId
+  nameWithType: StudioRunnerDispatchRequest.DispatchId
+  fullName: Cress.Studio.Services.StudioRunnerDispatchRequest.DispatchId
+- uid: Cress.Studio.Services.StudioRunnerDispatchRequest.RequestedBy*
+  commentId: Overload:Cress.Studio.Services.StudioRunnerDispatchRequest.RequestedBy
+  href: Cress.Studio.Services.StudioRunnerDispatchRequest.html#Cress_Studio_Services_StudioRunnerDispatchRequest_RequestedBy
+  name: RequestedBy
+  nameWithType: StudioRunnerDispatchRequest.RequestedBy
+  fullName: Cress.Studio.Services.StudioRunnerDispatchRequest.RequestedBy
+- uid: Cress.Studio.Services.StudioRunnerDispatchRequest.RequestedFrom*
+  commentId: Overload:Cress.Studio.Services.StudioRunnerDispatchRequest.RequestedFrom
+  href: Cress.Studio.Services.StudioRunnerDispatchRequest.html#Cress_Studio_Services_StudioRunnerDispatchRequest_RequestedFrom
+  name: RequestedFrom
+  nameWithType: StudioRunnerDispatchRequest.RequestedFrom
+  fullName: Cress.Studio.Services.StudioRunnerDispatchRequest.RequestedFrom
+- uid: Cress.Studio.Services.StudioRunnerDispatchRequest.Create*
+  commentId: Overload:Cress.Studio.Services.StudioRunnerDispatchRequest.Create
+  href: Cress.Studio.Services.StudioRunnerDispatchRequest.html#Cress_Studio_Services_StudioRunnerDispatchRequest_Create_System_String_System_String_Cress_Core_Models_RunOptions_System_String_System_String_
+  name: Create
+  nameWithType: StudioRunnerDispatchRequest.Create
+  fullName: Cress.Studio.Services.StudioRunnerDispatchRequest.Create
+- uid: Cress.Studio.Services.StudioRunnerDispatchRequest
+  commentId: T:Cress.Studio.Services.StudioRunnerDispatchRequest
+  parent: Cress.Studio.Services
+  href: Cress.Studio.Services.StudioRunnerDispatchRequest.html
+  name: StudioRunnerDispatchRequest
+  nameWithType: StudioRunnerDispatchRequest
+  fullName: Cress.Studio.Services.StudioRunnerDispatchRequest

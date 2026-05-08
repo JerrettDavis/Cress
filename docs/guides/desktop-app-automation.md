@@ -1,6 +1,6 @@
 # Desktop app automation
 
-This walkthrough shows how to author a Windows desktop automation flow with Cress and FlaUI-backed steps.
+This walkthrough shows how to author a Windows desktop automation flow with Cress and Flawright-backed steps.
 
 ## 1. Create a desktop-focused project
 
@@ -18,7 +18,7 @@ drivers:
     enabled: false
   playwright:
     enabled: false
-  flaui:
+  flawright:
     enabled: true
 ```
 
@@ -35,9 +35,9 @@ timeouts:
 evidence:
   mode: full
   screenshots: true
-flaui:
+flawright:
   applicationPath: C:\Path\To\YourDesktopApp.exe
-  windowTitle: Cress FlaUI Test App
+  windowTitle: Cress Flawright Test App
   launchTimeoutMs: 15000
 ```
 
@@ -56,27 +56,37 @@ when:
   - step: desktop.open
   - step: desktop.fill
     with:
-      automationId: NameInput
+      selector: "#NameInput"
       value: Grace Hopper
   - step: desktop.click
     with:
-      automationId: ContinueButton
+      selector: "name:Continue"
 then:
   - expect: desktop.text
     with:
-      automationId: GreetingLabel
+      selector: "#GreetingLabel"
       text: Hello Grace Hopper
   - expect: desktop.window_title
     with:
-      title: Cress FlaUI Test App
+      title: Cress Flawright Test App
 ```
 
 For Windows desktop automation, prefer:
 
-1. `automationId`
-2. `name` plus `controlType`
-3. `label`
-4. `role`
+1. `#AutomationId`
+2. `name:Visible Name`
+3. `role:Button`
+4. `label:Field Label`
+
+The same selector model maps cleanly into natural Gherkin:
+
+```gherkin
+Given the user launches the `Cress.Flawright.TestApp.exe` application
+When the user fills the `#NameInput` element with `Grace Hopper`
+And the user clicks the `name:Continue` element
+Then the `#GreetingLabel` element shows `Hello Grace Hopper`
+And the window title is `Cress Flawright Test App`
+```
 
 ## 5. Refine in Source and push back into the designer
 
@@ -94,13 +104,15 @@ Once a run completes, Cress surfaces screenshots and generated reports alongside
 
 ![Desktop run completed](../images/desktop/run-completed.png)
 
+![Desktop results panel](../images/studio/results-panel.png)
+
 And you can drill into report output directly:
 
 ![Desktop report preview](../images/desktop/report-preview.png)
 
 ## 7. Practical guidance
 
-- Use stable `AutomationId` values in your app whenever possible.
+- Use stable `AutomationId` values in your app whenever possible and expose them through `#AutomationId` selectors.
 - Keep dialogs and startup flows deterministic.
 - Prefer dedicated test accounts, fixtures, and launch switches over brittle “click through setup” flows.
 - Treat the first recorded pass as scaffolding; the durable artifact is the reviewed YAML flow.

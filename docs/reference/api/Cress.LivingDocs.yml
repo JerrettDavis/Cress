@@ -1,0 +1,120 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.LivingDocs
+  commentId: N:Cress.LivingDocs
+  id: Cress.LivingDocs
+  children:
+  - Cress.LivingDocs.DiagnosticEntry
+  - Cress.LivingDocs.DocumentBranding
+  - Cress.LivingDocs.DocumentBuildOptions
+  - Cress.LivingDocs.DocumentBuilder
+  - Cress.LivingDocs.DocumentMeta
+  - Cress.LivingDocs.DocumentModel
+  - Cress.LivingDocs.FlowSummary
+  - Cress.LivingDocs.RunHistoryEntry
+  - Cress.LivingDocs.ScreenshotEvidence
+  - Cress.LivingDocs.SuiteSummary
+  - Cress.LivingDocs.TemplateRenderer
+  langs:
+  - csharp
+  - vb
+  name: Cress.LivingDocs
+  nameWithType: Cress.LivingDocs
+  fullName: Cress.LivingDocs
+  type: Namespace
+  assemblies:
+  - Cress.LivingDocs
+references:
+- uid: Cress.LivingDocs.DocumentBuilder
+  commentId: T:Cress.LivingDocs.DocumentBuilder
+  href: Cress.LivingDocs.DocumentBuilder.html
+  name: DocumentBuilder
+  nameWithType: DocumentBuilder
+  fullName: Cress.LivingDocs.DocumentBuilder
+- uid: Cress.LivingDocs.DocumentBuildOptions
+  commentId: T:Cress.LivingDocs.DocumentBuildOptions
+  parent: Cress.LivingDocs
+  href: Cress.LivingDocs.DocumentBuildOptions.html
+  name: DocumentBuildOptions
+  nameWithType: DocumentBuildOptions
+  fullName: Cress.LivingDocs.DocumentBuildOptions
+- uid: Cress.LivingDocs.DocumentModel
+  commentId: T:Cress.LivingDocs.DocumentModel
+  parent: Cress.LivingDocs
+  href: Cress.LivingDocs.DocumentModel.html
+  name: DocumentModel
+  nameWithType: DocumentModel
+  fullName: Cress.LivingDocs.DocumentModel
+- uid: Cress.LivingDocs.DocumentMeta
+  commentId: T:Cress.LivingDocs.DocumentMeta
+  parent: Cress.LivingDocs
+  href: Cress.LivingDocs.DocumentMeta.html
+  name: DocumentMeta
+  nameWithType: DocumentMeta
+  fullName: Cress.LivingDocs.DocumentMeta
+- uid: Cress.LivingDocs.DocumentBranding
+  commentId: T:Cress.LivingDocs.DocumentBranding
+  parent: Cress.LivingDocs
+  href: Cress.LivingDocs.DocumentBranding.html
+  name: DocumentBranding
+  nameWithType: DocumentBranding
+  fullName: Cress.LivingDocs.DocumentBranding
+- uid: Cress.LivingDocs.SuiteSummary
+  commentId: T:Cress.LivingDocs.SuiteSummary
+  parent: Cress.LivingDocs
+  href: Cress.LivingDocs.SuiteSummary.html
+  name: SuiteSummary
+  nameWithType: SuiteSummary
+  fullName: Cress.LivingDocs.SuiteSummary
+- uid: Cress.LivingDocs.FlowSummary
+  commentId: T:Cress.LivingDocs.FlowSummary
+  href: Cress.LivingDocs.FlowSummary.html
+  name: FlowSummary
+  nameWithType: FlowSummary
+  fullName: Cress.LivingDocs.FlowSummary
+- uid: Cress.LivingDocs.RunHistoryEntry
+  commentId: T:Cress.LivingDocs.RunHistoryEntry
+  href: Cress.LivingDocs.RunHistoryEntry.html
+  name: RunHistoryEntry
+  nameWithType: RunHistoryEntry
+  fullName: Cress.LivingDocs.RunHistoryEntry
+- uid: Cress.LivingDocs.ScreenshotEvidence
+  commentId: T:Cress.LivingDocs.ScreenshotEvidence
+  href: Cress.LivingDocs.ScreenshotEvidence.html
+  name: ScreenshotEvidence
+  nameWithType: ScreenshotEvidence
+  fullName: Cress.LivingDocs.ScreenshotEvidence
+- uid: Cress.LivingDocs.DiagnosticEntry
+  commentId: T:Cress.LivingDocs.DiagnosticEntry
+  href: Cress.LivingDocs.DiagnosticEntry.html
+  name: DiagnosticEntry
+  nameWithType: DiagnosticEntry
+  fullName: Cress.LivingDocs.DiagnosticEntry
+- uid: Cress.LivingDocs.TemplateRenderer
+  commentId: T:Cress.LivingDocs.TemplateRenderer
+  href: Cress.LivingDocs.TemplateRenderer.html
+  name: TemplateRenderer
+  nameWithType: TemplateRenderer
+  fullName: Cress.LivingDocs.TemplateRenderer
+- uid: Cress.LivingDocs
+  commentId: N:Cress.LivingDocs
+  href: Cress.html
+  name: Cress.LivingDocs
+  nameWithType: Cress.LivingDocs
+  fullName: Cress.LivingDocs
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.LivingDocs
+    name: LivingDocs
+    href: Cress.LivingDocs.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.LivingDocs
+    name: LivingDocs
+    href: Cress.LivingDocs.html

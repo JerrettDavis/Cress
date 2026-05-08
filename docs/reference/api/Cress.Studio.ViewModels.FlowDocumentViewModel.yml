@@ -1,0 +1,1005 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Studio.ViewModels.FlowDocumentViewModel
+  commentId: T:Cress.Studio.ViewModels.FlowDocumentViewModel
+  id: FlowDocumentViewModel
+  parent: Cress.Studio.ViewModels
+  children:
+  - Cress.Studio.ViewModels.FlowDocumentViewModel.Actions
+  - Cress.Studio.ViewModels.FlowDocumentViewModel.CapabilityId
+  - Cress.Studio.ViewModels.FlowDocumentViewModel.Expectations
+  - Cress.Studio.ViewModels.FlowDocumentViewModel.FilePath
+  - Cress.Studio.ViewModels.FlowDocumentViewModel.Fixtures
+  - Cress.Studio.ViewModels.FlowDocumentViewModel.FromDocument(Cress.Studio.Services.FlowEditorDocument)
+  - Cress.Studio.ViewModels.FlowDocumentViewModel.Id
+  - Cress.Studio.ViewModels.FlowDocumentViewModel.Name
+  - Cress.Studio.ViewModels.FlowDocumentViewModel.SourceText
+  - Cress.Studio.ViewModels.FlowDocumentViewModel.Status
+  - Cress.Studio.ViewModels.FlowDocumentViewModel.Summary
+  - Cress.Studio.ViewModels.FlowDocumentViewModel.TagsText
+  - Cress.Studio.ViewModels.FlowDocumentViewModel.ToDocument
+  langs:
+  - csharp
+  - vb
+  name: FlowDocumentViewModel
+  nameWithType: FlowDocumentViewModel
+  fullName: Cress.Studio.ViewModels.FlowDocumentViewModel
+  type: Class
+  source:
+    remote:
+      path: src/Cress.Studio.Core/ViewModels/FlowDocumentViewModel.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: FlowDocumentViewModel
+    path: ../src/Cress.Studio.Core/ViewModels/FlowDocumentViewModel.cs
+    startLine: 5
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.ViewModels
+  syntax:
+    content: 'public sealed class FlowDocumentViewModel : ObservableObject, INotifyPropertyChanged'
+    content.vb: Public NotInheritable Class FlowDocumentViewModel Inherits ObservableObject Implements INotifyPropertyChanged
+  inheritance:
+  - System.Object
+  - Cress.Studio.ViewModels.ObservableObject
+  implements:
+  - System.ComponentModel.INotifyPropertyChanged
+  inheritedMembers:
+  - Cress.Studio.ViewModels.ObservableObject.PropertyChanged
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Cress.Studio.ViewModels.FlowDocumentViewModel.FilePath
+  commentId: P:Cress.Studio.ViewModels.FlowDocumentViewModel.FilePath
+  id: FilePath
+  parent: Cress.Studio.ViewModels.FlowDocumentViewModel
+  langs:
+  - csharp
+  - vb
+  name: FilePath
+  nameWithType: FlowDocumentViewModel.FilePath
+  fullName: Cress.Studio.ViewModels.FlowDocumentViewModel.FilePath
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Studio.Core/ViewModels/FlowDocumentViewModel.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: FilePath
+    path: ../src/Cress.Studio.Core/ViewModels/FlowDocumentViewModel.cs
+    startLine: 15
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.ViewModels
+  syntax:
+    content: public string FilePath { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property FilePath As String
+  overload: Cress.Studio.ViewModels.FlowDocumentViewModel.FilePath*
+- uid: Cress.Studio.ViewModels.FlowDocumentViewModel.Id
+  commentId: P:Cress.Studio.ViewModels.FlowDocumentViewModel.Id
+  id: Id
+  parent: Cress.Studio.ViewModels.FlowDocumentViewModel
+  langs:
+  - csharp
+  - vb
+  name: Id
+  nameWithType: FlowDocumentViewModel.Id
+  fullName: Cress.Studio.ViewModels.FlowDocumentViewModel.Id
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Studio.Core/ViewModels/FlowDocumentViewModel.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Id
+    path: ../src/Cress.Studio.Core/ViewModels/FlowDocumentViewModel.cs
+    startLine: 17
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.ViewModels
+  syntax:
+    content: public string Id { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Id As String
+  overload: Cress.Studio.ViewModels.FlowDocumentViewModel.Id*
+- uid: Cress.Studio.ViewModels.FlowDocumentViewModel.Name
+  commentId: P:Cress.Studio.ViewModels.FlowDocumentViewModel.Name
+  id: Name
+  parent: Cress.Studio.ViewModels.FlowDocumentViewModel
+  langs:
+  - csharp
+  - vb
+  name: Name
+  nameWithType: FlowDocumentViewModel.Name
+  fullName: Cress.Studio.ViewModels.FlowDocumentViewModel.Name
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Studio.Core/ViewModels/FlowDocumentViewModel.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Name
+    path: ../src/Cress.Studio.Core/ViewModels/FlowDocumentViewModel.cs
+    startLine: 23
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.ViewModels
+  syntax:
+    content: public string Name { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Name As String
+  overload: Cress.Studio.ViewModels.FlowDocumentViewModel.Name*
+- uid: Cress.Studio.ViewModels.FlowDocumentViewModel.CapabilityId
+  commentId: P:Cress.Studio.ViewModels.FlowDocumentViewModel.CapabilityId
+  id: CapabilityId
+  parent: Cress.Studio.ViewModels.FlowDocumentViewModel
+  langs:
+  - csharp
+  - vb
+  name: CapabilityId
+  nameWithType: FlowDocumentViewModel.CapabilityId
+  fullName: Cress.Studio.ViewModels.FlowDocumentViewModel.CapabilityId
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Studio.Core/ViewModels/FlowDocumentViewModel.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: CapabilityId
+    path: ../src/Cress.Studio.Core/ViewModels/FlowDocumentViewModel.cs
+    startLine: 29
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.ViewModels
+  syntax:
+    content: public string? CapabilityId { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property CapabilityId As String
+  overload: Cress.Studio.ViewModels.FlowDocumentViewModel.CapabilityId*
+- uid: Cress.Studio.ViewModels.FlowDocumentViewModel.Summary
+  commentId: P:Cress.Studio.ViewModels.FlowDocumentViewModel.Summary
+  id: Summary
+  parent: Cress.Studio.ViewModels.FlowDocumentViewModel
+  langs:
+  - csharp
+  - vb
+  name: Summary
+  nameWithType: FlowDocumentViewModel.Summary
+  fullName: Cress.Studio.ViewModels.FlowDocumentViewModel.Summary
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Studio.Core/ViewModels/FlowDocumentViewModel.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Summary
+    path: ../src/Cress.Studio.Core/ViewModels/FlowDocumentViewModel.cs
+    startLine: 35
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.ViewModels
+  syntax:
+    content: public string? Summary { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Summary As String
+  overload: Cress.Studio.ViewModels.FlowDocumentViewModel.Summary*
+- uid: Cress.Studio.ViewModels.FlowDocumentViewModel.Status
+  commentId: P:Cress.Studio.ViewModels.FlowDocumentViewModel.Status
+  id: Status
+  parent: Cress.Studio.ViewModels.FlowDocumentViewModel
+  langs:
+  - csharp
+  - vb
+  name: Status
+  nameWithType: FlowDocumentViewModel.Status
+  fullName: Cress.Studio.ViewModels.FlowDocumentViewModel.Status
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Studio.Core/ViewModels/FlowDocumentViewModel.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Status
+    path: ../src/Cress.Studio.Core/ViewModels/FlowDocumentViewModel.cs
+    startLine: 41
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.ViewModels
+  syntax:
+    content: public string? Status { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Status As String
+  overload: Cress.Studio.ViewModels.FlowDocumentViewModel.Status*
+- uid: Cress.Studio.ViewModels.FlowDocumentViewModel.TagsText
+  commentId: P:Cress.Studio.ViewModels.FlowDocumentViewModel.TagsText
+  id: TagsText
+  parent: Cress.Studio.ViewModels.FlowDocumentViewModel
+  langs:
+  - csharp
+  - vb
+  name: TagsText
+  nameWithType: FlowDocumentViewModel.TagsText
+  fullName: Cress.Studio.ViewModels.FlowDocumentViewModel.TagsText
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Studio.Core/ViewModels/FlowDocumentViewModel.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: TagsText
+    path: ../src/Cress.Studio.Core/ViewModels/FlowDocumentViewModel.cs
+    startLine: 47
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.ViewModels
+  syntax:
+    content: public string TagsText { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property TagsText As String
+  overload: Cress.Studio.ViewModels.FlowDocumentViewModel.TagsText*
+- uid: Cress.Studio.ViewModels.FlowDocumentViewModel.SourceText
+  commentId: P:Cress.Studio.ViewModels.FlowDocumentViewModel.SourceText
+  id: SourceText
+  parent: Cress.Studio.ViewModels.FlowDocumentViewModel
+  langs:
+  - csharp
+  - vb
+  name: SourceText
+  nameWithType: FlowDocumentViewModel.SourceText
+  fullName: Cress.Studio.ViewModels.FlowDocumentViewModel.SourceText
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Studio.Core/ViewModels/FlowDocumentViewModel.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: SourceText
+    path: ../src/Cress.Studio.Core/ViewModels/FlowDocumentViewModel.cs
+    startLine: 53
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.ViewModels
+  syntax:
+    content: public string SourceText { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property SourceText As String
+  overload: Cress.Studio.ViewModels.FlowDocumentViewModel.SourceText*
+- uid: Cress.Studio.ViewModels.FlowDocumentViewModel.Fixtures
+  commentId: P:Cress.Studio.ViewModels.FlowDocumentViewModel.Fixtures
+  id: Fixtures
+  parent: Cress.Studio.ViewModels.FlowDocumentViewModel
+  langs:
+  - csharp
+  - vb
+  name: Fixtures
+  nameWithType: FlowDocumentViewModel.Fixtures
+  fullName: Cress.Studio.ViewModels.FlowDocumentViewModel.Fixtures
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Studio.Core/ViewModels/FlowDocumentViewModel.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Fixtures
+    path: ../src/Cress.Studio.Core/ViewModels/FlowDocumentViewModel.cs
+    startLine: 59
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.ViewModels
+  syntax:
+    content: public ObservableCollection<FlowDocumentViewModel.EditableFixtureRow> Fixtures { get; }
+    parameters: []
+    return:
+      type: System.Collections.ObjectModel.ObservableCollection{Cress.Studio.ViewModels.FlowDocumentViewModel.EditableFixtureRow}
+    content.vb: Public ReadOnly Property Fixtures As ObservableCollection(Of FlowDocumentViewModel.EditableFixtureRow)
+  overload: Cress.Studio.ViewModels.FlowDocumentViewModel.Fixtures*
+- uid: Cress.Studio.ViewModels.FlowDocumentViewModel.Actions
+  commentId: P:Cress.Studio.ViewModels.FlowDocumentViewModel.Actions
+  id: Actions
+  parent: Cress.Studio.ViewModels.FlowDocumentViewModel
+  langs:
+  - csharp
+  - vb
+  name: Actions
+  nameWithType: FlowDocumentViewModel.Actions
+  fullName: Cress.Studio.ViewModels.FlowDocumentViewModel.Actions
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Studio.Core/ViewModels/FlowDocumentViewModel.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Actions
+    path: ../src/Cress.Studio.Core/ViewModels/FlowDocumentViewModel.cs
+    startLine: 60
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.ViewModels
+  syntax:
+    content: public ObservableCollection<FlowDocumentViewModel.EditableExecutableRow> Actions { get; }
+    parameters: []
+    return:
+      type: System.Collections.ObjectModel.ObservableCollection{Cress.Studio.ViewModels.FlowDocumentViewModel.EditableExecutableRow}
+    content.vb: Public ReadOnly Property Actions As ObservableCollection(Of FlowDocumentViewModel.EditableExecutableRow)
+  overload: Cress.Studio.ViewModels.FlowDocumentViewModel.Actions*
+- uid: Cress.Studio.ViewModels.FlowDocumentViewModel.Expectations
+  commentId: P:Cress.Studio.ViewModels.FlowDocumentViewModel.Expectations
+  id: Expectations
+  parent: Cress.Studio.ViewModels.FlowDocumentViewModel
+  langs:
+  - csharp
+  - vb
+  name: Expectations
+  nameWithType: FlowDocumentViewModel.Expectations
+  fullName: Cress.Studio.ViewModels.FlowDocumentViewModel.Expectations
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Studio.Core/ViewModels/FlowDocumentViewModel.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Expectations
+    path: ../src/Cress.Studio.Core/ViewModels/FlowDocumentViewModel.cs
+    startLine: 61
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.ViewModels
+  syntax:
+    content: public ObservableCollection<FlowDocumentViewModel.EditableExecutableRow> Expectations { get; }
+    parameters: []
+    return:
+      type: System.Collections.ObjectModel.ObservableCollection{Cress.Studio.ViewModels.FlowDocumentViewModel.EditableExecutableRow}
+    content.vb: Public ReadOnly Property Expectations As ObservableCollection(Of FlowDocumentViewModel.EditableExecutableRow)
+  overload: Cress.Studio.ViewModels.FlowDocumentViewModel.Expectations*
+- uid: Cress.Studio.ViewModels.FlowDocumentViewModel.FromDocument(Cress.Studio.Services.FlowEditorDocument)
+  commentId: M:Cress.Studio.ViewModels.FlowDocumentViewModel.FromDocument(Cress.Studio.Services.FlowEditorDocument)
+  id: FromDocument(Cress.Studio.Services.FlowEditorDocument)
+  parent: Cress.Studio.ViewModels.FlowDocumentViewModel
+  langs:
+  - csharp
+  - vb
+  name: FromDocument(FlowEditorDocument)
+  nameWithType: FlowDocumentViewModel.FromDocument(FlowEditorDocument)
+  fullName: Cress.Studio.ViewModels.FlowDocumentViewModel.FromDocument(Cress.Studio.Services.FlowEditorDocument)
+  type: Method
+  source:
+    remote:
+      path: src/Cress.Studio.Core/ViewModels/FlowDocumentViewModel.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: FromDocument
+    path: ../src/Cress.Studio.Core/ViewModels/FlowDocumentViewModel.cs
+    startLine: 63
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.ViewModels
+  syntax:
+    content: public static FlowDocumentViewModel FromDocument(FlowEditorDocument document)
+    parameters:
+    - id: document
+      type: Cress.Studio.Services.FlowEditorDocument
+    return:
+      type: Cress.Studio.ViewModels.FlowDocumentViewModel
+    content.vb: Public Shared Function FromDocument(document As FlowEditorDocument) As FlowDocumentViewModel
+  overload: Cress.Studio.ViewModels.FlowDocumentViewModel.FromDocument*
+- uid: Cress.Studio.ViewModels.FlowDocumentViewModel.ToDocument
+  commentId: M:Cress.Studio.ViewModels.FlowDocumentViewModel.ToDocument
+  id: ToDocument
+  parent: Cress.Studio.ViewModels.FlowDocumentViewModel
+  langs:
+  - csharp
+  - vb
+  name: ToDocument()
+  nameWithType: FlowDocumentViewModel.ToDocument()
+  fullName: Cress.Studio.ViewModels.FlowDocumentViewModel.ToDocument()
+  type: Method
+  source:
+    remote:
+      path: src/Cress.Studio.Core/ViewModels/FlowDocumentViewModel.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: ToDocument
+    path: ../src/Cress.Studio.Core/ViewModels/FlowDocumentViewModel.cs
+    startLine: 109
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.ViewModels
+  syntax:
+    content: public FlowEditorDocument ToDocument()
+    return:
+      type: Cress.Studio.Services.FlowEditorDocument
+    content.vb: Public Function ToDocument() As FlowEditorDocument
+  overload: Cress.Studio.ViewModels.FlowDocumentViewModel.ToDocument*
+references:
+- uid: Cress.Studio.ViewModels
+  commentId: N:Cress.Studio.ViewModels
+  href: Cress.html
+  name: Cress.Studio.ViewModels
+  nameWithType: Cress.Studio.ViewModels
+  fullName: Cress.Studio.ViewModels
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Studio
+    name: Studio
+    href: Cress.Studio.html
+  - name: .
+  - uid: Cress.Studio.ViewModels
+    name: ViewModels
+    href: Cress.Studio.ViewModels.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Studio
+    name: Studio
+    href: Cress.Studio.html
+  - name: .
+  - uid: Cress.Studio.ViewModels
+    name: ViewModels
+    href: Cress.Studio.ViewModels.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: Cress.Studio.ViewModels.ObservableObject
+  commentId: T:Cress.Studio.ViewModels.ObservableObject
+  parent: Cress.Studio.ViewModels
+  href: Cress.Studio.ViewModels.ObservableObject.html
+  name: ObservableObject
+  nameWithType: ObservableObject
+  fullName: Cress.Studio.ViewModels.ObservableObject
+- uid: System.ComponentModel.INotifyPropertyChanged
+  commentId: T:System.ComponentModel.INotifyPropertyChanged
+  parent: System.ComponentModel
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanged
+  name: INotifyPropertyChanged
+  nameWithType: INotifyPropertyChanged
+  fullName: System.ComponentModel.INotifyPropertyChanged
+- uid: Cress.Studio.ViewModels.ObservableObject.PropertyChanged
+  commentId: E:Cress.Studio.ViewModels.ObservableObject.PropertyChanged
+  parent: Cress.Studio.ViewModels.ObservableObject
+  href: Cress.Studio.ViewModels.ObservableObject.html#Cress_Studio_ViewModels_ObservableObject_PropertyChanged
+  name: PropertyChanged
+  nameWithType: ObservableObject.PropertyChanged
+  fullName: Cress.Studio.ViewModels.ObservableObject.PropertyChanged
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.ComponentModel
+  commentId: N:System.ComponentModel
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.ComponentModel
+  nameWithType: System.ComponentModel
+  fullName: System.ComponentModel
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.ComponentModel
+    name: ComponentModel
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.componentmodel
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.ComponentModel
+    name: ComponentModel
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.componentmodel
+- uid: Cress.Studio.ViewModels.FlowDocumentViewModel.FilePath*
+  commentId: Overload:Cress.Studio.ViewModels.FlowDocumentViewModel.FilePath
+  href: Cress.Studio.ViewModels.FlowDocumentViewModel.html#Cress_Studio_ViewModels_FlowDocumentViewModel_FilePath
+  name: FilePath
+  nameWithType: FlowDocumentViewModel.FilePath
+  fullName: Cress.Studio.ViewModels.FlowDocumentViewModel.FilePath
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Cress.Studio.ViewModels.FlowDocumentViewModel.Id*
+  commentId: Overload:Cress.Studio.ViewModels.FlowDocumentViewModel.Id
+  href: Cress.Studio.ViewModels.FlowDocumentViewModel.html#Cress_Studio_ViewModels_FlowDocumentViewModel_Id
+  name: Id
+  nameWithType: FlowDocumentViewModel.Id
+  fullName: Cress.Studio.ViewModels.FlowDocumentViewModel.Id
+- uid: Cress.Studio.ViewModels.FlowDocumentViewModel.Name*
+  commentId: Overload:Cress.Studio.ViewModels.FlowDocumentViewModel.Name
+  href: Cress.Studio.ViewModels.FlowDocumentViewModel.html#Cress_Studio_ViewModels_FlowDocumentViewModel_Name
+  name: Name
+  nameWithType: FlowDocumentViewModel.Name
+  fullName: Cress.Studio.ViewModels.FlowDocumentViewModel.Name
+- uid: Cress.Studio.ViewModels.FlowDocumentViewModel.CapabilityId*
+  commentId: Overload:Cress.Studio.ViewModels.FlowDocumentViewModel.CapabilityId
+  href: Cress.Studio.ViewModels.FlowDocumentViewModel.html#Cress_Studio_ViewModels_FlowDocumentViewModel_CapabilityId
+  name: CapabilityId
+  nameWithType: FlowDocumentViewModel.CapabilityId
+  fullName: Cress.Studio.ViewModels.FlowDocumentViewModel.CapabilityId
+- uid: Cress.Studio.ViewModels.FlowDocumentViewModel.Summary*
+  commentId: Overload:Cress.Studio.ViewModels.FlowDocumentViewModel.Summary
+  href: Cress.Studio.ViewModels.FlowDocumentViewModel.html#Cress_Studio_ViewModels_FlowDocumentViewModel_Summary
+  name: Summary
+  nameWithType: FlowDocumentViewModel.Summary
+  fullName: Cress.Studio.ViewModels.FlowDocumentViewModel.Summary
+- uid: Cress.Studio.ViewModels.FlowDocumentViewModel.Status*
+  commentId: Overload:Cress.Studio.ViewModels.FlowDocumentViewModel.Status
+  href: Cress.Studio.ViewModels.FlowDocumentViewModel.html#Cress_Studio_ViewModels_FlowDocumentViewModel_Status
+  name: Status
+  nameWithType: FlowDocumentViewModel.Status
+  fullName: Cress.Studio.ViewModels.FlowDocumentViewModel.Status
+- uid: Cress.Studio.ViewModels.FlowDocumentViewModel.TagsText*
+  commentId: Overload:Cress.Studio.ViewModels.FlowDocumentViewModel.TagsText
+  href: Cress.Studio.ViewModels.FlowDocumentViewModel.html#Cress_Studio_ViewModels_FlowDocumentViewModel_TagsText
+  name: TagsText
+  nameWithType: FlowDocumentViewModel.TagsText
+  fullName: Cress.Studio.ViewModels.FlowDocumentViewModel.TagsText
+- uid: Cress.Studio.ViewModels.FlowDocumentViewModel.SourceText*
+  commentId: Overload:Cress.Studio.ViewModels.FlowDocumentViewModel.SourceText
+  href: Cress.Studio.ViewModels.FlowDocumentViewModel.html#Cress_Studio_ViewModels_FlowDocumentViewModel_SourceText
+  name: SourceText
+  nameWithType: FlowDocumentViewModel.SourceText
+  fullName: Cress.Studio.ViewModels.FlowDocumentViewModel.SourceText
+- uid: Cress.Studio.ViewModels.FlowDocumentViewModel.Fixtures*
+  commentId: Overload:Cress.Studio.ViewModels.FlowDocumentViewModel.Fixtures
+  href: Cress.Studio.ViewModels.FlowDocumentViewModel.html#Cress_Studio_ViewModels_FlowDocumentViewModel_Fixtures
+  name: Fixtures
+  nameWithType: FlowDocumentViewModel.Fixtures
+  fullName: Cress.Studio.ViewModels.FlowDocumentViewModel.Fixtures
+- uid: System.Collections.ObjectModel.ObservableCollection{Cress.Studio.ViewModels.FlowDocumentViewModel.EditableFixtureRow}
+  commentId: T:System.Collections.ObjectModel.ObservableCollection{Cress.Studio.ViewModels.FlowDocumentViewModel.EditableFixtureRow}
+  parent: System.Collections.ObjectModel
+  definition: System.Collections.ObjectModel.ObservableCollection`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1
+  name: ObservableCollection<FlowDocumentViewModel.EditableFixtureRow>
+  nameWithType: ObservableCollection<FlowDocumentViewModel.EditableFixtureRow>
+  fullName: System.Collections.ObjectModel.ObservableCollection<Cress.Studio.ViewModels.FlowDocumentViewModel.EditableFixtureRow>
+  nameWithType.vb: ObservableCollection(Of FlowDocumentViewModel.EditableFixtureRow)
+  fullName.vb: System.Collections.ObjectModel.ObservableCollection(Of Cress.Studio.ViewModels.FlowDocumentViewModel.EditableFixtureRow)
+  name.vb: ObservableCollection(Of FlowDocumentViewModel.EditableFixtureRow)
+  spec.csharp:
+  - uid: System.Collections.ObjectModel.ObservableCollection`1
+    name: ObservableCollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1
+  - name: <
+  - uid: Cress.Studio.ViewModels.FlowDocumentViewModel
+    name: FlowDocumentViewModel
+    href: Cress.Studio.ViewModels.FlowDocumentViewModel.html
+  - name: .
+  - uid: Cress.Studio.ViewModels.FlowDocumentViewModel.EditableFixtureRow
+    name: EditableFixtureRow
+    href: Cress.Studio.ViewModels.FlowDocumentViewModel.EditableFixtureRow.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.ObjectModel.ObservableCollection`1
+    name: ObservableCollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Cress.Studio.ViewModels.FlowDocumentViewModel
+    name: FlowDocumentViewModel
+    href: Cress.Studio.ViewModels.FlowDocumentViewModel.html
+  - name: .
+  - uid: Cress.Studio.ViewModels.FlowDocumentViewModel.EditableFixtureRow
+    name: EditableFixtureRow
+    href: Cress.Studio.ViewModels.FlowDocumentViewModel.EditableFixtureRow.html
+  - name: )
+- uid: System.Collections.ObjectModel.ObservableCollection`1
+  commentId: T:System.Collections.ObjectModel.ObservableCollection`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1
+  name: ObservableCollection<T>
+  nameWithType: ObservableCollection<T>
+  fullName: System.Collections.ObjectModel.ObservableCollection<T>
+  nameWithType.vb: ObservableCollection(Of T)
+  fullName.vb: System.Collections.ObjectModel.ObservableCollection(Of T)
+  name.vb: ObservableCollection(Of T)
+  spec.csharp:
+  - uid: System.Collections.ObjectModel.ObservableCollection`1
+    name: ObservableCollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.ObjectModel.ObservableCollection`1
+    name: ObservableCollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.ObjectModel
+  commentId: N:System.Collections.ObjectModel
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.ObjectModel
+  nameWithType: System.Collections.ObjectModel
+  fullName: System.Collections.ObjectModel
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.ObjectModel
+    name: ObjectModel
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.ObjectModel
+    name: ObjectModel
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel
+- uid: Cress.Studio.ViewModels.FlowDocumentViewModel.Actions*
+  commentId: Overload:Cress.Studio.ViewModels.FlowDocumentViewModel.Actions
+  href: Cress.Studio.ViewModels.FlowDocumentViewModel.html#Cress_Studio_ViewModels_FlowDocumentViewModel_Actions
+  name: Actions
+  nameWithType: FlowDocumentViewModel.Actions
+  fullName: Cress.Studio.ViewModels.FlowDocumentViewModel.Actions
+- uid: System.Collections.ObjectModel.ObservableCollection{Cress.Studio.ViewModels.FlowDocumentViewModel.EditableExecutableRow}
+  commentId: T:System.Collections.ObjectModel.ObservableCollection{Cress.Studio.ViewModels.FlowDocumentViewModel.EditableExecutableRow}
+  parent: System.Collections.ObjectModel
+  definition: System.Collections.ObjectModel.ObservableCollection`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1
+  name: ObservableCollection<FlowDocumentViewModel.EditableExecutableRow>
+  nameWithType: ObservableCollection<FlowDocumentViewModel.EditableExecutableRow>
+  fullName: System.Collections.ObjectModel.ObservableCollection<Cress.Studio.ViewModels.FlowDocumentViewModel.EditableExecutableRow>
+  nameWithType.vb: ObservableCollection(Of FlowDocumentViewModel.EditableExecutableRow)
+  fullName.vb: System.Collections.ObjectModel.ObservableCollection(Of Cress.Studio.ViewModels.FlowDocumentViewModel.EditableExecutableRow)
+  name.vb: ObservableCollection(Of FlowDocumentViewModel.EditableExecutableRow)
+  spec.csharp:
+  - uid: System.Collections.ObjectModel.ObservableCollection`1
+    name: ObservableCollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1
+  - name: <
+  - uid: Cress.Studio.ViewModels.FlowDocumentViewModel
+    name: FlowDocumentViewModel
+    href: Cress.Studio.ViewModels.FlowDocumentViewModel.html
+  - name: .
+  - uid: Cress.Studio.ViewModels.FlowDocumentViewModel.EditableExecutableRow
+    name: EditableExecutableRow
+    href: Cress.Studio.ViewModels.FlowDocumentViewModel.EditableExecutableRow.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.ObjectModel.ObservableCollection`1
+    name: ObservableCollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Cress.Studio.ViewModels.FlowDocumentViewModel
+    name: FlowDocumentViewModel
+    href: Cress.Studio.ViewModels.FlowDocumentViewModel.html
+  - name: .
+  - uid: Cress.Studio.ViewModels.FlowDocumentViewModel.EditableExecutableRow
+    name: EditableExecutableRow
+    href: Cress.Studio.ViewModels.FlowDocumentViewModel.EditableExecutableRow.html
+  - name: )
+- uid: Cress.Studio.ViewModels.FlowDocumentViewModel.Expectations*
+  commentId: Overload:Cress.Studio.ViewModels.FlowDocumentViewModel.Expectations
+  href: Cress.Studio.ViewModels.FlowDocumentViewModel.html#Cress_Studio_ViewModels_FlowDocumentViewModel_Expectations
+  name: Expectations
+  nameWithType: FlowDocumentViewModel.Expectations
+  fullName: Cress.Studio.ViewModels.FlowDocumentViewModel.Expectations
+- uid: Cress.Studio.ViewModels.FlowDocumentViewModel.FromDocument*
+  commentId: Overload:Cress.Studio.ViewModels.FlowDocumentViewModel.FromDocument
+  href: Cress.Studio.ViewModels.FlowDocumentViewModel.html#Cress_Studio_ViewModels_FlowDocumentViewModel_FromDocument_Cress_Studio_Services_FlowEditorDocument_
+  name: FromDocument
+  nameWithType: FlowDocumentViewModel.FromDocument
+  fullName: Cress.Studio.ViewModels.FlowDocumentViewModel.FromDocument
+- uid: Cress.Studio.Services.FlowEditorDocument
+  commentId: T:Cress.Studio.Services.FlowEditorDocument
+  parent: Cress.Studio.Services
+  href: Cress.Studio.Services.FlowEditorDocument.html
+  name: FlowEditorDocument
+  nameWithType: FlowEditorDocument
+  fullName: Cress.Studio.Services.FlowEditorDocument
+- uid: Cress.Studio.ViewModels.FlowDocumentViewModel
+  commentId: T:Cress.Studio.ViewModels.FlowDocumentViewModel
+  parent: Cress.Studio.ViewModels
+  href: Cress.Studio.ViewModels.FlowDocumentViewModel.html
+  name: FlowDocumentViewModel
+  nameWithType: FlowDocumentViewModel
+  fullName: Cress.Studio.ViewModels.FlowDocumentViewModel
+- uid: Cress.Studio.Services
+  commentId: N:Cress.Studio.Services
+  href: Cress.html
+  name: Cress.Studio.Services
+  nameWithType: Cress.Studio.Services
+  fullName: Cress.Studio.Services
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Studio
+    name: Studio
+    href: Cress.Studio.html
+  - name: .
+  - uid: Cress.Studio.Services
+    name: Services
+    href: Cress.Studio.Services.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Studio
+    name: Studio
+    href: Cress.Studio.html
+  - name: .
+  - uid: Cress.Studio.Services
+    name: Services
+    href: Cress.Studio.Services.html
+- uid: Cress.Studio.ViewModels.FlowDocumentViewModel.ToDocument*
+  commentId: Overload:Cress.Studio.ViewModels.FlowDocumentViewModel.ToDocument
+  href: Cress.Studio.ViewModels.FlowDocumentViewModel.html#Cress_Studio_ViewModels_FlowDocumentViewModel_ToDocument
+  name: ToDocument
+  nameWithType: FlowDocumentViewModel.ToDocument
+  fullName: Cress.Studio.ViewModels.FlowDocumentViewModel.ToDocument

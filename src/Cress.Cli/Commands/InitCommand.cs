@@ -121,7 +121,7 @@ plugins:
 drivers:
   playwright:
     enabled: false
-  flaui:
+  flawright:
     enabled: false
   http:
     enabled: true
@@ -144,7 +144,7 @@ timeouts:
 evidence:
   mode: standard
   screenshots: true
-# flaui:
+# flawright:
 #   applicationPath: C:\Path\To\YourApp.exe
 #   windowTitle: Your application
 #   launchTimeoutMs: 10000

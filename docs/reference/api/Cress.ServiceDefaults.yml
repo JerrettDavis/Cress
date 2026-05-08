@@ -1,0 +1,23 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.ServiceDefaults
+  commentId: N:Cress.ServiceDefaults
+  id: Cress.ServiceDefaults
+  children:
+  - Cress.ServiceDefaults.Extensions
+  langs:
+  - csharp
+  - vb
+  name: Cress.ServiceDefaults
+  nameWithType: Cress.ServiceDefaults
+  fullName: Cress.ServiceDefaults
+  type: Namespace
+  assemblies:
+  - Cress.ServiceDefaults
+references:
+- uid: Cress.ServiceDefaults.Extensions
+  commentId: T:Cress.ServiceDefaults.Extensions
+  href: Cress.ServiceDefaults.Extensions.html
+  name: Extensions
+  nameWithType: Extensions
+  fullName: Cress.ServiceDefaults.Extensions

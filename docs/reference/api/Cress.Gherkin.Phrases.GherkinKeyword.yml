@@ -1,0 +1,203 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Gherkin.Phrases.GherkinKeyword
+  commentId: T:Cress.Gherkin.Phrases.GherkinKeyword
+  id: GherkinKeyword
+  parent: Cress.Gherkin.Phrases
+  children:
+  - Cress.Gherkin.Phrases.GherkinKeyword.And
+  - Cress.Gherkin.Phrases.GherkinKeyword.But
+  - Cress.Gherkin.Phrases.GherkinKeyword.Given
+  - Cress.Gherkin.Phrases.GherkinKeyword.Then
+  - Cress.Gherkin.Phrases.GherkinKeyword.When
+  langs:
+  - csharp
+  - vb
+  name: GherkinKeyword
+  nameWithType: GherkinKeyword
+  fullName: Cress.Gherkin.Phrases.GherkinKeyword
+  type: Enum
+  source:
+    remote:
+      path: src/Cress.Gherkin/Phrases/GherkinKeyword.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: GherkinKeyword
+    path: ../src/Cress.Gherkin/Phrases/GherkinKeyword.cs
+    startLine: 3
+  assemblies:
+  - Cress.Gherkin
+  namespace: Cress.Gherkin.Phrases
+  summary: Gherkin step keyword variants.
+  example: []
+  syntax:
+    content: public enum GherkinKeyword
+    content.vb: Public Enum GherkinKeyword
+- uid: Cress.Gherkin.Phrases.GherkinKeyword.Given
+  commentId: F:Cress.Gherkin.Phrases.GherkinKeyword.Given
+  id: Given
+  parent: Cress.Gherkin.Phrases.GherkinKeyword
+  langs:
+  - csharp
+  - vb
+  name: Given
+  nameWithType: GherkinKeyword.Given
+  fullName: Cress.Gherkin.Phrases.GherkinKeyword.Given
+  type: Field
+  source:
+    remote:
+      path: src/Cress.Gherkin/Phrases/GherkinKeyword.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Given
+    path: ../src/Cress.Gherkin/Phrases/GherkinKeyword.cs
+    startLine: 5
+  assemblies:
+  - Cress.Gherkin
+  namespace: Cress.Gherkin.Phrases
+  syntax:
+    content: Given = 0
+    return:
+      type: Cress.Gherkin.Phrases.GherkinKeyword
+- uid: Cress.Gherkin.Phrases.GherkinKeyword.When
+  commentId: F:Cress.Gherkin.Phrases.GherkinKeyword.When
+  id: When
+  parent: Cress.Gherkin.Phrases.GherkinKeyword
+  langs:
+  - csharp
+  - vb
+  name: When
+  nameWithType: GherkinKeyword.When
+  fullName: Cress.Gherkin.Phrases.GherkinKeyword.When
+  type: Field
+  source:
+    remote:
+      path: src/Cress.Gherkin/Phrases/GherkinKeyword.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: When
+    path: ../src/Cress.Gherkin/Phrases/GherkinKeyword.cs
+    startLine: 6
+  assemblies:
+  - Cress.Gherkin
+  namespace: Cress.Gherkin.Phrases
+  syntax:
+    content: When = 1
+    return:
+      type: Cress.Gherkin.Phrases.GherkinKeyword
+- uid: Cress.Gherkin.Phrases.GherkinKeyword.Then
+  commentId: F:Cress.Gherkin.Phrases.GherkinKeyword.Then
+  id: Then
+  parent: Cress.Gherkin.Phrases.GherkinKeyword
+  langs:
+  - csharp
+  - vb
+  name: Then
+  nameWithType: GherkinKeyword.Then
+  fullName: Cress.Gherkin.Phrases.GherkinKeyword.Then
+  type: Field
+  source:
+    remote:
+      path: src/Cress.Gherkin/Phrases/GherkinKeyword.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Then
+    path: ../src/Cress.Gherkin/Phrases/GherkinKeyword.cs
+    startLine: 7
+  assemblies:
+  - Cress.Gherkin
+  namespace: Cress.Gherkin.Phrases
+  syntax:
+    content: Then = 2
+    return:
+      type: Cress.Gherkin.Phrases.GherkinKeyword
+- uid: Cress.Gherkin.Phrases.GherkinKeyword.And
+  commentId: F:Cress.Gherkin.Phrases.GherkinKeyword.And
+  id: And
+  parent: Cress.Gherkin.Phrases.GherkinKeyword
+  langs:
+  - csharp
+  - vb
+  name: And
+  nameWithType: GherkinKeyword.And
+  fullName: Cress.Gherkin.Phrases.GherkinKeyword.And
+  type: Field
+  source:
+    remote:
+      path: src/Cress.Gherkin/Phrases/GherkinKeyword.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: And
+    path: ../src/Cress.Gherkin/Phrases/GherkinKeyword.cs
+    startLine: 8
+  assemblies:
+  - Cress.Gherkin
+  namespace: Cress.Gherkin.Phrases
+  syntax:
+    content: And = 3
+    return:
+      type: Cress.Gherkin.Phrases.GherkinKeyword
+- uid: Cress.Gherkin.Phrases.GherkinKeyword.But
+  commentId: F:Cress.Gherkin.Phrases.GherkinKeyword.But
+  id: But
+  parent: Cress.Gherkin.Phrases.GherkinKeyword
+  langs:
+  - csharp
+  - vb
+  name: But
+  nameWithType: GherkinKeyword.But
+  fullName: Cress.Gherkin.Phrases.GherkinKeyword.But
+  type: Field
+  source:
+    remote:
+      path: src/Cress.Gherkin/Phrases/GherkinKeyword.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: But
+    path: ../src/Cress.Gherkin/Phrases/GherkinKeyword.cs
+    startLine: 9
+  assemblies:
+  - Cress.Gherkin
+  namespace: Cress.Gherkin.Phrases
+  syntax:
+    content: But = 4
+    return:
+      type: Cress.Gherkin.Phrases.GherkinKeyword
+references:
+- uid: Cress.Gherkin.Phrases
+  commentId: N:Cress.Gherkin.Phrases
+  href: Cress.html
+  name: Cress.Gherkin.Phrases
+  nameWithType: Cress.Gherkin.Phrases
+  fullName: Cress.Gherkin.Phrases
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Gherkin
+    name: Gherkin
+    href: Cress.Gherkin.html
+  - name: .
+  - uid: Cress.Gherkin.Phrases
+    name: Phrases
+    href: Cress.Gherkin.Phrases.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Gherkin
+    name: Gherkin
+    href: Cress.Gherkin.html
+  - name: .
+  - uid: Cress.Gherkin.Phrases
+    name: Phrases
+    href: Cress.Gherkin.Phrases.html
+- uid: Cress.Gherkin.Phrases.GherkinKeyword
+  commentId: T:Cress.Gherkin.Phrases.GherkinKeyword
+  parent: Cress.Gherkin.Phrases
+  href: Cress.Gherkin.Phrases.GherkinKeyword.html
+  name: GherkinKeyword
+  nameWithType: GherkinKeyword
+  fullName: Cress.Gherkin.Phrases.GherkinKeyword

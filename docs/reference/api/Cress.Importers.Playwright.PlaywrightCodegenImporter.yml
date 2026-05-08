@@ -1,0 +1,386 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Importers.Playwright.PlaywrightCodegenImporter
+  commentId: T:Cress.Importers.Playwright.PlaywrightCodegenImporter
+  id: PlaywrightCodegenImporter
+  parent: Cress.Importers.Playwright
+  children:
+  - Cress.Importers.Playwright.PlaywrightCodegenImporter.Import(System.String,System.String)
+  langs:
+  - csharp
+  - vb
+  name: PlaywrightCodegenImporter
+  nameWithType: PlaywrightCodegenImporter
+  fullName: Cress.Importers.Playwright.PlaywrightCodegenImporter
+  type: Class
+  source:
+    remote:
+      path: src/Cress.Importers/Playwright/PlaywrightCodegenImporter.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: PlaywrightCodegenImporter
+    path: ../src/Cress.Importers/Playwright/PlaywrightCodegenImporter.cs
+    startLine: 11
+  assemblies:
+  - Cress.Importers
+  namespace: Cress.Importers.Playwright
+  summary: >-
+    Converts a Playwright codegen <code>.ts</code> or <code>.js</code> file into a <xref href="Cress.Core.Models.CressFlow" data-throw-if-not-resolved="false"></xref>.
+
+    Uses lightweight regex matching — not a full TypeScript/JavaScript parser.
+
+    Handles the predictable shape produced by <code>playwright codegen</code>.
+  example: []
+  syntax:
+    content: public sealed class PlaywrightCodegenImporter
+    content.vb: Public NotInheritable Class PlaywrightCodegenImporter
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Cress.Importers.Playwright.PlaywrightCodegenImporter.Import(System.String,System.String)
+  commentId: M:Cress.Importers.Playwright.PlaywrightCodegenImporter.Import(System.String,System.String)
+  id: Import(System.String,System.String)
+  parent: Cress.Importers.Playwright.PlaywrightCodegenImporter
+  langs:
+  - csharp
+  - vb
+  name: Import(string, string?)
+  nameWithType: PlaywrightCodegenImporter.Import(string, string?)
+  fullName: Cress.Importers.Playwright.PlaywrightCodegenImporter.Import(string, string?)
+  type: Method
+  source:
+    remote:
+      path: src/Cress.Importers/Playwright/PlaywrightCodegenImporter.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Import
+    path: ../src/Cress.Importers/Playwright/PlaywrightCodegenImporter.cs
+    startLine: 129
+  assemblies:
+  - Cress.Importers
+  namespace: Cress.Importers.Playwright
+  summary: >-
+    Parse <code class="paramref">codegenText</code> (Playwright codegen .ts/.js file content)
+
+    and return a <xref href="Cress.Core.Models.CressFlow" data-throw-if-not-resolved="false"></xref> ready for serialization.
+  example: []
+  syntax:
+    content: public CressFlow Import(string codegenText, string? flowName = null)
+    parameters:
+    - id: codegenText
+      type: System.String
+      description: Full file contents.
+    - id: flowName
+      type: System.String
+      description: Optional override for the flow name; derived from test name otherwise.
+    return:
+      type: Cress.Core.Models.CressFlow
+    content.vb: Public Function Import(codegenText As String, flowName As String = Nothing) As CressFlow
+  overload: Cress.Importers.Playwright.PlaywrightCodegenImporter.Import*
+  nameWithType.vb: PlaywrightCodegenImporter.Import(String, String)
+  fullName.vb: Cress.Importers.Playwright.PlaywrightCodegenImporter.Import(String, String)
+  name.vb: Import(String, String)
+references:
+- uid: Cress.Core.Models.CressFlow
+  commentId: T:Cress.Core.Models.CressFlow
+  parent: Cress.Core.Models
+  href: Cress.Core.Models.CressFlow.html
+  name: CressFlow
+  nameWithType: CressFlow
+  fullName: Cress.Core.Models.CressFlow
+- uid: Cress.Importers.Playwright
+  commentId: N:Cress.Importers.Playwright
+  href: Cress.html
+  name: Cress.Importers.Playwright
+  nameWithType: Cress.Importers.Playwright
+  fullName: Cress.Importers.Playwright
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Importers
+    name: Importers
+    href: Cress.Importers.html
+  - name: .
+  - uid: Cress.Importers.Playwright
+    name: Playwright
+    href: Cress.Importers.Playwright.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Importers
+    name: Importers
+    href: Cress.Importers.html
+  - name: .
+  - uid: Cress.Importers.Playwright
+    name: Playwright
+    href: Cress.Importers.Playwright.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: Cress.Core.Models
+  commentId: N:Cress.Core.Models
+  href: Cress.html
+  name: Cress.Core.Models
+  nameWithType: Cress.Core.Models
+  fullName: Cress.Core.Models
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Core
+    name: Core
+    href: Cress.Core.html
+  - name: .
+  - uid: Cress.Core.Models
+    name: Models
+    href: Cress.Core.Models.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Core
+    name: Core
+    href: Cress.Core.html
+  - name: .
+  - uid: Cress.Core.Models
+    name: Models
+    href: Cress.Core.Models.html
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Cress.Importers.Playwright.PlaywrightCodegenImporter.Import*
+  commentId: Overload:Cress.Importers.Playwright.PlaywrightCodegenImporter.Import
+  href: Cress.Importers.Playwright.PlaywrightCodegenImporter.html#Cress_Importers_Playwright_PlaywrightCodegenImporter_Import_System_String_System_String_
+  name: Import
+  nameWithType: PlaywrightCodegenImporter.Import
+  fullName: Cress.Importers.Playwright.PlaywrightCodegenImporter.Import
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String

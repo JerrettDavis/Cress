@@ -6,7 +6,7 @@ namespace Cress.Recorder.Inference;
 public enum InferenceDomain
 {
     /// <summary>
-    /// Desktop UIA recording (FlaUI/UIA3). Original behaviour; all existing tests
+    /// Desktop UIA recording (Windows UI Automation). Original behaviour; all existing tests
     /// rely on this domain. AssertionTargetAutomationId is relevant here.
     /// </summary>
     Desktop,

@@ -20,11 +20,14 @@ dotnet build Cress.sln --configuration Release
 
 ```powershell
 dotnet test Cress.sln --configuration Release --no-build
+dotnet test tests\Cress.AppHost.Tests\Cress.AppHost.Tests.csproj --configuration Release
 node --test node/tests/*.test.mjs
 ```
 
 > [!NOTE]
 > Hosted CI uses a safe subset for desktop automation, but local Windows sessions can run the full desktop-oriented suite.
+
+The dedicated `Cress.AppHost.Tests` project adds Aspire-focused **unit**, **integration**, and **end-to-end** coverage for the orchestrated AppHost surface.
 
 ## 4. Launch the local authoring environment
 

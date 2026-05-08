@@ -1,0 +1,23 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Importers.Postman
+  commentId: N:Cress.Importers.Postman
+  id: Cress.Importers.Postman
+  children:
+  - Cress.Importers.Postman.PostmanImporter
+  langs:
+  - csharp
+  - vb
+  name: Cress.Importers.Postman
+  nameWithType: Cress.Importers.Postman
+  fullName: Cress.Importers.Postman
+  type: Namespace
+  assemblies:
+  - Cress.Importers
+references:
+- uid: Cress.Importers.Postman.PostmanImporter
+  commentId: T:Cress.Importers.Postman.PostmanImporter
+  href: Cress.Importers.Postman.PostmanImporter.html
+  name: PostmanImporter
+  nameWithType: PostmanImporter
+  fullName: Cress.Importers.Postman.PostmanImporter

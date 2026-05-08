@@ -1,0 +1,819 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Studio.Services.FlowEditorDocument
+  commentId: T:Cress.Studio.Services.FlowEditorDocument
+  id: FlowEditorDocument
+  parent: Cress.Studio.Services
+  children:
+  - Cress.Studio.Services.FlowEditorDocument.Actions
+  - Cress.Studio.Services.FlowEditorDocument.CapabilityId
+  - Cress.Studio.Services.FlowEditorDocument.Expectations
+  - Cress.Studio.Services.FlowEditorDocument.FilePath
+  - Cress.Studio.Services.FlowEditorDocument.Fixtures
+  - Cress.Studio.Services.FlowEditorDocument.Id
+  - Cress.Studio.Services.FlowEditorDocument.Name
+  - Cress.Studio.Services.FlowEditorDocument.SourceText
+  - Cress.Studio.Services.FlowEditorDocument.Status
+  - Cress.Studio.Services.FlowEditorDocument.Summary
+  - Cress.Studio.Services.FlowEditorDocument.TagsText
+  langs:
+  - csharp
+  - vb
+  name: FlowEditorDocument
+  nameWithType: FlowEditorDocument
+  fullName: Cress.Studio.Services.FlowEditorDocument
+  type: Class
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/FlowDocumentService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: FlowEditorDocument
+    path: ../src/Cress.Studio.Core/Services/FlowDocumentService.cs
+    startLine: 243
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  syntax:
+    content: public sealed class FlowEditorDocument
+    content.vb: Public NotInheritable Class FlowEditorDocument
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Cress.Studio.Services.FlowEditorDocument.FilePath
+  commentId: P:Cress.Studio.Services.FlowEditorDocument.FilePath
+  id: FilePath
+  parent: Cress.Studio.Services.FlowEditorDocument
+  langs:
+  - csharp
+  - vb
+  name: FilePath
+  nameWithType: FlowEditorDocument.FilePath
+  fullName: Cress.Studio.Services.FlowEditorDocument.FilePath
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/FlowDocumentService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: FilePath
+    path: ../src/Cress.Studio.Core/Services/FlowDocumentService.cs
+    startLine: 245
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  syntax:
+    content: public string FilePath { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property FilePath As String
+  overload: Cress.Studio.Services.FlowEditorDocument.FilePath*
+- uid: Cress.Studio.Services.FlowEditorDocument.Id
+  commentId: P:Cress.Studio.Services.FlowEditorDocument.Id
+  id: Id
+  parent: Cress.Studio.Services.FlowEditorDocument
+  langs:
+  - csharp
+  - vb
+  name: Id
+  nameWithType: FlowEditorDocument.Id
+  fullName: Cress.Studio.Services.FlowEditorDocument.Id
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/FlowDocumentService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Id
+    path: ../src/Cress.Studio.Core/Services/FlowDocumentService.cs
+    startLine: 246
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  syntax:
+    content: public string Id { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Id As String
+  overload: Cress.Studio.Services.FlowEditorDocument.Id*
+- uid: Cress.Studio.Services.FlowEditorDocument.Name
+  commentId: P:Cress.Studio.Services.FlowEditorDocument.Name
+  id: Name
+  parent: Cress.Studio.Services.FlowEditorDocument
+  langs:
+  - csharp
+  - vb
+  name: Name
+  nameWithType: FlowEditorDocument.Name
+  fullName: Cress.Studio.Services.FlowEditorDocument.Name
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/FlowDocumentService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Name
+    path: ../src/Cress.Studio.Core/Services/FlowDocumentService.cs
+    startLine: 247
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  syntax:
+    content: public string Name { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Name As String
+  overload: Cress.Studio.Services.FlowEditorDocument.Name*
+- uid: Cress.Studio.Services.FlowEditorDocument.CapabilityId
+  commentId: P:Cress.Studio.Services.FlowEditorDocument.CapabilityId
+  id: CapabilityId
+  parent: Cress.Studio.Services.FlowEditorDocument
+  langs:
+  - csharp
+  - vb
+  name: CapabilityId
+  nameWithType: FlowEditorDocument.CapabilityId
+  fullName: Cress.Studio.Services.FlowEditorDocument.CapabilityId
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/FlowDocumentService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: CapabilityId
+    path: ../src/Cress.Studio.Core/Services/FlowDocumentService.cs
+    startLine: 248
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  syntax:
+    content: public string? CapabilityId { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property CapabilityId As String
+  overload: Cress.Studio.Services.FlowEditorDocument.CapabilityId*
+- uid: Cress.Studio.Services.FlowEditorDocument.Summary
+  commentId: P:Cress.Studio.Services.FlowEditorDocument.Summary
+  id: Summary
+  parent: Cress.Studio.Services.FlowEditorDocument
+  langs:
+  - csharp
+  - vb
+  name: Summary
+  nameWithType: FlowEditorDocument.Summary
+  fullName: Cress.Studio.Services.FlowEditorDocument.Summary
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/FlowDocumentService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Summary
+    path: ../src/Cress.Studio.Core/Services/FlowDocumentService.cs
+    startLine: 249
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  syntax:
+    content: public string? Summary { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Summary As String
+  overload: Cress.Studio.Services.FlowEditorDocument.Summary*
+- uid: Cress.Studio.Services.FlowEditorDocument.Status
+  commentId: P:Cress.Studio.Services.FlowEditorDocument.Status
+  id: Status
+  parent: Cress.Studio.Services.FlowEditorDocument
+  langs:
+  - csharp
+  - vb
+  name: Status
+  nameWithType: FlowEditorDocument.Status
+  fullName: Cress.Studio.Services.FlowEditorDocument.Status
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/FlowDocumentService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Status
+    path: ../src/Cress.Studio.Core/Services/FlowDocumentService.cs
+    startLine: 250
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  syntax:
+    content: public string? Status { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Status As String
+  overload: Cress.Studio.Services.FlowEditorDocument.Status*
+- uid: Cress.Studio.Services.FlowEditorDocument.TagsText
+  commentId: P:Cress.Studio.Services.FlowEditorDocument.TagsText
+  id: TagsText
+  parent: Cress.Studio.Services.FlowEditorDocument
+  langs:
+  - csharp
+  - vb
+  name: TagsText
+  nameWithType: FlowEditorDocument.TagsText
+  fullName: Cress.Studio.Services.FlowEditorDocument.TagsText
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/FlowDocumentService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: TagsText
+    path: ../src/Cress.Studio.Core/Services/FlowDocumentService.cs
+    startLine: 251
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  syntax:
+    content: public string TagsText { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property TagsText As String
+  overload: Cress.Studio.Services.FlowEditorDocument.TagsText*
+- uid: Cress.Studio.Services.FlowEditorDocument.SourceText
+  commentId: P:Cress.Studio.Services.FlowEditorDocument.SourceText
+  id: SourceText
+  parent: Cress.Studio.Services.FlowEditorDocument
+  langs:
+  - csharp
+  - vb
+  name: SourceText
+  nameWithType: FlowEditorDocument.SourceText
+  fullName: Cress.Studio.Services.FlowEditorDocument.SourceText
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/FlowDocumentService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: SourceText
+    path: ../src/Cress.Studio.Core/Services/FlowDocumentService.cs
+    startLine: 252
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  syntax:
+    content: public string SourceText { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property SourceText As String
+  overload: Cress.Studio.Services.FlowEditorDocument.SourceText*
+- uid: Cress.Studio.Services.FlowEditorDocument.Fixtures
+  commentId: P:Cress.Studio.Services.FlowEditorDocument.Fixtures
+  id: Fixtures
+  parent: Cress.Studio.Services.FlowEditorDocument
+  langs:
+  - csharp
+  - vb
+  name: Fixtures
+  nameWithType: FlowEditorDocument.Fixtures
+  fullName: Cress.Studio.Services.FlowEditorDocument.Fixtures
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/FlowDocumentService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Fixtures
+    path: ../src/Cress.Studio.Core/Services/FlowDocumentService.cs
+    startLine: 253
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  syntax:
+    content: public List<EditableFixture> Fixtures { get; set; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.List{Cress.Studio.Services.EditableFixture}
+    content.vb: Public Property Fixtures As List(Of EditableFixture)
+  overload: Cress.Studio.Services.FlowEditorDocument.Fixtures*
+- uid: Cress.Studio.Services.FlowEditorDocument.Actions
+  commentId: P:Cress.Studio.Services.FlowEditorDocument.Actions
+  id: Actions
+  parent: Cress.Studio.Services.FlowEditorDocument
+  langs:
+  - csharp
+  - vb
+  name: Actions
+  nameWithType: FlowEditorDocument.Actions
+  fullName: Cress.Studio.Services.FlowEditorDocument.Actions
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/FlowDocumentService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Actions
+    path: ../src/Cress.Studio.Core/Services/FlowDocumentService.cs
+    startLine: 254
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  syntax:
+    content: public List<EditableExecutable> Actions { get; set; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.List{Cress.Studio.Services.EditableExecutable}
+    content.vb: Public Property Actions As List(Of EditableExecutable)
+  overload: Cress.Studio.Services.FlowEditorDocument.Actions*
+- uid: Cress.Studio.Services.FlowEditorDocument.Expectations
+  commentId: P:Cress.Studio.Services.FlowEditorDocument.Expectations
+  id: Expectations
+  parent: Cress.Studio.Services.FlowEditorDocument
+  langs:
+  - csharp
+  - vb
+  name: Expectations
+  nameWithType: FlowEditorDocument.Expectations
+  fullName: Cress.Studio.Services.FlowEditorDocument.Expectations
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/FlowDocumentService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Expectations
+    path: ../src/Cress.Studio.Core/Services/FlowDocumentService.cs
+    startLine: 255
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  syntax:
+    content: public List<EditableExecutable> Expectations { get; set; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.List{Cress.Studio.Services.EditableExecutable}
+    content.vb: Public Property Expectations As List(Of EditableExecutable)
+  overload: Cress.Studio.Services.FlowEditorDocument.Expectations*
+references:
+- uid: Cress.Studio.Services
+  commentId: N:Cress.Studio.Services
+  href: Cress.html
+  name: Cress.Studio.Services
+  nameWithType: Cress.Studio.Services
+  fullName: Cress.Studio.Services
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Studio
+    name: Studio
+    href: Cress.Studio.html
+  - name: .
+  - uid: Cress.Studio.Services
+    name: Services
+    href: Cress.Studio.Services.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Studio
+    name: Studio
+    href: Cress.Studio.html
+  - name: .
+  - uid: Cress.Studio.Services
+    name: Services
+    href: Cress.Studio.Services.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Cress.Studio.Services.FlowEditorDocument.FilePath*
+  commentId: Overload:Cress.Studio.Services.FlowEditorDocument.FilePath
+  href: Cress.Studio.Services.FlowEditorDocument.html#Cress_Studio_Services_FlowEditorDocument_FilePath
+  name: FilePath
+  nameWithType: FlowEditorDocument.FilePath
+  fullName: Cress.Studio.Services.FlowEditorDocument.FilePath
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Cress.Studio.Services.FlowEditorDocument.Id*
+  commentId: Overload:Cress.Studio.Services.FlowEditorDocument.Id
+  href: Cress.Studio.Services.FlowEditorDocument.html#Cress_Studio_Services_FlowEditorDocument_Id
+  name: Id
+  nameWithType: FlowEditorDocument.Id
+  fullName: Cress.Studio.Services.FlowEditorDocument.Id
+- uid: Cress.Studio.Services.FlowEditorDocument.Name*
+  commentId: Overload:Cress.Studio.Services.FlowEditorDocument.Name
+  href: Cress.Studio.Services.FlowEditorDocument.html#Cress_Studio_Services_FlowEditorDocument_Name
+  name: Name
+  nameWithType: FlowEditorDocument.Name
+  fullName: Cress.Studio.Services.FlowEditorDocument.Name
+- uid: Cress.Studio.Services.FlowEditorDocument.CapabilityId*
+  commentId: Overload:Cress.Studio.Services.FlowEditorDocument.CapabilityId
+  href: Cress.Studio.Services.FlowEditorDocument.html#Cress_Studio_Services_FlowEditorDocument_CapabilityId
+  name: CapabilityId
+  nameWithType: FlowEditorDocument.CapabilityId
+  fullName: Cress.Studio.Services.FlowEditorDocument.CapabilityId
+- uid: Cress.Studio.Services.FlowEditorDocument.Summary*
+  commentId: Overload:Cress.Studio.Services.FlowEditorDocument.Summary
+  href: Cress.Studio.Services.FlowEditorDocument.html#Cress_Studio_Services_FlowEditorDocument_Summary
+  name: Summary
+  nameWithType: FlowEditorDocument.Summary
+  fullName: Cress.Studio.Services.FlowEditorDocument.Summary
+- uid: Cress.Studio.Services.FlowEditorDocument.Status*
+  commentId: Overload:Cress.Studio.Services.FlowEditorDocument.Status
+  href: Cress.Studio.Services.FlowEditorDocument.html#Cress_Studio_Services_FlowEditorDocument_Status
+  name: Status
+  nameWithType: FlowEditorDocument.Status
+  fullName: Cress.Studio.Services.FlowEditorDocument.Status
+- uid: Cress.Studio.Services.FlowEditorDocument.TagsText*
+  commentId: Overload:Cress.Studio.Services.FlowEditorDocument.TagsText
+  href: Cress.Studio.Services.FlowEditorDocument.html#Cress_Studio_Services_FlowEditorDocument_TagsText
+  name: TagsText
+  nameWithType: FlowEditorDocument.TagsText
+  fullName: Cress.Studio.Services.FlowEditorDocument.TagsText
+- uid: Cress.Studio.Services.FlowEditorDocument.SourceText*
+  commentId: Overload:Cress.Studio.Services.FlowEditorDocument.SourceText
+  href: Cress.Studio.Services.FlowEditorDocument.html#Cress_Studio_Services_FlowEditorDocument_SourceText
+  name: SourceText
+  nameWithType: FlowEditorDocument.SourceText
+  fullName: Cress.Studio.Services.FlowEditorDocument.SourceText
+- uid: Cress.Studio.Services.FlowEditorDocument.Fixtures*
+  commentId: Overload:Cress.Studio.Services.FlowEditorDocument.Fixtures
+  href: Cress.Studio.Services.FlowEditorDocument.html#Cress_Studio_Services_FlowEditorDocument_Fixtures
+  name: Fixtures
+  nameWithType: FlowEditorDocument.Fixtures
+  fullName: Cress.Studio.Services.FlowEditorDocument.Fixtures
+- uid: System.Collections.Generic.List{Cress.Studio.Services.EditableFixture}
+  commentId: T:System.Collections.Generic.List{Cress.Studio.Services.EditableFixture}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  name: List<EditableFixture>
+  nameWithType: List<EditableFixture>
+  fullName: System.Collections.Generic.List<Cress.Studio.Services.EditableFixture>
+  nameWithType.vb: List(Of EditableFixture)
+  fullName.vb: System.Collections.Generic.List(Of Cress.Studio.Services.EditableFixture)
+  name.vb: List(Of EditableFixture)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - uid: Cress.Studio.Services.EditableFixture
+    name: EditableFixture
+    href: Cress.Studio.Services.EditableFixture.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Cress.Studio.Services.EditableFixture
+    name: EditableFixture
+    href: Cress.Studio.Services.EditableFixture.html
+  - name: )
+- uid: System.Collections.Generic.List`1
+  commentId: T:System.Collections.Generic.List`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  name: List<T>
+  nameWithType: List<T>
+  fullName: System.Collections.Generic.List<T>
+  nameWithType.vb: List(Of T)
+  fullName.vb: System.Collections.Generic.List(Of T)
+  name.vb: List(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: Cress.Studio.Services.FlowEditorDocument.Actions*
+  commentId: Overload:Cress.Studio.Services.FlowEditorDocument.Actions
+  href: Cress.Studio.Services.FlowEditorDocument.html#Cress_Studio_Services_FlowEditorDocument_Actions
+  name: Actions
+  nameWithType: FlowEditorDocument.Actions
+  fullName: Cress.Studio.Services.FlowEditorDocument.Actions
+- uid: System.Collections.Generic.List{Cress.Studio.Services.EditableExecutable}
+  commentId: T:System.Collections.Generic.List{Cress.Studio.Services.EditableExecutable}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  name: List<EditableExecutable>
+  nameWithType: List<EditableExecutable>
+  fullName: System.Collections.Generic.List<Cress.Studio.Services.EditableExecutable>
+  nameWithType.vb: List(Of EditableExecutable)
+  fullName.vb: System.Collections.Generic.List(Of Cress.Studio.Services.EditableExecutable)
+  name.vb: List(Of EditableExecutable)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - uid: Cress.Studio.Services.EditableExecutable
+    name: EditableExecutable
+    href: Cress.Studio.Services.EditableExecutable.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Cress.Studio.Services.EditableExecutable
+    name: EditableExecutable
+    href: Cress.Studio.Services.EditableExecutable.html
+  - name: )
+- uid: Cress.Studio.Services.FlowEditorDocument.Expectations*
+  commentId: Overload:Cress.Studio.Services.FlowEditorDocument.Expectations
+  href: Cress.Studio.Services.FlowEditorDocument.html#Cress_Studio_Services_FlowEditorDocument_Expectations
+  name: Expectations
+  nameWithType: FlowEditorDocument.Expectations
+  fullName: Cress.Studio.Services.FlowEditorDocument.Expectations

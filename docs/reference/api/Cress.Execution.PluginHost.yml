@@ -1,0 +1,697 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Execution.PluginHost
+  commentId: T:Cress.Execution.PluginHost
+  id: PluginHost
+  parent: Cress.Execution
+  children:
+  - Cress.Execution.PluginHost.InvokeFixtureAsync(Cress.Execution.ProjectCatalog,Cress.Core.Models.PlanAction,Cress.Execution.FlowExecutionContext,System.Threading.CancellationToken)
+  - Cress.Execution.PluginHost.InvokeStepAsync(Cress.Execution.ProjectCatalog,Cress.Core.Models.PlanAction,Cress.Execution.FlowExecutionContext,System.Threading.CancellationToken)
+  - Cress.Execution.PluginHost.Probe(Cress.Execution.ProjectCatalog,System.String)
+  langs:
+  - csharp
+  - vb
+  name: PluginHost
+  nameWithType: PluginHost
+  fullName: Cress.Execution.PluginHost
+  type: Class
+  source:
+    remote:
+      path: src/Cress.Execution/PluginHost.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: PluginHost
+    path: ../src/Cress.Execution/PluginHost.cs
+    startLine: 7
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Execution
+  syntax:
+    content: public sealed class PluginHost
+    content.vb: Public NotInheritable Class PluginHost
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Cress.Execution.PluginHost.InvokeStepAsync(Cress.Execution.ProjectCatalog,Cress.Core.Models.PlanAction,Cress.Execution.FlowExecutionContext,System.Threading.CancellationToken)
+  commentId: M:Cress.Execution.PluginHost.InvokeStepAsync(Cress.Execution.ProjectCatalog,Cress.Core.Models.PlanAction,Cress.Execution.FlowExecutionContext,System.Threading.CancellationToken)
+  id: InvokeStepAsync(Cress.Execution.ProjectCatalog,Cress.Core.Models.PlanAction,Cress.Execution.FlowExecutionContext,System.Threading.CancellationToken)
+  parent: Cress.Execution.PluginHost
+  langs:
+  - csharp
+  - vb
+  name: InvokeStepAsync(ProjectCatalog, PlanAction, FlowExecutionContext, CancellationToken)
+  nameWithType: PluginHost.InvokeStepAsync(ProjectCatalog, PlanAction, FlowExecutionContext, CancellationToken)
+  fullName: Cress.Execution.PluginHost.InvokeStepAsync(Cress.Execution.ProjectCatalog, Cress.Core.Models.PlanAction, Cress.Execution.FlowExecutionContext, System.Threading.CancellationToken)
+  type: Method
+  source:
+    remote:
+      path: src/Cress.Execution/PluginHost.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: InvokeStepAsync
+    path: ../src/Cress.Execution/PluginHost.cs
+    startLine: 12
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Execution
+  syntax:
+    content: public Task<DriverExecutionResult> InvokeStepAsync(ProjectCatalog catalog, PlanAction action, FlowExecutionContext context, CancellationToken cancellationToken)
+    parameters:
+    - id: catalog
+      type: Cress.Execution.ProjectCatalog
+    - id: action
+      type: Cress.Core.Models.PlanAction
+    - id: context
+      type: Cress.Execution.FlowExecutionContext
+    - id: cancellationToken
+      type: System.Threading.CancellationToken
+    return:
+      type: System.Threading.Tasks.Task{Cress.Core.Models.DriverExecutionResult}
+    content.vb: Public Function InvokeStepAsync(catalog As ProjectCatalog, action As PlanAction, context As FlowExecutionContext, cancellationToken As CancellationToken) As Task(Of DriverExecutionResult)
+  overload: Cress.Execution.PluginHost.InvokeStepAsync*
+- uid: Cress.Execution.PluginHost.InvokeFixtureAsync(Cress.Execution.ProjectCatalog,Cress.Core.Models.PlanAction,Cress.Execution.FlowExecutionContext,System.Threading.CancellationToken)
+  commentId: M:Cress.Execution.PluginHost.InvokeFixtureAsync(Cress.Execution.ProjectCatalog,Cress.Core.Models.PlanAction,Cress.Execution.FlowExecutionContext,System.Threading.CancellationToken)
+  id: InvokeFixtureAsync(Cress.Execution.ProjectCatalog,Cress.Core.Models.PlanAction,Cress.Execution.FlowExecutionContext,System.Threading.CancellationToken)
+  parent: Cress.Execution.PluginHost
+  langs:
+  - csharp
+  - vb
+  name: InvokeFixtureAsync(ProjectCatalog, PlanAction, FlowExecutionContext, CancellationToken)
+  nameWithType: PluginHost.InvokeFixtureAsync(ProjectCatalog, PlanAction, FlowExecutionContext, CancellationToken)
+  fullName: Cress.Execution.PluginHost.InvokeFixtureAsync(Cress.Execution.ProjectCatalog, Cress.Core.Models.PlanAction, Cress.Execution.FlowExecutionContext, System.Threading.CancellationToken)
+  type: Method
+  source:
+    remote:
+      path: src/Cress.Execution/PluginHost.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: InvokeFixtureAsync
+    path: ../src/Cress.Execution/PluginHost.cs
+    startLine: 69
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Execution
+  syntax:
+    content: public Task<DriverExecutionResult> InvokeFixtureAsync(ProjectCatalog catalog, PlanAction action, FlowExecutionContext context, CancellationToken cancellationToken)
+    parameters:
+    - id: catalog
+      type: Cress.Execution.ProjectCatalog
+    - id: action
+      type: Cress.Core.Models.PlanAction
+    - id: context
+      type: Cress.Execution.FlowExecutionContext
+    - id: cancellationToken
+      type: System.Threading.CancellationToken
+    return:
+      type: System.Threading.Tasks.Task{Cress.Core.Models.DriverExecutionResult}
+    content.vb: Public Function InvokeFixtureAsync(catalog As ProjectCatalog, action As PlanAction, context As FlowExecutionContext, cancellationToken As CancellationToken) As Task(Of DriverExecutionResult)
+  overload: Cress.Execution.PluginHost.InvokeFixtureAsync*
+- uid: Cress.Execution.PluginHost.Probe(Cress.Execution.ProjectCatalog,System.String)
+  commentId: M:Cress.Execution.PluginHost.Probe(Cress.Execution.ProjectCatalog,System.String)
+  id: Probe(Cress.Execution.ProjectCatalog,System.String)
+  parent: Cress.Execution.PluginHost
+  langs:
+  - csharp
+  - vb
+  name: Probe(ProjectCatalog, string)
+  nameWithType: PluginHost.Probe(ProjectCatalog, string)
+  fullName: Cress.Execution.PluginHost.Probe(Cress.Execution.ProjectCatalog, string)
+  type: Method
+  source:
+    remote:
+      path: src/Cress.Execution/PluginHost.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Probe
+    path: ../src/Cress.Execution/PluginHost.cs
+    startLine: 132
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Execution
+  syntax:
+    content: public IReadOnlyList<Diagnostic> Probe(ProjectCatalog catalog, string pluginName)
+    parameters:
+    - id: catalog
+      type: Cress.Execution.ProjectCatalog
+    - id: pluginName
+      type: System.String
+    return:
+      type: System.Collections.Generic.IReadOnlyList{Cress.Core.Models.Diagnostic}
+    content.vb: Public Function Probe(catalog As ProjectCatalog, pluginName As String) As IReadOnlyList(Of Diagnostic)
+  overload: Cress.Execution.PluginHost.Probe*
+  nameWithType.vb: PluginHost.Probe(ProjectCatalog, String)
+  fullName.vb: Cress.Execution.PluginHost.Probe(Cress.Execution.ProjectCatalog, String)
+  name.vb: Probe(ProjectCatalog, String)
+references:
+- uid: Cress.Execution
+  commentId: N:Cress.Execution
+  href: Cress.html
+  name: Cress.Execution
+  nameWithType: Cress.Execution
+  fullName: Cress.Execution
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Execution
+    name: Execution
+    href: Cress.Execution.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Execution
+    name: Execution
+    href: Cress.Execution.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Cress.Execution.PluginHost.InvokeStepAsync*
+  commentId: Overload:Cress.Execution.PluginHost.InvokeStepAsync
+  href: Cress.Execution.PluginHost.html#Cress_Execution_PluginHost_InvokeStepAsync_Cress_Execution_ProjectCatalog_Cress_Core_Models_PlanAction_Cress_Execution_FlowExecutionContext_System_Threading_CancellationToken_
+  name: InvokeStepAsync
+  nameWithType: PluginHost.InvokeStepAsync
+  fullName: Cress.Execution.PluginHost.InvokeStepAsync
+- uid: Cress.Execution.ProjectCatalog
+  commentId: T:Cress.Execution.ProjectCatalog
+  parent: Cress.Execution
+  href: Cress.Execution.ProjectCatalog.html
+  name: ProjectCatalog
+  nameWithType: ProjectCatalog
+  fullName: Cress.Execution.ProjectCatalog
+- uid: Cress.Core.Models.PlanAction
+  commentId: T:Cress.Core.Models.PlanAction
+  parent: Cress.Core.Models
+  href: Cress.Core.Models.PlanAction.html
+  name: PlanAction
+  nameWithType: PlanAction
+  fullName: Cress.Core.Models.PlanAction
+- uid: Cress.Execution.FlowExecutionContext
+  commentId: T:Cress.Execution.FlowExecutionContext
+  parent: Cress.Execution
+  href: Cress.Execution.FlowExecutionContext.html
+  name: FlowExecutionContext
+  nameWithType: FlowExecutionContext
+  fullName: Cress.Execution.FlowExecutionContext
+- uid: System.Threading.CancellationToken
+  commentId: T:System.Threading.CancellationToken
+  parent: System.Threading
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken
+  name: CancellationToken
+  nameWithType: CancellationToken
+  fullName: System.Threading.CancellationToken
+- uid: System.Threading.Tasks.Task{Cress.Core.Models.DriverExecutionResult}
+  commentId: T:System.Threading.Tasks.Task{Cress.Core.Models.DriverExecutionResult}
+  parent: System.Threading.Tasks
+  definition: System.Threading.Tasks.Task`1
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<DriverExecutionResult>
+  nameWithType: Task<DriverExecutionResult>
+  fullName: System.Threading.Tasks.Task<Cress.Core.Models.DriverExecutionResult>
+  nameWithType.vb: Task(Of DriverExecutionResult)
+  fullName.vb: System.Threading.Tasks.Task(Of Cress.Core.Models.DriverExecutionResult)
+  name.vb: Task(Of DriverExecutionResult)
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - uid: Cress.Core.Models.DriverExecutionResult
+    name: DriverExecutionResult
+    href: Cress.Core.Models.DriverExecutionResult.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Cress.Core.Models.DriverExecutionResult
+    name: DriverExecutionResult
+    href: Cress.Core.Models.DriverExecutionResult.html
+  - name: )
+- uid: Cress.Core.Models
+  commentId: N:Cress.Core.Models
+  href: Cress.html
+  name: Cress.Core.Models
+  nameWithType: Cress.Core.Models
+  fullName: Cress.Core.Models
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Core
+    name: Core
+    href: Cress.Core.html
+  - name: .
+  - uid: Cress.Core.Models
+    name: Models
+    href: Cress.Core.Models.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Core
+    name: Core
+    href: Cress.Core.html
+  - name: .
+  - uid: Cress.Core.Models
+    name: Models
+    href: Cress.Core.Models.html
+- uid: System.Threading
+  commentId: N:System.Threading
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Threading
+  nameWithType: System.Threading
+  fullName: System.Threading
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+- uid: System.Threading.Tasks.Task`1
+  commentId: T:System.Threading.Tasks.Task`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<TResult>
+  nameWithType: Task<TResult>
+  fullName: System.Threading.Tasks.Task<TResult>
+  nameWithType.vb: Task(Of TResult)
+  fullName.vb: System.Threading.Tasks.Task(Of TResult)
+  name.vb: Task(Of TResult)
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - name: TResult
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TResult
+  - name: )
+- uid: System.Threading.Tasks
+  commentId: N:System.Threading.Tasks
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Threading.Tasks
+  nameWithType: System.Threading.Tasks
+  fullName: System.Threading.Tasks
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+- uid: Cress.Execution.PluginHost.InvokeFixtureAsync*
+  commentId: Overload:Cress.Execution.PluginHost.InvokeFixtureAsync
+  href: Cress.Execution.PluginHost.html#Cress_Execution_PluginHost_InvokeFixtureAsync_Cress_Execution_ProjectCatalog_Cress_Core_Models_PlanAction_Cress_Execution_FlowExecutionContext_System_Threading_CancellationToken_
+  name: InvokeFixtureAsync
+  nameWithType: PluginHost.InvokeFixtureAsync
+  fullName: Cress.Execution.PluginHost.InvokeFixtureAsync
+- uid: Cress.Execution.PluginHost.Probe*
+  commentId: Overload:Cress.Execution.PluginHost.Probe
+  href: Cress.Execution.PluginHost.html#Cress_Execution_PluginHost_Probe_Cress_Execution_ProjectCatalog_System_String_
+  name: Probe
+  nameWithType: PluginHost.Probe
+  fullName: Cress.Execution.PluginHost.Probe
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: System.Collections.Generic.IReadOnlyList{Cress.Core.Models.Diagnostic}
+  commentId: T:System.Collections.Generic.IReadOnlyList{Cress.Core.Models.Diagnostic}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IReadOnlyList`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  name: IReadOnlyList<Diagnostic>
+  nameWithType: IReadOnlyList<Diagnostic>
+  fullName: System.Collections.Generic.IReadOnlyList<Cress.Core.Models.Diagnostic>
+  nameWithType.vb: IReadOnlyList(Of Diagnostic)
+  fullName.vb: System.Collections.Generic.IReadOnlyList(Of Cress.Core.Models.Diagnostic)
+  name.vb: IReadOnlyList(Of Diagnostic)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: <
+  - uid: Cress.Core.Models.Diagnostic
+    name: Diagnostic
+    href: Cress.Core.Models.Diagnostic.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Cress.Core.Models.Diagnostic
+    name: Diagnostic
+    href: Cress.Core.Models.Diagnostic.html
+  - name: )
+- uid: System.Collections.Generic.IReadOnlyList`1
+  commentId: T:System.Collections.Generic.IReadOnlyList`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  name: IReadOnlyList<T>
+  nameWithType: IReadOnlyList<T>
+  fullName: System.Collections.Generic.IReadOnlyList<T>
+  nameWithType.vb: IReadOnlyList(Of T)
+  fullName.vb: System.Collections.Generic.IReadOnlyList(Of T)
+  name.vb: IReadOnlyList(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic

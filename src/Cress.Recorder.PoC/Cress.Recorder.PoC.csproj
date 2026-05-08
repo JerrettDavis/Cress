@@ -10,8 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="FlaUI.Core" />
-    <PackageReference Include="FlaUI.UIA3" />
+    <PackageReference Include="Flawright" />
   </ItemGroup>
 
   <ItemGroup>

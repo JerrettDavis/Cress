@@ -1,0 +1,428 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Execution.IRuntimeDriver
+  commentId: T:Cress.Execution.IRuntimeDriver
+  id: IRuntimeDriver
+  parent: Cress.Execution
+  children:
+  - Cress.Execution.IRuntimeDriver.HealthCheck(Cress.Execution.ProjectCatalog)
+  - Cress.Execution.IRuntimeDriver.Name
+  - Cress.Execution.IRuntimeDriver.StartSessionAsync(Cress.Execution.DriverSessionStartContext,System.Threading.CancellationToken)
+  langs:
+  - csharp
+  - vb
+  name: IRuntimeDriver
+  nameWithType: IRuntimeDriver
+  fullName: Cress.Execution.IRuntimeDriver
+  type: Interface
+  source:
+    remote:
+      path: src/Cress.Execution/DriverContracts.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: IRuntimeDriver
+    path: ../src/Cress.Execution/DriverContracts.cs
+    startLine: 5
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Execution
+  syntax:
+    content: public interface IRuntimeDriver
+    content.vb: Public Interface IRuntimeDriver
+- uid: Cress.Execution.IRuntimeDriver.Name
+  commentId: P:Cress.Execution.IRuntimeDriver.Name
+  id: Name
+  parent: Cress.Execution.IRuntimeDriver
+  langs:
+  - csharp
+  - vb
+  name: Name
+  nameWithType: IRuntimeDriver.Name
+  fullName: Cress.Execution.IRuntimeDriver.Name
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Execution/DriverContracts.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Name
+    path: ../src/Cress.Execution/DriverContracts.cs
+    startLine: 7
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Execution
+  syntax:
+    content: string Name { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: ReadOnly Property Name As String
+  overload: Cress.Execution.IRuntimeDriver.Name*
+- uid: Cress.Execution.IRuntimeDriver.HealthCheck(Cress.Execution.ProjectCatalog)
+  commentId: M:Cress.Execution.IRuntimeDriver.HealthCheck(Cress.Execution.ProjectCatalog)
+  id: HealthCheck(Cress.Execution.ProjectCatalog)
+  parent: Cress.Execution.IRuntimeDriver
+  langs:
+  - csharp
+  - vb
+  name: HealthCheck(ProjectCatalog)
+  nameWithType: IRuntimeDriver.HealthCheck(ProjectCatalog)
+  fullName: Cress.Execution.IRuntimeDriver.HealthCheck(Cress.Execution.ProjectCatalog)
+  type: Method
+  source:
+    remote:
+      path: src/Cress.Execution/DriverContracts.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: HealthCheck
+    path: ../src/Cress.Execution/DriverContracts.cs
+    startLine: 8
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Execution
+  syntax:
+    content: IReadOnlyList<Diagnostic> HealthCheck(ProjectCatalog catalog)
+    parameters:
+    - id: catalog
+      type: Cress.Execution.ProjectCatalog
+    return:
+      type: System.Collections.Generic.IReadOnlyList{Cress.Core.Models.Diagnostic}
+    content.vb: Function HealthCheck(catalog As ProjectCatalog) As IReadOnlyList(Of Diagnostic)
+  overload: Cress.Execution.IRuntimeDriver.HealthCheck*
+- uid: Cress.Execution.IRuntimeDriver.StartSessionAsync(Cress.Execution.DriverSessionStartContext,System.Threading.CancellationToken)
+  commentId: M:Cress.Execution.IRuntimeDriver.StartSessionAsync(Cress.Execution.DriverSessionStartContext,System.Threading.CancellationToken)
+  id: StartSessionAsync(Cress.Execution.DriverSessionStartContext,System.Threading.CancellationToken)
+  parent: Cress.Execution.IRuntimeDriver
+  langs:
+  - csharp
+  - vb
+  name: StartSessionAsync(DriverSessionStartContext, CancellationToken)
+  nameWithType: IRuntimeDriver.StartSessionAsync(DriverSessionStartContext, CancellationToken)
+  fullName: Cress.Execution.IRuntimeDriver.StartSessionAsync(Cress.Execution.DriverSessionStartContext, System.Threading.CancellationToken)
+  type: Method
+  source:
+    remote:
+      path: src/Cress.Execution/DriverContracts.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: StartSessionAsync
+    path: ../src/Cress.Execution/DriverContracts.cs
+    startLine: 9
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Execution
+  syntax:
+    content: Task<IDriverSession> StartSessionAsync(DriverSessionStartContext context, CancellationToken cancellationToken)
+    parameters:
+    - id: context
+      type: Cress.Execution.DriverSessionStartContext
+    - id: cancellationToken
+      type: System.Threading.CancellationToken
+    return:
+      type: System.Threading.Tasks.Task{Cress.Execution.IDriverSession}
+    content.vb: Function StartSessionAsync(context As DriverSessionStartContext, cancellationToken As CancellationToken) As Task(Of IDriverSession)
+  overload: Cress.Execution.IRuntimeDriver.StartSessionAsync*
+references:
+- uid: Cress.Execution
+  commentId: N:Cress.Execution
+  href: Cress.html
+  name: Cress.Execution
+  nameWithType: Cress.Execution
+  fullName: Cress.Execution
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Execution
+    name: Execution
+    href: Cress.Execution.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Execution
+    name: Execution
+    href: Cress.Execution.html
+- uid: Cress.Execution.IRuntimeDriver.Name*
+  commentId: Overload:Cress.Execution.IRuntimeDriver.Name
+  href: Cress.Execution.IRuntimeDriver.html#Cress_Execution_IRuntimeDriver_Name
+  name: Name
+  nameWithType: IRuntimeDriver.Name
+  fullName: Cress.Execution.IRuntimeDriver.Name
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Cress.Execution.IRuntimeDriver.HealthCheck*
+  commentId: Overload:Cress.Execution.IRuntimeDriver.HealthCheck
+  href: Cress.Execution.IRuntimeDriver.html#Cress_Execution_IRuntimeDriver_HealthCheck_Cress_Execution_ProjectCatalog_
+  name: HealthCheck
+  nameWithType: IRuntimeDriver.HealthCheck
+  fullName: Cress.Execution.IRuntimeDriver.HealthCheck
+- uid: Cress.Execution.ProjectCatalog
+  commentId: T:Cress.Execution.ProjectCatalog
+  parent: Cress.Execution
+  href: Cress.Execution.ProjectCatalog.html
+  name: ProjectCatalog
+  nameWithType: ProjectCatalog
+  fullName: Cress.Execution.ProjectCatalog
+- uid: System.Collections.Generic.IReadOnlyList{Cress.Core.Models.Diagnostic}
+  commentId: T:System.Collections.Generic.IReadOnlyList{Cress.Core.Models.Diagnostic}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IReadOnlyList`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  name: IReadOnlyList<Diagnostic>
+  nameWithType: IReadOnlyList<Diagnostic>
+  fullName: System.Collections.Generic.IReadOnlyList<Cress.Core.Models.Diagnostic>
+  nameWithType.vb: IReadOnlyList(Of Diagnostic)
+  fullName.vb: System.Collections.Generic.IReadOnlyList(Of Cress.Core.Models.Diagnostic)
+  name.vb: IReadOnlyList(Of Diagnostic)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: <
+  - uid: Cress.Core.Models.Diagnostic
+    name: Diagnostic
+    href: Cress.Core.Models.Diagnostic.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Cress.Core.Models.Diagnostic
+    name: Diagnostic
+    href: Cress.Core.Models.Diagnostic.html
+  - name: )
+- uid: System.Collections.Generic.IReadOnlyList`1
+  commentId: T:System.Collections.Generic.IReadOnlyList`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  name: IReadOnlyList<T>
+  nameWithType: IReadOnlyList<T>
+  fullName: System.Collections.Generic.IReadOnlyList<T>
+  nameWithType.vb: IReadOnlyList(Of T)
+  fullName.vb: System.Collections.Generic.IReadOnlyList(Of T)
+  name.vb: IReadOnlyList(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: Cress.Execution.IRuntimeDriver.StartSessionAsync*
+  commentId: Overload:Cress.Execution.IRuntimeDriver.StartSessionAsync
+  href: Cress.Execution.IRuntimeDriver.html#Cress_Execution_IRuntimeDriver_StartSessionAsync_Cress_Execution_DriverSessionStartContext_System_Threading_CancellationToken_
+  name: StartSessionAsync
+  nameWithType: IRuntimeDriver.StartSessionAsync
+  fullName: Cress.Execution.IRuntimeDriver.StartSessionAsync
+- uid: Cress.Execution.DriverSessionStartContext
+  commentId: T:Cress.Execution.DriverSessionStartContext
+  parent: Cress.Execution
+  href: Cress.Execution.DriverSessionStartContext.html
+  name: DriverSessionStartContext
+  nameWithType: DriverSessionStartContext
+  fullName: Cress.Execution.DriverSessionStartContext
+- uid: System.Threading.CancellationToken
+  commentId: T:System.Threading.CancellationToken
+  parent: System.Threading
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken
+  name: CancellationToken
+  nameWithType: CancellationToken
+  fullName: System.Threading.CancellationToken
+- uid: System.Threading.Tasks.Task{Cress.Execution.IDriverSession}
+  commentId: T:System.Threading.Tasks.Task{Cress.Execution.IDriverSession}
+  parent: System.Threading.Tasks
+  definition: System.Threading.Tasks.Task`1
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<IDriverSession>
+  nameWithType: Task<IDriverSession>
+  fullName: System.Threading.Tasks.Task<Cress.Execution.IDriverSession>
+  nameWithType.vb: Task(Of IDriverSession)
+  fullName.vb: System.Threading.Tasks.Task(Of Cress.Execution.IDriverSession)
+  name.vb: Task(Of IDriverSession)
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - uid: Cress.Execution.IDriverSession
+    name: IDriverSession
+    href: Cress.Execution.IDriverSession.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Cress.Execution.IDriverSession
+    name: IDriverSession
+    href: Cress.Execution.IDriverSession.html
+  - name: )
+- uid: System.Threading
+  commentId: N:System.Threading
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Threading
+  nameWithType: System.Threading
+  fullName: System.Threading
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+- uid: System.Threading.Tasks.Task`1
+  commentId: T:System.Threading.Tasks.Task`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<TResult>
+  nameWithType: Task<TResult>
+  fullName: System.Threading.Tasks.Task<TResult>
+  nameWithType.vb: Task(Of TResult)
+  fullName.vb: System.Threading.Tasks.Task(Of TResult)
+  name.vb: Task(Of TResult)
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - name: TResult
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TResult
+  - name: )
+- uid: System.Threading.Tasks
+  commentId: N:System.Threading.Tasks
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Threading.Tasks
+  nameWithType: System.Threading.Tasks
+  fullName: System.Threading.Tasks
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks

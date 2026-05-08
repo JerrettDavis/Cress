@@ -1,0 +1,174 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Studio.Services.StudioRunnerNodeStatus
+  commentId: T:Cress.Studio.Services.StudioRunnerNodeStatus
+  id: StudioRunnerNodeStatus
+  parent: Cress.Studio.Services
+  children:
+  - Cress.Studio.Services.StudioRunnerNodeStatus.Busy
+  - Cress.Studio.Services.StudioRunnerNodeStatus.Degraded
+  - Cress.Studio.Services.StudioRunnerNodeStatus.Healthy
+  - Cress.Studio.Services.StudioRunnerNodeStatus.Offline
+  langs:
+  - csharp
+  - vb
+  name: StudioRunnerNodeStatus
+  nameWithType: StudioRunnerNodeStatus
+  fullName: Cress.Studio.Services.StudioRunnerNodeStatus
+  type: Enum
+  source:
+    remote:
+      path: src/Cress.Execution/StudioRunnerService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: StudioRunnerNodeStatus
+    path: ../src/Cress.Execution/StudioRunnerService.cs
+    startLine: 271
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Studio.Services
+  syntax:
+    content: public enum StudioRunnerNodeStatus
+    content.vb: Public Enum StudioRunnerNodeStatus
+- uid: Cress.Studio.Services.StudioRunnerNodeStatus.Healthy
+  commentId: F:Cress.Studio.Services.StudioRunnerNodeStatus.Healthy
+  id: Healthy
+  parent: Cress.Studio.Services.StudioRunnerNodeStatus
+  langs:
+  - csharp
+  - vb
+  name: Healthy
+  nameWithType: StudioRunnerNodeStatus.Healthy
+  fullName: Cress.Studio.Services.StudioRunnerNodeStatus.Healthy
+  type: Field
+  source:
+    remote:
+      path: src/Cress.Execution/StudioRunnerService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Healthy
+    path: ../src/Cress.Execution/StudioRunnerService.cs
+    startLine: 273
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Studio.Services
+  syntax:
+    content: Healthy = 0
+    return:
+      type: Cress.Studio.Services.StudioRunnerNodeStatus
+- uid: Cress.Studio.Services.StudioRunnerNodeStatus.Busy
+  commentId: F:Cress.Studio.Services.StudioRunnerNodeStatus.Busy
+  id: Busy
+  parent: Cress.Studio.Services.StudioRunnerNodeStatus
+  langs:
+  - csharp
+  - vb
+  name: Busy
+  nameWithType: StudioRunnerNodeStatus.Busy
+  fullName: Cress.Studio.Services.StudioRunnerNodeStatus.Busy
+  type: Field
+  source:
+    remote:
+      path: src/Cress.Execution/StudioRunnerService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Busy
+    path: ../src/Cress.Execution/StudioRunnerService.cs
+    startLine: 274
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Studio.Services
+  syntax:
+    content: Busy = 1
+    return:
+      type: Cress.Studio.Services.StudioRunnerNodeStatus
+- uid: Cress.Studio.Services.StudioRunnerNodeStatus.Degraded
+  commentId: F:Cress.Studio.Services.StudioRunnerNodeStatus.Degraded
+  id: Degraded
+  parent: Cress.Studio.Services.StudioRunnerNodeStatus
+  langs:
+  - csharp
+  - vb
+  name: Degraded
+  nameWithType: StudioRunnerNodeStatus.Degraded
+  fullName: Cress.Studio.Services.StudioRunnerNodeStatus.Degraded
+  type: Field
+  source:
+    remote:
+      path: src/Cress.Execution/StudioRunnerService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Degraded
+    path: ../src/Cress.Execution/StudioRunnerService.cs
+    startLine: 275
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Studio.Services
+  syntax:
+    content: Degraded = 2
+    return:
+      type: Cress.Studio.Services.StudioRunnerNodeStatus
+- uid: Cress.Studio.Services.StudioRunnerNodeStatus.Offline
+  commentId: F:Cress.Studio.Services.StudioRunnerNodeStatus.Offline
+  id: Offline
+  parent: Cress.Studio.Services.StudioRunnerNodeStatus
+  langs:
+  - csharp
+  - vb
+  name: Offline
+  nameWithType: StudioRunnerNodeStatus.Offline
+  fullName: Cress.Studio.Services.StudioRunnerNodeStatus.Offline
+  type: Field
+  source:
+    remote:
+      path: src/Cress.Execution/StudioRunnerService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Offline
+    path: ../src/Cress.Execution/StudioRunnerService.cs
+    startLine: 276
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Studio.Services
+  syntax:
+    content: Offline = 3
+    return:
+      type: Cress.Studio.Services.StudioRunnerNodeStatus
+references:
+- uid: Cress.Studio.Services
+  commentId: N:Cress.Studio.Services
+  href: Cress.html
+  name: Cress.Studio.Services
+  nameWithType: Cress.Studio.Services
+  fullName: Cress.Studio.Services
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Studio
+    name: Studio
+    href: Cress.Studio.html
+  - name: .
+  - uid: Cress.Studio.Services
+    name: Services
+    href: Cress.Studio.Services.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Studio
+    name: Studio
+    href: Cress.Studio.html
+  - name: .
+  - uid: Cress.Studio.Services
+    name: Services
+    href: Cress.Studio.Services.html
+- uid: Cress.Studio.Services.StudioRunnerNodeStatus
+  commentId: T:Cress.Studio.Services.StudioRunnerNodeStatus
+  parent: Cress.Studio.Services
+  href: Cress.Studio.Services.StudioRunnerNodeStatus.html
+  name: StudioRunnerNodeStatus
+  nameWithType: StudioRunnerNodeStatus
+  fullName: Cress.Studio.Services.StudioRunnerNodeStatus

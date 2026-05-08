@@ -1,0 +1,147 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Core.Models.DiagnosticSeverity
+  commentId: T:Cress.Core.Models.DiagnosticSeverity
+  id: DiagnosticSeverity
+  parent: Cress.Core.Models
+  children:
+  - Cress.Core.Models.DiagnosticSeverity.Error
+  - Cress.Core.Models.DiagnosticSeverity.Info
+  - Cress.Core.Models.DiagnosticSeverity.Warning
+  langs:
+  - csharp
+  - vb
+  name: DiagnosticSeverity
+  nameWithType: DiagnosticSeverity
+  fullName: Cress.Core.Models.DiagnosticSeverity
+  type: Enum
+  source:
+    remote:
+      path: src/Cress.Core/Models/Diagnostics.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: DiagnosticSeverity
+    path: ../src/Cress.Core/Models/Diagnostics.cs
+    startLine: 13
+  assemblies:
+  - Cress.Core
+  namespace: Cress.Core.Models
+  syntax:
+    content: public enum DiagnosticSeverity
+    content.vb: Public Enum DiagnosticSeverity
+- uid: Cress.Core.Models.DiagnosticSeverity.Info
+  commentId: F:Cress.Core.Models.DiagnosticSeverity.Info
+  id: Info
+  parent: Cress.Core.Models.DiagnosticSeverity
+  langs:
+  - csharp
+  - vb
+  name: Info
+  nameWithType: DiagnosticSeverity.Info
+  fullName: Cress.Core.Models.DiagnosticSeverity.Info
+  type: Field
+  source:
+    remote:
+      path: src/Cress.Core/Models/Diagnostics.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Info
+    path: ../src/Cress.Core/Models/Diagnostics.cs
+    startLine: 15
+  assemblies:
+  - Cress.Core
+  namespace: Cress.Core.Models
+  syntax:
+    content: Info = 0
+    return:
+      type: Cress.Core.Models.DiagnosticSeverity
+- uid: Cress.Core.Models.DiagnosticSeverity.Warning
+  commentId: F:Cress.Core.Models.DiagnosticSeverity.Warning
+  id: Warning
+  parent: Cress.Core.Models.DiagnosticSeverity
+  langs:
+  - csharp
+  - vb
+  name: Warning
+  nameWithType: DiagnosticSeverity.Warning
+  fullName: Cress.Core.Models.DiagnosticSeverity.Warning
+  type: Field
+  source:
+    remote:
+      path: src/Cress.Core/Models/Diagnostics.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Warning
+    path: ../src/Cress.Core/Models/Diagnostics.cs
+    startLine: 16
+  assemblies:
+  - Cress.Core
+  namespace: Cress.Core.Models
+  syntax:
+    content: Warning = 1
+    return:
+      type: Cress.Core.Models.DiagnosticSeverity
+- uid: Cress.Core.Models.DiagnosticSeverity.Error
+  commentId: F:Cress.Core.Models.DiagnosticSeverity.Error
+  id: Error
+  parent: Cress.Core.Models.DiagnosticSeverity
+  langs:
+  - csharp
+  - vb
+  name: Error
+  nameWithType: DiagnosticSeverity.Error
+  fullName: Cress.Core.Models.DiagnosticSeverity.Error
+  type: Field
+  source:
+    remote:
+      path: src/Cress.Core/Models/Diagnostics.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Error
+    path: ../src/Cress.Core/Models/Diagnostics.cs
+    startLine: 17
+  assemblies:
+  - Cress.Core
+  namespace: Cress.Core.Models
+  syntax:
+    content: Error = 2
+    return:
+      type: Cress.Core.Models.DiagnosticSeverity
+references:
+- uid: Cress.Core.Models
+  commentId: N:Cress.Core.Models
+  href: Cress.html
+  name: Cress.Core.Models
+  nameWithType: Cress.Core.Models
+  fullName: Cress.Core.Models
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Core
+    name: Core
+    href: Cress.Core.html
+  - name: .
+  - uid: Cress.Core.Models
+    name: Models
+    href: Cress.Core.Models.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Core
+    name: Core
+    href: Cress.Core.html
+  - name: .
+  - uid: Cress.Core.Models
+    name: Models
+    href: Cress.Core.Models.html
+- uid: Cress.Core.Models.DiagnosticSeverity
+  commentId: T:Cress.Core.Models.DiagnosticSeverity
+  parent: Cress.Core.Models
+  href: Cress.Core.Models.DiagnosticSeverity.html
+  name: DiagnosticSeverity
+  nameWithType: DiagnosticSeverity
+  fullName: Cress.Core.Models.DiagnosticSeverity

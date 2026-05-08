@@ -4,7 +4,7 @@
 <span class="record-button-wrap">
 @if (State.IsRecording)
 {
-    <button type="button" class="action-button record-active" @onclick="StopAsync"
+    <button type="button" class="action-button record-active" data-testid="record-button-stop" @onclick="StopAsync"
             title="Stop recording and save the captured flow">
         <span class="record-dot record-dot--pulse" aria-hidden="true"></span>
         Stop recording
@@ -18,7 +18,7 @@
 }
 else
 {
-    <button type="button" class="action-button record-idle" @onclick="OpenPickerAsync"
+    <button type="button" class="action-button record-idle" data-testid="record-button-open" @onclick="OpenPickerAsync"
             title="Record a new flow by capturing UI interactions">
         <span class="record-dot" aria-hidden="true"></span>
         Record

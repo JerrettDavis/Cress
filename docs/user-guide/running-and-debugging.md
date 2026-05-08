@@ -2,6 +2,8 @@
 
 The CLI gives you a predictable loop for validation, plan inspection, execution, diagnostics, and report review.
 
+![Results panel](../images/studio/results-panel.png)
+
 ## Core command sequence
 
 ```powershell

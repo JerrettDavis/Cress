@@ -1,0 +1,688 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Gherkin.Phrases.StepPhrase
+  commentId: T:Cress.Gherkin.Phrases.StepPhrase
+  id: StepPhrase
+  parent: Cress.Gherkin.Phrases
+  children:
+  - Cress.Gherkin.Phrases.StepPhrase.#ctor(System.String,Cress.Gherkin.Phrases.GherkinKeyword,System.String,System.Collections.Generic.IReadOnlyList{System.String})
+  - Cress.Gherkin.Phrases.StepPhrase.Keyword
+  - Cress.Gherkin.Phrases.StepPhrase.RequiredKeys
+  - Cress.Gherkin.Phrases.StepPhrase.StepOp
+  - Cress.Gherkin.Phrases.StepPhrase.Template
+  langs:
+  - csharp
+  - vb
+  name: StepPhrase
+  nameWithType: StepPhrase
+  fullName: Cress.Gherkin.Phrases.StepPhrase
+  type: Class
+  source:
+    remote:
+      path: src/Cress.Gherkin/Phrases/StepPhrase.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: StepPhrase
+    path: ../src/Cress.Gherkin/Phrases/StepPhrase.cs
+    startLine: 16
+  assemblies:
+  - Cress.Gherkin
+  namespace: Cress.Gherkin.Phrases
+  summary: >-
+    Maps a step operation (and optionally a required set of with-block keys)
+
+    to a Gherkin keyword + phrase template.
+  example: []
+  syntax:
+    content: 'public sealed record StepPhrase : IEquatable<StepPhrase>'
+    content.vb: Public NotInheritable Class StepPhrase Implements IEquatable(Of StepPhrase)
+  inheritance:
+  - System.Object
+  implements:
+  - System.IEquatable{Cress.Gherkin.Phrases.StepPhrase}
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Cress.Gherkin.Phrases.StepPhrase.#ctor(System.String,Cress.Gherkin.Phrases.GherkinKeyword,System.String,System.Collections.Generic.IReadOnlyList{System.String})
+  commentId: M:Cress.Gherkin.Phrases.StepPhrase.#ctor(System.String,Cress.Gherkin.Phrases.GherkinKeyword,System.String,System.Collections.Generic.IReadOnlyList{System.String})
+  id: '#ctor(System.String,Cress.Gherkin.Phrases.GherkinKeyword,System.String,System.Collections.Generic.IReadOnlyList{System.String})'
+  parent: Cress.Gherkin.Phrases.StepPhrase
+  langs:
+  - csharp
+  - vb
+  name: StepPhrase(string, GherkinKeyword, string, IReadOnlyList<string>?)
+  nameWithType: StepPhrase.StepPhrase(string, GherkinKeyword, string, IReadOnlyList<string>?)
+  fullName: Cress.Gherkin.Phrases.StepPhrase.StepPhrase(string, Cress.Gherkin.Phrases.GherkinKeyword, string, System.Collections.Generic.IReadOnlyList<string>?)
+  type: Constructor
+  source:
+    remote:
+      path: src/Cress.Gherkin/Phrases/StepPhrase.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: .ctor
+    path: ../src/Cress.Gherkin/Phrases/StepPhrase.cs
+    startLine: 16
+  assemblies:
+  - Cress.Gherkin
+  namespace: Cress.Gherkin.Phrases
+  summary: >-
+    Maps a step operation (and optionally a required set of with-block keys)
+
+    to a Gherkin keyword + phrase template.
+  example: []
+  syntax:
+    content: public StepPhrase(string StepOp, GherkinKeyword Keyword, string Template, IReadOnlyList<string>? RequiredKeys = null)
+    parameters:
+    - id: StepOp
+      type: System.String
+      description: Step name, e.g. "ui.click".
+    - id: Keyword
+      type: Cress.Gherkin.Phrases.GherkinKeyword
+      description: The natural Gherkin keyword for this operation.
+    - id: Template
+      type: System.String
+      description: >-
+        Phrase template. Placeholders are {key} where key matches a with-block key.
+
+        Example: "I click {automationId}"
+    - id: RequiredKeys
+      type: System.Collections.Generic.IReadOnlyList{System.String}
+      description: >-
+        Optional set of keys that must be present in the with-block for this phrase
+
+        to be selected.  Used to distinguish overloads (e.g. testId variant of ui.click).
+    content.vb: Public Sub New(StepOp As String, Keyword As GherkinKeyword, Template As String, RequiredKeys As IReadOnlyList(Of String) = Nothing)
+  overload: Cress.Gherkin.Phrases.StepPhrase.#ctor*
+  nameWithType.vb: StepPhrase.New(String, GherkinKeyword, String, IReadOnlyList(Of String))
+  fullName.vb: Cress.Gherkin.Phrases.StepPhrase.New(String, Cress.Gherkin.Phrases.GherkinKeyword, String, System.Collections.Generic.IReadOnlyList(Of String))
+  name.vb: New(String, GherkinKeyword, String, IReadOnlyList(Of String))
+- uid: Cress.Gherkin.Phrases.StepPhrase.StepOp
+  commentId: P:Cress.Gherkin.Phrases.StepPhrase.StepOp
+  id: StepOp
+  parent: Cress.Gherkin.Phrases.StepPhrase
+  langs:
+  - csharp
+  - vb
+  name: StepOp
+  nameWithType: StepPhrase.StepOp
+  fullName: Cress.Gherkin.Phrases.StepPhrase.StepOp
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Gherkin/Phrases/StepPhrase.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: StepOp
+    path: ../src/Cress.Gherkin/Phrases/StepPhrase.cs
+    startLine: 17
+  assemblies:
+  - Cress.Gherkin
+  namespace: Cress.Gherkin.Phrases
+  summary: Step name, e.g. "ui.click".
+  example: []
+  syntax:
+    content: public string StepOp { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property StepOp As String
+  overload: Cress.Gherkin.Phrases.StepPhrase.StepOp*
+- uid: Cress.Gherkin.Phrases.StepPhrase.Keyword
+  commentId: P:Cress.Gherkin.Phrases.StepPhrase.Keyword
+  id: Keyword
+  parent: Cress.Gherkin.Phrases.StepPhrase
+  langs:
+  - csharp
+  - vb
+  name: Keyword
+  nameWithType: StepPhrase.Keyword
+  fullName: Cress.Gherkin.Phrases.StepPhrase.Keyword
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Gherkin/Phrases/StepPhrase.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Keyword
+    path: ../src/Cress.Gherkin/Phrases/StepPhrase.cs
+    startLine: 18
+  assemblies:
+  - Cress.Gherkin
+  namespace: Cress.Gherkin.Phrases
+  summary: The natural Gherkin keyword for this operation.
+  example: []
+  syntax:
+    content: public GherkinKeyword Keyword { get; init; }
+    parameters: []
+    return:
+      type: Cress.Gherkin.Phrases.GherkinKeyword
+    content.vb: Public Property Keyword As GherkinKeyword
+  overload: Cress.Gherkin.Phrases.StepPhrase.Keyword*
+- uid: Cress.Gherkin.Phrases.StepPhrase.Template
+  commentId: P:Cress.Gherkin.Phrases.StepPhrase.Template
+  id: Template
+  parent: Cress.Gherkin.Phrases.StepPhrase
+  langs:
+  - csharp
+  - vb
+  name: Template
+  nameWithType: StepPhrase.Template
+  fullName: Cress.Gherkin.Phrases.StepPhrase.Template
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Gherkin/Phrases/StepPhrase.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Template
+    path: ../src/Cress.Gherkin/Phrases/StepPhrase.cs
+    startLine: 19
+  assemblies:
+  - Cress.Gherkin
+  namespace: Cress.Gherkin.Phrases
+  summary: >-
+    Phrase template. Placeholders are {key} where key matches a with-block key.
+
+    Example: "I click {automationId}"
+  example: []
+  syntax:
+    content: public string Template { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Template As String
+  overload: Cress.Gherkin.Phrases.StepPhrase.Template*
+- uid: Cress.Gherkin.Phrases.StepPhrase.RequiredKeys
+  commentId: P:Cress.Gherkin.Phrases.StepPhrase.RequiredKeys
+  id: RequiredKeys
+  parent: Cress.Gherkin.Phrases.StepPhrase
+  langs:
+  - csharp
+  - vb
+  name: RequiredKeys
+  nameWithType: StepPhrase.RequiredKeys
+  fullName: Cress.Gherkin.Phrases.StepPhrase.RequiredKeys
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Gherkin/Phrases/StepPhrase.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: RequiredKeys
+    path: ../src/Cress.Gherkin/Phrases/StepPhrase.cs
+    startLine: 20
+  assemblies:
+  - Cress.Gherkin
+  namespace: Cress.Gherkin.Phrases
+  summary: >-
+    Optional set of keys that must be present in the with-block for this phrase
+
+    to be selected.  Used to distinguish overloads (e.g. testId variant of ui.click).
+  example: []
+  syntax:
+    content: public IReadOnlyList<string>? RequiredKeys { get; init; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.IReadOnlyList{System.String}
+    content.vb: Public Property RequiredKeys As IReadOnlyList(Of String)
+  overload: Cress.Gherkin.Phrases.StepPhrase.RequiredKeys*
+references:
+- uid: Cress.Gherkin.Phrases
+  commentId: N:Cress.Gherkin.Phrases
+  href: Cress.html
+  name: Cress.Gherkin.Phrases
+  nameWithType: Cress.Gherkin.Phrases
+  fullName: Cress.Gherkin.Phrases
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Gherkin
+    name: Gherkin
+    href: Cress.Gherkin.html
+  - name: .
+  - uid: Cress.Gherkin.Phrases
+    name: Phrases
+    href: Cress.Gherkin.Phrases.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Gherkin
+    name: Gherkin
+    href: Cress.Gherkin.html
+  - name: .
+  - uid: Cress.Gherkin.Phrases
+    name: Phrases
+    href: Cress.Gherkin.Phrases.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.IEquatable{Cress.Gherkin.Phrases.StepPhrase}
+  commentId: T:System.IEquatable{Cress.Gherkin.Phrases.StepPhrase}
+  parent: System
+  definition: System.IEquatable`1
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<StepPhrase>
+  nameWithType: IEquatable<StepPhrase>
+  fullName: System.IEquatable<Cress.Gherkin.Phrases.StepPhrase>
+  nameWithType.vb: IEquatable(Of StepPhrase)
+  fullName.vb: System.IEquatable(Of Cress.Gherkin.Phrases.StepPhrase)
+  name.vb: IEquatable(Of StepPhrase)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - uid: Cress.Gherkin.Phrases.StepPhrase
+    name: StepPhrase
+    href: Cress.Gherkin.Phrases.StepPhrase.html
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Cress.Gherkin.Phrases.StepPhrase
+    name: StepPhrase
+    href: Cress.Gherkin.Phrases.StepPhrase.html
+  - name: )
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.IEquatable`1
+  commentId: T:System.IEquatable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<T>
+  nameWithType: IEquatable<T>
+  fullName: System.IEquatable<T>
+  nameWithType.vb: IEquatable(Of T)
+  fullName.vb: System.IEquatable(Of T)
+  name.vb: IEquatable(Of T)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Cress.Gherkin.Phrases.StepPhrase.#ctor*
+  commentId: Overload:Cress.Gherkin.Phrases.StepPhrase.#ctor
+  href: Cress.Gherkin.Phrases.StepPhrase.html#Cress_Gherkin_Phrases_StepPhrase__ctor_System_String_Cress_Gherkin_Phrases_GherkinKeyword_System_String_System_Collections_Generic_IReadOnlyList_System_String__
+  name: StepPhrase
+  nameWithType: StepPhrase.StepPhrase
+  fullName: Cress.Gherkin.Phrases.StepPhrase.StepPhrase
+  nameWithType.vb: StepPhrase.New
+  fullName.vb: Cress.Gherkin.Phrases.StepPhrase.New
+  name.vb: New
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Cress.Gherkin.Phrases.GherkinKeyword
+  commentId: T:Cress.Gherkin.Phrases.GherkinKeyword
+  parent: Cress.Gherkin.Phrases
+  href: Cress.Gherkin.Phrases.GherkinKeyword.html
+  name: GherkinKeyword
+  nameWithType: GherkinKeyword
+  fullName: Cress.Gherkin.Phrases.GherkinKeyword
+- uid: System.Collections.Generic.IReadOnlyList{System.String}
+  commentId: T:System.Collections.Generic.IReadOnlyList{System.String}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IReadOnlyList`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  name: IReadOnlyList<string>
+  nameWithType: IReadOnlyList<string>
+  fullName: System.Collections.Generic.IReadOnlyList<string>
+  nameWithType.vb: IReadOnlyList(Of String)
+  fullName.vb: System.Collections.Generic.IReadOnlyList(Of String)
+  name.vb: IReadOnlyList(Of String)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+- uid: System.Collections.Generic.IReadOnlyList`1
+  commentId: T:System.Collections.Generic.IReadOnlyList`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  name: IReadOnlyList<T>
+  nameWithType: IReadOnlyList<T>
+  fullName: System.Collections.Generic.IReadOnlyList<T>
+  nameWithType.vb: IReadOnlyList(Of T)
+  fullName.vb: System.Collections.Generic.IReadOnlyList(Of T)
+  name.vb: IReadOnlyList(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: Cress.Gherkin.Phrases.StepPhrase.StepOp*
+  commentId: Overload:Cress.Gherkin.Phrases.StepPhrase.StepOp
+  href: Cress.Gherkin.Phrases.StepPhrase.html#Cress_Gherkin_Phrases_StepPhrase_StepOp
+  name: StepOp
+  nameWithType: StepPhrase.StepOp
+  fullName: Cress.Gherkin.Phrases.StepPhrase.StepOp
+- uid: Cress.Gherkin.Phrases.StepPhrase.Keyword*
+  commentId: Overload:Cress.Gherkin.Phrases.StepPhrase.Keyword
+  href: Cress.Gherkin.Phrases.StepPhrase.html#Cress_Gherkin_Phrases_StepPhrase_Keyword
+  name: Keyword
+  nameWithType: StepPhrase.Keyword
+  fullName: Cress.Gherkin.Phrases.StepPhrase.Keyword
+- uid: Cress.Gherkin.Phrases.StepPhrase.Template*
+  commentId: Overload:Cress.Gherkin.Phrases.StepPhrase.Template
+  href: Cress.Gherkin.Phrases.StepPhrase.html#Cress_Gherkin_Phrases_StepPhrase_Template
+  name: Template
+  nameWithType: StepPhrase.Template
+  fullName: Cress.Gherkin.Phrases.StepPhrase.Template
+- uid: Cress.Gherkin.Phrases.StepPhrase.RequiredKeys*
+  commentId: Overload:Cress.Gherkin.Phrases.StepPhrase.RequiredKeys
+  href: Cress.Gherkin.Phrases.StepPhrase.html#Cress_Gherkin_Phrases_StepPhrase_RequiredKeys
+  name: RequiredKeys
+  nameWithType: StepPhrase.RequiredKeys
+  fullName: Cress.Gherkin.Phrases.StepPhrase.RequiredKeys

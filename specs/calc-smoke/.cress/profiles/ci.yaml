@@ -6,7 +6,8 @@ timeouts:
 evidence:
   mode: standard
   screenshots: true
-flaui:
+flawright:
+  applicationPath: calc.exe
   windowTitle: Calculator
   launchTimeoutMs: 12000
 variables:

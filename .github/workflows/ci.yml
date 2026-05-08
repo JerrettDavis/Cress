@@ -73,7 +73,7 @@ jobs:
           dotnet test Cress.sln
           --configuration Release
           --no-build
-          --filter "FullyQualifiedName!~FlaUiRuntimeDriverTests&FullyQualifiedName!~StudioEndToEndTests"
+          --filter "FullyQualifiedName!~FlawrightRuntimeDriverTests&FullyQualifiedName!~StudioEndToEndTests"
           --results-directory ${{ env.TEST_RESULTS_DIR }}
           --logger "trx;LogFileName=test-results.trx"
           --collect:"XPlat Code Coverage"
@@ -85,29 +85,35 @@ jobs:
       - name: Run Node tests
         run: node --test node/tests/*.test.mjs
 
+      - name: Run Studio Web E2E tests
+        run: npm run test:e2e
+
       - name: Install ReportGenerator
         if: always()
         run: dotnet tool update -g dotnet-reportgenerator-globaltool --version 5.5.4
 
-      - name: Generate coverage report
+      - name: Generate full coverage report
         if: always()
         shell: pwsh
         run: |
-          $reports = (Get-ChildItem $env:TEST_RESULTS_DIR -Recurse -Filter coverage.cobertura.xml | ForEach-Object FullName) -join ';'
-          if ([string]::IsNullOrWhiteSpace($reports)) {
-            Write-Host 'No coverage files found.'
-            exit 0
-          }
+          $summary = .\scripts\Generate-CoverageReport.ps1 `
+            -ResultsDirectory $env:TEST_RESULTS_DIR `
+            -TargetDirectory coverage-report `
+            -Scope full
+          "FULL_COVERAGE_SUMMARY<<EOF" | Out-File -FilePath $env:GITHUB_ENV -Append
+          $summary | Out-File -FilePath $env:GITHUB_ENV -Append
+          "EOF" | Out-File -FilePath $env:GITHUB_ENV -Append
 
-          reportgenerator `
-            "-reports:$reports" `
-            "-targetdir:coverage-report" `
-            "-reporttypes:HtmlInline;Cobertura;TextSummary;Badges" `
-            "-assemblyfilters:+Cress*;-*Tests*" `
-            "-filefilters:-**\tests\**"
-
-          $summary = Get-Content coverage-report\Summary.txt -Raw
-          "COVERAGE_SUMMARY<<EOF" | Out-File -FilePath $env:GITHUB_ENV -Append
+      - name: Generate core coverage report
+        if: always()
+        shell: pwsh
+        run: |
+          $summary = .\scripts\Generate-CoverageReport.ps1 `
+            -ResultsDirectory $env:TEST_RESULTS_DIR `
+            -TargetDirectory coverage-report-core `
+            -Scope core `
+            -MinimumLineCoverage 90
+          "CORE_COVERAGE_SUMMARY<<EOF" | Out-File -FilePath $env:GITHUB_ENV -Append
           $summary | Out-File -FilePath $env:GITHUB_ENV -Append
           "EOF" | Out-File -FilePath $env:GITHUB_ENV -Append
 
@@ -124,8 +130,37 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: coverage-report
+          name: coverage-report-full
           path: coverage-report
+
+      - name: Upload core coverage report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report-core
+          path: coverage-report-core
+
+      - name: Upload full coverage to Codecov
+        if: always()
+        uses: codecov/codecov-action@v5
+        with:
+          files: coverage-report/Cobertura.xml
+          flags: full
+          name: cress-full
+          disable_search: true
+          fail_ci_if_error: true
+          verbose: true
+
+      - name: Upload core coverage to Codecov
+        if: always()
+        uses: codecov/codecov-action@v5
+        with:
+          files: coverage-report-core/Cobertura.xml
+          flags: core
+          name: cress-core
+          disable_search: true
+          fail_ci_if_error: true
+          verbose: true
 
       - name: Upload CLI packages
         if: always()
@@ -140,9 +175,14 @@ jobs:
         with:
           recreate: true
           message: |
-            ## Cress coverage
+            ## Cress full coverage
             ```
-            ${{ env.COVERAGE_SUMMARY }}
+            ${{ env.FULL_COVERAGE_SUMMARY }}
+            ```
+
+            ## Cress core coverage gate
+            ```
+            ${{ env.CORE_COVERAGE_SUMMARY }}
             ```
 
   apphost-smoke:

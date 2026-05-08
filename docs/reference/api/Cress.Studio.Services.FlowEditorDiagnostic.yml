@@ -1,0 +1,584 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Studio.Services.FlowEditorDiagnostic
+  commentId: T:Cress.Studio.Services.FlowEditorDiagnostic
+  id: FlowEditorDiagnostic
+  parent: Cress.Studio.Services
+  children:
+  - Cress.Studio.Services.FlowEditorDiagnostic.#ctor(System.String,Cress.Core.Models.DiagnosticSeverity,System.String,System.String)
+  - Cress.Studio.Services.FlowEditorDiagnostic.Message
+  - Cress.Studio.Services.FlowEditorDiagnostic.Recommendation
+  - Cress.Studio.Services.FlowEditorDiagnostic.Severity
+  - Cress.Studio.Services.FlowEditorDiagnostic.Target
+  langs:
+  - csharp
+  - vb
+  name: FlowEditorDiagnostic
+  nameWithType: FlowEditorDiagnostic
+  fullName: Cress.Studio.Services.FlowEditorDiagnostic
+  type: Class
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/StudioAuthoringService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: FlowEditorDiagnostic
+    path: ../src/Cress.Studio.Core/Services/StudioAuthoringService.cs
+    startLine: 301
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  syntax:
+    content: 'public sealed record FlowEditorDiagnostic : IEquatable<FlowEditorDiagnostic>'
+    content.vb: Public NotInheritable Class FlowEditorDiagnostic Implements IEquatable(Of FlowEditorDiagnostic)
+  inheritance:
+  - System.Object
+  implements:
+  - System.IEquatable{Cress.Studio.Services.FlowEditorDiagnostic}
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Cress.Studio.Services.FlowEditorDiagnostic.#ctor(System.String,Cress.Core.Models.DiagnosticSeverity,System.String,System.String)
+  commentId: M:Cress.Studio.Services.FlowEditorDiagnostic.#ctor(System.String,Cress.Core.Models.DiagnosticSeverity,System.String,System.String)
+  id: '#ctor(System.String,Cress.Core.Models.DiagnosticSeverity,System.String,System.String)'
+  parent: Cress.Studio.Services.FlowEditorDiagnostic
+  langs:
+  - csharp
+  - vb
+  name: FlowEditorDiagnostic(string, DiagnosticSeverity, string, string?)
+  nameWithType: FlowEditorDiagnostic.FlowEditorDiagnostic(string, DiagnosticSeverity, string, string?)
+  fullName: Cress.Studio.Services.FlowEditorDiagnostic.FlowEditorDiagnostic(string, Cress.Core.Models.DiagnosticSeverity, string, string?)
+  type: Constructor
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/StudioAuthoringService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: .ctor
+    path: ../src/Cress.Studio.Core/Services/StudioAuthoringService.cs
+    startLine: 301
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  syntax:
+    content: public FlowEditorDiagnostic(string Target, DiagnosticSeverity Severity, string Message, string? Recommendation)
+    parameters:
+    - id: Target
+      type: System.String
+    - id: Severity
+      type: Cress.Core.Models.DiagnosticSeverity
+    - id: Message
+      type: System.String
+    - id: Recommendation
+      type: System.String
+    content.vb: Public Sub New(Target As String, Severity As DiagnosticSeverity, Message As String, Recommendation As String)
+  overload: Cress.Studio.Services.FlowEditorDiagnostic.#ctor*
+  nameWithType.vb: FlowEditorDiagnostic.New(String, DiagnosticSeverity, String, String)
+  fullName.vb: Cress.Studio.Services.FlowEditorDiagnostic.New(String, Cress.Core.Models.DiagnosticSeverity, String, String)
+  name.vb: New(String, DiagnosticSeverity, String, String)
+- uid: Cress.Studio.Services.FlowEditorDiagnostic.Target
+  commentId: P:Cress.Studio.Services.FlowEditorDiagnostic.Target
+  id: Target
+  parent: Cress.Studio.Services.FlowEditorDiagnostic
+  langs:
+  - csharp
+  - vb
+  name: Target
+  nameWithType: FlowEditorDiagnostic.Target
+  fullName: Cress.Studio.Services.FlowEditorDiagnostic.Target
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/StudioAuthoringService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Target
+    path: ../src/Cress.Studio.Core/Services/StudioAuthoringService.cs
+    startLine: 301
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  syntax:
+    content: public string Target { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Target As String
+  overload: Cress.Studio.Services.FlowEditorDiagnostic.Target*
+- uid: Cress.Studio.Services.FlowEditorDiagnostic.Severity
+  commentId: P:Cress.Studio.Services.FlowEditorDiagnostic.Severity
+  id: Severity
+  parent: Cress.Studio.Services.FlowEditorDiagnostic
+  langs:
+  - csharp
+  - vb
+  name: Severity
+  nameWithType: FlowEditorDiagnostic.Severity
+  fullName: Cress.Studio.Services.FlowEditorDiagnostic.Severity
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/StudioAuthoringService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Severity
+    path: ../src/Cress.Studio.Core/Services/StudioAuthoringService.cs
+    startLine: 301
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  syntax:
+    content: public DiagnosticSeverity Severity { get; init; }
+    parameters: []
+    return:
+      type: Cress.Core.Models.DiagnosticSeverity
+    content.vb: Public Property Severity As DiagnosticSeverity
+  overload: Cress.Studio.Services.FlowEditorDiagnostic.Severity*
+- uid: Cress.Studio.Services.FlowEditorDiagnostic.Message
+  commentId: P:Cress.Studio.Services.FlowEditorDiagnostic.Message
+  id: Message
+  parent: Cress.Studio.Services.FlowEditorDiagnostic
+  langs:
+  - csharp
+  - vb
+  name: Message
+  nameWithType: FlowEditorDiagnostic.Message
+  fullName: Cress.Studio.Services.FlowEditorDiagnostic.Message
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/StudioAuthoringService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Message
+    path: ../src/Cress.Studio.Core/Services/StudioAuthoringService.cs
+    startLine: 301
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  syntax:
+    content: public string Message { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Message As String
+  overload: Cress.Studio.Services.FlowEditorDiagnostic.Message*
+- uid: Cress.Studio.Services.FlowEditorDiagnostic.Recommendation
+  commentId: P:Cress.Studio.Services.FlowEditorDiagnostic.Recommendation
+  id: Recommendation
+  parent: Cress.Studio.Services.FlowEditorDiagnostic
+  langs:
+  - csharp
+  - vb
+  name: Recommendation
+  nameWithType: FlowEditorDiagnostic.Recommendation
+  fullName: Cress.Studio.Services.FlowEditorDiagnostic.Recommendation
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/StudioAuthoringService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Recommendation
+    path: ../src/Cress.Studio.Core/Services/StudioAuthoringService.cs
+    startLine: 301
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  syntax:
+    content: public string? Recommendation { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Recommendation As String
+  overload: Cress.Studio.Services.FlowEditorDiagnostic.Recommendation*
+references:
+- uid: Cress.Studio.Services
+  commentId: N:Cress.Studio.Services
+  href: Cress.html
+  name: Cress.Studio.Services
+  nameWithType: Cress.Studio.Services
+  fullName: Cress.Studio.Services
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Studio
+    name: Studio
+    href: Cress.Studio.html
+  - name: .
+  - uid: Cress.Studio.Services
+    name: Services
+    href: Cress.Studio.Services.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Studio
+    name: Studio
+    href: Cress.Studio.html
+  - name: .
+  - uid: Cress.Studio.Services
+    name: Services
+    href: Cress.Studio.Services.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.IEquatable{Cress.Studio.Services.FlowEditorDiagnostic}
+  commentId: T:System.IEquatable{Cress.Studio.Services.FlowEditorDiagnostic}
+  parent: System
+  definition: System.IEquatable`1
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<FlowEditorDiagnostic>
+  nameWithType: IEquatable<FlowEditorDiagnostic>
+  fullName: System.IEquatable<Cress.Studio.Services.FlowEditorDiagnostic>
+  nameWithType.vb: IEquatable(Of FlowEditorDiagnostic)
+  fullName.vb: System.IEquatable(Of Cress.Studio.Services.FlowEditorDiagnostic)
+  name.vb: IEquatable(Of FlowEditorDiagnostic)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - uid: Cress.Studio.Services.FlowEditorDiagnostic
+    name: FlowEditorDiagnostic
+    href: Cress.Studio.Services.FlowEditorDiagnostic.html
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Cress.Studio.Services.FlowEditorDiagnostic
+    name: FlowEditorDiagnostic
+    href: Cress.Studio.Services.FlowEditorDiagnostic.html
+  - name: )
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.IEquatable`1
+  commentId: T:System.IEquatable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<T>
+  nameWithType: IEquatable<T>
+  fullName: System.IEquatable<T>
+  nameWithType.vb: IEquatable(Of T)
+  fullName.vb: System.IEquatable(Of T)
+  name.vb: IEquatable(Of T)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Cress.Studio.Services.FlowEditorDiagnostic.#ctor*
+  commentId: Overload:Cress.Studio.Services.FlowEditorDiagnostic.#ctor
+  href: Cress.Studio.Services.FlowEditorDiagnostic.html#Cress_Studio_Services_FlowEditorDiagnostic__ctor_System_String_Cress_Core_Models_DiagnosticSeverity_System_String_System_String_
+  name: FlowEditorDiagnostic
+  nameWithType: FlowEditorDiagnostic.FlowEditorDiagnostic
+  fullName: Cress.Studio.Services.FlowEditorDiagnostic.FlowEditorDiagnostic
+  nameWithType.vb: FlowEditorDiagnostic.New
+  fullName.vb: Cress.Studio.Services.FlowEditorDiagnostic.New
+  name.vb: New
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Cress.Core.Models.DiagnosticSeverity
+  commentId: T:Cress.Core.Models.DiagnosticSeverity
+  parent: Cress.Core.Models
+  href: Cress.Core.Models.DiagnosticSeverity.html
+  name: DiagnosticSeverity
+  nameWithType: DiagnosticSeverity
+  fullName: Cress.Core.Models.DiagnosticSeverity
+- uid: Cress.Core.Models
+  commentId: N:Cress.Core.Models
+  href: Cress.html
+  name: Cress.Core.Models
+  nameWithType: Cress.Core.Models
+  fullName: Cress.Core.Models
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Core
+    name: Core
+    href: Cress.Core.html
+  - name: .
+  - uid: Cress.Core.Models
+    name: Models
+    href: Cress.Core.Models.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Core
+    name: Core
+    href: Cress.Core.html
+  - name: .
+  - uid: Cress.Core.Models
+    name: Models
+    href: Cress.Core.Models.html
+- uid: Cress.Studio.Services.FlowEditorDiagnostic.Target*
+  commentId: Overload:Cress.Studio.Services.FlowEditorDiagnostic.Target
+  href: Cress.Studio.Services.FlowEditorDiagnostic.html#Cress_Studio_Services_FlowEditorDiagnostic_Target
+  name: Target
+  nameWithType: FlowEditorDiagnostic.Target
+  fullName: Cress.Studio.Services.FlowEditorDiagnostic.Target
+- uid: Cress.Studio.Services.FlowEditorDiagnostic.Severity*
+  commentId: Overload:Cress.Studio.Services.FlowEditorDiagnostic.Severity
+  href: Cress.Studio.Services.FlowEditorDiagnostic.html#Cress_Studio_Services_FlowEditorDiagnostic_Severity
+  name: Severity
+  nameWithType: FlowEditorDiagnostic.Severity
+  fullName: Cress.Studio.Services.FlowEditorDiagnostic.Severity
+- uid: Cress.Studio.Services.FlowEditorDiagnostic.Message*
+  commentId: Overload:Cress.Studio.Services.FlowEditorDiagnostic.Message
+  href: Cress.Studio.Services.FlowEditorDiagnostic.html#Cress_Studio_Services_FlowEditorDiagnostic_Message
+  name: Message
+  nameWithType: FlowEditorDiagnostic.Message
+  fullName: Cress.Studio.Services.FlowEditorDiagnostic.Message
+- uid: Cress.Studio.Services.FlowEditorDiagnostic.Recommendation*
+  commentId: Overload:Cress.Studio.Services.FlowEditorDiagnostic.Recommendation
+  href: Cress.Studio.Services.FlowEditorDiagnostic.html#Cress_Studio_Services_FlowEditorDiagnostic_Recommendation
+  name: Recommendation
+  nameWithType: FlowEditorDiagnostic.Recommendation
+  fullName: Cress.Studio.Services.FlowEditorDiagnostic.Recommendation

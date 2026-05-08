@@ -153,8 +153,10 @@ public sealed class GherkinIngester
                 continue;
             }
 
-            // Skip pure comment lines that are not TODO stubs
-            if (stepText.StartsWith('#'))
+            // Skip pure comment lines that are not TODO stubs. Selector steps may
+            // legitimately start with '#' (for automationId shorthand), so only
+            // treat '# ' as a comment prefix here.
+            if (stepText.StartsWith("# ", StringComparison.Ordinal))
             {
                 continue;
             }
@@ -315,6 +317,8 @@ public sealed class GherkinIngester
         List<FlowAction> whenActions,
         List<FlowExpectation> thenExpectations)
     {
+        NormalizeDesktopSelector(stepOp, withBlock);
+
         if (section == GherkinKeyword.Then)
         {
             thenExpectations.Add(new FlowExpectation
@@ -333,6 +337,27 @@ public sealed class GherkinIngester
             });
         }
     }
+
+    private static void NormalizeDesktopSelector(string stepOp, Dictionary<string, string> withBlock)
+    {
+        if (stepOp is not ("ui.click" or "ui.invoke" or "ui.fill" or "ui.assert-text"))
+        {
+            return;
+        }
+
+        if (withBlock.TryGetValue("automationId", out var automationId) && LooksLikeDesktopSelector(automationId))
+        {
+            withBlock.Remove("automationId");
+            withBlock["selector"] = automationId;
+        }
+    }
+
+    private static bool LooksLikeDesktopSelector(string value)
+        => value.StartsWith('#')
+            || value.StartsWith('[')
+            || value.Contains(':')
+            || value.Contains(">>", StringComparison.Ordinal)
+            || value.Contains(' ');
 
     /// <summary>Convert a human-readable name to a kebab/dot-slug suitable for a flow id.</summary>
     private static string SlugifyName(string name)

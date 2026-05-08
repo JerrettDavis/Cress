@@ -1,0 +1,140 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Recorder.Inference.InferenceDomain
+  commentId: T:Cress.Recorder.Inference.InferenceDomain
+  id: InferenceDomain
+  parent: Cress.Recorder.Inference
+  children:
+  - Cress.Recorder.Inference.InferenceDomain.Desktop
+  - Cress.Recorder.Inference.InferenceDomain.Web
+  langs:
+  - csharp
+  - vb
+  name: InferenceDomain
+  nameWithType: InferenceDomain
+  fullName: Cress.Recorder.Inference.InferenceDomain
+  type: Enum
+  source:
+    remote:
+      path: src/Cress.Recorder/Inference/InferenceOptions.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: InferenceDomain
+    path: ../src/Cress.Recorder/Inference/InferenceOptions.cs
+    startLine: 5
+  assemblies:
+  - Cress.Recorder
+  namespace: Cress.Recorder.Inference
+  summary: The recording domain that determines event-to-step mapping rules.
+  example: []
+  syntax:
+    content: public enum InferenceDomain
+    content.vb: Public Enum InferenceDomain
+- uid: Cress.Recorder.Inference.InferenceDomain.Desktop
+  commentId: F:Cress.Recorder.Inference.InferenceDomain.Desktop
+  id: Desktop
+  parent: Cress.Recorder.Inference.InferenceDomain
+  langs:
+  - csharp
+  - vb
+  name: Desktop
+  nameWithType: InferenceDomain.Desktop
+  fullName: Cress.Recorder.Inference.InferenceDomain.Desktop
+  type: Field
+  source:
+    remote:
+      path: src/Cress.Recorder/Inference/InferenceOptions.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Desktop
+    path: ../src/Cress.Recorder/Inference/InferenceOptions.cs
+    startLine: 11
+  assemblies:
+  - Cress.Recorder
+  namespace: Cress.Recorder.Inference
+  summary: >-
+    Desktop UIA recording (Windows UI Automation). Original behaviour; all existing tests
+
+    rely on this domain. AssertionTargetAutomationId is relevant here.
+  example: []
+  syntax:
+    content: Desktop = 0
+    return:
+      type: Cress.Recorder.Inference.InferenceDomain
+- uid: Cress.Recorder.Inference.InferenceDomain.Web
+  commentId: F:Cress.Recorder.Inference.InferenceDomain.Web
+  id: Web
+  parent: Cress.Recorder.Inference.InferenceDomain
+  langs:
+  - csharp
+  - vb
+  name: Web
+  nameWithType: InferenceDomain.Web
+  fullName: Cress.Recorder.Inference.InferenceDomain.Web
+  type: Field
+  source:
+    remote:
+      path: src/Cress.Recorder/Inference/InferenceOptions.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Web
+    path: ../src/Cress.Recorder/Inference/InferenceOptions.cs
+    startLine: 18
+  assemblies:
+  - Cress.Recorder
+  namespace: Cress.Recorder.Inference
+  summary: >-
+    Web browser recording (Playwright CDP). Uses ARIA/testId locator preference
+
+    order and treats all ValueChanged events as SetValue (fills), never assertions.
+
+    Fill events are debounced with the longer <xref href="Cress.Recorder.Inference.InferenceOptions.WebDebounceWindow" data-throw-if-not-resolved="false"></xref>.
+  example: []
+  syntax:
+    content: Web = 1
+    return:
+      type: Cress.Recorder.Inference.InferenceDomain
+references:
+- uid: Cress.Recorder.Inference
+  commentId: N:Cress.Recorder.Inference
+  href: Cress.html
+  name: Cress.Recorder.Inference
+  nameWithType: Cress.Recorder.Inference
+  fullName: Cress.Recorder.Inference
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Recorder
+    name: Recorder
+    href: Cress.Recorder.html
+  - name: .
+  - uid: Cress.Recorder.Inference
+    name: Inference
+    href: Cress.Recorder.Inference.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Recorder
+    name: Recorder
+    href: Cress.Recorder.html
+  - name: .
+  - uid: Cress.Recorder.Inference
+    name: Inference
+    href: Cress.Recorder.Inference.html
+- uid: Cress.Recorder.Inference.InferenceDomain
+  commentId: T:Cress.Recorder.Inference.InferenceDomain
+  parent: Cress.Recorder.Inference
+  href: Cress.Recorder.Inference.InferenceDomain.html
+  name: InferenceDomain
+  nameWithType: InferenceDomain
+  fullName: Cress.Recorder.Inference.InferenceDomain
+- uid: Cress.Recorder.Inference.InferenceOptions.WebDebounceWindow
+  commentId: P:Cress.Recorder.Inference.InferenceOptions.WebDebounceWindow
+  href: Cress.Recorder.Inference.InferenceOptions.html#Cress_Recorder_Inference_InferenceOptions_WebDebounceWindow
+  name: WebDebounceWindow
+  nameWithType: InferenceOptions.WebDebounceWindow
+  fullName: Cress.Recorder.Inference.InferenceOptions.WebDebounceWindow

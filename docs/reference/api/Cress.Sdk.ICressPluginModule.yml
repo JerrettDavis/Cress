@@ -1,0 +1,252 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Sdk.ICressPluginModule
+  commentId: T:Cress.Sdk.ICressPluginModule
+  id: ICressPluginModule
+  parent: Cress.Sdk
+  children:
+  - Cress.Sdk.ICressPluginModule.GetFixtureProviders
+  - Cress.Sdk.ICressPluginModule.GetStepHandlers
+  langs:
+  - csharp
+  - vb
+  name: ICressPluginModule
+  nameWithType: ICressPluginModule
+  fullName: Cress.Sdk.ICressPluginModule
+  type: Interface
+  source:
+    remote:
+      path: src/Cress.Sdk/PluginAbstractions.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: ICressPluginModule
+    path: ../src/Cress.Sdk/PluginAbstractions.cs
+    startLine: 4
+  assemblies:
+  - Cress.Sdk
+  namespace: Cress.Sdk
+  syntax:
+    content: public interface ICressPluginModule
+    content.vb: Public Interface ICressPluginModule
+- uid: Cress.Sdk.ICressPluginModule.GetStepHandlers
+  commentId: M:Cress.Sdk.ICressPluginModule.GetStepHandlers
+  id: GetStepHandlers
+  parent: Cress.Sdk.ICressPluginModule
+  langs:
+  - csharp
+  - vb
+  name: GetStepHandlers()
+  nameWithType: ICressPluginModule.GetStepHandlers()
+  fullName: Cress.Sdk.ICressPluginModule.GetStepHandlers()
+  type: Method
+  source:
+    remote:
+      path: src/Cress.Sdk/PluginAbstractions.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: GetStepHandlers
+    path: ../src/Cress.Sdk/PluginAbstractions.cs
+    startLine: 6
+  assemblies:
+  - Cress.Sdk
+  namespace: Cress.Sdk
+  syntax:
+    content: IEnumerable<StepHandlerRegistration> GetStepHandlers()
+    return:
+      type: System.Collections.Generic.IEnumerable{Cress.Sdk.StepHandlerRegistration}
+    content.vb: Function GetStepHandlers() As IEnumerable(Of StepHandlerRegistration)
+  overload: Cress.Sdk.ICressPluginModule.GetStepHandlers*
+- uid: Cress.Sdk.ICressPluginModule.GetFixtureProviders
+  commentId: M:Cress.Sdk.ICressPluginModule.GetFixtureProviders
+  id: GetFixtureProviders
+  parent: Cress.Sdk.ICressPluginModule
+  langs:
+  - csharp
+  - vb
+  name: GetFixtureProviders()
+  nameWithType: ICressPluginModule.GetFixtureProviders()
+  fullName: Cress.Sdk.ICressPluginModule.GetFixtureProviders()
+  type: Method
+  source:
+    remote:
+      path: src/Cress.Sdk/PluginAbstractions.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: GetFixtureProviders
+    path: ../src/Cress.Sdk/PluginAbstractions.cs
+    startLine: 8
+  assemblies:
+  - Cress.Sdk
+  namespace: Cress.Sdk
+  syntax:
+    content: IEnumerable<FixtureProviderRegistration> GetFixtureProviders()
+    return:
+      type: System.Collections.Generic.IEnumerable{Cress.Sdk.FixtureProviderRegistration}
+    content.vb: Function GetFixtureProviders() As IEnumerable(Of FixtureProviderRegistration)
+  overload: Cress.Sdk.ICressPluginModule.GetFixtureProviders*
+references:
+- uid: Cress.Sdk
+  commentId: N:Cress.Sdk
+  href: Cress.html
+  name: Cress.Sdk
+  nameWithType: Cress.Sdk
+  fullName: Cress.Sdk
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Sdk
+    name: Sdk
+    href: Cress.Sdk.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Sdk
+    name: Sdk
+    href: Cress.Sdk.html
+- uid: Cress.Sdk.ICressPluginModule.GetStepHandlers*
+  commentId: Overload:Cress.Sdk.ICressPluginModule.GetStepHandlers
+  href: Cress.Sdk.ICressPluginModule.html#Cress_Sdk_ICressPluginModule_GetStepHandlers
+  name: GetStepHandlers
+  nameWithType: ICressPluginModule.GetStepHandlers
+  fullName: Cress.Sdk.ICressPluginModule.GetStepHandlers
+- uid: System.Collections.Generic.IEnumerable{Cress.Sdk.StepHandlerRegistration}
+  commentId: T:System.Collections.Generic.IEnumerable{Cress.Sdk.StepHandlerRegistration}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IEnumerable`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  name: IEnumerable<StepHandlerRegistration>
+  nameWithType: IEnumerable<StepHandlerRegistration>
+  fullName: System.Collections.Generic.IEnumerable<Cress.Sdk.StepHandlerRegistration>
+  nameWithType.vb: IEnumerable(Of StepHandlerRegistration)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of Cress.Sdk.StepHandlerRegistration)
+  name.vb: IEnumerable(Of StepHandlerRegistration)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - uid: Cress.Sdk.StepHandlerRegistration
+    name: StepHandlerRegistration
+    href: Cress.Sdk.StepHandlerRegistration.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Cress.Sdk.StepHandlerRegistration
+    name: StepHandlerRegistration
+    href: Cress.Sdk.StepHandlerRegistration.html
+  - name: )
+- uid: System.Collections.Generic.IEnumerable`1
+  commentId: T:System.Collections.Generic.IEnumerable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  name: IEnumerable<T>
+  nameWithType: IEnumerable<T>
+  fullName: System.Collections.Generic.IEnumerable<T>
+  nameWithType.vb: IEnumerable(Of T)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of T)
+  name.vb: IEnumerable(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: Cress.Sdk.ICressPluginModule.GetFixtureProviders*
+  commentId: Overload:Cress.Sdk.ICressPluginModule.GetFixtureProviders
+  href: Cress.Sdk.ICressPluginModule.html#Cress_Sdk_ICressPluginModule_GetFixtureProviders
+  name: GetFixtureProviders
+  nameWithType: ICressPluginModule.GetFixtureProviders
+  fullName: Cress.Sdk.ICressPluginModule.GetFixtureProviders
+- uid: System.Collections.Generic.IEnumerable{Cress.Sdk.FixtureProviderRegistration}
+  commentId: T:System.Collections.Generic.IEnumerable{Cress.Sdk.FixtureProviderRegistration}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IEnumerable`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  name: IEnumerable<FixtureProviderRegistration>
+  nameWithType: IEnumerable<FixtureProviderRegistration>
+  fullName: System.Collections.Generic.IEnumerable<Cress.Sdk.FixtureProviderRegistration>
+  nameWithType.vb: IEnumerable(Of FixtureProviderRegistration)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of Cress.Sdk.FixtureProviderRegistration)
+  name.vb: IEnumerable(Of FixtureProviderRegistration)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - uid: Cress.Sdk.FixtureProviderRegistration
+    name: FixtureProviderRegistration
+    href: Cress.Sdk.FixtureProviderRegistration.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Cress.Sdk.FixtureProviderRegistration
+    name: FixtureProviderRegistration
+    href: Cress.Sdk.FixtureProviderRegistration.html
+  - name: )

@@ -81,6 +81,7 @@ public sealed class RuntimeOrchestrator
         {
             Kind = RuntimeProgressKind.RunStarted,
             RunId = runId,
+            FlowCount = selectedFlows.Count,
             Message = $"Running {selectedFlows.Count} flow(s)."
         });
 
@@ -92,13 +93,13 @@ public sealed class RuntimeOrchestrator
         if (options.Parallel.GetValueOrDefault() > 1)
         {
             var semaphore = new SemaphoreSlim(options.Parallel!.Value);
-            var tasks = planCollection.Plans.Select(async plan =>
+            var tasks = planCollection.Plans.Select(async (plan, index) =>
             {
                 await semaphore.WaitAsync(cancellationToken);
                 try
                 {
                     var flow = selectedFlows.First(item => item.FlowId.Equals(plan.FlowId, StringComparison.OrdinalIgnoreCase));
-                    return await ExecuteFlowAsync(catalog, flow, plan, evidenceStore, options, progress, cancellationToken);
+                    return await ExecuteFlowAsync(catalog, flow, plan, index + 1, selectedFlows.Count, evidenceStore, options, progress, cancellationToken);
                 }
                 finally
                 {
@@ -110,10 +111,11 @@ public sealed class RuntimeOrchestrator
         }
         else
         {
-            foreach (var plan in planCollection.Plans)
+            for (var index = 0; index < planCollection.Plans.Count; index++)
             {
+                var plan = planCollection.Plans[index];
                 var flow = selectedFlows.First(item => item.FlowId.Equals(plan.FlowId, StringComparison.OrdinalIgnoreCase));
-                var result = await ExecuteFlowAsync(catalog, flow, plan, evidenceStore, options, progress, cancellationToken);
+                var result = await ExecuteFlowAsync(catalog, flow, plan, index + 1, selectedFlows.Count, evidenceStore, options, progress, cancellationToken);
                 flowResults.Add(result);
                 if (!options.ContinueOnFailure && result.Outcome is RunOutcome.Failed or RunOutcome.Errored)
                 {
@@ -155,7 +157,7 @@ public sealed class RuntimeOrchestrator
         return completed;
     }
 
-    private async Task<FlowRunResult> ExecuteFlowAsync(ProjectCatalog catalog, NormalizedFlow flow, ExecutionPlan plan, EvidenceStore evidenceStore, RunOptions options, IProgress<RuntimeProgressUpdate>? progress, CancellationToken cancellationToken)
+    private async Task<FlowRunResult> ExecuteFlowAsync(ProjectCatalog catalog, NormalizedFlow flow, ExecutionPlan plan, int flowIndex, int flowCount, EvidenceStore evidenceStore, RunOptions options, IProgress<RuntimeProgressUpdate>? progress, CancellationToken cancellationToken)
     {
         var startedAt = DateTimeOffset.UtcNow;
         var stepResults = new List<StepRunResult>();
@@ -167,12 +169,25 @@ public sealed class RuntimeOrchestrator
         var passedWithRetry = false;
         string? failureMessage = null;
         string? failureClassification = null;
-        var logger = new CollectingLogger(evidenceStore, flow.FlowId);
+        var logger = new CollectingLogger(evidenceStore, flow.FlowId, (level, message) =>
+            progress?.Report(new RuntimeProgressUpdate
+            {
+                Kind = RuntimeProgressKind.Log,
+                FlowId = flow.FlowId,
+                FlowName = flow.Name,
+                FlowIndex = flowIndex,
+                FlowCount = flowCount,
+                LogLevel = level,
+                Message = message
+            }));
         progress?.Report(new RuntimeProgressUpdate
         {
             Kind = RuntimeProgressKind.FlowStarted,
             FlowId = flow.FlowId,
             FlowName = flow.Name,
+            FlowIndex = flowIndex,
+            FlowCount = flowCount,
+            StepCount = plan.Actions.Count,
             Message = $"Starting {flow.Name}."
         });
 
@@ -230,8 +245,9 @@ public sealed class RuntimeOrchestrator
                 failureClassification = "rerun-start-not-found";
             }
 
-            foreach (var action in plan.Actions)
+            for (var actionIndex = 0; actionIndex < plan.Actions.Count; actionIndex++)
             {
+                var action = plan.Actions[actionIndex];
                 if (!reachedRequestedStart && action.Kind != "setup" && action.Kind != "cleanup")
                 {
                     if (MatchesRequestedStart(action, options.StartFromStep))
@@ -282,6 +298,27 @@ public sealed class RuntimeOrchestrator
                 for (var attempt = 1; attempt <= maxAttempts; attempt++)
                 {
                     var stepStartedAt = DateTimeOffset.UtcNow;
+                    progress?.Report(new RuntimeProgressUpdate
+                    {
+                        Kind = RuntimeProgressKind.StepStarted,
+                        FlowId = flow.FlowId,
+                        FlowName = flow.Name,
+                        FlowIndex = flowIndex,
+                        FlowCount = flowCount,
+                        StepIndex = actionIndex + 1,
+                        StepCount = plan.Actions.Count,
+                        Step = new StepRunResult
+                        {
+                            Kind = action.Kind,
+                            Name = action.Name,
+                            Driver = action.Driver,
+                            Owner = action.Owner,
+                            Attempt = attempt,
+                            StartedAt = stepStartedAt,
+                            Inputs = new Dictionary<string, string>(action.Inputs, StringComparer.OrdinalIgnoreCase)
+                        },
+                        Message = $"{action.Kind}: {action.Name} attempt {attempt}"
+                    });
                     var driverResult = await ExecuteActionAsync(catalog, action, executionContext, sessions, cancellationToken);
                     foreach (var output in driverResult.Outputs)
                     {
@@ -310,6 +347,10 @@ public sealed class RuntimeOrchestrator
                         Kind = RuntimeProgressKind.StepCompleted,
                         FlowId = flow.FlowId,
                         FlowName = flow.Name,
+                        FlowIndex = flowIndex,
+                        FlowCount = flowCount,
+                        StepIndex = actionIndex + 1,
+                        StepCount = plan.Actions.Count,
                         Step = stepResult,
                         Message = $"{action.Kind}: {action.Name} attempt {attempt} -> {stepResult.Outcome}"
                     });
@@ -360,6 +401,10 @@ public sealed class RuntimeOrchestrator
                         Kind = RuntimeProgressKind.StepCompleted,
                         FlowId = flow.FlowId,
                         FlowName = flow.Name,
+                        FlowIndex = flowIndex,
+                        FlowCount = flowCount,
+                        StepIndex = plan.Actions.Count,
+                        StepCount = plan.Actions.Count,
                         Step = stepResults[^1],
                         Message = $"{session.Name} final evidence captured."
                     });
@@ -404,6 +449,9 @@ public sealed class RuntimeOrchestrator
             Kind = RuntimeProgressKind.FlowCompleted,
             FlowId = flow.FlowId,
             FlowName = flow.Name,
+            FlowIndex = flowIndex,
+            FlowCount = flowCount,
+            StepCount = plan.Actions.Count,
             Flow = flowResult,
             Message = $"{flow.Name} finished with {flowResult.Outcome}."
         });
@@ -528,7 +576,7 @@ public sealed class RuntimeOrchestrator
         var policy = context.EffectiveConfig.Profile.Evidence?.ScreenshotPolicy;
 
         // HTTP driver and other non-UI drivers do not support screenshots.
-        if (!string.Equals(session.Name, "flaui", StringComparison.OrdinalIgnoreCase))
+        if (!string.Equals(session.Name, "flawright", StringComparison.OrdinalIgnoreCase))
         {
             return result;
         }
@@ -623,12 +671,14 @@ public sealed class RuntimeOrchestrator
     {
         private readonly EvidenceStore _evidenceStore;
         private readonly string _flowId;
+        private readonly Action<string, string>? _onEntry;
         private readonly List<string> _entries = [];
 
-        public CollectingLogger(EvidenceStore evidenceStore, string flowId)
+        public CollectingLogger(EvidenceStore evidenceStore, string flowId, Action<string, string>? onEntry = null)
         {
             _evidenceStore = evidenceStore;
             _flowId = flowId;
+            _onEntry = onEntry;
         }
 
         public void Info(string message, IReadOnlyDictionary<string, string>? data = null)
@@ -642,8 +692,10 @@ public sealed class RuntimeOrchestrator
 
         private void Write(string level, string message, IReadOnlyDictionary<string, string>? data)
         {
-            _entries.Add($"{DateTimeOffset.UtcNow:o} {level} {message}");
+            var formatted = $"{DateTimeOffset.UtcNow:o} {level} {message}";
+            _entries.Add(formatted);
             _evidenceStore.WriteText(Path.Combine("logs", $"{EvidenceStore.SanitizeFileName(_flowId)}.log"), string.Join(Environment.NewLine, _entries), "logs", "Flow log");
+            _onEntry?.Invoke(level, message);
         }
     }
 }

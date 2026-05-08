@@ -1,0 +1,807 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Recorder.Inference.InferenceOptions
+  commentId: T:Cress.Recorder.Inference.InferenceOptions
+  id: InferenceOptions
+  parent: Cress.Recorder.Inference
+  children:
+  - Cress.Recorder.Inference.InferenceOptions.AssertionTargetAutomationId
+  - Cress.Recorder.Inference.InferenceOptions.DebounceWindow
+  - Cress.Recorder.Inference.InferenceOptions.Domain
+  - Cress.Recorder.Inference.InferenceOptions.IgnoreFocusEvents
+  - Cress.Recorder.Inference.InferenceOptions.TargetProcessId
+  - Cress.Recorder.Inference.InferenceOptions.WebDebounceWindow
+  langs:
+  - csharp
+  - vb
+  name: InferenceOptions
+  nameWithType: InferenceOptions
+  fullName: Cress.Recorder.Inference.InferenceOptions
+  type: Class
+  source:
+    remote:
+      path: src/Cress.Recorder/Inference/InferenceOptions.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: InferenceOptions
+    path: ../src/Cress.Recorder/Inference/InferenceOptions.cs
+    startLine: 25
+  assemblies:
+  - Cress.Recorder
+  namespace: Cress.Recorder.Inference
+  summary: >-
+    Controls how <xref href="Cress.Recorder.Inference.StepInferenceEngine" data-throw-if-not-resolved="false"></xref> processes a sequence of
+
+    <xref href="Cress.Recorder.RecordedEvent" data-throw-if-not-resolved="false"></xref> objects into <xref href="Cress.Recorder.Inference.InferredStep" data-throw-if-not-resolved="false"></xref> objects.
+  example: []
+  syntax:
+    content: 'public sealed record InferenceOptions : IEquatable<InferenceOptions>'
+    content.vb: Public NotInheritable Class InferenceOptions Implements IEquatable(Of InferenceOptions)
+  inheritance:
+  - System.Object
+  implements:
+  - System.IEquatable{Cress.Recorder.Inference.InferenceOptions}
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Cress.Recorder.Inference.InferenceOptions.Domain
+  commentId: P:Cress.Recorder.Inference.InferenceOptions.Domain
+  id: Domain
+  parent: Cress.Recorder.Inference.InferenceOptions
+  langs:
+  - csharp
+  - vb
+  name: Domain
+  nameWithType: InferenceOptions.Domain
+  fullName: Cress.Recorder.Inference.InferenceOptions.Domain
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Recorder/Inference/InferenceOptions.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Domain
+    path: ../src/Cress.Recorder/Inference/InferenceOptions.cs
+    startLine: 31
+  assemblies:
+  - Cress.Recorder
+  namespace: Cress.Recorder.Inference
+  summary: >-
+    The recording domain. Defaults to <xref href="Cress.Recorder.Inference.InferenceDomain.Desktop" data-throw-if-not-resolved="false"></xref>
+
+    to preserve backward-compatible behaviour for all existing tests and workflows.
+  example: []
+  syntax:
+    content: public InferenceDomain Domain { get; init; }
+    parameters: []
+    return:
+      type: Cress.Recorder.Inference.InferenceDomain
+    content.vb: Public Property Domain As InferenceDomain
+  overload: Cress.Recorder.Inference.InferenceOptions.Domain*
+- uid: Cress.Recorder.Inference.InferenceOptions.TargetProcessId
+  commentId: P:Cress.Recorder.Inference.InferenceOptions.TargetProcessId
+  id: TargetProcessId
+  parent: Cress.Recorder.Inference.InferenceOptions
+  langs:
+  - csharp
+  - vb
+  name: TargetProcessId
+  nameWithType: InferenceOptions.TargetProcessId
+  fullName: Cress.Recorder.Inference.InferenceOptions.TargetProcessId
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Recorder/Inference/InferenceOptions.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: TargetProcessId
+    path: ../src/Cress.Recorder/Inference/InferenceOptions.cs
+    startLine: 37
+  assemblies:
+  - Cress.Recorder
+  namespace: Cress.Recorder.Inference
+  summary: >-
+    When set, events whose <xref href="Cress.Recorder.RecordedEvent.Element" data-throw-if-not-resolved="false"></xref> ProcessId does not match
+
+    are discarded before inference. Leave null to accept events from all processes.
+  example: []
+  syntax:
+    content: public int? TargetProcessId { get; init; }
+    parameters: []
+    return:
+      type: System.Nullable{System.Int32}
+    content.vb: Public Property TargetProcessId As Integer?
+  overload: Cress.Recorder.Inference.InferenceOptions.TargetProcessId*
+- uid: Cress.Recorder.Inference.InferenceOptions.DebounceWindow
+  commentId: P:Cress.Recorder.Inference.InferenceOptions.DebounceWindow
+  id: DebounceWindow
+  parent: Cress.Recorder.Inference.InferenceOptions
+  langs:
+  - csharp
+  - vb
+  name: DebounceWindow
+  nameWithType: InferenceOptions.DebounceWindow
+  fullName: Cress.Recorder.Inference.InferenceOptions.DebounceWindow
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Recorder/Inference/InferenceOptions.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: DebounceWindow
+    path: ../src/Cress.Recorder/Inference/InferenceOptions.cs
+    startLine: 45
+  assemblies:
+  - Cress.Recorder
+  namespace: Cress.Recorder.Inference
+  summary: >-
+    Identical consecutive events within this window are collapsed to a single event.
+
+    Identity is defined as: same <xref href="Cress.Recorder.EventKind" data-throw-if-not-resolved="false"></xref> + same element RuntimeId +
+
+    same <xref href="Cress.Recorder.RecordedEvent.Value" data-throw-if-not-resolved="false"></xref> / <xref href="Cress.Recorder.RecordedEvent.Key" data-throw-if-not-resolved="false"></xref>.
+
+    Defaults to 50 ms (conservative; avoids double-event noise without hiding real repeated clicks).
+  example: []
+  syntax:
+    content: public TimeSpan DebounceWindow { get; init; }
+    parameters: []
+    return:
+      type: System.TimeSpan
+    content.vb: Public Property DebounceWindow As TimeSpan
+  overload: Cress.Recorder.Inference.InferenceOptions.DebounceWindow*
+- uid: Cress.Recorder.Inference.InferenceOptions.WebDebounceWindow
+  commentId: P:Cress.Recorder.Inference.InferenceOptions.WebDebounceWindow
+  id: WebDebounceWindow
+  parent: Cress.Recorder.Inference.InferenceOptions
+  langs:
+  - csharp
+  - vb
+  name: WebDebounceWindow
+  nameWithType: InferenceOptions.WebDebounceWindow
+  fullName: Cress.Recorder.Inference.InferenceOptions.WebDebounceWindow
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Recorder/Inference/InferenceOptions.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: WebDebounceWindow
+    path: ../src/Cress.Recorder/Inference/InferenceOptions.cs
+    startLine: 54
+  assemblies:
+  - Cress.Recorder
+  namespace: Cress.Recorder.Inference
+  summary: >-
+    Debounce window applied to consecutive <xref href="Cress.Recorder.EventKind.ValueChanged" data-throw-if-not-resolved="false"></xref> events
+
+    on the same element when <xref href="Cress.Recorder.Inference.InferenceOptions.Domain" data-throw-if-not-resolved="false"></xref> is <xref href="Cress.Recorder.Inference.InferenceDomain.Web" data-throw-if-not-resolved="false"></xref>.
+
+    Human typing has natural inter-key pauses longer than the desktop debounce window,
+
+    so a longer window (250 ms default) collapses a "hello" keystroke stream into one fill.
+
+    The last value in the window is kept (not the first, unlike the standard debounce).
+  example: []
+  syntax:
+    content: public TimeSpan WebDebounceWindow { get; init; }
+    parameters: []
+    return:
+      type: System.TimeSpan
+    content.vb: Public Property WebDebounceWindow As TimeSpan
+  overload: Cress.Recorder.Inference.InferenceOptions.WebDebounceWindow*
+- uid: Cress.Recorder.Inference.InferenceOptions.IgnoreFocusEvents
+  commentId: P:Cress.Recorder.Inference.InferenceOptions.IgnoreFocusEvents
+  id: IgnoreFocusEvents
+  parent: Cress.Recorder.Inference.InferenceOptions
+  langs:
+  - csharp
+  - vb
+  name: IgnoreFocusEvents
+  nameWithType: InferenceOptions.IgnoreFocusEvents
+  fullName: Cress.Recorder.Inference.InferenceOptions.IgnoreFocusEvents
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Recorder/Inference/InferenceOptions.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: IgnoreFocusEvents
+    path: ../src/Cress.Recorder/Inference/InferenceOptions.cs
+    startLine: 60
+  assemblies:
+  - Cress.Recorder
+  namespace: Cress.Recorder.Inference
+  summary: >-
+    When true (default), <xref href="Cress.Recorder.EventKind.FocusChanged" data-throw-if-not-resolved="false"></xref> events are discarded.
+
+    Focus events are almost always noise and rarely correspond to a user-visible action.
+  example: []
+  syntax:
+    content: public bool IgnoreFocusEvents { get; init; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property IgnoreFocusEvents As Boolean
+  overload: Cress.Recorder.Inference.InferenceOptions.IgnoreFocusEvents*
+- uid: Cress.Recorder.Inference.InferenceOptions.AssertionTargetAutomationId
+  commentId: P:Cress.Recorder.Inference.InferenceOptions.AssertionTargetAutomationId
+  id: AssertionTargetAutomationId
+  parent: Cress.Recorder.Inference.InferenceOptions
+  langs:
+  - csharp
+  - vb
+  name: AssertionTargetAutomationId
+  nameWithType: InferenceOptions.AssertionTargetAutomationId
+  fullName: Cress.Recorder.Inference.InferenceOptions.AssertionTargetAutomationId
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Recorder/Inference/InferenceOptions.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: AssertionTargetAutomationId
+    path: ../src/Cress.Recorder/Inference/InferenceOptions.cs
+    startLine: 69
+  assemblies:
+  - Cress.Recorder
+  namespace: Cress.Recorder.Inference
+  summary: >-
+    When set, <xref href="Cress.Recorder.EventKind.ValueChanged" data-throw-if-not-resolved="false"></xref> events (and PropertyChanged events
+
+    carrying a new value) on the element whose AutomationId matches this string are
+
+    emitted as <xref href="Cress.Recorder.Inference.StepKind.AssertText" data-throw-if-not-resolved="false"></xref> steps rather than <xref href="Cress.Recorder.Inference.StepKind.SetValue" data-throw-if-not-resolved="false"></xref> steps.
+
+    For Calculator this is <code>"CalculatorResults"</code>.
+
+    Only applies when <xref href="Cress.Recorder.Inference.InferenceOptions.Domain" data-throw-if-not-resolved="false"></xref> is <xref href="Cress.Recorder.Inference.InferenceDomain.Desktop" data-throw-if-not-resolved="false"></xref>.
+  example: []
+  syntax:
+    content: public string? AssertionTargetAutomationId { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property AssertionTargetAutomationId As String
+  overload: Cress.Recorder.Inference.InferenceOptions.AssertionTargetAutomationId*
+references:
+- uid: Cress.Recorder.Inference.StepInferenceEngine
+  commentId: T:Cress.Recorder.Inference.StepInferenceEngine
+  href: Cress.Recorder.Inference.StepInferenceEngine.html
+  name: StepInferenceEngine
+  nameWithType: StepInferenceEngine
+  fullName: Cress.Recorder.Inference.StepInferenceEngine
+- uid: Cress.Recorder.RecordedEvent
+  commentId: T:Cress.Recorder.RecordedEvent
+  parent: Cress.Recorder
+  href: Cress.Recorder.RecordedEvent.html
+  name: RecordedEvent
+  nameWithType: RecordedEvent
+  fullName: Cress.Recorder.RecordedEvent
+- uid: Cress.Recorder.Inference.InferredStep
+  commentId: T:Cress.Recorder.Inference.InferredStep
+  href: Cress.Recorder.Inference.InferredStep.html
+  name: InferredStep
+  nameWithType: InferredStep
+  fullName: Cress.Recorder.Inference.InferredStep
+- uid: Cress.Recorder.Inference
+  commentId: N:Cress.Recorder.Inference
+  href: Cress.html
+  name: Cress.Recorder.Inference
+  nameWithType: Cress.Recorder.Inference
+  fullName: Cress.Recorder.Inference
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Recorder
+    name: Recorder
+    href: Cress.Recorder.html
+  - name: .
+  - uid: Cress.Recorder.Inference
+    name: Inference
+    href: Cress.Recorder.Inference.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Recorder
+    name: Recorder
+    href: Cress.Recorder.html
+  - name: .
+  - uid: Cress.Recorder.Inference
+    name: Inference
+    href: Cress.Recorder.Inference.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.IEquatable{Cress.Recorder.Inference.InferenceOptions}
+  commentId: T:System.IEquatable{Cress.Recorder.Inference.InferenceOptions}
+  parent: System
+  definition: System.IEquatable`1
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<InferenceOptions>
+  nameWithType: IEquatable<InferenceOptions>
+  fullName: System.IEquatable<Cress.Recorder.Inference.InferenceOptions>
+  nameWithType.vb: IEquatable(Of InferenceOptions)
+  fullName.vb: System.IEquatable(Of Cress.Recorder.Inference.InferenceOptions)
+  name.vb: IEquatable(Of InferenceOptions)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - uid: Cress.Recorder.Inference.InferenceOptions
+    name: InferenceOptions
+    href: Cress.Recorder.Inference.InferenceOptions.html
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Cress.Recorder.Inference.InferenceOptions
+    name: InferenceOptions
+    href: Cress.Recorder.Inference.InferenceOptions.html
+  - name: )
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: Cress.Recorder
+  commentId: N:Cress.Recorder
+  href: Cress.html
+  name: Cress.Recorder
+  nameWithType: Cress.Recorder
+  fullName: Cress.Recorder
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Recorder
+    name: Recorder
+    href: Cress.Recorder.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Recorder
+    name: Recorder
+    href: Cress.Recorder.html
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.IEquatable`1
+  commentId: T:System.IEquatable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<T>
+  nameWithType: IEquatable<T>
+  fullName: System.IEquatable<T>
+  nameWithType.vb: IEquatable(Of T)
+  fullName.vb: System.IEquatable(Of T)
+  name.vb: IEquatable(Of T)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Cress.Recorder.Inference.InferenceDomain.Desktop
+  commentId: F:Cress.Recorder.Inference.InferenceDomain.Desktop
+  href: Cress.Recorder.Inference.InferenceDomain.html#Cress_Recorder_Inference_InferenceDomain_Desktop
+  name: Desktop
+  nameWithType: InferenceDomain.Desktop
+  fullName: Cress.Recorder.Inference.InferenceDomain.Desktop
+- uid: Cress.Recorder.Inference.InferenceOptions.Domain*
+  commentId: Overload:Cress.Recorder.Inference.InferenceOptions.Domain
+  href: Cress.Recorder.Inference.InferenceOptions.html#Cress_Recorder_Inference_InferenceOptions_Domain
+  name: Domain
+  nameWithType: InferenceOptions.Domain
+  fullName: Cress.Recorder.Inference.InferenceOptions.Domain
+- uid: Cress.Recorder.Inference.InferenceDomain
+  commentId: T:Cress.Recorder.Inference.InferenceDomain
+  parent: Cress.Recorder.Inference
+  href: Cress.Recorder.Inference.InferenceDomain.html
+  name: InferenceDomain
+  nameWithType: InferenceDomain
+  fullName: Cress.Recorder.Inference.InferenceDomain
+- uid: Cress.Recorder.RecordedEvent.Element
+  commentId: P:Cress.Recorder.RecordedEvent.Element
+  href: Cress.Recorder.RecordedEvent.html#Cress_Recorder_RecordedEvent_Element
+  name: Element
+  nameWithType: RecordedEvent.Element
+  fullName: Cress.Recorder.RecordedEvent.Element
+- uid: Cress.Recorder.Inference.InferenceOptions.TargetProcessId*
+  commentId: Overload:Cress.Recorder.Inference.InferenceOptions.TargetProcessId
+  href: Cress.Recorder.Inference.InferenceOptions.html#Cress_Recorder_Inference_InferenceOptions_TargetProcessId
+  name: TargetProcessId
+  nameWithType: InferenceOptions.TargetProcessId
+  fullName: Cress.Recorder.Inference.InferenceOptions.TargetProcessId
+- uid: System.Nullable{System.Int32}
+  commentId: T:System.Nullable{System.Int32}
+  parent: System
+  definition: System.Nullable`1
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int?
+  nameWithType: int?
+  fullName: int?
+  nameWithType.vb: Integer?
+  fullName.vb: Integer?
+  name.vb: Integer?
+  spec.csharp:
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: '?'
+  spec.vb:
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: '?'
+- uid: System.Nullable`1
+  commentId: T:System.Nullable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.nullable-1
+  name: Nullable<T>
+  nameWithType: Nullable<T>
+  fullName: System.Nullable<T>
+  nameWithType.vb: Nullable(Of T)
+  fullName.vb: System.Nullable(Of T)
+  name.vb: Nullable(Of T)
+  spec.csharp:
+  - uid: System.Nullable`1
+    name: Nullable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.nullable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Nullable`1
+    name: Nullable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.nullable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Cress.Recorder.EventKind
+  commentId: T:Cress.Recorder.EventKind
+  parent: Cress.Recorder
+  href: Cress.Recorder.EventKind.html
+  name: EventKind
+  nameWithType: EventKind
+  fullName: Cress.Recorder.EventKind
+- uid: Cress.Recorder.RecordedEvent.Value
+  commentId: P:Cress.Recorder.RecordedEvent.Value
+  href: Cress.Recorder.RecordedEvent.html#Cress_Recorder_RecordedEvent_Value
+  name: Value
+  nameWithType: RecordedEvent.Value
+  fullName: Cress.Recorder.RecordedEvent.Value
+- uid: Cress.Recorder.RecordedEvent.Key
+  commentId: P:Cress.Recorder.RecordedEvent.Key
+  href: Cress.Recorder.RecordedEvent.html#Cress_Recorder_RecordedEvent_Key
+  name: Key
+  nameWithType: RecordedEvent.Key
+  fullName: Cress.Recorder.RecordedEvent.Key
+- uid: Cress.Recorder.Inference.InferenceOptions.DebounceWindow*
+  commentId: Overload:Cress.Recorder.Inference.InferenceOptions.DebounceWindow
+  href: Cress.Recorder.Inference.InferenceOptions.html#Cress_Recorder_Inference_InferenceOptions_DebounceWindow
+  name: DebounceWindow
+  nameWithType: InferenceOptions.DebounceWindow
+  fullName: Cress.Recorder.Inference.InferenceOptions.DebounceWindow
+- uid: System.TimeSpan
+  commentId: T:System.TimeSpan
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.timespan
+  name: TimeSpan
+  nameWithType: TimeSpan
+  fullName: System.TimeSpan
+- uid: Cress.Recorder.EventKind.ValueChanged
+  commentId: F:Cress.Recorder.EventKind.ValueChanged
+  href: Cress.Recorder.EventKind.html#Cress_Recorder_EventKind_ValueChanged
+  name: ValueChanged
+  nameWithType: EventKind.ValueChanged
+  fullName: Cress.Recorder.EventKind.ValueChanged
+- uid: Cress.Recorder.Inference.InferenceOptions.Domain
+  commentId: P:Cress.Recorder.Inference.InferenceOptions.Domain
+  href: Cress.Recorder.Inference.InferenceOptions.html#Cress_Recorder_Inference_InferenceOptions_Domain
+  name: Domain
+  nameWithType: InferenceOptions.Domain
+  fullName: Cress.Recorder.Inference.InferenceOptions.Domain
+- uid: Cress.Recorder.Inference.InferenceDomain.Web
+  commentId: F:Cress.Recorder.Inference.InferenceDomain.Web
+  href: Cress.Recorder.Inference.InferenceDomain.html#Cress_Recorder_Inference_InferenceDomain_Web
+  name: Web
+  nameWithType: InferenceDomain.Web
+  fullName: Cress.Recorder.Inference.InferenceDomain.Web
+- uid: Cress.Recorder.Inference.InferenceOptions.WebDebounceWindow*
+  commentId: Overload:Cress.Recorder.Inference.InferenceOptions.WebDebounceWindow
+  href: Cress.Recorder.Inference.InferenceOptions.html#Cress_Recorder_Inference_InferenceOptions_WebDebounceWindow
+  name: WebDebounceWindow
+  nameWithType: InferenceOptions.WebDebounceWindow
+  fullName: Cress.Recorder.Inference.InferenceOptions.WebDebounceWindow
+- uid: Cress.Recorder.EventKind.FocusChanged
+  commentId: F:Cress.Recorder.EventKind.FocusChanged
+  href: Cress.Recorder.EventKind.html#Cress_Recorder_EventKind_FocusChanged
+  name: FocusChanged
+  nameWithType: EventKind.FocusChanged
+  fullName: Cress.Recorder.EventKind.FocusChanged
+- uid: Cress.Recorder.Inference.InferenceOptions.IgnoreFocusEvents*
+  commentId: Overload:Cress.Recorder.Inference.InferenceOptions.IgnoreFocusEvents
+  href: Cress.Recorder.Inference.InferenceOptions.html#Cress_Recorder_Inference_InferenceOptions_IgnoreFocusEvents
+  name: IgnoreFocusEvents
+  nameWithType: InferenceOptions.IgnoreFocusEvents
+  fullName: Cress.Recorder.Inference.InferenceOptions.IgnoreFocusEvents
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Cress.Recorder.Inference.StepKind.AssertText
+  commentId: F:Cress.Recorder.Inference.StepKind.AssertText
+  href: Cress.Recorder.Inference.StepKind.html#Cress_Recorder_Inference_StepKind_AssertText
+  name: AssertText
+  nameWithType: StepKind.AssertText
+  fullName: Cress.Recorder.Inference.StepKind.AssertText
+- uid: Cress.Recorder.Inference.StepKind.SetValue
+  commentId: F:Cress.Recorder.Inference.StepKind.SetValue
+  href: Cress.Recorder.Inference.StepKind.html#Cress_Recorder_Inference_StepKind_SetValue
+  name: SetValue
+  nameWithType: StepKind.SetValue
+  fullName: Cress.Recorder.Inference.StepKind.SetValue
+- uid: Cress.Recorder.Inference.InferenceOptions.AssertionTargetAutomationId*
+  commentId: Overload:Cress.Recorder.Inference.InferenceOptions.AssertionTargetAutomationId
+  href: Cress.Recorder.Inference.InferenceOptions.html#Cress_Recorder_Inference_InferenceOptions_AssertionTargetAutomationId
+  name: AssertionTargetAutomationId
+  nameWithType: InferenceOptions.AssertionTargetAutomationId
+  fullName: Cress.Recorder.Inference.InferenceOptions.AssertionTargetAutomationId
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String

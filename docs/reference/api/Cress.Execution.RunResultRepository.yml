@@ -1,0 +1,486 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Execution.RunResultRepository
+  commentId: T:Cress.Execution.RunResultRepository
+  id: RunResultRepository
+  parent: Cress.Execution
+  children:
+  - Cress.Execution.RunResultRepository.ListRuns(System.String,System.String,System.Int32)
+  - Cress.Execution.RunResultRepository.LoadRunFromArtifactDirectory(System.String)
+  langs:
+  - csharp
+  - vb
+  name: RunResultRepository
+  nameWithType: RunResultRepository
+  fullName: Cress.Execution.RunResultRepository
+  type: Class
+  source:
+    remote:
+      path: src/Cress.Execution/RunResultRepository.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: RunResultRepository
+    path: ../src/Cress.Execution/RunResultRepository.cs
+    startLine: 5
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Execution
+  syntax:
+    content: public sealed class RunResultRepository
+    content.vb: Public NotInheritable Class RunResultRepository
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Cress.Execution.RunResultRepository.ListRuns(System.String,System.String,System.Int32)
+  commentId: M:Cress.Execution.RunResultRepository.ListRuns(System.String,System.String,System.Int32)
+  id: ListRuns(System.String,System.String,System.Int32)
+  parent: Cress.Execution.RunResultRepository
+  langs:
+  - csharp
+  - vb
+  name: ListRuns(string, string, int)
+  nameWithType: RunResultRepository.ListRuns(string, string, int)
+  fullName: Cress.Execution.RunResultRepository.ListRuns(string, string, int)
+  type: Method
+  source:
+    remote:
+      path: src/Cress.Execution/RunResultRepository.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: ListRuns
+    path: ../src/Cress.Execution/RunResultRepository.cs
+    startLine: 7
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Execution
+  syntax:
+    content: public IReadOnlyList<StoredRunResult> ListRuns(string projectRoot, string artifactsRelativePath, int maxCount = 25)
+    parameters:
+    - id: projectRoot
+      type: System.String
+    - id: artifactsRelativePath
+      type: System.String
+    - id: maxCount
+      type: System.Int32
+    return:
+      type: System.Collections.Generic.IReadOnlyList{Cress.Execution.StoredRunResult}
+    content.vb: Public Function ListRuns(projectRoot As String, artifactsRelativePath As String, maxCount As Integer = 25) As IReadOnlyList(Of StoredRunResult)
+  overload: Cress.Execution.RunResultRepository.ListRuns*
+  nameWithType.vb: RunResultRepository.ListRuns(String, String, Integer)
+  fullName.vb: Cress.Execution.RunResultRepository.ListRuns(String, String, Integer)
+  name.vb: ListRuns(String, String, Integer)
+- uid: Cress.Execution.RunResultRepository.LoadRunFromArtifactDirectory(System.String)
+  commentId: M:Cress.Execution.RunResultRepository.LoadRunFromArtifactDirectory(System.String)
+  id: LoadRunFromArtifactDirectory(System.String)
+  parent: Cress.Execution.RunResultRepository
+  langs:
+  - csharp
+  - vb
+  name: LoadRunFromArtifactDirectory(string)
+  nameWithType: RunResultRepository.LoadRunFromArtifactDirectory(string)
+  fullName: Cress.Execution.RunResultRepository.LoadRunFromArtifactDirectory(string)
+  type: Method
+  source:
+    remote:
+      path: src/Cress.Execution/RunResultRepository.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: LoadRunFromArtifactDirectory
+    path: ../src/Cress.Execution/RunResultRepository.cs
+    startLine: 24
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Execution
+  syntax:
+    content: public StoredRunResult? LoadRunFromArtifactDirectory(string artifactDirectory)
+    parameters:
+    - id: artifactDirectory
+      type: System.String
+    return:
+      type: Cress.Execution.StoredRunResult
+    content.vb: Public Function LoadRunFromArtifactDirectory(artifactDirectory As String) As StoredRunResult
+  overload: Cress.Execution.RunResultRepository.LoadRunFromArtifactDirectory*
+  nameWithType.vb: RunResultRepository.LoadRunFromArtifactDirectory(String)
+  fullName.vb: Cress.Execution.RunResultRepository.LoadRunFromArtifactDirectory(String)
+  name.vb: LoadRunFromArtifactDirectory(String)
+references:
+- uid: Cress.Execution
+  commentId: N:Cress.Execution
+  href: Cress.html
+  name: Cress.Execution
+  nameWithType: Cress.Execution
+  fullName: Cress.Execution
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Execution
+    name: Execution
+    href: Cress.Execution.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Execution
+    name: Execution
+    href: Cress.Execution.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Cress.Execution.RunResultRepository.ListRuns*
+  commentId: Overload:Cress.Execution.RunResultRepository.ListRuns
+  href: Cress.Execution.RunResultRepository.html#Cress_Execution_RunResultRepository_ListRuns_System_String_System_String_System_Int32_
+  name: ListRuns
+  nameWithType: RunResultRepository.ListRuns
+  fullName: Cress.Execution.RunResultRepository.ListRuns
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System.Collections.Generic.IReadOnlyList{Cress.Execution.StoredRunResult}
+  commentId: T:System.Collections.Generic.IReadOnlyList{Cress.Execution.StoredRunResult}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IReadOnlyList`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  name: IReadOnlyList<StoredRunResult>
+  nameWithType: IReadOnlyList<StoredRunResult>
+  fullName: System.Collections.Generic.IReadOnlyList<Cress.Execution.StoredRunResult>
+  nameWithType.vb: IReadOnlyList(Of StoredRunResult)
+  fullName.vb: System.Collections.Generic.IReadOnlyList(Of Cress.Execution.StoredRunResult)
+  name.vb: IReadOnlyList(Of StoredRunResult)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: <
+  - uid: Cress.Execution.StoredRunResult
+    name: StoredRunResult
+    href: Cress.Execution.StoredRunResult.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Cress.Execution.StoredRunResult
+    name: StoredRunResult
+    href: Cress.Execution.StoredRunResult.html
+  - name: )
+- uid: System.Collections.Generic.IReadOnlyList`1
+  commentId: T:System.Collections.Generic.IReadOnlyList`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  name: IReadOnlyList<T>
+  nameWithType: IReadOnlyList<T>
+  fullName: System.Collections.Generic.IReadOnlyList<T>
+  nameWithType.vb: IReadOnlyList(Of T)
+  fullName.vb: System.Collections.Generic.IReadOnlyList(Of T)
+  name.vb: IReadOnlyList(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: Cress.Execution.RunResultRepository.LoadRunFromArtifactDirectory*
+  commentId: Overload:Cress.Execution.RunResultRepository.LoadRunFromArtifactDirectory
+  href: Cress.Execution.RunResultRepository.html#Cress_Execution_RunResultRepository_LoadRunFromArtifactDirectory_System_String_
+  name: LoadRunFromArtifactDirectory
+  nameWithType: RunResultRepository.LoadRunFromArtifactDirectory
+  fullName: Cress.Execution.RunResultRepository.LoadRunFromArtifactDirectory
+- uid: Cress.Execution.StoredRunResult
+  commentId: T:Cress.Execution.StoredRunResult
+  parent: Cress.Execution
+  href: Cress.Execution.StoredRunResult.html
+  name: StoredRunResult
+  nameWithType: StoredRunResult
+  fullName: Cress.Execution.StoredRunResult

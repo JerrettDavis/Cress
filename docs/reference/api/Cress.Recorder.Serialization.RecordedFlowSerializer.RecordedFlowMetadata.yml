@@ -1,0 +1,739 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata
+  commentId: T:Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata
+  id: RecordedFlowSerializer.RecordedFlowMetadata
+  parent: Cress.Recorder.Serialization
+  children:
+  - Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata.AttachProcessName
+  - Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata.Capability
+  - Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata.Id
+  - Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata.Name
+  - Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata.Status
+  - Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata.Summary
+  - Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata.Tags
+  langs:
+  - csharp
+  - vb
+  name: RecordedFlowSerializer.RecordedFlowMetadata
+  nameWithType: RecordedFlowSerializer.RecordedFlowMetadata
+  fullName: Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata
+  type: Class
+  source:
+    remote:
+      path: src/Cress.Recorder/Serialization/RecordedFlowSerializer.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: RecordedFlowMetadata
+    path: ../src/Cress.Recorder/Serialization/RecordedFlowSerializer.cs
+    startLine: 16
+  assemblies:
+  - Cress.Recorder
+  namespace: Cress.Recorder.Serialization
+  summary: Metadata that decorates the serialized flow.
+  example: []
+  syntax:
+    content: 'public sealed record RecordedFlowSerializer.RecordedFlowMetadata : IEquatable<RecordedFlowSerializer.RecordedFlowMetadata>'
+    content.vb: Public NotInheritable Class RecordedFlowSerializer.RecordedFlowMetadata Implements IEquatable(Of RecordedFlowSerializer.RecordedFlowMetadata)
+  inheritance:
+  - System.Object
+  implements:
+  - System.IEquatable{Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata}
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata.Id
+  commentId: P:Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata.Id
+  id: Id
+  parent: Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata
+  langs:
+  - csharp
+  - vb
+  name: Id
+  nameWithType: RecordedFlowSerializer.RecordedFlowMetadata.Id
+  fullName: Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata.Id
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Recorder/Serialization/RecordedFlowSerializer.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Id
+    path: ../src/Cress.Recorder/Serialization/RecordedFlowSerializer.cs
+    startLine: 19
+  assemblies:
+  - Cress.Recorder
+  namespace: Cress.Recorder.Serialization
+  summary: Flow identifier, e.g. <code>calc.add-two-plus-two</code>.
+  example: []
+  syntax:
+    content: public required string Id { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Id As String
+  overload: Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata.Id*
+- uid: Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata.Name
+  commentId: P:Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata.Name
+  id: Name
+  parent: Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata
+  langs:
+  - csharp
+  - vb
+  name: Name
+  nameWithType: RecordedFlowSerializer.RecordedFlowMetadata.Name
+  fullName: Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata.Name
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Recorder/Serialization/RecordedFlowSerializer.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Name
+    path: ../src/Cress.Recorder/Serialization/RecordedFlowSerializer.cs
+    startLine: 22
+  assemblies:
+  - Cress.Recorder
+  namespace: Cress.Recorder.Serialization
+  summary: 'Human-readable name, e.g. <code>Calculator: 2 + 2 = 4</code>.'
+  example: []
+  syntax:
+    content: public required string Name { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Name As String
+  overload: Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata.Name*
+- uid: Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata.Capability
+  commentId: P:Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata.Capability
+  id: Capability
+  parent: Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata
+  langs:
+  - csharp
+  - vb
+  name: Capability
+  nameWithType: RecordedFlowSerializer.RecordedFlowMetadata.Capability
+  fullName: Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata.Capability
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Recorder/Serialization/RecordedFlowSerializer.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Capability
+    path: ../src/Cress.Recorder/Serialization/RecordedFlowSerializer.cs
+    startLine: 25
+  assemblies:
+  - Cress.Recorder
+  namespace: Cress.Recorder.Serialization
+  summary: Optional capability id this flow belongs to.
+  example: []
+  syntax:
+    content: public string? Capability { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Capability As String
+  overload: Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata.Capability*
+- uid: Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata.Summary
+  commentId: P:Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata.Summary
+  id: Summary
+  parent: Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata
+  langs:
+  - csharp
+  - vb
+  name: Summary
+  nameWithType: RecordedFlowSerializer.RecordedFlowMetadata.Summary
+  fullName: Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata.Summary
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Recorder/Serialization/RecordedFlowSerializer.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Summary
+    path: ../src/Cress.Recorder/Serialization/RecordedFlowSerializer.cs
+    startLine: 28
+  assemblies:
+  - Cress.Recorder
+  namespace: Cress.Recorder.Serialization
+  summary: One-sentence summary shown in the Studio.
+  example: []
+  syntax:
+    content: public string? Summary { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Summary As String
+  overload: Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata.Summary*
+- uid: Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata.Tags
+  commentId: P:Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata.Tags
+  id: Tags
+  parent: Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata
+  langs:
+  - csharp
+  - vb
+  name: Tags
+  nameWithType: RecordedFlowSerializer.RecordedFlowMetadata.Tags
+  fullName: Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata.Tags
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Recorder/Serialization/RecordedFlowSerializer.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Tags
+    path: ../src/Cress.Recorder/Serialization/RecordedFlowSerializer.cs
+    startLine: 31
+  assemblies:
+  - Cress.Recorder
+  namespace: Cress.Recorder.Serialization
+  summary: Tags attached to the flow. Defaults to <code>["recorded", "draft"]</code>.
+  example: []
+  syntax:
+    content: public IReadOnlyList<string> Tags { get; init; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.IReadOnlyList{System.String}
+    content.vb: Public Property Tags As IReadOnlyList(Of String)
+  overload: Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata.Tags*
+- uid: Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata.Status
+  commentId: P:Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata.Status
+  id: Status
+  parent: Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata
+  langs:
+  - csharp
+  - vb
+  name: Status
+  nameWithType: RecordedFlowSerializer.RecordedFlowMetadata.Status
+  fullName: Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata.Status
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Recorder/Serialization/RecordedFlowSerializer.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Status
+    path: ../src/Cress.Recorder/Serialization/RecordedFlowSerializer.cs
+    startLine: 37
+  assemblies:
+  - Cress.Recorder
+  namespace: Cress.Recorder.Serialization
+  summary: >-
+    Lifecycle status. Per PLAN.md AC-24.1.6, recorded flows are <code>draft</code> until
+
+    manually reviewed and promoted.
+  example: []
+  syntax:
+    content: public string Status { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Status As String
+  overload: Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata.Status*
+- uid: Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata.AttachProcessName
+  commentId: P:Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata.AttachProcessName
+  id: AttachProcessName
+  parent: Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata
+  langs:
+  - csharp
+  - vb
+  name: AttachProcessName
+  nameWithType: RecordedFlowSerializer.RecordedFlowMetadata.AttachProcessName
+  fullName: Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata.AttachProcessName
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Recorder/Serialization/RecordedFlowSerializer.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: AttachProcessName
+    path: ../src/Cress.Recorder/Serialization/RecordedFlowSerializer.cs
+    startLine: 44
+  assemblies:
+  - Cress.Recorder
+  namespace: Cress.Recorder.Serialization
+  summary: >-
+    When set, a <code>ui.attach</code> step is prepended as the first <code>when</code> action
+
+    using this value as the <code>processName</code> input. Set to the process name of
+
+    the application that was recorded (e.g. <code>"calc"</code>).
+  example: []
+  syntax:
+    content: public string? AttachProcessName { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property AttachProcessName As String
+  overload: Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata.AttachProcessName*
+references:
+- uid: Cress.Recorder.Serialization
+  commentId: N:Cress.Recorder.Serialization
+  href: Cress.html
+  name: Cress.Recorder.Serialization
+  nameWithType: Cress.Recorder.Serialization
+  fullName: Cress.Recorder.Serialization
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Recorder
+    name: Recorder
+    href: Cress.Recorder.html
+  - name: .
+  - uid: Cress.Recorder.Serialization
+    name: Serialization
+    href: Cress.Recorder.Serialization.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Recorder
+    name: Recorder
+    href: Cress.Recorder.html
+  - name: .
+  - uid: Cress.Recorder.Serialization
+    name: Serialization
+    href: Cress.Recorder.Serialization.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.IEquatable{Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata}
+  commentId: T:System.IEquatable{Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata}
+  parent: System
+  definition: System.IEquatable`1
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<RecordedFlowSerializer.RecordedFlowMetadata>
+  nameWithType: IEquatable<RecordedFlowSerializer.RecordedFlowMetadata>
+  fullName: System.IEquatable<Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata>
+  nameWithType.vb: IEquatable(Of RecordedFlowSerializer.RecordedFlowMetadata)
+  fullName.vb: System.IEquatable(Of Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata)
+  name.vb: IEquatable(Of RecordedFlowSerializer.RecordedFlowMetadata)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - uid: Cress.Recorder.Serialization.RecordedFlowSerializer
+    name: RecordedFlowSerializer
+    href: Cress.Recorder.Serialization.RecordedFlowSerializer.html
+  - name: .
+  - uid: Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata
+    name: RecordedFlowMetadata
+    href: Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata.html
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Cress.Recorder.Serialization.RecordedFlowSerializer
+    name: RecordedFlowSerializer
+    href: Cress.Recorder.Serialization.RecordedFlowSerializer.html
+  - name: .
+  - uid: Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata
+    name: RecordedFlowMetadata
+    href: Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata.html
+  - name: )
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.IEquatable`1
+  commentId: T:System.IEquatable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<T>
+  nameWithType: IEquatable<T>
+  fullName: System.IEquatable<T>
+  nameWithType.vb: IEquatable(Of T)
+  fullName.vb: System.IEquatable(Of T)
+  name.vb: IEquatable(Of T)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata.Id*
+  commentId: Overload:Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata.Id
+  href: Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata.html#Cress_Recorder_Serialization_RecordedFlowSerializer_RecordedFlowMetadata_Id
+  name: Id
+  nameWithType: RecordedFlowSerializer.RecordedFlowMetadata.Id
+  fullName: Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata.Id
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata.Name*
+  commentId: Overload:Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata.Name
+  href: Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata.html#Cress_Recorder_Serialization_RecordedFlowSerializer_RecordedFlowMetadata_Name
+  name: Name
+  nameWithType: RecordedFlowSerializer.RecordedFlowMetadata.Name
+  fullName: Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata.Name
+- uid: Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata.Capability*
+  commentId: Overload:Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata.Capability
+  href: Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata.html#Cress_Recorder_Serialization_RecordedFlowSerializer_RecordedFlowMetadata_Capability
+  name: Capability
+  nameWithType: RecordedFlowSerializer.RecordedFlowMetadata.Capability
+  fullName: Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata.Capability
+- uid: Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata.Summary*
+  commentId: Overload:Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata.Summary
+  href: Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata.html#Cress_Recorder_Serialization_RecordedFlowSerializer_RecordedFlowMetadata_Summary
+  name: Summary
+  nameWithType: RecordedFlowSerializer.RecordedFlowMetadata.Summary
+  fullName: Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata.Summary
+- uid: Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata.Tags*
+  commentId: Overload:Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata.Tags
+  href: Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata.html#Cress_Recorder_Serialization_RecordedFlowSerializer_RecordedFlowMetadata_Tags
+  name: Tags
+  nameWithType: RecordedFlowSerializer.RecordedFlowMetadata.Tags
+  fullName: Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata.Tags
+- uid: System.Collections.Generic.IReadOnlyList{System.String}
+  commentId: T:System.Collections.Generic.IReadOnlyList{System.String}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IReadOnlyList`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  name: IReadOnlyList<string>
+  nameWithType: IReadOnlyList<string>
+  fullName: System.Collections.Generic.IReadOnlyList<string>
+  nameWithType.vb: IReadOnlyList(Of String)
+  fullName.vb: System.Collections.Generic.IReadOnlyList(Of String)
+  name.vb: IReadOnlyList(Of String)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+- uid: System.Collections.Generic.IReadOnlyList`1
+  commentId: T:System.Collections.Generic.IReadOnlyList`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  name: IReadOnlyList<T>
+  nameWithType: IReadOnlyList<T>
+  fullName: System.Collections.Generic.IReadOnlyList<T>
+  nameWithType.vb: IReadOnlyList(Of T)
+  fullName.vb: System.Collections.Generic.IReadOnlyList(Of T)
+  name.vb: IReadOnlyList(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata.Status*
+  commentId: Overload:Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata.Status
+  href: Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata.html#Cress_Recorder_Serialization_RecordedFlowSerializer_RecordedFlowMetadata_Status
+  name: Status
+  nameWithType: RecordedFlowSerializer.RecordedFlowMetadata.Status
+  fullName: Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata.Status
+- uid: Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata.AttachProcessName*
+  commentId: Overload:Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata.AttachProcessName
+  href: Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata.html#Cress_Recorder_Serialization_RecordedFlowSerializer_RecordedFlowMetadata_AttachProcessName
+  name: AttachProcessName
+  nameWithType: RecordedFlowSerializer.RecordedFlowMetadata.AttachProcessName
+  fullName: Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata.AttachProcessName

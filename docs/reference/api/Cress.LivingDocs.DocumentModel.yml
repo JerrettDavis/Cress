@@ -1,0 +1,939 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.LivingDocs.DocumentModel
+  commentId: T:Cress.LivingDocs.DocumentModel
+  id: DocumentModel
+  parent: Cress.LivingDocs
+  children:
+  - Cress.LivingDocs.DocumentModel.#ctor(Cress.LivingDocs.DocumentMeta,Cress.LivingDocs.DocumentBranding,Cress.LivingDocs.SuiteSummary,System.Collections.Generic.IReadOnlyList{Cress.LivingDocs.FlowSummary},Cress.Studio.Services.RunMetrics,System.Collections.Generic.IReadOnlyList{Cress.LivingDocs.RunHistoryEntry},System.Collections.Generic.IReadOnlyList{Cress.LivingDocs.ScreenshotEvidence},System.Collections.Generic.IReadOnlyList{Cress.LivingDocs.DiagnosticEntry})
+  - Cress.LivingDocs.DocumentModel.Branding
+  - Cress.LivingDocs.DocumentModel.Diagnostics
+  - Cress.LivingDocs.DocumentModel.Flows
+  - Cress.LivingDocs.DocumentModel.Meta
+  - Cress.LivingDocs.DocumentModel.Metrics
+  - Cress.LivingDocs.DocumentModel.RecentRuns
+  - Cress.LivingDocs.DocumentModel.Screenshots
+  - Cress.LivingDocs.DocumentModel.Suite
+  langs:
+  - csharp
+  - vb
+  name: DocumentModel
+  nameWithType: DocumentModel
+  fullName: Cress.LivingDocs.DocumentModel
+  type: Class
+  source:
+    remote:
+      path: src/Cress.LivingDocs/DocumentModel.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: DocumentModel
+    path: ../src/Cress.LivingDocs/DocumentModel.cs
+    startLine: 5
+  assemblies:
+  - Cress.LivingDocs
+  namespace: Cress.LivingDocs
+  summary: Top-level data shape passed to every living doc template.
+  example: []
+  syntax:
+    content: 'public sealed record DocumentModel : IEquatable<DocumentModel>'
+    content.vb: Public NotInheritable Class DocumentModel Implements IEquatable(Of DocumentModel)
+  inheritance:
+  - System.Object
+  implements:
+  - System.IEquatable{Cress.LivingDocs.DocumentModel}
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Cress.LivingDocs.DocumentModel.#ctor(Cress.LivingDocs.DocumentMeta,Cress.LivingDocs.DocumentBranding,Cress.LivingDocs.SuiteSummary,System.Collections.Generic.IReadOnlyList{Cress.LivingDocs.FlowSummary},Cress.Studio.Services.RunMetrics,System.Collections.Generic.IReadOnlyList{Cress.LivingDocs.RunHistoryEntry},System.Collections.Generic.IReadOnlyList{Cress.LivingDocs.ScreenshotEvidence},System.Collections.Generic.IReadOnlyList{Cress.LivingDocs.DiagnosticEntry})
+  commentId: M:Cress.LivingDocs.DocumentModel.#ctor(Cress.LivingDocs.DocumentMeta,Cress.LivingDocs.DocumentBranding,Cress.LivingDocs.SuiteSummary,System.Collections.Generic.IReadOnlyList{Cress.LivingDocs.FlowSummary},Cress.Studio.Services.RunMetrics,System.Collections.Generic.IReadOnlyList{Cress.LivingDocs.RunHistoryEntry},System.Collections.Generic.IReadOnlyList{Cress.LivingDocs.ScreenshotEvidence},System.Collections.Generic.IReadOnlyList{Cress.LivingDocs.DiagnosticEntry})
+  id: '#ctor(Cress.LivingDocs.DocumentMeta,Cress.LivingDocs.DocumentBranding,Cress.LivingDocs.SuiteSummary,System.Collections.Generic.IReadOnlyList{Cress.LivingDocs.FlowSummary},Cress.Studio.Services.RunMetrics,System.Collections.Generic.IReadOnlyList{Cress.LivingDocs.RunHistoryEntry},System.Collections.Generic.IReadOnlyList{Cress.LivingDocs.ScreenshotEvidence},System.Collections.Generic.IReadOnlyList{Cress.LivingDocs.DiagnosticEntry})'
+  parent: Cress.LivingDocs.DocumentModel
+  langs:
+  - csharp
+  - vb
+  name: DocumentModel(DocumentMeta, DocumentBranding, SuiteSummary, IReadOnlyList<FlowSummary>, RunMetrics?, IReadOnlyList<RunHistoryEntry>, IReadOnlyList<ScreenshotEvidence>, IReadOnlyList<DiagnosticEntry>)
+  nameWithType: DocumentModel.DocumentModel(DocumentMeta, DocumentBranding, SuiteSummary, IReadOnlyList<FlowSummary>, RunMetrics?, IReadOnlyList<RunHistoryEntry>, IReadOnlyList<ScreenshotEvidence>, IReadOnlyList<DiagnosticEntry>)
+  fullName: Cress.LivingDocs.DocumentModel.DocumentModel(Cress.LivingDocs.DocumentMeta, Cress.LivingDocs.DocumentBranding, Cress.LivingDocs.SuiteSummary, System.Collections.Generic.IReadOnlyList<Cress.LivingDocs.FlowSummary>, Cress.Studio.Services.RunMetrics?, System.Collections.Generic.IReadOnlyList<Cress.LivingDocs.RunHistoryEntry>, System.Collections.Generic.IReadOnlyList<Cress.LivingDocs.ScreenshotEvidence>, System.Collections.Generic.IReadOnlyList<Cress.LivingDocs.DiagnosticEntry>)
+  type: Constructor
+  source:
+    remote:
+      path: src/Cress.LivingDocs/DocumentModel.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: .ctor
+    path: ../src/Cress.LivingDocs/DocumentModel.cs
+    startLine: 5
+  assemblies:
+  - Cress.LivingDocs
+  namespace: Cress.LivingDocs
+  summary: Top-level data shape passed to every living doc template.
+  example: []
+  syntax:
+    content: public DocumentModel(DocumentMeta Meta, DocumentBranding Branding, SuiteSummary Suite, IReadOnlyList<FlowSummary> Flows, RunMetrics? Metrics, IReadOnlyList<RunHistoryEntry> RecentRuns, IReadOnlyList<ScreenshotEvidence> Screenshots, IReadOnlyList<DiagnosticEntry> Diagnostics)
+    parameters:
+    - id: Meta
+      type: Cress.LivingDocs.DocumentMeta
+    - id: Branding
+      type: Cress.LivingDocs.DocumentBranding
+    - id: Suite
+      type: Cress.LivingDocs.SuiteSummary
+    - id: Flows
+      type: System.Collections.Generic.IReadOnlyList{Cress.LivingDocs.FlowSummary}
+    - id: Metrics
+      type: Cress.Studio.Services.RunMetrics
+    - id: RecentRuns
+      type: System.Collections.Generic.IReadOnlyList{Cress.LivingDocs.RunHistoryEntry}
+    - id: Screenshots
+      type: System.Collections.Generic.IReadOnlyList{Cress.LivingDocs.ScreenshotEvidence}
+    - id: Diagnostics
+      type: System.Collections.Generic.IReadOnlyList{Cress.LivingDocs.DiagnosticEntry}
+    content.vb: Public Sub New(Meta As DocumentMeta, Branding As DocumentBranding, Suite As SuiteSummary, Flows As IReadOnlyList(Of FlowSummary), Metrics As RunMetrics, RecentRuns As IReadOnlyList(Of RunHistoryEntry), Screenshots As IReadOnlyList(Of ScreenshotEvidence), Diagnostics As IReadOnlyList(Of DiagnosticEntry))
+  overload: Cress.LivingDocs.DocumentModel.#ctor*
+  nameWithType.vb: DocumentModel.New(DocumentMeta, DocumentBranding, SuiteSummary, IReadOnlyList(Of FlowSummary), RunMetrics, IReadOnlyList(Of RunHistoryEntry), IReadOnlyList(Of ScreenshotEvidence), IReadOnlyList(Of DiagnosticEntry))
+  fullName.vb: Cress.LivingDocs.DocumentModel.New(Cress.LivingDocs.DocumentMeta, Cress.LivingDocs.DocumentBranding, Cress.LivingDocs.SuiteSummary, System.Collections.Generic.IReadOnlyList(Of Cress.LivingDocs.FlowSummary), Cress.Studio.Services.RunMetrics, System.Collections.Generic.IReadOnlyList(Of Cress.LivingDocs.RunHistoryEntry), System.Collections.Generic.IReadOnlyList(Of Cress.LivingDocs.ScreenshotEvidence), System.Collections.Generic.IReadOnlyList(Of Cress.LivingDocs.DiagnosticEntry))
+  name.vb: New(DocumentMeta, DocumentBranding, SuiteSummary, IReadOnlyList(Of FlowSummary), RunMetrics, IReadOnlyList(Of RunHistoryEntry), IReadOnlyList(Of ScreenshotEvidence), IReadOnlyList(Of DiagnosticEntry))
+- uid: Cress.LivingDocs.DocumentModel.Meta
+  commentId: P:Cress.LivingDocs.DocumentModel.Meta
+  id: Meta
+  parent: Cress.LivingDocs.DocumentModel
+  langs:
+  - csharp
+  - vb
+  name: Meta
+  nameWithType: DocumentModel.Meta
+  fullName: Cress.LivingDocs.DocumentModel.Meta
+  type: Property
+  source:
+    remote:
+      path: src/Cress.LivingDocs/DocumentModel.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Meta
+    path: ../src/Cress.LivingDocs/DocumentModel.cs
+    startLine: 6
+  assemblies:
+  - Cress.LivingDocs
+  namespace: Cress.LivingDocs
+  syntax:
+    content: public DocumentMeta Meta { get; init; }
+    parameters: []
+    return:
+      type: Cress.LivingDocs.DocumentMeta
+    content.vb: Public Property Meta As DocumentMeta
+  overload: Cress.LivingDocs.DocumentModel.Meta*
+- uid: Cress.LivingDocs.DocumentModel.Branding
+  commentId: P:Cress.LivingDocs.DocumentModel.Branding
+  id: Branding
+  parent: Cress.LivingDocs.DocumentModel
+  langs:
+  - csharp
+  - vb
+  name: Branding
+  nameWithType: DocumentModel.Branding
+  fullName: Cress.LivingDocs.DocumentModel.Branding
+  type: Property
+  source:
+    remote:
+      path: src/Cress.LivingDocs/DocumentModel.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Branding
+    path: ../src/Cress.LivingDocs/DocumentModel.cs
+    startLine: 7
+  assemblies:
+  - Cress.LivingDocs
+  namespace: Cress.LivingDocs
+  syntax:
+    content: public DocumentBranding Branding { get; init; }
+    parameters: []
+    return:
+      type: Cress.LivingDocs.DocumentBranding
+    content.vb: Public Property Branding As DocumentBranding
+  overload: Cress.LivingDocs.DocumentModel.Branding*
+- uid: Cress.LivingDocs.DocumentModel.Suite
+  commentId: P:Cress.LivingDocs.DocumentModel.Suite
+  id: Suite
+  parent: Cress.LivingDocs.DocumentModel
+  langs:
+  - csharp
+  - vb
+  name: Suite
+  nameWithType: DocumentModel.Suite
+  fullName: Cress.LivingDocs.DocumentModel.Suite
+  type: Property
+  source:
+    remote:
+      path: src/Cress.LivingDocs/DocumentModel.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Suite
+    path: ../src/Cress.LivingDocs/DocumentModel.cs
+    startLine: 8
+  assemblies:
+  - Cress.LivingDocs
+  namespace: Cress.LivingDocs
+  syntax:
+    content: public SuiteSummary Suite { get; init; }
+    parameters: []
+    return:
+      type: Cress.LivingDocs.SuiteSummary
+    content.vb: Public Property Suite As SuiteSummary
+  overload: Cress.LivingDocs.DocumentModel.Suite*
+- uid: Cress.LivingDocs.DocumentModel.Flows
+  commentId: P:Cress.LivingDocs.DocumentModel.Flows
+  id: Flows
+  parent: Cress.LivingDocs.DocumentModel
+  langs:
+  - csharp
+  - vb
+  name: Flows
+  nameWithType: DocumentModel.Flows
+  fullName: Cress.LivingDocs.DocumentModel.Flows
+  type: Property
+  source:
+    remote:
+      path: src/Cress.LivingDocs/DocumentModel.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Flows
+    path: ../src/Cress.LivingDocs/DocumentModel.cs
+    startLine: 9
+  assemblies:
+  - Cress.LivingDocs
+  namespace: Cress.LivingDocs
+  syntax:
+    content: public IReadOnlyList<FlowSummary> Flows { get; init; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.IReadOnlyList{Cress.LivingDocs.FlowSummary}
+    content.vb: Public Property Flows As IReadOnlyList(Of FlowSummary)
+  overload: Cress.LivingDocs.DocumentModel.Flows*
+- uid: Cress.LivingDocs.DocumentModel.Metrics
+  commentId: P:Cress.LivingDocs.DocumentModel.Metrics
+  id: Metrics
+  parent: Cress.LivingDocs.DocumentModel
+  langs:
+  - csharp
+  - vb
+  name: Metrics
+  nameWithType: DocumentModel.Metrics
+  fullName: Cress.LivingDocs.DocumentModel.Metrics
+  type: Property
+  source:
+    remote:
+      path: src/Cress.LivingDocs/DocumentModel.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Metrics
+    path: ../src/Cress.LivingDocs/DocumentModel.cs
+    startLine: 10
+  assemblies:
+  - Cress.LivingDocs
+  namespace: Cress.LivingDocs
+  syntax:
+    content: public RunMetrics? Metrics { get; init; }
+    parameters: []
+    return:
+      type: Cress.Studio.Services.RunMetrics
+    content.vb: Public Property Metrics As RunMetrics
+  overload: Cress.LivingDocs.DocumentModel.Metrics*
+- uid: Cress.LivingDocs.DocumentModel.RecentRuns
+  commentId: P:Cress.LivingDocs.DocumentModel.RecentRuns
+  id: RecentRuns
+  parent: Cress.LivingDocs.DocumentModel
+  langs:
+  - csharp
+  - vb
+  name: RecentRuns
+  nameWithType: DocumentModel.RecentRuns
+  fullName: Cress.LivingDocs.DocumentModel.RecentRuns
+  type: Property
+  source:
+    remote:
+      path: src/Cress.LivingDocs/DocumentModel.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: RecentRuns
+    path: ../src/Cress.LivingDocs/DocumentModel.cs
+    startLine: 11
+  assemblies:
+  - Cress.LivingDocs
+  namespace: Cress.LivingDocs
+  syntax:
+    content: public IReadOnlyList<RunHistoryEntry> RecentRuns { get; init; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.IReadOnlyList{Cress.LivingDocs.RunHistoryEntry}
+    content.vb: Public Property RecentRuns As IReadOnlyList(Of RunHistoryEntry)
+  overload: Cress.LivingDocs.DocumentModel.RecentRuns*
+- uid: Cress.LivingDocs.DocumentModel.Screenshots
+  commentId: P:Cress.LivingDocs.DocumentModel.Screenshots
+  id: Screenshots
+  parent: Cress.LivingDocs.DocumentModel
+  langs:
+  - csharp
+  - vb
+  name: Screenshots
+  nameWithType: DocumentModel.Screenshots
+  fullName: Cress.LivingDocs.DocumentModel.Screenshots
+  type: Property
+  source:
+    remote:
+      path: src/Cress.LivingDocs/DocumentModel.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Screenshots
+    path: ../src/Cress.LivingDocs/DocumentModel.cs
+    startLine: 12
+  assemblies:
+  - Cress.LivingDocs
+  namespace: Cress.LivingDocs
+  syntax:
+    content: public IReadOnlyList<ScreenshotEvidence> Screenshots { get; init; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.IReadOnlyList{Cress.LivingDocs.ScreenshotEvidence}
+    content.vb: Public Property Screenshots As IReadOnlyList(Of ScreenshotEvidence)
+  overload: Cress.LivingDocs.DocumentModel.Screenshots*
+- uid: Cress.LivingDocs.DocumentModel.Diagnostics
+  commentId: P:Cress.LivingDocs.DocumentModel.Diagnostics
+  id: Diagnostics
+  parent: Cress.LivingDocs.DocumentModel
+  langs:
+  - csharp
+  - vb
+  name: Diagnostics
+  nameWithType: DocumentModel.Diagnostics
+  fullName: Cress.LivingDocs.DocumentModel.Diagnostics
+  type: Property
+  source:
+    remote:
+      path: src/Cress.LivingDocs/DocumentModel.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Diagnostics
+    path: ../src/Cress.LivingDocs/DocumentModel.cs
+    startLine: 13
+  assemblies:
+  - Cress.LivingDocs
+  namespace: Cress.LivingDocs
+  syntax:
+    content: public IReadOnlyList<DiagnosticEntry> Diagnostics { get; init; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.IReadOnlyList{Cress.LivingDocs.DiagnosticEntry}
+    content.vb: Public Property Diagnostics As IReadOnlyList(Of DiagnosticEntry)
+  overload: Cress.LivingDocs.DocumentModel.Diagnostics*
+references:
+- uid: Cress.LivingDocs
+  commentId: N:Cress.LivingDocs
+  href: Cress.html
+  name: Cress.LivingDocs
+  nameWithType: Cress.LivingDocs
+  fullName: Cress.LivingDocs
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.LivingDocs
+    name: LivingDocs
+    href: Cress.LivingDocs.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.LivingDocs
+    name: LivingDocs
+    href: Cress.LivingDocs.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.IEquatable{Cress.LivingDocs.DocumentModel}
+  commentId: T:System.IEquatable{Cress.LivingDocs.DocumentModel}
+  parent: System
+  definition: System.IEquatable`1
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<DocumentModel>
+  nameWithType: IEquatable<DocumentModel>
+  fullName: System.IEquatable<Cress.LivingDocs.DocumentModel>
+  nameWithType.vb: IEquatable(Of DocumentModel)
+  fullName.vb: System.IEquatable(Of Cress.LivingDocs.DocumentModel)
+  name.vb: IEquatable(Of DocumentModel)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - uid: Cress.LivingDocs.DocumentModel
+    name: DocumentModel
+    href: Cress.LivingDocs.DocumentModel.html
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Cress.LivingDocs.DocumentModel
+    name: DocumentModel
+    href: Cress.LivingDocs.DocumentModel.html
+  - name: )
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.IEquatable`1
+  commentId: T:System.IEquatable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<T>
+  nameWithType: IEquatable<T>
+  fullName: System.IEquatable<T>
+  nameWithType.vb: IEquatable(Of T)
+  fullName.vb: System.IEquatable(Of T)
+  name.vb: IEquatable(Of T)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Cress.LivingDocs.DocumentModel.#ctor*
+  commentId: Overload:Cress.LivingDocs.DocumentModel.#ctor
+  href: Cress.LivingDocs.DocumentModel.html#Cress_LivingDocs_DocumentModel__ctor_Cress_LivingDocs_DocumentMeta_Cress_LivingDocs_DocumentBranding_Cress_LivingDocs_SuiteSummary_System_Collections_Generic_IReadOnlyList_Cress_LivingDocs_FlowSummary__Cress_Studio_Services_RunMetrics_System_Collections_Generic_IReadOnlyList_Cress_LivingDocs_RunHistoryEntry__System_Collections_Generic_IReadOnlyList_Cress_LivingDocs_ScreenshotEvidence__System_Collections_Generic_IReadOnlyList_Cress_LivingDocs_DiagnosticEntry__
+  name: DocumentModel
+  nameWithType: DocumentModel.DocumentModel
+  fullName: Cress.LivingDocs.DocumentModel.DocumentModel
+  nameWithType.vb: DocumentModel.New
+  fullName.vb: Cress.LivingDocs.DocumentModel.New
+  name.vb: New
+- uid: Cress.LivingDocs.DocumentMeta
+  commentId: T:Cress.LivingDocs.DocumentMeta
+  parent: Cress.LivingDocs
+  href: Cress.LivingDocs.DocumentMeta.html
+  name: DocumentMeta
+  nameWithType: DocumentMeta
+  fullName: Cress.LivingDocs.DocumentMeta
+- uid: Cress.LivingDocs.DocumentBranding
+  commentId: T:Cress.LivingDocs.DocumentBranding
+  parent: Cress.LivingDocs
+  href: Cress.LivingDocs.DocumentBranding.html
+  name: DocumentBranding
+  nameWithType: DocumentBranding
+  fullName: Cress.LivingDocs.DocumentBranding
+- uid: Cress.LivingDocs.SuiteSummary
+  commentId: T:Cress.LivingDocs.SuiteSummary
+  parent: Cress.LivingDocs
+  href: Cress.LivingDocs.SuiteSummary.html
+  name: SuiteSummary
+  nameWithType: SuiteSummary
+  fullName: Cress.LivingDocs.SuiteSummary
+- uid: System.Collections.Generic.IReadOnlyList{Cress.LivingDocs.FlowSummary}
+  commentId: T:System.Collections.Generic.IReadOnlyList{Cress.LivingDocs.FlowSummary}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IReadOnlyList`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  name: IReadOnlyList<FlowSummary>
+  nameWithType: IReadOnlyList<FlowSummary>
+  fullName: System.Collections.Generic.IReadOnlyList<Cress.LivingDocs.FlowSummary>
+  nameWithType.vb: IReadOnlyList(Of FlowSummary)
+  fullName.vb: System.Collections.Generic.IReadOnlyList(Of Cress.LivingDocs.FlowSummary)
+  name.vb: IReadOnlyList(Of FlowSummary)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: <
+  - uid: Cress.LivingDocs.FlowSummary
+    name: FlowSummary
+    href: Cress.LivingDocs.FlowSummary.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Cress.LivingDocs.FlowSummary
+    name: FlowSummary
+    href: Cress.LivingDocs.FlowSummary.html
+  - name: )
+- uid: Cress.Studio.Services.RunMetrics
+  commentId: T:Cress.Studio.Services.RunMetrics
+  parent: Cress.Studio.Services
+  href: Cress.Studio.Services.RunMetrics.html
+  name: RunMetrics
+  nameWithType: RunMetrics
+  fullName: Cress.Studio.Services.RunMetrics
+- uid: System.Collections.Generic.IReadOnlyList{Cress.LivingDocs.RunHistoryEntry}
+  commentId: T:System.Collections.Generic.IReadOnlyList{Cress.LivingDocs.RunHistoryEntry}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IReadOnlyList`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  name: IReadOnlyList<RunHistoryEntry>
+  nameWithType: IReadOnlyList<RunHistoryEntry>
+  fullName: System.Collections.Generic.IReadOnlyList<Cress.LivingDocs.RunHistoryEntry>
+  nameWithType.vb: IReadOnlyList(Of RunHistoryEntry)
+  fullName.vb: System.Collections.Generic.IReadOnlyList(Of Cress.LivingDocs.RunHistoryEntry)
+  name.vb: IReadOnlyList(Of RunHistoryEntry)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: <
+  - uid: Cress.LivingDocs.RunHistoryEntry
+    name: RunHistoryEntry
+    href: Cress.LivingDocs.RunHistoryEntry.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Cress.LivingDocs.RunHistoryEntry
+    name: RunHistoryEntry
+    href: Cress.LivingDocs.RunHistoryEntry.html
+  - name: )
+- uid: System.Collections.Generic.IReadOnlyList{Cress.LivingDocs.ScreenshotEvidence}
+  commentId: T:System.Collections.Generic.IReadOnlyList{Cress.LivingDocs.ScreenshotEvidence}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IReadOnlyList`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  name: IReadOnlyList<ScreenshotEvidence>
+  nameWithType: IReadOnlyList<ScreenshotEvidence>
+  fullName: System.Collections.Generic.IReadOnlyList<Cress.LivingDocs.ScreenshotEvidence>
+  nameWithType.vb: IReadOnlyList(Of ScreenshotEvidence)
+  fullName.vb: System.Collections.Generic.IReadOnlyList(Of Cress.LivingDocs.ScreenshotEvidence)
+  name.vb: IReadOnlyList(Of ScreenshotEvidence)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: <
+  - uid: Cress.LivingDocs.ScreenshotEvidence
+    name: ScreenshotEvidence
+    href: Cress.LivingDocs.ScreenshotEvidence.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Cress.LivingDocs.ScreenshotEvidence
+    name: ScreenshotEvidence
+    href: Cress.LivingDocs.ScreenshotEvidence.html
+  - name: )
+- uid: System.Collections.Generic.IReadOnlyList{Cress.LivingDocs.DiagnosticEntry}
+  commentId: T:System.Collections.Generic.IReadOnlyList{Cress.LivingDocs.DiagnosticEntry}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IReadOnlyList`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  name: IReadOnlyList<DiagnosticEntry>
+  nameWithType: IReadOnlyList<DiagnosticEntry>
+  fullName: System.Collections.Generic.IReadOnlyList<Cress.LivingDocs.DiagnosticEntry>
+  nameWithType.vb: IReadOnlyList(Of DiagnosticEntry)
+  fullName.vb: System.Collections.Generic.IReadOnlyList(Of Cress.LivingDocs.DiagnosticEntry)
+  name.vb: IReadOnlyList(Of DiagnosticEntry)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: <
+  - uid: Cress.LivingDocs.DiagnosticEntry
+    name: DiagnosticEntry
+    href: Cress.LivingDocs.DiagnosticEntry.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Cress.LivingDocs.DiagnosticEntry
+    name: DiagnosticEntry
+    href: Cress.LivingDocs.DiagnosticEntry.html
+  - name: )
+- uid: System.Collections.Generic.IReadOnlyList`1
+  commentId: T:System.Collections.Generic.IReadOnlyList`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  name: IReadOnlyList<T>
+  nameWithType: IReadOnlyList<T>
+  fullName: System.Collections.Generic.IReadOnlyList<T>
+  nameWithType.vb: IReadOnlyList(Of T)
+  fullName.vb: System.Collections.Generic.IReadOnlyList(Of T)
+  name.vb: IReadOnlyList(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: Cress.Studio.Services
+  commentId: N:Cress.Studio.Services
+  href: Cress.html
+  name: Cress.Studio.Services
+  nameWithType: Cress.Studio.Services
+  fullName: Cress.Studio.Services
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Studio
+    name: Studio
+    href: Cress.Studio.html
+  - name: .
+  - uid: Cress.Studio.Services
+    name: Services
+    href: Cress.Studio.Services.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Studio
+    name: Studio
+    href: Cress.Studio.html
+  - name: .
+  - uid: Cress.Studio.Services
+    name: Services
+    href: Cress.Studio.Services.html
+- uid: Cress.LivingDocs.DocumentModel.Meta*
+  commentId: Overload:Cress.LivingDocs.DocumentModel.Meta
+  href: Cress.LivingDocs.DocumentModel.html#Cress_LivingDocs_DocumentModel_Meta
+  name: Meta
+  nameWithType: DocumentModel.Meta
+  fullName: Cress.LivingDocs.DocumentModel.Meta
+- uid: Cress.LivingDocs.DocumentModel.Branding*
+  commentId: Overload:Cress.LivingDocs.DocumentModel.Branding
+  href: Cress.LivingDocs.DocumentModel.html#Cress_LivingDocs_DocumentModel_Branding
+  name: Branding
+  nameWithType: DocumentModel.Branding
+  fullName: Cress.LivingDocs.DocumentModel.Branding
+- uid: Cress.LivingDocs.DocumentModel.Suite*
+  commentId: Overload:Cress.LivingDocs.DocumentModel.Suite
+  href: Cress.LivingDocs.DocumentModel.html#Cress_LivingDocs_DocumentModel_Suite
+  name: Suite
+  nameWithType: DocumentModel.Suite
+  fullName: Cress.LivingDocs.DocumentModel.Suite
+- uid: Cress.LivingDocs.DocumentModel.Flows*
+  commentId: Overload:Cress.LivingDocs.DocumentModel.Flows
+  href: Cress.LivingDocs.DocumentModel.html#Cress_LivingDocs_DocumentModel_Flows
+  name: Flows
+  nameWithType: DocumentModel.Flows
+  fullName: Cress.LivingDocs.DocumentModel.Flows
+- uid: Cress.LivingDocs.DocumentModel.Metrics*
+  commentId: Overload:Cress.LivingDocs.DocumentModel.Metrics
+  href: Cress.LivingDocs.DocumentModel.html#Cress_LivingDocs_DocumentModel_Metrics
+  name: Metrics
+  nameWithType: DocumentModel.Metrics
+  fullName: Cress.LivingDocs.DocumentModel.Metrics
+- uid: Cress.LivingDocs.DocumentModel.RecentRuns*
+  commentId: Overload:Cress.LivingDocs.DocumentModel.RecentRuns
+  href: Cress.LivingDocs.DocumentModel.html#Cress_LivingDocs_DocumentModel_RecentRuns
+  name: RecentRuns
+  nameWithType: DocumentModel.RecentRuns
+  fullName: Cress.LivingDocs.DocumentModel.RecentRuns
+- uid: Cress.LivingDocs.DocumentModel.Screenshots*
+  commentId: Overload:Cress.LivingDocs.DocumentModel.Screenshots
+  href: Cress.LivingDocs.DocumentModel.html#Cress_LivingDocs_DocumentModel_Screenshots
+  name: Screenshots
+  nameWithType: DocumentModel.Screenshots
+  fullName: Cress.LivingDocs.DocumentModel.Screenshots
+- uid: Cress.LivingDocs.DocumentModel.Diagnostics*
+  commentId: Overload:Cress.LivingDocs.DocumentModel.Diagnostics
+  href: Cress.LivingDocs.DocumentModel.html#Cress_LivingDocs_DocumentModel_Diagnostics
+  name: Diagnostics
+  nameWithType: DocumentModel.Diagnostics
+  fullName: Cress.LivingDocs.DocumentModel.Diagnostics

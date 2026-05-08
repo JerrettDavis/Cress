@@ -1,0 +1,486 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Gherkin.FlowToGherkinConverter
+  commentId: T:Cress.Gherkin.FlowToGherkinConverter
+  id: FlowToGherkinConverter
+  parent: Cress.Gherkin
+  children:
+  - Cress.Gherkin.FlowToGherkinConverter.#ctor(Cress.Gherkin.Phrases.PhraseLibrary)
+  - Cress.Gherkin.FlowToGherkinConverter.Convert(Cress.Core.Models.CressFlow)
+  - Cress.Gherkin.FlowToGherkinConverter.Convert(Cress.Core.Models.NormalizedFlow)
+  langs:
+  - csharp
+  - vb
+  name: FlowToGherkinConverter
+  nameWithType: FlowToGherkinConverter
+  fullName: Cress.Gherkin.FlowToGherkinConverter
+  type: Class
+  source:
+    remote:
+      path: src/Cress.Gherkin/FlowToGherkinConverter.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: FlowToGherkinConverter
+    path: ../src/Cress.Gherkin/FlowToGherkinConverter.cs
+    startLine: 10
+  assemblies:
+  - Cress.Gherkin
+  namespace: Cress.Gherkin
+  summary: >-
+    Converts an in-memory <xref href="Cress.Core.Models.CressFlow" data-throw-if-not-resolved="false"></xref> (or <xref href="Cress.Core.Models.NormalizedFlow" data-throw-if-not-resolved="false"></xref>)
+
+    to a Gherkin <code>.feature</code> string.
+  example: []
+  syntax:
+    content: public sealed class FlowToGherkinConverter
+    content.vb: Public NotInheritable Class FlowToGherkinConverter
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Cress.Gherkin.FlowToGherkinConverter.#ctor(Cress.Gherkin.Phrases.PhraseLibrary)
+  commentId: M:Cress.Gherkin.FlowToGherkinConverter.#ctor(Cress.Gherkin.Phrases.PhraseLibrary)
+  id: '#ctor(Cress.Gherkin.Phrases.PhraseLibrary)'
+  parent: Cress.Gherkin.FlowToGherkinConverter
+  langs:
+  - csharp
+  - vb
+  name: FlowToGherkinConverter(PhraseLibrary)
+  nameWithType: FlowToGherkinConverter.FlowToGherkinConverter(PhraseLibrary)
+  fullName: Cress.Gherkin.FlowToGherkinConverter.FlowToGherkinConverter(Cress.Gherkin.Phrases.PhraseLibrary)
+  type: Constructor
+  source:
+    remote:
+      path: src/Cress.Gherkin/FlowToGherkinConverter.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: .ctor
+    path: ../src/Cress.Gherkin/FlowToGherkinConverter.cs
+    startLine: 14
+  assemblies:
+  - Cress.Gherkin
+  namespace: Cress.Gherkin
+  syntax:
+    content: public FlowToGherkinConverter(PhraseLibrary library)
+    parameters:
+    - id: library
+      type: Cress.Gherkin.Phrases.PhraseLibrary
+    content.vb: Public Sub New(library As PhraseLibrary)
+  overload: Cress.Gherkin.FlowToGherkinConverter.#ctor*
+  nameWithType.vb: FlowToGherkinConverter.New(PhraseLibrary)
+  fullName.vb: Cress.Gherkin.FlowToGherkinConverter.New(Cress.Gherkin.Phrases.PhraseLibrary)
+  name.vb: New(PhraseLibrary)
+- uid: Cress.Gherkin.FlowToGherkinConverter.Convert(Cress.Core.Models.CressFlow)
+  commentId: M:Cress.Gherkin.FlowToGherkinConverter.Convert(Cress.Core.Models.CressFlow)
+  id: Convert(Cress.Core.Models.CressFlow)
+  parent: Cress.Gherkin.FlowToGherkinConverter
+  langs:
+  - csharp
+  - vb
+  name: Convert(CressFlow)
+  nameWithType: FlowToGherkinConverter.Convert(CressFlow)
+  fullName: Cress.Gherkin.FlowToGherkinConverter.Convert(Cress.Core.Models.CressFlow)
+  type: Method
+  source:
+    remote:
+      path: src/Cress.Gherkin/FlowToGherkinConverter.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Convert
+    path: ../src/Cress.Gherkin/FlowToGherkinConverter.cs
+    startLine: 20
+  assemblies:
+  - Cress.Gherkin
+  namespace: Cress.Gherkin
+  summary: Convert a parsed <xref href="Cress.Core.Models.CressFlow" data-throw-if-not-resolved="false"></xref> to a .feature string.
+  example: []
+  syntax:
+    content: public string Convert(CressFlow flow)
+    parameters:
+    - id: flow
+      type: Cress.Core.Models.CressFlow
+    return:
+      type: System.String
+    content.vb: Public Function Convert(flow As CressFlow) As String
+  overload: Cress.Gherkin.FlowToGherkinConverter.Convert*
+- uid: Cress.Gherkin.FlowToGherkinConverter.Convert(Cress.Core.Models.NormalizedFlow)
+  commentId: M:Cress.Gherkin.FlowToGherkinConverter.Convert(Cress.Core.Models.NormalizedFlow)
+  id: Convert(Cress.Core.Models.NormalizedFlow)
+  parent: Cress.Gherkin.FlowToGherkinConverter
+  langs:
+  - csharp
+  - vb
+  name: Convert(NormalizedFlow)
+  nameWithType: FlowToGherkinConverter.Convert(NormalizedFlow)
+  fullName: Cress.Gherkin.FlowToGherkinConverter.Convert(Cress.Core.Models.NormalizedFlow)
+  type: Method
+  source:
+    remote:
+      path: src/Cress.Gherkin/FlowToGherkinConverter.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Convert
+    path: ../src/Cress.Gherkin/FlowToGherkinConverter.cs
+    startLine: 62
+  assemblies:
+  - Cress.Gherkin
+  namespace: Cress.Gherkin
+  summary: Convert a <xref href="Cress.Core.Models.NormalizedFlow" data-throw-if-not-resolved="false"></xref> to a .feature string.
+  example: []
+  syntax:
+    content: public string Convert(NormalizedFlow flow)
+    parameters:
+    - id: flow
+      type: Cress.Core.Models.NormalizedFlow
+    return:
+      type: System.String
+    content.vb: Public Function Convert(flow As NormalizedFlow) As String
+  overload: Cress.Gherkin.FlowToGherkinConverter.Convert*
+references:
+- uid: Cress.Core.Models.CressFlow
+  commentId: T:Cress.Core.Models.CressFlow
+  parent: Cress.Core.Models
+  href: Cress.Core.Models.CressFlow.html
+  name: CressFlow
+  nameWithType: CressFlow
+  fullName: Cress.Core.Models.CressFlow
+- uid: Cress.Core.Models.NormalizedFlow
+  commentId: T:Cress.Core.Models.NormalizedFlow
+  parent: Cress.Core.Models
+  href: Cress.Core.Models.NormalizedFlow.html
+  name: NormalizedFlow
+  nameWithType: NormalizedFlow
+  fullName: Cress.Core.Models.NormalizedFlow
+- uid: Cress.Gherkin
+  commentId: N:Cress.Gherkin
+  href: Cress.html
+  name: Cress.Gherkin
+  nameWithType: Cress.Gherkin
+  fullName: Cress.Gherkin
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Gherkin
+    name: Gherkin
+    href: Cress.Gherkin.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Gherkin
+    name: Gherkin
+    href: Cress.Gherkin.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: Cress.Core.Models
+  commentId: N:Cress.Core.Models
+  href: Cress.html
+  name: Cress.Core.Models
+  nameWithType: Cress.Core.Models
+  fullName: Cress.Core.Models
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Core
+    name: Core
+    href: Cress.Core.html
+  - name: .
+  - uid: Cress.Core.Models
+    name: Models
+    href: Cress.Core.Models.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Core
+    name: Core
+    href: Cress.Core.html
+  - name: .
+  - uid: Cress.Core.Models
+    name: Models
+    href: Cress.Core.Models.html
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Cress.Gherkin.FlowToGherkinConverter.#ctor*
+  commentId: Overload:Cress.Gherkin.FlowToGherkinConverter.#ctor
+  href: Cress.Gherkin.FlowToGherkinConverter.html#Cress_Gherkin_FlowToGherkinConverter__ctor_Cress_Gherkin_Phrases_PhraseLibrary_
+  name: FlowToGherkinConverter
+  nameWithType: FlowToGherkinConverter.FlowToGherkinConverter
+  fullName: Cress.Gherkin.FlowToGherkinConverter.FlowToGherkinConverter
+  nameWithType.vb: FlowToGherkinConverter.New
+  fullName.vb: Cress.Gherkin.FlowToGherkinConverter.New
+  name.vb: New
+- uid: Cress.Gherkin.Phrases.PhraseLibrary
+  commentId: T:Cress.Gherkin.Phrases.PhraseLibrary
+  parent: Cress.Gherkin.Phrases
+  href: Cress.Gherkin.Phrases.PhraseLibrary.html
+  name: PhraseLibrary
+  nameWithType: PhraseLibrary
+  fullName: Cress.Gherkin.Phrases.PhraseLibrary
+- uid: Cress.Gherkin.Phrases
+  commentId: N:Cress.Gherkin.Phrases
+  href: Cress.html
+  name: Cress.Gherkin.Phrases
+  nameWithType: Cress.Gherkin.Phrases
+  fullName: Cress.Gherkin.Phrases
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Gherkin
+    name: Gherkin
+    href: Cress.Gherkin.html
+  - name: .
+  - uid: Cress.Gherkin.Phrases
+    name: Phrases
+    href: Cress.Gherkin.Phrases.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Gherkin
+    name: Gherkin
+    href: Cress.Gherkin.html
+  - name: .
+  - uid: Cress.Gherkin.Phrases
+    name: Phrases
+    href: Cress.Gherkin.Phrases.html
+- uid: Cress.Gherkin.FlowToGherkinConverter.Convert*
+  commentId: Overload:Cress.Gherkin.FlowToGherkinConverter.Convert
+  href: Cress.Gherkin.FlowToGherkinConverter.html#Cress_Gherkin_FlowToGherkinConverter_Convert_Cress_Core_Models_CressFlow_
+  name: Convert
+  nameWithType: FlowToGherkinConverter.Convert
+  fullName: Cress.Gherkin.FlowToGherkinConverter.Convert
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String

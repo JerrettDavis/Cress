@@ -286,7 +286,7 @@ Examples:
 
 * Playwright driver.
 * Appium driver.
-* FlaUI driver.
+* Flawright driver.
 * HTTP driver.
 * Database driver.
 * CLI driver.
@@ -415,7 +415,7 @@ Post-MVP features include:
 3. Flow promotion from recordings.
 4. Model-based testing.
 5. Appium driver.
-6. FlaUI driver.
+6. Flawright driver.
 7. CLI driver.
 8. Database driver.
 9. Queue driver.

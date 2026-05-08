@@ -2,8 +2,7 @@ using System.Diagnostics;
 using Cress.Recorder;
 using Cress.Recorder.Inference;
 using Cress.Recorder.Serialization;
-using FlaUI.Core.AutomationElements;
-using FlaUI.UIA3;
+using JerrettDavis.Flawright;
 
 // ---- argument parsing ----
 string? launchExe = null;
@@ -139,41 +138,31 @@ catch (Exception ex)
 Console.WriteLine("[PoC] Recording... press Ctrl+C to stop (or wait for auto-demo).");
 Console.WriteLine();
 
-// ---- optional auto-demo: drive Calculator via FlaUI ----
+// ---- optional auto-demo: drive Calculator via Flawright ----
 if (autoDemo)
 {
-    Console.WriteLine("[PoC] Auto-demo mode: driving Calculator via FlaUI in 1s...");
+    Console.WriteLine("[PoC] Auto-demo mode: driving Calculator via Flawright in 1s...");
     Thread.Sleep(1000);
 
     try
     {
-        // Use a separate UIA3Automation instance for driving (per PLAN.md note)
-        using var driverAutomation = new UIA3Automation();
+        await using var app = await Flawright.AttachAsync(
+            new AttachOptions { ProcessId = attachPid },
+            new FlawrightOptions
+            {
+                DefaultTimeout = TimeSpan.FromSeconds(5),
+                DefaultRetryInterval = TimeSpan.FromMilliseconds(100)
+            });
 
-        // Find the Calculator window — it may be hosted under ApplicationFrameHost
-        // Try getting it by window title via the desktop element
-        var desktop = driverAutomation.GetDesktop();
-        AutomationElement? calcWindow = null;
-
-        // Try finding by process directly first
-        var app = FlaUI.Core.Application.Attach(attachPid);
-        calcWindow = app.GetMainWindow(driverAutomation, TimeSpan.FromSeconds(5));
-
-        if (calcWindow is null)
-        {
-            // Fallback: search desktop for a window with "Calculator" in title
-            calcWindow = desktop.FindFirstDescendant(
-                driverAutomation.ConditionFactory.ByName("Calculator"));
-        }
-
+        var calcWindow = await app.Browser.WaitForPageAsync("Calculator", TimeSpan.FromSeconds(5));
         if (calcWindow is null)
         {
             Console.WriteLine("[PoC] WARNING: Could not get Calculator window for auto-demo.");
         }
         else
         {
-            Console.WriteLine($"[PoC] Got window: '{calcWindow.Name}' (ControlType={calcWindow.ControlType})");
-            DriveCalculator(calcWindow, driverAutomation);
+            Console.WriteLine($"[PoC] Got window: '{await calcWindow.TitleAsync()}'");
+            await DriveCalculatorAsync(calcWindow);
         }
     }
     catch (Exception ex)
@@ -260,8 +249,8 @@ if (recordAndSavePath is not null)
 
     // The AttachProcessName causes the serializer to prepend a ui.attach step.
     // Windows Calculator (UWP) is hosted by ApplicationFrameHost on the Win32 side.
-    // FlaUI.Application.Attach on ApplicationFrameHost PID successfully exposes the
-    // Calculator UIA window via GetMainWindow, which the FlaUI driver uses for element
+    // Flawright attach against the window-host process successfully exposes the
+    // Calculator UIA-backed page, which the Flawright driver uses for element
     // search. Attaching to CalculatorApp directly may not yield a visible window because
     // the HWND belongs to ApplicationFrameHost.
     // Strategy: prefer the process that actually has the Calculator window title.
@@ -362,32 +351,24 @@ if (recordAndSavePath is not null)
 return 0;
 
 // ---- Calculator driver ----
-static void DriveCalculator(AutomationElement window, UIA3Automation automation)
+static async Task DriveCalculatorAsync(IFlawrightPage window)
 {
-    var cf = automation.ConditionFactory;
-
-    void ClickById(string id)
+    static async Task ClickByIdAsync(IFlawrightPage window, string id)
     {
-        // Search in window and also in descendants (Calculator UWP may have nested frame)
-        var btn = window.FindFirstDescendant(cf.ByAutomationId(id));
-        if (btn is null)
-        {
-            throw new Exception($"Button '{id}' not found in Calculator tree. Available buttons may differ.");
-        }
-        btn.AsButton().Invoke();
+        await window.ClickAsync($"#{id}");
         Thread.Sleep(300); // brief pause so UIA events fire before the next click
         Console.WriteLine($"[PoC]   Clicked: {id}");
     }
 
     // Clear first in case Calculator has state
-    try { ClickById("clearButton"); Thread.Sleep(300); } catch { /* might not be visible */ }
+    try { await ClickByIdAsync(window, "clearButton"); Thread.Sleep(300); } catch { /* might not be visible */ }
 
     // Type: 2 + 2 =
     Console.WriteLine("[PoC] Clicking: 2 + 2 =");
-    ClickById("num2Button");
-    ClickById("plusButton");
-    ClickById("num2Button");
-    ClickById("equalButton");
+    await ClickByIdAsync(window, "num2Button");
+    await ClickByIdAsync(window, "plusButton");
+    await ClickByIdAsync(window, "num2Button");
+    await ClickByIdAsync(window, "equalButton");
 
     Thread.Sleep(500);
     Console.WriteLine("[PoC] Drive sequence complete: 2 + 2 = ");
@@ -395,12 +376,8 @@ static void DriveCalculator(AutomationElement window, UIA3Automation automation)
     // Read the result display
     try
     {
-        var result = window.FindFirstDescendant(cf.ByAutomationId("CalculatorResults"));
-        if (result != null)
-        {
-            Console.WriteLine($"[PoC] Calculator display: '{result.Name}'");
-        }
+        var result = window.Locator("#CalculatorResults");
+        Console.WriteLine($"[PoC] Calculator display: '{await result.TextContentAsync() ?? await result.InnerTextAsync()}'");
     }
     catch { }
 }
-

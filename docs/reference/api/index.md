@@ -1,25 +1,6 @@
 # Generated API reference
 
-This section contains the DocFX-generated API reference for the public .NET assemblies in the `src\` tree.
+Browse the generated .NET API surface for Cress libraries here.
 
-## Assemblies included
-
-The generated reference is built from the main product projects, including:
-
-- `Cress.Core`
-- `Cress.ProjectSystem`
-- `Cress.Specs`
-- `Cress.Validation`
-- `Cress.Execution`
-- `Cress.Sdk`
-- `Cress.Gherkin`
-- `Cress.Importers`
-- `Cress.Exporters`
-- `Cress.LivingDocs`
-- `Cress.Recorder`
-- `Cress.Studio.Core`
-- `Cress.Studio.Web`
-- `Cress.Studio`
-- `Cress.Cli`
-
-Use the generated navigation tree to browse namespaces, types, and members after the site is built.
+- Use the [namespace table of contents](toc.yml) to navigate by assembly and namespace.
+- Jump back to the broader [API guide](../../api/index.md) for CLI and project-schema guidance.

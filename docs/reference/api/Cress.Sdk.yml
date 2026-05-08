@@ -1,0 +1,119 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Sdk
+  commentId: N:Cress.Sdk
+  id: Cress.Sdk
+  children:
+  - Cress.Sdk.FixtureExecutionContext
+  - Cress.Sdk.FixtureExecutionResult
+  - Cress.Sdk.FixtureProviderRegistration
+  - Cress.Sdk.ICressLogger
+  - Cress.Sdk.ICressPluginModule
+  - Cress.Sdk.IDriverAccessor
+  - Cress.Sdk.NullCressLogger
+  - Cress.Sdk.NullDriverAccessor
+  - Cress.Sdk.StepExecutionContext
+  - Cress.Sdk.StepExecutionResult
+  - Cress.Sdk.StepHandlerRegistration
+  langs:
+  - csharp
+  - vb
+  name: Cress.Sdk
+  nameWithType: Cress.Sdk
+  fullName: Cress.Sdk
+  type: Namespace
+  assemblies:
+  - Cress.Sdk
+references:
+- uid: Cress.Sdk.ICressPluginModule
+  commentId: T:Cress.Sdk.ICressPluginModule
+  href: Cress.Sdk.ICressPluginModule.html
+  name: ICressPluginModule
+  nameWithType: ICressPluginModule
+  fullName: Cress.Sdk.ICressPluginModule
+- uid: Cress.Sdk.StepHandlerRegistration
+  commentId: T:Cress.Sdk.StepHandlerRegistration
+  href: Cress.Sdk.StepHandlerRegistration.html
+  name: StepHandlerRegistration
+  nameWithType: StepHandlerRegistration
+  fullName: Cress.Sdk.StepHandlerRegistration
+- uid: Cress.Sdk.FixtureProviderRegistration
+  commentId: T:Cress.Sdk.FixtureProviderRegistration
+  href: Cress.Sdk.FixtureProviderRegistration.html
+  name: FixtureProviderRegistration
+  nameWithType: FixtureProviderRegistration
+  fullName: Cress.Sdk.FixtureProviderRegistration
+- uid: Cress.Sdk.StepExecutionContext
+  commentId: T:Cress.Sdk.StepExecutionContext
+  href: Cress.Sdk.StepExecutionContext.html
+  name: StepExecutionContext
+  nameWithType: StepExecutionContext
+  fullName: Cress.Sdk.StepExecutionContext
+- uid: Cress.Sdk.FixtureExecutionContext
+  commentId: T:Cress.Sdk.FixtureExecutionContext
+  href: Cress.Sdk.FixtureExecutionContext.html
+  name: FixtureExecutionContext
+  nameWithType: FixtureExecutionContext
+  fullName: Cress.Sdk.FixtureExecutionContext
+- uid: Cress.Sdk.StepExecutionResult
+  commentId: T:Cress.Sdk.StepExecutionResult
+  href: Cress.Sdk.StepExecutionResult.html
+  name: StepExecutionResult
+  nameWithType: StepExecutionResult
+  fullName: Cress.Sdk.StepExecutionResult
+- uid: Cress.Sdk.FixtureExecutionResult
+  commentId: T:Cress.Sdk.FixtureExecutionResult
+  href: Cress.Sdk.FixtureExecutionResult.html
+  name: FixtureExecutionResult
+  nameWithType: FixtureExecutionResult
+  fullName: Cress.Sdk.FixtureExecutionResult
+- uid: Cress.Sdk.ICressLogger
+  commentId: T:Cress.Sdk.ICressLogger
+  parent: Cress.Sdk
+  href: Cress.Sdk.ICressLogger.html
+  name: ICressLogger
+  nameWithType: ICressLogger
+  fullName: Cress.Sdk.ICressLogger
+- uid: Cress.Sdk.NullCressLogger
+  commentId: T:Cress.Sdk.NullCressLogger
+  parent: Cress.Sdk
+  href: Cress.Sdk.NullCressLogger.html
+  name: NullCressLogger
+  nameWithType: NullCressLogger
+  fullName: Cress.Sdk.NullCressLogger
+- uid: Cress.Sdk.IDriverAccessor
+  commentId: T:Cress.Sdk.IDriverAccessor
+  parent: Cress.Sdk
+  href: Cress.Sdk.IDriverAccessor.html
+  name: IDriverAccessor
+  nameWithType: IDriverAccessor
+  fullName: Cress.Sdk.IDriverAccessor
+- uid: Cress.Sdk.NullDriverAccessor
+  commentId: T:Cress.Sdk.NullDriverAccessor
+  parent: Cress.Sdk
+  href: Cress.Sdk.NullDriverAccessor.html
+  name: NullDriverAccessor
+  nameWithType: NullDriverAccessor
+  fullName: Cress.Sdk.NullDriverAccessor
+- uid: Cress.Sdk
+  commentId: N:Cress.Sdk
+  href: Cress.html
+  name: Cress.Sdk
+  nameWithType: Cress.Sdk
+  fullName: Cress.Sdk
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Sdk
+    name: Sdk
+    href: Cress.Sdk.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Sdk
+    name: Sdk
+    href: Cress.Sdk.html

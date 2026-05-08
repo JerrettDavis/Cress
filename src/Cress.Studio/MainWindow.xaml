@@ -203,33 +203,14 @@
                 BorderBrush="{DynamicResource StudioBorderBrush}"
                 BorderThickness="1">
             <StackPanel>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-
-                    <StackPanel>
-                        <TextBlock Style="{StaticResource StudioEyebrowText}" Text="Automation studio" />
-                        <TextBlock Style="{StaticResource StudioTitleText}" Margin="0,6,0,0" Text="Cress Studio" />
-                        <TextBlock Margin="0,8,0,0"
-                                   MaxWidth="720"
-                                   Style="{StaticResource StudioMutedText}"
-                                   Text="Design flows, validate suites, inspect evidence, and triage failures in a system-theme-aware workspace built for high-clarity test automation work." />
-                    </StackPanel>
-
-                    <WrapPanel Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top">
-                        <Border Style="{StaticResource StudioStatusPill}">
-                            <TextBlock Style="{StaticResource StudioBadgeText}" Text="System theme aware" />
-                        </Border>
-                        <Border Style="{StaticResource StudioStatusPill}">
-                            <TextBlock Style="{StaticResource StudioBadgeText}" Text="Keyboard-first" />
-                        </Border>
-                        <Border Style="{StaticResource StudioStatusPill}">
-                            <TextBlock Style="{StaticResource StudioBadgeText}" Text="Evidence-ready" />
-                        </Border>
-                    </WrapPanel>
-                </Grid>
+                <StackPanel>
+                    <TextBlock Style="{StaticResource StudioEyebrowText}" Text="Automation studio" />
+                    <TextBlock Style="{StaticResource StudioTitleText}" Margin="0,6,0,0" Text="Cress Studio" />
+                    <TextBlock Margin="0,8,0,0"
+                               MaxWidth="720"
+                               Style="{StaticResource StudioMutedText}"
+                               Text="Design flows, validate suites, inspect evidence, and triage failures in a system-theme-aware workspace built for high-clarity test automation work." />
+                </StackPanel>
 
                 <Grid Margin="0,20,0,0">
                     <Grid.ColumnDefinitions>

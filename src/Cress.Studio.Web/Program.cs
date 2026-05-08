@@ -22,7 +22,10 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
+if (!string.Equals(builder.Configuration["CRESS_DISABLE_HTTPS_REDIRECTION"], "1", StringComparison.Ordinal))
+{
+    app.UseHttpsRedirection();
+}
 
 app.UseStaticFiles();
 app.UseAntiforgery();

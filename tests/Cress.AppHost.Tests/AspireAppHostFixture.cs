@@ -12,6 +12,7 @@ public sealed class AspireAppHostCollection : ICollectionFixture<AspireAppHostFi
 public sealed class AspireAppHostFixture : IAsyncLifetime
 {
     private string? _originalDisableDesktopValue;
+    private string? _originalDisableHttpsRedirectionValue;
     private IDistributedApplicationTestingBuilder? _builder;
 
     public DistributedApplication App { get; private set; } = null!;
@@ -19,7 +20,9 @@ public sealed class AspireAppHostFixture : IAsyncLifetime
     public async Task InitializeAsync()
     {
         _originalDisableDesktopValue = Environment.GetEnvironmentVariable("CRESS_APPHOST_DISABLE_DESKTOP");
+        _originalDisableHttpsRedirectionValue = Environment.GetEnvironmentVariable("CRESS_DISABLE_HTTPS_REDIRECTION");
         Environment.SetEnvironmentVariable("CRESS_APPHOST_DISABLE_DESKTOP", "1");
+        Environment.SetEnvironmentVariable("CRESS_DISABLE_HTTPS_REDIRECTION", "1");
 
         _builder = await DistributedApplicationTestingBuilder.CreateAsync<Program>();
         App = await _builder.BuildAsync();
@@ -47,5 +50,6 @@ public sealed class AspireAppHostFixture : IAsyncLifetime
         }
 
         Environment.SetEnvironmentVariable("CRESS_APPHOST_DISABLE_DESKTOP", _originalDisableDesktopValue);
+        Environment.SetEnvironmentVariable("CRESS_DISABLE_HTTPS_REDIRECTION", _originalDisableHttpsRedirectionValue);
     }
 }

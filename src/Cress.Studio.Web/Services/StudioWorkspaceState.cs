@@ -1151,7 +1151,7 @@ public sealed class StudioWorkspaceState : IDisposable
             }
         }
 
-        var firstFlow = Snapshot.Catalog.NormalizedFlows.FirstOrDefault()?.SourceFile;
+        var firstFlow = ResolveInitialFlowPath();
         if (!string.IsNullOrWhiteSpace(firstFlow))
         {
             SelectFlow(firstFlow);
@@ -1181,6 +1181,44 @@ public sealed class StudioWorkspaceState : IDisposable
             var selected = Suites.FirstOrDefault(item => string.Equals(item.FilePath, selectedSuitePath, StringComparison.OrdinalIgnoreCase));
             SelectedSuite = selected is null ? null : StudioSuiteEditorModel.FromDocument(selected);
         }
+    }
+
+    private string? ResolveInitialFlowPath()
+    {
+        if (Snapshot is null)
+        {
+            return null;
+        }
+
+        var projectRoot = Snapshot.Catalog.ProjectRoot;
+        foreach (var flowPath in Snapshot.Catalog.NormalizedFlows
+                     .Select(flow => ResolveProjectFilePath(projectRoot, flow.SourceFile))
+                     .Where(path => !string.IsNullOrWhiteSpace(path) && File.Exists(path)))
+        {
+            return flowPath;
+        }
+
+        var flowsDirectory = ResolveProjectFilePath(projectRoot, Snapshot.Catalog.EffectiveConfig.Config.Paths.Flows);
+        if (string.IsNullOrWhiteSpace(flowsDirectory) || !Directory.Exists(flowsDirectory))
+        {
+            return null;
+        }
+
+        return Directory.EnumerateFiles(flowsDirectory, "*.flow.y*ml", SearchOption.AllDirectories)
+            .OrderBy(path => path, StringComparer.OrdinalIgnoreCase)
+            .FirstOrDefault();
+    }
+
+    private static string? ResolveProjectFilePath(string projectRoot, string? path)
+    {
+        if (string.IsNullOrWhiteSpace(path))
+        {
+            return null;
+        }
+
+        return Path.IsPathRooted(path)
+            ? path
+            : Path.GetFullPath(Path.Combine(projectRoot, path));
     }
 
     private void PopulateArtifacts()

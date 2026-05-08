@@ -112,10 +112,21 @@ public sealed class StudioWorkspaceStateTests : IDisposable
         scope.State.LoadDemoWorkspace(demo.Id);
 
         Assert.True(scope.State.HasLoadedProject);
-        Assert.NotNull(scope.State.SelectedFlow);
-        Assert.Contains("ui.launch", scope.State.SourceEditorText, StringComparison.Ordinal);
-        Assert.Contains("status: ready", scope.State.SourceEditorText, StringComparison.OrdinalIgnoreCase);
-        Assert.Contains("CalculatorResults", scope.State.SourceEditorText, StringComparison.Ordinal);
+        var snapshot = scope.State.Snapshot;
+        Assert.NotNull(snapshot);
+        var flow = Assert.Single(snapshot!.Catalog.NormalizedFlows, item => item.FlowId == "calc.add-two-plus-two");
+        var flowPath = Path.IsPathRooted(flow.SourceFile)
+            ? flow.SourceFile
+            : Path.Combine(snapshot.Catalog.ProjectRoot, flow.SourceFile);
+        Assert.True(File.Exists(flowPath), $"Expected calculator flow at '{flowPath}'.");
+
+        var source = scope.State.SelectedFlow is null
+            ? File.ReadAllText(flowPath)
+            : scope.State.SourceEditorText;
+
+        Assert.Contains("ui.launch", source, StringComparison.Ordinal);
+        Assert.Contains("status: ready", source, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("CalculatorResults", source, StringComparison.Ordinal);
     }
 
     private StateScope CreateState()

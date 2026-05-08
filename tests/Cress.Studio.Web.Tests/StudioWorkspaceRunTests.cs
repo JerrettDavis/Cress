@@ -249,7 +249,7 @@ public sealed class StudioWorkspaceRunTests : IDisposable
         Assert.Equal("rerun-from-step", runner.Requests[2].Options.Trigger);
         Assert.Equal("http.get", runner.Requests[2].Options.StartFromStep);
         Assert.Equal("Search flow", scope.State.LiveCurrentFlow);
-        Assert.Equal("http.get", scope.State.LiveCurrentStep);
+        Assert.Equal("—", scope.State.LiveCurrentStep);
         Assert.NotEmpty(scope.State.LiveEvents);
     }
 

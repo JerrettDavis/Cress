@@ -20,12 +20,14 @@ public sealed class HomePageIntegrationTests : IClassFixture<WebApplicationFacto
 
         Assert.Contains("color-scheme", html, StringComparison.OrdinalIgnoreCase);
         Assert.Contains("Skip to main content", html, StringComparison.OrdinalIgnoreCase);
-        Assert.Contains("Test automation studio", html, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("Cress Studio Web", html, StringComparison.OrdinalIgnoreCase);
         Assert.Contains("Workspace setup", html, StringComparison.OrdinalIgnoreCase);
         Assert.Contains("Studio navigation", html, StringComparison.OrdinalIgnoreCase);
         Assert.Contains("Runs, evidence, and diagnostics", html, StringComparison.OrdinalIgnoreCase);
-        Assert.Contains("System theme aware", html, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("Web-first authoring", html, StringComparison.OrdinalIgnoreCase);
         Assert.Contains("Flake watch", html, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("Current checkpoint", html, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("Show live log", html, StringComparison.OrdinalIgnoreCase);
     }
 
     [Fact]

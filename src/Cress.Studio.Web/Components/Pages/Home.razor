@@ -15,14 +15,33 @@
         <section class="card hero-panel" aria-labelledby="studio-home-title" data-testid="hero-panel">
             <div class="hero-header">
                 <div>
-                    <h1 id="studio-home-title">Test automation studio</h1>
-                    <p class="hero-copy">Load a project, author resilient flows, and inspect evidence.</p>
+                    <div class="hero-kicker">Primary experience</div>
+                    <h1 id="studio-home-title">Cress Studio Web</h1>
+                    <p class="hero-copy">Open a real workspace, design resilient flows, orchestrate runs, and inspect evidence from the web-first shell we are actively investing in.</p>
                 </div>
                 <div class="hero-badges">
-                    <span class="pill">System theme aware</span>
-                    <span class="pill">Visible focus states</span>
-                    <span class="pill">Reduced-motion friendly</span>
+                    <span class="pill">Web-first authoring</span>
+                    <span class="pill">Live run visibility</span>
+                    <span class="pill">Remote-node ready</span>
                 </div>
+            </div>
+            <div class="hero-actions" data-testid="hero-actions">
+                <button type="button" class="action-button primary" @onclick="LoadFirstDemo" disabled="@(State.DemoWorkspaces.Count == 0)" data-testid="hero-load-demo">Load a demo</button>
+                <button type="button" class="action-button" @onclick="OpenWorkspacePicker" data-testid="hero-browse-workspaces">Browse workspaces</button>
+            </div>
+            <div class="hero-highlights" data-testid="hero-highlights">
+                <article class="hero-highlight">
+                    <strong>Blazor-first shell</strong>
+                    <p>The browser experience is now the preferred product surface for onboarding, authoring, execution, and evidence review.</p>
+                </article>
+                <article class="hero-highlight">
+                    <strong>Guided workspace startup</strong>
+                    <p>Suggested workspaces, recent folders, and built-in demos get you to a runnable project quickly instead of dropping you into repo trivia.</p>
+                </article>
+                <article class="hero-highlight">
+                    <strong>Unified studio shell</strong>
+                    <p>Workspace setup, design, execution, and evidence review now live in one web-first surface instead of split shells.</p>
+                </article>
             </div>
         </section>
     }
@@ -46,7 +65,7 @@
                     <div class="subpanel-header">
                         <div>
                             <h3>Suggested workspace</h3>
-                            <p>Studio now starts from a known Cress sample instead of the web app folder.</p>
+                            <p>Start from a known Cress sample or repo root instead of falling into framework internals.</p>
                         </div>
                     </div>
 
@@ -97,7 +116,7 @@
                     <div class="subpanel-header">
                         <div>
                             <h3>Built-in demos</h3>
-                            <p>Open a concrete sample for service, browser, or desktop coverage without hunting through the repo.</p>
+                            <p>Open concrete service, browser, or desktop samples without hunting through the repo or switching to the legacy desktop shell.</p>
                         </div>
                     </div>
 
@@ -128,7 +147,7 @@
                     <div class="subpanel-header">
                         <div>
                             <h3>Execution nodes</h3>
-                            <p>Today the app runs through the embedded local node. This panel is the starting point for remote-node orchestration.</p>
+                            <p>The embedded local node powers runs today, and this same surface is where remote-node orchestration will grow.</p>
                         </div>
                     </div>
 

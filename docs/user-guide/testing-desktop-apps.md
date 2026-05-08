@@ -24,8 +24,8 @@ This is a strong fit for:
 | Layer | Recommendation |
 | --- | --- |
 | Runtime driver | `flawright` |
-| Authoring surfaces | Studio desktop app, Source view, Results panel |
-| Sample project | `specs\calc-smoke` and `tests\Cress.Studio.E2ETests\Fixtures\StudioSampleProject` |
+| Authoring surfaces | `Cress.Studio.Web`, Source view, Results panel |
+| Sample project | `specs\calc-smoke` |
 | Diagnostics | `validate`, `doctor`, `discover`, `run --dry-run` |
 | Evidence | screenshots, run artifacts, reports |
 
@@ -66,7 +66,7 @@ flawright:
 
 ### 4. Start the authoring workflow
 
-1. open the project in Studio
+1. open the project in `Cress.Studio.Web`
 2. choose the desktop target in the recorder
 3. capture the first pass of the interaction
 4. refine the generated source into stable Flawright selectors

@@ -197,6 +197,9 @@ public sealed class StudioWorkspaceRunTests : IDisposable
         Assert.Single(runner.Requests);
         Assert.EndsWith("search.flow.yaml", runner.Requests[0].Options.FlowPath, StringComparison.OrdinalIgnoreCase);
         Assert.Contains("passed", scope.State.LiveRunHeadline, StringComparison.OrdinalIgnoreCase);
+        Assert.NotEmpty(scope.State.LiveTimelineEntries);
+        Assert.Contains(scope.State.LiveTimelineEntries, entry => entry.Category == "Log" && entry.Headline.Contains("Waiting 5s before click.", StringComparison.Ordinal));
+        Assert.Contains(scope.State.LiveTimelineEntries, entry => string.Equals(entry.Category, "Step", StringComparison.Ordinal) && (entry.Detail?.Contains("Clicked!", StringComparison.Ordinal) ?? false));
 
         var failedRun = new StoredRunResult
         {
@@ -282,6 +285,7 @@ public sealed class StudioWorkspaceRunTests : IDisposable
         Assert.False(scope.State.IsBusy);
         Assert.Equal("Canceled", scope.State.LiveRunStatus);
         Assert.Contains(scope.State.LiveEvents, entry => entry.Contains("Run cancellation requested.", StringComparison.Ordinal));
+        Assert.Contains(scope.State.LiveTimelineEntries, entry => entry.Headline.Contains("Run cancellation requested.", StringComparison.Ordinal));
     }
 
     private StateScope CreateState(FakeRunnerService? runner = null)

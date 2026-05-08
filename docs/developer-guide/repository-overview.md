@@ -19,7 +19,6 @@ The Cress solution is organized around the project system, execution pipeline, a
 | `Cress.Recorder` | recording models, inference, and serialization |
 | `Cress.Studio.Core` | shared services used by Studio surfaces |
 | `Cress.Studio.Web` | Blazor web authoring experience |
-| `Cress.Studio` | WPF desktop authoring experience |
 | `Cress.Cli` | command-line entry point and command surface |
 | `Cress.AppHost` | Aspire-based local orchestration for Studio and Studio Web |
 

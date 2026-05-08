@@ -57,5 +57,5 @@ The fastest adoption pattern is:
 ## Where to start
 
 - Web teams should start with `specs\web-smoke`
-- Desktop teams should start with `tests\Cress.Studio.E2ETests\Fixtures\StudioSampleProject`
+- Desktop teams should start with `specs\calc-smoke`
 - HTTP/service teams should start with `specs\httpbin-smoke`

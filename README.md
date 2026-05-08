@@ -4,7 +4,7 @@
 [![CodeQL](https://github.com/JerrettDavis/Cress/actions/workflows/codeql.yml/badge.svg)](https://github.com/JerrettDavis/Cress/actions/workflows/codeql.yml)
 [![Docs](https://github.com/JerrettDavis/Cress/actions/workflows/docs.yml/badge.svg)](https://github.com/JerrettDavis/Cress/actions/workflows/docs.yml)
 
-Cress is a **.NET 10 / C# latest** end-to-end testing platform for Windows, with a WPF Studio, a Blazor web experience, Node-based automation components, and an Aspire AppHost for centralized orchestration and monitoring.
+Cress is a **.NET 10 / C# latest** end-to-end testing platform for Windows, with a **Blazor-first Studio experience**, Node-based automation components, and an Aspire AppHost for centralized orchestration and monitoring.
 
 ## Guides and examples
 
@@ -21,7 +21,7 @@ See [docs/README.md](docs/README.md) and the published DocFX site at <https://je
 
 - .NET SDK `10.0.107` or later in the .NET 10 feature band
 - Node.js `22.x`
-- Windows for the full WPF Studio and desktop E2E experience
+- Windows for desktop/Flawright execution
 
 ## Restore and build
 
@@ -57,7 +57,6 @@ dotnet run --project src\Cress.AppHost\Cress.AppHost.csproj --configuration Rele
 The AppHost orchestrates:
 
 - `Cress.Studio.Web` as an Aspire project resource
-- `Cress.Studio` as a desktop executable resource
 
 ## Validation
 

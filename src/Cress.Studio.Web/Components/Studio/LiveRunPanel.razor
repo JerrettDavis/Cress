@@ -59,6 +59,32 @@
         </div>
     </div>
 
+    <div class="live-run-badges">
+        <span class="@GetBadgeClass(State.LiveRunStatus)" data-testid="live-run-status-badge">@State.LiveRunStatus</span>
+        <span class="live-run-chip">@GetNodeLabel()</span>
+        @if (State.LiveTotalFlows > 0)
+        {
+            <span class="live-run-chip">Flow @BuildFlowCounter()</span>
+        }
+        @if (State.LiveTotalSteps > 0)
+        {
+            <span class="live-run-chip">Overall @State.LiveCompletedSteps / @State.LiveTotalSteps steps</span>
+        }
+    </div>
+
+    <section class="live-run-current" data-testid="live-run-current">
+        <div class="live-run-current-copy">
+            <span class="live-run-section-kicker">Current checkpoint</span>
+            <strong data-testid="live-run-current-title">@BuildCurrentCheckpointTitle()</strong>
+            <p data-testid="live-run-current-message">@State.LiveCurrentStepMessage</p>
+        </div>
+        <div class="live-run-current-meta">
+            <span>@BuildFlowProgressSummary()</span>
+            <span>@BuildStepProgressSummary()</span>
+            <span>@BuildElapsedSummary()</span>
+        </div>
+    </section>
+
     <div class="live-run-progress-grid">
         <div class="field-stack">
             <label>Run progress</label>
@@ -75,17 +101,35 @@
     @if (!Compact && State.IsLiveLogVisible)
     {
         <div class="field-stack">
-            <label>Live timeline</label>
-            @if (State.LiveEvents.Count == 0)
+            <label>Timeline and live log</label>
+            @if (!State.HasLiveTimeline)
             {
                 <div class="subpanel-empty" data-testid="live-run-log-empty">No live events yet.</div>
             }
             else
             {
-                <ol class="live-run-log" data-testid="live-run-log">
-                    @foreach (var entry in State.LiveEvents.Take(40))
+                <ol class="live-run-log live-run-timeline" data-testid="live-run-log">
+                    @foreach (var entry in State.LiveTimelineEntries.Take(24))
                     {
-                        <li>@entry</li>
+                        <li class="live-run-timeline-item @GetTimelineItemClass(entry)">
+                            <div class="live-run-timeline-meta">
+                                <span class="live-run-timeline-badge">@entry.Category</span>
+                                @if (!string.IsNullOrWhiteSpace(entry.FlowName))
+                                {
+                                    <span class="live-run-timeline-scope">@entry.FlowName</span>
+                                }
+                                @if (!string.IsNullOrWhiteSpace(entry.StepName))
+                                {
+                                    <span class="live-run-timeline-scope">@entry.StepName</span>
+                                }
+                                <span class="live-run-timeline-time">@FormatTimestamp(entry.TimestampUtc)</span>
+                            </div>
+                            <strong>@entry.Headline</strong>
+                            @if (!string.IsNullOrWhiteSpace(entry.Detail))
+                            {
+                                <div class="muted">@entry.Detail</div>
+                            }
+                        </li>
                     }
                 </ol>
             }
@@ -121,6 +165,49 @@
 
         return $"Step {Math.Max(State.LiveCurrentFlowStepIndex, 0)} / {State.LiveCurrentFlowStepCount}";
     }
+
+    private string BuildCurrentCheckpointTitle()
+        => string.Equals(State.LiveCurrentStep, "—", StringComparison.Ordinal)
+            ? State.LiveCurrentFlow
+            : $"{State.LiveCurrentFlow} -> {State.LiveCurrentStep}";
+
+    private string BuildFlowCounter()
+        => $"{Math.Max(State.LiveCurrentFlowIndex, State.LiveCompletedFlows + (State.IsBusy ? 1 : 0))} / {State.LiveTotalFlows}";
+
+    private string BuildFlowProgressSummary()
+        => State.LiveTotalFlows > 0
+            ? $"{State.LiveCompletedFlows} of {State.LiveTotalFlows} flows complete"
+            : "Waiting for the run plan.";
+
+    private string BuildStepProgressSummary()
+        => State.LiveTotalSteps > 0
+            ? $"{State.LiveCompletedSteps} of {State.LiveTotalSteps} steps complete"
+            : "Waiting for the first runnable step.";
+
+    private string BuildElapsedSummary()
+        => State.LiveStepStartedAt is null
+            ? "No step timer active"
+            : $"Elapsed {FormatElapsed(State.LiveStepElapsed)}";
+
+    private string GetNodeLabel()
+        => $"Node: {(State.SelectedRunnerNode?.DisplayName ?? "local embedded node")}";
+
+    private static string GetTimelineItemClass(StudioLiveRunEntry entry)
+        => entry.Status.ToLowerInvariant() switch
+        {
+            "passed" => "live-run-timeline-item--passed",
+            "failed" => "live-run-timeline-item--failed",
+            "error" => "live-run-timeline-item--failed",
+            "warning" => "live-run-timeline-item--warning",
+            "stopping" => "live-run-timeline-item--warning",
+            _ => string.Empty
+        };
+
+    private static string GetBadgeClass(string status)
+        => $"live-run-chip live-run-chip--{status.ToLowerInvariant().Replace(' ', '-')}";
+
+    private static string FormatTimestamp(DateTimeOffset timestamp)
+        => timestamp.ToLocalTime().ToString("HH:mm:ss");
 
     private static string FormatElapsed(TimeSpan elapsed)
         => elapsed <= TimeSpan.Zero

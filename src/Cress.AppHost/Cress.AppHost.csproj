@@ -6,7 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Cress.Studio\Cress.Studio.csproj" />
     <ProjectReference Include="..\Cress.Studio.Web\Cress.Studio.Web.csproj" />
   </ItemGroup>
 </Project>

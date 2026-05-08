@@ -22,7 +22,6 @@ body:
       label: Area
       options:
         - CLI
-        - Studio (WPF)
         - Studio Web
         - AppHost / Aspire
         - Execution engine

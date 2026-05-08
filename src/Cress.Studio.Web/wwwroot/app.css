@@ -523,6 +523,9 @@ svg {
     flex-direction: column;
     gap: 0;
     padding: 0;
+    background:
+        radial-gradient(circle at top left, color-mix(in srgb, var(--color-accent) 10%, transparent) 0, transparent 28rem),
+        linear-gradient(180deg, color-mix(in srgb, var(--color-surface-raised) 94%, var(--color-accent) 6%) 0%, var(--color-page) 24rem);
 }
 
 .panel-focus {
@@ -532,9 +535,9 @@ svg {
 .card,
 .subpanel {
     border: 1px solid var(--color-border);
-    border-radius: 0;
+    border-radius: 18px;
     background: var(--color-surface);
-    box-shadow: none;
+    box-shadow: 0 12px 40px rgba(15, 23, 42, 0.08);
 }
 
 .card + .card,
@@ -543,7 +546,7 @@ svg {
 }
 
 .subpanel {
-    padding: 0.5rem 0.75rem;
+    padding: 0.9rem 1rem;
     background: var(--color-surface-alt);
 }
 
@@ -557,7 +560,8 @@ svg {
 
 /* No hero gradient — flat surface */
 .hero-panel {
-    background: var(--color-surface-raised);
+    background:
+        linear-gradient(135deg, color-mix(in srgb, var(--color-surface-raised) 92%, var(--color-accent) 8%) 0%, var(--color-surface) 100%);
 }
 
 .hero-panel--compact {
@@ -579,6 +583,14 @@ svg {
     align-items: flex-start;
 }
 
+.hero-kicker {
+    color: var(--color-accent);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
 .hero-header h1 {
     margin: 0.2rem 0 0;
     font-size: 1.1rem;
@@ -588,10 +600,10 @@ svg {
 
 .hero-copy {
     max-width: 62rem;
-    margin: 0.35rem 0 0;
+    margin: 0.5rem 0 0;
     color: var(--color-muted);
-    font-size: 12px;
-    line-height: 1.4;
+    font-size: 0.97rem;
+    line-height: 1.6;
 }
 
 .hero-badges {
@@ -601,24 +613,60 @@ svg {
     gap: 0.35rem;
 }
 
+.hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1.25rem;
+}
+
+.hero-highlights {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.85rem;
+    margin-top: 1.25rem;
+}
+
+.hero-highlight {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    padding: 1rem;
+    border: 1px solid color-mix(in srgb, var(--color-border) 78%, var(--color-accent) 22%);
+    border-radius: 16px;
+    background: color-mix(in srgb, var(--color-surface) 86%, var(--color-accent) 14%);
+}
+
+.hero-highlight strong {
+    font-size: 0.95rem;
+}
+
+.hero-highlight p {
+    margin: 0;
+    color: var(--color-muted);
+    font-size: 0.86rem;
+    line-height: 1.5;
+}
+
 .onboarding-panel {
-    padding: 0.75rem;
+    padding: 1rem;
 }
 
 .onboarding-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.75rem;
+    gap: 1rem;
 }
 
 .workspace-chip {
     display: flex;
     flex-direction: column;
     gap: 0.25rem;
-    padding: 0.5rem;
+    padding: 0.8rem;
     border: 1px solid var(--color-border);
     background: var(--color-surface-inset);
     overflow-wrap: anywhere;
+    border-radius: 14px;
 }
 
 .demo-card-list,
@@ -633,9 +681,10 @@ svg {
     display: flex;
     flex-direction: column;
     gap: 0.6rem;
-    padding: 0.65rem;
+    padding: 0.85rem;
     border: 1px solid var(--color-border);
     background: var(--color-surface-inset);
+    border-radius: 14px;
 }
 
 .demo-card p,
@@ -2017,6 +2066,84 @@ input[type="checkbox"] {
     min-height: 5.5rem;
 }
 
+.live-run-badges,
+.live-run-current-meta,
+.live-run-timeline-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    align-items: center;
+}
+
+.live-run-chip,
+.live-run-timeline-badge,
+.live-run-timeline-scope {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    border-radius: 999px;
+    padding: 0.2rem 0.6rem;
+    font-size: 0.78rem;
+    line-height: 1.2;
+    border: 1px solid var(--color-border);
+    background: var(--color-surface-inset);
+}
+
+.live-run-chip--dispatching,
+.live-run-chip--running {
+    border-color: color-mix(in srgb, var(--color-accent) 45%, var(--color-border));
+    background: color-mix(in srgb, var(--color-accent-soft) 60%, var(--color-surface-inset));
+}
+
+.live-run-chip--passed {
+    border-color: color-mix(in srgb, var(--color-success) 45%, var(--color-border));
+    background: color-mix(in srgb, var(--color-success) 16%, var(--color-surface-inset));
+}
+
+.live-run-chip--failed,
+.live-run-chip--canceled {
+    border-color: color-mix(in srgb, var(--color-danger) 45%, var(--color-border));
+    background: color-mix(in srgb, var(--color-danger) 14%, var(--color-surface-inset));
+}
+
+.live-run-chip--stopping,
+.live-run-chip--queued {
+    border-color: color-mix(in srgb, var(--color-warning) 45%, var(--color-border));
+    background: color-mix(in srgb, var(--color-warning) 14%, var(--color-surface-inset));
+}
+
+.live-run-current {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: 0.9rem 1rem;
+    background:
+        linear-gradient(135deg, color-mix(in srgb, var(--color-accent-soft) 65%, transparent), transparent 60%),
+        var(--color-surface-inset);
+}
+
+.live-run-current-copy {
+    display: grid;
+    gap: 0.3rem;
+}
+
+.live-run-current-copy p {
+    margin: 0;
+}
+
+.live-run-current-meta {
+    margin-top: 0.75rem;
+    color: var(--color-muted);
+    font-size: 0.82rem;
+}
+
+.live-run-section-kicker {
+    font-size: 0.74rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-muted);
+}
+
 .live-run-progress-grid progress {
     width: 100%;
     height: 0.75rem;
@@ -2025,19 +2152,47 @@ input[type="checkbox"] {
 
 .live-run-log {
     margin: 0;
-    padding: 0.5rem 0.75rem 0.5rem 1.5rem;
+    padding: 0.75rem;
     border: 1px solid var(--color-border);
     background: var(--color-surface-inset);
     color: var(--color-foreground);
-    font-family: var(--font-mono);
     font-size: 11px;
     line-height: 1.45;
     max-height: 16rem;
     overflow: auto;
 }
 
-.live-run-log li + li {
-    margin-top: 0.25rem;
+.live-run-timeline {
+    list-style: none;
+    display: grid;
+    gap: 0.6rem;
+}
+
+.live-run-timeline-item {
+    padding: 0.75rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+    display: grid;
+    gap: 0.35rem;
+}
+
+.live-run-timeline-item--passed {
+    border-color: color-mix(in srgb, var(--color-success) 40%, var(--color-border));
+}
+
+.live-run-timeline-item--failed {
+    border-color: color-mix(in srgb, var(--color-danger) 42%, var(--color-border));
+}
+
+.live-run-timeline-item--warning {
+    border-color: color-mix(in srgb, var(--color-warning) 42%, var(--color-border));
+}
+
+.live-run-timeline-time {
+    margin-left: auto;
+    color: var(--color-muted);
+    font-variant-numeric: tabular-nums;
 }
 
 .flake-flow-id {
@@ -2421,6 +2576,11 @@ input[type="checkbox"] {
 
     .hero-badges {
         justify-content: flex-start;
+    }
+
+    .hero-highlights,
+    .onboarding-grid {
+        grid-template-columns: minmax(0, 1fr);
     }
 
     /* Stack summary cards vertically on mobile */

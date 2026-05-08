@@ -26,7 +26,6 @@
     <ProjectReference Include="..\..\src\Cress.Execution\Cress.Execution.csproj" />
     <ProjectReference Include="..\..\src\Cress.Sdk\Cress.Sdk.csproj" />
     <ProjectReference Include="..\..\src\Cress.Studio.Core\Cress.Studio.Core.csproj" />
-    <ProjectReference Include="..\..\src\Cress.Studio\Cress.Studio.csproj" />
   </ItemGroup>
 
 </Project>

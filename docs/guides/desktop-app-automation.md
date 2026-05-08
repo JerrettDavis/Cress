@@ -49,7 +49,7 @@ The desktop authoring flow looks the same in Studio, but the locators and target
 
 ## 4. Draft the interaction flow
 
-The Studio sample project's desktop flow is a good baseline:
+The calculator smoke flow is a good baseline:
 
 ```yaml
 when:

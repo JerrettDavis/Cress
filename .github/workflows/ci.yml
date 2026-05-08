@@ -9,6 +9,7 @@ on:
 
 permissions:
   contents: read
+  id-token: write
   pull-requests: write
 
 env:
@@ -149,6 +150,7 @@ jobs:
           name: cress-full
           disable_search: true
           fail_ci_if_error: true
+          use_oidc: true
           verbose: true
 
       - name: Upload core coverage to Codecov
@@ -160,6 +162,7 @@ jobs:
           name: cress-core
           disable_search: true
           fail_ci_if_error: true
+          use_oidc: true
           verbose: true
 
       - name: Upload CLI packages

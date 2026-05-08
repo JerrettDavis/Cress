@@ -1,0 +1,423 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Studio.Services.StudioAuthoringService
+  commentId: T:Cress.Studio.Services.StudioAuthoringService
+  id: StudioAuthoringService
+  parent: Cress.Studio.Services
+  children:
+  - Cress.Studio.Services.StudioAuthoringService.Analyze(Cress.Execution.ProjectCatalog,Cress.Studio.Services.FlowEditorDocument)
+  - Cress.Studio.Services.StudioAuthoringService.ApplyQuickAction(Cress.Execution.ProjectCatalog,Cress.Studio.Services.FlowEditorDocument,System.String)
+  langs:
+  - csharp
+  - vb
+  name: StudioAuthoringService
+  nameWithType: StudioAuthoringService
+  fullName: Cress.Studio.Services.StudioAuthoringService
+  type: Class
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/StudioAuthoringService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: StudioAuthoringService
+    path: ../src/Cress.Studio.Core/Services/StudioAuthoringService.cs
+    startLine: 6
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  syntax:
+    content: public sealed class StudioAuthoringService
+    content.vb: Public NotInheritable Class StudioAuthoringService
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Cress.Studio.Services.StudioAuthoringService.Analyze(Cress.Execution.ProjectCatalog,Cress.Studio.Services.FlowEditorDocument)
+  commentId: M:Cress.Studio.Services.StudioAuthoringService.Analyze(Cress.Execution.ProjectCatalog,Cress.Studio.Services.FlowEditorDocument)
+  id: Analyze(Cress.Execution.ProjectCatalog,Cress.Studio.Services.FlowEditorDocument)
+  parent: Cress.Studio.Services.StudioAuthoringService
+  langs:
+  - csharp
+  - vb
+  name: Analyze(ProjectCatalog?, FlowEditorDocument)
+  nameWithType: StudioAuthoringService.Analyze(ProjectCatalog?, FlowEditorDocument)
+  fullName: Cress.Studio.Services.StudioAuthoringService.Analyze(Cress.Execution.ProjectCatalog?, Cress.Studio.Services.FlowEditorDocument)
+  type: Method
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/StudioAuthoringService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Analyze
+    path: ../src/Cress.Studio.Core/Services/StudioAuthoringService.cs
+    startLine: 10
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  syntax:
+    content: public FlowEditorAnalysis Analyze(ProjectCatalog? catalog, FlowEditorDocument document)
+    parameters:
+    - id: catalog
+      type: Cress.Execution.ProjectCatalog
+    - id: document
+      type: Cress.Studio.Services.FlowEditorDocument
+    return:
+      type: Cress.Studio.Services.FlowEditorAnalysis
+    content.vb: Public Function Analyze(catalog As ProjectCatalog, document As FlowEditorDocument) As FlowEditorAnalysis
+  overload: Cress.Studio.Services.StudioAuthoringService.Analyze*
+  nameWithType.vb: StudioAuthoringService.Analyze(ProjectCatalog, FlowEditorDocument)
+  fullName.vb: Cress.Studio.Services.StudioAuthoringService.Analyze(Cress.Execution.ProjectCatalog, Cress.Studio.Services.FlowEditorDocument)
+  name.vb: Analyze(ProjectCatalog, FlowEditorDocument)
+- uid: Cress.Studio.Services.StudioAuthoringService.ApplyQuickAction(Cress.Execution.ProjectCatalog,Cress.Studio.Services.FlowEditorDocument,System.String)
+  commentId: M:Cress.Studio.Services.StudioAuthoringService.ApplyQuickAction(Cress.Execution.ProjectCatalog,Cress.Studio.Services.FlowEditorDocument,System.String)
+  id: ApplyQuickAction(Cress.Execution.ProjectCatalog,Cress.Studio.Services.FlowEditorDocument,System.String)
+  parent: Cress.Studio.Services.StudioAuthoringService
+  langs:
+  - csharp
+  - vb
+  name: ApplyQuickAction(ProjectCatalog?, FlowEditorDocument, string)
+  nameWithType: StudioAuthoringService.ApplyQuickAction(ProjectCatalog?, FlowEditorDocument, string)
+  fullName: Cress.Studio.Services.StudioAuthoringService.ApplyQuickAction(Cress.Execution.ProjectCatalog?, Cress.Studio.Services.FlowEditorDocument, string)
+  type: Method
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/StudioAuthoringService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: ApplyQuickAction
+    path: ../src/Cress.Studio.Core/Services/StudioAuthoringService.cs
+    startLine: 64
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  syntax:
+    content: public FlowEditorDocument ApplyQuickAction(ProjectCatalog? catalog, FlowEditorDocument document, string actionId)
+    parameters:
+    - id: catalog
+      type: Cress.Execution.ProjectCatalog
+    - id: document
+      type: Cress.Studio.Services.FlowEditorDocument
+    - id: actionId
+      type: System.String
+    return:
+      type: Cress.Studio.Services.FlowEditorDocument
+    content.vb: Public Function ApplyQuickAction(catalog As ProjectCatalog, document As FlowEditorDocument, actionId As String) As FlowEditorDocument
+  overload: Cress.Studio.Services.StudioAuthoringService.ApplyQuickAction*
+  nameWithType.vb: StudioAuthoringService.ApplyQuickAction(ProjectCatalog, FlowEditorDocument, String)
+  fullName.vb: Cress.Studio.Services.StudioAuthoringService.ApplyQuickAction(Cress.Execution.ProjectCatalog, Cress.Studio.Services.FlowEditorDocument, String)
+  name.vb: ApplyQuickAction(ProjectCatalog, FlowEditorDocument, String)
+references:
+- uid: Cress.Studio.Services
+  commentId: N:Cress.Studio.Services
+  href: Cress.html
+  name: Cress.Studio.Services
+  nameWithType: Cress.Studio.Services
+  fullName: Cress.Studio.Services
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Studio
+    name: Studio
+    href: Cress.Studio.html
+  - name: .
+  - uid: Cress.Studio.Services
+    name: Services
+    href: Cress.Studio.Services.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Studio
+    name: Studio
+    href: Cress.Studio.html
+  - name: .
+  - uid: Cress.Studio.Services
+    name: Services
+    href: Cress.Studio.Services.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Cress.Studio.Services.StudioAuthoringService.Analyze*
+  commentId: Overload:Cress.Studio.Services.StudioAuthoringService.Analyze
+  href: Cress.Studio.Services.StudioAuthoringService.html#Cress_Studio_Services_StudioAuthoringService_Analyze_Cress_Execution_ProjectCatalog_Cress_Studio_Services_FlowEditorDocument_
+  name: Analyze
+  nameWithType: StudioAuthoringService.Analyze
+  fullName: Cress.Studio.Services.StudioAuthoringService.Analyze
+- uid: Cress.Execution.ProjectCatalog
+  commentId: T:Cress.Execution.ProjectCatalog
+  parent: Cress.Execution
+  href: Cress.Execution.ProjectCatalog.html
+  name: ProjectCatalog
+  nameWithType: ProjectCatalog
+  fullName: Cress.Execution.ProjectCatalog
+- uid: Cress.Studio.Services.FlowEditorDocument
+  commentId: T:Cress.Studio.Services.FlowEditorDocument
+  parent: Cress.Studio.Services
+  href: Cress.Studio.Services.FlowEditorDocument.html
+  name: FlowEditorDocument
+  nameWithType: FlowEditorDocument
+  fullName: Cress.Studio.Services.FlowEditorDocument
+- uid: Cress.Studio.Services.FlowEditorAnalysis
+  commentId: T:Cress.Studio.Services.FlowEditorAnalysis
+  parent: Cress.Studio.Services
+  href: Cress.Studio.Services.FlowEditorAnalysis.html
+  name: FlowEditorAnalysis
+  nameWithType: FlowEditorAnalysis
+  fullName: Cress.Studio.Services.FlowEditorAnalysis
+- uid: Cress.Execution
+  commentId: N:Cress.Execution
+  href: Cress.html
+  name: Cress.Execution
+  nameWithType: Cress.Execution
+  fullName: Cress.Execution
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Execution
+    name: Execution
+    href: Cress.Execution.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Execution
+    name: Execution
+    href: Cress.Execution.html
+- uid: Cress.Studio.Services.StudioAuthoringService.ApplyQuickAction*
+  commentId: Overload:Cress.Studio.Services.StudioAuthoringService.ApplyQuickAction
+  href: Cress.Studio.Services.StudioAuthoringService.html#Cress_Studio_Services_StudioAuthoringService_ApplyQuickAction_Cress_Execution_ProjectCatalog_Cress_Studio_Services_FlowEditorDocument_System_String_
+  name: ApplyQuickAction
+  nameWithType: StudioAuthoringService.ApplyQuickAction
+  fullName: Cress.Studio.Services.StudioAuthoringService.ApplyQuickAction
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String

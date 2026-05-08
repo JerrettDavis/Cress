@@ -1,0 +1,957 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Core.Models.CressProfile
+  commentId: T:Cress.Core.Models.CressProfile
+  id: CressProfile
+  parent: Cress.Core.Models
+  children:
+  - Cress.Core.Models.CressProfile.Authentication
+  - Cress.Core.Models.CressProfile.BaseUrl
+  - Cress.Core.Models.CressProfile.Evidence
+  - Cress.Core.Models.CressProfile.Flake
+  - Cress.Core.Models.CressProfile.Flawright
+  - Cress.Core.Models.CressProfile.Headers
+  - Cress.Core.Models.CressProfile.Playwright
+  - Cress.Core.Models.CressProfile.Profile
+  - Cress.Core.Models.CressProfile.Secrets
+  - Cress.Core.Models.CressProfile.Timeouts
+  - Cress.Core.Models.CressProfile.Variables
+  langs:
+  - csharp
+  - vb
+  name: CressProfile
+  nameWithType: CressProfile
+  fullName: Cress.Core.Models.CressProfile
+  type: Class
+  source:
+    remote:
+      path: src/Cress.Core/Models/ProfileModels.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: CressProfile
+    path: ../src/Cress.Core/Models/ProfileModels.cs
+    startLine: 4
+  assemblies:
+  - Cress.Core
+  namespace: Cress.Core.Models
+  syntax:
+    content: 'public record CressProfile : IEquatable<CressProfile>'
+    content.vb: Public Class CressProfile Implements IEquatable(Of CressProfile)
+  inheritance:
+  - System.Object
+  implements:
+  - System.IEquatable{Cress.Core.Models.CressProfile}
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Cress.Core.Models.CressProfile.Profile
+  commentId: P:Cress.Core.Models.CressProfile.Profile
+  id: Profile
+  parent: Cress.Core.Models.CressProfile
+  langs:
+  - csharp
+  - vb
+  name: Profile
+  nameWithType: CressProfile.Profile
+  fullName: Cress.Core.Models.CressProfile.Profile
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Core/Models/ProfileModels.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Profile
+    path: ../src/Cress.Core/Models/ProfileModels.cs
+    startLine: 6
+  assemblies:
+  - Cress.Core
+  namespace: Cress.Core.Models
+  syntax:
+    content: public string Profile { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Profile As String
+  overload: Cress.Core.Models.CressProfile.Profile*
+- uid: Cress.Core.Models.CressProfile.BaseUrl
+  commentId: P:Cress.Core.Models.CressProfile.BaseUrl
+  id: BaseUrl
+  parent: Cress.Core.Models.CressProfile
+  langs:
+  - csharp
+  - vb
+  name: BaseUrl
+  nameWithType: CressProfile.BaseUrl
+  fullName: Cress.Core.Models.CressProfile.BaseUrl
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Core/Models/ProfileModels.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: BaseUrl
+    path: ../src/Cress.Core/Models/ProfileModels.cs
+    startLine: 7
+  assemblies:
+  - Cress.Core
+  namespace: Cress.Core.Models
+  syntax:
+    content: public string? BaseUrl { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property BaseUrl As String
+  overload: Cress.Core.Models.CressProfile.BaseUrl*
+- uid: Cress.Core.Models.CressProfile.Timeouts
+  commentId: P:Cress.Core.Models.CressProfile.Timeouts
+  id: Timeouts
+  parent: Cress.Core.Models.CressProfile
+  langs:
+  - csharp
+  - vb
+  name: Timeouts
+  nameWithType: CressProfile.Timeouts
+  fullName: Cress.Core.Models.CressProfile.Timeouts
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Core/Models/ProfileModels.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Timeouts
+    path: ../src/Cress.Core/Models/ProfileModels.cs
+    startLine: 8
+  assemblies:
+  - Cress.Core
+  namespace: Cress.Core.Models
+  syntax:
+    content: public TimeoutsConfig? Timeouts { get; init; }
+    parameters: []
+    return:
+      type: Cress.Core.Models.TimeoutsConfig
+    content.vb: Public Property Timeouts As TimeoutsConfig
+  overload: Cress.Core.Models.CressProfile.Timeouts*
+- uid: Cress.Core.Models.CressProfile.Evidence
+  commentId: P:Cress.Core.Models.CressProfile.Evidence
+  id: Evidence
+  parent: Cress.Core.Models.CressProfile
+  langs:
+  - csharp
+  - vb
+  name: Evidence
+  nameWithType: CressProfile.Evidence
+  fullName: Cress.Core.Models.CressProfile.Evidence
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Core/Models/ProfileModels.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Evidence
+    path: ../src/Cress.Core/Models/ProfileModels.cs
+    startLine: 9
+  assemblies:
+  - Cress.Core
+  namespace: Cress.Core.Models
+  syntax:
+    content: public EvidenceProfileConfig? Evidence { get; init; }
+    parameters: []
+    return:
+      type: Cress.Core.Models.EvidenceProfileConfig
+    content.vb: Public Property Evidence As EvidenceProfileConfig
+  overload: Cress.Core.Models.CressProfile.Evidence*
+- uid: Cress.Core.Models.CressProfile.Secrets
+  commentId: P:Cress.Core.Models.CressProfile.Secrets
+  id: Secrets
+  parent: Cress.Core.Models.CressProfile
+  langs:
+  - csharp
+  - vb
+  name: Secrets
+  nameWithType: CressProfile.Secrets
+  fullName: Cress.Core.Models.CressProfile.Secrets
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Core/Models/ProfileModels.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Secrets
+    path: ../src/Cress.Core/Models/ProfileModels.cs
+    startLine: 10
+  assemblies:
+  - Cress.Core
+  namespace: Cress.Core.Models
+  syntax:
+    content: public SecretsConfig? Secrets { get; init; }
+    parameters: []
+    return:
+      type: Cress.Core.Models.SecretsConfig
+    content.vb: Public Property Secrets As SecretsConfig
+  overload: Cress.Core.Models.CressProfile.Secrets*
+- uid: Cress.Core.Models.CressProfile.Authentication
+  commentId: P:Cress.Core.Models.CressProfile.Authentication
+  id: Authentication
+  parent: Cress.Core.Models.CressProfile
+  langs:
+  - csharp
+  - vb
+  name: Authentication
+  nameWithType: CressProfile.Authentication
+  fullName: Cress.Core.Models.CressProfile.Authentication
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Core/Models/ProfileModels.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Authentication
+    path: ../src/Cress.Core/Models/ProfileModels.cs
+    startLine: 11
+  assemblies:
+  - Cress.Core
+  namespace: Cress.Core.Models
+  syntax:
+    content: public AuthenticationConfig? Authentication { get; init; }
+    parameters: []
+    return:
+      type: Cress.Core.Models.AuthenticationConfig
+    content.vb: Public Property Authentication As AuthenticationConfig
+  overload: Cress.Core.Models.CressProfile.Authentication*
+- uid: Cress.Core.Models.CressProfile.Headers
+  commentId: P:Cress.Core.Models.CressProfile.Headers
+  id: Headers
+  parent: Cress.Core.Models.CressProfile
+  langs:
+  - csharp
+  - vb
+  name: Headers
+  nameWithType: CressProfile.Headers
+  fullName: Cress.Core.Models.CressProfile.Headers
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Core/Models/ProfileModels.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Headers
+    path: ../src/Cress.Core/Models/ProfileModels.cs
+    startLine: 12
+  assemblies:
+  - Cress.Core
+  namespace: Cress.Core.Models
+  syntax:
+    content: public Dictionary<string, string>? Headers { get; init; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.Dictionary{System.String,System.String}
+    content.vb: Public Property Headers As Dictionary(Of String, String)
+  overload: Cress.Core.Models.CressProfile.Headers*
+- uid: Cress.Core.Models.CressProfile.Playwright
+  commentId: P:Cress.Core.Models.CressProfile.Playwright
+  id: Playwright
+  parent: Cress.Core.Models.CressProfile
+  langs:
+  - csharp
+  - vb
+  name: Playwright
+  nameWithType: CressProfile.Playwright
+  fullName: Cress.Core.Models.CressProfile.Playwright
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Core/Models/ProfileModels.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Playwright
+    path: ../src/Cress.Core/Models/ProfileModels.cs
+    startLine: 13
+  assemblies:
+  - Cress.Core
+  namespace: Cress.Core.Models
+  syntax:
+    content: public PlaywrightProfileConfig? Playwright { get; init; }
+    parameters: []
+    return:
+      type: Cress.Core.Models.PlaywrightProfileConfig
+    content.vb: Public Property Playwright As PlaywrightProfileConfig
+  overload: Cress.Core.Models.CressProfile.Playwright*
+- uid: Cress.Core.Models.CressProfile.Flawright
+  commentId: P:Cress.Core.Models.CressProfile.Flawright
+  id: Flawright
+  parent: Cress.Core.Models.CressProfile
+  langs:
+  - csharp
+  - vb
+  name: Flawright
+  nameWithType: CressProfile.Flawright
+  fullName: Cress.Core.Models.CressProfile.Flawright
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Core/Models/ProfileModels.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Flawright
+    path: ../src/Cress.Core/Models/ProfileModels.cs
+    startLine: 14
+  assemblies:
+  - Cress.Core
+  namespace: Cress.Core.Models
+  syntax:
+    content: >-
+      [YamlMember(Alias = "flawright")]
+
+      public FlawrightProfileConfig? Flawright { get; init; }
+    parameters: []
+    return:
+      type: Cress.Core.Models.FlawrightProfileConfig
+    content.vb: >-
+      <YamlMember(Alias:="flawright")>
+
+      Public Property Flawright As FlawrightProfileConfig
+  overload: Cress.Core.Models.CressProfile.Flawright*
+  attributes:
+  - type: YamlDotNet.Serialization.YamlMemberAttribute
+    ctor: YamlDotNet.Serialization.YamlMemberAttribute.#ctor
+    arguments: []
+    namedArguments:
+    - name: Alias
+      type: System.String
+      value: flawright
+- uid: Cress.Core.Models.CressProfile.Variables
+  commentId: P:Cress.Core.Models.CressProfile.Variables
+  id: Variables
+  parent: Cress.Core.Models.CressProfile
+  langs:
+  - csharp
+  - vb
+  name: Variables
+  nameWithType: CressProfile.Variables
+  fullName: Cress.Core.Models.CressProfile.Variables
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Core/Models/ProfileModels.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Variables
+    path: ../src/Cress.Core/Models/ProfileModels.cs
+    startLine: 16
+  assemblies:
+  - Cress.Core
+  namespace: Cress.Core.Models
+  syntax:
+    content: public Dictionary<string, string>? Variables { get; init; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.Dictionary{System.String,System.String}
+    content.vb: Public Property Variables As Dictionary(Of String, String)
+  overload: Cress.Core.Models.CressProfile.Variables*
+- uid: Cress.Core.Models.CressProfile.Flake
+  commentId: P:Cress.Core.Models.CressProfile.Flake
+  id: Flake
+  parent: Cress.Core.Models.CressProfile
+  langs:
+  - csharp
+  - vb
+  name: Flake
+  nameWithType: CressProfile.Flake
+  fullName: Cress.Core.Models.CressProfile.Flake
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Core/Models/ProfileModels.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Flake
+    path: ../src/Cress.Core/Models/ProfileModels.cs
+    startLine: 17
+  assemblies:
+  - Cress.Core
+  namespace: Cress.Core.Models
+  syntax:
+    content: public FlakeProfileConfig? Flake { get; init; }
+    parameters: []
+    return:
+      type: Cress.Core.Models.FlakeProfileConfig
+    content.vb: Public Property Flake As FlakeProfileConfig
+  overload: Cress.Core.Models.CressProfile.Flake*
+references:
+- uid: Cress.Core.Models
+  commentId: N:Cress.Core.Models
+  href: Cress.html
+  name: Cress.Core.Models
+  nameWithType: Cress.Core.Models
+  fullName: Cress.Core.Models
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Core
+    name: Core
+    href: Cress.Core.html
+  - name: .
+  - uid: Cress.Core.Models
+    name: Models
+    href: Cress.Core.Models.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Core
+    name: Core
+    href: Cress.Core.html
+  - name: .
+  - uid: Cress.Core.Models
+    name: Models
+    href: Cress.Core.Models.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.IEquatable{Cress.Core.Models.CressProfile}
+  commentId: T:System.IEquatable{Cress.Core.Models.CressProfile}
+  parent: System
+  definition: System.IEquatable`1
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<CressProfile>
+  nameWithType: IEquatable<CressProfile>
+  fullName: System.IEquatable<Cress.Core.Models.CressProfile>
+  nameWithType.vb: IEquatable(Of CressProfile)
+  fullName.vb: System.IEquatable(Of Cress.Core.Models.CressProfile)
+  name.vb: IEquatable(Of CressProfile)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - uid: Cress.Core.Models.CressProfile
+    name: CressProfile
+    href: Cress.Core.Models.CressProfile.html
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Cress.Core.Models.CressProfile
+    name: CressProfile
+    href: Cress.Core.Models.CressProfile.html
+  - name: )
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.IEquatable`1
+  commentId: T:System.IEquatable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<T>
+  nameWithType: IEquatable<T>
+  fullName: System.IEquatable<T>
+  nameWithType.vb: IEquatable(Of T)
+  fullName.vb: System.IEquatable(Of T)
+  name.vb: IEquatable(Of T)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Cress.Core.Models.CressProfile.Profile*
+  commentId: Overload:Cress.Core.Models.CressProfile.Profile
+  href: Cress.Core.Models.CressProfile.html#Cress_Core_Models_CressProfile_Profile
+  name: Profile
+  nameWithType: CressProfile.Profile
+  fullName: Cress.Core.Models.CressProfile.Profile
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Cress.Core.Models.CressProfile.BaseUrl*
+  commentId: Overload:Cress.Core.Models.CressProfile.BaseUrl
+  href: Cress.Core.Models.CressProfile.html#Cress_Core_Models_CressProfile_BaseUrl
+  name: BaseUrl
+  nameWithType: CressProfile.BaseUrl
+  fullName: Cress.Core.Models.CressProfile.BaseUrl
+- uid: Cress.Core.Models.CressProfile.Timeouts*
+  commentId: Overload:Cress.Core.Models.CressProfile.Timeouts
+  href: Cress.Core.Models.CressProfile.html#Cress_Core_Models_CressProfile_Timeouts
+  name: Timeouts
+  nameWithType: CressProfile.Timeouts
+  fullName: Cress.Core.Models.CressProfile.Timeouts
+- uid: Cress.Core.Models.TimeoutsConfig
+  commentId: T:Cress.Core.Models.TimeoutsConfig
+  parent: Cress.Core.Models
+  href: Cress.Core.Models.TimeoutsConfig.html
+  name: TimeoutsConfig
+  nameWithType: TimeoutsConfig
+  fullName: Cress.Core.Models.TimeoutsConfig
+- uid: Cress.Core.Models.CressProfile.Evidence*
+  commentId: Overload:Cress.Core.Models.CressProfile.Evidence
+  href: Cress.Core.Models.CressProfile.html#Cress_Core_Models_CressProfile_Evidence
+  name: Evidence
+  nameWithType: CressProfile.Evidence
+  fullName: Cress.Core.Models.CressProfile.Evidence
+- uid: Cress.Core.Models.EvidenceProfileConfig
+  commentId: T:Cress.Core.Models.EvidenceProfileConfig
+  parent: Cress.Core.Models
+  href: Cress.Core.Models.EvidenceProfileConfig.html
+  name: EvidenceProfileConfig
+  nameWithType: EvidenceProfileConfig
+  fullName: Cress.Core.Models.EvidenceProfileConfig
+- uid: Cress.Core.Models.CressProfile.Secrets*
+  commentId: Overload:Cress.Core.Models.CressProfile.Secrets
+  href: Cress.Core.Models.CressProfile.html#Cress_Core_Models_CressProfile_Secrets
+  name: Secrets
+  nameWithType: CressProfile.Secrets
+  fullName: Cress.Core.Models.CressProfile.Secrets
+- uid: Cress.Core.Models.SecretsConfig
+  commentId: T:Cress.Core.Models.SecretsConfig
+  parent: Cress.Core.Models
+  href: Cress.Core.Models.SecretsConfig.html
+  name: SecretsConfig
+  nameWithType: SecretsConfig
+  fullName: Cress.Core.Models.SecretsConfig
+- uid: Cress.Core.Models.CressProfile.Authentication*
+  commentId: Overload:Cress.Core.Models.CressProfile.Authentication
+  href: Cress.Core.Models.CressProfile.html#Cress_Core_Models_CressProfile_Authentication
+  name: Authentication
+  nameWithType: CressProfile.Authentication
+  fullName: Cress.Core.Models.CressProfile.Authentication
+- uid: Cress.Core.Models.AuthenticationConfig
+  commentId: T:Cress.Core.Models.AuthenticationConfig
+  parent: Cress.Core.Models
+  href: Cress.Core.Models.AuthenticationConfig.html
+  name: AuthenticationConfig
+  nameWithType: AuthenticationConfig
+  fullName: Cress.Core.Models.AuthenticationConfig
+- uid: Cress.Core.Models.CressProfile.Headers*
+  commentId: Overload:Cress.Core.Models.CressProfile.Headers
+  href: Cress.Core.Models.CressProfile.html#Cress_Core_Models_CressProfile_Headers
+  name: Headers
+  nameWithType: CressProfile.Headers
+  fullName: Cress.Core.Models.CressProfile.Headers
+- uid: System.Collections.Generic.Dictionary{System.String,System.String}
+  commentId: T:System.Collections.Generic.Dictionary{System.String,System.String}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.Dictionary`2
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  name: Dictionary<string, string>
+  nameWithType: Dictionary<string, string>
+  fullName: System.Collections.Generic.Dictionary<string, string>
+  nameWithType.vb: Dictionary(Of String, String)
+  fullName.vb: System.Collections.Generic.Dictionary(Of String, String)
+  name.vb: Dictionary(Of String, String)
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+- uid: System.Collections.Generic.Dictionary`2
+  commentId: T:System.Collections.Generic.Dictionary`2
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  name: Dictionary<TKey, TValue>
+  nameWithType: Dictionary<TKey, TValue>
+  fullName: System.Collections.Generic.Dictionary<TKey, TValue>
+  nameWithType.vb: Dictionary(Of TKey, TValue)
+  fullName.vb: System.Collections.Generic.Dictionary(Of TKey, TValue)
+  name.vb: Dictionary(Of TKey, TValue)
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: Cress.Core.Models.CressProfile.Playwright*
+  commentId: Overload:Cress.Core.Models.CressProfile.Playwright
+  href: Cress.Core.Models.CressProfile.html#Cress_Core_Models_CressProfile_Playwright
+  name: Playwright
+  nameWithType: CressProfile.Playwright
+  fullName: Cress.Core.Models.CressProfile.Playwright
+- uid: Cress.Core.Models.PlaywrightProfileConfig
+  commentId: T:Cress.Core.Models.PlaywrightProfileConfig
+  parent: Cress.Core.Models
+  href: Cress.Core.Models.PlaywrightProfileConfig.html
+  name: PlaywrightProfileConfig
+  nameWithType: PlaywrightProfileConfig
+  fullName: Cress.Core.Models.PlaywrightProfileConfig
+- uid: Cress.Core.Models.CressProfile.Flawright*
+  commentId: Overload:Cress.Core.Models.CressProfile.Flawright
+  href: Cress.Core.Models.CressProfile.html#Cress_Core_Models_CressProfile_Flawright
+  name: Flawright
+  nameWithType: CressProfile.Flawright
+  fullName: Cress.Core.Models.CressProfile.Flawright
+- uid: Cress.Core.Models.FlawrightProfileConfig
+  commentId: T:Cress.Core.Models.FlawrightProfileConfig
+  parent: Cress.Core.Models
+  href: Cress.Core.Models.FlawrightProfileConfig.html
+  name: FlawrightProfileConfig
+  nameWithType: FlawrightProfileConfig
+  fullName: Cress.Core.Models.FlawrightProfileConfig
+- uid: Cress.Core.Models.CressProfile.Variables*
+  commentId: Overload:Cress.Core.Models.CressProfile.Variables
+  href: Cress.Core.Models.CressProfile.html#Cress_Core_Models_CressProfile_Variables
+  name: Variables
+  nameWithType: CressProfile.Variables
+  fullName: Cress.Core.Models.CressProfile.Variables
+- uid: Cress.Core.Models.CressProfile.Flake*
+  commentId: Overload:Cress.Core.Models.CressProfile.Flake
+  href: Cress.Core.Models.CressProfile.html#Cress_Core_Models_CressProfile_Flake
+  name: Flake
+  nameWithType: CressProfile.Flake
+  fullName: Cress.Core.Models.CressProfile.Flake
+- uid: Cress.Core.Models.FlakeProfileConfig
+  commentId: T:Cress.Core.Models.FlakeProfileConfig
+  parent: Cress.Core.Models
+  href: Cress.Core.Models.FlakeProfileConfig.html
+  name: FlakeProfileConfig
+  nameWithType: FlakeProfileConfig
+  fullName: Cress.Core.Models.FlakeProfileConfig

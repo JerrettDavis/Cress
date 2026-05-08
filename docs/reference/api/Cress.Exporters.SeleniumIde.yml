@@ -1,0 +1,23 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Exporters.SeleniumIde
+  commentId: N:Cress.Exporters.SeleniumIde
+  id: Cress.Exporters.SeleniumIde
+  children:
+  - Cress.Exporters.SeleniumIde.SeleniumIdeExporter
+  langs:
+  - csharp
+  - vb
+  name: Cress.Exporters.SeleniumIde
+  nameWithType: Cress.Exporters.SeleniumIde
+  fullName: Cress.Exporters.SeleniumIde
+  type: Namespace
+  assemblies:
+  - Cress.Exporters
+references:
+- uid: Cress.Exporters.SeleniumIde.SeleniumIdeExporter
+  commentId: T:Cress.Exporters.SeleniumIde.SeleniumIdeExporter
+  href: Cress.Exporters.SeleniumIde.SeleniumIdeExporter.html
+  name: SeleniumIdeExporter
+  nameWithType: SeleniumIdeExporter
+  fullName: Cress.Exporters.SeleniumIde.SeleniumIdeExporter

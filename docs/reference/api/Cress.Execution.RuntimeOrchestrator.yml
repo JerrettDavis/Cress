@@ -1,0 +1,808 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Execution.RuntimeOrchestrator
+  commentId: T:Cress.Execution.RuntimeOrchestrator
+  id: RuntimeOrchestrator
+  parent: Cress.Execution
+  children:
+  - Cress.Execution.RuntimeOrchestrator.#ctor(Cress.Execution.ProjectCatalogService,Cress.Execution.PlanGenerator,Cress.ProjectSystem.ConfigLoader,Cress.Execution.PluginHost,Cress.Execution.ReportGenerator,System.Collections.Generic.IEnumerable{Cress.Execution.IRuntimeDriver})
+  - Cress.Execution.RuntimeOrchestrator.ExecuteAsync(System.String,Cress.Core.Models.RunOptions,System.IProgress{Cress.Execution.RuntimeProgressUpdate},System.Threading.CancellationToken)
+  - Cress.Execution.RuntimeOrchestrator.ExecuteAsync(System.String,Cress.Core.Models.RunOptions,System.Threading.CancellationToken)
+  langs:
+  - csharp
+  - vb
+  name: RuntimeOrchestrator
+  nameWithType: RuntimeOrchestrator
+  fullName: Cress.Execution.RuntimeOrchestrator
+  type: Class
+  source:
+    remote:
+      path: src/Cress.Execution/RuntimeOrchestrator.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: RuntimeOrchestrator
+    path: ../src/Cress.Execution/RuntimeOrchestrator.cs
+    startLine: 6
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Execution
+  syntax:
+    content: public sealed class RuntimeOrchestrator
+    content.vb: Public NotInheritable Class RuntimeOrchestrator
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Cress.Execution.RuntimeOrchestrator.#ctor(Cress.Execution.ProjectCatalogService,Cress.Execution.PlanGenerator,Cress.ProjectSystem.ConfigLoader,Cress.Execution.PluginHost,Cress.Execution.ReportGenerator,System.Collections.Generic.IEnumerable{Cress.Execution.IRuntimeDriver})
+  commentId: M:Cress.Execution.RuntimeOrchestrator.#ctor(Cress.Execution.ProjectCatalogService,Cress.Execution.PlanGenerator,Cress.ProjectSystem.ConfigLoader,Cress.Execution.PluginHost,Cress.Execution.ReportGenerator,System.Collections.Generic.IEnumerable{Cress.Execution.IRuntimeDriver})
+  id: '#ctor(Cress.Execution.ProjectCatalogService,Cress.Execution.PlanGenerator,Cress.ProjectSystem.ConfigLoader,Cress.Execution.PluginHost,Cress.Execution.ReportGenerator,System.Collections.Generic.IEnumerable{Cress.Execution.IRuntimeDriver})'
+  parent: Cress.Execution.RuntimeOrchestrator
+  langs:
+  - csharp
+  - vb
+  name: RuntimeOrchestrator(ProjectCatalogService, PlanGenerator, ConfigLoader, PluginHost, ReportGenerator, IEnumerable<IRuntimeDriver>)
+  nameWithType: RuntimeOrchestrator.RuntimeOrchestrator(ProjectCatalogService, PlanGenerator, ConfigLoader, PluginHost, ReportGenerator, IEnumerable<IRuntimeDriver>)
+  fullName: Cress.Execution.RuntimeOrchestrator.RuntimeOrchestrator(Cress.Execution.ProjectCatalogService, Cress.Execution.PlanGenerator, Cress.ProjectSystem.ConfigLoader, Cress.Execution.PluginHost, Cress.Execution.ReportGenerator, System.Collections.Generic.IEnumerable<Cress.Execution.IRuntimeDriver>)
+  type: Constructor
+  source:
+    remote:
+      path: src/Cress.Execution/RuntimeOrchestrator.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: .ctor
+    path: ../src/Cress.Execution/RuntimeOrchestrator.cs
+    startLine: 15
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Execution
+  syntax:
+    content: public RuntimeOrchestrator(ProjectCatalogService catalogService, PlanGenerator planGenerator, ConfigLoader configLoader, PluginHost pluginHost, ReportGenerator reportGenerator, IEnumerable<IRuntimeDriver> drivers)
+    parameters:
+    - id: catalogService
+      type: Cress.Execution.ProjectCatalogService
+    - id: planGenerator
+      type: Cress.Execution.PlanGenerator
+    - id: configLoader
+      type: Cress.ProjectSystem.ConfigLoader
+    - id: pluginHost
+      type: Cress.Execution.PluginHost
+    - id: reportGenerator
+      type: Cress.Execution.ReportGenerator
+    - id: drivers
+      type: System.Collections.Generic.IEnumerable{Cress.Execution.IRuntimeDriver}
+    content.vb: Public Sub New(catalogService As ProjectCatalogService, planGenerator As PlanGenerator, configLoader As ConfigLoader, pluginHost As PluginHost, reportGenerator As ReportGenerator, drivers As IEnumerable(Of IRuntimeDriver))
+  overload: Cress.Execution.RuntimeOrchestrator.#ctor*
+  nameWithType.vb: RuntimeOrchestrator.New(ProjectCatalogService, PlanGenerator, ConfigLoader, PluginHost, ReportGenerator, IEnumerable(Of IRuntimeDriver))
+  fullName.vb: Cress.Execution.RuntimeOrchestrator.New(Cress.Execution.ProjectCatalogService, Cress.Execution.PlanGenerator, Cress.ProjectSystem.ConfigLoader, Cress.Execution.PluginHost, Cress.Execution.ReportGenerator, System.Collections.Generic.IEnumerable(Of Cress.Execution.IRuntimeDriver))
+  name.vb: New(ProjectCatalogService, PlanGenerator, ConfigLoader, PluginHost, ReportGenerator, IEnumerable(Of IRuntimeDriver))
+- uid: Cress.Execution.RuntimeOrchestrator.ExecuteAsync(System.String,Cress.Core.Models.RunOptions,System.Threading.CancellationToken)
+  commentId: M:Cress.Execution.RuntimeOrchestrator.ExecuteAsync(System.String,Cress.Core.Models.RunOptions,System.Threading.CancellationToken)
+  id: ExecuteAsync(System.String,Cress.Core.Models.RunOptions,System.Threading.CancellationToken)
+  parent: Cress.Execution.RuntimeOrchestrator
+  langs:
+  - csharp
+  - vb
+  name: ExecuteAsync(string, RunOptions, CancellationToken)
+  nameWithType: RuntimeOrchestrator.ExecuteAsync(string, RunOptions, CancellationToken)
+  fullName: Cress.Execution.RuntimeOrchestrator.ExecuteAsync(string, Cress.Core.Models.RunOptions, System.Threading.CancellationToken)
+  type: Method
+  source:
+    remote:
+      path: src/Cress.Execution/RuntimeOrchestrator.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: ExecuteAsync
+    path: ../src/Cress.Execution/RuntimeOrchestrator.cs
+    startLine: 31
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Execution
+  syntax:
+    content: public Task<RunResult> ExecuteAsync(string startDirectory, RunOptions options, CancellationToken cancellationToken = default)
+    parameters:
+    - id: startDirectory
+      type: System.String
+    - id: options
+      type: Cress.Core.Models.RunOptions
+    - id: cancellationToken
+      type: System.Threading.CancellationToken
+    return:
+      type: System.Threading.Tasks.Task{Cress.Core.Models.RunResult}
+    content.vb: Public Function ExecuteAsync(startDirectory As String, options As RunOptions, cancellationToken As CancellationToken = Nothing) As Task(Of RunResult)
+  overload: Cress.Execution.RuntimeOrchestrator.ExecuteAsync*
+  nameWithType.vb: RuntimeOrchestrator.ExecuteAsync(String, RunOptions, CancellationToken)
+  fullName.vb: Cress.Execution.RuntimeOrchestrator.ExecuteAsync(String, Cress.Core.Models.RunOptions, System.Threading.CancellationToken)
+  name.vb: ExecuteAsync(String, RunOptions, CancellationToken)
+- uid: Cress.Execution.RuntimeOrchestrator.ExecuteAsync(System.String,Cress.Core.Models.RunOptions,System.IProgress{Cress.Execution.RuntimeProgressUpdate},System.Threading.CancellationToken)
+  commentId: M:Cress.Execution.RuntimeOrchestrator.ExecuteAsync(System.String,Cress.Core.Models.RunOptions,System.IProgress{Cress.Execution.RuntimeProgressUpdate},System.Threading.CancellationToken)
+  id: ExecuteAsync(System.String,Cress.Core.Models.RunOptions,System.IProgress{Cress.Execution.RuntimeProgressUpdate},System.Threading.CancellationToken)
+  parent: Cress.Execution.RuntimeOrchestrator
+  langs:
+  - csharp
+  - vb
+  name: ExecuteAsync(string, RunOptions, IProgress<RuntimeProgressUpdate>?, CancellationToken)
+  nameWithType: RuntimeOrchestrator.ExecuteAsync(string, RunOptions, IProgress<RuntimeProgressUpdate>?, CancellationToken)
+  fullName: Cress.Execution.RuntimeOrchestrator.ExecuteAsync(string, Cress.Core.Models.RunOptions, System.IProgress<Cress.Execution.RuntimeProgressUpdate>?, System.Threading.CancellationToken)
+  type: Method
+  source:
+    remote:
+      path: src/Cress.Execution/RuntimeOrchestrator.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: ExecuteAsync
+    path: ../src/Cress.Execution/RuntimeOrchestrator.cs
+    startLine: 34
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Execution
+  syntax:
+    content: public Task<RunResult> ExecuteAsync(string startDirectory, RunOptions options, IProgress<RuntimeProgressUpdate>? progress, CancellationToken cancellationToken = default)
+    parameters:
+    - id: startDirectory
+      type: System.String
+    - id: options
+      type: Cress.Core.Models.RunOptions
+    - id: progress
+      type: System.IProgress{Cress.Execution.RuntimeProgressUpdate}
+    - id: cancellationToken
+      type: System.Threading.CancellationToken
+    return:
+      type: System.Threading.Tasks.Task{Cress.Core.Models.RunResult}
+    content.vb: Public Function ExecuteAsync(startDirectory As String, options As RunOptions, progress As IProgress(Of RuntimeProgressUpdate), cancellationToken As CancellationToken = Nothing) As Task(Of RunResult)
+  overload: Cress.Execution.RuntimeOrchestrator.ExecuteAsync*
+  nameWithType.vb: RuntimeOrchestrator.ExecuteAsync(String, RunOptions, IProgress(Of RuntimeProgressUpdate), CancellationToken)
+  fullName.vb: Cress.Execution.RuntimeOrchestrator.ExecuteAsync(String, Cress.Core.Models.RunOptions, System.IProgress(Of Cress.Execution.RuntimeProgressUpdate), System.Threading.CancellationToken)
+  name.vb: ExecuteAsync(String, RunOptions, IProgress(Of RuntimeProgressUpdate), CancellationToken)
+references:
+- uid: Cress.Execution
+  commentId: N:Cress.Execution
+  href: Cress.html
+  name: Cress.Execution
+  nameWithType: Cress.Execution
+  fullName: Cress.Execution
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Execution
+    name: Execution
+    href: Cress.Execution.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Execution
+    name: Execution
+    href: Cress.Execution.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Cress.Execution.RuntimeOrchestrator.#ctor*
+  commentId: Overload:Cress.Execution.RuntimeOrchestrator.#ctor
+  href: Cress.Execution.RuntimeOrchestrator.html#Cress_Execution_RuntimeOrchestrator__ctor_Cress_Execution_ProjectCatalogService_Cress_Execution_PlanGenerator_Cress_ProjectSystem_ConfigLoader_Cress_Execution_PluginHost_Cress_Execution_ReportGenerator_System_Collections_Generic_IEnumerable_Cress_Execution_IRuntimeDriver__
+  name: RuntimeOrchestrator
+  nameWithType: RuntimeOrchestrator.RuntimeOrchestrator
+  fullName: Cress.Execution.RuntimeOrchestrator.RuntimeOrchestrator
+  nameWithType.vb: RuntimeOrchestrator.New
+  fullName.vb: Cress.Execution.RuntimeOrchestrator.New
+  name.vb: New
+- uid: Cress.Execution.ProjectCatalogService
+  commentId: T:Cress.Execution.ProjectCatalogService
+  parent: Cress.Execution
+  href: Cress.Execution.ProjectCatalogService.html
+  name: ProjectCatalogService
+  nameWithType: ProjectCatalogService
+  fullName: Cress.Execution.ProjectCatalogService
+- uid: Cress.Execution.PlanGenerator
+  commentId: T:Cress.Execution.PlanGenerator
+  parent: Cress.Execution
+  href: Cress.Execution.PlanGenerator.html
+  name: PlanGenerator
+  nameWithType: PlanGenerator
+  fullName: Cress.Execution.PlanGenerator
+- uid: Cress.ProjectSystem.ConfigLoader
+  commentId: T:Cress.ProjectSystem.ConfigLoader
+  parent: Cress.ProjectSystem
+  href: Cress.ProjectSystem.ConfigLoader.html
+  name: ConfigLoader
+  nameWithType: ConfigLoader
+  fullName: Cress.ProjectSystem.ConfigLoader
+- uid: Cress.Execution.PluginHost
+  commentId: T:Cress.Execution.PluginHost
+  parent: Cress.Execution
+  href: Cress.Execution.PluginHost.html
+  name: PluginHost
+  nameWithType: PluginHost
+  fullName: Cress.Execution.PluginHost
+- uid: Cress.Execution.ReportGenerator
+  commentId: T:Cress.Execution.ReportGenerator
+  parent: Cress.Execution
+  href: Cress.Execution.ReportGenerator.html
+  name: ReportGenerator
+  nameWithType: ReportGenerator
+  fullName: Cress.Execution.ReportGenerator
+- uid: System.Collections.Generic.IEnumerable{Cress.Execution.IRuntimeDriver}
+  commentId: T:System.Collections.Generic.IEnumerable{Cress.Execution.IRuntimeDriver}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IEnumerable`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  name: IEnumerable<IRuntimeDriver>
+  nameWithType: IEnumerable<IRuntimeDriver>
+  fullName: System.Collections.Generic.IEnumerable<Cress.Execution.IRuntimeDriver>
+  nameWithType.vb: IEnumerable(Of IRuntimeDriver)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of Cress.Execution.IRuntimeDriver)
+  name.vb: IEnumerable(Of IRuntimeDriver)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - uid: Cress.Execution.IRuntimeDriver
+    name: IRuntimeDriver
+    href: Cress.Execution.IRuntimeDriver.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Cress.Execution.IRuntimeDriver
+    name: IRuntimeDriver
+    href: Cress.Execution.IRuntimeDriver.html
+  - name: )
+- uid: Cress.ProjectSystem
+  commentId: N:Cress.ProjectSystem
+  href: Cress.html
+  name: Cress.ProjectSystem
+  nameWithType: Cress.ProjectSystem
+  fullName: Cress.ProjectSystem
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.ProjectSystem
+    name: ProjectSystem
+    href: Cress.ProjectSystem.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.ProjectSystem
+    name: ProjectSystem
+    href: Cress.ProjectSystem.html
+- uid: System.Collections.Generic.IEnumerable`1
+  commentId: T:System.Collections.Generic.IEnumerable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  name: IEnumerable<T>
+  nameWithType: IEnumerable<T>
+  fullName: System.Collections.Generic.IEnumerable<T>
+  nameWithType.vb: IEnumerable(Of T)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of T)
+  name.vb: IEnumerable(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: Cress.Execution.RuntimeOrchestrator.ExecuteAsync*
+  commentId: Overload:Cress.Execution.RuntimeOrchestrator.ExecuteAsync
+  href: Cress.Execution.RuntimeOrchestrator.html#Cress_Execution_RuntimeOrchestrator_ExecuteAsync_System_String_Cress_Core_Models_RunOptions_System_Threading_CancellationToken_
+  name: ExecuteAsync
+  nameWithType: RuntimeOrchestrator.ExecuteAsync
+  fullName: Cress.Execution.RuntimeOrchestrator.ExecuteAsync
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Cress.Core.Models.RunOptions
+  commentId: T:Cress.Core.Models.RunOptions
+  parent: Cress.Core.Models
+  href: Cress.Core.Models.RunOptions.html
+  name: RunOptions
+  nameWithType: RunOptions
+  fullName: Cress.Core.Models.RunOptions
+- uid: System.Threading.CancellationToken
+  commentId: T:System.Threading.CancellationToken
+  parent: System.Threading
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken
+  name: CancellationToken
+  nameWithType: CancellationToken
+  fullName: System.Threading.CancellationToken
+- uid: System.Threading.Tasks.Task{Cress.Core.Models.RunResult}
+  commentId: T:System.Threading.Tasks.Task{Cress.Core.Models.RunResult}
+  parent: System.Threading.Tasks
+  definition: System.Threading.Tasks.Task`1
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<RunResult>
+  nameWithType: Task<RunResult>
+  fullName: System.Threading.Tasks.Task<Cress.Core.Models.RunResult>
+  nameWithType.vb: Task(Of RunResult)
+  fullName.vb: System.Threading.Tasks.Task(Of Cress.Core.Models.RunResult)
+  name.vb: Task(Of RunResult)
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - uid: Cress.Core.Models.RunResult
+    name: RunResult
+    href: Cress.Core.Models.RunResult.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Cress.Core.Models.RunResult
+    name: RunResult
+    href: Cress.Core.Models.RunResult.html
+  - name: )
+- uid: Cress.Core.Models
+  commentId: N:Cress.Core.Models
+  href: Cress.html
+  name: Cress.Core.Models
+  nameWithType: Cress.Core.Models
+  fullName: Cress.Core.Models
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Core
+    name: Core
+    href: Cress.Core.html
+  - name: .
+  - uid: Cress.Core.Models
+    name: Models
+    href: Cress.Core.Models.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Core
+    name: Core
+    href: Cress.Core.html
+  - name: .
+  - uid: Cress.Core.Models
+    name: Models
+    href: Cress.Core.Models.html
+- uid: System.Threading
+  commentId: N:System.Threading
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Threading
+  nameWithType: System.Threading
+  fullName: System.Threading
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+- uid: System.Threading.Tasks.Task`1
+  commentId: T:System.Threading.Tasks.Task`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<TResult>
+  nameWithType: Task<TResult>
+  fullName: System.Threading.Tasks.Task<TResult>
+  nameWithType.vb: Task(Of TResult)
+  fullName.vb: System.Threading.Tasks.Task(Of TResult)
+  name.vb: Task(Of TResult)
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - name: TResult
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TResult
+  - name: )
+- uid: System.Threading.Tasks
+  commentId: N:System.Threading.Tasks
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Threading.Tasks
+  nameWithType: System.Threading.Tasks
+  fullName: System.Threading.Tasks
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+- uid: System.IProgress{Cress.Execution.RuntimeProgressUpdate}
+  commentId: T:System.IProgress{Cress.Execution.RuntimeProgressUpdate}
+  parent: System
+  definition: System.IProgress`1
+  href: https://learn.microsoft.com/dotnet/api/system.iprogress-1
+  name: IProgress<RuntimeProgressUpdate>
+  nameWithType: IProgress<RuntimeProgressUpdate>
+  fullName: System.IProgress<Cress.Execution.RuntimeProgressUpdate>
+  nameWithType.vb: IProgress(Of RuntimeProgressUpdate)
+  fullName.vb: System.IProgress(Of Cress.Execution.RuntimeProgressUpdate)
+  name.vb: IProgress(Of RuntimeProgressUpdate)
+  spec.csharp:
+  - uid: System.IProgress`1
+    name: IProgress
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iprogress-1
+  - name: <
+  - uid: Cress.Execution.RuntimeProgressUpdate
+    name: RuntimeProgressUpdate
+    href: Cress.Execution.RuntimeProgressUpdate.html
+  - name: '>'
+  spec.vb:
+  - uid: System.IProgress`1
+    name: IProgress
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iprogress-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Cress.Execution.RuntimeProgressUpdate
+    name: RuntimeProgressUpdate
+    href: Cress.Execution.RuntimeProgressUpdate.html
+  - name: )
+- uid: System.IProgress`1
+  commentId: T:System.IProgress`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iprogress-1
+  name: IProgress<T>
+  nameWithType: IProgress<T>
+  fullName: System.IProgress<T>
+  nameWithType.vb: IProgress(Of T)
+  fullName.vb: System.IProgress(Of T)
+  name.vb: IProgress(Of T)
+  spec.csharp:
+  - uid: System.IProgress`1
+    name: IProgress
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iprogress-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.IProgress`1
+    name: IProgress
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iprogress-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )

@@ -35,7 +35,7 @@ plugins:
 drivers:
   http:
     enabled: true
-  flaui:
+  flawright:
     enabled: false
 """);
 
@@ -47,6 +47,6 @@ drivers:
         Assert.NotNull(result.Value);
         Assert.Equal("Sample Project", result.Value!.Project.Name);
         Assert.True(result.Value.Drivers["http"].Enabled);
-        Assert.False(result.Value.Drivers["flaui"].Enabled);
+        Assert.False(result.Value.Drivers["flawright"].Enabled);
     }
 }

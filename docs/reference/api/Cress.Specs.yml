@@ -1,0 +1,78 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Specs
+  commentId: N:Cress.Specs
+  id: Cress.Specs
+  children:
+  - Cress.Specs.CapabilityParser
+  - Cress.Specs.FixtureManifestParser
+  - Cress.Specs.FlowNormalizer
+  - Cress.Specs.FlowParser
+  - Cress.Specs.StepManifestParser
+  langs:
+  - csharp
+  - vb
+  name: Cress.Specs
+  nameWithType: Cress.Specs
+  fullName: Cress.Specs
+  type: Namespace
+  assemblies:
+  - Cress.Specs
+references:
+- uid: Cress.Specs.CapabilityParser
+  commentId: T:Cress.Specs.CapabilityParser
+  parent: Cress.Specs
+  href: Cress.Specs.CapabilityParser.html
+  name: CapabilityParser
+  nameWithType: CapabilityParser
+  fullName: Cress.Specs.CapabilityParser
+- uid: Cress.Specs.FixtureManifestParser
+  commentId: T:Cress.Specs.FixtureManifestParser
+  parent: Cress.Specs
+  href: Cress.Specs.FixtureManifestParser.html
+  name: FixtureManifestParser
+  nameWithType: FixtureManifestParser
+  fullName: Cress.Specs.FixtureManifestParser
+- uid: Cress.Specs.FlowNormalizer
+  commentId: T:Cress.Specs.FlowNormalizer
+  parent: Cress.Specs
+  href: Cress.Specs.FlowNormalizer.html
+  name: FlowNormalizer
+  nameWithType: FlowNormalizer
+  fullName: Cress.Specs.FlowNormalizer
+- uid: Cress.Specs.FlowParser
+  commentId: T:Cress.Specs.FlowParser
+  parent: Cress.Specs
+  href: Cress.Specs.FlowParser.html
+  name: FlowParser
+  nameWithType: FlowParser
+  fullName: Cress.Specs.FlowParser
+- uid: Cress.Specs.StepManifestParser
+  commentId: T:Cress.Specs.StepManifestParser
+  parent: Cress.Specs
+  href: Cress.Specs.StepManifestParser.html
+  name: StepManifestParser
+  nameWithType: StepManifestParser
+  fullName: Cress.Specs.StepManifestParser
+- uid: Cress.Specs
+  commentId: N:Cress.Specs
+  href: Cress.html
+  name: Cress.Specs
+  nameWithType: Cress.Specs
+  fullName: Cress.Specs
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Specs
+    name: Specs
+    href: Cress.Specs.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Specs
+    name: Specs
+    href: Cress.Specs.html

@@ -1,0 +1,451 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Gherkin.GherkinIngester
+  commentId: T:Cress.Gherkin.GherkinIngester
+  id: GherkinIngester
+  parent: Cress.Gherkin
+  children:
+  - Cress.Gherkin.GherkinIngester.#ctor(Cress.Gherkin.Phrases.PhraseLibrary)
+  - Cress.Gherkin.GherkinIngester.Ingest(System.String)
+  langs:
+  - csharp
+  - vb
+  name: GherkinIngester
+  nameWithType: GherkinIngester
+  fullName: Cress.Gherkin.GherkinIngester
+  type: Class
+  source:
+    remote:
+      path: src/Cress.Gherkin/GherkinIngester.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: GherkinIngester
+    path: ../src/Cress.Gherkin/GherkinIngester.cs
+    startLine: 11
+  assemblies:
+  - Cress.Gherkin
+  namespace: Cress.Gherkin
+  summary: >-
+    Parses a Gherkin <code>.feature</code> file back into a <xref href="Cress.Core.Models.CressFlow" data-throw-if-not-resolved="false"></xref>.
+
+    Uses the <xref href="Cress.Gherkin.Phrases.PhraseLibrary" data-throw-if-not-resolved="false"></xref> for reverse-lookup of step text → step op.
+  example: []
+  syntax:
+    content: public sealed class GherkinIngester
+    content.vb: Public NotInheritable Class GherkinIngester
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Cress.Gherkin.GherkinIngester.#ctor(Cress.Gherkin.Phrases.PhraseLibrary)
+  commentId: M:Cress.Gherkin.GherkinIngester.#ctor(Cress.Gherkin.Phrases.PhraseLibrary)
+  id: '#ctor(Cress.Gherkin.Phrases.PhraseLibrary)'
+  parent: Cress.Gherkin.GherkinIngester
+  langs:
+  - csharp
+  - vb
+  name: GherkinIngester(PhraseLibrary)
+  nameWithType: GherkinIngester.GherkinIngester(PhraseLibrary)
+  fullName: Cress.Gherkin.GherkinIngester.GherkinIngester(Cress.Gherkin.Phrases.PhraseLibrary)
+  type: Constructor
+  source:
+    remote:
+      path: src/Cress.Gherkin/GherkinIngester.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: .ctor
+    path: ../src/Cress.Gherkin/GherkinIngester.cs
+    startLine: 15
+  assemblies:
+  - Cress.Gherkin
+  namespace: Cress.Gherkin
+  syntax:
+    content: public GherkinIngester(PhraseLibrary library)
+    parameters:
+    - id: library
+      type: Cress.Gherkin.Phrases.PhraseLibrary
+    content.vb: Public Sub New(library As PhraseLibrary)
+  overload: Cress.Gherkin.GherkinIngester.#ctor*
+  nameWithType.vb: GherkinIngester.New(PhraseLibrary)
+  fullName.vb: Cress.Gherkin.GherkinIngester.New(Cress.Gherkin.Phrases.PhraseLibrary)
+  name.vb: New(PhraseLibrary)
+- uid: Cress.Gherkin.GherkinIngester.Ingest(System.String)
+  commentId: M:Cress.Gherkin.GherkinIngester.Ingest(System.String)
+  id: Ingest(System.String)
+  parent: Cress.Gherkin.GherkinIngester
+  langs:
+  - csharp
+  - vb
+  name: Ingest(string)
+  nameWithType: GherkinIngester.Ingest(string)
+  fullName: Cress.Gherkin.GherkinIngester.Ingest(string)
+  type: Method
+  source:
+    remote:
+      path: src/Cress.Gherkin/GherkinIngester.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Ingest
+    path: ../src/Cress.Gherkin/GherkinIngester.cs
+    startLine: 24
+  assemblies:
+  - Cress.Gherkin
+  namespace: Cress.Gherkin
+  summary: >-
+    Parse the given <code>.feature</code> text and return a <xref href="Cress.Core.Models.CressFlow" data-throw-if-not-resolved="false"></xref>.
+
+    Only the first Scenario block is processed (multi-scenario is V11).
+  example: []
+  syntax:
+    content: public CressFlow Ingest(string featureText)
+    parameters:
+    - id: featureText
+      type: System.String
+    return:
+      type: Cress.Core.Models.CressFlow
+    content.vb: Public Function Ingest(featureText As String) As CressFlow
+  overload: Cress.Gherkin.GherkinIngester.Ingest*
+  nameWithType.vb: GherkinIngester.Ingest(String)
+  fullName.vb: Cress.Gherkin.GherkinIngester.Ingest(String)
+  name.vb: Ingest(String)
+references:
+- uid: Cress.Core.Models.CressFlow
+  commentId: T:Cress.Core.Models.CressFlow
+  parent: Cress.Core.Models
+  href: Cress.Core.Models.CressFlow.html
+  name: CressFlow
+  nameWithType: CressFlow
+  fullName: Cress.Core.Models.CressFlow
+- uid: Cress.Gherkin.Phrases.PhraseLibrary
+  commentId: T:Cress.Gherkin.Phrases.PhraseLibrary
+  parent: Cress.Gherkin.Phrases
+  href: Cress.Gherkin.Phrases.PhraseLibrary.html
+  name: PhraseLibrary
+  nameWithType: PhraseLibrary
+  fullName: Cress.Gherkin.Phrases.PhraseLibrary
+- uid: Cress.Gherkin
+  commentId: N:Cress.Gherkin
+  href: Cress.html
+  name: Cress.Gherkin
+  nameWithType: Cress.Gherkin
+  fullName: Cress.Gherkin
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Gherkin
+    name: Gherkin
+    href: Cress.Gherkin.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Gherkin
+    name: Gherkin
+    href: Cress.Gherkin.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: Cress.Core.Models
+  commentId: N:Cress.Core.Models
+  href: Cress.html
+  name: Cress.Core.Models
+  nameWithType: Cress.Core.Models
+  fullName: Cress.Core.Models
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Core
+    name: Core
+    href: Cress.Core.html
+  - name: .
+  - uid: Cress.Core.Models
+    name: Models
+    href: Cress.Core.Models.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Core
+    name: Core
+    href: Cress.Core.html
+  - name: .
+  - uid: Cress.Core.Models
+    name: Models
+    href: Cress.Core.Models.html
+- uid: Cress.Gherkin.Phrases
+  commentId: N:Cress.Gherkin.Phrases
+  href: Cress.html
+  name: Cress.Gherkin.Phrases
+  nameWithType: Cress.Gherkin.Phrases
+  fullName: Cress.Gherkin.Phrases
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Gherkin
+    name: Gherkin
+    href: Cress.Gherkin.html
+  - name: .
+  - uid: Cress.Gherkin.Phrases
+    name: Phrases
+    href: Cress.Gherkin.Phrases.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Gherkin
+    name: Gherkin
+    href: Cress.Gherkin.html
+  - name: .
+  - uid: Cress.Gherkin.Phrases
+    name: Phrases
+    href: Cress.Gherkin.Phrases.html
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Cress.Gherkin.GherkinIngester.#ctor*
+  commentId: Overload:Cress.Gherkin.GherkinIngester.#ctor
+  href: Cress.Gherkin.GherkinIngester.html#Cress_Gherkin_GherkinIngester__ctor_Cress_Gherkin_Phrases_PhraseLibrary_
+  name: GherkinIngester
+  nameWithType: GherkinIngester.GherkinIngester
+  fullName: Cress.Gherkin.GherkinIngester.GherkinIngester
+  nameWithType.vb: GherkinIngester.New
+  fullName.vb: Cress.Gherkin.GherkinIngester.New
+  name.vb: New
+- uid: Cress.Gherkin.GherkinIngester.Ingest*
+  commentId: Overload:Cress.Gherkin.GherkinIngester.Ingest
+  href: Cress.Gherkin.GherkinIngester.html#Cress_Gherkin_GherkinIngester_Ingest_System_String_
+  name: Ingest
+  nameWithType: GherkinIngester.Ingest
+  fullName: Cress.Gherkin.GherkinIngester.Ingest
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String

@@ -1,0 +1,62 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.ProjectSystem
+  commentId: N:Cress.ProjectSystem
+  id: Cress.ProjectSystem
+  children:
+  - Cress.ProjectSystem.ConfigLoader
+  - Cress.ProjectSystem.ProfileLoader
+  - Cress.ProjectSystem.ProjectLocator
+  langs:
+  - csharp
+  - vb
+  name: Cress.ProjectSystem
+  nameWithType: Cress.ProjectSystem
+  fullName: Cress.ProjectSystem
+  type: Namespace
+  assemblies:
+  - Cress.ProjectSystem
+references:
+- uid: Cress.ProjectSystem.ConfigLoader
+  commentId: T:Cress.ProjectSystem.ConfigLoader
+  parent: Cress.ProjectSystem
+  href: Cress.ProjectSystem.ConfigLoader.html
+  name: ConfigLoader
+  nameWithType: ConfigLoader
+  fullName: Cress.ProjectSystem.ConfigLoader
+- uid: Cress.ProjectSystem.ProfileLoader
+  commentId: T:Cress.ProjectSystem.ProfileLoader
+  parent: Cress.ProjectSystem
+  href: Cress.ProjectSystem.ProfileLoader.html
+  name: ProfileLoader
+  nameWithType: ProfileLoader
+  fullName: Cress.ProjectSystem.ProfileLoader
+- uid: Cress.ProjectSystem.ProjectLocator
+  commentId: T:Cress.ProjectSystem.ProjectLocator
+  parent: Cress.ProjectSystem
+  href: Cress.ProjectSystem.ProjectLocator.html
+  name: ProjectLocator
+  nameWithType: ProjectLocator
+  fullName: Cress.ProjectSystem.ProjectLocator
+- uid: Cress.ProjectSystem
+  commentId: N:Cress.ProjectSystem
+  href: Cress.html
+  name: Cress.ProjectSystem
+  nameWithType: Cress.ProjectSystem
+  fullName: Cress.ProjectSystem
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.ProjectSystem
+    name: ProjectSystem
+    href: Cress.ProjectSystem.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.ProjectSystem
+    name: ProjectSystem
+    href: Cress.ProjectSystem.html

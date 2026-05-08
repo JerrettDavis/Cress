@@ -3,44 +3,44 @@
 
 @if (State.IsWorkspacePickerOpen)
 {
-    <div class="modal-backdrop" @onclick="Close" role="presentation"></div>
-    <div class="modal-dialog modal-dialog--wide" role="dialog" aria-modal="true" aria-labelledby="workspace-picker-title">
+    <div class="modal-backdrop" @onclick="Close" role="presentation" data-testid="workspace-picker-backdrop"></div>
+    <div class="modal-dialog modal-dialog--wide" role="dialog" aria-modal="true" aria-labelledby="workspace-picker-title" data-testid="workspace-picker-dialog">
         <div class="modal-header">
             <h3 id="workspace-picker-title">Browse for a workspace</h3>
-            <button type="button" class="action-button" @onclick="Close" aria-label="Close">&#x2715;</button>
+            <button type="button" class="action-button" @onclick="Close" aria-label="Close" data-testid="workspace-picker-close">&#x2715;</button>
         </div>
 
-        <div class="modal-body workspace-picker-body">
-            <div class="workspace-picker-toolbar">
+        <div class="modal-body workspace-picker-body" data-testid="workspace-picker-body">
+            <div class="workspace-picker-toolbar" data-testid="workspace-picker-toolbar">
                 <div class="field-stack workspace-picker-location">
                     <label for="workspace-picker-location">Current location</label>
-                    <input id="workspace-picker-location" class="text-input" value="@State.WorkspaceBrowserLocationLabel" readonly />
+                    <input id="workspace-picker-location" class="text-input" value="@State.WorkspaceBrowserLocationLabel" readonly data-testid="workspace-picker-location" />
                 </div>
 
                 <div class="workspace-picker-actions">
-                    <button type="button" class="action-button" @onclick="BrowseParent" disabled="@string.IsNullOrWhiteSpace(State.WorkspaceBrowserCurrentPath)">Up</button>
-                    <button type="button" class="action-button" @onclick="BrowseComputer">This machine</button>
-                    <button type="button" class="action-button primary" @onclick="SelectCurrentFolder" disabled="@string.IsNullOrWhiteSpace(State.WorkspaceBrowserCurrentPath)">Use this folder</button>
-                    <button type="button" class="action-button success" @onclick="LoadCurrentFolder" disabled="@string.IsNullOrWhiteSpace(State.WorkspaceBrowserCurrentPath)">Load this folder</button>
+                    <button type="button" class="action-button" @onclick="BrowseParent" disabled="@string.IsNullOrWhiteSpace(State.WorkspaceBrowserCurrentPath)" data-testid="workspace-picker-up">Up</button>
+                    <button type="button" class="action-button" @onclick="BrowseComputer" data-testid="workspace-picker-machine">This machine</button>
+                    <button type="button" class="action-button primary" @onclick="SelectCurrentFolder" disabled="@string.IsNullOrWhiteSpace(State.WorkspaceBrowserCurrentPath)" data-testid="workspace-picker-use-current">Use this folder</button>
+                    <button type="button" class="action-button success" @onclick="LoadCurrentFolder" disabled="@string.IsNullOrWhiteSpace(State.WorkspaceBrowserCurrentPath)" data-testid="workspace-picker-load-current">Load this folder</button>
                 </div>
             </div>
 
             @if (!string.IsNullOrWhiteSpace(State.WorkspaceBrowserError))
             {
-                <div class="workspace-picker-error">@State.WorkspaceBrowserError</div>
+                <div class="workspace-picker-error" data-testid="workspace-picker-error">@State.WorkspaceBrowserError</div>
             }
 
             @if (State.WorkspaceBrowserEntries.Count == 0)
             {
-                <p class="subpanel-empty">No folders are available here. Move up a level or choose another root.</p>
+                <p class="subpanel-empty" data-testid="workspace-picker-empty">No folders are available here. Move up a level or choose another root.</p>
             }
             else
             {
-                <div class="workspace-picker-list">
+                <div class="workspace-picker-list" data-testid="workspace-picker-list">
                     @foreach (var entry in State.WorkspaceBrowserEntries)
                     {
-                        <div class="workspace-picker-row">
-                            <div class="workspace-picker-entry">
+                        <div class="workspace-picker-row" data-testid="@($"workspace-picker-row-{ToTestIdSegment(entry.Path)}")">
+                            <div class="workspace-picker-entry" data-testid="@($"workspace-picker-entry-{ToTestIdSegment(entry.Path)}")">
                                 <strong>@entry.Name</strong>
                                 <span>@entry.Path</span>
                                 <div class="workspace-picker-meta">
@@ -55,9 +55,9 @@
                                 </div>
                             </div>
                             <div class="workspace-picker-row-actions">
-                                <button type="button" class="action-button" @onclick="() => Browse(entry.Path)">Open</button>
-                                <button type="button" class="action-button" @onclick="() => Select(entry.Path)">Select</button>
-                                <button type="button" class="action-button success" @onclick="() => Load(entry.Path)">Load</button>
+                                <button type="button" class="action-button" @onclick="() => Browse(entry.Path)" data-testid="@($"workspace-picker-open-{ToTestIdSegment(entry.Path)}")">Open</button>
+                                <button type="button" class="action-button" @onclick="() => Select(entry.Path)" data-testid="@($"workspace-picker-select-{ToTestIdSegment(entry.Path)}")">Select</button>
+                                <button type="button" class="action-button success" @onclick="() => Load(entry.Path)" data-testid="@($"workspace-picker-load-{ToTestIdSegment(entry.Path)}")">Load</button>
                             </div>
                         </div>
                     }
@@ -66,7 +66,7 @@
         </div>
 
         <div class="modal-footer">
-            <button type="button" class="action-button" @onclick="Close">Cancel</button>
+            <button type="button" class="action-button" @onclick="Close" data-testid="workspace-picker-cancel">Cancel</button>
         </div>
     </div>
 }
@@ -108,4 +108,30 @@
 
     private void LoadCurrentFolder()
         => State.ChooseWorkspaceFromPicker(State.WorkspaceBrowserCurrentPath, loadImmediately: true);
+
+    private static string ToTestIdSegment(string? value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            return "empty";
+        }
+
+        var builder = new System.Text.StringBuilder(value.Length);
+        var lastWasDash = false;
+        foreach (var ch in value)
+        {
+            if (char.IsLetterOrDigit(ch))
+            {
+                builder.Append(char.ToLowerInvariant(ch));
+                lastWasDash = false;
+            }
+            else if (!lastWasDash)
+            {
+                builder.Append('-');
+                lastWasDash = true;
+            }
+        }
+
+        return builder.ToString().Trim('-');
+    }
 }

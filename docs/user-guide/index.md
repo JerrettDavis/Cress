@@ -2,6 +2,8 @@
 
 The user guide focuses on the day-to-day authoring workflow: opening a project, recording and editing flows, running them, and understanding the evidence that comes back.
 
+![Studio landing page](../images/studio/landing.png)
+
 ## Typical authoring loop
 
 1. Open the project in Studio or Studio Web.
@@ -34,7 +36,7 @@ These target-specific guides show how to apply Cress to realistic automation sur
 | CLI apps | [Testing CLI apps](testing-cli-apps.md) | plugin-backed command execution, assertions, and evidence patterns |
 | Services and APIs | [Testing services](testing-services.md) | HTTP-driver workflows, service smoke tests, JSON assertions, and CI use cases |
 | Web apps | [Testing web apps](testing-web-apps.md) | Playwright-backed browser flows, Studio recording, locator strategy, and mixed UI/API testing |
-| Desktop apps | [Testing desktop apps](testing-desktop-apps.md) | FlaUI-driven Windows automation, launch/attach patterns, locator strategy, and screenshot-heavy troubleshooting |
+| Desktop apps | [Testing desktop apps](testing-desktop-apps.md) | Flawright-driven Windows automation, launch/attach patterns, locator strategy, and screenshot-heavy troubleshooting |
 
 ## Running flows inside xUnit, NUnit, and MSTest
 
@@ -55,6 +57,8 @@ The strongest Cress setups combine:
 3. environment-aware execution across services, browsers, desktop apps, and CLIs
 
 See [Environment orchestration](../developer-guide/environment-orchestration.md) for the end-to-end setup patterns.
+
+![Flow designer visual map and Gherkin preview](../images/studio/flow-designer.png)
 
 ## Where screenshots and wizard-style flows fit
 

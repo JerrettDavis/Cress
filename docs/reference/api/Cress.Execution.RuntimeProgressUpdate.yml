@@ -1,0 +1,924 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Execution.RuntimeProgressUpdate
+  commentId: T:Cress.Execution.RuntimeProgressUpdate
+  id: RuntimeProgressUpdate
+  parent: Cress.Execution
+  children:
+  - Cress.Execution.RuntimeProgressUpdate.Flow
+  - Cress.Execution.RuntimeProgressUpdate.FlowCount
+  - Cress.Execution.RuntimeProgressUpdate.FlowId
+  - Cress.Execution.RuntimeProgressUpdate.FlowIndex
+  - Cress.Execution.RuntimeProgressUpdate.FlowName
+  - Cress.Execution.RuntimeProgressUpdate.Kind
+  - Cress.Execution.RuntimeProgressUpdate.LogLevel
+  - Cress.Execution.RuntimeProgressUpdate.Message
+  - Cress.Execution.RuntimeProgressUpdate.Run
+  - Cress.Execution.RuntimeProgressUpdate.RunId
+  - Cress.Execution.RuntimeProgressUpdate.Step
+  - Cress.Execution.RuntimeProgressUpdate.StepCount
+  - Cress.Execution.RuntimeProgressUpdate.StepIndex
+  langs:
+  - csharp
+  - vb
+  name: RuntimeProgressUpdate
+  nameWithType: RuntimeProgressUpdate
+  fullName: Cress.Execution.RuntimeProgressUpdate
+  type: Class
+  source:
+    remote:
+      path: src/Cress.Execution/RuntimeProgressUpdate.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: RuntimeProgressUpdate
+    path: ../src/Cress.Execution/RuntimeProgressUpdate.cs
+    startLine: 15
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Execution
+  syntax:
+    content: 'public sealed record RuntimeProgressUpdate : IEquatable<RuntimeProgressUpdate>'
+    content.vb: Public NotInheritable Class RuntimeProgressUpdate Implements IEquatable(Of RuntimeProgressUpdate)
+  inheritance:
+  - System.Object
+  implements:
+  - System.IEquatable{Cress.Execution.RuntimeProgressUpdate}
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Cress.Execution.RuntimeProgressUpdate.Kind
+  commentId: P:Cress.Execution.RuntimeProgressUpdate.Kind
+  id: Kind
+  parent: Cress.Execution.RuntimeProgressUpdate
+  langs:
+  - csharp
+  - vb
+  name: Kind
+  nameWithType: RuntimeProgressUpdate.Kind
+  fullName: Cress.Execution.RuntimeProgressUpdate.Kind
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Execution/RuntimeProgressUpdate.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Kind
+    path: ../src/Cress.Execution/RuntimeProgressUpdate.cs
+    startLine: 17
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Execution
+  syntax:
+    content: public RuntimeProgressKind Kind { get; init; }
+    parameters: []
+    return:
+      type: Cress.Execution.RuntimeProgressKind
+    content.vb: Public Property Kind As RuntimeProgressKind
+  overload: Cress.Execution.RuntimeProgressUpdate.Kind*
+- uid: Cress.Execution.RuntimeProgressUpdate.RunId
+  commentId: P:Cress.Execution.RuntimeProgressUpdate.RunId
+  id: RunId
+  parent: Cress.Execution.RuntimeProgressUpdate
+  langs:
+  - csharp
+  - vb
+  name: RunId
+  nameWithType: RuntimeProgressUpdate.RunId
+  fullName: Cress.Execution.RuntimeProgressUpdate.RunId
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Execution/RuntimeProgressUpdate.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: RunId
+    path: ../src/Cress.Execution/RuntimeProgressUpdate.cs
+    startLine: 18
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Execution
+  syntax:
+    content: public string? RunId { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property RunId As String
+  overload: Cress.Execution.RuntimeProgressUpdate.RunId*
+- uid: Cress.Execution.RuntimeProgressUpdate.FlowId
+  commentId: P:Cress.Execution.RuntimeProgressUpdate.FlowId
+  id: FlowId
+  parent: Cress.Execution.RuntimeProgressUpdate
+  langs:
+  - csharp
+  - vb
+  name: FlowId
+  nameWithType: RuntimeProgressUpdate.FlowId
+  fullName: Cress.Execution.RuntimeProgressUpdate.FlowId
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Execution/RuntimeProgressUpdate.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: FlowId
+    path: ../src/Cress.Execution/RuntimeProgressUpdate.cs
+    startLine: 19
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Execution
+  syntax:
+    content: public string? FlowId { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property FlowId As String
+  overload: Cress.Execution.RuntimeProgressUpdate.FlowId*
+- uid: Cress.Execution.RuntimeProgressUpdate.FlowName
+  commentId: P:Cress.Execution.RuntimeProgressUpdate.FlowName
+  id: FlowName
+  parent: Cress.Execution.RuntimeProgressUpdate
+  langs:
+  - csharp
+  - vb
+  name: FlowName
+  nameWithType: RuntimeProgressUpdate.FlowName
+  fullName: Cress.Execution.RuntimeProgressUpdate.FlowName
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Execution/RuntimeProgressUpdate.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: FlowName
+    path: ../src/Cress.Execution/RuntimeProgressUpdate.cs
+    startLine: 20
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Execution
+  syntax:
+    content: public string? FlowName { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property FlowName As String
+  overload: Cress.Execution.RuntimeProgressUpdate.FlowName*
+- uid: Cress.Execution.RuntimeProgressUpdate.Message
+  commentId: P:Cress.Execution.RuntimeProgressUpdate.Message
+  id: Message
+  parent: Cress.Execution.RuntimeProgressUpdate
+  langs:
+  - csharp
+  - vb
+  name: Message
+  nameWithType: RuntimeProgressUpdate.Message
+  fullName: Cress.Execution.RuntimeProgressUpdate.Message
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Execution/RuntimeProgressUpdate.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Message
+    path: ../src/Cress.Execution/RuntimeProgressUpdate.cs
+    startLine: 21
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Execution
+  syntax:
+    content: public string? Message { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Message As String
+  overload: Cress.Execution.RuntimeProgressUpdate.Message*
+- uid: Cress.Execution.RuntimeProgressUpdate.LogLevel
+  commentId: P:Cress.Execution.RuntimeProgressUpdate.LogLevel
+  id: LogLevel
+  parent: Cress.Execution.RuntimeProgressUpdate
+  langs:
+  - csharp
+  - vb
+  name: LogLevel
+  nameWithType: RuntimeProgressUpdate.LogLevel
+  fullName: Cress.Execution.RuntimeProgressUpdate.LogLevel
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Execution/RuntimeProgressUpdate.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: LogLevel
+    path: ../src/Cress.Execution/RuntimeProgressUpdate.cs
+    startLine: 22
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Execution
+  syntax:
+    content: public string? LogLevel { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property LogLevel As String
+  overload: Cress.Execution.RuntimeProgressUpdate.LogLevel*
+- uid: Cress.Execution.RuntimeProgressUpdate.FlowIndex
+  commentId: P:Cress.Execution.RuntimeProgressUpdate.FlowIndex
+  id: FlowIndex
+  parent: Cress.Execution.RuntimeProgressUpdate
+  langs:
+  - csharp
+  - vb
+  name: FlowIndex
+  nameWithType: RuntimeProgressUpdate.FlowIndex
+  fullName: Cress.Execution.RuntimeProgressUpdate.FlowIndex
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Execution/RuntimeProgressUpdate.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: FlowIndex
+    path: ../src/Cress.Execution/RuntimeProgressUpdate.cs
+    startLine: 23
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Execution
+  syntax:
+    content: public int? FlowIndex { get; init; }
+    parameters: []
+    return:
+      type: System.Nullable{System.Int32}
+    content.vb: Public Property FlowIndex As Integer?
+  overload: Cress.Execution.RuntimeProgressUpdate.FlowIndex*
+- uid: Cress.Execution.RuntimeProgressUpdate.FlowCount
+  commentId: P:Cress.Execution.RuntimeProgressUpdate.FlowCount
+  id: FlowCount
+  parent: Cress.Execution.RuntimeProgressUpdate
+  langs:
+  - csharp
+  - vb
+  name: FlowCount
+  nameWithType: RuntimeProgressUpdate.FlowCount
+  fullName: Cress.Execution.RuntimeProgressUpdate.FlowCount
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Execution/RuntimeProgressUpdate.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: FlowCount
+    path: ../src/Cress.Execution/RuntimeProgressUpdate.cs
+    startLine: 24
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Execution
+  syntax:
+    content: public int? FlowCount { get; init; }
+    parameters: []
+    return:
+      type: System.Nullable{System.Int32}
+    content.vb: Public Property FlowCount As Integer?
+  overload: Cress.Execution.RuntimeProgressUpdate.FlowCount*
+- uid: Cress.Execution.RuntimeProgressUpdate.StepIndex
+  commentId: P:Cress.Execution.RuntimeProgressUpdate.StepIndex
+  id: StepIndex
+  parent: Cress.Execution.RuntimeProgressUpdate
+  langs:
+  - csharp
+  - vb
+  name: StepIndex
+  nameWithType: RuntimeProgressUpdate.StepIndex
+  fullName: Cress.Execution.RuntimeProgressUpdate.StepIndex
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Execution/RuntimeProgressUpdate.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: StepIndex
+    path: ../src/Cress.Execution/RuntimeProgressUpdate.cs
+    startLine: 25
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Execution
+  syntax:
+    content: public int? StepIndex { get; init; }
+    parameters: []
+    return:
+      type: System.Nullable{System.Int32}
+    content.vb: Public Property StepIndex As Integer?
+  overload: Cress.Execution.RuntimeProgressUpdate.StepIndex*
+- uid: Cress.Execution.RuntimeProgressUpdate.StepCount
+  commentId: P:Cress.Execution.RuntimeProgressUpdate.StepCount
+  id: StepCount
+  parent: Cress.Execution.RuntimeProgressUpdate
+  langs:
+  - csharp
+  - vb
+  name: StepCount
+  nameWithType: RuntimeProgressUpdate.StepCount
+  fullName: Cress.Execution.RuntimeProgressUpdate.StepCount
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Execution/RuntimeProgressUpdate.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: StepCount
+    path: ../src/Cress.Execution/RuntimeProgressUpdate.cs
+    startLine: 26
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Execution
+  syntax:
+    content: public int? StepCount { get; init; }
+    parameters: []
+    return:
+      type: System.Nullable{System.Int32}
+    content.vb: Public Property StepCount As Integer?
+  overload: Cress.Execution.RuntimeProgressUpdate.StepCount*
+- uid: Cress.Execution.RuntimeProgressUpdate.Step
+  commentId: P:Cress.Execution.RuntimeProgressUpdate.Step
+  id: Step
+  parent: Cress.Execution.RuntimeProgressUpdate
+  langs:
+  - csharp
+  - vb
+  name: Step
+  nameWithType: RuntimeProgressUpdate.Step
+  fullName: Cress.Execution.RuntimeProgressUpdate.Step
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Execution/RuntimeProgressUpdate.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Step
+    path: ../src/Cress.Execution/RuntimeProgressUpdate.cs
+    startLine: 27
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Execution
+  syntax:
+    content: public StepRunResult? Step { get; init; }
+    parameters: []
+    return:
+      type: Cress.Core.Models.StepRunResult
+    content.vb: Public Property [Step] As StepRunResult
+  overload: Cress.Execution.RuntimeProgressUpdate.Step*
+- uid: Cress.Execution.RuntimeProgressUpdate.Flow
+  commentId: P:Cress.Execution.RuntimeProgressUpdate.Flow
+  id: Flow
+  parent: Cress.Execution.RuntimeProgressUpdate
+  langs:
+  - csharp
+  - vb
+  name: Flow
+  nameWithType: RuntimeProgressUpdate.Flow
+  fullName: Cress.Execution.RuntimeProgressUpdate.Flow
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Execution/RuntimeProgressUpdate.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Flow
+    path: ../src/Cress.Execution/RuntimeProgressUpdate.cs
+    startLine: 28
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Execution
+  syntax:
+    content: public FlowRunResult? Flow { get; init; }
+    parameters: []
+    return:
+      type: Cress.Core.Models.FlowRunResult
+    content.vb: Public Property Flow As FlowRunResult
+  overload: Cress.Execution.RuntimeProgressUpdate.Flow*
+- uid: Cress.Execution.RuntimeProgressUpdate.Run
+  commentId: P:Cress.Execution.RuntimeProgressUpdate.Run
+  id: Run
+  parent: Cress.Execution.RuntimeProgressUpdate
+  langs:
+  - csharp
+  - vb
+  name: Run
+  nameWithType: RuntimeProgressUpdate.Run
+  fullName: Cress.Execution.RuntimeProgressUpdate.Run
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Execution/RuntimeProgressUpdate.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Run
+    path: ../src/Cress.Execution/RuntimeProgressUpdate.cs
+    startLine: 29
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Execution
+  syntax:
+    content: public RunResult? Run { get; init; }
+    parameters: []
+    return:
+      type: Cress.Core.Models.RunResult
+    content.vb: Public Property Run As RunResult
+  overload: Cress.Execution.RuntimeProgressUpdate.Run*
+references:
+- uid: Cress.Execution
+  commentId: N:Cress.Execution
+  href: Cress.html
+  name: Cress.Execution
+  nameWithType: Cress.Execution
+  fullName: Cress.Execution
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Execution
+    name: Execution
+    href: Cress.Execution.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Execution
+    name: Execution
+    href: Cress.Execution.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.IEquatable{Cress.Execution.RuntimeProgressUpdate}
+  commentId: T:System.IEquatable{Cress.Execution.RuntimeProgressUpdate}
+  parent: System
+  definition: System.IEquatable`1
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<RuntimeProgressUpdate>
+  nameWithType: IEquatable<RuntimeProgressUpdate>
+  fullName: System.IEquatable<Cress.Execution.RuntimeProgressUpdate>
+  nameWithType.vb: IEquatable(Of RuntimeProgressUpdate)
+  fullName.vb: System.IEquatable(Of Cress.Execution.RuntimeProgressUpdate)
+  name.vb: IEquatable(Of RuntimeProgressUpdate)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - uid: Cress.Execution.RuntimeProgressUpdate
+    name: RuntimeProgressUpdate
+    href: Cress.Execution.RuntimeProgressUpdate.html
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Cress.Execution.RuntimeProgressUpdate
+    name: RuntimeProgressUpdate
+    href: Cress.Execution.RuntimeProgressUpdate.html
+  - name: )
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.IEquatable`1
+  commentId: T:System.IEquatable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<T>
+  nameWithType: IEquatable<T>
+  fullName: System.IEquatable<T>
+  nameWithType.vb: IEquatable(Of T)
+  fullName.vb: System.IEquatable(Of T)
+  name.vb: IEquatable(Of T)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Cress.Execution.RuntimeProgressUpdate.Kind*
+  commentId: Overload:Cress.Execution.RuntimeProgressUpdate.Kind
+  href: Cress.Execution.RuntimeProgressUpdate.html#Cress_Execution_RuntimeProgressUpdate_Kind
+  name: Kind
+  nameWithType: RuntimeProgressUpdate.Kind
+  fullName: Cress.Execution.RuntimeProgressUpdate.Kind
+- uid: Cress.Execution.RuntimeProgressKind
+  commentId: T:Cress.Execution.RuntimeProgressKind
+  parent: Cress.Execution
+  href: Cress.Execution.RuntimeProgressKind.html
+  name: RuntimeProgressKind
+  nameWithType: RuntimeProgressKind
+  fullName: Cress.Execution.RuntimeProgressKind
+- uid: Cress.Execution.RuntimeProgressUpdate.RunId*
+  commentId: Overload:Cress.Execution.RuntimeProgressUpdate.RunId
+  href: Cress.Execution.RuntimeProgressUpdate.html#Cress_Execution_RuntimeProgressUpdate_RunId
+  name: RunId
+  nameWithType: RuntimeProgressUpdate.RunId
+  fullName: Cress.Execution.RuntimeProgressUpdate.RunId
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Cress.Execution.RuntimeProgressUpdate.FlowId*
+  commentId: Overload:Cress.Execution.RuntimeProgressUpdate.FlowId
+  href: Cress.Execution.RuntimeProgressUpdate.html#Cress_Execution_RuntimeProgressUpdate_FlowId
+  name: FlowId
+  nameWithType: RuntimeProgressUpdate.FlowId
+  fullName: Cress.Execution.RuntimeProgressUpdate.FlowId
+- uid: Cress.Execution.RuntimeProgressUpdate.FlowName*
+  commentId: Overload:Cress.Execution.RuntimeProgressUpdate.FlowName
+  href: Cress.Execution.RuntimeProgressUpdate.html#Cress_Execution_RuntimeProgressUpdate_FlowName
+  name: FlowName
+  nameWithType: RuntimeProgressUpdate.FlowName
+  fullName: Cress.Execution.RuntimeProgressUpdate.FlowName
+- uid: Cress.Execution.RuntimeProgressUpdate.Message*
+  commentId: Overload:Cress.Execution.RuntimeProgressUpdate.Message
+  href: Cress.Execution.RuntimeProgressUpdate.html#Cress_Execution_RuntimeProgressUpdate_Message
+  name: Message
+  nameWithType: RuntimeProgressUpdate.Message
+  fullName: Cress.Execution.RuntimeProgressUpdate.Message
+- uid: Cress.Execution.RuntimeProgressUpdate.LogLevel*
+  commentId: Overload:Cress.Execution.RuntimeProgressUpdate.LogLevel
+  href: Cress.Execution.RuntimeProgressUpdate.html#Cress_Execution_RuntimeProgressUpdate_LogLevel
+  name: LogLevel
+  nameWithType: RuntimeProgressUpdate.LogLevel
+  fullName: Cress.Execution.RuntimeProgressUpdate.LogLevel
+- uid: Cress.Execution.RuntimeProgressUpdate.FlowIndex*
+  commentId: Overload:Cress.Execution.RuntimeProgressUpdate.FlowIndex
+  href: Cress.Execution.RuntimeProgressUpdate.html#Cress_Execution_RuntimeProgressUpdate_FlowIndex
+  name: FlowIndex
+  nameWithType: RuntimeProgressUpdate.FlowIndex
+  fullName: Cress.Execution.RuntimeProgressUpdate.FlowIndex
+- uid: System.Nullable{System.Int32}
+  commentId: T:System.Nullable{System.Int32}
+  parent: System
+  definition: System.Nullable`1
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int?
+  nameWithType: int?
+  fullName: int?
+  nameWithType.vb: Integer?
+  fullName.vb: Integer?
+  name.vb: Integer?
+  spec.csharp:
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: '?'
+  spec.vb:
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: '?'
+- uid: System.Nullable`1
+  commentId: T:System.Nullable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.nullable-1
+  name: Nullable<T>
+  nameWithType: Nullable<T>
+  fullName: System.Nullable<T>
+  nameWithType.vb: Nullable(Of T)
+  fullName.vb: System.Nullable(Of T)
+  name.vb: Nullable(Of T)
+  spec.csharp:
+  - uid: System.Nullable`1
+    name: Nullable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.nullable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Nullable`1
+    name: Nullable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.nullable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Cress.Execution.RuntimeProgressUpdate.FlowCount*
+  commentId: Overload:Cress.Execution.RuntimeProgressUpdate.FlowCount
+  href: Cress.Execution.RuntimeProgressUpdate.html#Cress_Execution_RuntimeProgressUpdate_FlowCount
+  name: FlowCount
+  nameWithType: RuntimeProgressUpdate.FlowCount
+  fullName: Cress.Execution.RuntimeProgressUpdate.FlowCount
+- uid: Cress.Execution.RuntimeProgressUpdate.StepIndex*
+  commentId: Overload:Cress.Execution.RuntimeProgressUpdate.StepIndex
+  href: Cress.Execution.RuntimeProgressUpdate.html#Cress_Execution_RuntimeProgressUpdate_StepIndex
+  name: StepIndex
+  nameWithType: RuntimeProgressUpdate.StepIndex
+  fullName: Cress.Execution.RuntimeProgressUpdate.StepIndex
+- uid: Cress.Execution.RuntimeProgressUpdate.StepCount*
+  commentId: Overload:Cress.Execution.RuntimeProgressUpdate.StepCount
+  href: Cress.Execution.RuntimeProgressUpdate.html#Cress_Execution_RuntimeProgressUpdate_StepCount
+  name: StepCount
+  nameWithType: RuntimeProgressUpdate.StepCount
+  fullName: Cress.Execution.RuntimeProgressUpdate.StepCount
+- uid: Cress.Execution.RuntimeProgressUpdate.Step*
+  commentId: Overload:Cress.Execution.RuntimeProgressUpdate.Step
+  href: Cress.Execution.RuntimeProgressUpdate.html#Cress_Execution_RuntimeProgressUpdate_Step
+  name: Step
+  nameWithType: RuntimeProgressUpdate.Step
+  fullName: Cress.Execution.RuntimeProgressUpdate.Step
+- uid: Cress.Core.Models.StepRunResult
+  commentId: T:Cress.Core.Models.StepRunResult
+  parent: Cress.Core.Models
+  href: Cress.Core.Models.StepRunResult.html
+  name: StepRunResult
+  nameWithType: StepRunResult
+  fullName: Cress.Core.Models.StepRunResult
+- uid: Cress.Core.Models
+  commentId: N:Cress.Core.Models
+  href: Cress.html
+  name: Cress.Core.Models
+  nameWithType: Cress.Core.Models
+  fullName: Cress.Core.Models
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Core
+    name: Core
+    href: Cress.Core.html
+  - name: .
+  - uid: Cress.Core.Models
+    name: Models
+    href: Cress.Core.Models.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Core
+    name: Core
+    href: Cress.Core.html
+  - name: .
+  - uid: Cress.Core.Models
+    name: Models
+    href: Cress.Core.Models.html
+- uid: Cress.Execution.RuntimeProgressUpdate.Flow*
+  commentId: Overload:Cress.Execution.RuntimeProgressUpdate.Flow
+  href: Cress.Execution.RuntimeProgressUpdate.html#Cress_Execution_RuntimeProgressUpdate_Flow
+  name: Flow
+  nameWithType: RuntimeProgressUpdate.Flow
+  fullName: Cress.Execution.RuntimeProgressUpdate.Flow
+- uid: Cress.Core.Models.FlowRunResult
+  commentId: T:Cress.Core.Models.FlowRunResult
+  parent: Cress.Core.Models
+  href: Cress.Core.Models.FlowRunResult.html
+  name: FlowRunResult
+  nameWithType: FlowRunResult
+  fullName: Cress.Core.Models.FlowRunResult
+- uid: Cress.Execution.RuntimeProgressUpdate.Run*
+  commentId: Overload:Cress.Execution.RuntimeProgressUpdate.Run
+  href: Cress.Execution.RuntimeProgressUpdate.html#Cress_Execution_RuntimeProgressUpdate_Run
+  name: Run
+  nameWithType: RuntimeProgressUpdate.Run
+  fullName: Cress.Execution.RuntimeProgressUpdate.Run
+- uid: Cress.Core.Models.RunResult
+  commentId: T:Cress.Core.Models.RunResult
+  parent: Cress.Core.Models
+  href: Cress.Core.Models.RunResult.html
+  name: RunResult
+  nameWithType: RunResult
+  fullName: Cress.Core.Models.RunResult

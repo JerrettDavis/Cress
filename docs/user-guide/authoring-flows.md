@@ -2,6 +2,8 @@
 
 Cress flows are easiest to maintain when they stay close to user intent and avoid environment-specific or selector-heavy implementation detail.
 
+![Flow designer visual map and Gherkin preview](../images/studio/flow-designer.png)
+
 ## Flow anatomy
 
 A durable flow usually includes:

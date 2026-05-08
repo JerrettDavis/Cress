@@ -29,7 +29,7 @@ These repo examples back the guides and are good starting points for your own pr
 | --- | --- |
 | `specs\httpbin-smoke` | HTTP-only project, validation, reporting, and living docs |
 | `specs\web-smoke` | browser flow structure, locator strategy, and Playwright-backed steps |
-| `specs\calc-smoke` | desktop/FlaUI project structure and profile shape |
+| `specs\calc-smoke` | desktop/Flawright project structure and profile shape |
 | `tests\Cress.Studio.E2ETests\Fixtures\StudioSampleProject` | Studio sample project used in the desktop walkthrough |
 
 ## Legacy repo-browsing guides

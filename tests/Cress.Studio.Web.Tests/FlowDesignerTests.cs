@@ -66,6 +66,11 @@ public sealed class FlowDesignerTests : TestContext
         Assert.Contains("order.completed", cut.Markup);
         Assert.Contains("Web smoke template", cut.Markup);
         Assert.Contains("Missing input", cut.Markup);
+        Assert.Contains("Flow map", cut.Markup);
+        Assert.Contains("Gherkin preview", cut.Markup);
+        Assert.Contains("Feature: Checkout flow", cut.Markup);
+        Assert.Contains("flow-graph-node-flow-start", cut.Markup);
+        Assert.Contains("flow-graph-node-flow-end", cut.Markup);
         Assert.Equal(3, cut.FindAll("table").Count);
     }
 }

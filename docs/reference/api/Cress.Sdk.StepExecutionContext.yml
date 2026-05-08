@@ -1,0 +1,822 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Sdk.StepExecutionContext
+  commentId: T:Cress.Sdk.StepExecutionContext
+  id: StepExecutionContext
+  parent: Cress.Sdk
+  children:
+  - Cress.Sdk.StepExecutionContext.ArtifactDirectory
+  - Cress.Sdk.StepExecutionContext.BaseUrl
+  - Cress.Sdk.StepExecutionContext.Drivers
+  - Cress.Sdk.StepExecutionContext.Fixtures
+  - Cress.Sdk.StepExecutionContext.FlowId
+  - Cress.Sdk.StepExecutionContext.GetInput(System.String)
+  - Cress.Sdk.StepExecutionContext.GetRequiredInput(System.String)
+  - Cress.Sdk.StepExecutionContext.Inputs
+  - Cress.Sdk.StepExecutionContext.Logger
+  - Cress.Sdk.StepExecutionContext.StepName
+  - Cress.Sdk.StepExecutionContext.Variables
+  langs:
+  - csharp
+  - vb
+  name: StepExecutionContext
+  nameWithType: StepExecutionContext
+  fullName: Cress.Sdk.StepExecutionContext
+  type: Class
+  source:
+    remote:
+      path: src/Cress.Sdk/PluginAbstractions.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: StepExecutionContext
+    path: ../src/Cress.Sdk/PluginAbstractions.cs
+    startLine: 20
+  assemblies:
+  - Cress.Sdk
+  namespace: Cress.Sdk
+  syntax:
+    content: public sealed class StepExecutionContext
+    content.vb: Public NotInheritable Class StepExecutionContext
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Cress.Sdk.StepExecutionContext.FlowId
+  commentId: P:Cress.Sdk.StepExecutionContext.FlowId
+  id: FlowId
+  parent: Cress.Sdk.StepExecutionContext
+  langs:
+  - csharp
+  - vb
+  name: FlowId
+  nameWithType: StepExecutionContext.FlowId
+  fullName: Cress.Sdk.StepExecutionContext.FlowId
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Sdk/PluginAbstractions.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: FlowId
+    path: ../src/Cress.Sdk/PluginAbstractions.cs
+    startLine: 22
+  assemblies:
+  - Cress.Sdk
+  namespace: Cress.Sdk
+  syntax:
+    content: public string FlowId { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property FlowId As String
+  overload: Cress.Sdk.StepExecutionContext.FlowId*
+- uid: Cress.Sdk.StepExecutionContext.StepName
+  commentId: P:Cress.Sdk.StepExecutionContext.StepName
+  id: StepName
+  parent: Cress.Sdk.StepExecutionContext
+  langs:
+  - csharp
+  - vb
+  name: StepName
+  nameWithType: StepExecutionContext.StepName
+  fullName: Cress.Sdk.StepExecutionContext.StepName
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Sdk/PluginAbstractions.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: StepName
+    path: ../src/Cress.Sdk/PluginAbstractions.cs
+    startLine: 23
+  assemblies:
+  - Cress.Sdk
+  namespace: Cress.Sdk
+  syntax:
+    content: public string StepName { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property StepName As String
+  overload: Cress.Sdk.StepExecutionContext.StepName*
+- uid: Cress.Sdk.StepExecutionContext.ArtifactDirectory
+  commentId: P:Cress.Sdk.StepExecutionContext.ArtifactDirectory
+  id: ArtifactDirectory
+  parent: Cress.Sdk.StepExecutionContext
+  langs:
+  - csharp
+  - vb
+  name: ArtifactDirectory
+  nameWithType: StepExecutionContext.ArtifactDirectory
+  fullName: Cress.Sdk.StepExecutionContext.ArtifactDirectory
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Sdk/PluginAbstractions.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: ArtifactDirectory
+    path: ../src/Cress.Sdk/PluginAbstractions.cs
+    startLine: 24
+  assemblies:
+  - Cress.Sdk
+  namespace: Cress.Sdk
+  syntax:
+    content: public string ArtifactDirectory { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property ArtifactDirectory As String
+  overload: Cress.Sdk.StepExecutionContext.ArtifactDirectory*
+- uid: Cress.Sdk.StepExecutionContext.BaseUrl
+  commentId: P:Cress.Sdk.StepExecutionContext.BaseUrl
+  id: BaseUrl
+  parent: Cress.Sdk.StepExecutionContext
+  langs:
+  - csharp
+  - vb
+  name: BaseUrl
+  nameWithType: StepExecutionContext.BaseUrl
+  fullName: Cress.Sdk.StepExecutionContext.BaseUrl
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Sdk/PluginAbstractions.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: BaseUrl
+    path: ../src/Cress.Sdk/PluginAbstractions.cs
+    startLine: 25
+  assemblies:
+  - Cress.Sdk
+  namespace: Cress.Sdk
+  syntax:
+    content: public string? BaseUrl { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property BaseUrl As String
+  overload: Cress.Sdk.StepExecutionContext.BaseUrl*
+- uid: Cress.Sdk.StepExecutionContext.Inputs
+  commentId: P:Cress.Sdk.StepExecutionContext.Inputs
+  id: Inputs
+  parent: Cress.Sdk.StepExecutionContext
+  langs:
+  - csharp
+  - vb
+  name: Inputs
+  nameWithType: StepExecutionContext.Inputs
+  fullName: Cress.Sdk.StepExecutionContext.Inputs
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Sdk/PluginAbstractions.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Inputs
+    path: ../src/Cress.Sdk/PluginAbstractions.cs
+    startLine: 26
+  assemblies:
+  - Cress.Sdk
+  namespace: Cress.Sdk
+  syntax:
+    content: public IReadOnlyDictionary<string, string> Inputs { get; init; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.IReadOnlyDictionary{System.String,System.String}
+    content.vb: Public Property Inputs As IReadOnlyDictionary(Of String, String)
+  overload: Cress.Sdk.StepExecutionContext.Inputs*
+- uid: Cress.Sdk.StepExecutionContext.Variables
+  commentId: P:Cress.Sdk.StepExecutionContext.Variables
+  id: Variables
+  parent: Cress.Sdk.StepExecutionContext
+  langs:
+  - csharp
+  - vb
+  name: Variables
+  nameWithType: StepExecutionContext.Variables
+  fullName: Cress.Sdk.StepExecutionContext.Variables
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Sdk/PluginAbstractions.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Variables
+    path: ../src/Cress.Sdk/PluginAbstractions.cs
+    startLine: 27
+  assemblies:
+  - Cress.Sdk
+  namespace: Cress.Sdk
+  syntax:
+    content: public IReadOnlyDictionary<string, string> Variables { get; init; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.IReadOnlyDictionary{System.String,System.String}
+    content.vb: Public Property Variables As IReadOnlyDictionary(Of String, String)
+  overload: Cress.Sdk.StepExecutionContext.Variables*
+- uid: Cress.Sdk.StepExecutionContext.Fixtures
+  commentId: P:Cress.Sdk.StepExecutionContext.Fixtures
+  id: Fixtures
+  parent: Cress.Sdk.StepExecutionContext
+  langs:
+  - csharp
+  - vb
+  name: Fixtures
+  nameWithType: StepExecutionContext.Fixtures
+  fullName: Cress.Sdk.StepExecutionContext.Fixtures
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Sdk/PluginAbstractions.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Fixtures
+    path: ../src/Cress.Sdk/PluginAbstractions.cs
+    startLine: 28
+  assemblies:
+  - Cress.Sdk
+  namespace: Cress.Sdk
+  syntax:
+    content: public IReadOnlyDictionary<string, string> Fixtures { get; init; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.IReadOnlyDictionary{System.String,System.String}
+    content.vb: Public Property Fixtures As IReadOnlyDictionary(Of String, String)
+  overload: Cress.Sdk.StepExecutionContext.Fixtures*
+- uid: Cress.Sdk.StepExecutionContext.Logger
+  commentId: P:Cress.Sdk.StepExecutionContext.Logger
+  id: Logger
+  parent: Cress.Sdk.StepExecutionContext
+  langs:
+  - csharp
+  - vb
+  name: Logger
+  nameWithType: StepExecutionContext.Logger
+  fullName: Cress.Sdk.StepExecutionContext.Logger
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Sdk/PluginAbstractions.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Logger
+    path: ../src/Cress.Sdk/PluginAbstractions.cs
+    startLine: 29
+  assemblies:
+  - Cress.Sdk
+  namespace: Cress.Sdk
+  syntax:
+    content: public ICressLogger Logger { get; init; }
+    parameters: []
+    return:
+      type: Cress.Sdk.ICressLogger
+    content.vb: Public Property Logger As ICressLogger
+  overload: Cress.Sdk.StepExecutionContext.Logger*
+- uid: Cress.Sdk.StepExecutionContext.Drivers
+  commentId: P:Cress.Sdk.StepExecutionContext.Drivers
+  id: Drivers
+  parent: Cress.Sdk.StepExecutionContext
+  langs:
+  - csharp
+  - vb
+  name: Drivers
+  nameWithType: StepExecutionContext.Drivers
+  fullName: Cress.Sdk.StepExecutionContext.Drivers
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Sdk/PluginAbstractions.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Drivers
+    path: ../src/Cress.Sdk/PluginAbstractions.cs
+    startLine: 30
+  assemblies:
+  - Cress.Sdk
+  namespace: Cress.Sdk
+  syntax:
+    content: public IDriverAccessor Drivers { get; init; }
+    parameters: []
+    return:
+      type: Cress.Sdk.IDriverAccessor
+    content.vb: Public Property Drivers As IDriverAccessor
+  overload: Cress.Sdk.StepExecutionContext.Drivers*
+- uid: Cress.Sdk.StepExecutionContext.GetRequiredInput(System.String)
+  commentId: M:Cress.Sdk.StepExecutionContext.GetRequiredInput(System.String)
+  id: GetRequiredInput(System.String)
+  parent: Cress.Sdk.StepExecutionContext
+  langs:
+  - csharp
+  - vb
+  name: GetRequiredInput(string)
+  nameWithType: StepExecutionContext.GetRequiredInput(string)
+  fullName: Cress.Sdk.StepExecutionContext.GetRequiredInput(string)
+  type: Method
+  source:
+    remote:
+      path: src/Cress.Sdk/PluginAbstractions.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: GetRequiredInput
+    path: ../src/Cress.Sdk/PluginAbstractions.cs
+    startLine: 32
+  assemblies:
+  - Cress.Sdk
+  namespace: Cress.Sdk
+  syntax:
+    content: public string GetRequiredInput(string name)
+    parameters:
+    - id: name
+      type: System.String
+    return:
+      type: System.String
+    content.vb: Public Function GetRequiredInput(name As String) As String
+  overload: Cress.Sdk.StepExecutionContext.GetRequiredInput*
+  nameWithType.vb: StepExecutionContext.GetRequiredInput(String)
+  fullName.vb: Cress.Sdk.StepExecutionContext.GetRequiredInput(String)
+  name.vb: GetRequiredInput(String)
+- uid: Cress.Sdk.StepExecutionContext.GetInput(System.String)
+  commentId: M:Cress.Sdk.StepExecutionContext.GetInput(System.String)
+  id: GetInput(System.String)
+  parent: Cress.Sdk.StepExecutionContext
+  langs:
+  - csharp
+  - vb
+  name: GetInput(string)
+  nameWithType: StepExecutionContext.GetInput(string)
+  fullName: Cress.Sdk.StepExecutionContext.GetInput(string)
+  type: Method
+  source:
+    remote:
+      path: src/Cress.Sdk/PluginAbstractions.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: GetInput
+    path: ../src/Cress.Sdk/PluginAbstractions.cs
+    startLine: 37
+  assemblies:
+  - Cress.Sdk
+  namespace: Cress.Sdk
+  syntax:
+    content: public string? GetInput(string name)
+    parameters:
+    - id: name
+      type: System.String
+    return:
+      type: System.String
+    content.vb: Public Function GetInput(name As String) As String
+  overload: Cress.Sdk.StepExecutionContext.GetInput*
+  nameWithType.vb: StepExecutionContext.GetInput(String)
+  fullName.vb: Cress.Sdk.StepExecutionContext.GetInput(String)
+  name.vb: GetInput(String)
+references:
+- uid: Cress.Sdk
+  commentId: N:Cress.Sdk
+  href: Cress.html
+  name: Cress.Sdk
+  nameWithType: Cress.Sdk
+  fullName: Cress.Sdk
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Sdk
+    name: Sdk
+    href: Cress.Sdk.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Sdk
+    name: Sdk
+    href: Cress.Sdk.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Cress.Sdk.StepExecutionContext.FlowId*
+  commentId: Overload:Cress.Sdk.StepExecutionContext.FlowId
+  href: Cress.Sdk.StepExecutionContext.html#Cress_Sdk_StepExecutionContext_FlowId
+  name: FlowId
+  nameWithType: StepExecutionContext.FlowId
+  fullName: Cress.Sdk.StepExecutionContext.FlowId
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Cress.Sdk.StepExecutionContext.StepName*
+  commentId: Overload:Cress.Sdk.StepExecutionContext.StepName
+  href: Cress.Sdk.StepExecutionContext.html#Cress_Sdk_StepExecutionContext_StepName
+  name: StepName
+  nameWithType: StepExecutionContext.StepName
+  fullName: Cress.Sdk.StepExecutionContext.StepName
+- uid: Cress.Sdk.StepExecutionContext.ArtifactDirectory*
+  commentId: Overload:Cress.Sdk.StepExecutionContext.ArtifactDirectory
+  href: Cress.Sdk.StepExecutionContext.html#Cress_Sdk_StepExecutionContext_ArtifactDirectory
+  name: ArtifactDirectory
+  nameWithType: StepExecutionContext.ArtifactDirectory
+  fullName: Cress.Sdk.StepExecutionContext.ArtifactDirectory
+- uid: Cress.Sdk.StepExecutionContext.BaseUrl*
+  commentId: Overload:Cress.Sdk.StepExecutionContext.BaseUrl
+  href: Cress.Sdk.StepExecutionContext.html#Cress_Sdk_StepExecutionContext_BaseUrl
+  name: BaseUrl
+  nameWithType: StepExecutionContext.BaseUrl
+  fullName: Cress.Sdk.StepExecutionContext.BaseUrl
+- uid: Cress.Sdk.StepExecutionContext.Inputs*
+  commentId: Overload:Cress.Sdk.StepExecutionContext.Inputs
+  href: Cress.Sdk.StepExecutionContext.html#Cress_Sdk_StepExecutionContext_Inputs
+  name: Inputs
+  nameWithType: StepExecutionContext.Inputs
+  fullName: Cress.Sdk.StepExecutionContext.Inputs
+- uid: System.Collections.Generic.IReadOnlyDictionary{System.String,System.String}
+  commentId: T:System.Collections.Generic.IReadOnlyDictionary{System.String,System.String}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IReadOnlyDictionary`2
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2
+  name: IReadOnlyDictionary<string, string>
+  nameWithType: IReadOnlyDictionary<string, string>
+  fullName: System.Collections.Generic.IReadOnlyDictionary<string, string>
+  nameWithType.vb: IReadOnlyDictionary(Of String, String)
+  fullName.vb: System.Collections.Generic.IReadOnlyDictionary(Of String, String)
+  name.vb: IReadOnlyDictionary(Of String, String)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyDictionary`2
+    name: IReadOnlyDictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyDictionary`2
+    name: IReadOnlyDictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+- uid: System.Collections.Generic.IReadOnlyDictionary`2
+  commentId: T:System.Collections.Generic.IReadOnlyDictionary`2
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2
+  name: IReadOnlyDictionary<TKey, TValue>
+  nameWithType: IReadOnlyDictionary<TKey, TValue>
+  fullName: System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>
+  nameWithType.vb: IReadOnlyDictionary(Of TKey, TValue)
+  fullName.vb: System.Collections.Generic.IReadOnlyDictionary(Of TKey, TValue)
+  name.vb: IReadOnlyDictionary(Of TKey, TValue)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyDictionary`2
+    name: IReadOnlyDictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyDictionary`2
+    name: IReadOnlyDictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: Cress.Sdk.StepExecutionContext.Variables*
+  commentId: Overload:Cress.Sdk.StepExecutionContext.Variables
+  href: Cress.Sdk.StepExecutionContext.html#Cress_Sdk_StepExecutionContext_Variables
+  name: Variables
+  nameWithType: StepExecutionContext.Variables
+  fullName: Cress.Sdk.StepExecutionContext.Variables
+- uid: Cress.Sdk.StepExecutionContext.Fixtures*
+  commentId: Overload:Cress.Sdk.StepExecutionContext.Fixtures
+  href: Cress.Sdk.StepExecutionContext.html#Cress_Sdk_StepExecutionContext_Fixtures
+  name: Fixtures
+  nameWithType: StepExecutionContext.Fixtures
+  fullName: Cress.Sdk.StepExecutionContext.Fixtures
+- uid: Cress.Sdk.StepExecutionContext.Logger*
+  commentId: Overload:Cress.Sdk.StepExecutionContext.Logger
+  href: Cress.Sdk.StepExecutionContext.html#Cress_Sdk_StepExecutionContext_Logger
+  name: Logger
+  nameWithType: StepExecutionContext.Logger
+  fullName: Cress.Sdk.StepExecutionContext.Logger
+- uid: Cress.Sdk.ICressLogger
+  commentId: T:Cress.Sdk.ICressLogger
+  parent: Cress.Sdk
+  href: Cress.Sdk.ICressLogger.html
+  name: ICressLogger
+  nameWithType: ICressLogger
+  fullName: Cress.Sdk.ICressLogger
+- uid: Cress.Sdk.StepExecutionContext.Drivers*
+  commentId: Overload:Cress.Sdk.StepExecutionContext.Drivers
+  href: Cress.Sdk.StepExecutionContext.html#Cress_Sdk_StepExecutionContext_Drivers
+  name: Drivers
+  nameWithType: StepExecutionContext.Drivers
+  fullName: Cress.Sdk.StepExecutionContext.Drivers
+- uid: Cress.Sdk.IDriverAccessor
+  commentId: T:Cress.Sdk.IDriverAccessor
+  parent: Cress.Sdk
+  href: Cress.Sdk.IDriverAccessor.html
+  name: IDriverAccessor
+  nameWithType: IDriverAccessor
+  fullName: Cress.Sdk.IDriverAccessor
+- uid: Cress.Sdk.StepExecutionContext.GetRequiredInput*
+  commentId: Overload:Cress.Sdk.StepExecutionContext.GetRequiredInput
+  href: Cress.Sdk.StepExecutionContext.html#Cress_Sdk_StepExecutionContext_GetRequiredInput_System_String_
+  name: GetRequiredInput
+  nameWithType: StepExecutionContext.GetRequiredInput
+  fullName: Cress.Sdk.StepExecutionContext.GetRequiredInput
+- uid: Cress.Sdk.StepExecutionContext.GetInput*
+  commentId: Overload:Cress.Sdk.StepExecutionContext.GetInput
+  href: Cress.Sdk.StepExecutionContext.html#Cress_Sdk_StepExecutionContext_GetInput_System_String_
+  name: GetInput
+  nameWithType: StepExecutionContext.GetInput
+  fullName: Cress.Sdk.StepExecutionContext.GetInput

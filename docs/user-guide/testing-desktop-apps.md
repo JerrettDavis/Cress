@@ -1,15 +1,15 @@
 # Testing desktop apps
 
-Desktop app testing in Cress uses the **FlaUI runtime driver** together with the same source-controlled flow model and Studio-guided authoring flow used elsewhere in the platform.
+Desktop app testing in Cress uses the **Flawright runtime driver** together with the same source-controlled flow model and Studio-guided authoring flow used elsewhere in the platform.
 
 ## Recommended approach
 
 Use this stack for Windows desktop applications:
 
-1. the built-in **FlaUI** runtime driver
+1. the built-in **Flawright** runtime driver
 2. Studio for recording and source refinement
 3. deterministic launch or attach steps
-4. AutomationId-first locator design
+4. Flawright selector-first locator design
 
 This is a strong fit for:
 
@@ -23,7 +23,7 @@ This is a strong fit for:
 
 | Layer | Recommendation |
 | --- | --- |
-| Runtime driver | `flaui` |
+| Runtime driver | `flawright` |
 | Authoring surfaces | Studio desktop app, Source view, Results panel |
 | Sample project | `specs\calc-smoke` and `tests\Cress.Studio.E2ETests\Fixtures\StudioSampleProject` |
 | Diagnostics | `validate`, `doctor`, `discover`, `run --dry-run` |
@@ -37,11 +37,11 @@ This is a strong fit for:
 dotnet run --project src\Cress.Cli\Cress.Cli.csproj -- init demos\desktop-client
 ```
 
-### 2. Enable the FlaUI driver
+### 2. Enable the Flawright driver
 
 ```yaml
 drivers:
-  flaui:
+  flawright:
     enabled: true
   playwright:
     enabled: false
@@ -58,7 +58,7 @@ timeouts:
 evidence:
   mode: full
   screenshots: true
-flaui:
+flawright:
   applicationPath: C:\Apps\ContosoBackOffice\ContosoBackOffice.exe
   windowTitle: Contoso Back Office
   launchTimeoutMs: 15000
@@ -69,21 +69,31 @@ flaui:
 1. open the project in Studio
 2. choose the desktop target in the recorder
 3. capture the first pass of the interaction
-4. refine the generated source
+4. refine the generated source into stable Flawright selectors
 5. run the flow and inspect screenshots
 
 ![Desktop recording picker](../images/studio/desktop-recording-picker.png)
+
+![Desktop flow designer](../images/studio/flow-designer.png)
 
 ![Desktop source edited](../images/desktop/source-edited.png)
 
 ## Locator strategy
 
-Prefer desktop locators in this order:
+Prefer Flawright selectors in this order:
 
-1. `automationId`
-2. `name` + `controlType`
-3. `label`
-4. `role`
+1. `#AutomationId`
+2. `name:Visible Name`
+3. `role:Button`
+4. `label:Field Label`
+
+Examples:
+
+```yaml
+selector: "#CalculatorResults"
+selector: "name:Continue"
+selector: "role:Button"
+```
 
 ## Realistic examples
 
@@ -98,16 +108,13 @@ when:
       processName: ApplicationFrameHost
   - step: ui.invoke
     with:
-      automationId: num2Button
-      controlType: Button
+      selector: "#num2Button"
   - step: ui.invoke
     with:
-      automationId: plusButton
-      controlType: Button
+      selector: "#plusButton"
   - step: ui.invoke
     with:
-      automationId: equalButton
-      controlType: Button
+      selector: "#equalButton"
 ```
 
 ### Example 2: launch a business client and confirm a greeting flow
@@ -128,15 +135,15 @@ when:
       windowTitle: Contoso Back Office
   - step: ui.fill
     with:
-      automationId: NameInput
+      selector: "#NameInput"
       value: Grace Hopper
   - step: ui.invoke
     with:
-      automationId: ContinueButton
+      selector: "name:Continue"
 then:
   - expect: ui.assert-text
     with:
-      automationId: GreetingLabel
+      selector: "#GreetingLabel"
       text: Hello Grace Hopper
 ```
 
@@ -188,25 +195,34 @@ when:
       processName: ApplicationFrameHost
   - step: ui.invoke
     with:
-      automationId: num2Button
-      controlType: Button
+      selector: "#num2Button"
   - step: ui.invoke
     with:
-      automationId: plusButton
-      controlType: Button
+      selector: "#plusButton"
   - step: ui.invoke
     with:
-      automationId: num2Button
-      controlType: Button
+      selector: "#num2Button"
   - step: ui.invoke
     with:
-      automationId: equalButton
-      controlType: Button
+      selector: "#equalButton"
 then:
   - expect: ui.assert-text
     with:
-      automationId: CalculatorResults
+      selector: "#CalculatorResults"
       text: Display is 4
+```
+
+And the same flow can be narrated naturally in Gherkin:
+
+```gherkin
+Given the user launches the `calc.exe` application
+When the user clicks the `#clearButton` element
+And the user clicks the `#num2Button` element
+And the user clicks the `#plusButton` element
+And the user clicks the `#num2Button` element
+And the user clicks the `#equalButton` element
+And the user captures a screenshot named `calc-result`
+Then the `#CalculatorResults` element shows `Display is 4`
 ```
 
 ### 5. Run the flow with screenshots
@@ -220,7 +236,7 @@ dotnet run --project src\Cress.Cli\Cress.Cli.csproj -- run specs\calc-smoke --pr
 Once Calculator works, apply the same approach to your product:
 
 1. replace attach details with your executable or window title
-2. swap demo locators for real `AutomationId` values
+2. swap demo selectors for your app's stable `#AutomationId` or `name:` targets
 3. keep the flow small and deterministic
 4. publish screenshots from CI so failures are easy to triage
 
@@ -256,7 +272,9 @@ dotnet run --project src\Cress.Cli\Cress.Cli.csproj -- run demos\desktop-client 
 
 ## Design guidance
 
-- prefer `AutomationId` over title or text-only matching
+- prefer `#AutomationId` over title or text-only matching
 - keep launch and login flows deterministic
 - avoid brittle “click through setup” sequences when a launch argument or test mode is available
 - publish screenshots and HTML reports from CI or dedicated Windows agents when possible
+
+![Desktop run results](../images/studio/results-panel.png)

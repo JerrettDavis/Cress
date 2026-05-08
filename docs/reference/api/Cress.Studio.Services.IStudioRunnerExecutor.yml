@@ -1,0 +1,355 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Studio.Services.IStudioRunnerExecutor
+  commentId: T:Cress.Studio.Services.IStudioRunnerExecutor
+  id: IStudioRunnerExecutor
+  parent: Cress.Studio.Services
+  children:
+  - Cress.Studio.Services.IStudioRunnerExecutor.ExecuteAsync(System.String,Cress.Core.Models.RunOptions,System.IProgress{Cress.Execution.RuntimeProgressUpdate},System.Threading.CancellationToken)
+  langs:
+  - csharp
+  - vb
+  name: IStudioRunnerExecutor
+  nameWithType: IStudioRunnerExecutor
+  fullName: Cress.Studio.Services.IStudioRunnerExecutor
+  type: Interface
+  source:
+    remote:
+      path: src/Cress.Execution/StudioRunnerService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: IStudioRunnerExecutor
+    path: ../src/Cress.Execution/StudioRunnerService.cs
+    startLine: 6
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Studio.Services
+  syntax:
+    content: public interface IStudioRunnerExecutor
+    content.vb: Public Interface IStudioRunnerExecutor
+- uid: Cress.Studio.Services.IStudioRunnerExecutor.ExecuteAsync(System.String,Cress.Core.Models.RunOptions,System.IProgress{Cress.Execution.RuntimeProgressUpdate},System.Threading.CancellationToken)
+  commentId: M:Cress.Studio.Services.IStudioRunnerExecutor.ExecuteAsync(System.String,Cress.Core.Models.RunOptions,System.IProgress{Cress.Execution.RuntimeProgressUpdate},System.Threading.CancellationToken)
+  id: ExecuteAsync(System.String,Cress.Core.Models.RunOptions,System.IProgress{Cress.Execution.RuntimeProgressUpdate},System.Threading.CancellationToken)
+  parent: Cress.Studio.Services.IStudioRunnerExecutor
+  langs:
+  - csharp
+  - vb
+  name: ExecuteAsync(string, RunOptions, IProgress<RuntimeProgressUpdate>?, CancellationToken)
+  nameWithType: IStudioRunnerExecutor.ExecuteAsync(string, RunOptions, IProgress<RuntimeProgressUpdate>?, CancellationToken)
+  fullName: Cress.Studio.Services.IStudioRunnerExecutor.ExecuteAsync(string, Cress.Core.Models.RunOptions, System.IProgress<Cress.Execution.RuntimeProgressUpdate>?, System.Threading.CancellationToken)
+  type: Method
+  source:
+    remote:
+      path: src/Cress.Execution/StudioRunnerService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: ExecuteAsync
+    path: ../src/Cress.Execution/StudioRunnerService.cs
+    startLine: 8
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Studio.Services
+  syntax:
+    content: Task<RunResult> ExecuteAsync(string projectRoot, RunOptions options, IProgress<RuntimeProgressUpdate>? progress, CancellationToken cancellationToken)
+    parameters:
+    - id: projectRoot
+      type: System.String
+    - id: options
+      type: Cress.Core.Models.RunOptions
+    - id: progress
+      type: System.IProgress{Cress.Execution.RuntimeProgressUpdate}
+    - id: cancellationToken
+      type: System.Threading.CancellationToken
+    return:
+      type: System.Threading.Tasks.Task{Cress.Core.Models.RunResult}
+    content.vb: Function ExecuteAsync(projectRoot As String, options As RunOptions, progress As IProgress(Of RuntimeProgressUpdate), cancellationToken As CancellationToken) As Task(Of RunResult)
+  overload: Cress.Studio.Services.IStudioRunnerExecutor.ExecuteAsync*
+  nameWithType.vb: IStudioRunnerExecutor.ExecuteAsync(String, RunOptions, IProgress(Of RuntimeProgressUpdate), CancellationToken)
+  fullName.vb: Cress.Studio.Services.IStudioRunnerExecutor.ExecuteAsync(String, Cress.Core.Models.RunOptions, System.IProgress(Of Cress.Execution.RuntimeProgressUpdate), System.Threading.CancellationToken)
+  name.vb: ExecuteAsync(String, RunOptions, IProgress(Of RuntimeProgressUpdate), CancellationToken)
+references:
+- uid: Cress.Studio.Services
+  commentId: N:Cress.Studio.Services
+  href: Cress.html
+  name: Cress.Studio.Services
+  nameWithType: Cress.Studio.Services
+  fullName: Cress.Studio.Services
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Studio
+    name: Studio
+    href: Cress.Studio.html
+  - name: .
+  - uid: Cress.Studio.Services
+    name: Services
+    href: Cress.Studio.Services.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Studio
+    name: Studio
+    href: Cress.Studio.html
+  - name: .
+  - uid: Cress.Studio.Services
+    name: Services
+    href: Cress.Studio.Services.html
+- uid: Cress.Studio.Services.IStudioRunnerExecutor.ExecuteAsync*
+  commentId: Overload:Cress.Studio.Services.IStudioRunnerExecutor.ExecuteAsync
+  href: Cress.Studio.Services.IStudioRunnerExecutor.html#Cress_Studio_Services_IStudioRunnerExecutor_ExecuteAsync_System_String_Cress_Core_Models_RunOptions_System_IProgress_Cress_Execution_RuntimeProgressUpdate__System_Threading_CancellationToken_
+  name: ExecuteAsync
+  nameWithType: IStudioRunnerExecutor.ExecuteAsync
+  fullName: Cress.Studio.Services.IStudioRunnerExecutor.ExecuteAsync
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Cress.Core.Models.RunOptions
+  commentId: T:Cress.Core.Models.RunOptions
+  parent: Cress.Core.Models
+  href: Cress.Core.Models.RunOptions.html
+  name: RunOptions
+  nameWithType: RunOptions
+  fullName: Cress.Core.Models.RunOptions
+- uid: System.IProgress{Cress.Execution.RuntimeProgressUpdate}
+  commentId: T:System.IProgress{Cress.Execution.RuntimeProgressUpdate}
+  parent: System
+  definition: System.IProgress`1
+  href: https://learn.microsoft.com/dotnet/api/system.iprogress-1
+  name: IProgress<RuntimeProgressUpdate>
+  nameWithType: IProgress<RuntimeProgressUpdate>
+  fullName: System.IProgress<Cress.Execution.RuntimeProgressUpdate>
+  nameWithType.vb: IProgress(Of RuntimeProgressUpdate)
+  fullName.vb: System.IProgress(Of Cress.Execution.RuntimeProgressUpdate)
+  name.vb: IProgress(Of RuntimeProgressUpdate)
+  spec.csharp:
+  - uid: System.IProgress`1
+    name: IProgress
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iprogress-1
+  - name: <
+  - uid: Cress.Execution.RuntimeProgressUpdate
+    name: RuntimeProgressUpdate
+    href: Cress.Execution.RuntimeProgressUpdate.html
+  - name: '>'
+  spec.vb:
+  - uid: System.IProgress`1
+    name: IProgress
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iprogress-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Cress.Execution.RuntimeProgressUpdate
+    name: RuntimeProgressUpdate
+    href: Cress.Execution.RuntimeProgressUpdate.html
+  - name: )
+- uid: System.Threading.CancellationToken
+  commentId: T:System.Threading.CancellationToken
+  parent: System.Threading
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken
+  name: CancellationToken
+  nameWithType: CancellationToken
+  fullName: System.Threading.CancellationToken
+- uid: System.Threading.Tasks.Task{Cress.Core.Models.RunResult}
+  commentId: T:System.Threading.Tasks.Task{Cress.Core.Models.RunResult}
+  parent: System.Threading.Tasks
+  definition: System.Threading.Tasks.Task`1
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<RunResult>
+  nameWithType: Task<RunResult>
+  fullName: System.Threading.Tasks.Task<Cress.Core.Models.RunResult>
+  nameWithType.vb: Task(Of RunResult)
+  fullName.vb: System.Threading.Tasks.Task(Of Cress.Core.Models.RunResult)
+  name.vb: Task(Of RunResult)
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - uid: Cress.Core.Models.RunResult
+    name: RunResult
+    href: Cress.Core.Models.RunResult.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Cress.Core.Models.RunResult
+    name: RunResult
+    href: Cress.Core.Models.RunResult.html
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Cress.Core.Models
+  commentId: N:Cress.Core.Models
+  href: Cress.html
+  name: Cress.Core.Models
+  nameWithType: Cress.Core.Models
+  fullName: Cress.Core.Models
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Core
+    name: Core
+    href: Cress.Core.html
+  - name: .
+  - uid: Cress.Core.Models
+    name: Models
+    href: Cress.Core.Models.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Core
+    name: Core
+    href: Cress.Core.html
+  - name: .
+  - uid: Cress.Core.Models
+    name: Models
+    href: Cress.Core.Models.html
+- uid: System.IProgress`1
+  commentId: T:System.IProgress`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iprogress-1
+  name: IProgress<T>
+  nameWithType: IProgress<T>
+  fullName: System.IProgress<T>
+  nameWithType.vb: IProgress(Of T)
+  fullName.vb: System.IProgress(Of T)
+  name.vb: IProgress(Of T)
+  spec.csharp:
+  - uid: System.IProgress`1
+    name: IProgress
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iprogress-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.IProgress`1
+    name: IProgress
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iprogress-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Threading
+  commentId: N:System.Threading
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Threading
+  nameWithType: System.Threading
+  fullName: System.Threading
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+- uid: System.Threading.Tasks.Task`1
+  commentId: T:System.Threading.Tasks.Task`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<TResult>
+  nameWithType: Task<TResult>
+  fullName: System.Threading.Tasks.Task<TResult>
+  nameWithType.vb: Task(Of TResult)
+  fullName.vb: System.Threading.Tasks.Task(Of TResult)
+  name.vb: Task(Of TResult)
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - name: TResult
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TResult
+  - name: )
+- uid: System.Threading.Tasks
+  commentId: N:System.Threading.Tasks
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Threading.Tasks
+  nameWithType: System.Threading.Tasks
+  fullName: System.Threading.Tasks
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks

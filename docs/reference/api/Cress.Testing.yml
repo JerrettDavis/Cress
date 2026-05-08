@@ -1,0 +1,37 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Testing
+  commentId: N:Cress.Testing
+  id: Cress.Testing
+  children:
+  - Cress.Testing.CressTestEngine
+  - Cress.Testing.CressTestFailureException
+  - Cress.Testing.CressTestPaths
+  langs:
+  - csharp
+  - vb
+  name: Cress.Testing
+  nameWithType: Cress.Testing
+  fullName: Cress.Testing
+  type: Namespace
+  assemblies:
+  - Cress.Testing
+references:
+- uid: Cress.Testing.CressTestEngine
+  commentId: T:Cress.Testing.CressTestEngine
+  href: Cress.Testing.CressTestEngine.html
+  name: CressTestEngine
+  nameWithType: CressTestEngine
+  fullName: Cress.Testing.CressTestEngine
+- uid: Cress.Testing.CressTestFailureException
+  commentId: T:Cress.Testing.CressTestFailureException
+  href: Cress.Testing.CressTestFailureException.html
+  name: CressTestFailureException
+  nameWithType: CressTestFailureException
+  fullName: Cress.Testing.CressTestFailureException
+- uid: Cress.Testing.CressTestPaths
+  commentId: T:Cress.Testing.CressTestPaths
+  href: Cress.Testing.CressTestPaths.html
+  name: CressTestPaths
+  nameWithType: CressTestPaths
+  fullName: Cress.Testing.CressTestPaths

@@ -1,0 +1,597 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Execution.IDriverSession
+  commentId: T:Cress.Execution.IDriverSession
+  id: IDriverSession
+  parent: Cress.Execution
+  children:
+  - Cress.Execution.IDriverSession.CaptureFinalEvidenceAsync(Cress.Execution.FlowExecutionContext,System.Threading.CancellationToken)
+  - Cress.Execution.IDriverSession.ExecuteAsync(Cress.Core.Models.PlanAction,Cress.Execution.FlowExecutionContext,System.Threading.CancellationToken)
+  - Cress.Execution.IDriverSession.Metadata
+  - Cress.Execution.IDriverSession.Name
+  langs:
+  - csharp
+  - vb
+  name: IDriverSession
+  nameWithType: IDriverSession
+  fullName: Cress.Execution.IDriverSession
+  type: Interface
+  source:
+    remote:
+      path: src/Cress.Execution/DriverContracts.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: IDriverSession
+    path: ../src/Cress.Execution/DriverContracts.cs
+    startLine: 12
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Execution
+  syntax:
+    content: 'public interface IDriverSession : IAsyncDisposable'
+    content.vb: Public Interface IDriverSession Inherits IAsyncDisposable
+  inheritedMembers:
+  - System.IAsyncDisposable.DisposeAsync
+- uid: Cress.Execution.IDriverSession.Name
+  commentId: P:Cress.Execution.IDriverSession.Name
+  id: Name
+  parent: Cress.Execution.IDriverSession
+  langs:
+  - csharp
+  - vb
+  name: Name
+  nameWithType: IDriverSession.Name
+  fullName: Cress.Execution.IDriverSession.Name
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Execution/DriverContracts.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Name
+    path: ../src/Cress.Execution/DriverContracts.cs
+    startLine: 14
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Execution
+  syntax:
+    content: string Name { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: ReadOnly Property Name As String
+  overload: Cress.Execution.IDriverSession.Name*
+- uid: Cress.Execution.IDriverSession.Metadata
+  commentId: P:Cress.Execution.IDriverSession.Metadata
+  id: Metadata
+  parent: Cress.Execution.IDriverSession
+  langs:
+  - csharp
+  - vb
+  name: Metadata
+  nameWithType: IDriverSession.Metadata
+  fullName: Cress.Execution.IDriverSession.Metadata
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Execution/DriverContracts.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Metadata
+    path: ../src/Cress.Execution/DriverContracts.cs
+    startLine: 15
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Execution
+  syntax:
+    content: IReadOnlyDictionary<string, string> Metadata { get; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.IReadOnlyDictionary{System.String,System.String}
+    content.vb: ReadOnly Property Metadata As IReadOnlyDictionary(Of String, String)
+  overload: Cress.Execution.IDriverSession.Metadata*
+- uid: Cress.Execution.IDriverSession.ExecuteAsync(Cress.Core.Models.PlanAction,Cress.Execution.FlowExecutionContext,System.Threading.CancellationToken)
+  commentId: M:Cress.Execution.IDriverSession.ExecuteAsync(Cress.Core.Models.PlanAction,Cress.Execution.FlowExecutionContext,System.Threading.CancellationToken)
+  id: ExecuteAsync(Cress.Core.Models.PlanAction,Cress.Execution.FlowExecutionContext,System.Threading.CancellationToken)
+  parent: Cress.Execution.IDriverSession
+  langs:
+  - csharp
+  - vb
+  name: ExecuteAsync(PlanAction, FlowExecutionContext, CancellationToken)
+  nameWithType: IDriverSession.ExecuteAsync(PlanAction, FlowExecutionContext, CancellationToken)
+  fullName: Cress.Execution.IDriverSession.ExecuteAsync(Cress.Core.Models.PlanAction, Cress.Execution.FlowExecutionContext, System.Threading.CancellationToken)
+  type: Method
+  source:
+    remote:
+      path: src/Cress.Execution/DriverContracts.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: ExecuteAsync
+    path: ../src/Cress.Execution/DriverContracts.cs
+    startLine: 16
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Execution
+  syntax:
+    content: Task<DriverExecutionResult> ExecuteAsync(PlanAction action, FlowExecutionContext context, CancellationToken cancellationToken)
+    parameters:
+    - id: action
+      type: Cress.Core.Models.PlanAction
+    - id: context
+      type: Cress.Execution.FlowExecutionContext
+    - id: cancellationToken
+      type: System.Threading.CancellationToken
+    return:
+      type: System.Threading.Tasks.Task{Cress.Core.Models.DriverExecutionResult}
+    content.vb: Function ExecuteAsync(action As PlanAction, context As FlowExecutionContext, cancellationToken As CancellationToken) As Task(Of DriverExecutionResult)
+  overload: Cress.Execution.IDriverSession.ExecuteAsync*
+- uid: Cress.Execution.IDriverSession.CaptureFinalEvidenceAsync(Cress.Execution.FlowExecutionContext,System.Threading.CancellationToken)
+  commentId: M:Cress.Execution.IDriverSession.CaptureFinalEvidenceAsync(Cress.Execution.FlowExecutionContext,System.Threading.CancellationToken)
+  id: CaptureFinalEvidenceAsync(Cress.Execution.FlowExecutionContext,System.Threading.CancellationToken)
+  parent: Cress.Execution.IDriverSession
+  langs:
+  - csharp
+  - vb
+  name: CaptureFinalEvidenceAsync(FlowExecutionContext, CancellationToken)
+  nameWithType: IDriverSession.CaptureFinalEvidenceAsync(FlowExecutionContext, CancellationToken)
+  fullName: Cress.Execution.IDriverSession.CaptureFinalEvidenceAsync(Cress.Execution.FlowExecutionContext, System.Threading.CancellationToken)
+  type: Method
+  source:
+    remote:
+      path: src/Cress.Execution/DriverContracts.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: CaptureFinalEvidenceAsync
+    path: ../src/Cress.Execution/DriverContracts.cs
+    startLine: 17
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Execution
+  syntax:
+    content: Task<IReadOnlyList<EvidenceArtifact>> CaptureFinalEvidenceAsync(FlowExecutionContext context, CancellationToken cancellationToken)
+    parameters:
+    - id: context
+      type: Cress.Execution.FlowExecutionContext
+    - id: cancellationToken
+      type: System.Threading.CancellationToken
+    return:
+      type: System.Threading.Tasks.Task{System.Collections.Generic.IReadOnlyList{Cress.Core.Models.EvidenceArtifact}}
+    content.vb: Function CaptureFinalEvidenceAsync(context As FlowExecutionContext, cancellationToken As CancellationToken) As Task(Of IReadOnlyList(Of EvidenceArtifact))
+  overload: Cress.Execution.IDriverSession.CaptureFinalEvidenceAsync*
+references:
+- uid: Cress.Execution
+  commentId: N:Cress.Execution
+  href: Cress.html
+  name: Cress.Execution
+  nameWithType: Cress.Execution
+  fullName: Cress.Execution
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Execution
+    name: Execution
+    href: Cress.Execution.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Execution
+    name: Execution
+    href: Cress.Execution.html
+- uid: System.IAsyncDisposable.DisposeAsync
+  commentId: M:System.IAsyncDisposable.DisposeAsync
+  parent: System.IAsyncDisposable
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iasyncdisposable.disposeasync
+  name: DisposeAsync()
+  nameWithType: IAsyncDisposable.DisposeAsync()
+  fullName: System.IAsyncDisposable.DisposeAsync()
+  spec.csharp:
+  - uid: System.IAsyncDisposable.DisposeAsync
+    name: DisposeAsync
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iasyncdisposable.disposeasync
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.IAsyncDisposable.DisposeAsync
+    name: DisposeAsync
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iasyncdisposable.disposeasync
+  - name: (
+  - name: )
+- uid: System.IAsyncDisposable
+  commentId: T:System.IAsyncDisposable
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iasyncdisposable
+  name: IAsyncDisposable
+  nameWithType: IAsyncDisposable
+  fullName: System.IAsyncDisposable
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Cress.Execution.IDriverSession.Name*
+  commentId: Overload:Cress.Execution.IDriverSession.Name
+  href: Cress.Execution.IDriverSession.html#Cress_Execution_IDriverSession_Name
+  name: Name
+  nameWithType: IDriverSession.Name
+  fullName: Cress.Execution.IDriverSession.Name
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Cress.Execution.IDriverSession.Metadata*
+  commentId: Overload:Cress.Execution.IDriverSession.Metadata
+  href: Cress.Execution.IDriverSession.html#Cress_Execution_IDriverSession_Metadata
+  name: Metadata
+  nameWithType: IDriverSession.Metadata
+  fullName: Cress.Execution.IDriverSession.Metadata
+- uid: System.Collections.Generic.IReadOnlyDictionary{System.String,System.String}
+  commentId: T:System.Collections.Generic.IReadOnlyDictionary{System.String,System.String}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IReadOnlyDictionary`2
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2
+  name: IReadOnlyDictionary<string, string>
+  nameWithType: IReadOnlyDictionary<string, string>
+  fullName: System.Collections.Generic.IReadOnlyDictionary<string, string>
+  nameWithType.vb: IReadOnlyDictionary(Of String, String)
+  fullName.vb: System.Collections.Generic.IReadOnlyDictionary(Of String, String)
+  name.vb: IReadOnlyDictionary(Of String, String)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyDictionary`2
+    name: IReadOnlyDictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyDictionary`2
+    name: IReadOnlyDictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+- uid: System.Collections.Generic.IReadOnlyDictionary`2
+  commentId: T:System.Collections.Generic.IReadOnlyDictionary`2
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2
+  name: IReadOnlyDictionary<TKey, TValue>
+  nameWithType: IReadOnlyDictionary<TKey, TValue>
+  fullName: System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>
+  nameWithType.vb: IReadOnlyDictionary(Of TKey, TValue)
+  fullName.vb: System.Collections.Generic.IReadOnlyDictionary(Of TKey, TValue)
+  name.vb: IReadOnlyDictionary(Of TKey, TValue)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyDictionary`2
+    name: IReadOnlyDictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyDictionary`2
+    name: IReadOnlyDictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: Cress.Execution.IDriverSession.ExecuteAsync*
+  commentId: Overload:Cress.Execution.IDriverSession.ExecuteAsync
+  href: Cress.Execution.IDriverSession.html#Cress_Execution_IDriverSession_ExecuteAsync_Cress_Core_Models_PlanAction_Cress_Execution_FlowExecutionContext_System_Threading_CancellationToken_
+  name: ExecuteAsync
+  nameWithType: IDriverSession.ExecuteAsync
+  fullName: Cress.Execution.IDriverSession.ExecuteAsync
+- uid: Cress.Core.Models.PlanAction
+  commentId: T:Cress.Core.Models.PlanAction
+  parent: Cress.Core.Models
+  href: Cress.Core.Models.PlanAction.html
+  name: PlanAction
+  nameWithType: PlanAction
+  fullName: Cress.Core.Models.PlanAction
+- uid: Cress.Execution.FlowExecutionContext
+  commentId: T:Cress.Execution.FlowExecutionContext
+  parent: Cress.Execution
+  href: Cress.Execution.FlowExecutionContext.html
+  name: FlowExecutionContext
+  nameWithType: FlowExecutionContext
+  fullName: Cress.Execution.FlowExecutionContext
+- uid: System.Threading.CancellationToken
+  commentId: T:System.Threading.CancellationToken
+  parent: System.Threading
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken
+  name: CancellationToken
+  nameWithType: CancellationToken
+  fullName: System.Threading.CancellationToken
+- uid: System.Threading.Tasks.Task{Cress.Core.Models.DriverExecutionResult}
+  commentId: T:System.Threading.Tasks.Task{Cress.Core.Models.DriverExecutionResult}
+  parent: System.Threading.Tasks
+  definition: System.Threading.Tasks.Task`1
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<DriverExecutionResult>
+  nameWithType: Task<DriverExecutionResult>
+  fullName: System.Threading.Tasks.Task<Cress.Core.Models.DriverExecutionResult>
+  nameWithType.vb: Task(Of DriverExecutionResult)
+  fullName.vb: System.Threading.Tasks.Task(Of Cress.Core.Models.DriverExecutionResult)
+  name.vb: Task(Of DriverExecutionResult)
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - uid: Cress.Core.Models.DriverExecutionResult
+    name: DriverExecutionResult
+    href: Cress.Core.Models.DriverExecutionResult.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Cress.Core.Models.DriverExecutionResult
+    name: DriverExecutionResult
+    href: Cress.Core.Models.DriverExecutionResult.html
+  - name: )
+- uid: Cress.Core.Models
+  commentId: N:Cress.Core.Models
+  href: Cress.html
+  name: Cress.Core.Models
+  nameWithType: Cress.Core.Models
+  fullName: Cress.Core.Models
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Core
+    name: Core
+    href: Cress.Core.html
+  - name: .
+  - uid: Cress.Core.Models
+    name: Models
+    href: Cress.Core.Models.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Core
+    name: Core
+    href: Cress.Core.html
+  - name: .
+  - uid: Cress.Core.Models
+    name: Models
+    href: Cress.Core.Models.html
+- uid: System.Threading
+  commentId: N:System.Threading
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Threading
+  nameWithType: System.Threading
+  fullName: System.Threading
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+- uid: System.Threading.Tasks.Task`1
+  commentId: T:System.Threading.Tasks.Task`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<TResult>
+  nameWithType: Task<TResult>
+  fullName: System.Threading.Tasks.Task<TResult>
+  nameWithType.vb: Task(Of TResult)
+  fullName.vb: System.Threading.Tasks.Task(Of TResult)
+  name.vb: Task(Of TResult)
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - name: TResult
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TResult
+  - name: )
+- uid: System.Threading.Tasks
+  commentId: N:System.Threading.Tasks
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Threading.Tasks
+  nameWithType: System.Threading.Tasks
+  fullName: System.Threading.Tasks
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+- uid: Cress.Execution.IDriverSession.CaptureFinalEvidenceAsync*
+  commentId: Overload:Cress.Execution.IDriverSession.CaptureFinalEvidenceAsync
+  href: Cress.Execution.IDriverSession.html#Cress_Execution_IDriverSession_CaptureFinalEvidenceAsync_Cress_Execution_FlowExecutionContext_System_Threading_CancellationToken_
+  name: CaptureFinalEvidenceAsync
+  nameWithType: IDriverSession.CaptureFinalEvidenceAsync
+  fullName: Cress.Execution.IDriverSession.CaptureFinalEvidenceAsync
+- uid: System.Threading.Tasks.Task{System.Collections.Generic.IReadOnlyList{Cress.Core.Models.EvidenceArtifact}}
+  commentId: T:System.Threading.Tasks.Task{System.Collections.Generic.IReadOnlyList{Cress.Core.Models.EvidenceArtifact}}
+  parent: System.Threading.Tasks
+  definition: System.Threading.Tasks.Task`1
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<IReadOnlyList<EvidenceArtifact>>
+  nameWithType: Task<IReadOnlyList<EvidenceArtifact>>
+  fullName: System.Threading.Tasks.Task<System.Collections.Generic.IReadOnlyList<Cress.Core.Models.EvidenceArtifact>>
+  nameWithType.vb: Task(Of IReadOnlyList(Of EvidenceArtifact))
+  fullName.vb: System.Threading.Tasks.Task(Of System.Collections.Generic.IReadOnlyList(Of Cress.Core.Models.EvidenceArtifact))
+  name.vb: Task(Of IReadOnlyList(Of EvidenceArtifact))
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: <
+  - uid: Cress.Core.Models.EvidenceArtifact
+    name: EvidenceArtifact
+    href: Cress.Core.Models.EvidenceArtifact.html
+  - name: '>'
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Cress.Core.Models.EvidenceArtifact
+    name: EvidenceArtifact
+    href: Cress.Core.Models.EvidenceArtifact.html
+  - name: )
+  - name: )

@@ -1,0 +1,120 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Studio.Services.StudioRunnerTransportKind
+  commentId: T:Cress.Studio.Services.StudioRunnerTransportKind
+  id: StudioRunnerTransportKind
+  parent: Cress.Studio.Services
+  children:
+  - Cress.Studio.Services.StudioRunnerTransportKind.Embedded
+  - Cress.Studio.Services.StudioRunnerTransportKind.RemoteHttp
+  langs:
+  - csharp
+  - vb
+  name: StudioRunnerTransportKind
+  nameWithType: StudioRunnerTransportKind
+  fullName: Cress.Studio.Services.StudioRunnerTransportKind
+  type: Enum
+  source:
+    remote:
+      path: src/Cress.Execution/StudioRunnerService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: StudioRunnerTransportKind
+    path: ../src/Cress.Execution/StudioRunnerService.cs
+    startLine: 279
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Studio.Services
+  syntax:
+    content: public enum StudioRunnerTransportKind
+    content.vb: Public Enum StudioRunnerTransportKind
+- uid: Cress.Studio.Services.StudioRunnerTransportKind.Embedded
+  commentId: F:Cress.Studio.Services.StudioRunnerTransportKind.Embedded
+  id: Embedded
+  parent: Cress.Studio.Services.StudioRunnerTransportKind
+  langs:
+  - csharp
+  - vb
+  name: Embedded
+  nameWithType: StudioRunnerTransportKind.Embedded
+  fullName: Cress.Studio.Services.StudioRunnerTransportKind.Embedded
+  type: Field
+  source:
+    remote:
+      path: src/Cress.Execution/StudioRunnerService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Embedded
+    path: ../src/Cress.Execution/StudioRunnerService.cs
+    startLine: 281
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Studio.Services
+  syntax:
+    content: Embedded = 0
+    return:
+      type: Cress.Studio.Services.StudioRunnerTransportKind
+- uid: Cress.Studio.Services.StudioRunnerTransportKind.RemoteHttp
+  commentId: F:Cress.Studio.Services.StudioRunnerTransportKind.RemoteHttp
+  id: RemoteHttp
+  parent: Cress.Studio.Services.StudioRunnerTransportKind
+  langs:
+  - csharp
+  - vb
+  name: RemoteHttp
+  nameWithType: StudioRunnerTransportKind.RemoteHttp
+  fullName: Cress.Studio.Services.StudioRunnerTransportKind.RemoteHttp
+  type: Field
+  source:
+    remote:
+      path: src/Cress.Execution/StudioRunnerService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: RemoteHttp
+    path: ../src/Cress.Execution/StudioRunnerService.cs
+    startLine: 282
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Studio.Services
+  syntax:
+    content: RemoteHttp = 1
+    return:
+      type: Cress.Studio.Services.StudioRunnerTransportKind
+references:
+- uid: Cress.Studio.Services
+  commentId: N:Cress.Studio.Services
+  href: Cress.html
+  name: Cress.Studio.Services
+  nameWithType: Cress.Studio.Services
+  fullName: Cress.Studio.Services
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Studio
+    name: Studio
+    href: Cress.Studio.html
+  - name: .
+  - uid: Cress.Studio.Services
+    name: Services
+    href: Cress.Studio.Services.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Studio
+    name: Studio
+    href: Cress.Studio.html
+  - name: .
+  - uid: Cress.Studio.Services
+    name: Services
+    href: Cress.Studio.Services.html
+- uid: Cress.Studio.Services.StudioRunnerTransportKind
+  commentId: T:Cress.Studio.Services.StudioRunnerTransportKind
+  parent: Cress.Studio.Services
+  href: Cress.Studio.Services.StudioRunnerTransportKind.html
+  name: StudioRunnerTransportKind
+  nameWithType: StudioRunnerTransportKind
+  fullName: Cress.Studio.Services.StudioRunnerTransportKind

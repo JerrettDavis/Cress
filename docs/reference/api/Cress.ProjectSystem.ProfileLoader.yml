@@ -1,0 +1,633 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.ProjectSystem.ProfileLoader
+  commentId: T:Cress.ProjectSystem.ProfileLoader
+  id: ProfileLoader
+  parent: Cress.ProjectSystem
+  children:
+  - Cress.ProjectSystem.ProfileLoader.Load(System.String,System.String,System.Boolean)
+  - Cress.ProjectSystem.ProfileLoader.LoadActive(System.String,Cress.Core.Models.CressConfig,System.String,System.Boolean)
+  - Cress.ProjectSystem.ProfileLoader.LoadAll(System.String,System.Boolean)
+  langs:
+  - csharp
+  - vb
+  name: ProfileLoader
+  nameWithType: ProfileLoader
+  fullName: Cress.ProjectSystem.ProfileLoader
+  type: Class
+  source:
+    remote:
+      path: src/Cress.ProjectSystem/ProfileLoader.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: ProfileLoader
+    path: ../src/Cress.ProjectSystem/ProfileLoader.cs
+    startLine: 7
+  assemblies:
+  - Cress.ProjectSystem
+  namespace: Cress.ProjectSystem
+  syntax:
+    content: public sealed class ProfileLoader
+    content.vb: Public NotInheritable Class ProfileLoader
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Cress.ProjectSystem.ProfileLoader.Load(System.String,System.String,System.Boolean)
+  commentId: M:Cress.ProjectSystem.ProfileLoader.Load(System.String,System.String,System.Boolean)
+  id: Load(System.String,System.String,System.Boolean)
+  parent: Cress.ProjectSystem.ProfileLoader
+  langs:
+  - csharp
+  - vb
+  name: Load(string, string, bool)
+  nameWithType: ProfileLoader.Load(string, string, bool)
+  fullName: Cress.ProjectSystem.ProfileLoader.Load(string, string, bool)
+  type: Method
+  source:
+    remote:
+      path: src/Cress.ProjectSystem/ProfileLoader.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Load
+    path: ../src/Cress.ProjectSystem/ProfileLoader.cs
+    startLine: 9
+  assemblies:
+  - Cress.ProjectSystem
+  namespace: Cress.ProjectSystem
+  syntax:
+    content: public OperationResult<CressProfile> Load(string projectRoot, string profileName, bool strict = false)
+    parameters:
+    - id: projectRoot
+      type: System.String
+    - id: profileName
+      type: System.String
+    - id: strict
+      type: System.Boolean
+    return:
+      type: Cress.Core.Models.OperationResult{Cress.Core.Models.CressProfile}
+    content.vb: Public Function Load(projectRoot As String, profileName As String, strict As Boolean = False) As OperationResult(Of CressProfile)
+  overload: Cress.ProjectSystem.ProfileLoader.Load*
+  nameWithType.vb: ProfileLoader.Load(String, String, Boolean)
+  fullName.vb: Cress.ProjectSystem.ProfileLoader.Load(String, String, Boolean)
+  name.vb: Load(String, String, Boolean)
+- uid: Cress.ProjectSystem.ProfileLoader.LoadAll(System.String,System.Boolean)
+  commentId: M:Cress.ProjectSystem.ProfileLoader.LoadAll(System.String,System.Boolean)
+  id: LoadAll(System.String,System.Boolean)
+  parent: Cress.ProjectSystem.ProfileLoader
+  langs:
+  - csharp
+  - vb
+  name: LoadAll(string, bool)
+  nameWithType: ProfileLoader.LoadAll(string, bool)
+  fullName: Cress.ProjectSystem.ProfileLoader.LoadAll(string, bool)
+  type: Method
+  source:
+    remote:
+      path: src/Cress.ProjectSystem/ProfileLoader.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: LoadAll
+    path: ../src/Cress.ProjectSystem/ProfileLoader.cs
+    startLine: 15
+  assemblies:
+  - Cress.ProjectSystem
+  namespace: Cress.ProjectSystem
+  syntax:
+    content: public IReadOnlyList<OperationResult<CressProfile>> LoadAll(string projectRoot, bool strict = false)
+    parameters:
+    - id: projectRoot
+      type: System.String
+    - id: strict
+      type: System.Boolean
+    return:
+      type: System.Collections.Generic.IReadOnlyList{Cress.Core.Models.OperationResult{Cress.Core.Models.CressProfile}}
+    content.vb: Public Function LoadAll(projectRoot As String, strict As Boolean = False) As IReadOnlyList(Of OperationResult(Of CressProfile))
+  overload: Cress.ProjectSystem.ProfileLoader.LoadAll*
+  nameWithType.vb: ProfileLoader.LoadAll(String, Boolean)
+  fullName.vb: Cress.ProjectSystem.ProfileLoader.LoadAll(String, Boolean)
+  name.vb: LoadAll(String, Boolean)
+- uid: Cress.ProjectSystem.ProfileLoader.LoadActive(System.String,Cress.Core.Models.CressConfig,System.String,System.Boolean)
+  commentId: M:Cress.ProjectSystem.ProfileLoader.LoadActive(System.String,Cress.Core.Models.CressConfig,System.String,System.Boolean)
+  id: LoadActive(System.String,Cress.Core.Models.CressConfig,System.String,System.Boolean)
+  parent: Cress.ProjectSystem.ProfileLoader
+  langs:
+  - csharp
+  - vb
+  name: LoadActive(string, CressConfig, string?, bool)
+  nameWithType: ProfileLoader.LoadActive(string, CressConfig, string?, bool)
+  fullName: Cress.ProjectSystem.ProfileLoader.LoadActive(string, Cress.Core.Models.CressConfig, string?, bool)
+  type: Method
+  source:
+    remote:
+      path: src/Cress.ProjectSystem/ProfileLoader.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: LoadActive
+    path: ../src/Cress.ProjectSystem/ProfileLoader.cs
+    startLine: 44
+  assemblies:
+  - Cress.ProjectSystem
+  namespace: Cress.ProjectSystem
+  syntax:
+    content: public OperationResult<CressProfile> LoadActive(string projectRoot, CressConfig config, string? profileName = null, bool strict = false)
+    parameters:
+    - id: projectRoot
+      type: System.String
+    - id: config
+      type: Cress.Core.Models.CressConfig
+    - id: profileName
+      type: System.String
+    - id: strict
+      type: System.Boolean
+    return:
+      type: Cress.Core.Models.OperationResult{Cress.Core.Models.CressProfile}
+    content.vb: Public Function LoadActive(projectRoot As String, config As CressConfig, profileName As String = Nothing, strict As Boolean = False) As OperationResult(Of CressProfile)
+  overload: Cress.ProjectSystem.ProfileLoader.LoadActive*
+  nameWithType.vb: ProfileLoader.LoadActive(String, CressConfig, String, Boolean)
+  fullName.vb: Cress.ProjectSystem.ProfileLoader.LoadActive(String, Cress.Core.Models.CressConfig, String, Boolean)
+  name.vb: LoadActive(String, CressConfig, String, Boolean)
+references:
+- uid: Cress.ProjectSystem
+  commentId: N:Cress.ProjectSystem
+  href: Cress.html
+  name: Cress.ProjectSystem
+  nameWithType: Cress.ProjectSystem
+  fullName: Cress.ProjectSystem
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.ProjectSystem
+    name: ProjectSystem
+    href: Cress.ProjectSystem.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.ProjectSystem
+    name: ProjectSystem
+    href: Cress.ProjectSystem.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Cress.ProjectSystem.ProfileLoader.Load*
+  commentId: Overload:Cress.ProjectSystem.ProfileLoader.Load
+  href: Cress.ProjectSystem.ProfileLoader.html#Cress_ProjectSystem_ProfileLoader_Load_System_String_System_String_System_Boolean_
+  name: Load
+  nameWithType: ProfileLoader.Load
+  fullName: Cress.ProjectSystem.ProfileLoader.Load
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Cress.Core.Models.OperationResult{Cress.Core.Models.CressProfile}
+  commentId: T:Cress.Core.Models.OperationResult{Cress.Core.Models.CressProfile}
+  parent: Cress.Core.Models
+  definition: Cress.Core.Models.OperationResult`1
+  href: Cress.Core.Models.OperationResult-1.html
+  name: OperationResult<CressProfile>
+  nameWithType: OperationResult<CressProfile>
+  fullName: Cress.Core.Models.OperationResult<Cress.Core.Models.CressProfile>
+  nameWithType.vb: OperationResult(Of CressProfile)
+  fullName.vb: Cress.Core.Models.OperationResult(Of Cress.Core.Models.CressProfile)
+  name.vb: OperationResult(Of CressProfile)
+  spec.csharp:
+  - uid: Cress.Core.Models.OperationResult`1
+    name: OperationResult
+    href: Cress.Core.Models.OperationResult-1.html
+  - name: <
+  - uid: Cress.Core.Models.CressProfile
+    name: CressProfile
+    href: Cress.Core.Models.CressProfile.html
+  - name: '>'
+  spec.vb:
+  - uid: Cress.Core.Models.OperationResult`1
+    name: OperationResult
+    href: Cress.Core.Models.OperationResult-1.html
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Cress.Core.Models.CressProfile
+    name: CressProfile
+    href: Cress.Core.Models.CressProfile.html
+  - name: )
+- uid: Cress.Core.Models.OperationResult`1
+  commentId: T:Cress.Core.Models.OperationResult`1
+  href: Cress.Core.Models.OperationResult-1.html
+  name: OperationResult<T>
+  nameWithType: OperationResult<T>
+  fullName: Cress.Core.Models.OperationResult<T>
+  nameWithType.vb: OperationResult(Of T)
+  fullName.vb: Cress.Core.Models.OperationResult(Of T)
+  name.vb: OperationResult(Of T)
+  spec.csharp:
+  - uid: Cress.Core.Models.OperationResult`1
+    name: OperationResult
+    href: Cress.Core.Models.OperationResult-1.html
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Cress.Core.Models.OperationResult`1
+    name: OperationResult
+    href: Cress.Core.Models.OperationResult-1.html
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Cress.Core.Models
+  commentId: N:Cress.Core.Models
+  href: Cress.html
+  name: Cress.Core.Models
+  nameWithType: Cress.Core.Models
+  fullName: Cress.Core.Models
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Core
+    name: Core
+    href: Cress.Core.html
+  - name: .
+  - uid: Cress.Core.Models
+    name: Models
+    href: Cress.Core.Models.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Core
+    name: Core
+    href: Cress.Core.html
+  - name: .
+  - uid: Cress.Core.Models
+    name: Models
+    href: Cress.Core.Models.html
+- uid: Cress.ProjectSystem.ProfileLoader.LoadAll*
+  commentId: Overload:Cress.ProjectSystem.ProfileLoader.LoadAll
+  href: Cress.ProjectSystem.ProfileLoader.html#Cress_ProjectSystem_ProfileLoader_LoadAll_System_String_System_Boolean_
+  name: LoadAll
+  nameWithType: ProfileLoader.LoadAll
+  fullName: Cress.ProjectSystem.ProfileLoader.LoadAll
+- uid: System.Collections.Generic.IReadOnlyList{Cress.Core.Models.OperationResult{Cress.Core.Models.CressProfile}}
+  commentId: T:System.Collections.Generic.IReadOnlyList{Cress.Core.Models.OperationResult{Cress.Core.Models.CressProfile}}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IReadOnlyList`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  name: IReadOnlyList<OperationResult<CressProfile>>
+  nameWithType: IReadOnlyList<OperationResult<CressProfile>>
+  fullName: System.Collections.Generic.IReadOnlyList<Cress.Core.Models.OperationResult<Cress.Core.Models.CressProfile>>
+  nameWithType.vb: IReadOnlyList(Of OperationResult(Of CressProfile))
+  fullName.vb: System.Collections.Generic.IReadOnlyList(Of Cress.Core.Models.OperationResult(Of Cress.Core.Models.CressProfile))
+  name.vb: IReadOnlyList(Of OperationResult(Of CressProfile))
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: <
+  - uid: Cress.Core.Models.OperationResult`1
+    name: OperationResult
+    href: Cress.Core.Models.OperationResult-1.html
+  - name: <
+  - uid: Cress.Core.Models.CressProfile
+    name: CressProfile
+    href: Cress.Core.Models.CressProfile.html
+  - name: '>'
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Cress.Core.Models.OperationResult`1
+    name: OperationResult
+    href: Cress.Core.Models.OperationResult-1.html
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Cress.Core.Models.CressProfile
+    name: CressProfile
+    href: Cress.Core.Models.CressProfile.html
+  - name: )
+  - name: )
+- uid: System.Collections.Generic.IReadOnlyList`1
+  commentId: T:System.Collections.Generic.IReadOnlyList`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  name: IReadOnlyList<T>
+  nameWithType: IReadOnlyList<T>
+  fullName: System.Collections.Generic.IReadOnlyList<T>
+  nameWithType.vb: IReadOnlyList(Of T)
+  fullName.vb: System.Collections.Generic.IReadOnlyList(Of T)
+  name.vb: IReadOnlyList(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: Cress.ProjectSystem.ProfileLoader.LoadActive*
+  commentId: Overload:Cress.ProjectSystem.ProfileLoader.LoadActive
+  href: Cress.ProjectSystem.ProfileLoader.html#Cress_ProjectSystem_ProfileLoader_LoadActive_System_String_Cress_Core_Models_CressConfig_System_String_System_Boolean_
+  name: LoadActive
+  nameWithType: ProfileLoader.LoadActive
+  fullName: Cress.ProjectSystem.ProfileLoader.LoadActive
+- uid: Cress.Core.Models.CressConfig
+  commentId: T:Cress.Core.Models.CressConfig
+  parent: Cress.Core.Models
+  href: Cress.Core.Models.CressConfig.html
+  name: CressConfig
+  nameWithType: CressConfig
+  fullName: Cress.Core.Models.CressConfig

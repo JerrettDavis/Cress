@@ -1,0 +1,504 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Importers.Postman.PostmanImporter
+  commentId: T:Cress.Importers.Postman.PostmanImporter
+  id: PostmanImporter
+  parent: Cress.Importers.Postman
+  children:
+  - Cress.Importers.Postman.PostmanImporter.Import(System.String,System.Boolean)
+  langs:
+  - csharp
+  - vb
+  name: PostmanImporter
+  nameWithType: PostmanImporter
+  fullName: Cress.Importers.Postman.PostmanImporter
+  type: Class
+  source:
+    remote:
+      path: src/Cress.Importers/Postman/PostmanImporter.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: PostmanImporter
+    path: ../src/Cress.Importers/Postman/PostmanImporter.cs
+    startLine: 28
+  assemblies:
+  - Cress.Importers
+  namespace: Cress.Importers.Postman
+  summary: >-
+    Converts a Postman Collection v2.1 JSON file into one or more <xref href="Cress.Core.Models.CressFlow" data-throw-if-not-resolved="false"></xref> objects.
+
+    Each request becomes a separate flow by default (<code class="paramref">singleFlow</code> = false),
+
+    or all requests are combined into a single multi-step flow when <code class="paramref">singleFlow</code> = true.
+  remarks: >-
+    Supports:
+
+    <ul><li>HTTP methods: GET, POST, PUT, DELETE, PATCH, HEAD, OPTIONS</li><li>URL from <code>request.url.raw</code> (preferred) or reconstructed from host/path</li><li>Headers → <code>with.headers.*</code> key/value pairs</li><li>Raw body → <code>with.body</code></li><li>Postman variable syntax <code>{{varName}}</code> is preserved verbatim</li><li>Folder hierarchy → flow <code>tags</code></li></ul>
+
+    Does NOT support:
+
+    <ul><li>Pre-request scripts or test scripts (Postman JS hooks) — emitted as TODO comment steps</li><li>Body modes other than "raw" — emitted as TODO comment steps</li></ul>
+  example: []
+  syntax:
+    content: public sealed class PostmanImporter
+    content.vb: Public NotInheritable Class PostmanImporter
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Cress.Importers.Postman.PostmanImporter.Import(System.String,System.Boolean)
+  commentId: M:Cress.Importers.Postman.PostmanImporter.Import(System.String,System.Boolean)
+  id: Import(System.String,System.Boolean)
+  parent: Cress.Importers.Postman.PostmanImporter
+  langs:
+  - csharp
+  - vb
+  name: Import(string, bool)
+  nameWithType: PostmanImporter.Import(string, bool)
+  fullName: Cress.Importers.Postman.PostmanImporter.Import(string, bool)
+  type: Method
+  source:
+    remote:
+      path: src/Cress.Importers/Postman/PostmanImporter.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Import
+    path: ../src/Cress.Importers/Postman/PostmanImporter.cs
+    startLine: 43
+  assemblies:
+  - Cress.Importers
+  namespace: Cress.Importers.Postman
+  summary: Parse a Postman Collection v2.1 JSON string and return one <xref href="Cress.Core.Models.CressFlow" data-throw-if-not-resolved="false"></xref> per request.
+  example: []
+  syntax:
+    content: public IReadOnlyList<CressFlow> Import(string collectionJson, bool singleFlow = false)
+    parameters:
+    - id: collectionJson
+      type: System.String
+      description: Full JSON content of the Postman collection.
+    - id: singleFlow
+      type: System.Boolean
+      description: >-
+        When <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a>, all requests are combined into one flow with sequential steps.
+
+        When <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a> (default), one flow is produced per request.
+    return:
+      type: System.Collections.Generic.IReadOnlyList{Cress.Core.Models.CressFlow}
+      description: A list of <xref href="Cress.Core.Models.CressFlow" data-throw-if-not-resolved="false"></xref> objects ready for YAML serialization.
+    content.vb: Public Function Import(collectionJson As String, singleFlow As Boolean = False) As IReadOnlyList(Of CressFlow)
+  overload: Cress.Importers.Postman.PostmanImporter.Import*
+  nameWithType.vb: PostmanImporter.Import(String, Boolean)
+  fullName.vb: Cress.Importers.Postman.PostmanImporter.Import(String, Boolean)
+  name.vb: Import(String, Boolean)
+references:
+- uid: Cress.Core.Models.CressFlow
+  commentId: T:Cress.Core.Models.CressFlow
+  parent: Cress.Core.Models
+  href: Cress.Core.Models.CressFlow.html
+  name: CressFlow
+  nameWithType: CressFlow
+  fullName: Cress.Core.Models.CressFlow
+- uid: Cress.Importers.Postman
+  commentId: N:Cress.Importers.Postman
+  href: Cress.html
+  name: Cress.Importers.Postman
+  nameWithType: Cress.Importers.Postman
+  fullName: Cress.Importers.Postman
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Importers
+    name: Importers
+    href: Cress.Importers.html
+  - name: .
+  - uid: Cress.Importers.Postman
+    name: Postman
+    href: Cress.Importers.Postman.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Importers
+    name: Importers
+    href: Cress.Importers.html
+  - name: .
+  - uid: Cress.Importers.Postman
+    name: Postman
+    href: Cress.Importers.Postman.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: Cress.Core.Models
+  commentId: N:Cress.Core.Models
+  href: Cress.html
+  name: Cress.Core.Models
+  nameWithType: Cress.Core.Models
+  fullName: Cress.Core.Models
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Core
+    name: Core
+    href: Cress.Core.html
+  - name: .
+  - uid: Cress.Core.Models
+    name: Models
+    href: Cress.Core.Models.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Core
+    name: Core
+    href: Cress.Core.html
+  - name: .
+  - uid: Cress.Core.Models
+    name: Models
+    href: Cress.Core.Models.html
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Cress.Importers.Postman.PostmanImporter.Import*
+  commentId: Overload:Cress.Importers.Postman.PostmanImporter.Import
+  href: Cress.Importers.Postman.PostmanImporter.html#Cress_Importers_Postman_PostmanImporter_Import_System_String_System_Boolean_
+  name: Import
+  nameWithType: PostmanImporter.Import
+  fullName: Cress.Importers.Postman.PostmanImporter.Import
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System.Collections.Generic.IReadOnlyList{Cress.Core.Models.CressFlow}
+  commentId: T:System.Collections.Generic.IReadOnlyList{Cress.Core.Models.CressFlow}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IReadOnlyList`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  name: IReadOnlyList<CressFlow>
+  nameWithType: IReadOnlyList<CressFlow>
+  fullName: System.Collections.Generic.IReadOnlyList<Cress.Core.Models.CressFlow>
+  nameWithType.vb: IReadOnlyList(Of CressFlow)
+  fullName.vb: System.Collections.Generic.IReadOnlyList(Of Cress.Core.Models.CressFlow)
+  name.vb: IReadOnlyList(Of CressFlow)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: <
+  - uid: Cress.Core.Models.CressFlow
+    name: CressFlow
+    href: Cress.Core.Models.CressFlow.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Cress.Core.Models.CressFlow
+    name: CressFlow
+    href: Cress.Core.Models.CressFlow.html
+  - name: )
+- uid: System.Collections.Generic.IReadOnlyList`1
+  commentId: T:System.Collections.Generic.IReadOnlyList`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  name: IReadOnlyList<T>
+  nameWithType: IReadOnlyList<T>
+  fullName: System.Collections.Generic.IReadOnlyList<T>
+  nameWithType.vb: IReadOnlyList(Of T)
+  fullName.vb: System.Collections.Generic.IReadOnlyList(Of T)
+  name.vb: IReadOnlyList(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic

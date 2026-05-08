@@ -1,0 +1,501 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.LivingDocs.ScreenshotEvidence
+  commentId: T:Cress.LivingDocs.ScreenshotEvidence
+  id: ScreenshotEvidence
+  parent: Cress.LivingDocs
+  children:
+  - Cress.LivingDocs.ScreenshotEvidence.#ctor(System.String,System.String,System.String)
+  - Cress.LivingDocs.ScreenshotEvidence.FilePath
+  - Cress.LivingDocs.ScreenshotEvidence.FlowId
+  - Cress.LivingDocs.ScreenshotEvidence.StepName
+  langs:
+  - csharp
+  - vb
+  name: ScreenshotEvidence
+  nameWithType: ScreenshotEvidence
+  fullName: Cress.LivingDocs.ScreenshotEvidence
+  type: Class
+  source:
+    remote:
+      path: src/Cress.LivingDocs/DocumentModel.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: ScreenshotEvidence
+    path: ../src/Cress.LivingDocs/DocumentModel.cs
+    startLine: 47
+  assemblies:
+  - Cress.LivingDocs
+  namespace: Cress.LivingDocs
+  syntax:
+    content: 'public sealed record ScreenshotEvidence : IEquatable<ScreenshotEvidence>'
+    content.vb: Public NotInheritable Class ScreenshotEvidence Implements IEquatable(Of ScreenshotEvidence)
+  inheritance:
+  - System.Object
+  implements:
+  - System.IEquatable{Cress.LivingDocs.ScreenshotEvidence}
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Cress.LivingDocs.ScreenshotEvidence.#ctor(System.String,System.String,System.String)
+  commentId: M:Cress.LivingDocs.ScreenshotEvidence.#ctor(System.String,System.String,System.String)
+  id: '#ctor(System.String,System.String,System.String)'
+  parent: Cress.LivingDocs.ScreenshotEvidence
+  langs:
+  - csharp
+  - vb
+  name: ScreenshotEvidence(string, string, string)
+  nameWithType: ScreenshotEvidence.ScreenshotEvidence(string, string, string)
+  fullName: Cress.LivingDocs.ScreenshotEvidence.ScreenshotEvidence(string, string, string)
+  type: Constructor
+  source:
+    remote:
+      path: src/Cress.LivingDocs/DocumentModel.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: .ctor
+    path: ../src/Cress.LivingDocs/DocumentModel.cs
+    startLine: 47
+  assemblies:
+  - Cress.LivingDocs
+  namespace: Cress.LivingDocs
+  syntax:
+    content: public ScreenshotEvidence(string FlowId, string StepName, string FilePath)
+    parameters:
+    - id: FlowId
+      type: System.String
+    - id: StepName
+      type: System.String
+    - id: FilePath
+      type: System.String
+    content.vb: Public Sub New(FlowId As String, StepName As String, FilePath As String)
+  overload: Cress.LivingDocs.ScreenshotEvidence.#ctor*
+  nameWithType.vb: ScreenshotEvidence.New(String, String, String)
+  fullName.vb: Cress.LivingDocs.ScreenshotEvidence.New(String, String, String)
+  name.vb: New(String, String, String)
+- uid: Cress.LivingDocs.ScreenshotEvidence.FlowId
+  commentId: P:Cress.LivingDocs.ScreenshotEvidence.FlowId
+  id: FlowId
+  parent: Cress.LivingDocs.ScreenshotEvidence
+  langs:
+  - csharp
+  - vb
+  name: FlowId
+  nameWithType: ScreenshotEvidence.FlowId
+  fullName: Cress.LivingDocs.ScreenshotEvidence.FlowId
+  type: Property
+  source:
+    remote:
+      path: src/Cress.LivingDocs/DocumentModel.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: FlowId
+    path: ../src/Cress.LivingDocs/DocumentModel.cs
+    startLine: 48
+  assemblies:
+  - Cress.LivingDocs
+  namespace: Cress.LivingDocs
+  syntax:
+    content: public string FlowId { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property FlowId As String
+  overload: Cress.LivingDocs.ScreenshotEvidence.FlowId*
+- uid: Cress.LivingDocs.ScreenshotEvidence.StepName
+  commentId: P:Cress.LivingDocs.ScreenshotEvidence.StepName
+  id: StepName
+  parent: Cress.LivingDocs.ScreenshotEvidence
+  langs:
+  - csharp
+  - vb
+  name: StepName
+  nameWithType: ScreenshotEvidence.StepName
+  fullName: Cress.LivingDocs.ScreenshotEvidence.StepName
+  type: Property
+  source:
+    remote:
+      path: src/Cress.LivingDocs/DocumentModel.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: StepName
+    path: ../src/Cress.LivingDocs/DocumentModel.cs
+    startLine: 49
+  assemblies:
+  - Cress.LivingDocs
+  namespace: Cress.LivingDocs
+  syntax:
+    content: public string StepName { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property StepName As String
+  overload: Cress.LivingDocs.ScreenshotEvidence.StepName*
+- uid: Cress.LivingDocs.ScreenshotEvidence.FilePath
+  commentId: P:Cress.LivingDocs.ScreenshotEvidence.FilePath
+  id: FilePath
+  parent: Cress.LivingDocs.ScreenshotEvidence
+  langs:
+  - csharp
+  - vb
+  name: FilePath
+  nameWithType: ScreenshotEvidence.FilePath
+  fullName: Cress.LivingDocs.ScreenshotEvidence.FilePath
+  type: Property
+  source:
+    remote:
+      path: src/Cress.LivingDocs/DocumentModel.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: FilePath
+    path: ../src/Cress.LivingDocs/DocumentModel.cs
+    startLine: 50
+  assemblies:
+  - Cress.LivingDocs
+  namespace: Cress.LivingDocs
+  syntax:
+    content: public string FilePath { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property FilePath As String
+  overload: Cress.LivingDocs.ScreenshotEvidence.FilePath*
+references:
+- uid: Cress.LivingDocs
+  commentId: N:Cress.LivingDocs
+  href: Cress.html
+  name: Cress.LivingDocs
+  nameWithType: Cress.LivingDocs
+  fullName: Cress.LivingDocs
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.LivingDocs
+    name: LivingDocs
+    href: Cress.LivingDocs.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.LivingDocs
+    name: LivingDocs
+    href: Cress.LivingDocs.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.IEquatable{Cress.LivingDocs.ScreenshotEvidence}
+  commentId: T:System.IEquatable{Cress.LivingDocs.ScreenshotEvidence}
+  parent: System
+  definition: System.IEquatable`1
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<ScreenshotEvidence>
+  nameWithType: IEquatable<ScreenshotEvidence>
+  fullName: System.IEquatable<Cress.LivingDocs.ScreenshotEvidence>
+  nameWithType.vb: IEquatable(Of ScreenshotEvidence)
+  fullName.vb: System.IEquatable(Of Cress.LivingDocs.ScreenshotEvidence)
+  name.vb: IEquatable(Of ScreenshotEvidence)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - uid: Cress.LivingDocs.ScreenshotEvidence
+    name: ScreenshotEvidence
+    href: Cress.LivingDocs.ScreenshotEvidence.html
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Cress.LivingDocs.ScreenshotEvidence
+    name: ScreenshotEvidence
+    href: Cress.LivingDocs.ScreenshotEvidence.html
+  - name: )
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.IEquatable`1
+  commentId: T:System.IEquatable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<T>
+  nameWithType: IEquatable<T>
+  fullName: System.IEquatable<T>
+  nameWithType.vb: IEquatable(Of T)
+  fullName.vb: System.IEquatable(Of T)
+  name.vb: IEquatable(Of T)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Cress.LivingDocs.ScreenshotEvidence.#ctor*
+  commentId: Overload:Cress.LivingDocs.ScreenshotEvidence.#ctor
+  href: Cress.LivingDocs.ScreenshotEvidence.html#Cress_LivingDocs_ScreenshotEvidence__ctor_System_String_System_String_System_String_
+  name: ScreenshotEvidence
+  nameWithType: ScreenshotEvidence.ScreenshotEvidence
+  fullName: Cress.LivingDocs.ScreenshotEvidence.ScreenshotEvidence
+  nameWithType.vb: ScreenshotEvidence.New
+  fullName.vb: Cress.LivingDocs.ScreenshotEvidence.New
+  name.vb: New
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Cress.LivingDocs.ScreenshotEvidence.FlowId*
+  commentId: Overload:Cress.LivingDocs.ScreenshotEvidence.FlowId
+  href: Cress.LivingDocs.ScreenshotEvidence.html#Cress_LivingDocs_ScreenshotEvidence_FlowId
+  name: FlowId
+  nameWithType: ScreenshotEvidence.FlowId
+  fullName: Cress.LivingDocs.ScreenshotEvidence.FlowId
+- uid: Cress.LivingDocs.ScreenshotEvidence.StepName*
+  commentId: Overload:Cress.LivingDocs.ScreenshotEvidence.StepName
+  href: Cress.LivingDocs.ScreenshotEvidence.html#Cress_LivingDocs_ScreenshotEvidence_StepName
+  name: StepName
+  nameWithType: ScreenshotEvidence.StepName
+  fullName: Cress.LivingDocs.ScreenshotEvidence.StepName
+- uid: Cress.LivingDocs.ScreenshotEvidence.FilePath*
+  commentId: Overload:Cress.LivingDocs.ScreenshotEvidence.FilePath
+  href: Cress.LivingDocs.ScreenshotEvidence.html#Cress_LivingDocs_ScreenshotEvidence_FilePath
+  name: FilePath
+  nameWithType: ScreenshotEvidence.FilePath
+  fullName: Cress.LivingDocs.ScreenshotEvidence.FilePath

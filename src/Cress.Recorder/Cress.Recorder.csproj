@@ -4,8 +4,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="FlaUI.Core" />
-    <PackageReference Include="FlaUI.UIA3" />
     <PackageReference Include="YamlDotNet" />
   </ItemGroup>
 

@@ -2,6 +2,8 @@
 
 The developer guide is for contributors who need to understand the solution structure, run the full toolchain locally, extend Cress, and maintain the documentation and CI setup.
 
+![Project loaded in Studio](../images/studio/project-loaded.png)
+
 ## Topics
 
 - [Repository overview](repository-overview.md)

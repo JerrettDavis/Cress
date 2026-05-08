@@ -5,7 +5,7 @@ namespace Cress.Recorder.Tests.Inference;
 
 /// <summary>
 /// Unit tests for <see cref="StepInferenceEngine"/>.
-/// No FlaUI dependency — all events are constructed from plain C# value types.
+/// No Flawright dependency — all events are constructed from plain C# value types.
 /// </summary>
 public class StepInferenceEngineTests
 {

@@ -1,0 +1,1010 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Core.Models.RunOptions
+  commentId: T:Cress.Core.Models.RunOptions
+  id: RunOptions
+  parent: Cress.Core.Models
+  children:
+  - Cress.Core.Models.RunOptions.ContinueOnFailure
+  - Cress.Core.Models.RunOptions.DryRun
+  - Cress.Core.Models.RunOptions.EvidenceModeOverride
+  - Cress.Core.Models.RunOptions.FlowPath
+  - Cress.Core.Models.RunOptions.FlowPaths
+  - Cress.Core.Models.RunOptions.Parallel
+  - Cress.Core.Models.RunOptions.Profile
+  - Cress.Core.Models.RunOptions.ReportFormats
+  - Cress.Core.Models.RunOptions.RetryCountOverride
+  - Cress.Core.Models.RunOptions.ScreenshotPolicyOverride
+  - Cress.Core.Models.RunOptions.StartFromStep
+  - Cress.Core.Models.RunOptions.Tag
+  - Cress.Core.Models.RunOptions.Trigger
+  langs:
+  - csharp
+  - vb
+  name: RunOptions
+  nameWithType: RunOptions
+  fullName: Cress.Core.Models.RunOptions
+  type: Class
+  source:
+    remote:
+      path: src/Cress.Core/Models/ExecutionModels.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: RunOptions
+    path: ../src/Cress.Core/Models/ExecutionModels.cs
+    startLine: 11
+  assemblies:
+  - Cress.Core
+  namespace: Cress.Core.Models
+  syntax:
+    content: 'public record RunOptions : IEquatable<RunOptions>'
+    content.vb: Public Class RunOptions Implements IEquatable(Of RunOptions)
+  inheritance:
+  - System.Object
+  implements:
+  - System.IEquatable{Cress.Core.Models.RunOptions}
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Cress.Core.Models.RunOptions.FlowPath
+  commentId: P:Cress.Core.Models.RunOptions.FlowPath
+  id: FlowPath
+  parent: Cress.Core.Models.RunOptions
+  langs:
+  - csharp
+  - vb
+  name: FlowPath
+  nameWithType: RunOptions.FlowPath
+  fullName: Cress.Core.Models.RunOptions.FlowPath
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Core/Models/ExecutionModels.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: FlowPath
+    path: ../src/Cress.Core/Models/ExecutionModels.cs
+    startLine: 13
+  assemblies:
+  - Cress.Core
+  namespace: Cress.Core.Models
+  syntax:
+    content: public string? FlowPath { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property FlowPath As String
+  overload: Cress.Core.Models.RunOptions.FlowPath*
+- uid: Cress.Core.Models.RunOptions.FlowPaths
+  commentId: P:Cress.Core.Models.RunOptions.FlowPaths
+  id: FlowPaths
+  parent: Cress.Core.Models.RunOptions
+  langs:
+  - csharp
+  - vb
+  name: FlowPaths
+  nameWithType: RunOptions.FlowPaths
+  fullName: Cress.Core.Models.RunOptions.FlowPaths
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Core/Models/ExecutionModels.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: FlowPaths
+    path: ../src/Cress.Core/Models/ExecutionModels.cs
+    startLine: 14
+  assemblies:
+  - Cress.Core
+  namespace: Cress.Core.Models
+  syntax:
+    content: public IReadOnlyList<string> FlowPaths { get; init; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.IReadOnlyList{System.String}
+    content.vb: Public Property FlowPaths As IReadOnlyList(Of String)
+  overload: Cress.Core.Models.RunOptions.FlowPaths*
+- uid: Cress.Core.Models.RunOptions.Tag
+  commentId: P:Cress.Core.Models.RunOptions.Tag
+  id: Tag
+  parent: Cress.Core.Models.RunOptions
+  langs:
+  - csharp
+  - vb
+  name: Tag
+  nameWithType: RunOptions.Tag
+  fullName: Cress.Core.Models.RunOptions.Tag
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Core/Models/ExecutionModels.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Tag
+    path: ../src/Cress.Core/Models/ExecutionModels.cs
+    startLine: 15
+  assemblies:
+  - Cress.Core
+  namespace: Cress.Core.Models
+  syntax:
+    content: public string? Tag { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Tag As String
+  overload: Cress.Core.Models.RunOptions.Tag*
+- uid: Cress.Core.Models.RunOptions.Profile
+  commentId: P:Cress.Core.Models.RunOptions.Profile
+  id: Profile
+  parent: Cress.Core.Models.RunOptions
+  langs:
+  - csharp
+  - vb
+  name: Profile
+  nameWithType: RunOptions.Profile
+  fullName: Cress.Core.Models.RunOptions.Profile
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Core/Models/ExecutionModels.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Profile
+    path: ../src/Cress.Core/Models/ExecutionModels.cs
+    startLine: 16
+  assemblies:
+  - Cress.Core
+  namespace: Cress.Core.Models
+  syntax:
+    content: public string? Profile { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Profile As String
+  overload: Cress.Core.Models.RunOptions.Profile*
+- uid: Cress.Core.Models.RunOptions.Parallel
+  commentId: P:Cress.Core.Models.RunOptions.Parallel
+  id: Parallel
+  parent: Cress.Core.Models.RunOptions
+  langs:
+  - csharp
+  - vb
+  name: Parallel
+  nameWithType: RunOptions.Parallel
+  fullName: Cress.Core.Models.RunOptions.Parallel
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Core/Models/ExecutionModels.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Parallel
+    path: ../src/Cress.Core/Models/ExecutionModels.cs
+    startLine: 17
+  assemblies:
+  - Cress.Core
+  namespace: Cress.Core.Models
+  syntax:
+    content: public int? Parallel { get; init; }
+    parameters: []
+    return:
+      type: System.Nullable{System.Int32}
+    content.vb: Public Property Parallel As Integer?
+  overload: Cress.Core.Models.RunOptions.Parallel*
+- uid: Cress.Core.Models.RunOptions.ContinueOnFailure
+  commentId: P:Cress.Core.Models.RunOptions.ContinueOnFailure
+  id: ContinueOnFailure
+  parent: Cress.Core.Models.RunOptions
+  langs:
+  - csharp
+  - vb
+  name: ContinueOnFailure
+  nameWithType: RunOptions.ContinueOnFailure
+  fullName: Cress.Core.Models.RunOptions.ContinueOnFailure
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Core/Models/ExecutionModels.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: ContinueOnFailure
+    path: ../src/Cress.Core/Models/ExecutionModels.cs
+    startLine: 18
+  assemblies:
+  - Cress.Core
+  namespace: Cress.Core.Models
+  syntax:
+    content: public bool ContinueOnFailure { get; init; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property ContinueOnFailure As Boolean
+  overload: Cress.Core.Models.RunOptions.ContinueOnFailure*
+- uid: Cress.Core.Models.RunOptions.DryRun
+  commentId: P:Cress.Core.Models.RunOptions.DryRun
+  id: DryRun
+  parent: Cress.Core.Models.RunOptions
+  langs:
+  - csharp
+  - vb
+  name: DryRun
+  nameWithType: RunOptions.DryRun
+  fullName: Cress.Core.Models.RunOptions.DryRun
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Core/Models/ExecutionModels.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: DryRun
+    path: ../src/Cress.Core/Models/ExecutionModels.cs
+    startLine: 19
+  assemblies:
+  - Cress.Core
+  namespace: Cress.Core.Models
+  syntax:
+    content: public bool DryRun { get; init; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property DryRun As Boolean
+  overload: Cress.Core.Models.RunOptions.DryRun*
+- uid: Cress.Core.Models.RunOptions.EvidenceModeOverride
+  commentId: P:Cress.Core.Models.RunOptions.EvidenceModeOverride
+  id: EvidenceModeOverride
+  parent: Cress.Core.Models.RunOptions
+  langs:
+  - csharp
+  - vb
+  name: EvidenceModeOverride
+  nameWithType: RunOptions.EvidenceModeOverride
+  fullName: Cress.Core.Models.RunOptions.EvidenceModeOverride
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Core/Models/ExecutionModels.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: EvidenceModeOverride
+    path: ../src/Cress.Core/Models/ExecutionModels.cs
+    startLine: 20
+  assemblies:
+  - Cress.Core
+  namespace: Cress.Core.Models
+  syntax:
+    content: public string? EvidenceModeOverride { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property EvidenceModeOverride As String
+  overload: Cress.Core.Models.RunOptions.EvidenceModeOverride*
+- uid: Cress.Core.Models.RunOptions.ScreenshotPolicyOverride
+  commentId: P:Cress.Core.Models.RunOptions.ScreenshotPolicyOverride
+  id: ScreenshotPolicyOverride
+  parent: Cress.Core.Models.RunOptions
+  langs:
+  - csharp
+  - vb
+  name: ScreenshotPolicyOverride
+  nameWithType: RunOptions.ScreenshotPolicyOverride
+  fullName: Cress.Core.Models.RunOptions.ScreenshotPolicyOverride
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Core/Models/ExecutionModels.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: ScreenshotPolicyOverride
+    path: ../src/Cress.Core/Models/ExecutionModels.cs
+    startLine: 21
+  assemblies:
+  - Cress.Core
+  namespace: Cress.Core.Models
+  syntax:
+    content: public string? ScreenshotPolicyOverride { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property ScreenshotPolicyOverride As String
+  overload: Cress.Core.Models.RunOptions.ScreenshotPolicyOverride*
+- uid: Cress.Core.Models.RunOptions.StartFromStep
+  commentId: P:Cress.Core.Models.RunOptions.StartFromStep
+  id: StartFromStep
+  parent: Cress.Core.Models.RunOptions
+  langs:
+  - csharp
+  - vb
+  name: StartFromStep
+  nameWithType: RunOptions.StartFromStep
+  fullName: Cress.Core.Models.RunOptions.StartFromStep
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Core/Models/ExecutionModels.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: StartFromStep
+    path: ../src/Cress.Core/Models/ExecutionModels.cs
+    startLine: 22
+  assemblies:
+  - Cress.Core
+  namespace: Cress.Core.Models
+  syntax:
+    content: public string? StartFromStep { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property StartFromStep As String
+  overload: Cress.Core.Models.RunOptions.StartFromStep*
+- uid: Cress.Core.Models.RunOptions.RetryCountOverride
+  commentId: P:Cress.Core.Models.RunOptions.RetryCountOverride
+  id: RetryCountOverride
+  parent: Cress.Core.Models.RunOptions
+  langs:
+  - csharp
+  - vb
+  name: RetryCountOverride
+  nameWithType: RunOptions.RetryCountOverride
+  fullName: Cress.Core.Models.RunOptions.RetryCountOverride
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Core/Models/ExecutionModels.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: RetryCountOverride
+    path: ../src/Cress.Core/Models/ExecutionModels.cs
+    startLine: 23
+  assemblies:
+  - Cress.Core
+  namespace: Cress.Core.Models
+  syntax:
+    content: public int? RetryCountOverride { get; init; }
+    parameters: []
+    return:
+      type: System.Nullable{System.Int32}
+    content.vb: Public Property RetryCountOverride As Integer?
+  overload: Cress.Core.Models.RunOptions.RetryCountOverride*
+- uid: Cress.Core.Models.RunOptions.Trigger
+  commentId: P:Cress.Core.Models.RunOptions.Trigger
+  id: Trigger
+  parent: Cress.Core.Models.RunOptions
+  langs:
+  - csharp
+  - vb
+  name: Trigger
+  nameWithType: RunOptions.Trigger
+  fullName: Cress.Core.Models.RunOptions.Trigger
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Core/Models/ExecutionModels.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Trigger
+    path: ../src/Cress.Core/Models/ExecutionModels.cs
+    startLine: 24
+  assemblies:
+  - Cress.Core
+  namespace: Cress.Core.Models
+  syntax:
+    content: public string? Trigger { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Trigger As String
+  overload: Cress.Core.Models.RunOptions.Trigger*
+- uid: Cress.Core.Models.RunOptions.ReportFormats
+  commentId: P:Cress.Core.Models.RunOptions.ReportFormats
+  id: ReportFormats
+  parent: Cress.Core.Models.RunOptions
+  langs:
+  - csharp
+  - vb
+  name: ReportFormats
+  nameWithType: RunOptions.ReportFormats
+  fullName: Cress.Core.Models.RunOptions.ReportFormats
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Core/Models/ExecutionModels.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: ReportFormats
+    path: ../src/Cress.Core/Models/ExecutionModels.cs
+    startLine: 25
+  assemblies:
+  - Cress.Core
+  namespace: Cress.Core.Models
+  syntax:
+    content: public IReadOnlyList<string> ReportFormats { get; init; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.IReadOnlyList{System.String}
+    content.vb: Public Property ReportFormats As IReadOnlyList(Of String)
+  overload: Cress.Core.Models.RunOptions.ReportFormats*
+references:
+- uid: Cress.Core.Models
+  commentId: N:Cress.Core.Models
+  href: Cress.html
+  name: Cress.Core.Models
+  nameWithType: Cress.Core.Models
+  fullName: Cress.Core.Models
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Core
+    name: Core
+    href: Cress.Core.html
+  - name: .
+  - uid: Cress.Core.Models
+    name: Models
+    href: Cress.Core.Models.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Core
+    name: Core
+    href: Cress.Core.html
+  - name: .
+  - uid: Cress.Core.Models
+    name: Models
+    href: Cress.Core.Models.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.IEquatable{Cress.Core.Models.RunOptions}
+  commentId: T:System.IEquatable{Cress.Core.Models.RunOptions}
+  parent: System
+  definition: System.IEquatable`1
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<RunOptions>
+  nameWithType: IEquatable<RunOptions>
+  fullName: System.IEquatable<Cress.Core.Models.RunOptions>
+  nameWithType.vb: IEquatable(Of RunOptions)
+  fullName.vb: System.IEquatable(Of Cress.Core.Models.RunOptions)
+  name.vb: IEquatable(Of RunOptions)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - uid: Cress.Core.Models.RunOptions
+    name: RunOptions
+    href: Cress.Core.Models.RunOptions.html
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Cress.Core.Models.RunOptions
+    name: RunOptions
+    href: Cress.Core.Models.RunOptions.html
+  - name: )
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.IEquatable`1
+  commentId: T:System.IEquatable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<T>
+  nameWithType: IEquatable<T>
+  fullName: System.IEquatable<T>
+  nameWithType.vb: IEquatable(Of T)
+  fullName.vb: System.IEquatable(Of T)
+  name.vb: IEquatable(Of T)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Cress.Core.Models.RunOptions.FlowPath*
+  commentId: Overload:Cress.Core.Models.RunOptions.FlowPath
+  href: Cress.Core.Models.RunOptions.html#Cress_Core_Models_RunOptions_FlowPath
+  name: FlowPath
+  nameWithType: RunOptions.FlowPath
+  fullName: Cress.Core.Models.RunOptions.FlowPath
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Cress.Core.Models.RunOptions.FlowPaths*
+  commentId: Overload:Cress.Core.Models.RunOptions.FlowPaths
+  href: Cress.Core.Models.RunOptions.html#Cress_Core_Models_RunOptions_FlowPaths
+  name: FlowPaths
+  nameWithType: RunOptions.FlowPaths
+  fullName: Cress.Core.Models.RunOptions.FlowPaths
+- uid: System.Collections.Generic.IReadOnlyList{System.String}
+  commentId: T:System.Collections.Generic.IReadOnlyList{System.String}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IReadOnlyList`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  name: IReadOnlyList<string>
+  nameWithType: IReadOnlyList<string>
+  fullName: System.Collections.Generic.IReadOnlyList<string>
+  nameWithType.vb: IReadOnlyList(Of String)
+  fullName.vb: System.Collections.Generic.IReadOnlyList(Of String)
+  name.vb: IReadOnlyList(Of String)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+- uid: System.Collections.Generic.IReadOnlyList`1
+  commentId: T:System.Collections.Generic.IReadOnlyList`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  name: IReadOnlyList<T>
+  nameWithType: IReadOnlyList<T>
+  fullName: System.Collections.Generic.IReadOnlyList<T>
+  nameWithType.vb: IReadOnlyList(Of T)
+  fullName.vb: System.Collections.Generic.IReadOnlyList(Of T)
+  name.vb: IReadOnlyList(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: Cress.Core.Models.RunOptions.Tag*
+  commentId: Overload:Cress.Core.Models.RunOptions.Tag
+  href: Cress.Core.Models.RunOptions.html#Cress_Core_Models_RunOptions_Tag
+  name: Tag
+  nameWithType: RunOptions.Tag
+  fullName: Cress.Core.Models.RunOptions.Tag
+- uid: Cress.Core.Models.RunOptions.Profile*
+  commentId: Overload:Cress.Core.Models.RunOptions.Profile
+  href: Cress.Core.Models.RunOptions.html#Cress_Core_Models_RunOptions_Profile
+  name: Profile
+  nameWithType: RunOptions.Profile
+  fullName: Cress.Core.Models.RunOptions.Profile
+- uid: Cress.Core.Models.RunOptions.Parallel*
+  commentId: Overload:Cress.Core.Models.RunOptions.Parallel
+  href: Cress.Core.Models.RunOptions.html#Cress_Core_Models_RunOptions_Parallel
+  name: Parallel
+  nameWithType: RunOptions.Parallel
+  fullName: Cress.Core.Models.RunOptions.Parallel
+- uid: System.Nullable{System.Int32}
+  commentId: T:System.Nullable{System.Int32}
+  parent: System
+  definition: System.Nullable`1
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int?
+  nameWithType: int?
+  fullName: int?
+  nameWithType.vb: Integer?
+  fullName.vb: Integer?
+  name.vb: Integer?
+  spec.csharp:
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: '?'
+  spec.vb:
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: '?'
+- uid: System.Nullable`1
+  commentId: T:System.Nullable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.nullable-1
+  name: Nullable<T>
+  nameWithType: Nullable<T>
+  fullName: System.Nullable<T>
+  nameWithType.vb: Nullable(Of T)
+  fullName.vb: System.Nullable(Of T)
+  name.vb: Nullable(Of T)
+  spec.csharp:
+  - uid: System.Nullable`1
+    name: Nullable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.nullable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Nullable`1
+    name: Nullable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.nullable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Cress.Core.Models.RunOptions.ContinueOnFailure*
+  commentId: Overload:Cress.Core.Models.RunOptions.ContinueOnFailure
+  href: Cress.Core.Models.RunOptions.html#Cress_Core_Models_RunOptions_ContinueOnFailure
+  name: ContinueOnFailure
+  nameWithType: RunOptions.ContinueOnFailure
+  fullName: Cress.Core.Models.RunOptions.ContinueOnFailure
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Cress.Core.Models.RunOptions.DryRun*
+  commentId: Overload:Cress.Core.Models.RunOptions.DryRun
+  href: Cress.Core.Models.RunOptions.html#Cress_Core_Models_RunOptions_DryRun
+  name: DryRun
+  nameWithType: RunOptions.DryRun
+  fullName: Cress.Core.Models.RunOptions.DryRun
+- uid: Cress.Core.Models.RunOptions.EvidenceModeOverride*
+  commentId: Overload:Cress.Core.Models.RunOptions.EvidenceModeOverride
+  href: Cress.Core.Models.RunOptions.html#Cress_Core_Models_RunOptions_EvidenceModeOverride
+  name: EvidenceModeOverride
+  nameWithType: RunOptions.EvidenceModeOverride
+  fullName: Cress.Core.Models.RunOptions.EvidenceModeOverride
+- uid: Cress.Core.Models.RunOptions.ScreenshotPolicyOverride*
+  commentId: Overload:Cress.Core.Models.RunOptions.ScreenshotPolicyOverride
+  href: Cress.Core.Models.RunOptions.html#Cress_Core_Models_RunOptions_ScreenshotPolicyOverride
+  name: ScreenshotPolicyOverride
+  nameWithType: RunOptions.ScreenshotPolicyOverride
+  fullName: Cress.Core.Models.RunOptions.ScreenshotPolicyOverride
+- uid: Cress.Core.Models.RunOptions.StartFromStep*
+  commentId: Overload:Cress.Core.Models.RunOptions.StartFromStep
+  href: Cress.Core.Models.RunOptions.html#Cress_Core_Models_RunOptions_StartFromStep
+  name: StartFromStep
+  nameWithType: RunOptions.StartFromStep
+  fullName: Cress.Core.Models.RunOptions.StartFromStep
+- uid: Cress.Core.Models.RunOptions.RetryCountOverride*
+  commentId: Overload:Cress.Core.Models.RunOptions.RetryCountOverride
+  href: Cress.Core.Models.RunOptions.html#Cress_Core_Models_RunOptions_RetryCountOverride
+  name: RetryCountOverride
+  nameWithType: RunOptions.RetryCountOverride
+  fullName: Cress.Core.Models.RunOptions.RetryCountOverride
+- uid: Cress.Core.Models.RunOptions.Trigger*
+  commentId: Overload:Cress.Core.Models.RunOptions.Trigger
+  href: Cress.Core.Models.RunOptions.html#Cress_Core_Models_RunOptions_Trigger
+  name: Trigger
+  nameWithType: RunOptions.Trigger
+  fullName: Cress.Core.Models.RunOptions.Trigger
+- uid: Cress.Core.Models.RunOptions.ReportFormats*
+  commentId: Overload:Cress.Core.Models.RunOptions.ReportFormats
+  href: Cress.Core.Models.RunOptions.html#Cress_Core_Models_RunOptions_ReportFormats
+  name: ReportFormats
+  nameWithType: RunOptions.ReportFormats
+  fullName: Cress.Core.Models.RunOptions.ReportFormats

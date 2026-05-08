@@ -1,0 +1,92 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Recorder.Inference
+  commentId: N:Cress.Recorder.Inference
+  id: Cress.Recorder.Inference
+  children:
+  - Cress.Recorder.Inference.InferenceDomain
+  - Cress.Recorder.Inference.InferenceOptions
+  - Cress.Recorder.Inference.InferredStep
+  - Cress.Recorder.Inference.Locator
+  - Cress.Recorder.Inference.StepInferenceEngine
+  - Cress.Recorder.Inference.StepKind
+  langs:
+  - csharp
+  - vb
+  name: Cress.Recorder.Inference
+  nameWithType: Cress.Recorder.Inference
+  fullName: Cress.Recorder.Inference
+  type: Namespace
+  assemblies:
+  - Cress.Recorder
+references:
+- uid: Cress.Recorder.Inference.InferenceDomain
+  commentId: T:Cress.Recorder.Inference.InferenceDomain
+  parent: Cress.Recorder.Inference
+  href: Cress.Recorder.Inference.InferenceDomain.html
+  name: InferenceDomain
+  nameWithType: InferenceDomain
+  fullName: Cress.Recorder.Inference.InferenceDomain
+- uid: Cress.Recorder.Inference.InferenceOptions
+  commentId: T:Cress.Recorder.Inference.InferenceOptions
+  parent: Cress.Recorder.Inference
+  href: Cress.Recorder.Inference.InferenceOptions.html
+  name: InferenceOptions
+  nameWithType: InferenceOptions
+  fullName: Cress.Recorder.Inference.InferenceOptions
+- uid: Cress.Recorder.Inference.StepKind
+  commentId: T:Cress.Recorder.Inference.StepKind
+  parent: Cress.Recorder.Inference
+  href: Cress.Recorder.Inference.StepKind.html
+  name: StepKind
+  nameWithType: StepKind
+  fullName: Cress.Recorder.Inference.StepKind
+- uid: Cress.Recorder.Inference.Locator
+  commentId: T:Cress.Recorder.Inference.Locator
+  parent: Cress.Recorder.Inference
+  href: Cress.Recorder.Inference.Locator.html
+  name: Locator
+  nameWithType: Locator
+  fullName: Cress.Recorder.Inference.Locator
+- uid: Cress.Recorder.Inference.InferredStep
+  commentId: T:Cress.Recorder.Inference.InferredStep
+  href: Cress.Recorder.Inference.InferredStep.html
+  name: InferredStep
+  nameWithType: InferredStep
+  fullName: Cress.Recorder.Inference.InferredStep
+- uid: Cress.Recorder.Inference.StepInferenceEngine
+  commentId: T:Cress.Recorder.Inference.StepInferenceEngine
+  href: Cress.Recorder.Inference.StepInferenceEngine.html
+  name: StepInferenceEngine
+  nameWithType: StepInferenceEngine
+  fullName: Cress.Recorder.Inference.StepInferenceEngine
+- uid: Cress.Recorder.Inference
+  commentId: N:Cress.Recorder.Inference
+  href: Cress.html
+  name: Cress.Recorder.Inference
+  nameWithType: Cress.Recorder.Inference
+  fullName: Cress.Recorder.Inference
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Recorder
+    name: Recorder
+    href: Cress.Recorder.html
+  - name: .
+  - uid: Cress.Recorder.Inference
+    name: Inference
+    href: Cress.Recorder.Inference.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Recorder
+    name: Recorder
+    href: Cress.Recorder.html
+  - name: .
+  - uid: Cress.Recorder.Inference
+    name: Inference
+    href: Cress.Recorder.Inference.html

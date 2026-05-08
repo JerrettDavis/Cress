@@ -1,0 +1,546 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Studio.Services.StudioCapabilityCoverage
+  commentId: T:Cress.Studio.Services.StudioCapabilityCoverage
+  id: StudioCapabilityCoverage
+  parent: Cress.Studio.Services
+  children:
+  - Cress.Studio.Services.StudioCapabilityCoverage.AcceptanceCriteriaCount
+  - Cress.Studio.Services.StudioCapabilityCoverage.CapabilityId
+  - Cress.Studio.Services.StudioCapabilityCoverage.CapabilityName
+  - Cress.Studio.Services.StudioCapabilityCoverage.FlowCount
+  - Cress.Studio.Services.StudioCapabilityCoverage.LatestOutcome
+  langs:
+  - csharp
+  - vb
+  name: StudioCapabilityCoverage
+  nameWithType: StudioCapabilityCoverage
+  fullName: Cress.Studio.Services.StudioCapabilityCoverage
+  type: Class
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/StudioProjectService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: StudioCapabilityCoverage
+    path: ../src/Cress.Studio.Core/Services/StudioProjectService.cs
+    startLine: 99
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  syntax:
+    content: 'public sealed record StudioCapabilityCoverage : IEquatable<StudioCapabilityCoverage>'
+    content.vb: Public NotInheritable Class StudioCapabilityCoverage Implements IEquatable(Of StudioCapabilityCoverage)
+  inheritance:
+  - System.Object
+  implements:
+  - System.IEquatable{Cress.Studio.Services.StudioCapabilityCoverage}
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Cress.Studio.Services.StudioCapabilityCoverage.CapabilityId
+  commentId: P:Cress.Studio.Services.StudioCapabilityCoverage.CapabilityId
+  id: CapabilityId
+  parent: Cress.Studio.Services.StudioCapabilityCoverage
+  langs:
+  - csharp
+  - vb
+  name: CapabilityId
+  nameWithType: StudioCapabilityCoverage.CapabilityId
+  fullName: Cress.Studio.Services.StudioCapabilityCoverage.CapabilityId
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/StudioProjectService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: CapabilityId
+    path: ../src/Cress.Studio.Core/Services/StudioProjectService.cs
+    startLine: 101
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  syntax:
+    content: public string CapabilityId { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property CapabilityId As String
+  overload: Cress.Studio.Services.StudioCapabilityCoverage.CapabilityId*
+- uid: Cress.Studio.Services.StudioCapabilityCoverage.CapabilityName
+  commentId: P:Cress.Studio.Services.StudioCapabilityCoverage.CapabilityName
+  id: CapabilityName
+  parent: Cress.Studio.Services.StudioCapabilityCoverage
+  langs:
+  - csharp
+  - vb
+  name: CapabilityName
+  nameWithType: StudioCapabilityCoverage.CapabilityName
+  fullName: Cress.Studio.Services.StudioCapabilityCoverage.CapabilityName
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/StudioProjectService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: CapabilityName
+    path: ../src/Cress.Studio.Core/Services/StudioProjectService.cs
+    startLine: 102
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  syntax:
+    content: public string CapabilityName { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property CapabilityName As String
+  overload: Cress.Studio.Services.StudioCapabilityCoverage.CapabilityName*
+- uid: Cress.Studio.Services.StudioCapabilityCoverage.FlowCount
+  commentId: P:Cress.Studio.Services.StudioCapabilityCoverage.FlowCount
+  id: FlowCount
+  parent: Cress.Studio.Services.StudioCapabilityCoverage
+  langs:
+  - csharp
+  - vb
+  name: FlowCount
+  nameWithType: StudioCapabilityCoverage.FlowCount
+  fullName: Cress.Studio.Services.StudioCapabilityCoverage.FlowCount
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/StudioProjectService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: FlowCount
+    path: ../src/Cress.Studio.Core/Services/StudioProjectService.cs
+    startLine: 103
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  syntax:
+    content: public int FlowCount { get; init; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property FlowCount As Integer
+  overload: Cress.Studio.Services.StudioCapabilityCoverage.FlowCount*
+- uid: Cress.Studio.Services.StudioCapabilityCoverage.AcceptanceCriteriaCount
+  commentId: P:Cress.Studio.Services.StudioCapabilityCoverage.AcceptanceCriteriaCount
+  id: AcceptanceCriteriaCount
+  parent: Cress.Studio.Services.StudioCapabilityCoverage
+  langs:
+  - csharp
+  - vb
+  name: AcceptanceCriteriaCount
+  nameWithType: StudioCapabilityCoverage.AcceptanceCriteriaCount
+  fullName: Cress.Studio.Services.StudioCapabilityCoverage.AcceptanceCriteriaCount
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/StudioProjectService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: AcceptanceCriteriaCount
+    path: ../src/Cress.Studio.Core/Services/StudioProjectService.cs
+    startLine: 104
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  syntax:
+    content: public int AcceptanceCriteriaCount { get; init; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property AcceptanceCriteriaCount As Integer
+  overload: Cress.Studio.Services.StudioCapabilityCoverage.AcceptanceCriteriaCount*
+- uid: Cress.Studio.Services.StudioCapabilityCoverage.LatestOutcome
+  commentId: P:Cress.Studio.Services.StudioCapabilityCoverage.LatestOutcome
+  id: LatestOutcome
+  parent: Cress.Studio.Services.StudioCapabilityCoverage
+  langs:
+  - csharp
+  - vb
+  name: LatestOutcome
+  nameWithType: StudioCapabilityCoverage.LatestOutcome
+  fullName: Cress.Studio.Services.StudioCapabilityCoverage.LatestOutcome
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/StudioProjectService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: LatestOutcome
+    path: ../src/Cress.Studio.Core/Services/StudioProjectService.cs
+    startLine: 105
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  syntax:
+    content: public string LatestOutcome { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property LatestOutcome As String
+  overload: Cress.Studio.Services.StudioCapabilityCoverage.LatestOutcome*
+references:
+- uid: Cress.Studio.Services
+  commentId: N:Cress.Studio.Services
+  href: Cress.html
+  name: Cress.Studio.Services
+  nameWithType: Cress.Studio.Services
+  fullName: Cress.Studio.Services
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Studio
+    name: Studio
+    href: Cress.Studio.html
+  - name: .
+  - uid: Cress.Studio.Services
+    name: Services
+    href: Cress.Studio.Services.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Studio
+    name: Studio
+    href: Cress.Studio.html
+  - name: .
+  - uid: Cress.Studio.Services
+    name: Services
+    href: Cress.Studio.Services.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.IEquatable{Cress.Studio.Services.StudioCapabilityCoverage}
+  commentId: T:System.IEquatable{Cress.Studio.Services.StudioCapabilityCoverage}
+  parent: System
+  definition: System.IEquatable`1
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<StudioCapabilityCoverage>
+  nameWithType: IEquatable<StudioCapabilityCoverage>
+  fullName: System.IEquatable<Cress.Studio.Services.StudioCapabilityCoverage>
+  nameWithType.vb: IEquatable(Of StudioCapabilityCoverage)
+  fullName.vb: System.IEquatable(Of Cress.Studio.Services.StudioCapabilityCoverage)
+  name.vb: IEquatable(Of StudioCapabilityCoverage)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - uid: Cress.Studio.Services.StudioCapabilityCoverage
+    name: StudioCapabilityCoverage
+    href: Cress.Studio.Services.StudioCapabilityCoverage.html
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Cress.Studio.Services.StudioCapabilityCoverage
+    name: StudioCapabilityCoverage
+    href: Cress.Studio.Services.StudioCapabilityCoverage.html
+  - name: )
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.IEquatable`1
+  commentId: T:System.IEquatable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<T>
+  nameWithType: IEquatable<T>
+  fullName: System.IEquatable<T>
+  nameWithType.vb: IEquatable(Of T)
+  fullName.vb: System.IEquatable(Of T)
+  name.vb: IEquatable(Of T)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Cress.Studio.Services.StudioCapabilityCoverage.CapabilityId*
+  commentId: Overload:Cress.Studio.Services.StudioCapabilityCoverage.CapabilityId
+  href: Cress.Studio.Services.StudioCapabilityCoverage.html#Cress_Studio_Services_StudioCapabilityCoverage_CapabilityId
+  name: CapabilityId
+  nameWithType: StudioCapabilityCoverage.CapabilityId
+  fullName: Cress.Studio.Services.StudioCapabilityCoverage.CapabilityId
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Cress.Studio.Services.StudioCapabilityCoverage.CapabilityName*
+  commentId: Overload:Cress.Studio.Services.StudioCapabilityCoverage.CapabilityName
+  href: Cress.Studio.Services.StudioCapabilityCoverage.html#Cress_Studio_Services_StudioCapabilityCoverage_CapabilityName
+  name: CapabilityName
+  nameWithType: StudioCapabilityCoverage.CapabilityName
+  fullName: Cress.Studio.Services.StudioCapabilityCoverage.CapabilityName
+- uid: Cress.Studio.Services.StudioCapabilityCoverage.FlowCount*
+  commentId: Overload:Cress.Studio.Services.StudioCapabilityCoverage.FlowCount
+  href: Cress.Studio.Services.StudioCapabilityCoverage.html#Cress_Studio_Services_StudioCapabilityCoverage_FlowCount
+  name: FlowCount
+  nameWithType: StudioCapabilityCoverage.FlowCount
+  fullName: Cress.Studio.Services.StudioCapabilityCoverage.FlowCount
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Cress.Studio.Services.StudioCapabilityCoverage.AcceptanceCriteriaCount*
+  commentId: Overload:Cress.Studio.Services.StudioCapabilityCoverage.AcceptanceCriteriaCount
+  href: Cress.Studio.Services.StudioCapabilityCoverage.html#Cress_Studio_Services_StudioCapabilityCoverage_AcceptanceCriteriaCount
+  name: AcceptanceCriteriaCount
+  nameWithType: StudioCapabilityCoverage.AcceptanceCriteriaCount
+  fullName: Cress.Studio.Services.StudioCapabilityCoverage.AcceptanceCriteriaCount
+- uid: Cress.Studio.Services.StudioCapabilityCoverage.LatestOutcome*
+  commentId: Overload:Cress.Studio.Services.StudioCapabilityCoverage.LatestOutcome
+  href: Cress.Studio.Services.StudioCapabilityCoverage.html#Cress_Studio_Services_StudioCapabilityCoverage_LatestOutcome
+  name: LatestOutcome
+  nameWithType: StudioCapabilityCoverage.LatestOutcome
+  fullName: Cress.Studio.Services.StudioCapabilityCoverage.LatestOutcome

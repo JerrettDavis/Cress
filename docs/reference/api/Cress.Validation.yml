@@ -1,0 +1,46 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Validation
+  commentId: N:Cress.Validation
+  id: Cress.Validation
+  children:
+  - Cress.Validation.ProjectValidator
+  langs:
+  - csharp
+  - vb
+  name: Cress.Validation
+  nameWithType: Cress.Validation
+  fullName: Cress.Validation
+  type: Namespace
+  assemblies:
+  - Cress.Validation
+references:
+- uid: Cress.Validation.ProjectValidator
+  commentId: T:Cress.Validation.ProjectValidator
+  parent: Cress.Validation
+  href: Cress.Validation.ProjectValidator.html
+  name: ProjectValidator
+  nameWithType: ProjectValidator
+  fullName: Cress.Validation.ProjectValidator
+- uid: Cress.Validation
+  commentId: N:Cress.Validation
+  href: Cress.html
+  name: Cress.Validation
+  nameWithType: Cress.Validation
+  fullName: Cress.Validation
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Validation
+    name: Validation
+    href: Cress.Validation.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Validation
+    name: Validation
+    href: Cress.Validation.html

@@ -6,7 +6,7 @@
     <ProjectReference Include="..\Cress.Specs\Cress.Specs.csproj" />
     <ProjectReference Include="..\Cress.Validation\Cress.Validation.csproj" />
     <ProjectReference Include="..\Cress.Execution\Cress.Execution.csproj" />
-    <ProjectReference Include="..\Cress.Execution.FlaUi\Cress.Execution.FlaUi.csproj" />
+    <ProjectReference Include="..\Cress.Execution.Flawright\Cress.Execution.Flawright.csproj" />
     <ProjectReference Include="..\Cress.Recorder\Cress.Recorder.csproj" />
   </ItemGroup>
 

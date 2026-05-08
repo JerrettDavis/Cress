@@ -51,7 +51,7 @@ drivers:
     enabled: false
   playwright:
     enabled: false
-  flaui:
+  flawright:
     enabled: false
 plugins:
   discover:

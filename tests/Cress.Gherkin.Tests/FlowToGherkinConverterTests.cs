@@ -85,6 +85,33 @@ public sealed class FlowToGherkinConverterTests
     }
 
     [Fact]
+    public void Convert_DesktopSelectorFlow_UsesSelectorFriendlyPhrases()
+    {
+        var converter = BuildConverter();
+        var flow = new CressFlow
+        {
+            Version = 1,
+            Id = "desktop.selector-flow",
+            Name = "Desktop selector flow",
+            When =
+            [
+                new FlowAction { Step = "ui.launch", With = new() { ["application"] = "calc.exe" } },
+                new FlowAction { Step = "ui.invoke", With = new() { ["selector"] = "Clear Button" } }
+            ],
+            Then =
+            [
+                new FlowExpectation { Expect = "ui.assert-text", With = new() { ["selector"] = "Calculator Results", ["text"] = "Display is 4" } }
+            ]
+        };
+
+        var result = converter.Convert(flow);
+
+        Assert.Contains("Given I launch the \"calc.exe\" application", result);
+        Assert.Contains("And I invoke Clear Button", result);
+        Assert.Contains("Then Calculator Results should display \"Display is 4\"", result);
+    }
+
+    [Fact]
     public void Convert_MultipleThenSteps_SecondStepUsesAnd()
     {
         var converter = BuildConverter();

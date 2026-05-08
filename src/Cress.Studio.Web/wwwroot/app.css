@@ -1791,6 +1791,102 @@ input[type="checkbox"] {
     white-space: nowrap;
 }
 
+.flow-graph-panel {
+    overflow-x: auto;
+}
+
+.flow-graph-summary {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    justify-content: flex-end;
+}
+
+.flow-graph-sequence {
+    display: flex;
+    align-items: stretch;
+    gap: 0.5rem;
+    min-width: max-content;
+    padding-bottom: 0.15rem;
+}
+
+.flow-graph-node {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    min-width: 10rem;
+    max-width: 12rem;
+    padding: 0.6rem 0.7rem;
+    border: 1px solid var(--color-border);
+    background: var(--color-surface-alt);
+}
+
+.flow-graph-node-kind {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--color-subtle);
+}
+
+.flow-graph-node-title {
+    font-size: 12px;
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+}
+
+.flow-graph-node-subtitle,
+.flow-graph-node-detail {
+    font-size: 11px;
+    color: var(--color-muted);
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+}
+
+.flow-graph-node--start,
+.flow-graph-node--end {
+    border-color: var(--color-accent-border);
+    background: color-mix(in srgb, var(--color-accent-soft) 45%, var(--color-surface-alt));
+}
+
+.flow-graph-node--fixture {
+    border-color: color-mix(in srgb, var(--color-warning) 40%, var(--color-border));
+    background: color-mix(in srgb, var(--color-warning-soft) 55%, var(--color-surface-alt));
+}
+
+.flow-graph-node--action,
+.flow-graph-node--scenario {
+    border-color: color-mix(in srgb, var(--color-accent) 45%, var(--color-border));
+    background: color-mix(in srgb, var(--color-accent-soft) 55%, var(--color-surface-alt));
+}
+
+.flow-graph-node--expectation,
+.flow-graph-node--decision {
+    border-color: color-mix(in srgb, var(--color-success) 40%, var(--color-border));
+    background: color-mix(in srgb, var(--color-success-soft) 55%, var(--color-surface-alt));
+}
+
+.flow-graph-edge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.5rem;
+    color: var(--color-muted);
+    font-variant-numeric: tabular-nums;
+}
+
+.flow-graph-edge-arrow {
+    font-size: 1rem;
+    line-height: 1;
+}
+
+.flow-graph-edge-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
 /* ArtifactPreviewPanel: file path */
 .artifact-path {
     direction: rtl;
@@ -1896,6 +1992,52 @@ input[type="checkbox"] {
 .flake-flow-name {
     font-weight: 600;
     font-size: 12px;
+}
+
+/* LiveRunPanel */
+.live-run-panel {
+    gap: 0.75rem;
+}
+
+.live-run-panel-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    align-items: center;
+}
+
+.live-run-summary,
+.live-run-progress-grid {
+    display: grid;
+    gap: 0.6rem;
+    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+}
+
+.live-run-summary .summary-card {
+    min-height: 5.5rem;
+}
+
+.live-run-progress-grid progress {
+    width: 100%;
+    height: 0.75rem;
+    accent-color: var(--color-accent);
+}
+
+.live-run-log {
+    margin: 0;
+    padding: 0.5rem 0.75rem 0.5rem 1.5rem;
+    border: 1px solid var(--color-border);
+    background: var(--color-surface-inset);
+    color: var(--color-foreground);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    line-height: 1.45;
+    max-height: 16rem;
+    overflow: auto;
+}
+
+.live-run-log li + li {
+    margin-top: 0.25rem;
 }
 
 .flake-flow-id {

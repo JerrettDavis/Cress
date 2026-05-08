@@ -3,11 +3,8 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Windows.Forms;
 using Cress.Core.Models;
-using FlaUI.Core.AutomationElements;
-using FlaUI.Core.Capturing;
-using FlaUI.Core.Definitions;
-using FlaUI.UIA3;
-using FlaUiApplication = FlaUI.Core.Application;
+using JerrettDavis.Flawright;
+using JerrettDavis.Flawright.Locator;
 
 namespace Cress.Studio.E2ETests;
 
@@ -21,9 +18,8 @@ internal sealed class StudioAppHarness : IAsyncDisposable
     };
 
     private readonly Process _process;
-    private readonly FlaUiApplication _application;
-    private readonly UIA3Automation _automation;
-    private readonly Window _window;
+    private readonly IFlawright _flawright;
+    private readonly IFlawrightPage _window;
     private int _screenshotSequence;
 
     private StudioAppHarness(
@@ -35,9 +31,8 @@ internal sealed class StudioAppHarness : IAsyncDisposable
         string testAppPath,
         string flowFilePath,
         Process process,
-        FlaUiApplication application,
-        UIA3Automation automation,
-        Window window)
+        IFlawright flawright,
+        IFlawrightPage window)
     {
         ScenarioRoot = scenarioRoot;
         WorkspaceRoot = workspaceRoot;
@@ -47,8 +42,7 @@ internal sealed class StudioAppHarness : IAsyncDisposable
         TestAppPath = testAppPath;
         FlowFilePath = flowFilePath;
         _process = process;
-        _application = application;
-        _automation = automation;
+        _flawright = flawright;
         _window = window;
     }
 
@@ -84,7 +78,7 @@ internal sealed class StudioAppHarness : IAsyncDisposable
         Directory.CreateDirectory(Path.Combine(projectRoot, "models"));
 
         var studioPath = FindBuiltExecutable(repositoryRoot, Path.Combine("src", "Cress.Studio"), "Cress.Studio.exe");
-        var testAppPath = FindBuiltExecutable(repositoryRoot, Path.Combine("tests", "Cress.FlaUi.TestApp"), "Cress.FlaUi.TestApp.exe");
+        var testAppPath = FindBuiltExecutable(repositoryRoot, Path.Combine("tests", "Cress.Flawright.TestApp"), "Cress.Flawright.TestApp.exe");
         var flowFilePath = Path.Combine(projectRoot, "flows", "studio-desktop.flow.yaml");
 
         var profilePath = Path.Combine(projectRoot, ".cress", "profiles", "local.yaml");
@@ -113,10 +107,11 @@ internal sealed class StudioAppHarness : IAsyncDisposable
         var process = Process.Start(startInfo) ?? throw new InvalidOperationException("Could not start Cress Studio.");
         process.WaitForInputIdle(15000);
 
-        var application = FlaUiApplication.Attach(process.Id);
-        var automation = new UIA3Automation();
-        var window = WaitForWindow(application, automation, "Cress Studio", TimeSpan.FromSeconds(20));
-        window.SetForeground();
+        var flawright = Flawright.AttachAsync(
+            new AttachOptions { ProcessId = process.Id },
+            new FlawrightOptions { DefaultTimeout = TimeSpan.FromSeconds(20) }).GetAwaiter().GetResult();
+        var window = flawright.Browser.WaitForPageAsync("Cress Studio", TimeSpan.FromSeconds(20)).GetAwaiter().GetResult();
+        window.BringToFrontAsync().GetAwaiter().GetResult();
 
         var harness = new StudioAppHarness(
             scenarioRoot,
@@ -127,8 +122,7 @@ internal sealed class StudioAppHarness : IAsyncDisposable
             testAppPath,
             flowFilePath,
             process,
-            application,
-            automation,
+            flawright,
             window);
 
         harness.WaitForCondition(
@@ -144,91 +138,98 @@ internal sealed class StudioAppHarness : IAsyncDisposable
     public void CaptureWindow(string name)
     {
         var path = Path.Combine(ScreenshotsRoot, $"{++_screenshotSequence:D3}-{SanitizeName(name)}.png");
-        using var image = Capture.Element(_window);
-        image.ToFile(path);
+        var bytes = _window.ScreenshotAsync(ct: CancellationToken.None).GetAwaiter().GetResult();
+        File.WriteAllBytes(path, bytes);
     }
 
     public string GetElementText(string automationId)
-        => FindElementById(automationId).Name;
+        => ReadLocatorText($"#{automationId}");
 
     public string GetTextBoxText(string automationId)
-    {
-        var textBox = FindElementById(automationId).AsTextBox();
-        return textBox.Text;
-    }
+        => ReadLocatorText($"#{automationId}");
 
     public void SetTextBoxText(string automationId, string value)
-    {
-        var textBox = FindElementById(automationId).AsTextBox();
-        if (textBox.Patterns.Value.IsSupported)
-        {
-            textBox.Patterns.Value.Pattern.SetValue(value);
-        }
-        else
-        {
-            textBox.Focus();
-            textBox.Enter(value);
-        }
-    }
+        => _window.FillAsync($"#{automationId}", value).GetAwaiter().GetResult();
 
     public void ClickButton(string automationId)
-    {
-        var button = FindElementById(automationId).AsButton();
-        if (button.Patterns.Invoke.IsSupported)
-        {
-            button.Patterns.Invoke.Pattern.Invoke();
-            return;
-        }
-
-        button.Click();
-    }
+        => _window.ClickAsync($"#{automationId}").GetAwaiter().GetResult();
 
     public void SelectTab(string automationId)
     {
-        var tab = FindElementById(automationId).AsTabItem();
-        if (tab.Patterns.SelectionItem.IsSupported)
+        var (tabControlSelector, headerText, contentSelector, index) = automationId switch
         {
-            tab.Patterns.SelectionItem.Pattern.Select();
+            "OverviewTab" => ("#EditorTabControl", "Overview", "#SelectedAssetSummaryTextBox", 0),
+            "DesignerTab" => ("#EditorTabControl", "Designer", "#FlowIdTextBox", 1),
+            "SourceTab" => ("#EditorTabControl", "Source", "#SourceEditorTextBox", 2),
+            "LiveRunTab" => ("#ResultsTabControl", "Live run", "#LiveEventsList", 0),
+            "RunsTab" => ("#ResultsTabControl", "Runs", "#RunsList", 1),
+            "DiagnosticsTab" => ("#ResultsTabControl", "Diagnostics", "#DiagnosticsList", 2),
+            _ => (string.Empty, automationId.EndsWith("Tab", StringComparison.Ordinal) ? automationId[..^3] : automationId, $"#{automationId}", -1)
+        };
+
+        if (!string.IsNullOrWhiteSpace(tabControlSelector))
+        {
+            try
+            {
+                _window.Locator($"{tabControlSelector} >> role:TabItem >> name:{headerText}").First.ClickAsync().GetAwaiter().GetResult();
+            }
+            catch (FlawrightTimeoutException)
+            {
+                _window.BringToFrontAsync().GetAwaiter().GetResult();
+                _window.FocusAsync(tabControlSelector).GetAwaiter().GetResult();
+                SendKeys.SendWait("{HOME}");
+                Thread.Sleep(150);
+                for (var step = 0; step < index; step++)
+                {
+                    SendKeys.SendWait("{RIGHT}");
+                    Thread.Sleep(150);
+                }
+            }
         }
         else
         {
-            tab.Focus();
+            _window.ClickAsync($"#{automationId}").GetAwaiter().GetResult();
         }
 
-        WaitForCondition(
-            () => !tab.Properties.IsOffscreen.ValueOrDefault,
-            TimeSpan.FromSeconds(5),
-            $"Tab '{automationId}' did not become visible.");
+        try
+        {
+            WaitForCondition(
+                () => _window.Locator(contentSelector).IsVisibleAsync().GetAwaiter().GetResult(),
+                TimeSpan.FromSeconds(4),
+                $"Tab '{automationId}' did not expose '{contentSelector}'.");
+        }
+        catch (TimeoutException) when (!string.IsNullOrWhiteSpace(tabControlSelector) && index >= 0)
+        {
+            _window.BringToFrontAsync().GetAwaiter().GetResult();
+            _window.FocusAsync(tabControlSelector).GetAwaiter().GetResult();
+            SendKeys.SendWait("{HOME}");
+            Thread.Sleep(150);
+            for (var step = 0; step < index; step++)
+            {
+                SendKeys.SendWait("{RIGHT}");
+                Thread.Sleep(150);
+            }
+
+            WaitForCondition(
+                () => _window.Locator(contentSelector).IsVisibleAsync().GetAwaiter().GetResult(),
+                TimeSpan.FromSeconds(8),
+                $"Tab '{automationId}' did not expose '{contentSelector}'.");
+        }
     }
 
     public void SelectExplorerItem(string groupPrefix, string itemContains)
     {
-        var tree = FindElementById("ProjectExplorerTree");
         try
         {
-            var groupLabel = WaitForDescendant(
-                tree,
-                element => element.ControlType == ControlType.Text && element.Name.StartsWith(groupPrefix, StringComparison.OrdinalIgnoreCase),
-                TimeSpan.FromSeconds(5),
-                $"Could not find explorer group '{groupPrefix}'.");
-            var group = GetAncestor(groupLabel, ControlType.TreeItem);
-            Expand(group);
-
-            var itemLabel = WaitForDescendant(
-                tree,
-                element => element.ControlType == ControlType.Text && element.Name.Contains(itemContains, StringComparison.OrdinalIgnoreCase),
-                TimeSpan.FromSeconds(5),
-                $"Could not find explorer item containing '{itemContains}'.");
-            var item = GetAncestor(itemLabel, ControlType.TreeItem);
-            SelectItem(item);
+            _window.Locator("#ProjectExplorerTree").Locator($"text:{itemContains}").First.ClickAsync().GetAwaiter().GetResult();
             return;
         }
         catch
         {
         }
 
-        _window.SetForeground();
-        tree.Focus();
+        _window.BringToFrontAsync().GetAwaiter().GetResult();
+        _window.FocusAsync("#ProjectExplorerTree").GetAwaiter().GetResult();
         SendKeys.SendWait("{HOME}");
         Thread.Sleep(250);
         SendKeys.SendWait("{RIGHT}");
@@ -243,47 +244,28 @@ internal sealed class StudioAppHarness : IAsyncDisposable
 
     public string SelectFirstListItem(string automationId)
     {
-        var list = FindElementById(automationId);
-        var label = WaitForDescendant(
-            list,
-            element => element.ControlType == ControlType.Text && !string.IsNullOrWhiteSpace(element.Name),
-            TimeSpan.FromSeconds(10),
-            $"List '{automationId}' did not contain any items.");
-        var item = GetAncestor(label, ControlType.ListItem);
-        SelectItem(item);
-        return label.Name;
+        var locator = _window.Locator($"#{automationId}").Locator("role:Text").First;
+        var text = locator.InnerTextAsync().GetAwaiter().GetResult();
+        locator.ClickAsync().GetAwaiter().GetResult();
+        return text;
     }
 
     public string SelectListItemContaining(string automationId, string text)
     {
-        var list = FindElementById(automationId);
-        var label = WaitForDescendant(
-            list,
-            element => element.ControlType == ControlType.Text && element.Name.Contains(text, StringComparison.OrdinalIgnoreCase),
-            TimeSpan.FromSeconds(10),
-            $"List '{automationId}' did not contain an item matching '{text}'.");
-        var item = GetAncestor(label, ControlType.ListItem);
-        SelectItem(item);
-        return label.Name;
+        var locator = _window.Locator($"#{automationId}").Locator($"text:{text}").First;
+        var match = locator.InnerTextAsync().GetAwaiter().GetResult();
+        locator.ClickAsync().GetAwaiter().GetResult();
+        return match;
     }
 
     public IReadOnlyList<string> GetListItemNames(string automationId)
-    {
-        var list = FindElementById(automationId);
-        return list.FindAllDescendants()
-            .Where(element => element.ControlType == ControlType.Text)
-            .Select(element => element.Name)
+        => _window.Locator($"#{automationId}").Locator("role:Text").AllInnerTextsAsync().GetAwaiter().GetResult()
             .Where(name => !string.IsNullOrWhiteSpace(name))
             .Distinct(StringComparer.OrdinalIgnoreCase)
             .ToList();
-    }
 
     public bool IsElementVisible(string automationId)
-    {
-        var element = FindElementById(automationId);
-        var bounds = element.BoundingRectangle;
-        return !element.Properties.IsOffscreen.ValueOrDefault && bounds.Width > 0 && bounds.Height > 0;
-    }
+        => _window.Locator($"#{automationId}").IsVisibleAsync().GetAwaiter().GetResult();
 
     public void WaitForPreviewText(string expectedFragment)
     {
@@ -352,8 +334,7 @@ internal sealed class StudioAppHarness : IAsyncDisposable
         }
         finally
         {
-            _automation.Dispose();
-            _application.Dispose();
+            _flawright.DisposeAsync().GetAwaiter().GetResult();
             _process.Dispose();
         }
 
@@ -378,109 +359,29 @@ internal sealed class StudioAppHarness : IAsyncDisposable
 
     private void WriteWindowDump()
     {
-        var lines = _window.FindAllDescendants()
-            .Select(element => $"{TryGet(() => element.ControlType.ToString(), "?")} | {TryGet(() => element.Name, string.Empty)} | {TryGet(() => element.Properties.AutomationId.ValueOrDefault, string.Empty)}")
+        var lines = _window.Locator("role:Text").AllInnerTextsAsync().GetAwaiter().GetResult()
+            .Where(line => !string.IsNullOrWhiteSpace(line))
+            .Distinct(StringComparer.OrdinalIgnoreCase)
             .ToList();
         File.WriteAllLines(Path.Combine(ScenarioRoot, "window-tree.txt"), lines);
     }
 
-    private AutomationElement FindElementById(string automationId)
+    private string ReadLocatorText(string selector)
     {
-        var conditions = _automation.ConditionFactory;
-        var until = DateTime.UtcNow.AddSeconds(10);
-        while (DateTime.UtcNow < until)
+        var locator = _window.Locator(selector);
+        var text = locator.TextContentAsync().GetAwaiter().GetResult();
+        if (!string.IsNullOrWhiteSpace(text))
         {
-            var match = _window.FindFirstDescendant(conditions.ByAutomationId(automationId));
-            if (match is not null)
-            {
-                return match;
-            }
-
-            Thread.Sleep(150);
+            return text;
         }
 
-        throw new TimeoutException($"Could not find element with automation id '{automationId}'.");
-    }
-
-    private static Window WaitForWindow(FlaUiApplication application, UIA3Automation automation, string title, TimeSpan timeout)
-    {
-        var conditions = automation.ConditionFactory;
-        var until = DateTime.UtcNow + timeout;
-        while (DateTime.UtcNow < until)
+        text = locator.InnerTextAsync().GetAwaiter().GetResult();
+        if (!string.IsNullOrWhiteSpace(text))
         {
-            var window = application.GetAllTopLevelWindows(automation)
-                .FirstOrDefault(candidate => string.Equals(candidate.Title, title, StringComparison.OrdinalIgnoreCase));
-            if (window is not null)
-            {
-                return window;
-            }
-
-            Thread.Sleep(150);
+            return text;
         }
 
-        throw new TimeoutException($"Could not find Studio window '{title}'.");
-    }
-
-    private static void Expand(AutomationElement element)
-    {
-        if (element.Patterns.ExpandCollapse.IsSupported)
-        {
-            var state = element.Patterns.ExpandCollapse.Pattern.ExpandCollapseState.Value;
-            if (state is ExpandCollapseState.Collapsed or ExpandCollapseState.PartiallyExpanded)
-            {
-                element.Patterns.ExpandCollapse.Pattern.Expand();
-            }
-        }
-    }
-
-    private static void SelectItem(AutomationElement element)
-    {
-        if (element.Patterns.SelectionItem.IsSupported)
-        {
-            element.Patterns.SelectionItem.Pattern.Select();
-            return;
-        }
-
-        if (element.Patterns.Invoke.IsSupported)
-        {
-            element.Patterns.Invoke.Pattern.Invoke();
-            return;
-        }
-
-        element.Focus();
-    }
-
-    private static AutomationElement GetAncestor(AutomationElement element, ControlType controlType)
-    {
-        var current = element.Parent;
-        while (current is not null)
-        {
-            if (current.ControlType == controlType)
-            {
-                return current;
-            }
-
-            current = current.Parent;
-        }
-
-        throw new InvalidOperationException($"Could not find ancestor of type '{controlType}'.");
-    }
-
-    private static AutomationElement WaitForDescendant(AutomationElement root, Func<AutomationElement, bool> predicate, TimeSpan timeout, string failureMessage)
-    {
-        var until = DateTime.UtcNow + timeout;
-        while (DateTime.UtcNow < until)
-        {
-            var match = root.FindAllDescendants().FirstOrDefault(predicate);
-            if (match is not null)
-            {
-                return match;
-            }
-
-            Thread.Sleep(150);
-        }
-
-        throw new TimeoutException(failureMessage);
+        return locator.InputValueAsync().GetAwaiter().GetResult() ?? string.Empty;
     }
 
     private static string FindBuiltExecutable(string repositoryRoot, string projectRelativePath, string executableName)

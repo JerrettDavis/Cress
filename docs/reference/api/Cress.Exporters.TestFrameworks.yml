@@ -1,0 +1,75 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Exporters.TestFrameworks
+  commentId: N:Cress.Exporters.TestFrameworks
+  id: Cress.Exporters.TestFrameworks
+  children:
+  - Cress.Exporters.TestFrameworks.DotNetTestExportOptions
+  - Cress.Exporters.TestFrameworks.MsTestExporter
+  - Cress.Exporters.TestFrameworks.NUnitExporter
+  - Cress.Exporters.TestFrameworks.XunitExporter
+  langs:
+  - csharp
+  - vb
+  name: Cress.Exporters.TestFrameworks
+  nameWithType: Cress.Exporters.TestFrameworks
+  fullName: Cress.Exporters.TestFrameworks
+  type: Namespace
+  assemblies:
+  - Cress.Exporters
+references:
+- uid: Cress.Exporters.TestFrameworks.DotNetTestExportOptions
+  commentId: T:Cress.Exporters.TestFrameworks.DotNetTestExportOptions
+  parent: Cress.Exporters.TestFrameworks
+  href: Cress.Exporters.TestFrameworks.DotNetTestExportOptions.html
+  name: DotNetTestExportOptions
+  nameWithType: DotNetTestExportOptions
+  fullName: Cress.Exporters.TestFrameworks.DotNetTestExportOptions
+- uid: Cress.Exporters.TestFrameworks.MsTestExporter
+  commentId: T:Cress.Exporters.TestFrameworks.MsTestExporter
+  href: Cress.Exporters.TestFrameworks.MsTestExporter.html
+  name: MsTestExporter
+  nameWithType: MsTestExporter
+  fullName: Cress.Exporters.TestFrameworks.MsTestExporter
+- uid: Cress.Exporters.TestFrameworks.NUnitExporter
+  commentId: T:Cress.Exporters.TestFrameworks.NUnitExporter
+  href: Cress.Exporters.TestFrameworks.NUnitExporter.html
+  name: NUnitExporter
+  nameWithType: NUnitExporter
+  fullName: Cress.Exporters.TestFrameworks.NUnitExporter
+- uid: Cress.Exporters.TestFrameworks.XunitExporter
+  commentId: T:Cress.Exporters.TestFrameworks.XunitExporter
+  href: Cress.Exporters.TestFrameworks.XunitExporter.html
+  name: XunitExporter
+  nameWithType: XunitExporter
+  fullName: Cress.Exporters.TestFrameworks.XunitExporter
+- uid: Cress.Exporters.TestFrameworks
+  commentId: N:Cress.Exporters.TestFrameworks
+  href: Cress.html
+  name: Cress.Exporters.TestFrameworks
+  nameWithType: Cress.Exporters.TestFrameworks
+  fullName: Cress.Exporters.TestFrameworks
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Exporters
+    name: Exporters
+    href: Cress.Exporters.html
+  - name: .
+  - uid: Cress.Exporters.TestFrameworks
+    name: TestFrameworks
+    href: Cress.Exporters.TestFrameworks.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Exporters
+    name: Exporters
+    href: Cress.Exporters.html
+  - name: .
+  - uid: Cress.Exporters.TestFrameworks
+    name: TestFrameworks
+    href: Cress.Exporters.TestFrameworks.html

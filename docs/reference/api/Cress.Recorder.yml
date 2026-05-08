@@ -1,0 +1,70 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Recorder
+  commentId: N:Cress.Recorder
+  id: Cress.Recorder
+  children:
+  - Cress.Recorder.ElementInfo
+  - Cress.Recorder.EventKind
+  - Cress.Recorder.RecordedEvent
+  - Cress.Recorder.RecordingSession
+  langs:
+  - csharp
+  - vb
+  name: Cress.Recorder
+  nameWithType: Cress.Recorder
+  fullName: Cress.Recorder
+  type: Namespace
+  assemblies:
+  - Cress.Recorder
+references:
+- uid: Cress.Recorder.ElementInfo
+  commentId: T:Cress.Recorder.ElementInfo
+  parent: Cress.Recorder
+  href: Cress.Recorder.ElementInfo.html
+  name: ElementInfo
+  nameWithType: ElementInfo
+  fullName: Cress.Recorder.ElementInfo
+- uid: Cress.Recorder.EventKind
+  commentId: T:Cress.Recorder.EventKind
+  parent: Cress.Recorder
+  href: Cress.Recorder.EventKind.html
+  name: EventKind
+  nameWithType: EventKind
+  fullName: Cress.Recorder.EventKind
+- uid: Cress.Recorder.RecordedEvent
+  commentId: T:Cress.Recorder.RecordedEvent
+  parent: Cress.Recorder
+  href: Cress.Recorder.RecordedEvent.html
+  name: RecordedEvent
+  nameWithType: RecordedEvent
+  fullName: Cress.Recorder.RecordedEvent
+- uid: Cress.Recorder.RecordingSession
+  commentId: T:Cress.Recorder.RecordingSession
+  parent: Cress.Recorder
+  href: Cress.Recorder.RecordingSession.html
+  name: RecordingSession
+  nameWithType: RecordingSession
+  fullName: Cress.Recorder.RecordingSession
+- uid: Cress.Recorder
+  commentId: N:Cress.Recorder
+  href: Cress.html
+  name: Cress.Recorder
+  nameWithType: Cress.Recorder
+  fullName: Cress.Recorder
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Recorder
+    name: Recorder
+    href: Cress.Recorder.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Recorder
+    name: Recorder
+    href: Cress.Recorder.html

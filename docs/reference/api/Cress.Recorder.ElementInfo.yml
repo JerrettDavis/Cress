@@ -1,0 +1,980 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Recorder.ElementInfo
+  commentId: T:Cress.Recorder.ElementInfo
+  id: ElementInfo
+  parent: Cress.Recorder
+  children:
+  - Cress.Recorder.ElementInfo.AutomationId
+  - Cress.Recorder.ElementInfo.ClassName
+  - Cress.Recorder.ElementInfo.ControlType
+  - Cress.Recorder.ElementInfo.CssSelector
+  - Cress.Recorder.ElementInfo.FrameworkId
+  - Cress.Recorder.ElementInfo.Label
+  - Cress.Recorder.ElementInfo.Name
+  - Cress.Recorder.ElementInfo.Placeholder
+  - Cress.Recorder.ElementInfo.ProcessId
+  - Cress.Recorder.ElementInfo.Role
+  - Cress.Recorder.ElementInfo.RuntimeId
+  - Cress.Recorder.ElementInfo.TagName
+  - Cress.Recorder.ElementInfo.TestId
+  - Cress.Recorder.ElementInfo.Text
+  - Cress.Recorder.ElementInfo.ToString
+  - Cress.Recorder.ElementInfo.XPath
+  langs:
+  - csharp
+  - vb
+  name: ElementInfo
+  nameWithType: ElementInfo
+  fullName: Cress.Recorder.ElementInfo
+  type: Class
+  source:
+    remote:
+      path: src/Cress.Recorder/ElementInfo.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: ElementInfo
+    path: ../src/Cress.Recorder/ElementInfo.cs
+    startLine: 6
+  assemblies:
+  - Cress.Recorder
+  namespace: Cress.Recorder
+  summary: >-
+    Snapshot of an element's identity fields captured at event time.
+
+    Covers both desktop UIA fields (R1-R6) and web/ARIA fields (V3-V4).
+  example: []
+  syntax:
+    content: 'public sealed record ElementInfo : IEquatable<ElementInfo>'
+    content.vb: Public NotInheritable Class ElementInfo Implements IEquatable(Of ElementInfo)
+  inheritance:
+  - System.Object
+  implements:
+  - System.IEquatable{Cress.Recorder.ElementInfo}
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+- uid: Cress.Recorder.ElementInfo.Name
+  commentId: P:Cress.Recorder.ElementInfo.Name
+  id: Name
+  parent: Cress.Recorder.ElementInfo
+  langs:
+  - csharp
+  - vb
+  name: Name
+  nameWithType: ElementInfo.Name
+  fullName: Cress.Recorder.ElementInfo.Name
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Recorder/ElementInfo.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Name
+    path: ../src/Cress.Recorder/ElementInfo.cs
+    startLine: 9
+  assemblies:
+  - Cress.Recorder
+  namespace: Cress.Recorder
+  syntax:
+    content: public string Name { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Name As String
+  overload: Cress.Recorder.ElementInfo.Name*
+- uid: Cress.Recorder.ElementInfo.AutomationId
+  commentId: P:Cress.Recorder.ElementInfo.AutomationId
+  id: AutomationId
+  parent: Cress.Recorder.ElementInfo
+  langs:
+  - csharp
+  - vb
+  name: AutomationId
+  nameWithType: ElementInfo.AutomationId
+  fullName: Cress.Recorder.ElementInfo.AutomationId
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Recorder/ElementInfo.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: AutomationId
+    path: ../src/Cress.Recorder/ElementInfo.cs
+    startLine: 10
+  assemblies:
+  - Cress.Recorder
+  namespace: Cress.Recorder
+  syntax:
+    content: public string AutomationId { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property AutomationId As String
+  overload: Cress.Recorder.ElementInfo.AutomationId*
+- uid: Cress.Recorder.ElementInfo.ControlType
+  commentId: P:Cress.Recorder.ElementInfo.ControlType
+  id: ControlType
+  parent: Cress.Recorder.ElementInfo
+  langs:
+  - csharp
+  - vb
+  name: ControlType
+  nameWithType: ElementInfo.ControlType
+  fullName: Cress.Recorder.ElementInfo.ControlType
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Recorder/ElementInfo.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: ControlType
+    path: ../src/Cress.Recorder/ElementInfo.cs
+    startLine: 11
+  assemblies:
+  - Cress.Recorder
+  namespace: Cress.Recorder
+  syntax:
+    content: public string ControlType { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property ControlType As String
+  overload: Cress.Recorder.ElementInfo.ControlType*
+- uid: Cress.Recorder.ElementInfo.ClassName
+  commentId: P:Cress.Recorder.ElementInfo.ClassName
+  id: ClassName
+  parent: Cress.Recorder.ElementInfo
+  langs:
+  - csharp
+  - vb
+  name: ClassName
+  nameWithType: ElementInfo.ClassName
+  fullName: Cress.Recorder.ElementInfo.ClassName
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Recorder/ElementInfo.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: ClassName
+    path: ../src/Cress.Recorder/ElementInfo.cs
+    startLine: 12
+  assemblies:
+  - Cress.Recorder
+  namespace: Cress.Recorder
+  syntax:
+    content: public string ClassName { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property ClassName As String
+  overload: Cress.Recorder.ElementInfo.ClassName*
+- uid: Cress.Recorder.ElementInfo.FrameworkId
+  commentId: P:Cress.Recorder.ElementInfo.FrameworkId
+  id: FrameworkId
+  parent: Cress.Recorder.ElementInfo
+  langs:
+  - csharp
+  - vb
+  name: FrameworkId
+  nameWithType: ElementInfo.FrameworkId
+  fullName: Cress.Recorder.ElementInfo.FrameworkId
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Recorder/ElementInfo.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: FrameworkId
+    path: ../src/Cress.Recorder/ElementInfo.cs
+    startLine: 13
+  assemblies:
+  - Cress.Recorder
+  namespace: Cress.Recorder
+  syntax:
+    content: public string FrameworkId { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property FrameworkId As String
+  overload: Cress.Recorder.ElementInfo.FrameworkId*
+- uid: Cress.Recorder.ElementInfo.ProcessId
+  commentId: P:Cress.Recorder.ElementInfo.ProcessId
+  id: ProcessId
+  parent: Cress.Recorder.ElementInfo
+  langs:
+  - csharp
+  - vb
+  name: ProcessId
+  nameWithType: ElementInfo.ProcessId
+  fullName: Cress.Recorder.ElementInfo.ProcessId
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Recorder/ElementInfo.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: ProcessId
+    path: ../src/Cress.Recorder/ElementInfo.cs
+    startLine: 14
+  assemblies:
+  - Cress.Recorder
+  namespace: Cress.Recorder
+  syntax:
+    content: public int ProcessId { get; init; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property ProcessId As Integer
+  overload: Cress.Recorder.ElementInfo.ProcessId*
+- uid: Cress.Recorder.ElementInfo.RuntimeId
+  commentId: P:Cress.Recorder.ElementInfo.RuntimeId
+  id: RuntimeId
+  parent: Cress.Recorder.ElementInfo
+  langs:
+  - csharp
+  - vb
+  name: RuntimeId
+  nameWithType: ElementInfo.RuntimeId
+  fullName: Cress.Recorder.ElementInfo.RuntimeId
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Recorder/ElementInfo.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: RuntimeId
+    path: ../src/Cress.Recorder/ElementInfo.cs
+    startLine: 15
+  assemblies:
+  - Cress.Recorder
+  namespace: Cress.Recorder
+  syntax:
+    content: public int[] RuntimeId { get; init; }
+    parameters: []
+    return:
+      type: System.Int32[]
+    content.vb: Public Property RuntimeId As Integer()
+  overload: Cress.Recorder.ElementInfo.RuntimeId*
+- uid: Cress.Recorder.ElementInfo.TestId
+  commentId: P:Cress.Recorder.ElementInfo.TestId
+  id: TestId
+  parent: Cress.Recorder.ElementInfo
+  langs:
+  - csharp
+  - vb
+  name: TestId
+  nameWithType: ElementInfo.TestId
+  fullName: Cress.Recorder.ElementInfo.TestId
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Recorder/ElementInfo.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: TestId
+    path: ../src/Cress.Recorder/ElementInfo.cs
+    startLine: 20
+  assemblies:
+  - Cress.Recorder
+  namespace: Cress.Recorder
+  summary: data-testid attribute value (web only).
+  example: []
+  syntax:
+    content: public string? TestId { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property TestId As String
+  overload: Cress.Recorder.ElementInfo.TestId*
+- uid: Cress.Recorder.ElementInfo.Role
+  commentId: P:Cress.Recorder.ElementInfo.Role
+  id: Role
+  parent: Cress.Recorder.ElementInfo
+  langs:
+  - csharp
+  - vb
+  name: Role
+  nameWithType: ElementInfo.Role
+  fullName: Cress.Recorder.ElementInfo.Role
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Recorder/ElementInfo.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Role
+    path: ../src/Cress.Recorder/ElementInfo.cs
+    startLine: 23
+  assemblies:
+  - Cress.Recorder
+  namespace: Cress.Recorder
+  summary: ARIA role (explicit or implicit, e.g. "button", "textbox").
+  example: []
+  syntax:
+    content: public string? Role { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Role As String
+  overload: Cress.Recorder.ElementInfo.Role*
+- uid: Cress.Recorder.ElementInfo.Label
+  commentId: P:Cress.Recorder.ElementInfo.Label
+  id: Label
+  parent: Cress.Recorder.ElementInfo
+  langs:
+  - csharp
+  - vb
+  name: Label
+  nameWithType: ElementInfo.Label
+  fullName: Cress.Recorder.ElementInfo.Label
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Recorder/ElementInfo.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Label
+    path: ../src/Cress.Recorder/ElementInfo.cs
+    startLine: 26
+  assemblies:
+  - Cress.Recorder
+  namespace: Cress.Recorder
+  summary: aria-label or associated label text.
+  example: []
+  syntax:
+    content: public string? Label { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Label As String
+  overload: Cress.Recorder.ElementInfo.Label*
+- uid: Cress.Recorder.ElementInfo.Text
+  commentId: P:Cress.Recorder.ElementInfo.Text
+  id: Text
+  parent: Cress.Recorder.ElementInfo
+  langs:
+  - csharp
+  - vb
+  name: Text
+  nameWithType: ElementInfo.Text
+  fullName: Cress.Recorder.ElementInfo.Text
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Recorder/ElementInfo.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Text
+    path: ../src/Cress.Recorder/ElementInfo.cs
+    startLine: 29
+  assemblies:
+  - Cress.Recorder
+  namespace: Cress.Recorder
+  summary: Visible innerText (truncated to 80 chars).
+  example: []
+  syntax:
+    content: public string? Text { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Text As String
+  overload: Cress.Recorder.ElementInfo.Text*
+- uid: Cress.Recorder.ElementInfo.Placeholder
+  commentId: P:Cress.Recorder.ElementInfo.Placeholder
+  id: Placeholder
+  parent: Cress.Recorder.ElementInfo
+  langs:
+  - csharp
+  - vb
+  name: Placeholder
+  nameWithType: ElementInfo.Placeholder
+  fullName: Cress.Recorder.ElementInfo.Placeholder
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Recorder/ElementInfo.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Placeholder
+    path: ../src/Cress.Recorder/ElementInfo.cs
+    startLine: 32
+  assemblies:
+  - Cress.Recorder
+  namespace: Cress.Recorder
+  summary: Input placeholder text.
+  example: []
+  syntax:
+    content: public string? Placeholder { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Placeholder As String
+  overload: Cress.Recorder.ElementInfo.Placeholder*
+- uid: Cress.Recorder.ElementInfo.CssSelector
+  commentId: P:Cress.Recorder.ElementInfo.CssSelector
+  id: CssSelector
+  parent: Cress.Recorder.ElementInfo
+  langs:
+  - csharp
+  - vb
+  name: CssSelector
+  nameWithType: ElementInfo.CssSelector
+  fullName: Cress.Recorder.ElementInfo.CssSelector
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Recorder/ElementInfo.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: CssSelector
+    path: ../src/Cress.Recorder/ElementInfo.cs
+    startLine: 35
+  assemblies:
+  - Cress.Recorder
+  namespace: Cress.Recorder
+  summary: Synthesised CSS path (fallback locator, web only).
+  example: []
+  syntax:
+    content: public string? CssSelector { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property CssSelector As String
+  overload: Cress.Recorder.ElementInfo.CssSelector*
+- uid: Cress.Recorder.ElementInfo.XPath
+  commentId: P:Cress.Recorder.ElementInfo.XPath
+  id: XPath
+  parent: Cress.Recorder.ElementInfo
+  langs:
+  - csharp
+  - vb
+  name: XPath
+  nameWithType: ElementInfo.XPath
+  fullName: Cress.Recorder.ElementInfo.XPath
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Recorder/ElementInfo.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: XPath
+    path: ../src/Cress.Recorder/ElementInfo.cs
+    startLine: 38
+  assemblies:
+  - Cress.Recorder
+  namespace: Cress.Recorder
+  summary: DOM XPath expression (web only).
+  example: []
+  syntax:
+    content: public string? XPath { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property XPath As String
+  overload: Cress.Recorder.ElementInfo.XPath*
+- uid: Cress.Recorder.ElementInfo.TagName
+  commentId: P:Cress.Recorder.ElementInfo.TagName
+  id: TagName
+  parent: Cress.Recorder.ElementInfo
+  langs:
+  - csharp
+  - vb
+  name: TagName
+  nameWithType: ElementInfo.TagName
+  fullName: Cress.Recorder.ElementInfo.TagName
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Recorder/ElementInfo.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: TagName
+    path: ../src/Cress.Recorder/ElementInfo.cs
+    startLine: 41
+  assemblies:
+  - Cress.Recorder
+  namespace: Cress.Recorder
+  summary: Lower-case HTML tag name (e.g. "input", "button"), web only.
+  example: []
+  syntax:
+    content: public string? TagName { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property TagName As String
+  overload: Cress.Recorder.ElementInfo.TagName*
+- uid: Cress.Recorder.ElementInfo.ToString
+  commentId: M:Cress.Recorder.ElementInfo.ToString
+  id: ToString
+  parent: Cress.Recorder.ElementInfo
+  langs:
+  - csharp
+  - vb
+  name: ToString()
+  nameWithType: ElementInfo.ToString()
+  fullName: Cress.Recorder.ElementInfo.ToString()
+  type: Method
+  source:
+    remote:
+      path: src/Cress.Recorder/ElementInfo.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: ToString
+    path: ../src/Cress.Recorder/ElementInfo.cs
+    startLine: 43
+  assemblies:
+  - Cress.Recorder
+  namespace: Cress.Recorder
+  summary: Returns a string that represents the current object.
+  example: []
+  syntax:
+    content: public override string ToString()
+    return:
+      type: System.String
+      description: A string that represents the current object.
+    content.vb: Public Overrides Function ToString() As String
+  overridden: System.Object.ToString
+  overload: Cress.Recorder.ElementInfo.ToString*
+references:
+- uid: Cress.Recorder
+  commentId: N:Cress.Recorder
+  href: Cress.html
+  name: Cress.Recorder
+  nameWithType: Cress.Recorder
+  fullName: Cress.Recorder
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Recorder
+    name: Recorder
+    href: Cress.Recorder.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Recorder
+    name: Recorder
+    href: Cress.Recorder.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.IEquatable{Cress.Recorder.ElementInfo}
+  commentId: T:System.IEquatable{Cress.Recorder.ElementInfo}
+  parent: System
+  definition: System.IEquatable`1
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<ElementInfo>
+  nameWithType: IEquatable<ElementInfo>
+  fullName: System.IEquatable<Cress.Recorder.ElementInfo>
+  nameWithType.vb: IEquatable(Of ElementInfo)
+  fullName.vb: System.IEquatable(Of Cress.Recorder.ElementInfo)
+  name.vb: IEquatable(Of ElementInfo)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - uid: Cress.Recorder.ElementInfo
+    name: ElementInfo
+    href: Cress.Recorder.ElementInfo.html
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Cress.Recorder.ElementInfo
+    name: ElementInfo
+    href: Cress.Recorder.ElementInfo.html
+  - name: )
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.IEquatable`1
+  commentId: T:System.IEquatable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<T>
+  nameWithType: IEquatable<T>
+  fullName: System.IEquatable<T>
+  nameWithType.vb: IEquatable(Of T)
+  fullName.vb: System.IEquatable(Of T)
+  name.vb: IEquatable(Of T)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Cress.Recorder.ElementInfo.Name*
+  commentId: Overload:Cress.Recorder.ElementInfo.Name
+  href: Cress.Recorder.ElementInfo.html#Cress_Recorder_ElementInfo_Name
+  name: Name
+  nameWithType: ElementInfo.Name
+  fullName: Cress.Recorder.ElementInfo.Name
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Cress.Recorder.ElementInfo.AutomationId*
+  commentId: Overload:Cress.Recorder.ElementInfo.AutomationId
+  href: Cress.Recorder.ElementInfo.html#Cress_Recorder_ElementInfo_AutomationId
+  name: AutomationId
+  nameWithType: ElementInfo.AutomationId
+  fullName: Cress.Recorder.ElementInfo.AutomationId
+- uid: Cress.Recorder.ElementInfo.ControlType*
+  commentId: Overload:Cress.Recorder.ElementInfo.ControlType
+  href: Cress.Recorder.ElementInfo.html#Cress_Recorder_ElementInfo_ControlType
+  name: ControlType
+  nameWithType: ElementInfo.ControlType
+  fullName: Cress.Recorder.ElementInfo.ControlType
+- uid: Cress.Recorder.ElementInfo.ClassName*
+  commentId: Overload:Cress.Recorder.ElementInfo.ClassName
+  href: Cress.Recorder.ElementInfo.html#Cress_Recorder_ElementInfo_ClassName
+  name: ClassName
+  nameWithType: ElementInfo.ClassName
+  fullName: Cress.Recorder.ElementInfo.ClassName
+- uid: Cress.Recorder.ElementInfo.FrameworkId*
+  commentId: Overload:Cress.Recorder.ElementInfo.FrameworkId
+  href: Cress.Recorder.ElementInfo.html#Cress_Recorder_ElementInfo_FrameworkId
+  name: FrameworkId
+  nameWithType: ElementInfo.FrameworkId
+  fullName: Cress.Recorder.ElementInfo.FrameworkId
+- uid: Cress.Recorder.ElementInfo.ProcessId*
+  commentId: Overload:Cress.Recorder.ElementInfo.ProcessId
+  href: Cress.Recorder.ElementInfo.html#Cress_Recorder_ElementInfo_ProcessId
+  name: ProcessId
+  nameWithType: ElementInfo.ProcessId
+  fullName: Cress.Recorder.ElementInfo.ProcessId
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Cress.Recorder.ElementInfo.RuntimeId*
+  commentId: Overload:Cress.Recorder.ElementInfo.RuntimeId
+  href: Cress.Recorder.ElementInfo.html#Cress_Recorder_ElementInfo_RuntimeId
+  name: RuntimeId
+  nameWithType: ElementInfo.RuntimeId
+  fullName: Cress.Recorder.ElementInfo.RuntimeId
+- uid: System.Int32[]
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int[]
+  nameWithType: int[]
+  fullName: int[]
+  nameWithType.vb: Integer()
+  fullName.vb: Integer()
+  name.vb: Integer()
+  spec.csharp:
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: (
+  - name: )
+- uid: Cress.Recorder.ElementInfo.TestId*
+  commentId: Overload:Cress.Recorder.ElementInfo.TestId
+  href: Cress.Recorder.ElementInfo.html#Cress_Recorder_ElementInfo_TestId
+  name: TestId
+  nameWithType: ElementInfo.TestId
+  fullName: Cress.Recorder.ElementInfo.TestId
+- uid: Cress.Recorder.ElementInfo.Role*
+  commentId: Overload:Cress.Recorder.ElementInfo.Role
+  href: Cress.Recorder.ElementInfo.html#Cress_Recorder_ElementInfo_Role
+  name: Role
+  nameWithType: ElementInfo.Role
+  fullName: Cress.Recorder.ElementInfo.Role
+- uid: Cress.Recorder.ElementInfo.Label*
+  commentId: Overload:Cress.Recorder.ElementInfo.Label
+  href: Cress.Recorder.ElementInfo.html#Cress_Recorder_ElementInfo_Label
+  name: Label
+  nameWithType: ElementInfo.Label
+  fullName: Cress.Recorder.ElementInfo.Label
+- uid: Cress.Recorder.ElementInfo.Text*
+  commentId: Overload:Cress.Recorder.ElementInfo.Text
+  href: Cress.Recorder.ElementInfo.html#Cress_Recorder_ElementInfo_Text
+  name: Text
+  nameWithType: ElementInfo.Text
+  fullName: Cress.Recorder.ElementInfo.Text
+- uid: Cress.Recorder.ElementInfo.Placeholder*
+  commentId: Overload:Cress.Recorder.ElementInfo.Placeholder
+  href: Cress.Recorder.ElementInfo.html#Cress_Recorder_ElementInfo_Placeholder
+  name: Placeholder
+  nameWithType: ElementInfo.Placeholder
+  fullName: Cress.Recorder.ElementInfo.Placeholder
+- uid: Cress.Recorder.ElementInfo.CssSelector*
+  commentId: Overload:Cress.Recorder.ElementInfo.CssSelector
+  href: Cress.Recorder.ElementInfo.html#Cress_Recorder_ElementInfo_CssSelector
+  name: CssSelector
+  nameWithType: ElementInfo.CssSelector
+  fullName: Cress.Recorder.ElementInfo.CssSelector
+- uid: Cress.Recorder.ElementInfo.XPath*
+  commentId: Overload:Cress.Recorder.ElementInfo.XPath
+  href: Cress.Recorder.ElementInfo.html#Cress_Recorder_ElementInfo_XPath
+  name: XPath
+  nameWithType: ElementInfo.XPath
+  fullName: Cress.Recorder.ElementInfo.XPath
+- uid: Cress.Recorder.ElementInfo.TagName*
+  commentId: Overload:Cress.Recorder.ElementInfo.TagName
+  href: Cress.Recorder.ElementInfo.html#Cress_Recorder_ElementInfo_TagName
+  name: TagName
+  nameWithType: ElementInfo.TagName
+  fullName: Cress.Recorder.ElementInfo.TagName
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: Cress.Recorder.ElementInfo.ToString*
+  commentId: Overload:Cress.Recorder.ElementInfo.ToString
+  href: Cress.Recorder.ElementInfo.html#Cress_Recorder_ElementInfo_ToString
+  name: ToString
+  nameWithType: ElementInfo.ToString
+  fullName: Cress.Recorder.ElementInfo.ToString

@@ -1,0 +1,791 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Studio.Services.StudioEmbeddedRunnerNode
+  commentId: T:Cress.Studio.Services.StudioEmbeddedRunnerNode
+  id: StudioEmbeddedRunnerNode
+  parent: Cress.Studio.Services
+  children:
+  - Cress.Studio.Services.StudioEmbeddedRunnerNode.#ctor(Cress.Studio.Services.IStudioRunnerExecutor)
+  - Cress.Studio.Services.StudioEmbeddedRunnerNode.Changed
+  - Cress.Studio.Services.StudioEmbeddedRunnerNode.DispatchAsync(Cress.Studio.Services.StudioRunnerDispatchRequest,System.IProgress{Cress.Execution.RuntimeProgressUpdate},System.Threading.CancellationToken)
+  - Cress.Studio.Services.StudioEmbeddedRunnerNode.LocalNodeId
+  - Cress.Studio.Services.StudioEmbeddedRunnerNode.Snapshot
+  langs:
+  - csharp
+  - vb
+  name: StudioEmbeddedRunnerNode
+  nameWithType: StudioEmbeddedRunnerNode
+  fullName: Cress.Studio.Services.StudioEmbeddedRunnerNode
+  type: Class
+  source:
+    remote:
+      path: src/Cress.Execution/StudioRunnerService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: StudioEmbeddedRunnerNode
+    path: ../src/Cress.Execution/StudioRunnerService.cs
+    startLine: 87
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Studio.Services
+  syntax:
+    content: 'public sealed class StudioEmbeddedRunnerNode : IStudioRunnerNode'
+    content.vb: Public NotInheritable Class StudioEmbeddedRunnerNode Implements IStudioRunnerNode
+  inheritance:
+  - System.Object
+  implements:
+  - Cress.Studio.Services.IStudioRunnerNode
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Cress.Studio.Services.StudioEmbeddedRunnerNode.#ctor(Cress.Studio.Services.IStudioRunnerExecutor)
+  commentId: M:Cress.Studio.Services.StudioEmbeddedRunnerNode.#ctor(Cress.Studio.Services.IStudioRunnerExecutor)
+  id: '#ctor(Cress.Studio.Services.IStudioRunnerExecutor)'
+  parent: Cress.Studio.Services.StudioEmbeddedRunnerNode
+  langs:
+  - csharp
+  - vb
+  name: StudioEmbeddedRunnerNode(IStudioRunnerExecutor)
+  nameWithType: StudioEmbeddedRunnerNode.StudioEmbeddedRunnerNode(IStudioRunnerExecutor)
+  fullName: Cress.Studio.Services.StudioEmbeddedRunnerNode.StudioEmbeddedRunnerNode(Cress.Studio.Services.IStudioRunnerExecutor)
+  type: Constructor
+  source:
+    remote:
+      path: src/Cress.Execution/StudioRunnerService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: .ctor
+    path: ../src/Cress.Execution/StudioRunnerService.cs
+    startLine: 87
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Studio.Services
+  syntax:
+    content: public StudioEmbeddedRunnerNode(IStudioRunnerExecutor executor)
+    parameters:
+    - id: executor
+      type: Cress.Studio.Services.IStudioRunnerExecutor
+    content.vb: Public Sub New(executor As IStudioRunnerExecutor)
+  overload: Cress.Studio.Services.StudioEmbeddedRunnerNode.#ctor*
+  nameWithType.vb: StudioEmbeddedRunnerNode.New(IStudioRunnerExecutor)
+  fullName.vb: Cress.Studio.Services.StudioEmbeddedRunnerNode.New(Cress.Studio.Services.IStudioRunnerExecutor)
+  name.vb: New(IStudioRunnerExecutor)
+- uid: Cress.Studio.Services.StudioEmbeddedRunnerNode.LocalNodeId
+  commentId: F:Cress.Studio.Services.StudioEmbeddedRunnerNode.LocalNodeId
+  id: LocalNodeId
+  parent: Cress.Studio.Services.StudioEmbeddedRunnerNode
+  langs:
+  - csharp
+  - vb
+  name: LocalNodeId
+  nameWithType: StudioEmbeddedRunnerNode.LocalNodeId
+  fullName: Cress.Studio.Services.StudioEmbeddedRunnerNode.LocalNodeId
+  type: Field
+  source:
+    remote:
+      path: src/Cress.Execution/StudioRunnerService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: LocalNodeId
+    path: ../src/Cress.Execution/StudioRunnerService.cs
+    startLine: 89
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Studio.Services
+  syntax:
+    content: public const string LocalNodeId = "local-embedded"
+    return:
+      type: System.String
+    content.vb: Public Const LocalNodeId As String = "local-embedded"
+- uid: Cress.Studio.Services.StudioEmbeddedRunnerNode.Changed
+  commentId: E:Cress.Studio.Services.StudioEmbeddedRunnerNode.Changed
+  id: Changed
+  parent: Cress.Studio.Services.StudioEmbeddedRunnerNode
+  langs:
+  - csharp
+  - vb
+  name: Changed
+  nameWithType: StudioEmbeddedRunnerNode.Changed
+  fullName: Cress.Studio.Services.StudioEmbeddedRunnerNode.Changed
+  type: Event
+  source:
+    remote:
+      path: src/Cress.Execution/StudioRunnerService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Changed
+    path: ../src/Cress.Execution/StudioRunnerService.cs
+    startLine: 95
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Studio.Services
+  example: []
+  syntax:
+    content: public event Action? Changed
+    return:
+      type: System.Action
+    content.vb: Public Event Changed As Action
+  implements:
+  - Cress.Studio.Services.IStudioRunnerNode.Changed
+- uid: Cress.Studio.Services.StudioEmbeddedRunnerNode.Snapshot
+  commentId: P:Cress.Studio.Services.StudioEmbeddedRunnerNode.Snapshot
+  id: Snapshot
+  parent: Cress.Studio.Services.StudioEmbeddedRunnerNode
+  langs:
+  - csharp
+  - vb
+  name: Snapshot
+  nameWithType: StudioEmbeddedRunnerNode.Snapshot
+  fullName: Cress.Studio.Services.StudioEmbeddedRunnerNode.Snapshot
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Execution/StudioRunnerService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Snapshot
+    path: ../src/Cress.Execution/StudioRunnerService.cs
+    startLine: 97
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Studio.Services
+  example: []
+  syntax:
+    content: public StudioRunnerNodeSnapshot Snapshot { get; }
+    parameters: []
+    return:
+      type: Cress.Studio.Services.StudioRunnerNodeSnapshot
+    content.vb: Public ReadOnly Property Snapshot As StudioRunnerNodeSnapshot
+  overload: Cress.Studio.Services.StudioEmbeddedRunnerNode.Snapshot*
+  implements:
+  - Cress.Studio.Services.IStudioRunnerNode.Snapshot
+- uid: Cress.Studio.Services.StudioEmbeddedRunnerNode.DispatchAsync(Cress.Studio.Services.StudioRunnerDispatchRequest,System.IProgress{Cress.Execution.RuntimeProgressUpdate},System.Threading.CancellationToken)
+  commentId: M:Cress.Studio.Services.StudioEmbeddedRunnerNode.DispatchAsync(Cress.Studio.Services.StudioRunnerDispatchRequest,System.IProgress{Cress.Execution.RuntimeProgressUpdate},System.Threading.CancellationToken)
+  id: DispatchAsync(Cress.Studio.Services.StudioRunnerDispatchRequest,System.IProgress{Cress.Execution.RuntimeProgressUpdate},System.Threading.CancellationToken)
+  parent: Cress.Studio.Services.StudioEmbeddedRunnerNode
+  langs:
+  - csharp
+  - vb
+  name: DispatchAsync(StudioRunnerDispatchRequest, IProgress<RuntimeProgressUpdate>?, CancellationToken)
+  nameWithType: StudioEmbeddedRunnerNode.DispatchAsync(StudioRunnerDispatchRequest, IProgress<RuntimeProgressUpdate>?, CancellationToken)
+  fullName: Cress.Studio.Services.StudioEmbeddedRunnerNode.DispatchAsync(Cress.Studio.Services.StudioRunnerDispatchRequest, System.IProgress<Cress.Execution.RuntimeProgressUpdate>?, System.Threading.CancellationToken)
+  type: Method
+  source:
+    remote:
+      path: src/Cress.Execution/StudioRunnerService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: DispatchAsync
+    path: ../src/Cress.Execution/StudioRunnerService.cs
+    startLine: 99
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Studio.Services
+  example: []
+  syntax:
+    content: public Task<StudioRunnerDispatchResult> DispatchAsync(StudioRunnerDispatchRequest request, IProgress<RuntimeProgressUpdate>? progress, CancellationToken cancellationToken = default)
+    parameters:
+    - id: request
+      type: Cress.Studio.Services.StudioRunnerDispatchRequest
+    - id: progress
+      type: System.IProgress{Cress.Execution.RuntimeProgressUpdate}
+    - id: cancellationToken
+      type: System.Threading.CancellationToken
+    return:
+      type: System.Threading.Tasks.Task{Cress.Studio.Services.StudioRunnerDispatchResult}
+    content.vb: Public Function DispatchAsync(request As StudioRunnerDispatchRequest, progress As IProgress(Of RuntimeProgressUpdate), cancellationToken As CancellationToken = Nothing) As Task(Of StudioRunnerDispatchResult)
+  overload: Cress.Studio.Services.StudioEmbeddedRunnerNode.DispatchAsync*
+  implements:
+  - Cress.Studio.Services.IStudioRunnerNode.DispatchAsync(Cress.Studio.Services.StudioRunnerDispatchRequest,System.IProgress{Cress.Execution.RuntimeProgressUpdate},System.Threading.CancellationToken)
+  nameWithType.vb: StudioEmbeddedRunnerNode.DispatchAsync(StudioRunnerDispatchRequest, IProgress(Of RuntimeProgressUpdate), CancellationToken)
+  fullName.vb: Cress.Studio.Services.StudioEmbeddedRunnerNode.DispatchAsync(Cress.Studio.Services.StudioRunnerDispatchRequest, System.IProgress(Of Cress.Execution.RuntimeProgressUpdate), System.Threading.CancellationToken)
+  name.vb: DispatchAsync(StudioRunnerDispatchRequest, IProgress(Of RuntimeProgressUpdate), CancellationToken)
+references:
+- uid: Cress.Studio.Services
+  commentId: N:Cress.Studio.Services
+  href: Cress.html
+  name: Cress.Studio.Services
+  nameWithType: Cress.Studio.Services
+  fullName: Cress.Studio.Services
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Studio
+    name: Studio
+    href: Cress.Studio.html
+  - name: .
+  - uid: Cress.Studio.Services
+    name: Services
+    href: Cress.Studio.Services.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Studio
+    name: Studio
+    href: Cress.Studio.html
+  - name: .
+  - uid: Cress.Studio.Services
+    name: Services
+    href: Cress.Studio.Services.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: Cress.Studio.Services.IStudioRunnerNode
+  commentId: T:Cress.Studio.Services.IStudioRunnerNode
+  parent: Cress.Studio.Services
+  href: Cress.Studio.Services.IStudioRunnerNode.html
+  name: IStudioRunnerNode
+  nameWithType: IStudioRunnerNode
+  fullName: Cress.Studio.Services.IStudioRunnerNode
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Cress.Studio.Services.StudioEmbeddedRunnerNode.#ctor*
+  commentId: Overload:Cress.Studio.Services.StudioEmbeddedRunnerNode.#ctor
+  href: Cress.Studio.Services.StudioEmbeddedRunnerNode.html#Cress_Studio_Services_StudioEmbeddedRunnerNode__ctor_Cress_Studio_Services_IStudioRunnerExecutor_
+  name: StudioEmbeddedRunnerNode
+  nameWithType: StudioEmbeddedRunnerNode.StudioEmbeddedRunnerNode
+  fullName: Cress.Studio.Services.StudioEmbeddedRunnerNode.StudioEmbeddedRunnerNode
+  nameWithType.vb: StudioEmbeddedRunnerNode.New
+  fullName.vb: Cress.Studio.Services.StudioEmbeddedRunnerNode.New
+  name.vb: New
+- uid: Cress.Studio.Services.IStudioRunnerExecutor
+  commentId: T:Cress.Studio.Services.IStudioRunnerExecutor
+  parent: Cress.Studio.Services
+  href: Cress.Studio.Services.IStudioRunnerExecutor.html
+  name: IStudioRunnerExecutor
+  nameWithType: IStudioRunnerExecutor
+  fullName: Cress.Studio.Services.IStudioRunnerExecutor
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Cress.Studio.Services.IStudioRunnerNode.Changed
+  commentId: E:Cress.Studio.Services.IStudioRunnerNode.Changed
+  parent: Cress.Studio.Services.IStudioRunnerNode
+  href: Cress.Studio.Services.IStudioRunnerNode.html#Cress_Studio_Services_IStudioRunnerNode_Changed
+  name: Changed
+  nameWithType: IStudioRunnerNode.Changed
+  fullName: Cress.Studio.Services.IStudioRunnerNode.Changed
+- uid: System.Action
+  commentId: T:System.Action
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.action
+  name: Action
+  nameWithType: Action
+  fullName: System.Action
+- uid: Cress.Studio.Services.StudioEmbeddedRunnerNode.Snapshot*
+  commentId: Overload:Cress.Studio.Services.StudioEmbeddedRunnerNode.Snapshot
+  href: Cress.Studio.Services.StudioEmbeddedRunnerNode.html#Cress_Studio_Services_StudioEmbeddedRunnerNode_Snapshot
+  name: Snapshot
+  nameWithType: StudioEmbeddedRunnerNode.Snapshot
+  fullName: Cress.Studio.Services.StudioEmbeddedRunnerNode.Snapshot
+- uid: Cress.Studio.Services.IStudioRunnerNode.Snapshot
+  commentId: P:Cress.Studio.Services.IStudioRunnerNode.Snapshot
+  parent: Cress.Studio.Services.IStudioRunnerNode
+  href: Cress.Studio.Services.IStudioRunnerNode.html#Cress_Studio_Services_IStudioRunnerNode_Snapshot
+  name: Snapshot
+  nameWithType: IStudioRunnerNode.Snapshot
+  fullName: Cress.Studio.Services.IStudioRunnerNode.Snapshot
+- uid: Cress.Studio.Services.StudioRunnerNodeSnapshot
+  commentId: T:Cress.Studio.Services.StudioRunnerNodeSnapshot
+  parent: Cress.Studio.Services
+  href: Cress.Studio.Services.StudioRunnerNodeSnapshot.html
+  name: StudioRunnerNodeSnapshot
+  nameWithType: StudioRunnerNodeSnapshot
+  fullName: Cress.Studio.Services.StudioRunnerNodeSnapshot
+- uid: Cress.Studio.Services.StudioEmbeddedRunnerNode.DispatchAsync*
+  commentId: Overload:Cress.Studio.Services.StudioEmbeddedRunnerNode.DispatchAsync
+  href: Cress.Studio.Services.StudioEmbeddedRunnerNode.html#Cress_Studio_Services_StudioEmbeddedRunnerNode_DispatchAsync_Cress_Studio_Services_StudioRunnerDispatchRequest_System_IProgress_Cress_Execution_RuntimeProgressUpdate__System_Threading_CancellationToken_
+  name: DispatchAsync
+  nameWithType: StudioEmbeddedRunnerNode.DispatchAsync
+  fullName: Cress.Studio.Services.StudioEmbeddedRunnerNode.DispatchAsync
+- uid: Cress.Studio.Services.IStudioRunnerNode.DispatchAsync(Cress.Studio.Services.StudioRunnerDispatchRequest,System.IProgress{Cress.Execution.RuntimeProgressUpdate},System.Threading.CancellationToken)
+  commentId: M:Cress.Studio.Services.IStudioRunnerNode.DispatchAsync(Cress.Studio.Services.StudioRunnerDispatchRequest,System.IProgress{Cress.Execution.RuntimeProgressUpdate},System.Threading.CancellationToken)
+  parent: Cress.Studio.Services.IStudioRunnerNode
+  isExternal: true
+  href: Cress.Studio.Services.IStudioRunnerNode.html#Cress_Studio_Services_IStudioRunnerNode_DispatchAsync_Cress_Studio_Services_StudioRunnerDispatchRequest_System_IProgress_Cress_Execution_RuntimeProgressUpdate__System_Threading_CancellationToken_
+  name: DispatchAsync(StudioRunnerDispatchRequest, IProgress<RuntimeProgressUpdate>, CancellationToken)
+  nameWithType: IStudioRunnerNode.DispatchAsync(StudioRunnerDispatchRequest, IProgress<RuntimeProgressUpdate>, CancellationToken)
+  fullName: Cress.Studio.Services.IStudioRunnerNode.DispatchAsync(Cress.Studio.Services.StudioRunnerDispatchRequest, System.IProgress<Cress.Execution.RuntimeProgressUpdate>, System.Threading.CancellationToken)
+  nameWithType.vb: IStudioRunnerNode.DispatchAsync(StudioRunnerDispatchRequest, IProgress(Of RuntimeProgressUpdate), CancellationToken)
+  fullName.vb: Cress.Studio.Services.IStudioRunnerNode.DispatchAsync(Cress.Studio.Services.StudioRunnerDispatchRequest, System.IProgress(Of Cress.Execution.RuntimeProgressUpdate), System.Threading.CancellationToken)
+  name.vb: DispatchAsync(StudioRunnerDispatchRequest, IProgress(Of RuntimeProgressUpdate), CancellationToken)
+  spec.csharp:
+  - uid: Cress.Studio.Services.IStudioRunnerNode.DispatchAsync(Cress.Studio.Services.StudioRunnerDispatchRequest,System.IProgress{Cress.Execution.RuntimeProgressUpdate},System.Threading.CancellationToken)
+    name: DispatchAsync
+    href: Cress.Studio.Services.IStudioRunnerNode.html#Cress_Studio_Services_IStudioRunnerNode_DispatchAsync_Cress_Studio_Services_StudioRunnerDispatchRequest_System_IProgress_Cress_Execution_RuntimeProgressUpdate__System_Threading_CancellationToken_
+  - name: (
+  - uid: Cress.Studio.Services.StudioRunnerDispatchRequest
+    name: StudioRunnerDispatchRequest
+    href: Cress.Studio.Services.StudioRunnerDispatchRequest.html
+  - name: ','
+  - name: " "
+  - uid: System.IProgress`1
+    name: IProgress
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iprogress-1
+  - name: <
+  - uid: Cress.Execution.RuntimeProgressUpdate
+    name: RuntimeProgressUpdate
+    href: Cress.Execution.RuntimeProgressUpdate.html
+  - name: '>'
+  - name: ','
+  - name: " "
+  - uid: System.Threading.CancellationToken
+    name: CancellationToken
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken
+  - name: )
+  spec.vb:
+  - uid: Cress.Studio.Services.IStudioRunnerNode.DispatchAsync(Cress.Studio.Services.StudioRunnerDispatchRequest,System.IProgress{Cress.Execution.RuntimeProgressUpdate},System.Threading.CancellationToken)
+    name: DispatchAsync
+    href: Cress.Studio.Services.IStudioRunnerNode.html#Cress_Studio_Services_IStudioRunnerNode_DispatchAsync_Cress_Studio_Services_StudioRunnerDispatchRequest_System_IProgress_Cress_Execution_RuntimeProgressUpdate__System_Threading_CancellationToken_
+  - name: (
+  - uid: Cress.Studio.Services.StudioRunnerDispatchRequest
+    name: StudioRunnerDispatchRequest
+    href: Cress.Studio.Services.StudioRunnerDispatchRequest.html
+  - name: ','
+  - name: " "
+  - uid: System.IProgress`1
+    name: IProgress
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iprogress-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Cress.Execution.RuntimeProgressUpdate
+    name: RuntimeProgressUpdate
+    href: Cress.Execution.RuntimeProgressUpdate.html
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: System.Threading.CancellationToken
+    name: CancellationToken
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken
+  - name: )
+- uid: Cress.Studio.Services.StudioRunnerDispatchRequest
+  commentId: T:Cress.Studio.Services.StudioRunnerDispatchRequest
+  parent: Cress.Studio.Services
+  href: Cress.Studio.Services.StudioRunnerDispatchRequest.html
+  name: StudioRunnerDispatchRequest
+  nameWithType: StudioRunnerDispatchRequest
+  fullName: Cress.Studio.Services.StudioRunnerDispatchRequest
+- uid: System.IProgress{Cress.Execution.RuntimeProgressUpdate}
+  commentId: T:System.IProgress{Cress.Execution.RuntimeProgressUpdate}
+  parent: System
+  definition: System.IProgress`1
+  href: https://learn.microsoft.com/dotnet/api/system.iprogress-1
+  name: IProgress<RuntimeProgressUpdate>
+  nameWithType: IProgress<RuntimeProgressUpdate>
+  fullName: System.IProgress<Cress.Execution.RuntimeProgressUpdate>
+  nameWithType.vb: IProgress(Of RuntimeProgressUpdate)
+  fullName.vb: System.IProgress(Of Cress.Execution.RuntimeProgressUpdate)
+  name.vb: IProgress(Of RuntimeProgressUpdate)
+  spec.csharp:
+  - uid: System.IProgress`1
+    name: IProgress
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iprogress-1
+  - name: <
+  - uid: Cress.Execution.RuntimeProgressUpdate
+    name: RuntimeProgressUpdate
+    href: Cress.Execution.RuntimeProgressUpdate.html
+  - name: '>'
+  spec.vb:
+  - uid: System.IProgress`1
+    name: IProgress
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iprogress-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Cress.Execution.RuntimeProgressUpdate
+    name: RuntimeProgressUpdate
+    href: Cress.Execution.RuntimeProgressUpdate.html
+  - name: )
+- uid: System.Threading.CancellationToken
+  commentId: T:System.Threading.CancellationToken
+  parent: System.Threading
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken
+  name: CancellationToken
+  nameWithType: CancellationToken
+  fullName: System.Threading.CancellationToken
+- uid: System.Threading.Tasks.Task{Cress.Studio.Services.StudioRunnerDispatchResult}
+  commentId: T:System.Threading.Tasks.Task{Cress.Studio.Services.StudioRunnerDispatchResult}
+  parent: System.Threading.Tasks
+  definition: System.Threading.Tasks.Task`1
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<StudioRunnerDispatchResult>
+  nameWithType: Task<StudioRunnerDispatchResult>
+  fullName: System.Threading.Tasks.Task<Cress.Studio.Services.StudioRunnerDispatchResult>
+  nameWithType.vb: Task(Of StudioRunnerDispatchResult)
+  fullName.vb: System.Threading.Tasks.Task(Of Cress.Studio.Services.StudioRunnerDispatchResult)
+  name.vb: Task(Of StudioRunnerDispatchResult)
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - uid: Cress.Studio.Services.StudioRunnerDispatchResult
+    name: StudioRunnerDispatchResult
+    href: Cress.Studio.Services.StudioRunnerDispatchResult.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Cress.Studio.Services.StudioRunnerDispatchResult
+    name: StudioRunnerDispatchResult
+    href: Cress.Studio.Services.StudioRunnerDispatchResult.html
+  - name: )
+- uid: System.IProgress`1
+  commentId: T:System.IProgress`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iprogress-1
+  name: IProgress<T>
+  nameWithType: IProgress<T>
+  fullName: System.IProgress<T>
+  nameWithType.vb: IProgress(Of T)
+  fullName.vb: System.IProgress(Of T)
+  name.vb: IProgress(Of T)
+  spec.csharp:
+  - uid: System.IProgress`1
+    name: IProgress
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iprogress-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.IProgress`1
+    name: IProgress
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iprogress-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Threading
+  commentId: N:System.Threading
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Threading
+  nameWithType: System.Threading
+  fullName: System.Threading
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+- uid: System.Threading.Tasks.Task`1
+  commentId: T:System.Threading.Tasks.Task`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<TResult>
+  nameWithType: Task<TResult>
+  fullName: System.Threading.Tasks.Task<TResult>
+  nameWithType.vb: Task(Of TResult)
+  fullName.vb: System.Threading.Tasks.Task(Of TResult)
+  name.vb: Task(Of TResult)
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - name: TResult
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TResult
+  - name: )
+- uid: System.Threading.Tasks
+  commentId: N:System.Threading.Tasks
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Threading.Tasks
+  nameWithType: System.Threading.Tasks
+  fullName: System.Threading.Tasks
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks

@@ -1,7 +1,6 @@
 using System.Collections.Concurrent;
 using System.Diagnostics;
-using FlaUI.Core.AutomationElements;
-using FlaUI.UIA3;
+using System.Windows.Automation;
 
 namespace Cress.Recorder;
 
@@ -13,7 +12,6 @@ namespace Cress.Recorder;
 public sealed class RecordingSession : IDisposable
 {
     private readonly int _processId;
-    private readonly UIA3Automation _automation;
     private readonly ConcurrentQueue<RecordedEvent> _events = new();
     private UiaEventDispatcher? _dispatcher;
     private bool _disposed;
@@ -24,7 +22,6 @@ public sealed class RecordingSession : IDisposable
     private RecordingSession(int processId)
     {
         _processId = processId;
-        _automation = new UIA3Automation();
     }
 
     /// <summary>Creates a session attached to an already-running process by PID.</summary>
@@ -40,19 +37,18 @@ public sealed class RecordingSession : IDisposable
     }
 
     /// <summary>
-    /// Attaches FlaUI to the target process and registers UIA event handlers.
+    /// Attaches Windows UI Automation to the target process and registers UIA event handlers.
     /// Must be called before events will be captured.
     /// </summary>
     public void Start()
     {
         ObjectDisposedException.ThrowIf(_disposed, this);
 
-        var app = FlaUI.Core.Application.Attach(_processId);
-        var window = app.GetMainWindow(_automation, TimeSpan.FromSeconds(10))
+        using var process = Process.GetProcessById(_processId);
+        var window = WaitForMainWindow(process, TimeSpan.FromSeconds(10))
             ?? throw new InvalidOperationException($"Could not locate main window for PID {_processId}.");
 
         _dispatcher = new UiaEventDispatcher(
-            _automation,
             window,
             _processId,
             _events,
@@ -80,6 +76,29 @@ public sealed class RecordingSession : IDisposable
         _disposed = true;
 
         _dispatcher?.Dispose();
-        _automation.Dispose();
+    }
+
+    private static AutomationElement? WaitForMainWindow(Process process, TimeSpan timeout)
+    {
+        var end = DateTime.UtcNow + timeout;
+        while (DateTime.UtcNow < end)
+        {
+            process.Refresh();
+            if (process.MainWindowHandle != IntPtr.Zero)
+            {
+                try
+                {
+                    return AutomationElement.FromHandle(process.MainWindowHandle);
+                }
+                catch (ElementNotAvailableException)
+                {
+                    // The window appeared briefly but is not stable yet. Retry.
+                }
+            }
+
+            Thread.Sleep(100);
+        }
+
+        return null;
     }
 }

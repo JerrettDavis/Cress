@@ -1,0 +1,233 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Recorder.EventKind
+  commentId: T:Cress.Recorder.EventKind
+  id: EventKind
+  parent: Cress.Recorder
+  children:
+  - Cress.Recorder.EventKind.FocusChanged
+  - Cress.Recorder.EventKind.Invoke
+  - Cress.Recorder.EventKind.KeyDown
+  - Cress.Recorder.EventKind.Navigate
+  - Cress.Recorder.EventKind.ValueChanged
+  - Cress.Recorder.EventKind.WindowOpened
+  langs:
+  - csharp
+  - vb
+  name: EventKind
+  nameWithType: EventKind
+  fullName: Cress.Recorder.EventKind
+  type: Enum
+  source:
+    remote:
+      path: src/Cress.Recorder/RecordedEvent.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: EventKind
+    path: ../src/Cress.Recorder/RecordedEvent.cs
+    startLine: 5
+  assemblies:
+  - Cress.Recorder
+  namespace: Cress.Recorder
+  summary: The kind of UIA interaction captured.
+  example: []
+  syntax:
+    content: public enum EventKind
+    content.vb: Public Enum EventKind
+- uid: Cress.Recorder.EventKind.Invoke
+  commentId: F:Cress.Recorder.EventKind.Invoke
+  id: Invoke
+  parent: Cress.Recorder.EventKind
+  langs:
+  - csharp
+  - vb
+  name: Invoke
+  nameWithType: EventKind.Invoke
+  fullName: Cress.Recorder.EventKind.Invoke
+  type: Field
+  source:
+    remote:
+      path: src/Cress.Recorder/RecordedEvent.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Invoke
+    path: ../src/Cress.Recorder/RecordedEvent.cs
+    startLine: 7
+  assemblies:
+  - Cress.Recorder
+  namespace: Cress.Recorder
+  syntax:
+    content: Invoke = 0
+    return:
+      type: Cress.Recorder.EventKind
+- uid: Cress.Recorder.EventKind.ValueChanged
+  commentId: F:Cress.Recorder.EventKind.ValueChanged
+  id: ValueChanged
+  parent: Cress.Recorder.EventKind
+  langs:
+  - csharp
+  - vb
+  name: ValueChanged
+  nameWithType: EventKind.ValueChanged
+  fullName: Cress.Recorder.EventKind.ValueChanged
+  type: Field
+  source:
+    remote:
+      path: src/Cress.Recorder/RecordedEvent.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: ValueChanged
+    path: ../src/Cress.Recorder/RecordedEvent.cs
+    startLine: 8
+  assemblies:
+  - Cress.Recorder
+  namespace: Cress.Recorder
+  syntax:
+    content: ValueChanged = 1
+    return:
+      type: Cress.Recorder.EventKind
+- uid: Cress.Recorder.EventKind.FocusChanged
+  commentId: F:Cress.Recorder.EventKind.FocusChanged
+  id: FocusChanged
+  parent: Cress.Recorder.EventKind
+  langs:
+  - csharp
+  - vb
+  name: FocusChanged
+  nameWithType: EventKind.FocusChanged
+  fullName: Cress.Recorder.EventKind.FocusChanged
+  type: Field
+  source:
+    remote:
+      path: src/Cress.Recorder/RecordedEvent.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: FocusChanged
+    path: ../src/Cress.Recorder/RecordedEvent.cs
+    startLine: 9
+  assemblies:
+  - Cress.Recorder
+  namespace: Cress.Recorder
+  syntax:
+    content: FocusChanged = 2
+    return:
+      type: Cress.Recorder.EventKind
+- uid: Cress.Recorder.EventKind.KeyDown
+  commentId: F:Cress.Recorder.EventKind.KeyDown
+  id: KeyDown
+  parent: Cress.Recorder.EventKind
+  langs:
+  - csharp
+  - vb
+  name: KeyDown
+  nameWithType: EventKind.KeyDown
+  fullName: Cress.Recorder.EventKind.KeyDown
+  type: Field
+  source:
+    remote:
+      path: src/Cress.Recorder/RecordedEvent.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: KeyDown
+    path: ../src/Cress.Recorder/RecordedEvent.cs
+    startLine: 10
+  assemblies:
+  - Cress.Recorder
+  namespace: Cress.Recorder
+  syntax:
+    content: KeyDown = 3
+    return:
+      type: Cress.Recorder.EventKind
+- uid: Cress.Recorder.EventKind.WindowOpened
+  commentId: F:Cress.Recorder.EventKind.WindowOpened
+  id: WindowOpened
+  parent: Cress.Recorder.EventKind
+  langs:
+  - csharp
+  - vb
+  name: WindowOpened
+  nameWithType: EventKind.WindowOpened
+  fullName: Cress.Recorder.EventKind.WindowOpened
+  type: Field
+  source:
+    remote:
+      path: src/Cress.Recorder/RecordedEvent.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: WindowOpened
+    path: ../src/Cress.Recorder/RecordedEvent.cs
+    startLine: 11
+  assemblies:
+  - Cress.Recorder
+  namespace: Cress.Recorder
+  syntax:
+    content: WindowOpened = 4
+    return:
+      type: Cress.Recorder.EventKind
+- uid: Cress.Recorder.EventKind.Navigate
+  commentId: F:Cress.Recorder.EventKind.Navigate
+  id: Navigate
+  parent: Cress.Recorder.EventKind
+  langs:
+  - csharp
+  - vb
+  name: Navigate
+  nameWithType: EventKind.Navigate
+  fullName: Cress.Recorder.EventKind.Navigate
+  type: Field
+  source:
+    remote:
+      path: src/Cress.Recorder/RecordedEvent.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Navigate
+    path: ../src/Cress.Recorder/RecordedEvent.cs
+    startLine: 17
+  assemblies:
+  - Cress.Recorder
+  namespace: Cress.Recorder
+  summary: >-
+    A page/frame navigation was recorded (web recorder only).
+
+    The <xref href="Cress.Recorder.RecordedEvent.Url" data-throw-if-not-resolved="false"></xref> field carries the destination URL.
+  example: []
+  syntax:
+    content: Navigate = 5
+    return:
+      type: Cress.Recorder.EventKind
+references:
+- uid: Cress.Recorder
+  commentId: N:Cress.Recorder
+  href: Cress.html
+  name: Cress.Recorder
+  nameWithType: Cress.Recorder
+  fullName: Cress.Recorder
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Recorder
+    name: Recorder
+    href: Cress.Recorder.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Recorder
+    name: Recorder
+    href: Cress.Recorder.html
+- uid: Cress.Recorder.EventKind
+  commentId: T:Cress.Recorder.EventKind
+  parent: Cress.Recorder
+  href: Cress.Recorder.EventKind.html
+  name: EventKind
+  nameWithType: EventKind
+  fullName: Cress.Recorder.EventKind
+- uid: Cress.Recorder.RecordedEvent.Url
+  commentId: P:Cress.Recorder.RecordedEvent.Url
+  href: Cress.Recorder.RecordedEvent.html#Cress_Recorder_RecordedEvent_Url
+  name: Url
+  nameWithType: RecordedEvent.Url
+  fullName: Cress.Recorder.RecordedEvent.Url

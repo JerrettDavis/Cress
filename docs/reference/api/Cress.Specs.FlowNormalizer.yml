@@ -1,0 +1,404 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Specs.FlowNormalizer
+  commentId: T:Cress.Specs.FlowNormalizer
+  id: FlowNormalizer
+  parent: Cress.Specs
+  children:
+  - Cress.Specs.FlowNormalizer.Normalize(Cress.Core.Models.CressFlow)
+  langs:
+  - csharp
+  - vb
+  name: FlowNormalizer
+  nameWithType: FlowNormalizer
+  fullName: Cress.Specs.FlowNormalizer
+  type: Class
+  source:
+    remote:
+      path: src/Cress.Specs/FlowNormalizer.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: FlowNormalizer
+    path: ../src/Cress.Specs/FlowNormalizer.cs
+    startLine: 4
+  assemblies:
+  - Cress.Specs
+  namespace: Cress.Specs
+  syntax:
+    content: public sealed class FlowNormalizer
+    content.vb: Public NotInheritable Class FlowNormalizer
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Cress.Specs.FlowNormalizer.Normalize(Cress.Core.Models.CressFlow)
+  commentId: M:Cress.Specs.FlowNormalizer.Normalize(Cress.Core.Models.CressFlow)
+  id: Normalize(Cress.Core.Models.CressFlow)
+  parent: Cress.Specs.FlowNormalizer
+  langs:
+  - csharp
+  - vb
+  name: Normalize(CressFlow)
+  nameWithType: FlowNormalizer.Normalize(CressFlow)
+  fullName: Cress.Specs.FlowNormalizer.Normalize(Cress.Core.Models.CressFlow)
+  type: Method
+  source:
+    remote:
+      path: src/Cress.Specs/FlowNormalizer.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Normalize
+    path: ../src/Cress.Specs/FlowNormalizer.cs
+    startLine: 6
+  assemblies:
+  - Cress.Specs
+  namespace: Cress.Specs
+  syntax:
+    content: public OperationResult<NormalizedFlow> Normalize(CressFlow flow)
+    parameters:
+    - id: flow
+      type: Cress.Core.Models.CressFlow
+    return:
+      type: Cress.Core.Models.OperationResult{Cress.Core.Models.NormalizedFlow}
+    content.vb: Public Function Normalize(flow As CressFlow) As OperationResult(Of NormalizedFlow)
+  overload: Cress.Specs.FlowNormalizer.Normalize*
+references:
+- uid: Cress.Specs
+  commentId: N:Cress.Specs
+  href: Cress.html
+  name: Cress.Specs
+  nameWithType: Cress.Specs
+  fullName: Cress.Specs
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Specs
+    name: Specs
+    href: Cress.Specs.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Specs
+    name: Specs
+    href: Cress.Specs.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Cress.Specs.FlowNormalizer.Normalize*
+  commentId: Overload:Cress.Specs.FlowNormalizer.Normalize
+  href: Cress.Specs.FlowNormalizer.html#Cress_Specs_FlowNormalizer_Normalize_Cress_Core_Models_CressFlow_
+  name: Normalize
+  nameWithType: FlowNormalizer.Normalize
+  fullName: Cress.Specs.FlowNormalizer.Normalize
+- uid: Cress.Core.Models.CressFlow
+  commentId: T:Cress.Core.Models.CressFlow
+  parent: Cress.Core.Models
+  href: Cress.Core.Models.CressFlow.html
+  name: CressFlow
+  nameWithType: CressFlow
+  fullName: Cress.Core.Models.CressFlow
+- uid: Cress.Core.Models.OperationResult{Cress.Core.Models.NormalizedFlow}
+  commentId: T:Cress.Core.Models.OperationResult{Cress.Core.Models.NormalizedFlow}
+  parent: Cress.Core.Models
+  definition: Cress.Core.Models.OperationResult`1
+  href: Cress.Core.Models.OperationResult-1.html
+  name: OperationResult<NormalizedFlow>
+  nameWithType: OperationResult<NormalizedFlow>
+  fullName: Cress.Core.Models.OperationResult<Cress.Core.Models.NormalizedFlow>
+  nameWithType.vb: OperationResult(Of NormalizedFlow)
+  fullName.vb: Cress.Core.Models.OperationResult(Of Cress.Core.Models.NormalizedFlow)
+  name.vb: OperationResult(Of NormalizedFlow)
+  spec.csharp:
+  - uid: Cress.Core.Models.OperationResult`1
+    name: OperationResult
+    href: Cress.Core.Models.OperationResult-1.html
+  - name: <
+  - uid: Cress.Core.Models.NormalizedFlow
+    name: NormalizedFlow
+    href: Cress.Core.Models.NormalizedFlow.html
+  - name: '>'
+  spec.vb:
+  - uid: Cress.Core.Models.OperationResult`1
+    name: OperationResult
+    href: Cress.Core.Models.OperationResult-1.html
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Cress.Core.Models.NormalizedFlow
+    name: NormalizedFlow
+    href: Cress.Core.Models.NormalizedFlow.html
+  - name: )
+- uid: Cress.Core.Models
+  commentId: N:Cress.Core.Models
+  href: Cress.html
+  name: Cress.Core.Models
+  nameWithType: Cress.Core.Models
+  fullName: Cress.Core.Models
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Core
+    name: Core
+    href: Cress.Core.html
+  - name: .
+  - uid: Cress.Core.Models
+    name: Models
+    href: Cress.Core.Models.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Core
+    name: Core
+    href: Cress.Core.html
+  - name: .
+  - uid: Cress.Core.Models
+    name: Models
+    href: Cress.Core.Models.html
+- uid: Cress.Core.Models.OperationResult`1
+  commentId: T:Cress.Core.Models.OperationResult`1
+  href: Cress.Core.Models.OperationResult-1.html
+  name: OperationResult<T>
+  nameWithType: OperationResult<T>
+  fullName: Cress.Core.Models.OperationResult<T>
+  nameWithType.vb: OperationResult(Of T)
+  fullName.vb: Cress.Core.Models.OperationResult(Of T)
+  name.vb: OperationResult(Of T)
+  spec.csharp:
+  - uid: Cress.Core.Models.OperationResult`1
+    name: OperationResult
+    href: Cress.Core.Models.OperationResult-1.html
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Cress.Core.Models.OperationResult`1
+    name: OperationResult
+    href: Cress.Core.Models.OperationResult-1.html
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )

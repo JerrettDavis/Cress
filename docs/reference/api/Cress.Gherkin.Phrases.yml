@@ -1,0 +1,70 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Gherkin.Phrases
+  commentId: N:Cress.Gherkin.Phrases
+  id: Cress.Gherkin.Phrases
+  children:
+  - Cress.Gherkin.Phrases.GherkinKeyword
+  - Cress.Gherkin.Phrases.PhraseLibrary
+  - Cress.Gherkin.Phrases.StepPhrase
+  langs:
+  - csharp
+  - vb
+  name: Cress.Gherkin.Phrases
+  nameWithType: Cress.Gherkin.Phrases
+  fullName: Cress.Gherkin.Phrases
+  type: Namespace
+  assemblies:
+  - Cress.Gherkin
+references:
+- uid: Cress.Gherkin.Phrases.GherkinKeyword
+  commentId: T:Cress.Gherkin.Phrases.GherkinKeyword
+  parent: Cress.Gherkin.Phrases
+  href: Cress.Gherkin.Phrases.GherkinKeyword.html
+  name: GherkinKeyword
+  nameWithType: GherkinKeyword
+  fullName: Cress.Gherkin.Phrases.GherkinKeyword
+- uid: Cress.Gherkin.Phrases.PhraseLibrary
+  commentId: T:Cress.Gherkin.Phrases.PhraseLibrary
+  parent: Cress.Gherkin.Phrases
+  href: Cress.Gherkin.Phrases.PhraseLibrary.html
+  name: PhraseLibrary
+  nameWithType: PhraseLibrary
+  fullName: Cress.Gherkin.Phrases.PhraseLibrary
+- uid: Cress.Gherkin.Phrases.StepPhrase
+  commentId: T:Cress.Gherkin.Phrases.StepPhrase
+  parent: Cress.Gherkin.Phrases
+  href: Cress.Gherkin.Phrases.StepPhrase.html
+  name: StepPhrase
+  nameWithType: StepPhrase
+  fullName: Cress.Gherkin.Phrases.StepPhrase
+- uid: Cress.Gherkin.Phrases
+  commentId: N:Cress.Gherkin.Phrases
+  href: Cress.html
+  name: Cress.Gherkin.Phrases
+  nameWithType: Cress.Gherkin.Phrases
+  fullName: Cress.Gherkin.Phrases
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Gherkin
+    name: Gherkin
+    href: Cress.Gherkin.html
+  - name: .
+  - uid: Cress.Gherkin.Phrases
+    name: Phrases
+    href: Cress.Gherkin.Phrases.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Gherkin
+    name: Gherkin
+    href: Cress.Gherkin.html
+  - name: .
+  - uid: Cress.Gherkin.Phrases
+    name: Phrases
+    href: Cress.Gherkin.Phrases.html

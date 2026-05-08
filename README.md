@@ -65,6 +65,9 @@ The AppHost orchestrates:
 # Full local .NET test suite, including desktop and end-to-end coverage on Windows
 dotnet test Cress.sln --configuration Release --no-build
 
+# Aspire AppHost composition, integration, and end-to-end coverage
+dotnet test tests\Cress.AppHost.Tests\Cress.AppHost.Tests.csproj --configuration Release
+
 # Node test suite
 node --test node/tests/*.test.mjs
 
@@ -89,12 +92,14 @@ GitHub Actions now validates the repo with:
 The CI workflows publish:
 
 - TRX test results
-- Cobertura + HTML coverage artifacts
+- full Cobertura + HTML coverage artifacts
+- a filtered core-coverage artifact and 90% line-coverage gate for the cross-platform engine/export/import surface
+- Codecov uploads for both the full report and the gated core report
 - AppHost startup logs
 - DocFX site preview artifacts
-- A sticky PR coverage summary
+- a sticky PR summary with both the full report and the gated core report
 
-Desktop-display automation remains covered by the local Windows suite, but the hosted GitHub runner uses the CI-safe subset because FlaUI and full Studio E2E can be disrupted by the shared desktop session model on `windows-latest`.
+Desktop-display automation remains covered by the local Windows suite, but the hosted GitHub runner uses the CI-safe subset because Flawright and full Studio E2E can be disrupted by the shared desktop session model on `windows-latest`.
 
 ## Sample spec project
 

@@ -35,6 +35,8 @@ builder.Build().Run();
 
 That pattern scales to product environments too: use your preferred environment orchestrator to start dependencies, then let Cress connect through profiles, drivers, and plugins.
 
+The repository now also validates that orchestration layer directly through `tests\Cress.AppHost.Tests`, which uses Aspire's testing package to cover AppHost composition helpers, AppHost-started integration checks, and route-level end-to-end validation against the hosted `studio-web` resource.
+
 ## Step-by-step: GUI-first environment setup
 
 Use this path when a designer, QA engineer, or SDET is leading the first authoring pass.
@@ -104,7 +106,7 @@ Use the built-in and extension surfaces together:
 
 - `http` driver for services and APIs
 - `playwright` driver for web apps
-- `flaui` driver for Windows desktop apps
+- `flawright` driver for Windows desktop apps
 - plugin-backed steps for CLIs, data setup, or external-system bridges
 
 ### 4. Run directly or through a host framework

@@ -1,0 +1,436 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Studio.Services.EditableFixture
+  commentId: T:Cress.Studio.Services.EditableFixture
+  id: EditableFixture
+  parent: Cress.Studio.Services
+  children:
+  - Cress.Studio.Services.EditableFixture.Alias
+  - Cress.Studio.Services.EditableFixture.For
+  - Cress.Studio.Services.EditableFixture.Source
+  - Cress.Studio.Services.EditableFixture.Use
+  langs:
+  - csharp
+  - vb
+  name: EditableFixture
+  nameWithType: EditableFixture
+  fullName: Cress.Studio.Services.EditableFixture
+  type: Class
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/FlowDocumentService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: EditableFixture
+    path: ../src/Cress.Studio.Core/Services/FlowDocumentService.cs
+    startLine: 258
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  syntax:
+    content: public sealed class EditableFixture
+    content.vb: Public NotInheritable Class EditableFixture
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Cress.Studio.Services.EditableFixture.Alias
+  commentId: P:Cress.Studio.Services.EditableFixture.Alias
+  id: Alias
+  parent: Cress.Studio.Services.EditableFixture
+  langs:
+  - csharp
+  - vb
+  name: Alias
+  nameWithType: EditableFixture.Alias
+  fullName: Cress.Studio.Services.EditableFixture.Alias
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/FlowDocumentService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Alias
+    path: ../src/Cress.Studio.Core/Services/FlowDocumentService.cs
+    startLine: 260
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  syntax:
+    content: public string Alias { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property [Alias] As String
+  overload: Cress.Studio.Services.EditableFixture.Alias*
+- uid: Cress.Studio.Services.EditableFixture.Use
+  commentId: P:Cress.Studio.Services.EditableFixture.Use
+  id: Use
+  parent: Cress.Studio.Services.EditableFixture
+  langs:
+  - csharp
+  - vb
+  name: Use
+  nameWithType: EditableFixture.Use
+  fullName: Cress.Studio.Services.EditableFixture.Use
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/FlowDocumentService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Use
+    path: ../src/Cress.Studio.Core/Services/FlowDocumentService.cs
+    startLine: 261
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  syntax:
+    content: public string? Use { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Use As String
+  overload: Cress.Studio.Services.EditableFixture.Use*
+- uid: Cress.Studio.Services.EditableFixture.Source
+  commentId: P:Cress.Studio.Services.EditableFixture.Source
+  id: Source
+  parent: Cress.Studio.Services.EditableFixture
+  langs:
+  - csharp
+  - vb
+  name: Source
+  nameWithType: EditableFixture.Source
+  fullName: Cress.Studio.Services.EditableFixture.Source
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/FlowDocumentService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Source
+    path: ../src/Cress.Studio.Core/Services/FlowDocumentService.cs
+    startLine: 262
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  syntax:
+    content: public string? Source { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Source As String
+  overload: Cress.Studio.Services.EditableFixture.Source*
+- uid: Cress.Studio.Services.EditableFixture.For
+  commentId: P:Cress.Studio.Services.EditableFixture.For
+  id: For
+  parent: Cress.Studio.Services.EditableFixture
+  langs:
+  - csharp
+  - vb
+  name: For
+  nameWithType: EditableFixture.For
+  fullName: Cress.Studio.Services.EditableFixture.For
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/FlowDocumentService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: For
+    path: ../src/Cress.Studio.Core/Services/FlowDocumentService.cs
+    startLine: 263
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  syntax:
+    content: public string? For { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property [For] As String
+  overload: Cress.Studio.Services.EditableFixture.For*
+references:
+- uid: Cress.Studio.Services
+  commentId: N:Cress.Studio.Services
+  href: Cress.html
+  name: Cress.Studio.Services
+  nameWithType: Cress.Studio.Services
+  fullName: Cress.Studio.Services
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Studio
+    name: Studio
+    href: Cress.Studio.html
+  - name: .
+  - uid: Cress.Studio.Services
+    name: Services
+    href: Cress.Studio.Services.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Studio
+    name: Studio
+    href: Cress.Studio.html
+  - name: .
+  - uid: Cress.Studio.Services
+    name: Services
+    href: Cress.Studio.Services.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Cress.Studio.Services.EditableFixture.Alias*
+  commentId: Overload:Cress.Studio.Services.EditableFixture.Alias
+  href: Cress.Studio.Services.EditableFixture.html#Cress_Studio_Services_EditableFixture_Alias
+  name: Alias
+  nameWithType: EditableFixture.Alias
+  fullName: Cress.Studio.Services.EditableFixture.Alias
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Cress.Studio.Services.EditableFixture.Use*
+  commentId: Overload:Cress.Studio.Services.EditableFixture.Use
+  href: Cress.Studio.Services.EditableFixture.html#Cress_Studio_Services_EditableFixture_Use
+  name: Use
+  nameWithType: EditableFixture.Use
+  fullName: Cress.Studio.Services.EditableFixture.Use
+- uid: Cress.Studio.Services.EditableFixture.Source*
+  commentId: Overload:Cress.Studio.Services.EditableFixture.Source
+  href: Cress.Studio.Services.EditableFixture.html#Cress_Studio_Services_EditableFixture_Source
+  name: Source
+  nameWithType: EditableFixture.Source
+  fullName: Cress.Studio.Services.EditableFixture.Source
+- uid: Cress.Studio.Services.EditableFixture.For*
+  commentId: Overload:Cress.Studio.Services.EditableFixture.For
+  href: Cress.Studio.Services.EditableFixture.html#Cress_Studio_Services_EditableFixture_For
+  name: For
+  nameWithType: EditableFixture.For
+  fullName: Cress.Studio.Services.EditableFixture.For

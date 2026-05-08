@@ -1,0 +1,108 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Studio.ViewModels
+  commentId: N:Cress.Studio.ViewModels
+  id: Cress.Studio.ViewModels
+  children:
+  - Cress.Studio.ViewModels.FlowDocumentViewModel
+  - Cress.Studio.ViewModels.FlowDocumentViewModel.EditableExecutableRow
+  - Cress.Studio.ViewModels.FlowDocumentViewModel.EditableFixtureRow
+  - Cress.Studio.ViewModels.ObservableObject
+  langs:
+  - csharp
+  - vb
+  name: Cress.Studio.ViewModels
+  nameWithType: Cress.Studio.ViewModels
+  fullName: Cress.Studio.ViewModels
+  type: Namespace
+  assemblies:
+  - Cress.Studio.Core
+references:
+- uid: Cress.Studio.ViewModels.FlowDocumentViewModel
+  commentId: T:Cress.Studio.ViewModels.FlowDocumentViewModel
+  parent: Cress.Studio.ViewModels
+  href: Cress.Studio.ViewModels.FlowDocumentViewModel.html
+  name: FlowDocumentViewModel
+  nameWithType: FlowDocumentViewModel
+  fullName: Cress.Studio.ViewModels.FlowDocumentViewModel
+- uid: Cress.Studio.ViewModels.FlowDocumentViewModel.EditableFixtureRow
+  commentId: T:Cress.Studio.ViewModels.FlowDocumentViewModel.EditableFixtureRow
+  href: Cress.Studio.ViewModels.FlowDocumentViewModel.html
+  name: FlowDocumentViewModel.EditableFixtureRow
+  nameWithType: FlowDocumentViewModel.EditableFixtureRow
+  fullName: Cress.Studio.ViewModels.FlowDocumentViewModel.EditableFixtureRow
+  spec.csharp:
+  - uid: Cress.Studio.ViewModels.FlowDocumentViewModel
+    name: FlowDocumentViewModel
+    href: Cress.Studio.ViewModels.FlowDocumentViewModel.html
+  - name: .
+  - uid: Cress.Studio.ViewModels.FlowDocumentViewModel.EditableFixtureRow
+    name: EditableFixtureRow
+    href: Cress.Studio.ViewModels.FlowDocumentViewModel.EditableFixtureRow.html
+  spec.vb:
+  - uid: Cress.Studio.ViewModels.FlowDocumentViewModel
+    name: FlowDocumentViewModel
+    href: Cress.Studio.ViewModels.FlowDocumentViewModel.html
+  - name: .
+  - uid: Cress.Studio.ViewModels.FlowDocumentViewModel.EditableFixtureRow
+    name: EditableFixtureRow
+    href: Cress.Studio.ViewModels.FlowDocumentViewModel.EditableFixtureRow.html
+- uid: Cress.Studio.ViewModels.FlowDocumentViewModel.EditableExecutableRow
+  commentId: T:Cress.Studio.ViewModels.FlowDocumentViewModel.EditableExecutableRow
+  href: Cress.Studio.ViewModels.FlowDocumentViewModel.html
+  name: FlowDocumentViewModel.EditableExecutableRow
+  nameWithType: FlowDocumentViewModel.EditableExecutableRow
+  fullName: Cress.Studio.ViewModels.FlowDocumentViewModel.EditableExecutableRow
+  spec.csharp:
+  - uid: Cress.Studio.ViewModels.FlowDocumentViewModel
+    name: FlowDocumentViewModel
+    href: Cress.Studio.ViewModels.FlowDocumentViewModel.html
+  - name: .
+  - uid: Cress.Studio.ViewModels.FlowDocumentViewModel.EditableExecutableRow
+    name: EditableExecutableRow
+    href: Cress.Studio.ViewModels.FlowDocumentViewModel.EditableExecutableRow.html
+  spec.vb:
+  - uid: Cress.Studio.ViewModels.FlowDocumentViewModel
+    name: FlowDocumentViewModel
+    href: Cress.Studio.ViewModels.FlowDocumentViewModel.html
+  - name: .
+  - uid: Cress.Studio.ViewModels.FlowDocumentViewModel.EditableExecutableRow
+    name: EditableExecutableRow
+    href: Cress.Studio.ViewModels.FlowDocumentViewModel.EditableExecutableRow.html
+- uid: Cress.Studio.ViewModels.ObservableObject
+  commentId: T:Cress.Studio.ViewModels.ObservableObject
+  parent: Cress.Studio.ViewModels
+  href: Cress.Studio.ViewModels.ObservableObject.html
+  name: ObservableObject
+  nameWithType: ObservableObject
+  fullName: Cress.Studio.ViewModels.ObservableObject
+- uid: Cress.Studio.ViewModels
+  commentId: N:Cress.Studio.ViewModels
+  href: Cress.html
+  name: Cress.Studio.ViewModels
+  nameWithType: Cress.Studio.ViewModels
+  fullName: Cress.Studio.ViewModels
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Studio
+    name: Studio
+    href: Cress.Studio.html
+  - name: .
+  - uid: Cress.Studio.ViewModels
+    name: ViewModels
+    href: Cress.Studio.ViewModels.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Studio
+    name: Studio
+    href: Cress.Studio.html
+  - name: .
+  - uid: Cress.Studio.ViewModels
+    name: ViewModels
+    href: Cress.Studio.ViewModels.html

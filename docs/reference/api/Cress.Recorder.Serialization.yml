@@ -1,0 +1,77 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Recorder.Serialization
+  commentId: N:Cress.Recorder.Serialization
+  id: Cress.Recorder.Serialization
+  children:
+  - Cress.Recorder.Serialization.RecordedFlowSerializer
+  - Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata
+  langs:
+  - csharp
+  - vb
+  name: Cress.Recorder.Serialization
+  nameWithType: Cress.Recorder.Serialization
+  fullName: Cress.Recorder.Serialization
+  type: Namespace
+  assemblies:
+  - Cress.Recorder
+references:
+- uid: Cress.Recorder.Serialization.RecordedFlowSerializer
+  commentId: T:Cress.Recorder.Serialization.RecordedFlowSerializer
+  href: Cress.Recorder.Serialization.RecordedFlowSerializer.html
+  name: RecordedFlowSerializer
+  nameWithType: RecordedFlowSerializer
+  fullName: Cress.Recorder.Serialization.RecordedFlowSerializer
+- uid: Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata
+  commentId: T:Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata
+  parent: Cress.Recorder.Serialization
+  href: Cress.Recorder.Serialization.RecordedFlowSerializer.html
+  name: RecordedFlowSerializer.RecordedFlowMetadata
+  nameWithType: RecordedFlowSerializer.RecordedFlowMetadata
+  fullName: Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata
+  spec.csharp:
+  - uid: Cress.Recorder.Serialization.RecordedFlowSerializer
+    name: RecordedFlowSerializer
+    href: Cress.Recorder.Serialization.RecordedFlowSerializer.html
+  - name: .
+  - uid: Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata
+    name: RecordedFlowMetadata
+    href: Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata.html
+  spec.vb:
+  - uid: Cress.Recorder.Serialization.RecordedFlowSerializer
+    name: RecordedFlowSerializer
+    href: Cress.Recorder.Serialization.RecordedFlowSerializer.html
+  - name: .
+  - uid: Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata
+    name: RecordedFlowMetadata
+    href: Cress.Recorder.Serialization.RecordedFlowSerializer.RecordedFlowMetadata.html
+- uid: Cress.Recorder.Serialization
+  commentId: N:Cress.Recorder.Serialization
+  href: Cress.html
+  name: Cress.Recorder.Serialization
+  nameWithType: Cress.Recorder.Serialization
+  fullName: Cress.Recorder.Serialization
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Recorder
+    name: Recorder
+    href: Cress.Recorder.html
+  - name: .
+  - uid: Cress.Recorder.Serialization
+    name: Serialization
+    href: Cress.Recorder.Serialization.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Recorder
+    name: Recorder
+    href: Cress.Recorder.html
+  - name: .
+  - uid: Cress.Recorder.Serialization
+    name: Serialization
+    href: Cress.Recorder.Serialization.html

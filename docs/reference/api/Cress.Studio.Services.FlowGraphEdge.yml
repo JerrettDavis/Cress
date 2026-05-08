@@ -1,0 +1,547 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Studio.Services.FlowGraphEdge
+  commentId: T:Cress.Studio.Services.FlowGraphEdge
+  id: FlowGraphEdge
+  parent: Cress.Studio.Services
+  children:
+  - Cress.Studio.Services.FlowGraphEdge.#ctor(System.String,System.String,System.String,System.String)
+  - Cress.Studio.Services.FlowGraphEdge.Id
+  - Cress.Studio.Services.FlowGraphEdge.Label
+  - Cress.Studio.Services.FlowGraphEdge.SourceId
+  - Cress.Studio.Services.FlowGraphEdge.TargetId
+  langs:
+  - csharp
+  - vb
+  name: FlowGraphEdge
+  nameWithType: FlowGraphEdge
+  fullName: Cress.Studio.Services.FlowGraphEdge
+  type: Class
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/FlowGraphBuilder.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: FlowGraphEdge
+    path: ../src/Cress.Studio.Core/Services/FlowGraphBuilder.cs
+    startLine: 107
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  syntax:
+    content: 'public sealed record FlowGraphEdge : IEquatable<FlowGraphEdge>'
+    content.vb: Public NotInheritable Class FlowGraphEdge Implements IEquatable(Of FlowGraphEdge)
+  inheritance:
+  - System.Object
+  implements:
+  - System.IEquatable{Cress.Studio.Services.FlowGraphEdge}
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Cress.Studio.Services.FlowGraphEdge.#ctor(System.String,System.String,System.String,System.String)
+  commentId: M:Cress.Studio.Services.FlowGraphEdge.#ctor(System.String,System.String,System.String,System.String)
+  id: '#ctor(System.String,System.String,System.String,System.String)'
+  parent: Cress.Studio.Services.FlowGraphEdge
+  langs:
+  - csharp
+  - vb
+  name: FlowGraphEdge(string, string, string, string)
+  nameWithType: FlowGraphEdge.FlowGraphEdge(string, string, string, string)
+  fullName: Cress.Studio.Services.FlowGraphEdge.FlowGraphEdge(string, string, string, string)
+  type: Constructor
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/FlowGraphBuilder.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: .ctor
+    path: ../src/Cress.Studio.Core/Services/FlowGraphBuilder.cs
+    startLine: 107
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  syntax:
+    content: public FlowGraphEdge(string Id, string SourceId, string TargetId, string Label)
+    parameters:
+    - id: Id
+      type: System.String
+    - id: SourceId
+      type: System.String
+    - id: TargetId
+      type: System.String
+    - id: Label
+      type: System.String
+    content.vb: Public Sub New(Id As String, SourceId As String, TargetId As String, Label As String)
+  overload: Cress.Studio.Services.FlowGraphEdge.#ctor*
+  nameWithType.vb: FlowGraphEdge.New(String, String, String, String)
+  fullName.vb: Cress.Studio.Services.FlowGraphEdge.New(String, String, String, String)
+  name.vb: New(String, String, String, String)
+- uid: Cress.Studio.Services.FlowGraphEdge.Id
+  commentId: P:Cress.Studio.Services.FlowGraphEdge.Id
+  id: Id
+  parent: Cress.Studio.Services.FlowGraphEdge
+  langs:
+  - csharp
+  - vb
+  name: Id
+  nameWithType: FlowGraphEdge.Id
+  fullName: Cress.Studio.Services.FlowGraphEdge.Id
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/FlowGraphBuilder.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Id
+    path: ../src/Cress.Studio.Core/Services/FlowGraphBuilder.cs
+    startLine: 108
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  syntax:
+    content: public string Id { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Id As String
+  overload: Cress.Studio.Services.FlowGraphEdge.Id*
+- uid: Cress.Studio.Services.FlowGraphEdge.SourceId
+  commentId: P:Cress.Studio.Services.FlowGraphEdge.SourceId
+  id: SourceId
+  parent: Cress.Studio.Services.FlowGraphEdge
+  langs:
+  - csharp
+  - vb
+  name: SourceId
+  nameWithType: FlowGraphEdge.SourceId
+  fullName: Cress.Studio.Services.FlowGraphEdge.SourceId
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/FlowGraphBuilder.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: SourceId
+    path: ../src/Cress.Studio.Core/Services/FlowGraphBuilder.cs
+    startLine: 109
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  syntax:
+    content: public string SourceId { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property SourceId As String
+  overload: Cress.Studio.Services.FlowGraphEdge.SourceId*
+- uid: Cress.Studio.Services.FlowGraphEdge.TargetId
+  commentId: P:Cress.Studio.Services.FlowGraphEdge.TargetId
+  id: TargetId
+  parent: Cress.Studio.Services.FlowGraphEdge
+  langs:
+  - csharp
+  - vb
+  name: TargetId
+  nameWithType: FlowGraphEdge.TargetId
+  fullName: Cress.Studio.Services.FlowGraphEdge.TargetId
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/FlowGraphBuilder.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: TargetId
+    path: ../src/Cress.Studio.Core/Services/FlowGraphBuilder.cs
+    startLine: 110
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  syntax:
+    content: public string TargetId { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property TargetId As String
+  overload: Cress.Studio.Services.FlowGraphEdge.TargetId*
+- uid: Cress.Studio.Services.FlowGraphEdge.Label
+  commentId: P:Cress.Studio.Services.FlowGraphEdge.Label
+  id: Label
+  parent: Cress.Studio.Services.FlowGraphEdge
+  langs:
+  - csharp
+  - vb
+  name: Label
+  nameWithType: FlowGraphEdge.Label
+  fullName: Cress.Studio.Services.FlowGraphEdge.Label
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/FlowGraphBuilder.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Label
+    path: ../src/Cress.Studio.Core/Services/FlowGraphBuilder.cs
+    startLine: 111
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  syntax:
+    content: public string Label { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Label As String
+  overload: Cress.Studio.Services.FlowGraphEdge.Label*
+references:
+- uid: Cress.Studio.Services
+  commentId: N:Cress.Studio.Services
+  href: Cress.html
+  name: Cress.Studio.Services
+  nameWithType: Cress.Studio.Services
+  fullName: Cress.Studio.Services
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Studio
+    name: Studio
+    href: Cress.Studio.html
+  - name: .
+  - uid: Cress.Studio.Services
+    name: Services
+    href: Cress.Studio.Services.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Studio
+    name: Studio
+    href: Cress.Studio.html
+  - name: .
+  - uid: Cress.Studio.Services
+    name: Services
+    href: Cress.Studio.Services.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.IEquatable{Cress.Studio.Services.FlowGraphEdge}
+  commentId: T:System.IEquatable{Cress.Studio.Services.FlowGraphEdge}
+  parent: System
+  definition: System.IEquatable`1
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<FlowGraphEdge>
+  nameWithType: IEquatable<FlowGraphEdge>
+  fullName: System.IEquatable<Cress.Studio.Services.FlowGraphEdge>
+  nameWithType.vb: IEquatable(Of FlowGraphEdge)
+  fullName.vb: System.IEquatable(Of Cress.Studio.Services.FlowGraphEdge)
+  name.vb: IEquatable(Of FlowGraphEdge)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - uid: Cress.Studio.Services.FlowGraphEdge
+    name: FlowGraphEdge
+    href: Cress.Studio.Services.FlowGraphEdge.html
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Cress.Studio.Services.FlowGraphEdge
+    name: FlowGraphEdge
+    href: Cress.Studio.Services.FlowGraphEdge.html
+  - name: )
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.IEquatable`1
+  commentId: T:System.IEquatable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<T>
+  nameWithType: IEquatable<T>
+  fullName: System.IEquatable<T>
+  nameWithType.vb: IEquatable(Of T)
+  fullName.vb: System.IEquatable(Of T)
+  name.vb: IEquatable(Of T)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Cress.Studio.Services.FlowGraphEdge.#ctor*
+  commentId: Overload:Cress.Studio.Services.FlowGraphEdge.#ctor
+  href: Cress.Studio.Services.FlowGraphEdge.html#Cress_Studio_Services_FlowGraphEdge__ctor_System_String_System_String_System_String_System_String_
+  name: FlowGraphEdge
+  nameWithType: FlowGraphEdge.FlowGraphEdge
+  fullName: Cress.Studio.Services.FlowGraphEdge.FlowGraphEdge
+  nameWithType.vb: FlowGraphEdge.New
+  fullName.vb: Cress.Studio.Services.FlowGraphEdge.New
+  name.vb: New
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Cress.Studio.Services.FlowGraphEdge.Id*
+  commentId: Overload:Cress.Studio.Services.FlowGraphEdge.Id
+  href: Cress.Studio.Services.FlowGraphEdge.html#Cress_Studio_Services_FlowGraphEdge_Id
+  name: Id
+  nameWithType: FlowGraphEdge.Id
+  fullName: Cress.Studio.Services.FlowGraphEdge.Id
+- uid: Cress.Studio.Services.FlowGraphEdge.SourceId*
+  commentId: Overload:Cress.Studio.Services.FlowGraphEdge.SourceId
+  href: Cress.Studio.Services.FlowGraphEdge.html#Cress_Studio_Services_FlowGraphEdge_SourceId
+  name: SourceId
+  nameWithType: FlowGraphEdge.SourceId
+  fullName: Cress.Studio.Services.FlowGraphEdge.SourceId
+- uid: Cress.Studio.Services.FlowGraphEdge.TargetId*
+  commentId: Overload:Cress.Studio.Services.FlowGraphEdge.TargetId
+  href: Cress.Studio.Services.FlowGraphEdge.html#Cress_Studio_Services_FlowGraphEdge_TargetId
+  name: TargetId
+  nameWithType: FlowGraphEdge.TargetId
+  fullName: Cress.Studio.Services.FlowGraphEdge.TargetId
+- uid: Cress.Studio.Services.FlowGraphEdge.Label*
+  commentId: Overload:Cress.Studio.Services.FlowGraphEdge.Label
+  href: Cress.Studio.Services.FlowGraphEdge.html#Cress_Studio_Services_FlowGraphEdge_Label
+  name: Label
+  nameWithType: FlowGraphEdge.Label
+  fullName: Cress.Studio.Services.FlowGraphEdge.Label

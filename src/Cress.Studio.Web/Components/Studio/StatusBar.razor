@@ -1,27 +1,27 @@
 @implements IDisposable
 @inject StudioWorkspaceState State
 
-<div class="studio-statusbar" aria-live="polite" aria-label="Studio status">
-    <div class="statusbar-item" aria-label="Current status">
+<div class="studio-statusbar" aria-live="polite" aria-label="Studio status" data-testid="status-bar">
+    <div class="statusbar-item" aria-label="Current status" data-testid="status-bar-status">
         <span class="statusbar-dot @DotClass" aria-hidden="true"></span>
         <span>Status</span>
         <span>: </span>
-        <strong title="@State.StatusMessage">@State.StatusMessage</strong>
+        <strong title="@State.StatusMessage" data-testid="status-bar-status-text">@State.StatusMessage</strong>
     </div>
-    <div class="statusbar-item" aria-label="Live run">
+    <div class="statusbar-item" aria-label="Live run" data-testid="status-bar-live-run">
         <span>Live</span>
         <span>: </span>
-        <span title="@State.LiveRunHeadline">@State.LiveRunHeadline</span>
+        <span title="@State.LiveRunHeadline" data-testid="status-bar-live-run-text">@State.LiveRunHeadline</span>
     </div>
-    <div class="statusbar-item" aria-label="Selection">
+    <div class="statusbar-item" aria-label="Selection" data-testid="status-bar-selection">
         <span>Selection</span>
         <span>: </span>
-        <span title="@State.SelectionHeadline">@State.SelectionHeadline</span>
+        <span title="@State.SelectionHeadline" data-testid="status-bar-selection-text">@State.SelectionHeadline</span>
     </div>
-    <div class="statusbar-item" aria-label="Last run">
+    <div class="statusbar-item" aria-label="Last run" data-testid="status-bar-last-run">
         <span>Last run</span>
         <span>: </span>
-        <span title="@(_lastRunDescription)">@(_lastRunDescription)</span>
+        <span title="@(_lastRunDescription)" data-testid="status-bar-last-run-text">@(_lastRunDescription)</span>
     </div>
 </div>
 

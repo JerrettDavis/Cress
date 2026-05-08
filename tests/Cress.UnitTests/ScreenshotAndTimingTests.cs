@@ -88,7 +88,7 @@ public sealed class ScreenshotAndTimingTests
     public async Task Orchestrator_CapturesScreenshot_WhenAssertionFails_OnFailurePolicy()
     {
         using var workspace = new TestWorkspace();
-        WriteMinimalFlaUiLikeProject(workspace, screenshotPolicy: "on-failure");
+        WriteMinimalFlawrightLikeProject(workspace, screenshotPolicy: "on-failure");
         workspace.WriteFile(Path.Combine("project", "flows", "assert-fail.flow.yaml"), """
         version: 1
         id: assert-fail-flow
@@ -105,13 +105,13 @@ public sealed class ScreenshotAndTimingTests
         steps:
           - name: fake.act
             drivers:
-              - flaui
+              - flawright
             retrySafe: false
             implementation:
               operation: act
           - name: fake.assert-fail
             drivers:
-              - flaui
+              - flawright
             retrySafe: false
             implementation:
               operation: assert-fail
@@ -136,7 +136,7 @@ public sealed class ScreenshotAndTimingTests
     public async Task Orchestrator_CapturesScreenshot_OnAssertionFailurePolicy_WhenAssertionFails()
     {
         using var workspace = new TestWorkspace();
-        WriteMinimalFlaUiLikeProject(workspace, screenshotPolicy: "on-assertion-failure");
+        WriteMinimalFlawrightLikeProject(workspace, screenshotPolicy: "on-assertion-failure");
         workspace.WriteFile(Path.Combine("project", "flows", "assert-fail.flow.yaml"), """
         version: 1
         id: assert-fail-flow
@@ -153,13 +153,13 @@ public sealed class ScreenshotAndTimingTests
         steps:
           - name: fake.act
             drivers:
-              - flaui
+              - flawright
             retrySafe: false
             implementation:
               operation: act
           - name: fake.assert-fail
             drivers:
-              - flaui
+              - flawright
             retrySafe: false
             implementation:
               operation: assert-fail
@@ -184,7 +184,7 @@ public sealed class ScreenshotAndTimingTests
     public async Task Orchestrator_DoesNotCaptureScreenshot_OnAssertionFailurePolicy_WhenNonAssertionFails()
     {
         using var workspace = new TestWorkspace();
-        WriteMinimalFlaUiLikeProject(workspace, screenshotPolicy: "on-assertion-failure");
+        WriteMinimalFlawrightLikeProject(workspace, screenshotPolicy: "on-assertion-failure");
         workspace.WriteFile(Path.Combine("project", "flows", "generic-fail.flow.yaml"), """
         version: 1
         id: generic-fail-flow
@@ -196,7 +196,7 @@ public sealed class ScreenshotAndTimingTests
           - expect: fake.generic-fail
             with: {}
         """);
-        workspace.WriteFile(Path.Combine("project", "steps", "manifests", "fake.yaml"), FakeStepManifest("fake.generic-fail", "flaui", "generic-fail"));
+        workspace.WriteFile(Path.Combine("project", "steps", "manifests", "fake.yaml"), FakeStepManifest("fake.generic-fail", "flawright", "generic-fail"));
 
         var screenshotDriver = new FakeScreenshotDriver(genericFailStep: "fake.generic-fail");
         var orchestrator = CreateOrchestrator([screenshotDriver]);
@@ -341,7 +341,7 @@ public sealed class ScreenshotAndTimingTests
         Directory.CreateDirectory(workspace.GetPath("project", "fixtures"));
     }
 
-    private static void WriteMinimalFlaUiLikeProject(TestWorkspace workspace, string screenshotPolicy)
+    private static void WriteMinimalFlawrightLikeProject(TestWorkspace workspace, string screenshotPolicy)
     {
         workspace.WriteFile(Path.Combine("project", ".cress", "config.yaml"), """
         version: 1
@@ -366,7 +366,7 @@ public sealed class ScreenshotAndTimingTests
             - plugins
             - steps
         drivers:
-          flaui:
+          flawright:
             enabled: true
         """);
         workspace.WriteFile(Path.Combine("project", ".cress", "profiles", "local.yaml"), $"""
@@ -464,13 +464,13 @@ public sealed class ScreenshotAndTimingTests
     }
 
     /// <summary>
-    /// Driver named "flaui" so the orchestrator's MaybeCaptureScreenshotAsync will engage.
+    /// Driver named "flawright" so the orchestrator's MaybeCaptureScreenshotAsync will engage.
     /// Fails specified steps with assertion-failed or generic failure,
     /// and records whether a screenshot was requested.
     /// </summary>
     private sealed class FakeScreenshotDriver(string? assertionFailStep = null, string? genericFailStep = null) : IRuntimeDriver
     {
-        public string Name => "flaui";
+        public string Name => "flawright";
 
         public bool ScreenshotCaptured { get; private set; }
 
@@ -481,7 +481,7 @@ public sealed class ScreenshotAndTimingTests
 
         private sealed class FakeScreenshotSession(FakeScreenshotDriver parent, string? assertionFailStep, string? genericFailStep) : IDriverSession
         {
-            public string Name => "flaui";
+            public string Name => "flawright";
             public IReadOnlyDictionary<string, string> Metadata { get; } = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
             public Task<DriverExecutionResult> ExecuteAsync(PlanAction action, FlowExecutionContext context, CancellationToken cancellationToken)

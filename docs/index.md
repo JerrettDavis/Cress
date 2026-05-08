@@ -41,7 +41,7 @@ Cress is a workflow-first end-to-end testing platform for Windows teams that nee
 
 ### Desktop automation teams
 
-1. [Enable the FlaUI driver](getting-started/quickstart-desktop.md)
+1. [Enable the Flawright driver](getting-started/quickstart-desktop.md)
 2. [Use the desktop recording target picker](user-guide/recording-workflows.md)
 3. [Design desktop apps for automation](developer-guide/designing-for-automation.md)
 
@@ -59,7 +59,7 @@ Cress is a workflow-first end-to-end testing platform for Windows teams that nee
 | CLI tools | plugin-backed steps and process assertions | [Testing CLI apps](user-guide/testing-cli-apps.md) |
 | Services and APIs | built-in HTTP driver plus JSON assertions | [Testing services](user-guide/testing-services.md) |
 | Web apps | Playwright-backed browser flows with Studio recording | [Testing web apps](user-guide/testing-web-apps.md) |
-| Desktop apps | FlaUI-backed Windows flows with Studio authoring | [Testing desktop apps](user-guide/testing-desktop-apps.md) |
+| Desktop apps | Flawright-backed Windows flows with Studio authoring | [Testing desktop apps](user-guide/testing-desktop-apps.md) |
 
 ## Native test framework integration
 

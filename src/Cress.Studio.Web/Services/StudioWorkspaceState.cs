@@ -13,20 +13,22 @@ public sealed class StudioWorkspaceState : IDisposable
 {
     private readonly StudioProjectService _projectService;
     private readonly FlowDocumentService _flowDocumentService;
-    private readonly RuntimeOrchestrator _runtimeOrchestrator;
+    private readonly IStudioRunnerService _runnerService;
     private readonly StudioSuiteService _suiteService;
     private readonly StudioAuthoringService _authoringService;
     private readonly StudioRunInsightsService _runInsightsService;
     private readonly RunMetricsService _runMetricsService;
     private readonly IStudioRecorderService _recorderService;
     private readonly ProjectLocator _projectLocator;
+    private readonly Dictionary<string, int> _liveFlowOrder = new(StringComparer.OrdinalIgnoreCase);
+    private readonly Dictionary<string, int> _liveFlowStepOffsets = new(StringComparer.OrdinalIgnoreCase);
 
     private static readonly MetricsOptions DefaultMetricsOptions = new(TimeSpan.FromDays(30), 100);
 
     public StudioWorkspaceState(
         StudioProjectService projectService,
         FlowDocumentService flowDocumentService,
-        RuntimeOrchestrator runtimeOrchestrator,
+        IStudioRunnerService runnerService,
         StudioSuiteService suiteService,
         StudioAuthoringService authoringService,
         StudioRunInsightsService runInsightsService,
@@ -36,7 +38,7 @@ public sealed class StudioWorkspaceState : IDisposable
     {
         _projectService = projectService;
         _flowDocumentService = flowDocumentService;
-        _runtimeOrchestrator = runtimeOrchestrator;
+        _runnerService = runnerService;
         _suiteService = suiteService;
         _authoringService = authoringService;
         _runInsightsService = runInsightsService;
@@ -45,6 +47,7 @@ public sealed class StudioWorkspaceState : IDisposable
         _projectLocator = projectLocator;
 
         _recorderService.StateChanged += OnRecorderStateChanged;
+        _runnerService.Changed += OnRunnerNodesChanged;
 
         SuggestedWorkspacePath = ResolveSuggestedWorkspacePath(projectLocator) ?? string.Empty;
         if (!string.IsNullOrWhiteSpace(SuggestedWorkspacePath))
@@ -54,8 +57,8 @@ public sealed class StudioWorkspaceState : IDisposable
         }
 
         DemoWorkspaces = BuildDemoWorkspaces();
-        RunnerNodes = BuildRunnerNodes();
-        SelectedRunnerNodeId = RunnerNodes.FirstOrDefault()?.Id ?? StudioRunnerNode.LocalNodeId;
+        RunnerNodes = _runnerService.ListNodes();
+        SelectedRunnerNodeId = RunnerNodes.FirstOrDefault()?.Id ?? StudioEmbeddedRunnerNode.LocalNodeId;
     }
 
     public event Action? Changed;
@@ -92,9 +95,9 @@ public sealed class StudioWorkspaceState : IDisposable
     public string SuggestedWorkspacePath { get; }
     public List<string> RecentWorkspaces { get; } = [];
     public IReadOnlyList<StudioDemoWorkspace> DemoWorkspaces { get; }
-    public IReadOnlyList<StudioRunnerNode> RunnerNodes { get; private set; }
-    public string SelectedRunnerNodeId { get; set; } = StudioRunnerNode.LocalNodeId;
-    public StudioRunnerNode? SelectedRunnerNode
+    public IReadOnlyList<StudioRunnerNodeSnapshot> RunnerNodes { get; private set; }
+    public string SelectedRunnerNodeId { get; set; } = StudioEmbeddedRunnerNode.LocalNodeId;
+    public StudioRunnerNodeSnapshot? SelectedRunnerNode
         => RunnerNodes.FirstOrDefault(node => string.Equals(node.Id, SelectedRunnerNodeId, StringComparison.OrdinalIgnoreCase));
 
     public bool IsWorkspacePickerOpen { get; private set; }
@@ -105,6 +108,8 @@ public sealed class StudioWorkspaceState : IDisposable
 
     // Used to cancel the auto-clear timer when a new error arrives before the 8 s expires.
     private CancellationTokenSource? _errorClearCts;
+    private CancellationTokenSource? _activeRunCts;
+    private CancellationTokenSource? _liveTickerCts;
 
     public void OpenRecorderPicker()
     {
@@ -183,8 +188,13 @@ public sealed class StudioWorkspaceState : IDisposable
     public void Dispose()
     {
         _recorderService.StateChanged -= OnRecorderStateChanged;
+        _runnerService.Changed -= OnRunnerNodesChanged;
         _errorClearCts?.Cancel();
         _errorClearCts?.Dispose();
+        _activeRunCts?.Cancel();
+        _activeRunCts?.Dispose();
+        _liveTickerCts?.Cancel();
+        _liveTickerCts?.Dispose();
     }
 
     private void ClearRecordingError()
@@ -238,6 +248,17 @@ public sealed class StudioWorkspaceState : IDisposable
     private void OnRecorderStateChanged()
         => NotifyChanged();
 
+    private void OnRunnerNodesChanged()
+    {
+        RunnerNodes = _runnerService.ListNodes();
+        if (!RunnerNodes.Any(node => string.Equals(node.Id, SelectedRunnerNodeId, StringComparison.OrdinalIgnoreCase)))
+        {
+            SelectedRunnerNodeId = RunnerNodes.FirstOrDefault()?.Id ?? StudioEmbeddedRunnerNode.LocalNodeId;
+        }
+
+        NotifyChanged();
+    }
+
     // -------------------------------------------------------------------------
     // End recording state
     // -------------------------------------------------------------------------
@@ -268,10 +289,24 @@ public sealed class StudioWorkspaceState : IDisposable
     public string SelectedAssetSummary { get; private set; } = "Load a project to begin.";
     public string SelectionHeadline { get; private set; } = "No selection";
     public string LiveRunHeadline { get; private set; } = "No run in progress.";
+    public string LiveRunStatus { get; private set; } = "Idle";
+    public string LiveCurrentFlow { get; private set; } = "—";
+    public string LiveCurrentStep { get; private set; } = "—";
+    public string LiveCurrentStepMessage { get; private set; } = "No step in progress.";
     public string SourceEditorText { get; set; } = string.Empty;
     public string PreviewText { get; private set; } = string.Empty;
     public string PreviewImageDataUrl { get; private set; } = string.Empty;
     public bool IsBusy { get; private set; }
+    public bool IsLiveLogVisible { get; private set; }
+    public string? LiveRunId { get; private set; }
+    public int LiveTotalFlows { get; private set; }
+    public int LiveCompletedFlows { get; private set; }
+    public int LiveTotalSteps { get; private set; }
+    public int LiveCompletedSteps { get; private set; }
+    public int LiveCurrentFlowIndex { get; private set; }
+    public int LiveCurrentFlowStepIndex { get; private set; }
+    public int LiveCurrentFlowStepCount { get; private set; }
+    public DateTimeOffset? LiveStepStartedAt { get; private set; }
 
     public FlowDocumentViewModel? SelectedFlow { get; private set; }
     public StudioSuiteEditorModel? SelectedSuite { get; private set; }
@@ -286,6 +321,9 @@ public sealed class StudioWorkspaceState : IDisposable
     public bool HasSelectedFlow => SelectedFlow is not null;
     public bool HasSelectedSuite => SelectedSuite is not null;
     public bool HasRecentWorkspaces => RecentWorkspaces.Count > 0;
+    public bool HasLiveRunActivity => IsBusy || !string.IsNullOrWhiteSpace(LiveRunId) || LiveEvents.Count > 0;
+    public bool CanStopRun => IsBusy && _activeRunCts is { IsCancellationRequested: false };
+    public TimeSpan LiveStepElapsed => LiveStepStartedAt is null ? TimeSpan.Zero : DateTimeOffset.UtcNow - LiveStepStartedAt.Value;
     public int FlowCount => Snapshot?.Catalog.NormalizedFlows.Count ?? 0;
     public int CapabilityCount => Snapshot?.Catalog.Capabilities.Count ?? 0;
     public int FixtureCount => Snapshot?.Catalog.FixtureDefinitions.Count ?? 0;
@@ -857,6 +895,27 @@ public sealed class StudioWorkspaceState : IDisposable
                 Trigger = "rerun-from-step"
             }, reloadAtEnd: true);
 
+    public void ToggleLiveLogVisibility()
+    {
+        IsLiveLogVisible = !IsLiveLogVisible;
+        NotifyChanged();
+    }
+
+    public void StopActiveRun()
+    {
+        if (!CanStopRun)
+        {
+            return;
+        }
+
+        _activeRunCts!.Cancel();
+        LiveRunStatus = "Stopping";
+        LiveRunHeadline = "Stopping run...";
+        LiveCurrentStepMessage = "Cancel requested. Waiting for the active step to acknowledge cancellation.";
+        LiveEvents.Insert(0, "Run cancellation requested.");
+        NotifyChanged();
+    }
+
     public async Task RunSelectedSuiteAsync()
     {
         if (Snapshot is null || SelectedSuite is null)
@@ -913,6 +972,13 @@ public sealed class StudioWorkspaceState : IDisposable
             LoadProjectCore(Snapshot.Catalog.ProjectRoot, profile, null, suiteDocument.FilePath);
             StatusMessage = $"Suite {suiteDocument.Name} completed.";
         }
+        catch (OperationCanceledException)
+        {
+            LiveRunStatus = "Canceled";
+            LiveRunHeadline = $"Suite {suiteDocument.Name} canceled.";
+            StatusMessage = $"Suite {suiteDocument.Name} canceled.";
+            NotifyChanged();
+        }
         finally
         {
             IsBusy = false;
@@ -952,38 +1018,45 @@ public sealed class StudioWorkspaceState : IDisposable
             return;
         }
 
+        _activeRunCts?.Cancel();
+        _activeRunCts?.Dispose();
+        _activeRunCts = new CancellationTokenSource();
+
+        InitializeLiveRunState(options, clearLiveEvents);
+        StartLiveTicker();
         if (clearLiveEvents)
         {
             LiveEvents.Clear();
         }
 
         IsBusy = true;
+        LiveRunStatus = "Dispatching";
         LiveRunHeadline = $"Dispatching run to {(SelectedRunnerNode?.DisplayName ?? "local embedded node")}...";
         NotifyChanged();
 
         try
         {
-            var progress = new Progress<RuntimeProgressUpdate>(update =>
-            {
-                var message = update.Kind switch
-                {
-                    RuntimeProgressKind.RunStarted => $"[{update.RunId}] {update.Message}",
-                    RuntimeProgressKind.FlowStarted => $"[{update.FlowId}] {update.Message}",
-                    RuntimeProgressKind.StepCompleted => $"[{update.FlowId}] {update.Step?.Name} - {update.Step?.Outcome}",
-                    RuntimeProgressKind.FlowCompleted => $"[{update.FlowId}] {update.Flow?.Outcome}",
-                    RuntimeProgressKind.RunCompleted => $"[{update.RunId}] {update.Message}",
-                    _ => update.Message ?? update.Kind.ToString()
-                };
-                LiveEvents.Insert(0, message);
-                LiveRunHeadline = message;
-                NotifyChanged();
-            });
+            var progress = new Progress<RuntimeProgressUpdate>(HandleProgressUpdate);
 
-            var result = await _runtimeOrchestrator.ExecuteAsync(Snapshot.Catalog.ProjectRoot, options, progress);
+            var dispatch = await _runnerService.DispatchAsync(
+                StudioRunnerDispatchRequest.Create(
+                    SelectedRunnerNodeId,
+                    Snapshot.Catalog.ProjectRoot,
+                    options,
+                    requestedBy: Environment.UserName,
+                    requestedFrom: "studio-web"),
+                progress,
+                _activeRunCts.Token);
+            var result = dispatch.Result;
             AddDiagnostics(result.Diagnostics);
+            RunnerNodes = _runnerService.ListNodes();
+            LiveRunStatus = result.Passed ? "Passed" : "Failed";
             LiveRunHeadline = result.Passed
                 ? $"{result.Metadata.RunId} passed"
                 : $"{result.Metadata.RunId} finished with failures";
+            LiveCurrentStepMessage = result.Passed
+                ? "Run completed successfully."
+                : "Run completed with failures. Inspect the timeline or artifacts for details.";
             StatusMessage = $"Completed run {result.Metadata.RunId} on {(SelectedRunnerNode?.DisplayName ?? "local embedded node")}.";
 
             if (reloadAtEnd)
@@ -991,9 +1064,21 @@ public sealed class StudioWorkspaceState : IDisposable
                 LoadProjectCore(Snapshot.Catalog.ProjectRoot, options.Profile ?? SelectedProfile, options.FlowPath, SelectedSuite?.FilePath);
             }
         }
+        catch (OperationCanceledException)
+        {
+            LiveRunStatus = "Canceled";
+            LiveRunHeadline = "Run canceled.";
+            LiveCurrentStepMessage = "The active run was canceled before completion.";
+            StatusMessage = "Run canceled.";
+            LiveEvents.Insert(0, "Run canceled.");
+        }
         finally
         {
             IsBusy = false;
+            StopLiveTicker();
+            _activeRunCts?.Dispose();
+            _activeRunCts = null;
+            LiveStepStartedAt = null;
             NotifyChanged();
         }
     }
@@ -1197,6 +1282,242 @@ public sealed class StudioWorkspaceState : IDisposable
             ? File.ReadAllText(path)
             : string.Empty;
 
+    private void InitializeLiveRunState(RunOptions options, bool clearLiveEvents)
+    {
+        if (clearLiveEvents)
+        {
+            LiveEvents.Clear();
+        }
+
+        LiveRunId = null;
+        LiveRunStatus = "Queued";
+        LiveCurrentFlow = "—";
+        LiveCurrentStep = "—";
+        LiveCurrentStepMessage = "Preparing run plan...";
+        LiveCompletedFlows = 0;
+        LiveCompletedSteps = 0;
+        LiveCurrentFlowIndex = 0;
+        LiveCurrentFlowStepIndex = 0;
+        LiveCurrentFlowStepCount = 0;
+        LiveStepStartedAt = null;
+
+        _liveFlowOrder.Clear();
+        _liveFlowStepOffsets.Clear();
+
+        var flows = ResolveRunFlows(options);
+        LiveTotalFlows = flows.Count;
+        LiveTotalSteps = 0;
+        for (var index = 0; index < flows.Count; index++)
+        {
+            var flow = flows[index];
+            var stepCount = GetFlowStepCount(flow);
+            _liveFlowOrder[flow.FlowId] = index + 1;
+            _liveFlowStepOffsets[flow.FlowId] = LiveTotalSteps;
+            LiveTotalSteps += stepCount;
+        }
+    }
+
+    private void HandleProgressUpdate(RuntimeProgressUpdate update)
+    {
+        var message = update.Kind switch
+        {
+            RuntimeProgressKind.RunStarted => $"[{update.RunId}] {update.Message}",
+            RuntimeProgressKind.FlowStarted => $"[{update.FlowId}] {update.Message}",
+            RuntimeProgressKind.StepStarted => $"[{update.FlowId}] Starting {update.Step?.Name}",
+            RuntimeProgressKind.StepCompleted => $"[{update.FlowId}] {update.Step?.Name} - {update.Step?.Outcome}",
+            RuntimeProgressKind.Log => $"[{update.FlowId}] {update.LogLevel}: {update.Message}",
+            RuntimeProgressKind.FlowCompleted => $"[{update.FlowId}] {update.Flow?.Outcome}",
+            RuntimeProgressKind.RunCompleted => $"[{update.RunId}] {update.Message}",
+            _ => update.Message ?? update.Kind.ToString()
+        };
+
+        switch (update.Kind)
+        {
+            case RuntimeProgressKind.RunStarted:
+                LiveRunId = update.RunId;
+                LiveRunStatus = "Running";
+                LiveTotalFlows = update.FlowCount ?? LiveTotalFlows;
+                LiveCurrentStepMessage = update.Message ?? "Run started.";
+                break;
+
+            case RuntimeProgressKind.FlowStarted:
+                LiveRunStatus = "Running";
+                LiveCurrentFlow = update.FlowName ?? update.FlowId ?? "Unnamed flow";
+                LiveCurrentFlowIndex = update.FlowIndex ?? ResolveFlowIndex(update.FlowId);
+                LiveCurrentFlowStepCount = update.StepCount ?? ResolveFlowStepCount(update.FlowId);
+                LiveCurrentFlowStepIndex = 0;
+                LiveCurrentStep = "—";
+                LiveCurrentStepMessage = update.Message ?? "Flow started.";
+                break;
+
+            case RuntimeProgressKind.StepStarted:
+                LiveRunStatus = "Running";
+                LiveCurrentFlow = update.FlowName ?? LiveCurrentFlow;
+                LiveCurrentFlowIndex = update.FlowIndex ?? ResolveFlowIndex(update.FlowId);
+                LiveCurrentFlowStepIndex = update.StepIndex ?? LiveCurrentFlowStepIndex;
+                LiveCurrentFlowStepCount = update.StepCount ?? ResolveFlowStepCount(update.FlowId);
+                LiveCurrentStep = update.Step?.Name ?? "Unnamed step";
+                LiveCurrentStepMessage = update.Message ?? "Step started.";
+                LiveStepStartedAt = update.Step?.StartedAt == default ? DateTimeOffset.UtcNow : update.Step!.StartedAt;
+                LiveCompletedSteps = Math.Max(LiveCompletedSteps, Math.Max(0, CalculateOverallStepPosition(update.FlowId, update.StepIndex) - 1));
+                break;
+
+            case RuntimeProgressKind.StepCompleted:
+                LiveRunStatus = "Running";
+                LiveCurrentFlow = update.FlowName ?? LiveCurrentFlow;
+                LiveCurrentFlowIndex = update.FlowIndex ?? ResolveFlowIndex(update.FlowId);
+                LiveCurrentFlowStepIndex = update.StepIndex ?? LiveCurrentFlowStepIndex;
+                LiveCurrentFlowStepCount = update.StepCount ?? ResolveFlowStepCount(update.FlowId);
+                LiveCurrentStep = update.Step?.Name ?? LiveCurrentStep;
+                LiveCurrentStepMessage = update.Step?.Message ?? update.Message ?? "Step completed.";
+                LiveCompletedSteps = Math.Max(LiveCompletedSteps, CalculateOverallStepPosition(update.FlowId, update.StepIndex));
+                LiveStepStartedAt = null;
+                break;
+
+            case RuntimeProgressKind.Log:
+                LiveCurrentStepMessage = update.Message ?? LiveCurrentStepMessage;
+                break;
+
+            case RuntimeProgressKind.FlowCompleted:
+                LiveCompletedFlows = Math.Max(LiveCompletedFlows, update.FlowIndex ?? ResolveFlowIndex(update.FlowId));
+                LiveCurrentFlow = update.FlowName ?? LiveCurrentFlow;
+                LiveCurrentStep = "—";
+                LiveCurrentStepMessage = update.Message ?? "Flow completed.";
+                LiveStepStartedAt = null;
+                break;
+
+            case RuntimeProgressKind.RunCompleted:
+                LiveRunId = update.RunId ?? LiveRunId;
+                LiveRunStatus = update.Run?.Passed == true ? "Passed" : "Failed";
+                LiveCurrentStep = "—";
+                LiveCurrentStepMessage = update.Message ?? "Run completed.";
+                LiveCompletedFlows = LiveTotalFlows;
+                LiveCompletedSteps = LiveTotalSteps;
+                LiveStepStartedAt = null;
+                break;
+        }
+
+        LiveRunHeadline = message;
+        LiveEvents.Insert(0, message);
+        if (LiveEvents.Count > 200)
+        {
+            LiveEvents.RemoveRange(200, LiveEvents.Count - 200);
+        }
+
+        NotifyChanged();
+    }
+
+    private IReadOnlyList<NormalizedFlow> ResolveRunFlows(RunOptions options)
+    {
+        if (Snapshot is null)
+        {
+            return [];
+        }
+
+        var flows = Snapshot.Catalog.NormalizedFlows;
+        if (options.FlowPaths.Count > 0)
+        {
+            var selectors = options.FlowPaths
+                .Where(path => !string.IsNullOrWhiteSpace(path))
+                .Select(path => Path.IsPathRooted(path)
+                    ? Path.GetFullPath(path)
+                    : Path.GetFullPath(Path.Combine(Snapshot.Catalog.ProjectRoot, path)))
+                .ToHashSet(StringComparer.OrdinalIgnoreCase);
+
+            return flows
+                .Where(flow => !string.IsNullOrWhiteSpace(flow.SourceFile) && selectors.Contains(Path.GetFullPath(flow.SourceFile)))
+                .ToList();
+        }
+
+        if (!string.IsNullOrWhiteSpace(options.FlowPath))
+        {
+            var selector = options.FlowPath.Trim();
+            if (Path.HasExtension(selector) || selector.Contains(Path.DirectorySeparatorChar) || selector.Contains(Path.AltDirectorySeparatorChar))
+            {
+                var fullPath = Path.IsPathRooted(selector)
+                    ? Path.GetFullPath(selector)
+                    : Path.GetFullPath(Path.Combine(Snapshot.Catalog.ProjectRoot, selector));
+                return flows.Where(flow => string.Equals(Path.GetFullPath(flow.SourceFile ?? string.Empty), fullPath, StringComparison.OrdinalIgnoreCase)).ToList();
+            }
+
+            return flows.Where(flow =>
+                    string.Equals(flow.FlowId, selector, StringComparison.OrdinalIgnoreCase)
+                    || flow.FlowId.Contains(selector, StringComparison.OrdinalIgnoreCase)
+                    || flow.Name.Contains(selector, StringComparison.OrdinalIgnoreCase))
+                .ToList();
+        }
+
+        if (!string.IsNullOrWhiteSpace(options.Tag))
+        {
+            return flows.Where(flow => flow.Tags.Contains(options.Tag, StringComparer.OrdinalIgnoreCase)).ToList();
+        }
+
+        return flows;
+    }
+
+    private static int GetFlowStepCount(NormalizedFlow flow)
+        => flow.Actions.Count + flow.Expectations.Count;
+
+    private int ResolveFlowIndex(string? flowId)
+        => !string.IsNullOrWhiteSpace(flowId) && _liveFlowOrder.TryGetValue(flowId, out var index)
+            ? index
+            : 0;
+
+    private int ResolveFlowStepCount(string? flowId)
+    {
+        if (string.IsNullOrWhiteSpace(flowId) || Snapshot is null)
+        {
+            return 0;
+        }
+
+        return Snapshot.Catalog.NormalizedFlows
+            .Where(flow => string.Equals(flow.FlowId, flowId, StringComparison.OrdinalIgnoreCase))
+            .Select(GetFlowStepCount)
+            .FirstOrDefault();
+    }
+
+    private int CalculateOverallStepPosition(string? flowId, int? stepIndex)
+    {
+        if (string.IsNullOrWhiteSpace(flowId) || stepIndex.GetValueOrDefault() <= 0)
+        {
+            return LiveCompletedSteps;
+        }
+
+        return (_liveFlowStepOffsets.TryGetValue(flowId, out var offset) ? offset : 0) + stepIndex.Value;
+    }
+
+    private void StartLiveTicker()
+    {
+        _liveTickerCts?.Cancel();
+        _liveTickerCts?.Dispose();
+        _liveTickerCts = new CancellationTokenSource();
+        var token = _liveTickerCts.Token;
+        _ = Task.Run(async () =>
+        {
+            try
+            {
+                while (!token.IsCancellationRequested)
+                {
+                    await Task.Delay(TimeSpan.FromSeconds(1), token);
+                    if (!token.IsCancellationRequested && LiveStepStartedAt is not null)
+                    {
+                        NotifyChanged();
+                    }
+                }
+            }
+            catch (OperationCanceledException)
+            {
+            }
+        }, token);
+    }
+
+    private void StopLiveTicker()
+    {
+        _liveTickerCts?.Cancel();
+        _liveTickerCts?.Dispose();
+        _liveTickerCts = null;
+    }
+
     private void NotifyChanged()
         => Changed?.Invoke();
 
@@ -1280,7 +1601,7 @@ public sealed class StudioWorkspaceState : IDisposable
             relativeConfigPath: Path.Combine("specs", "calc-smoke", ".cress", "config.yaml"),
             title: "Calculator desktop demo",
             description: "Load the Windows desktop sample to inspect Calculator-style attach/invoke flows and desktop evidence patterns.",
-            tags: ["desktop", "calculator", "flaui"],
+            tags: ["desktop", "calculator", "flawright"],
             preferredProfile: "local");
 
         return demos;
@@ -1305,25 +1626,6 @@ public sealed class StudioWorkspaceState : IDisposable
         }
 
         demos.Add(new StudioDemoWorkspace(id, title, description, projectPath, tags, preferredProfile));
-    }
-
-    private static IReadOnlyList<StudioRunnerNode> BuildRunnerNodes()
-    {
-        var capabilities = new List<string> { "http", "playwright", "plugins" };
-        if (OperatingSystem.IsWindows())
-        {
-            capabilities.Add("flaui");
-        }
-
-        return
-        [
-            new StudioRunnerNode(
-                StudioRunnerNode.LocalNodeId,
-                "Local embedded node",
-                $"{Environment.MachineName} • in-process",
-                "Runs flows on the same machine as Studio Web. This is the development node that future remote runners will mirror.",
-                capabilities)
-        ];
     }
 
     private static string BuildChildCountLabel(string directory)
@@ -1464,16 +1766,6 @@ public sealed record StudioDemoWorkspace(
     string ProjectPath,
     IReadOnlyList<string> Tags,
     string? PreferredProfile = null);
-
-public sealed record StudioRunnerNode(
-    string Id,
-    string Name,
-    string DisplayName,
-    string Description,
-    IReadOnlyList<string> Capabilities)
-{
-    public const string LocalNodeId = "local-embedded";
-}
 
 public sealed class StudioSuiteEditorModel
 {

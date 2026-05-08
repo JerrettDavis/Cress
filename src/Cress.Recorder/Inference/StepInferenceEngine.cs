@@ -5,7 +5,7 @@ namespace Cress.Recorder.Inference;
 /// objects into <see cref="InferredStep"/> objects using deterministic rules.
 ///
 /// Design notes:
-/// - No FlaUI dependency — safe to unit-test without launching any real application.
+/// - No desktop-driver dependency — safe to unit-test without launching any real application.
 /// - No mutation of input events.
 /// - Thread-safe: all methods are pure transformations on value types.
 /// - Single engine for both Desktop and Web domains — branching is via

@@ -1,0 +1,819 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Studio.Services.StepMetrics
+  commentId: T:Cress.Studio.Services.StepMetrics
+  id: StepMetrics
+  parent: Cress.Studio.Services
+  children:
+  - Cress.Studio.Services.StepMetrics.#ctor(System.String,System.Int32,System.String,System.Int32,System.Int32,System.Int32,System.TimeSpan,System.TimeSpan,System.TimeSpan,System.TimeSpan)
+  - Cress.Studio.Services.StepMetrics.AvgDuration
+  - Cress.Studio.Services.StepMetrics.Failed
+  - Cress.Studio.Services.StepMetrics.FlowId
+  - Cress.Studio.Services.StepMetrics.P50
+  - Cress.Studio.Services.StepMetrics.P95
+  - Cress.Studio.Services.StepMetrics.P99
+  - Cress.Studio.Services.StepMetrics.Passed
+  - Cress.Studio.Services.StepMetrics.Runs
+  - Cress.Studio.Services.StepMetrics.StepIndex
+  - Cress.Studio.Services.StepMetrics.StepName
+  langs:
+  - csharp
+  - vb
+  name: StepMetrics
+  nameWithType: StepMetrics
+  fullName: Cress.Studio.Services.StepMetrics
+  type: Class
+  source:
+    remote:
+      path: src/Cress.Execution/RunMetricsService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: StepMetrics
+    path: ../src/Cress.Execution/RunMetricsService.cs
+    startLine: 297
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Studio.Services
+  syntax:
+    content: 'public record StepMetrics : IEquatable<StepMetrics>'
+    content.vb: Public Class StepMetrics Implements IEquatable(Of StepMetrics)
+  inheritance:
+  - System.Object
+  implements:
+  - System.IEquatable{Cress.Studio.Services.StepMetrics}
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Cress.Studio.Services.StepMetrics.#ctor(System.String,System.Int32,System.String,System.Int32,System.Int32,System.Int32,System.TimeSpan,System.TimeSpan,System.TimeSpan,System.TimeSpan)
+  commentId: M:Cress.Studio.Services.StepMetrics.#ctor(System.String,System.Int32,System.String,System.Int32,System.Int32,System.Int32,System.TimeSpan,System.TimeSpan,System.TimeSpan,System.TimeSpan)
+  id: '#ctor(System.String,System.Int32,System.String,System.Int32,System.Int32,System.Int32,System.TimeSpan,System.TimeSpan,System.TimeSpan,System.TimeSpan)'
+  parent: Cress.Studio.Services.StepMetrics
+  langs:
+  - csharp
+  - vb
+  name: StepMetrics(string, int, string, int, int, int, TimeSpan, TimeSpan, TimeSpan, TimeSpan)
+  nameWithType: StepMetrics.StepMetrics(string, int, string, int, int, int, TimeSpan, TimeSpan, TimeSpan, TimeSpan)
+  fullName: Cress.Studio.Services.StepMetrics.StepMetrics(string, int, string, int, int, int, System.TimeSpan, System.TimeSpan, System.TimeSpan, System.TimeSpan)
+  type: Constructor
+  source:
+    remote:
+      path: src/Cress.Execution/RunMetricsService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: .ctor
+    path: ../src/Cress.Execution/RunMetricsService.cs
+    startLine: 297
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Studio.Services
+  syntax:
+    content: public StepMetrics(string FlowId, int StepIndex, string StepName, int Runs, int Passed, int Failed, TimeSpan AvgDuration, TimeSpan P50, TimeSpan P95, TimeSpan P99)
+    parameters:
+    - id: FlowId
+      type: System.String
+    - id: StepIndex
+      type: System.Int32
+    - id: StepName
+      type: System.String
+    - id: Runs
+      type: System.Int32
+    - id: Passed
+      type: System.Int32
+    - id: Failed
+      type: System.Int32
+    - id: AvgDuration
+      type: System.TimeSpan
+    - id: P50
+      type: System.TimeSpan
+    - id: P95
+      type: System.TimeSpan
+    - id: P99
+      type: System.TimeSpan
+    content.vb: Public Sub New(FlowId As String, StepIndex As Integer, StepName As String, Runs As Integer, Passed As Integer, Failed As Integer, AvgDuration As TimeSpan, P50 As TimeSpan, P95 As TimeSpan, P99 As TimeSpan)
+  overload: Cress.Studio.Services.StepMetrics.#ctor*
+  nameWithType.vb: StepMetrics.New(String, Integer, String, Integer, Integer, Integer, TimeSpan, TimeSpan, TimeSpan, TimeSpan)
+  fullName.vb: Cress.Studio.Services.StepMetrics.New(String, Integer, String, Integer, Integer, Integer, System.TimeSpan, System.TimeSpan, System.TimeSpan, System.TimeSpan)
+  name.vb: New(String, Integer, String, Integer, Integer, Integer, TimeSpan, TimeSpan, TimeSpan, TimeSpan)
+- uid: Cress.Studio.Services.StepMetrics.FlowId
+  commentId: P:Cress.Studio.Services.StepMetrics.FlowId
+  id: FlowId
+  parent: Cress.Studio.Services.StepMetrics
+  langs:
+  - csharp
+  - vb
+  name: FlowId
+  nameWithType: StepMetrics.FlowId
+  fullName: Cress.Studio.Services.StepMetrics.FlowId
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Execution/RunMetricsService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: FlowId
+    path: ../src/Cress.Execution/RunMetricsService.cs
+    startLine: 298
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Studio.Services
+  syntax:
+    content: public string FlowId { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property FlowId As String
+  overload: Cress.Studio.Services.StepMetrics.FlowId*
+- uid: Cress.Studio.Services.StepMetrics.StepIndex
+  commentId: P:Cress.Studio.Services.StepMetrics.StepIndex
+  id: StepIndex
+  parent: Cress.Studio.Services.StepMetrics
+  langs:
+  - csharp
+  - vb
+  name: StepIndex
+  nameWithType: StepMetrics.StepIndex
+  fullName: Cress.Studio.Services.StepMetrics.StepIndex
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Execution/RunMetricsService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: StepIndex
+    path: ../src/Cress.Execution/RunMetricsService.cs
+    startLine: 299
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Studio.Services
+  syntax:
+    content: public int StepIndex { get; init; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property StepIndex As Integer
+  overload: Cress.Studio.Services.StepMetrics.StepIndex*
+- uid: Cress.Studio.Services.StepMetrics.StepName
+  commentId: P:Cress.Studio.Services.StepMetrics.StepName
+  id: StepName
+  parent: Cress.Studio.Services.StepMetrics
+  langs:
+  - csharp
+  - vb
+  name: StepName
+  nameWithType: StepMetrics.StepName
+  fullName: Cress.Studio.Services.StepMetrics.StepName
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Execution/RunMetricsService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: StepName
+    path: ../src/Cress.Execution/RunMetricsService.cs
+    startLine: 300
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Studio.Services
+  syntax:
+    content: public string StepName { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property StepName As String
+  overload: Cress.Studio.Services.StepMetrics.StepName*
+- uid: Cress.Studio.Services.StepMetrics.Runs
+  commentId: P:Cress.Studio.Services.StepMetrics.Runs
+  id: Runs
+  parent: Cress.Studio.Services.StepMetrics
+  langs:
+  - csharp
+  - vb
+  name: Runs
+  nameWithType: StepMetrics.Runs
+  fullName: Cress.Studio.Services.StepMetrics.Runs
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Execution/RunMetricsService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Runs
+    path: ../src/Cress.Execution/RunMetricsService.cs
+    startLine: 301
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Studio.Services
+  syntax:
+    content: public int Runs { get; init; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property Runs As Integer
+  overload: Cress.Studio.Services.StepMetrics.Runs*
+- uid: Cress.Studio.Services.StepMetrics.Passed
+  commentId: P:Cress.Studio.Services.StepMetrics.Passed
+  id: Passed
+  parent: Cress.Studio.Services.StepMetrics
+  langs:
+  - csharp
+  - vb
+  name: Passed
+  nameWithType: StepMetrics.Passed
+  fullName: Cress.Studio.Services.StepMetrics.Passed
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Execution/RunMetricsService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Passed
+    path: ../src/Cress.Execution/RunMetricsService.cs
+    startLine: 302
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Studio.Services
+  syntax:
+    content: public int Passed { get; init; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property Passed As Integer
+  overload: Cress.Studio.Services.StepMetrics.Passed*
+- uid: Cress.Studio.Services.StepMetrics.Failed
+  commentId: P:Cress.Studio.Services.StepMetrics.Failed
+  id: Failed
+  parent: Cress.Studio.Services.StepMetrics
+  langs:
+  - csharp
+  - vb
+  name: Failed
+  nameWithType: StepMetrics.Failed
+  fullName: Cress.Studio.Services.StepMetrics.Failed
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Execution/RunMetricsService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Failed
+    path: ../src/Cress.Execution/RunMetricsService.cs
+    startLine: 303
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Studio.Services
+  syntax:
+    content: public int Failed { get; init; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property Failed As Integer
+  overload: Cress.Studio.Services.StepMetrics.Failed*
+- uid: Cress.Studio.Services.StepMetrics.AvgDuration
+  commentId: P:Cress.Studio.Services.StepMetrics.AvgDuration
+  id: AvgDuration
+  parent: Cress.Studio.Services.StepMetrics
+  langs:
+  - csharp
+  - vb
+  name: AvgDuration
+  nameWithType: StepMetrics.AvgDuration
+  fullName: Cress.Studio.Services.StepMetrics.AvgDuration
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Execution/RunMetricsService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: AvgDuration
+    path: ../src/Cress.Execution/RunMetricsService.cs
+    startLine: 304
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Studio.Services
+  syntax:
+    content: public TimeSpan AvgDuration { get; init; }
+    parameters: []
+    return:
+      type: System.TimeSpan
+    content.vb: Public Property AvgDuration As TimeSpan
+  overload: Cress.Studio.Services.StepMetrics.AvgDuration*
+- uid: Cress.Studio.Services.StepMetrics.P50
+  commentId: P:Cress.Studio.Services.StepMetrics.P50
+  id: P50
+  parent: Cress.Studio.Services.StepMetrics
+  langs:
+  - csharp
+  - vb
+  name: P50
+  nameWithType: StepMetrics.P50
+  fullName: Cress.Studio.Services.StepMetrics.P50
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Execution/RunMetricsService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: P50
+    path: ../src/Cress.Execution/RunMetricsService.cs
+    startLine: 305
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Studio.Services
+  syntax:
+    content: public TimeSpan P50 { get; init; }
+    parameters: []
+    return:
+      type: System.TimeSpan
+    content.vb: Public Property P50 As TimeSpan
+  overload: Cress.Studio.Services.StepMetrics.P50*
+- uid: Cress.Studio.Services.StepMetrics.P95
+  commentId: P:Cress.Studio.Services.StepMetrics.P95
+  id: P95
+  parent: Cress.Studio.Services.StepMetrics
+  langs:
+  - csharp
+  - vb
+  name: P95
+  nameWithType: StepMetrics.P95
+  fullName: Cress.Studio.Services.StepMetrics.P95
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Execution/RunMetricsService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: P95
+    path: ../src/Cress.Execution/RunMetricsService.cs
+    startLine: 306
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Studio.Services
+  syntax:
+    content: public TimeSpan P95 { get; init; }
+    parameters: []
+    return:
+      type: System.TimeSpan
+    content.vb: Public Property P95 As TimeSpan
+  overload: Cress.Studio.Services.StepMetrics.P95*
+- uid: Cress.Studio.Services.StepMetrics.P99
+  commentId: P:Cress.Studio.Services.StepMetrics.P99
+  id: P99
+  parent: Cress.Studio.Services.StepMetrics
+  langs:
+  - csharp
+  - vb
+  name: P99
+  nameWithType: StepMetrics.P99
+  fullName: Cress.Studio.Services.StepMetrics.P99
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Execution/RunMetricsService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: P99
+    path: ../src/Cress.Execution/RunMetricsService.cs
+    startLine: 307
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Studio.Services
+  syntax:
+    content: public TimeSpan P99 { get; init; }
+    parameters: []
+    return:
+      type: System.TimeSpan
+    content.vb: Public Property P99 As TimeSpan
+  overload: Cress.Studio.Services.StepMetrics.P99*
+references:
+- uid: Cress.Studio.Services
+  commentId: N:Cress.Studio.Services
+  href: Cress.html
+  name: Cress.Studio.Services
+  nameWithType: Cress.Studio.Services
+  fullName: Cress.Studio.Services
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Studio
+    name: Studio
+    href: Cress.Studio.html
+  - name: .
+  - uid: Cress.Studio.Services
+    name: Services
+    href: Cress.Studio.Services.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Studio
+    name: Studio
+    href: Cress.Studio.html
+  - name: .
+  - uid: Cress.Studio.Services
+    name: Services
+    href: Cress.Studio.Services.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.IEquatable{Cress.Studio.Services.StepMetrics}
+  commentId: T:System.IEquatable{Cress.Studio.Services.StepMetrics}
+  parent: System
+  definition: System.IEquatable`1
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<StepMetrics>
+  nameWithType: IEquatable<StepMetrics>
+  fullName: System.IEquatable<Cress.Studio.Services.StepMetrics>
+  nameWithType.vb: IEquatable(Of StepMetrics)
+  fullName.vb: System.IEquatable(Of Cress.Studio.Services.StepMetrics)
+  name.vb: IEquatable(Of StepMetrics)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - uid: Cress.Studio.Services.StepMetrics
+    name: StepMetrics
+    href: Cress.Studio.Services.StepMetrics.html
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Cress.Studio.Services.StepMetrics
+    name: StepMetrics
+    href: Cress.Studio.Services.StepMetrics.html
+  - name: )
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.IEquatable`1
+  commentId: T:System.IEquatable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<T>
+  nameWithType: IEquatable<T>
+  fullName: System.IEquatable<T>
+  nameWithType.vb: IEquatable(Of T)
+  fullName.vb: System.IEquatable(Of T)
+  name.vb: IEquatable(Of T)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Cress.Studio.Services.StepMetrics.#ctor*
+  commentId: Overload:Cress.Studio.Services.StepMetrics.#ctor
+  href: Cress.Studio.Services.StepMetrics.html#Cress_Studio_Services_StepMetrics__ctor_System_String_System_Int32_System_String_System_Int32_System_Int32_System_Int32_System_TimeSpan_System_TimeSpan_System_TimeSpan_System_TimeSpan_
+  name: StepMetrics
+  nameWithType: StepMetrics.StepMetrics
+  fullName: Cress.Studio.Services.StepMetrics.StepMetrics
+  nameWithType.vb: StepMetrics.New
+  fullName.vb: Cress.Studio.Services.StepMetrics.New
+  name.vb: New
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System.TimeSpan
+  commentId: T:System.TimeSpan
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.timespan
+  name: TimeSpan
+  nameWithType: TimeSpan
+  fullName: System.TimeSpan
+- uid: Cress.Studio.Services.StepMetrics.FlowId*
+  commentId: Overload:Cress.Studio.Services.StepMetrics.FlowId
+  href: Cress.Studio.Services.StepMetrics.html#Cress_Studio_Services_StepMetrics_FlowId
+  name: FlowId
+  nameWithType: StepMetrics.FlowId
+  fullName: Cress.Studio.Services.StepMetrics.FlowId
+- uid: Cress.Studio.Services.StepMetrics.StepIndex*
+  commentId: Overload:Cress.Studio.Services.StepMetrics.StepIndex
+  href: Cress.Studio.Services.StepMetrics.html#Cress_Studio_Services_StepMetrics_StepIndex
+  name: StepIndex
+  nameWithType: StepMetrics.StepIndex
+  fullName: Cress.Studio.Services.StepMetrics.StepIndex
+- uid: Cress.Studio.Services.StepMetrics.StepName*
+  commentId: Overload:Cress.Studio.Services.StepMetrics.StepName
+  href: Cress.Studio.Services.StepMetrics.html#Cress_Studio_Services_StepMetrics_StepName
+  name: StepName
+  nameWithType: StepMetrics.StepName
+  fullName: Cress.Studio.Services.StepMetrics.StepName
+- uid: Cress.Studio.Services.StepMetrics.Runs*
+  commentId: Overload:Cress.Studio.Services.StepMetrics.Runs
+  href: Cress.Studio.Services.StepMetrics.html#Cress_Studio_Services_StepMetrics_Runs
+  name: Runs
+  nameWithType: StepMetrics.Runs
+  fullName: Cress.Studio.Services.StepMetrics.Runs
+- uid: Cress.Studio.Services.StepMetrics.Passed*
+  commentId: Overload:Cress.Studio.Services.StepMetrics.Passed
+  href: Cress.Studio.Services.StepMetrics.html#Cress_Studio_Services_StepMetrics_Passed
+  name: Passed
+  nameWithType: StepMetrics.Passed
+  fullName: Cress.Studio.Services.StepMetrics.Passed
+- uid: Cress.Studio.Services.StepMetrics.Failed*
+  commentId: Overload:Cress.Studio.Services.StepMetrics.Failed
+  href: Cress.Studio.Services.StepMetrics.html#Cress_Studio_Services_StepMetrics_Failed
+  name: Failed
+  nameWithType: StepMetrics.Failed
+  fullName: Cress.Studio.Services.StepMetrics.Failed
+- uid: Cress.Studio.Services.StepMetrics.AvgDuration*
+  commentId: Overload:Cress.Studio.Services.StepMetrics.AvgDuration
+  href: Cress.Studio.Services.StepMetrics.html#Cress_Studio_Services_StepMetrics_AvgDuration
+  name: AvgDuration
+  nameWithType: StepMetrics.AvgDuration
+  fullName: Cress.Studio.Services.StepMetrics.AvgDuration
+- uid: Cress.Studio.Services.StepMetrics.P50*
+  commentId: Overload:Cress.Studio.Services.StepMetrics.P50
+  href: Cress.Studio.Services.StepMetrics.html#Cress_Studio_Services_StepMetrics_P50
+  name: P50
+  nameWithType: StepMetrics.P50
+  fullName: Cress.Studio.Services.StepMetrics.P50
+- uid: Cress.Studio.Services.StepMetrics.P95*
+  commentId: Overload:Cress.Studio.Services.StepMetrics.P95
+  href: Cress.Studio.Services.StepMetrics.html#Cress_Studio_Services_StepMetrics_P95
+  name: P95
+  nameWithType: StepMetrics.P95
+  fullName: Cress.Studio.Services.StepMetrics.P95
+- uid: Cress.Studio.Services.StepMetrics.P99*
+  commentId: Overload:Cress.Studio.Services.StepMetrics.P99
+  href: Cress.Studio.Services.StepMetrics.html#Cress_Studio_Services_StepMetrics_P99
+  name: P99
+  nameWithType: StepMetrics.P99
+  fullName: Cress.Studio.Services.StepMetrics.P99

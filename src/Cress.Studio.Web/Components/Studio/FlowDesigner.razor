@@ -81,6 +81,19 @@ else
             }
         </section>
 
+        <FlowGraphCanvas Graph="@FlowGraphBuilder.Build(Document)"
+                         OnAddFixture="OnAddFixture"
+                         OnAddAction="OnAddAction"
+                         OnAddExpectation="OnAddExpectation" />
+
+        <section class="subpanel">
+            <div class="subpanel-header">
+                <h3>Gherkin preview</h3>
+                <span class="muted">Derived from the current flow document.</span>
+            </div>
+            <pre class="summary-pre" data-testid="flow-gherkin-preview">@FlowGherkinPreviewBuilder.Build(Document)</pre>
+        </section>
+
         <!-- Identity + targeting fields -->
         <div class="form-section">
             <h4 class="form-section-heading">Identity</h4>

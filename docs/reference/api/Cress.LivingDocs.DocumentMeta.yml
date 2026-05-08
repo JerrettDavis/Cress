@@ -1,0 +1,539 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.LivingDocs.DocumentMeta
+  commentId: T:Cress.LivingDocs.DocumentMeta
+  id: DocumentMeta
+  parent: Cress.LivingDocs
+  children:
+  - Cress.LivingDocs.DocumentMeta.#ctor(System.String,System.String,System.String,System.String)
+  - Cress.LivingDocs.DocumentMeta.GeneratedAt
+  - Cress.LivingDocs.DocumentMeta.GitSha
+  - Cress.LivingDocs.DocumentMeta.ProjectName
+  - Cress.LivingDocs.DocumentMeta.Version
+  langs:
+  - csharp
+  - vb
+  name: DocumentMeta
+  nameWithType: DocumentMeta
+  fullName: Cress.LivingDocs.DocumentMeta
+  type: Class
+  source:
+    remote:
+      path: src/Cress.LivingDocs/DocumentModel.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: DocumentMeta
+    path: ../src/Cress.LivingDocs/DocumentModel.cs
+    startLine: 15
+  assemblies:
+  - Cress.LivingDocs
+  namespace: Cress.LivingDocs
+  syntax:
+    content: 'public sealed record DocumentMeta : IEquatable<DocumentMeta>'
+    content.vb: Public NotInheritable Class DocumentMeta Implements IEquatable(Of DocumentMeta)
+  inheritance:
+  - System.Object
+  implements:
+  - System.IEquatable{Cress.LivingDocs.DocumentMeta}
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Cress.LivingDocs.DocumentMeta.#ctor(System.String,System.String,System.String,System.String)
+  commentId: M:Cress.LivingDocs.DocumentMeta.#ctor(System.String,System.String,System.String,System.String)
+  id: '#ctor(System.String,System.String,System.String,System.String)'
+  parent: Cress.LivingDocs.DocumentMeta
+  langs:
+  - csharp
+  - vb
+  name: DocumentMeta(string, string, string, string)
+  nameWithType: DocumentMeta.DocumentMeta(string, string, string, string)
+  fullName: Cress.LivingDocs.DocumentMeta.DocumentMeta(string, string, string, string)
+  type: Constructor
+  source:
+    remote:
+      path: src/Cress.LivingDocs/DocumentModel.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: .ctor
+    path: ../src/Cress.LivingDocs/DocumentModel.cs
+    startLine: 15
+  assemblies:
+  - Cress.LivingDocs
+  namespace: Cress.LivingDocs
+  syntax:
+    content: public DocumentMeta(string ProjectName, string GeneratedAt, string Version, string GitSha)
+    parameters:
+    - id: ProjectName
+      type: System.String
+    - id: GeneratedAt
+      type: System.String
+    - id: Version
+      type: System.String
+    - id: GitSha
+      type: System.String
+    content.vb: Public Sub New(ProjectName As String, GeneratedAt As String, Version As String, GitSha As String)
+  overload: Cress.LivingDocs.DocumentMeta.#ctor*
+  nameWithType.vb: DocumentMeta.New(String, String, String, String)
+  fullName.vb: Cress.LivingDocs.DocumentMeta.New(String, String, String, String)
+  name.vb: New(String, String, String, String)
+- uid: Cress.LivingDocs.DocumentMeta.ProjectName
+  commentId: P:Cress.LivingDocs.DocumentMeta.ProjectName
+  id: ProjectName
+  parent: Cress.LivingDocs.DocumentMeta
+  langs:
+  - csharp
+  - vb
+  name: ProjectName
+  nameWithType: DocumentMeta.ProjectName
+  fullName: Cress.LivingDocs.DocumentMeta.ProjectName
+  type: Property
+  source:
+    remote:
+      path: src/Cress.LivingDocs/DocumentModel.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: ProjectName
+    path: ../src/Cress.LivingDocs/DocumentModel.cs
+    startLine: 16
+  assemblies:
+  - Cress.LivingDocs
+  namespace: Cress.LivingDocs
+  syntax:
+    content: public string ProjectName { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property ProjectName As String
+  overload: Cress.LivingDocs.DocumentMeta.ProjectName*
+- uid: Cress.LivingDocs.DocumentMeta.GeneratedAt
+  commentId: P:Cress.LivingDocs.DocumentMeta.GeneratedAt
+  id: GeneratedAt
+  parent: Cress.LivingDocs.DocumentMeta
+  langs:
+  - csharp
+  - vb
+  name: GeneratedAt
+  nameWithType: DocumentMeta.GeneratedAt
+  fullName: Cress.LivingDocs.DocumentMeta.GeneratedAt
+  type: Property
+  source:
+    remote:
+      path: src/Cress.LivingDocs/DocumentModel.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: GeneratedAt
+    path: ../src/Cress.LivingDocs/DocumentModel.cs
+    startLine: 17
+  assemblies:
+  - Cress.LivingDocs
+  namespace: Cress.LivingDocs
+  syntax:
+    content: public string GeneratedAt { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property GeneratedAt As String
+  overload: Cress.LivingDocs.DocumentMeta.GeneratedAt*
+- uid: Cress.LivingDocs.DocumentMeta.Version
+  commentId: P:Cress.LivingDocs.DocumentMeta.Version
+  id: Version
+  parent: Cress.LivingDocs.DocumentMeta
+  langs:
+  - csharp
+  - vb
+  name: Version
+  nameWithType: DocumentMeta.Version
+  fullName: Cress.LivingDocs.DocumentMeta.Version
+  type: Property
+  source:
+    remote:
+      path: src/Cress.LivingDocs/DocumentModel.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Version
+    path: ../src/Cress.LivingDocs/DocumentModel.cs
+    startLine: 18
+  assemblies:
+  - Cress.LivingDocs
+  namespace: Cress.LivingDocs
+  syntax:
+    content: public string Version { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Version As String
+  overload: Cress.LivingDocs.DocumentMeta.Version*
+- uid: Cress.LivingDocs.DocumentMeta.GitSha
+  commentId: P:Cress.LivingDocs.DocumentMeta.GitSha
+  id: GitSha
+  parent: Cress.LivingDocs.DocumentMeta
+  langs:
+  - csharp
+  - vb
+  name: GitSha
+  nameWithType: DocumentMeta.GitSha
+  fullName: Cress.LivingDocs.DocumentMeta.GitSha
+  type: Property
+  source:
+    remote:
+      path: src/Cress.LivingDocs/DocumentModel.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: GitSha
+    path: ../src/Cress.LivingDocs/DocumentModel.cs
+    startLine: 19
+  assemblies:
+  - Cress.LivingDocs
+  namespace: Cress.LivingDocs
+  syntax:
+    content: public string GitSha { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property GitSha As String
+  overload: Cress.LivingDocs.DocumentMeta.GitSha*
+references:
+- uid: Cress.LivingDocs
+  commentId: N:Cress.LivingDocs
+  href: Cress.html
+  name: Cress.LivingDocs
+  nameWithType: Cress.LivingDocs
+  fullName: Cress.LivingDocs
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.LivingDocs
+    name: LivingDocs
+    href: Cress.LivingDocs.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.LivingDocs
+    name: LivingDocs
+    href: Cress.LivingDocs.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.IEquatable{Cress.LivingDocs.DocumentMeta}
+  commentId: T:System.IEquatable{Cress.LivingDocs.DocumentMeta}
+  parent: System
+  definition: System.IEquatable`1
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<DocumentMeta>
+  nameWithType: IEquatable<DocumentMeta>
+  fullName: System.IEquatable<Cress.LivingDocs.DocumentMeta>
+  nameWithType.vb: IEquatable(Of DocumentMeta)
+  fullName.vb: System.IEquatable(Of Cress.LivingDocs.DocumentMeta)
+  name.vb: IEquatable(Of DocumentMeta)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - uid: Cress.LivingDocs.DocumentMeta
+    name: DocumentMeta
+    href: Cress.LivingDocs.DocumentMeta.html
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Cress.LivingDocs.DocumentMeta
+    name: DocumentMeta
+    href: Cress.LivingDocs.DocumentMeta.html
+  - name: )
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.IEquatable`1
+  commentId: T:System.IEquatable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<T>
+  nameWithType: IEquatable<T>
+  fullName: System.IEquatable<T>
+  nameWithType.vb: IEquatable(Of T)
+  fullName.vb: System.IEquatable(Of T)
+  name.vb: IEquatable(Of T)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Cress.LivingDocs.DocumentMeta.#ctor*
+  commentId: Overload:Cress.LivingDocs.DocumentMeta.#ctor
+  href: Cress.LivingDocs.DocumentMeta.html#Cress_LivingDocs_DocumentMeta__ctor_System_String_System_String_System_String_System_String_
+  name: DocumentMeta
+  nameWithType: DocumentMeta.DocumentMeta
+  fullName: Cress.LivingDocs.DocumentMeta.DocumentMeta
+  nameWithType.vb: DocumentMeta.New
+  fullName.vb: Cress.LivingDocs.DocumentMeta.New
+  name.vb: New
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Cress.LivingDocs.DocumentMeta.ProjectName*
+  commentId: Overload:Cress.LivingDocs.DocumentMeta.ProjectName
+  href: Cress.LivingDocs.DocumentMeta.html#Cress_LivingDocs_DocumentMeta_ProjectName
+  name: ProjectName
+  nameWithType: DocumentMeta.ProjectName
+  fullName: Cress.LivingDocs.DocumentMeta.ProjectName
+- uid: Cress.LivingDocs.DocumentMeta.GeneratedAt*
+  commentId: Overload:Cress.LivingDocs.DocumentMeta.GeneratedAt
+  href: Cress.LivingDocs.DocumentMeta.html#Cress_LivingDocs_DocumentMeta_GeneratedAt
+  name: GeneratedAt
+  nameWithType: DocumentMeta.GeneratedAt
+  fullName: Cress.LivingDocs.DocumentMeta.GeneratedAt
+- uid: Cress.LivingDocs.DocumentMeta.Version*
+  commentId: Overload:Cress.LivingDocs.DocumentMeta.Version
+  href: Cress.LivingDocs.DocumentMeta.html#Cress_LivingDocs_DocumentMeta_Version
+  name: Version
+  nameWithType: DocumentMeta.Version
+  fullName: Cress.LivingDocs.DocumentMeta.Version
+- uid: Cress.LivingDocs.DocumentMeta.GitSha*
+  commentId: Overload:Cress.LivingDocs.DocumentMeta.GitSha
+  href: Cress.LivingDocs.DocumentMeta.html#Cress_LivingDocs_DocumentMeta_GitSha
+  name: GitSha
+  nameWithType: DocumentMeta.GitSha
+  fullName: Cress.LivingDocs.DocumentMeta.GitSha

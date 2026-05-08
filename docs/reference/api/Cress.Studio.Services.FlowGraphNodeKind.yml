@@ -1,0 +1,255 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Studio.Services.FlowGraphNodeKind
+  commentId: T:Cress.Studio.Services.FlowGraphNodeKind
+  id: FlowGraphNodeKind
+  parent: Cress.Studio.Services
+  children:
+  - Cress.Studio.Services.FlowGraphNodeKind.Action
+  - Cress.Studio.Services.FlowGraphNodeKind.Decision
+  - Cress.Studio.Services.FlowGraphNodeKind.End
+  - Cress.Studio.Services.FlowGraphNodeKind.Expectation
+  - Cress.Studio.Services.FlowGraphNodeKind.Fixture
+  - Cress.Studio.Services.FlowGraphNodeKind.Scenario
+  - Cress.Studio.Services.FlowGraphNodeKind.Start
+  langs:
+  - csharp
+  - vb
+  name: FlowGraphNodeKind
+  nameWithType: FlowGraphNodeKind
+  fullName: Cress.Studio.Services.FlowGraphNodeKind
+  type: Enum
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/FlowGraphBuilder.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: FlowGraphNodeKind
+    path: ../src/Cress.Studio.Core/Services/FlowGraphBuilder.cs
+    startLine: 113
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  syntax:
+    content: public enum FlowGraphNodeKind
+    content.vb: Public Enum FlowGraphNodeKind
+- uid: Cress.Studio.Services.FlowGraphNodeKind.Start
+  commentId: F:Cress.Studio.Services.FlowGraphNodeKind.Start
+  id: Start
+  parent: Cress.Studio.Services.FlowGraphNodeKind
+  langs:
+  - csharp
+  - vb
+  name: Start
+  nameWithType: FlowGraphNodeKind.Start
+  fullName: Cress.Studio.Services.FlowGraphNodeKind.Start
+  type: Field
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/FlowGraphBuilder.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Start
+    path: ../src/Cress.Studio.Core/Services/FlowGraphBuilder.cs
+    startLine: 115
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  syntax:
+    content: Start = 0
+    return:
+      type: Cress.Studio.Services.FlowGraphNodeKind
+- uid: Cress.Studio.Services.FlowGraphNodeKind.Fixture
+  commentId: F:Cress.Studio.Services.FlowGraphNodeKind.Fixture
+  id: Fixture
+  parent: Cress.Studio.Services.FlowGraphNodeKind
+  langs:
+  - csharp
+  - vb
+  name: Fixture
+  nameWithType: FlowGraphNodeKind.Fixture
+  fullName: Cress.Studio.Services.FlowGraphNodeKind.Fixture
+  type: Field
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/FlowGraphBuilder.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Fixture
+    path: ../src/Cress.Studio.Core/Services/FlowGraphBuilder.cs
+    startLine: 116
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  syntax:
+    content: Fixture = 1
+    return:
+      type: Cress.Studio.Services.FlowGraphNodeKind
+- uid: Cress.Studio.Services.FlowGraphNodeKind.Action
+  commentId: F:Cress.Studio.Services.FlowGraphNodeKind.Action
+  id: Action
+  parent: Cress.Studio.Services.FlowGraphNodeKind
+  langs:
+  - csharp
+  - vb
+  name: Action
+  nameWithType: FlowGraphNodeKind.Action
+  fullName: Cress.Studio.Services.FlowGraphNodeKind.Action
+  type: Field
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/FlowGraphBuilder.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Action
+    path: ../src/Cress.Studio.Core/Services/FlowGraphBuilder.cs
+    startLine: 117
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  syntax:
+    content: Action = 2
+    return:
+      type: Cress.Studio.Services.FlowGraphNodeKind
+- uid: Cress.Studio.Services.FlowGraphNodeKind.Decision
+  commentId: F:Cress.Studio.Services.FlowGraphNodeKind.Decision
+  id: Decision
+  parent: Cress.Studio.Services.FlowGraphNodeKind
+  langs:
+  - csharp
+  - vb
+  name: Decision
+  nameWithType: FlowGraphNodeKind.Decision
+  fullName: Cress.Studio.Services.FlowGraphNodeKind.Decision
+  type: Field
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/FlowGraphBuilder.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Decision
+    path: ../src/Cress.Studio.Core/Services/FlowGraphBuilder.cs
+    startLine: 118
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  syntax:
+    content: Decision = 3
+    return:
+      type: Cress.Studio.Services.FlowGraphNodeKind
+- uid: Cress.Studio.Services.FlowGraphNodeKind.Scenario
+  commentId: F:Cress.Studio.Services.FlowGraphNodeKind.Scenario
+  id: Scenario
+  parent: Cress.Studio.Services.FlowGraphNodeKind
+  langs:
+  - csharp
+  - vb
+  name: Scenario
+  nameWithType: FlowGraphNodeKind.Scenario
+  fullName: Cress.Studio.Services.FlowGraphNodeKind.Scenario
+  type: Field
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/FlowGraphBuilder.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Scenario
+    path: ../src/Cress.Studio.Core/Services/FlowGraphBuilder.cs
+    startLine: 119
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  syntax:
+    content: Scenario = 4
+    return:
+      type: Cress.Studio.Services.FlowGraphNodeKind
+- uid: Cress.Studio.Services.FlowGraphNodeKind.Expectation
+  commentId: F:Cress.Studio.Services.FlowGraphNodeKind.Expectation
+  id: Expectation
+  parent: Cress.Studio.Services.FlowGraphNodeKind
+  langs:
+  - csharp
+  - vb
+  name: Expectation
+  nameWithType: FlowGraphNodeKind.Expectation
+  fullName: Cress.Studio.Services.FlowGraphNodeKind.Expectation
+  type: Field
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/FlowGraphBuilder.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Expectation
+    path: ../src/Cress.Studio.Core/Services/FlowGraphBuilder.cs
+    startLine: 120
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  syntax:
+    content: Expectation = 5
+    return:
+      type: Cress.Studio.Services.FlowGraphNodeKind
+- uid: Cress.Studio.Services.FlowGraphNodeKind.End
+  commentId: F:Cress.Studio.Services.FlowGraphNodeKind.End
+  id: End
+  parent: Cress.Studio.Services.FlowGraphNodeKind
+  langs:
+  - csharp
+  - vb
+  name: End
+  nameWithType: FlowGraphNodeKind.End
+  fullName: Cress.Studio.Services.FlowGraphNodeKind.End
+  type: Field
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/FlowGraphBuilder.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: End
+    path: ../src/Cress.Studio.Core/Services/FlowGraphBuilder.cs
+    startLine: 121
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  syntax:
+    content: End = 6
+    return:
+      type: Cress.Studio.Services.FlowGraphNodeKind
+references:
+- uid: Cress.Studio.Services
+  commentId: N:Cress.Studio.Services
+  href: Cress.html
+  name: Cress.Studio.Services
+  nameWithType: Cress.Studio.Services
+  fullName: Cress.Studio.Services
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Studio
+    name: Studio
+    href: Cress.Studio.html
+  - name: .
+  - uid: Cress.Studio.Services
+    name: Services
+    href: Cress.Studio.Services.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Studio
+    name: Studio
+    href: Cress.Studio.html
+  - name: .
+  - uid: Cress.Studio.Services
+    name: Services
+    href: Cress.Studio.Services.html
+- uid: Cress.Studio.Services.FlowGraphNodeKind
+  commentId: T:Cress.Studio.Services.FlowGraphNodeKind
+  parent: Cress.Studio.Services
+  href: Cress.Studio.Services.FlowGraphNodeKind.html
+  name: FlowGraphNodeKind
+  nameWithType: FlowGraphNodeKind
+  fullName: Cress.Studio.Services.FlowGraphNodeKind

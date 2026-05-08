@@ -1,0 +1,23 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Studio
+  commentId: N:Cress.Studio
+  id: Cress.Studio
+  children:
+  - Cress.Studio.ServiceCollectionExtensions
+  langs:
+  - csharp
+  - vb
+  name: Cress.Studio
+  nameWithType: Cress.Studio
+  fullName: Cress.Studio
+  type: Namespace
+  assemblies:
+  - Cress.Studio.Core
+references:
+- uid: Cress.Studio.ServiceCollectionExtensions
+  commentId: T:Cress.Studio.ServiceCollectionExtensions
+  href: Cress.Studio.ServiceCollectionExtensions.html
+  name: ServiceCollectionExtensions
+  nameWithType: ServiceCollectionExtensions
+  fullName: Cress.Studio.ServiceCollectionExtensions

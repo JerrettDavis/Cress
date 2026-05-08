@@ -164,7 +164,9 @@ public sealed class GherkinIngesterTests
 
     [Theory]
     [InlineData("ui.attach",      "the ApplicationFrameHost application is open", "processName", "ApplicationFrameHost")]
+    [InlineData("ui.launch",      "I launch the \"calc.exe\" application",         "application", "calc.exe")]
     [InlineData("ui.close",       "I close the application",                       null,          null)]
+    [InlineData("ui.invoke",      "I invoke Clear Button",                         "selector",    "Clear Button")]
     [InlineData("ui.invoke",      "I invoke clearButton",                           "automationId","clearButton")]
     [InlineData("ui.press-key",   "I press Enter",                                  "key",         "Enter")]
     [InlineData("ui.screenshot",  "I take a screenshot",                            null,          null)]

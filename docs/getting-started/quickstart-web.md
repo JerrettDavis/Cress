@@ -30,7 +30,7 @@ drivers:
     enabled: true
   http:
     enabled: true
-  flaui:
+  flawright:
     enabled: false
 ```
 

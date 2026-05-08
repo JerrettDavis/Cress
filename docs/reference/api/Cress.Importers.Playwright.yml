@@ -1,0 +1,23 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Importers.Playwright
+  commentId: N:Cress.Importers.Playwright
+  id: Cress.Importers.Playwright
+  children:
+  - Cress.Importers.Playwright.PlaywrightCodegenImporter
+  langs:
+  - csharp
+  - vb
+  name: Cress.Importers.Playwright
+  nameWithType: Cress.Importers.Playwright
+  fullName: Cress.Importers.Playwright
+  type: Namespace
+  assemblies:
+  - Cress.Importers
+references:
+- uid: Cress.Importers.Playwright.PlaywrightCodegenImporter
+  commentId: T:Cress.Importers.Playwright.PlaywrightCodegenImporter
+  href: Cress.Importers.Playwright.PlaywrightCodegenImporter.html
+  name: PlaywrightCodegenImporter
+  nameWithType: PlaywrightCodegenImporter
+  fullName: Cress.Importers.Playwright.PlaywrightCodegenImporter

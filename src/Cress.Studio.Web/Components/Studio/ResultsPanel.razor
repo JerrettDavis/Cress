@@ -1,7 +1,7 @@
 @implements IDisposable
 @inject StudioWorkspaceState State
 
-<aside id="results" class="card results-panel" aria-labelledby="results-title">
+<aside id="results" class="card results-panel" aria-labelledby="results-title" data-testid="results-panel">
     <div class="panel-header results-panel-header">
         <div class="panel-heading">
             <h2 id="results-title">Runs, evidence, and diagnostics</h2>
@@ -16,10 +16,10 @@
                 <p>Streaming status and event feed for the current execution.</p>
             </div>
         </div>
-        <div class="live-headline">@State.LiveRunHeadline</div>
+        <div class="live-headline" data-testid="results-live-headline">@State.LiveRunHeadline</div>
         @if (State.LiveEvents.Count == 0)
         {
-            <p class="subpanel-empty">No run in progress — start a run to see live output.</p>
+            <p class="subpanel-empty" data-testid="results-live-empty">No run in progress — start a run to see live output.</p>
         }
         else
         {
@@ -39,7 +39,7 @@
                 <p>Find the right run quickly, then inspect flows, steps, and artifacts below.</p>
             </div>
         </div>
-        <input class="text-input" @bind="State.RunFilter" @bind:event="oninput" placeholder="Filter runs" />
+        <input class="text-input" @bind="State.RunFilter" @bind:event="oninput" placeholder="Filter runs" data-testid="results-run-filter" />
         @{
             var filteredRuns = State.Runs.Where(run => string.IsNullOrWhiteSpace(State.RunFilter)
                 || run.Result.Metadata.RunId.Contains(State.RunFilter, StringComparison.OrdinalIgnoreCase)
@@ -48,7 +48,7 @@
         }
         @if (State.Runs.Count == 0)
         {
-            <p class="subpanel-empty">No runs yet — click Run all to start.</p>
+            <p class="subpanel-empty" data-testid="results-runs-empty">No runs yet — click Run all to start.</p>
         }
         else if (filteredRuns.Count == 0)
         {
@@ -56,13 +56,13 @@
         }
         else
         {
-            <div class="stack-list">
+            <div class="stack-list" data-testid="results-runs-list">
                 @foreach (var run in filteredRuns)
                 {
                     var allPassed = run.Result.Flows.All(f => f.Outcome == RunOutcome.Passed);
                     var anyFailed = run.Result.Flows.Any(f => f.Outcome == RunOutcome.Failed);
                     var statusClass = allPassed ? "run-status--passed" : anyFailed ? "run-status--failed" : "run-status--partial";
-                    <button type="button" class="@GetExplorerButtonClass(State.SelectedRun?.Result.Metadata.RunId == run.Result.Metadata.RunId)" @onclick="() => State.SelectRun(run)">
+                    <button type="button" class="@GetExplorerButtonClass(State.SelectedRun?.Result.Metadata.RunId == run.Result.Metadata.RunId)" @onclick="() => State.SelectRun(run)" data-testid="@($"results-run-{ToTestIdSegment(run.Result.Metadata.RunId)}")">
                         <span class="run-status-row">
                             <span class="run-status-dot @statusClass" aria-hidden="true"></span>
                             <strong class="run-id-text">@run.Result.Metadata.RunId</strong>
@@ -91,12 +91,12 @@
         }
         else
         {
-            <div class="stack-list run-flows-list">
+            <div class="stack-list run-flows-list" data-testid="results-flows-list">
                 @foreach (var flow in State.SelectedRun.Result.Flows)
                 {
                     var flowPassed = flow.Outcome == RunOutcome.Passed;
                     var flowStatusClass = flowPassed ? "run-status--passed" : "run-status--failed";
-                    <button type="button" class="@GetExplorerButtonClass(State.SelectedRunFlow?.FlowId == flow.FlowId)" @onclick="() => State.SelectRunFlow(flow)">
+                    <button type="button" class="@GetExplorerButtonClass(State.SelectedRunFlow?.FlowId == flow.FlowId)" @onclick="() => State.SelectRunFlow(flow)" data-testid="@($"results-flow-{ToTestIdSegment(flow.FlowId)}")">
                         <span class="run-status-row">
                             <span class="run-status-dot @flowStatusClass" aria-hidden="true"></span>
                             <strong>@flow.Outcome</strong>
@@ -125,12 +125,12 @@
         }
         else
         {
-            <div class="stack-list run-steps-list">
+            <div class="stack-list run-steps-list" data-testid="results-steps-list">
                 @foreach (var step in State.SelectedRunSteps)
                 {
                     var stepPassed = step.Outcome == RunOutcome.Passed;
                     var stepStatusClass = stepPassed ? "run-status--passed" : "run-status--failed";
-                    <button type="button" class="@GetExplorerButtonClass(ReferenceEquals(State.SelectedRunStep, step))" @onclick="() => State.SelectRunStep(step)">
+                    <button type="button" class="@GetExplorerButtonClass(ReferenceEquals(State.SelectedRunStep, step))" @onclick="() => State.SelectRunStep(step)" data-testid="@($"results-step-{ToTestIdSegment(step.Name)}")">
                         <span class="run-status-row">
                             <span class="run-status-dot @stepStatusClass" aria-hidden="true"></span>
                             <strong>@step.Name</strong>
@@ -224,4 +224,30 @@
             DiagnosticSeverity.Warning => "⚠",
             _                          => "ℹ"
         };
+
+    private static string ToTestIdSegment(string? value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            return "empty";
+        }
+
+        var builder = new System.Text.StringBuilder(value.Length);
+        var lastWasDash = false;
+        foreach (var ch in value)
+        {
+            if (char.IsLetterOrDigit(ch))
+            {
+                builder.Append(char.ToLowerInvariant(ch));
+                lastWasDash = false;
+            }
+            else if (!lastWasDash)
+            {
+                builder.Append('-');
+                lastWasDash = true;
+            }
+        }
+
+        return builder.ToString().Trim('-');
+    }
 }

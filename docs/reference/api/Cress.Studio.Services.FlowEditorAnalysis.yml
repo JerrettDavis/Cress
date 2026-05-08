@@ -1,0 +1,594 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Studio.Services.FlowEditorAnalysis
+  commentId: T:Cress.Studio.Services.FlowEditorAnalysis
+  id: FlowEditorAnalysis
+  parent: Cress.Studio.Services
+  children:
+  - Cress.Studio.Services.FlowEditorAnalysis.Diagnostics
+  - Cress.Studio.Services.FlowEditorAnalysis.QuickActions
+  - Cress.Studio.Services.FlowEditorAnalysis.Summary
+  langs:
+  - csharp
+  - vb
+  name: FlowEditorAnalysis
+  nameWithType: FlowEditorAnalysis
+  fullName: Cress.Studio.Services.FlowEditorAnalysis
+  type: Class
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/StudioAuthoringService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: FlowEditorAnalysis
+    path: ../src/Cress.Studio.Core/Services/StudioAuthoringService.cs
+    startLine: 294
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  syntax:
+    content: 'public sealed record FlowEditorAnalysis : IEquatable<FlowEditorAnalysis>'
+    content.vb: Public NotInheritable Class FlowEditorAnalysis Implements IEquatable(Of FlowEditorAnalysis)
+  inheritance:
+  - System.Object
+  implements:
+  - System.IEquatable{Cress.Studio.Services.FlowEditorAnalysis}
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Cress.Studio.Services.FlowEditorAnalysis.Summary
+  commentId: P:Cress.Studio.Services.FlowEditorAnalysis.Summary
+  id: Summary
+  parent: Cress.Studio.Services.FlowEditorAnalysis
+  langs:
+  - csharp
+  - vb
+  name: Summary
+  nameWithType: FlowEditorAnalysis.Summary
+  fullName: Cress.Studio.Services.FlowEditorAnalysis.Summary
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/StudioAuthoringService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Summary
+    path: ../src/Cress.Studio.Core/Services/StudioAuthoringService.cs
+    startLine: 296
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  syntax:
+    content: public string Summary { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Summary As String
+  overload: Cress.Studio.Services.FlowEditorAnalysis.Summary*
+- uid: Cress.Studio.Services.FlowEditorAnalysis.Diagnostics
+  commentId: P:Cress.Studio.Services.FlowEditorAnalysis.Diagnostics
+  id: Diagnostics
+  parent: Cress.Studio.Services.FlowEditorAnalysis
+  langs:
+  - csharp
+  - vb
+  name: Diagnostics
+  nameWithType: FlowEditorAnalysis.Diagnostics
+  fullName: Cress.Studio.Services.FlowEditorAnalysis.Diagnostics
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/StudioAuthoringService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Diagnostics
+    path: ../src/Cress.Studio.Core/Services/StudioAuthoringService.cs
+    startLine: 297
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  syntax:
+    content: public IReadOnlyList<FlowEditorDiagnostic> Diagnostics { get; init; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.IReadOnlyList{Cress.Studio.Services.FlowEditorDiagnostic}
+    content.vb: Public Property Diagnostics As IReadOnlyList(Of FlowEditorDiagnostic)
+  overload: Cress.Studio.Services.FlowEditorAnalysis.Diagnostics*
+- uid: Cress.Studio.Services.FlowEditorAnalysis.QuickActions
+  commentId: P:Cress.Studio.Services.FlowEditorAnalysis.QuickActions
+  id: QuickActions
+  parent: Cress.Studio.Services.FlowEditorAnalysis
+  langs:
+  - csharp
+  - vb
+  name: QuickActions
+  nameWithType: FlowEditorAnalysis.QuickActions
+  fullName: Cress.Studio.Services.FlowEditorAnalysis.QuickActions
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/StudioAuthoringService.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: QuickActions
+    path: ../src/Cress.Studio.Core/Services/StudioAuthoringService.cs
+    startLine: 298
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  syntax:
+    content: public IReadOnlyList<FlowQuickAction> QuickActions { get; init; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.IReadOnlyList{Cress.Studio.Services.FlowQuickAction}
+    content.vb: Public Property QuickActions As IReadOnlyList(Of FlowQuickAction)
+  overload: Cress.Studio.Services.FlowEditorAnalysis.QuickActions*
+references:
+- uid: Cress.Studio.Services
+  commentId: N:Cress.Studio.Services
+  href: Cress.html
+  name: Cress.Studio.Services
+  nameWithType: Cress.Studio.Services
+  fullName: Cress.Studio.Services
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Studio
+    name: Studio
+    href: Cress.Studio.html
+  - name: .
+  - uid: Cress.Studio.Services
+    name: Services
+    href: Cress.Studio.Services.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Studio
+    name: Studio
+    href: Cress.Studio.html
+  - name: .
+  - uid: Cress.Studio.Services
+    name: Services
+    href: Cress.Studio.Services.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.IEquatable{Cress.Studio.Services.FlowEditorAnalysis}
+  commentId: T:System.IEquatable{Cress.Studio.Services.FlowEditorAnalysis}
+  parent: System
+  definition: System.IEquatable`1
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<FlowEditorAnalysis>
+  nameWithType: IEquatable<FlowEditorAnalysis>
+  fullName: System.IEquatable<Cress.Studio.Services.FlowEditorAnalysis>
+  nameWithType.vb: IEquatable(Of FlowEditorAnalysis)
+  fullName.vb: System.IEquatable(Of Cress.Studio.Services.FlowEditorAnalysis)
+  name.vb: IEquatable(Of FlowEditorAnalysis)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - uid: Cress.Studio.Services.FlowEditorAnalysis
+    name: FlowEditorAnalysis
+    href: Cress.Studio.Services.FlowEditorAnalysis.html
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Cress.Studio.Services.FlowEditorAnalysis
+    name: FlowEditorAnalysis
+    href: Cress.Studio.Services.FlowEditorAnalysis.html
+  - name: )
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.IEquatable`1
+  commentId: T:System.IEquatable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<T>
+  nameWithType: IEquatable<T>
+  fullName: System.IEquatable<T>
+  nameWithType.vb: IEquatable(Of T)
+  fullName.vb: System.IEquatable(Of T)
+  name.vb: IEquatable(Of T)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Cress.Studio.Services.FlowEditorAnalysis.Summary*
+  commentId: Overload:Cress.Studio.Services.FlowEditorAnalysis.Summary
+  href: Cress.Studio.Services.FlowEditorAnalysis.html#Cress_Studio_Services_FlowEditorAnalysis_Summary
+  name: Summary
+  nameWithType: FlowEditorAnalysis.Summary
+  fullName: Cress.Studio.Services.FlowEditorAnalysis.Summary
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Cress.Studio.Services.FlowEditorAnalysis.Diagnostics*
+  commentId: Overload:Cress.Studio.Services.FlowEditorAnalysis.Diagnostics
+  href: Cress.Studio.Services.FlowEditorAnalysis.html#Cress_Studio_Services_FlowEditorAnalysis_Diagnostics
+  name: Diagnostics
+  nameWithType: FlowEditorAnalysis.Diagnostics
+  fullName: Cress.Studio.Services.FlowEditorAnalysis.Diagnostics
+- uid: System.Collections.Generic.IReadOnlyList{Cress.Studio.Services.FlowEditorDiagnostic}
+  commentId: T:System.Collections.Generic.IReadOnlyList{Cress.Studio.Services.FlowEditorDiagnostic}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IReadOnlyList`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  name: IReadOnlyList<FlowEditorDiagnostic>
+  nameWithType: IReadOnlyList<FlowEditorDiagnostic>
+  fullName: System.Collections.Generic.IReadOnlyList<Cress.Studio.Services.FlowEditorDiagnostic>
+  nameWithType.vb: IReadOnlyList(Of FlowEditorDiagnostic)
+  fullName.vb: System.Collections.Generic.IReadOnlyList(Of Cress.Studio.Services.FlowEditorDiagnostic)
+  name.vb: IReadOnlyList(Of FlowEditorDiagnostic)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: <
+  - uid: Cress.Studio.Services.FlowEditorDiagnostic
+    name: FlowEditorDiagnostic
+    href: Cress.Studio.Services.FlowEditorDiagnostic.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Cress.Studio.Services.FlowEditorDiagnostic
+    name: FlowEditorDiagnostic
+    href: Cress.Studio.Services.FlowEditorDiagnostic.html
+  - name: )
+- uid: System.Collections.Generic.IReadOnlyList`1
+  commentId: T:System.Collections.Generic.IReadOnlyList`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  name: IReadOnlyList<T>
+  nameWithType: IReadOnlyList<T>
+  fullName: System.Collections.Generic.IReadOnlyList<T>
+  nameWithType.vb: IReadOnlyList(Of T)
+  fullName.vb: System.Collections.Generic.IReadOnlyList(Of T)
+  name.vb: IReadOnlyList(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: Cress.Studio.Services.FlowEditorAnalysis.QuickActions*
+  commentId: Overload:Cress.Studio.Services.FlowEditorAnalysis.QuickActions
+  href: Cress.Studio.Services.FlowEditorAnalysis.html#Cress_Studio_Services_FlowEditorAnalysis_QuickActions
+  name: QuickActions
+  nameWithType: FlowEditorAnalysis.QuickActions
+  fullName: Cress.Studio.Services.FlowEditorAnalysis.QuickActions
+- uid: System.Collections.Generic.IReadOnlyList{Cress.Studio.Services.FlowQuickAction}
+  commentId: T:System.Collections.Generic.IReadOnlyList{Cress.Studio.Services.FlowQuickAction}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IReadOnlyList`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  name: IReadOnlyList<FlowQuickAction>
+  nameWithType: IReadOnlyList<FlowQuickAction>
+  fullName: System.Collections.Generic.IReadOnlyList<Cress.Studio.Services.FlowQuickAction>
+  nameWithType.vb: IReadOnlyList(Of FlowQuickAction)
+  fullName.vb: System.Collections.Generic.IReadOnlyList(Of Cress.Studio.Services.FlowQuickAction)
+  name.vb: IReadOnlyList(Of FlowQuickAction)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: <
+  - uid: Cress.Studio.Services.FlowQuickAction
+    name: FlowQuickAction
+    href: Cress.Studio.Services.FlowQuickAction.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Cress.Studio.Services.FlowQuickAction
+    name: FlowQuickAction
+    href: Cress.Studio.Services.FlowQuickAction.html
+  - name: )

@@ -12,8 +12,8 @@ public record CressProfile
     public AuthenticationConfig? Authentication { get; init; }
     public Dictionary<string, string>? Headers { get; init; }
     public PlaywrightProfileConfig? Playwright { get; init; }
-    [YamlMember(Alias = "flaui")]
-    public FlaUiProfileConfig? FlaUi { get; init; }
+    [YamlMember(Alias = "flawright")]
+    public FlawrightProfileConfig? Flawright { get; init; }
     public Dictionary<string, string>? Variables { get; init; }
     public FlakeProfileConfig? Flake { get; init; }
 }
@@ -52,7 +52,7 @@ public record PlaywrightProfileConfig
     public string? Browser { get; init; }
 }
 
-public record FlaUiProfileConfig
+public record FlawrightProfileConfig
 {
     public string? ApplicationPath { get; init; }
     public string? Arguments { get; init; }

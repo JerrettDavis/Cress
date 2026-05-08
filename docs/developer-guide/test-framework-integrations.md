@@ -2,6 +2,8 @@
 
 Cress can now export **framework-native C# tests** for **xUnit**, **NUnit**, and **MSTest** without translating the scenario away from the Cress engine. The generated test class calls `Cress.Testing` at runtime, which means designers can keep authoring flows in Studio while product teams run those same flows inside standard .NET test suites and CI pipelines.
 
+![Flow designer visual map and Gherkin preview](../images/studio/flow-designer.png)
+
 ## Why this matters
 
 This integration is designed for teams that want all of these at the same time:

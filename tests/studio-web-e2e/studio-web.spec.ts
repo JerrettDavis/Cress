@@ -66,6 +66,7 @@ test('validates the documented Studio authoring loop and captures the reused doc
   await loadBuiltInDemo(page);
   await expect(page.getByTestId('runner-node-select')).toHaveValue(/local-embedded/i);
   await expect(page.getByTestId('workspace-setup-summary')).toContainText('Screenshots: On failure');
+  await expect(page.getByTestId('workspace-path-readiness')).toContainText('Cress workspace detected');
   await captureDocScreenshot(page, 'project-loaded.png', page.getByTestId('studio-shell'));
 
   await page.getByTestId('nav-link-designer').click();

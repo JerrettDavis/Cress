@@ -356,6 +356,10 @@
                         <button type="button" class="action-button" @onclick="OpenWorkspacePicker" title="Browse folders on the host machine" data-testid="open-workspace-picker">Browse</button>
                     </div>
                     <span class="field-hint">Use a project or workspace root so flows, suites, reports, and artifacts stay connected. Blank paths no longer fall back to the web app folder.</span>
+                    <div class="@GetWorkspacePathReadinessClass()" data-testid="workspace-path-readiness">
+                        <strong>@GetWorkspacePathReadinessHeadline()</strong>
+                        <span>@GetWorkspacePathReadinessDetail()</span>
+                    </div>
                 </div>
                 <div class="field-stack">
                     <label for="profileSelect">Profile</label>
@@ -798,6 +802,40 @@
         return node is null
             ? "Local embedded"
             : $"{node.DisplayName} ({GetRunnerNodeStatusLabel(node)})";
+    }
+
+    private string GetWorkspacePathReadinessHeadline()
+        => EvaluateWorkspacePathReadiness().Headline;
+
+    private string GetWorkspacePathReadinessDetail()
+        => EvaluateWorkspacePathReadiness().Detail;
+
+    private string GetWorkspacePathReadinessClass()
+        => $"workspace-path-readiness workspace-path-readiness--{EvaluateWorkspacePathReadiness().Tone}";
+
+    private (string Tone, string Headline, string Detail) EvaluateWorkspacePathReadiness()
+    {
+        if (string.IsNullOrWhiteSpace(State.ProjectPathInput))
+        {
+            return ("info", "Choose a workspace path", "Browse for a folder, use recent history, or open a built-in demo.");
+        }
+
+        try
+        {
+            var fullPath = Path.GetFullPath(State.ProjectPathInput.Trim());
+            if (!Directory.Exists(fullPath))
+            {
+                return ("warning", "Folder not found", "Pick an existing folder or use a demo workspace before loading.");
+            }
+
+            return File.Exists(Path.Combine(fullPath, ".cress", "config.yaml"))
+                ? ("success", "Cress workspace detected", "This folder already has Cress config and is ready to load.")
+                : ("info", "Folder exists", "Load it to inspect whether it contains flows, suites, and profiles.");
+        }
+        catch (Exception)
+        {
+            return ("warning", "Path is not valid", "Use a valid local folder path before loading the workspace.");
+        }
     }
 
     private void UpdateShellSectionFromUri()

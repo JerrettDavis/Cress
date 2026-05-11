@@ -184,6 +184,34 @@ public sealed class HomeInteractionTests : TestContext, IDisposable
     }
 
     [Fact]
+    public void Home_workspace_path_readiness_reports_detected_cress_workspace()
+    {
+        var state = CreateState();
+        var workspace = CreateProject("path-readiness");
+        state.SetProjectPath(workspace);
+
+        var cut = RenderComponent<Home>();
+        var readiness = cut.Find("[data-testid='workspace-path-readiness']").TextContent;
+
+        Assert.Contains("Cress workspace detected", readiness, StringComparison.Ordinal);
+        Assert.Contains("ready to load", readiness, StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
+    public void Home_workspace_path_readiness_reports_missing_folder()
+    {
+        var state = CreateState();
+        var missingPath = Path.Combine(Path.GetTempPath(), "cress-home-tests", Guid.NewGuid().ToString("N"), "missing-workspace");
+        state.SetProjectPath(missingPath);
+
+        var cut = RenderComponent<Home>();
+        var readiness = cut.Find("[data-testid='workspace-path-readiness']").TextContent;
+
+        Assert.Contains("Folder not found", readiness, StringComparison.Ordinal);
+        Assert.Contains("Pick an existing folder", readiness, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void Home_runner_node_filter_narrows_visible_nodes()
     {
         CreateState(runnerService: new FakeRunnerService(

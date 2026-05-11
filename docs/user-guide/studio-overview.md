@@ -31,6 +31,7 @@ At this stage you can:
 
 - browse capabilities, flows, fixtures, and run history
 - confirm the active path, profile, retry, screenshot, and node settings from one summary strip
+- see immediately whether the chosen path already looks like a real Cress workspace before reloading
 - use the status bar and theme controls without leaving the shell
 - switch between designer, source, results, and metrics
 - confirm that the project structure loaded correctly

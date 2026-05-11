@@ -1823,6 +1823,37 @@ input[type="checkbox"] {
     color: var(--color-warning);
 }
 
+.workspace-path-readiness {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    margin-top: 0.45rem;
+    padding: 0.5rem 0.65rem;
+    border-left: 3px solid var(--color-accent);
+    border-radius: 10px;
+    background: color-mix(in srgb, var(--color-accent-soft) 35%, transparent);
+    font-size: 12px;
+}
+
+.workspace-path-readiness strong {
+    color: var(--color-foreground);
+}
+
+.workspace-path-readiness span {
+    color: var(--color-muted);
+    line-height: 1.45;
+}
+
+.workspace-path-readiness--warning {
+    border-left-color: var(--color-warning);
+    background: color-mix(in srgb, var(--color-warning-soft) 55%, transparent);
+}
+
+.workspace-path-readiness--success {
+    border-left-color: var(--color-success);
+    background: color-mix(in srgb, var(--color-success-soft) 60%, transparent);
+}
+
 .suite-flow-tools {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;

@@ -111,6 +111,7 @@ public sealed class StudioWorkspaceState : IDisposable
     private readonly object _liveRunEventsGate = new();
     private CancellationTokenSource? _activeRunCts;
     private CancellationTokenSource? _liveTickerCts;
+    private bool _ignoreLateProgressUpdates;
 
     public void OpenRecorderPicker()
     {
@@ -1082,6 +1083,7 @@ public sealed class StudioWorkspaceState : IDisposable
         _activeRunCts?.Cancel();
         _activeRunCts?.Dispose();
         _activeRunCts = new CancellationTokenSource();
+        _ignoreLateProgressUpdates = false;
 
         InitializeLiveRunState(options, clearLiveEvents);
         StartLiveTicker();
@@ -1125,6 +1127,7 @@ public sealed class StudioWorkspaceState : IDisposable
                 ? "Run completed successfully."
                 : "Run completed with failures. Inspect the timeline or artifacts for details.";
             StatusMessage = $"Completed run {result.Metadata.RunId} on {(SelectedRunnerNode?.DisplayName ?? "local embedded node")}.";
+            _ignoreLateProgressUpdates = true;
             AddLiveTimelineEntry(new StudioLiveRunEntry(
                 DateTimeOffset.UtcNow,
                 "Run",
@@ -1149,6 +1152,7 @@ public sealed class StudioWorkspaceState : IDisposable
             LiveRunHeadline = "Run canceled.";
             LiveCurrentStepMessage = "The active run was canceled before completion.";
             StatusMessage = "Run canceled.";
+            _ignoreLateProgressUpdates = true;
             AddLiveTimelineEntry(new StudioLiveRunEntry(
                 DateTimeOffset.UtcNow,
                 "Control",
@@ -1445,6 +1449,11 @@ public sealed class StudioWorkspaceState : IDisposable
 
     private void HandleProgressUpdate(RuntimeProgressUpdate update)
     {
+        if (_ignoreLateProgressUpdates)
+        {
+            return;
+        }
+
         var message = update.Kind switch
         {
             RuntimeProgressKind.RunStarted => $"[{update.RunId}] {update.Message}",

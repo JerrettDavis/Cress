@@ -158,6 +158,32 @@ public sealed class HomeInteractionTests : TestContext, IDisposable
     }
 
     [Fact]
+    public void Home_workspace_setup_summary_reflects_current_configuration_and_invalid_retry()
+    {
+        var state = CreateState(runnerService: new FakeRunnerService(
+        [
+            CreateNode("local", "Embedded local", "Local embedded runner", StudioRunnerTransportKind.Embedded, "This machine", ["web"], StudioRunnerNodeStatus.Healthy),
+            CreateNode("remote-browser", "Browser lab", "Remote browser node", StudioRunnerTransportKind.RemoteHttp, "Lab rack", ["browser"], StudioRunnerNodeStatus.Busy, activeRunId: "run-42")
+        ]));
+        var workspace = CreateProject("workspace-summary");
+        state.SetProjectPath(workspace);
+        state.SelectedProfile = "local";
+        state.RetryCountOverrideText = "oops";
+        state.ScreenshotPolicy = "every-step";
+        state.SelectedRunnerNodeId = "remote-browser";
+
+        var cut = RenderComponent<Home>();
+        var summary = cut.Find("[data-testid='workspace-setup-summary']").TextContent;
+
+        Assert.Contains("Workspace: workspace-summary", summary, StringComparison.Ordinal);
+        Assert.Contains("Profile: local", summary, StringComparison.Ordinal);
+        Assert.Contains("Retries: Invalid", summary, StringComparison.Ordinal);
+        Assert.Contains("Screenshots: Every step", summary, StringComparison.Ordinal);
+        Assert.Contains("Node: Browser lab (Busy)", summary, StringComparison.Ordinal);
+        Assert.Contains("Retry override must be a non-negative integer.", summary, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void Home_runner_node_filter_narrows_visible_nodes()
     {
         CreateState(runnerService: new FakeRunnerService(

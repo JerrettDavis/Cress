@@ -1,7 +1,7 @@
 /* ==========================================================================
-   Cress Studio Web — Wave G: IDE / Desktop test studio aesthetic
-   Target: Visual Studio 2022 / JetBrains / Playwright Inspector vibes
-   --radius: 2px global, panels 0px, buttons 2px
+   Cress Studio Web — polished studio shell refinement
+   Target: maintain a technical tool feel while restoring visual hierarchy,
+   spacing, and stronger feature delineation across setup, authoring, and results.
    ========================================================================== */
 
 :root {
@@ -9,33 +9,30 @@
     --font-sans: "Segoe UI", "Segoe UI Variable", system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
     --font-mono: "Cascadia Code", "Fira Code", Consolas, "Courier New", monospace;
 
-    /* Single radius token — 2px everywhere. Override locally only if needed. */
-    --radius: 2px;
-
-    /* Shadows: replaced with 1px borders instead of elevation shadows */
-    --shadow-sm: none;
-    --shadow-md: none;
+    --radius: 10px;
+    --shadow-sm: 0 10px 28px rgba(15, 23, 42, 0.08);
+    --shadow-md: 0 20px 48px rgba(15, 23, 42, 0.12);
 
     --focus-ring: 0 0 0 2px var(--color-focus);
 
     /* Light theme */
-    --color-bg: #f5f5f5;
-    --color-bg-alt: #ebebeb;
-    --color-panel: #f0f0f0;
+    --color-bg: #edf3fb;
+    --color-bg-alt: #e3ecf7;
+    --color-panel: #f5f8fc;
     --color-surface: #ffffff;
-    --color-surface-raised: #fafafa;
-    --color-surface-alt: #f8f8f8;
-    --color-surface-inset: #f2f2f2;
-    --color-foreground: #1e1e1e;
-    --color-muted: #6e6e6e;
-    --color-subtle: #8a8a8a;
-    --color-border: #d0d0d0;
-    --color-border-strong: #b0b0b0;
+    --color-surface-raised: #f8fbff;
+    --color-surface-alt: #f6f9fd;
+    --color-surface-inset: #eef4fb;
+    --color-foreground: #162033;
+    --color-muted: #5f6b7d;
+    --color-subtle: #7f8a9b;
+    --color-border: #d7e2f0;
+    --color-border-strong: #b8c9de;
     --color-accent: #0078d4;
     --color-accent-strong: #005a9e;
     --color-on-accent: #ffffff;
-    --color-accent-soft: #e8f3fb;
-    --color-accent-border: #6ab4f0;
+    --color-accent-soft: #e9f4ff;
+    --color-accent-border: #7fbff2;
     --color-success: #107c10;
     --color-success-soft: #dff6dd;
     --color-warning: #835b00;
@@ -53,26 +50,26 @@
 
 /* Dark token block */
 :root[data-theme="dark"] {
-    --shadow-sm: none;
-    --shadow-md: none;
+    --shadow-sm: 0 18px 40px rgba(2, 6, 23, 0.24);
+    --shadow-md: 0 28px 64px rgba(2, 6, 23, 0.34);
 
-    --color-bg: #1e1e1e;
-    --color-bg-alt: #252526;
-    --color-panel: #2d2d30;
-    --color-surface: #252526;
-    --color-surface-raised: #2d2d30;
-    --color-surface-alt: #333337;
-    --color-surface-inset: #1e1e1e;
-    --color-foreground: #d4d4d4;
-    --color-muted: #9d9d9d;
-    --color-subtle: #6d6d6d;
-    --color-border: #3c3c3c;
-    --color-border-strong: #555555;
+    --color-bg: #08111f;
+    --color-bg-alt: #0c1526;
+    --color-panel: #0f1b30;
+    --color-surface: #111f35;
+    --color-surface-raised: #16253d;
+    --color-surface-alt: #18283f;
+    --color-surface-inset: #0b1729;
+    --color-foreground: #e6eef8;
+    --color-muted: #9bb0c8;
+    --color-subtle: #7390ad;
+    --color-border: #243854;
+    --color-border-strong: #335071;
     --color-accent: #4fc1ff;
     --color-accent-strong: #9cdcfe;
     --color-on-accent: #001f3d;
-    --color-accent-soft: #0d2d44;
-    --color-accent-border: #4fc1ff;
+    --color-accent-soft: #112e48;
+    --color-accent-border: #62ccff;
     --color-success: #6bc45b;
     --color-success-soft: #1a3a1a;
     --color-warning: #ddb44c;
@@ -90,26 +87,26 @@
 /* System/OS dark */
 @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]):not([data-theme="dark"]) {
-        --shadow-sm: none;
-        --shadow-md: none;
+        --shadow-sm: 0 18px 40px rgba(2, 6, 23, 0.24);
+        --shadow-md: 0 28px 64px rgba(2, 6, 23, 0.34);
 
-        --color-bg: #1e1e1e;
-        --color-bg-alt: #252526;
-        --color-panel: #2d2d30;
-        --color-surface: #252526;
-        --color-surface-raised: #2d2d30;
-        --color-surface-alt: #333337;
-        --color-surface-inset: #1e1e1e;
-        --color-foreground: #d4d4d4;
-        --color-muted: #9d9d9d;
-        --color-subtle: #6d6d6d;
-        --color-border: #3c3c3c;
-        --color-border-strong: #555555;
+        --color-bg: #08111f;
+        --color-bg-alt: #0c1526;
+        --color-panel: #0f1b30;
+        --color-surface: #111f35;
+        --color-surface-raised: #16253d;
+        --color-surface-alt: #18283f;
+        --color-surface-inset: #0b1729;
+        --color-foreground: #e6eef8;
+        --color-muted: #9bb0c8;
+        --color-subtle: #7390ad;
+        --color-border: #243854;
+        --color-border-strong: #335071;
         --color-accent: #4fc1ff;
         --color-accent-strong: #9cdcfe;
         --color-on-accent: #001f3d;
-        --color-accent-soft: #0d2d44;
-        --color-accent-border: #4fc1ff;
+        --color-accent-soft: #112e48;
+        --color-accent-border: #62ccff;
         --color-success: #6bc45b;
         --color-success-soft: #1a3a1a;
         --color-warning: #ddb44c;
@@ -273,6 +270,9 @@ svg {
     display: grid;
     grid-template-columns: 15rem minmax(0, 1fr);
     min-height: 100vh;
+    background:
+        radial-gradient(circle at top left, color-mix(in srgb, var(--color-accent) 14%, transparent) 0, transparent 24rem),
+        linear-gradient(180deg, var(--color-bg-alt) 0%, var(--color-bg) 12rem);
 }
 
 .layout-sidebar {
@@ -280,11 +280,11 @@ svg {
     top: 0;
     display: flex;
     flex-direction: column;
-    gap: 0;
+    gap: 0.8rem;
     min-height: 100vh;
-    padding: 0;
-    border-right: 1px solid var(--color-border);
-    background: var(--color-panel);
+    padding: 0.8rem 0.7rem;
+    border-right: 1px solid color-mix(in srgb, var(--color-accent) 10%, var(--color-border));
+    background: linear-gradient(180deg, color-mix(in srgb, var(--color-surface-raised) 84%, var(--color-panel)) 0%, var(--color-panel) 100%);
     overflow-y: auto;
 }
 
@@ -296,9 +296,11 @@ svg {
     display: flex;
     gap: 0.5rem;
     align-items: center;
-    padding: 0.4rem 0.75rem;
-    border-bottom: 1px solid var(--color-border);
-    background: var(--color-surface-raised);
+    padding: 0.75rem 0.85rem;
+    border: 1px solid color-mix(in srgb, var(--color-accent) 8%, var(--color-border));
+    border-radius: 18px;
+    background: linear-gradient(180deg, color-mix(in srgb, var(--color-surface-raised) 88%, var(--color-accent-soft)) 0%, var(--color-surface) 100%);
+    box-shadow: var(--shadow-sm);
 }
 
 .brand-mark {
@@ -308,8 +310,8 @@ svg {
     flex: 0 0 auto;
     width: 1.75rem;
     height: 1.75rem;
-    border-radius: var(--radius);
-    background: var(--color-accent);
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--color-accent) 0%, color-mix(in srgb, var(--color-accent) 75%, var(--color-accent-strong)) 100%);
     color: var(--color-on-accent);
     font-weight: 800;
     font-size: 11px;
@@ -346,41 +348,39 @@ svg {
 .studio-nav {
     display: flex;
     flex-direction: column;
-    gap: 0;
-    padding: 0.25rem 0;
+    gap: 0.95rem;
+    padding: 0 0.1rem 0.75rem;
 }
 
 .nav-section {
     display: flex;
     flex-direction: column;
-    gap: 0;
+    gap: 0.45rem;
 }
 
 .nav-section-label {
-    padding: 0.4rem 0.75rem 0.2rem;
+    padding: 0 0.4rem;
     color: var(--color-subtle);
-    font-size: 10px;
+    font-size: 0.68rem;
     font-weight: 700;
-    letter-spacing: 0.07em;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    border-top: 1px solid var(--color-border);
-    margin-top: 0.25rem;
 }
 
 .nav-link {
     display: flex;
-    gap: 0.5rem;
-    align-items: center;
+    gap: 0.8rem;
+    align-items: flex-start;
     width: 100%;
-    padding: 0.35rem 0.75rem;
-    border: none;
-    border-left: 2px solid transparent;
-    border-radius: 0;
-    background: transparent;
+    padding: 0.82rem 0.85rem;
+    border: 1px solid color-mix(in srgb, var(--color-accent) 8%, var(--color-border));
+    border-radius: 16px;
+    background: linear-gradient(180deg, color-mix(in srgb, var(--color-surface-raised) 88%, var(--color-accent-soft)) 0%, var(--color-surface) 100%);
     color: var(--color-foreground);
     text-decoration: none;
     font-size: 13px;
     line-height: 1.3;
+    box-shadow: var(--shadow-sm);
 }
 
 .nav-link strong,
@@ -389,20 +389,25 @@ svg {
 }
 
 .nav-link small {
-    display: none; /* Hide verbose description in dense mode */
+    margin-top: 0.22rem;
+    color: var(--color-muted);
+    font-size: 11px;
+    line-height: 1.45;
 }
 
 .nav-link:hover,
 .nav-link:focus-visible {
-    border-left-color: var(--color-border-strong);
-    background: color-mix(in srgb, var(--color-accent-soft) 50%, transparent);
+    border-color: var(--color-accent-border);
+    background: linear-gradient(180deg, color-mix(in srgb, var(--color-accent-soft) 72%, var(--color-surface-raised)) 0%, color-mix(in srgb, var(--color-surface) 86%, var(--color-accent-soft)) 100%);
     color: var(--color-foreground);
+    transform: translateY(-1px);
 }
 
 .nav-link.active {
-    border-left-color: var(--color-accent);
-    background: var(--color-accent-soft);
+    border-color: var(--color-accent-border);
+    background: linear-gradient(180deg, color-mix(in srgb, var(--color-accent-soft) 82%, var(--color-surface-raised)) 0%, color-mix(in srgb, var(--color-accent-soft) 68%, var(--color-surface)) 100%);
     color: var(--color-foreground);
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-accent) 18%, transparent), var(--shadow-sm);
 }
 
 .nav-icon {
@@ -410,16 +415,16 @@ svg {
     align-items: center;
     justify-content: center;
     flex: 0 0 auto;
-    width: 1.25rem;
-    height: 1.25rem;
-    border-radius: 0;
-    background: none;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--color-accent-soft) 75%, transparent);
     color: var(--color-accent);
 }
 
 .nav-icon svg {
-    width: 1rem;
-    height: 1rem;
+    width: 1.05rem;
+    height: 1.05rem;
     fill: none;
     stroke: currentColor;
     stroke-linecap: round;
@@ -437,6 +442,7 @@ svg {
     min-width: 0;
     height: 100dvh;
     overflow-y: auto;
+    background: transparent;
 }
 
 /* Title/menu bar — 32px, dense */
@@ -445,10 +451,10 @@ svg {
     justify-content: space-between;
     gap: 0.5rem;
     align-items: center;
-    padding: 0 0.75rem;
+    padding: 0 1rem;
     height: 32px;
-    border-bottom: 1px solid var(--color-border);
-    background: var(--color-surface-raised);
+    border-bottom: 1px solid color-mix(in srgb, var(--color-accent) 10%, var(--color-border));
+    background: color-mix(in srgb, var(--color-surface-raised) 90%, var(--color-accent-soft));
     flex-shrink: 0;
 }
 
@@ -534,11 +540,12 @@ svg {
 .studio-shell {
     display: flex;
     flex-direction: column;
-    gap: 0;
-    padding: 0;
+    gap: 1rem;
+    padding: 1rem;
     background:
-        radial-gradient(circle at top left, color-mix(in srgb, var(--color-accent) 10%, transparent) 0, transparent 28rem),
-        linear-gradient(180deg, color-mix(in srgb, var(--color-surface-raised) 94%, var(--color-accent) 6%) 0%, var(--color-page) 24rem);
+        radial-gradient(circle at top left, color-mix(in srgb, var(--color-accent) 12%, transparent) 0, transparent 28rem),
+        radial-gradient(circle at top right, color-mix(in srgb, var(--color-success) 8%, transparent) 0, transparent 22rem),
+        linear-gradient(180deg, color-mix(in srgb, var(--color-surface-raised) 94%, var(--color-accent) 6%) 0%, transparent 24rem);
 }
 
 .panel-focus {
@@ -547,10 +554,12 @@ svg {
 
 .card,
 .subpanel {
+    position: relative;
     border: 1px solid var(--color-border);
     border-radius: 18px;
-    background: var(--color-surface);
-    box-shadow: 0 12px 40px rgba(15, 23, 42, 0.08);
+    background: linear-gradient(180deg, color-mix(in srgb, var(--color-surface-raised) 92%, var(--color-surface)) 0%, var(--color-surface) 100%);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
 }
 
 .card + .card,
@@ -560,7 +569,44 @@ svg {
 
 .subpanel {
     padding: 0.9rem 1rem;
-    background: var(--color-surface-alt);
+    background: linear-gradient(180deg, color-mix(in srgb, var(--color-surface-alt) 94%, var(--color-surface-raised)) 0%, var(--color-surface-alt) 100%);
+}
+
+.hero-panel,
+.onboarding-panel,
+.toolbar-panel,
+.explorer-panel,
+.editor-panel,
+.results-panel,
+.subpanel {
+    --panel-accent: var(--color-accent);
+}
+
+.explorer-panel {
+    --panel-accent: color-mix(in srgb, var(--color-success) 58%, var(--color-accent));
+}
+
+.editor-panel {
+    --panel-accent: color-mix(in srgb, var(--color-accent-strong) 78%, var(--color-accent));
+}
+
+.results-panel {
+    --panel-accent: color-mix(in srgb, var(--color-warning) 70%, var(--color-accent));
+}
+
+.hero-panel::before,
+.onboarding-panel::before,
+.toolbar-panel::before,
+.explorer-panel::before,
+.editor-panel::before,
+.results-panel::before,
+.subpanel::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--panel-accent) 0%, color-mix(in srgb, var(--panel-accent) 35%, transparent) 56%, transparent 100%);
+    pointer-events: none;
 }
 
 .hero-panel,
@@ -568,13 +614,13 @@ svg {
 .explorer-panel,
 .editor-panel,
 .results-panel {
-    padding: 0.75rem;
+    padding: 1rem;
 }
 
 /* No hero gradient — flat surface */
 .hero-panel {
     background:
-        linear-gradient(135deg, color-mix(in srgb, var(--color-surface-raised) 92%, var(--color-accent) 8%) 0%, var(--color-surface) 100%);
+        linear-gradient(135deg, color-mix(in srgb, var(--color-surface-raised) 82%, var(--color-accent-soft)) 0%, var(--color-surface) 100%);
 }
 
 .hero-panel--compact {
@@ -648,6 +694,7 @@ svg {
     border: 1px solid color-mix(in srgb, var(--color-border) 78%, var(--color-accent) 22%);
     border-radius: 16px;
     background: color-mix(in srgb, var(--color-surface) 86%, var(--color-accent) 14%);
+    box-shadow: inset 0 1px 0 color-mix(in srgb, var(--color-accent) 12%, transparent);
 }
 
 .hero-highlight strong {
@@ -1127,17 +1174,16 @@ summary:focus-visible {
 .studio-grid {
     display: grid;
     grid-template-columns: minmax(14rem, 16rem) minmax(32rem, 1fr) minmax(18rem, 22rem);
-    gap: 0;
-    border-top: 1px solid var(--color-border);
+    gap: 1rem;
     align-items: start;
 }
 
 .studio-grid > * {
-    border-right: 1px solid var(--color-border);
+    min-width: 0;
 }
 
 .studio-grid > *:last-child {
-    border-right: none;
+    min-width: 0;
 }
 
 /* ==========================================================================
@@ -1151,29 +1197,50 @@ summary:focus-visible {
 
 .panel-header {
     display: flex;
-    gap: 0.5rem;
+    gap: 0.85rem;
     align-items: flex-start;
-    margin-bottom: 0.5rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid var(--color-border);
+    margin-bottom: 0.9rem;
+    padding-bottom: 0.9rem;
+    border-bottom: 1px solid color-mix(in srgb, var(--panel-accent, var(--color-accent)) 14%, var(--color-border));
+}
+
+.panel-kicker {
+    display: inline-flex;
+    margin-bottom: 0.3rem;
+    color: var(--panel-accent, var(--color-accent));
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
 }
 
 .panel-header h2,
 .subpanel h3,
 .subpanel-header h3 {
     margin: 0;
-    font-size: 12px;
+    color: var(--color-foreground);
+}
+
+.panel-header h2 {
+    font-size: 1.08rem;
+    font-weight: 750;
+    letter-spacing: -0.01em;
+}
+
+.subpanel h3,
+.subpanel-header h3 {
+    font-size: 0.84rem;
     font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    color: var(--color-muted);
+    letter-spacing: 0.03em;
 }
 
 .panel-header p,
 .subpanel-header p {
     margin: 0.2rem 0 0;
-    font-size: 11px;
+    max-width: 48rem;
+    font-size: 0.83rem;
     color: var(--color-muted);
+    line-height: 1.55;
 }
 
 .panel-heading {
@@ -1372,30 +1439,28 @@ details[open] > summary .summary-chevron {
 .summary-cards {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 0;
-    border: 1px solid var(--color-border);
-    border-radius: 0;
+    gap: 0.75rem;
 }
 
 .summary-card {
-    padding: 0.5rem 0.75rem;
-    border: none;
-    border-right: 1px solid var(--color-border);
-    border-radius: 0;
-    background: var(--color-surface-alt);
+    padding: 0.85rem 0.95rem;
+    border: 1px solid color-mix(in srgb, var(--color-accent) 10%, var(--color-border));
+    border-radius: 16px;
+    background: linear-gradient(180deg, color-mix(in srgb, var(--color-surface-alt) 90%, var(--color-accent-soft)) 0%, var(--color-surface-alt) 100%);
     cursor: default;
     user-select: none;
+    box-shadow: inset 0 1px 0 color-mix(in srgb, var(--color-accent) 10%, transparent);
 }
 
 .summary-card:last-child {
-    border-right: none;
+    border-right: 1px solid color-mix(in srgb, var(--color-accent) 10%, var(--color-border));
 }
 
 .summary-card span:first-child {
     color: var(--color-muted);
-    font-size: 10px;
+    font-size: 0.68rem;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.08em;
     font-weight: 700;
 }
 
@@ -1619,11 +1684,11 @@ input[type="checkbox"] {
     position: sticky;
     top: 0;
     z-index: 1;
-    background: var(--color-surface-alt);
-    border-bottom: 1px solid var(--color-border);
+    background: linear-gradient(180deg, color-mix(in srgb, var(--color-surface-alt) 96%, var(--color-surface-raised)) 0%, color-mix(in srgb, var(--color-surface-alt) 88%, transparent) 100%);
+    border-bottom: 1px solid color-mix(in srgb, var(--panel-accent, var(--color-accent)) 12%, var(--color-border));
     margin: -0.5rem -0.75rem 0.5rem;
     padding: 0.4rem 0.75rem;
-    border-radius: 0;
+    border-radius: 16px 16px 0 0;
 }
 
 /* Run status dots — square for IDE feel */
@@ -2721,6 +2786,7 @@ input[type="checkbox"] {
         min-height: auto;
         border-right: 0;
         border-bottom: 1px solid var(--color-border);
+        padding: 0.75rem;
     }
 
     .layout-topbar {
@@ -2728,7 +2794,7 @@ input[type="checkbox"] {
     }
 
     .studio-shell {
-        padding: 0;
+        padding: 0.75rem;
     }
 
     .toolbar-grid,

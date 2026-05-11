@@ -1812,6 +1812,17 @@ input[type="checkbox"] {
     font-variant-numeric: tabular-nums;
 }
 
+.workspace-setup-summary {
+    margin-top: 0.75rem;
+    margin-bottom: 0.9rem;
+}
+
+.workspace-summary-pill--warning {
+    border-color: color-mix(in srgb, var(--color-warning) 40%, var(--color-border));
+    background: color-mix(in srgb, var(--color-warning-soft) 60%, var(--color-surface-inset));
+    color: var(--color-warning);
+}
+
 .suite-flow-tools {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;

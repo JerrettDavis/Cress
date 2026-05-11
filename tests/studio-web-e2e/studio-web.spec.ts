@@ -65,6 +65,7 @@ test('loads the suggested workspace through the in-app picker and exposes explor
 test('validates the documented Studio authoring loop and captures the reused docs screenshots', async ({ page }) => {
   await loadBuiltInDemo(page);
   await expect(page.getByTestId('runner-node-select')).toHaveValue(/local-embedded/i);
+  await expect(page.getByTestId('workspace-setup-summary')).toContainText('Screenshots: On failure');
   await captureDocScreenshot(page, 'project-loaded.png', page.getByTestId('studio-shell'));
 
   await page.getByTestId('nav-link-designer').click();

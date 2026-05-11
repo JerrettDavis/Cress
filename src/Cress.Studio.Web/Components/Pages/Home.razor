@@ -408,6 +408,17 @@
                 </div>
             </div>
         </div>
+        <div class="suite-flow-summary workspace-setup-summary" data-testid="workspace-setup-summary">
+            <span class="pill" title="@State.ProjectPathInput">Workspace: @GetWorkspacePathSummary()</span>
+            <span class="pill">Profile: @GetProfileSummary()</span>
+            <span class="pill">Retries: @GetRetryOverrideSummary()</span>
+            <span class="pill">Screenshots: @GetScreenshotPolicySummary()</span>
+            <span class="pill">Node: @GetRunnerNodeSelectionSummary()</span>
+            @if (!HasValidRetryOverride())
+            {
+                <span class="pill workspace-summary-pill--warning" data-testid="workspace-setup-warning">Retry override must be a non-negative integer.</span>
+            }
+        </div>
 
         <div class="toolbar-actions" aria-label="Workspace actions">
             <div class="toolbar-primary">
@@ -742,6 +753,52 @@
             : node.Status == StudioRunnerNodeStatus.Busy
                 ? "node-status-pill node-status-pill--busy"
                 : "node-status-pill";
+
+    private string GetWorkspacePathSummary()
+    {
+        if (string.IsNullOrWhiteSpace(State.ProjectPathInput))
+        {
+            return "Not selected";
+        }
+
+        var trimmed = State.ProjectPathInput.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
+        return Path.GetFileName(trimmed);
+    }
+
+    private string GetProfileSummary()
+        => string.IsNullOrWhiteSpace(State.SelectedProfile) ? "Default" : State.SelectedProfile;
+
+    private bool HasValidRetryOverride()
+        => string.IsNullOrWhiteSpace(State.RetryCountOverrideText)
+            || int.TryParse(State.RetryCountOverrideText, out var value) && value >= 0;
+
+    private string GetRetryOverrideSummary()
+    {
+        if (string.IsNullOrWhiteSpace(State.RetryCountOverrideText))
+        {
+            return "Project default";
+        }
+
+        return int.TryParse(State.RetryCountOverrideText, out var value) && value >= 0
+            ? value.ToString(System.Globalization.CultureInfo.InvariantCulture)
+            : "Invalid";
+    }
+
+    private string GetScreenshotPolicySummary()
+        => State.ScreenshotPolicy switch
+        {
+            "every-step" => "Every step",
+            "off" => "Off",
+            _ => "On failure"
+        };
+
+    private string GetRunnerNodeSelectionSummary()
+    {
+        var node = State.SelectedRunnerNode;
+        return node is null
+            ? "Local embedded"
+            : $"{node.DisplayName} ({GetRunnerNodeStatusLabel(node)})";
+    }
 
     private void UpdateShellSectionFromUri()
     {

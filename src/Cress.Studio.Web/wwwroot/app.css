@@ -500,6 +500,19 @@ svg {
     border-left: 1px solid rgba(255, 255, 255, 0.25);
 }
 
+.statusbar-badge {
+    display: inline-flex;
+    align-items: center;
+    height: 14px;
+    padding: 0 0.35rem;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    background: rgba(0, 0, 0, 0.12);
+    color: inherit;
+    font-size: 10px;
+    line-height: 1;
+    border-radius: 999px;
+}
+
 .statusbar-dot {
     width: 6px;
     height: 6px;
@@ -701,6 +714,13 @@ svg {
     gap: 0.45rem;
 }
 
+.node-card-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.75rem;
+}
+
 .demo-card-tags {
     display: flex;
     flex-wrap: wrap;
@@ -719,6 +739,31 @@ svg {
 .node-card--selected {
     border-color: var(--color-accent-border);
     background: var(--color-accent-soft);
+}
+
+.node-status-pill {
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+    padding: 0.18rem 0.5rem;
+    border-radius: 999px;
+    border: 1px solid color-mix(in srgb, var(--color-accent) 35%, var(--color-border));
+    background: color-mix(in srgb, var(--color-accent-soft) 60%, var(--color-surface-inset));
+    color: var(--color-accent);
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.node-status-pill--busy {
+    border-color: color-mix(in srgb, var(--color-warning) 40%, var(--color-border));
+    background: color-mix(in srgb, var(--color-warning-soft) 60%, var(--color-surface-inset));
+    color: var(--color-warning);
+}
+
+.node-status-pill--issue {
+    border-color: color-mix(in srgb, var(--color-danger) 40%, var(--color-border));
+    background: color-mix(in srgb, var(--color-danger-soft) 60%, var(--color-surface-inset));
+    color: var(--color-danger);
 }
 
 .workspace-pill {
@@ -1503,6 +1548,23 @@ input[type="checkbox"] {
     margin-bottom: 0.3rem;
 }
 
+.filter-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin-bottom: 0.45rem;
+    color: var(--color-muted);
+    font-size: 12px;
+}
+
+.explorer-filter-summary {
+    margin-bottom: 0.4rem;
+}
+
+.explorer-filter-empty {
+    margin-bottom: 0.5rem;
+}
+
 .explorer-search-field {
     position: relative;
     display: flex;
@@ -1748,6 +1810,38 @@ input[type="checkbox"] {
     font-size: 11px;
     color: var(--color-subtle);
     font-variant-numeric: tabular-nums;
+}
+
+.suite-flow-tools {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.75rem;
+    align-items: end;
+}
+
+.suite-flow-search {
+    min-width: 0;
+}
+
+.suite-flow-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    min-height: 2.5rem;
+    font-size: 12px;
+    color: var(--color-foreground);
+}
+
+.suite-flow-summary,
+.suite-selected-flow-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    align-items: center;
+}
+
+.suite-selected-flow-chips {
+    margin-top: 0.25rem;
 }
 
 /* Flow checklist: capability badge */
@@ -2162,6 +2256,11 @@ input[type="checkbox"] {
     overflow: auto;
 }
 
+.live-run-log-summary {
+    font-size: 0.82rem;
+    color: var(--color-muted);
+}
+
 .live-run-timeline {
     list-style: none;
     display: grid;
@@ -2396,6 +2495,33 @@ input[type="checkbox"] {
     flex-direction: column;
     gap: 3px;
     font-size: 11px;
+}
+
+.metrics-heatmap-summary {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    margin-bottom: 0.55rem;
+}
+
+.metrics-heatmap-summary p {
+    margin: 0;
+    font-size: 11px;
+    color: var(--color-muted);
+}
+
+.metrics-heatmap-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+}
+
+.metrics-heatmap-legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 11px;
+    color: var(--color-foreground);
 }
 
 .metrics-heatmap-row {
@@ -2668,6 +2794,11 @@ input[type="checkbox"] {
     margin-bottom: 0.75rem;
 }
 
+.workspace-picker-filter-wrap,
+.workspace-picker-summary {
+    margin-bottom: 0.75rem;
+}
+
 .workspace-picker-location {
     flex: 1 1 20rem;
 }
@@ -2723,6 +2854,53 @@ input[type="checkbox"] {
     align-items: center;
 }
 
+.quick-action-selector {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.quick-action-selector-header,
+.quick-action-selector-body {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: flex-end;
+}
+
+.quick-action-selector-header {
+    justify-content: space-between;
+}
+
+.quick-action-field {
+    flex: 1 1 18rem;
+    min-width: 0;
+}
+
+.quick-action-description {
+    margin-top: 0.1rem;
+}
+
+.artifact-filter-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    align-items: flex-end;
+}
+
+.theme-toggle-shell,
+.theme-toggle-summary {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.theme-toggle-shell {
+    flex-direction: column;
+    align-items: flex-start;
+}
+
 /* ==========================================================================
    Picker tab bar — Desktop | Web segmented control (V5)
    ========================================================================== */
@@ -2764,6 +2942,18 @@ input[type="checkbox"] {
 .picker-tab:focus-visible {
     outline: none;
     box-shadow: var(--focus-ring);
+}
+
+.picker-presets {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    align-items: center;
+    margin-top: 0.5rem;
+}
+
+.recording-picker-web-status {
+    margin-top: 0.5rem;
 }
 
 /* ==========================================================================

@@ -3,14 +3,43 @@
 
 @if (State.HasSelectedFlow && State.FlowAnalysis.QuickActions.Count > 0)
 {
-    <select class="text-input" @bind="_selectedActionId" aria-label="Quick action">
-        <option value="">Select quick action...</option>
-        @foreach (var action in State.FlowAnalysis.QuickActions)
-        {
-            <option value="@action.Id">@action.Title</option>
-        }
-    </select>
-    <button type="button" class="action-button" @onclick="ApplyAsync" disabled="@string.IsNullOrEmpty(_selectedActionId)">Apply</button>
+    var quickActions = State.FlowAnalysis.QuickActions
+        .OrderBy(action => action.Category, StringComparer.OrdinalIgnoreCase)
+        .ThenBy(action => action.Title, StringComparer.OrdinalIgnoreCase)
+        .ToList();
+    var selectedAction = quickActions.FirstOrDefault(action => action.Id == _selectedActionId);
+
+    <div class="quick-action-selector" data-testid="quick-action-selector">
+        <div class="quick-action-selector-header">
+            <label for="quick-action-select">Quick actions</label>
+            <span class="pill">@quickActions.Count available</span>
+        </div>
+        <div class="quick-action-selector-body">
+            <div class="field-stack quick-action-field">
+                <select id="quick-action-select" class="text-input" @bind="_selectedActionId" aria-label="Quick action" data-testid="quick-action-select">
+                    <option value="">Select quick action...</option>
+                    @foreach (var category in quickActions.GroupBy(action => action.Category))
+                    {
+                        <optgroup label="@category.Key">
+                            @foreach (var action in category)
+                            {
+                                <option value="@action.Id">@action.Title</option>
+                            }
+                        </optgroup>
+                    }
+                </select>
+                @if (selectedAction is null)
+                {
+                    <div class="field-hint quick-action-description" data-testid="quick-action-description">Choose an action to preview what it adds before applying it.</div>
+                }
+                else
+                {
+                    <div class="field-hint quick-action-description" data-testid="quick-action-description">@selectedAction.Category - @selectedAction.Description</div>
+                }
+            </div>
+            <button type="button" class="action-button" @onclick="ApplyAsync" disabled="@string.IsNullOrEmpty(_selectedActionId)" data-testid="quick-action-apply">Apply</button>
+        </div>
+    </div>
 }
 
 @code {
@@ -34,6 +63,7 @@
         if (!string.IsNullOrEmpty(_selectedActionId))
         {
             State.ApplyQuickAction(_selectedActionId);
+            _selectedActionId = string.Empty;
         }
 
         return Task.CompletedTask;

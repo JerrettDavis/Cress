@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\Cress.Cli\Cress.Cli.csproj" />
     <ProjectReference Include="..\..\src\Cress.Core\Cress.Core.csproj" />
     <ProjectReference Include="..\..\src\Cress.ProjectSystem\Cress.ProjectSystem.csproj" />
     <ProjectReference Include="..\..\src\Cress.Specs\Cress.Specs.csproj" />

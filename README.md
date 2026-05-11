@@ -70,6 +70,12 @@ dotnet test tests\Cress.AppHost.Tests\Cress.AppHost.Tests.csproj --configuration
 # Node test suite
 node --test node/tests/*.test.mjs
 
+# Browser E2E suite with failure screenshots, traces, and videos
+npm run test:e2e
+
+# Browser E2E docs refresh that also rewrites docs\images\studio screenshots
+npm run test:e2e:docs
+
 # DocFX site build
 dotnet tool run docfx docs\docfx.json --output artifacts\docs-site
 

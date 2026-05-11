@@ -1,0 +1,37 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Cli
+  commentId: N:Cress.Cli
+  id: Cress.Cli
+  children:
+  - Cress.Cli.CressCliApplication
+  - Cress.Cli.ICressCliCommand
+  - Cress.Cli.ServiceCollectionExtensions
+  langs:
+  - csharp
+  - vb
+  name: Cress.Cli
+  nameWithType: Cress.Cli
+  fullName: Cress.Cli
+  type: Namespace
+  assemblies:
+  - cress
+references:
+- uid: Cress.Cli.ICressCliCommand
+  commentId: T:Cress.Cli.ICressCliCommand
+  href: Cress.Cli.ICressCliCommand.html
+  name: ICressCliCommand
+  nameWithType: ICressCliCommand
+  fullName: Cress.Cli.ICressCliCommand
+- uid: Cress.Cli.CressCliApplication
+  commentId: T:Cress.Cli.CressCliApplication
+  href: Cress.Cli.CressCliApplication.html
+  name: CressCliApplication
+  nameWithType: CressCliApplication
+  fullName: Cress.Cli.CressCliApplication
+- uid: Cress.Cli.ServiceCollectionExtensions
+  commentId: T:Cress.Cli.ServiceCollectionExtensions
+  href: Cress.Cli.ServiceCollectionExtensions.html
+  name: ServiceCollectionExtensions
+  nameWithType: ServiceCollectionExtensions
+  fullName: Cress.Cli.ServiceCollectionExtensions

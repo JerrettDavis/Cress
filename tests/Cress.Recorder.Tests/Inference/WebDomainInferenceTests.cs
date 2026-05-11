@@ -99,9 +99,10 @@ public class WebDomainInferenceTests
         var steps = Engine.Infer([MakeWebInvoke(element)], WebOptions);
 
         Assert.Single(steps);
-        Assert.Equal("my-id", steps[0].Locator!.TestId);
-        Assert.Null(steps[0].Locator.Role);
-        Assert.Null(steps[0].Locator.CssSelector);
+        var locator = Assert.IsType<Locator>(steps[0].Locator);
+        Assert.Equal("my-id", locator.TestId);
+        Assert.Null(locator.Role);
+        Assert.Null(locator.CssSelector);
     }
 
     [Fact]

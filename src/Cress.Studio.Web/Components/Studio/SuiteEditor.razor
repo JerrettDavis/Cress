@@ -69,6 +69,7 @@ else
                 @{
                     var allFlows = State.AvailableFlows.OrderBy(item => item.Name, StringComparer.OrdinalIgnoreCase).ToList();
                     var selectedCount = allFlows.Count(f => State.SelectedSuite.FlowIds.Contains(f.FlowId));
+                    var filteredFlows = FilterFlows(allFlows).ToList();
                 }
                 <div class="checklist-toolbar">
                     <button type="button" class="checklist-toolbar-link"
@@ -77,24 +78,73 @@ else
                             @onclick="SelectNoFlows">None</button>
                     <span class="checklist-count">@selectedCount / @allFlows.Count selected</span>
                 </div>
-                <div class="flow-checklist">
-                    @foreach (var flow in allFlows)
+                <div class="suite-flow-tools">
+                    <div class="field-stack suite-flow-search">
+                        <label for="suite-flow-filter">Search flows</label>
+                        <input id="suite-flow-filter"
+                               class="text-input"
+                               @bind="_flowFilter"
+                               placeholder="Filter by flow name, id, or capability"
+                               data-testid="suite-flow-filter" />
+                    </div>
+                    <label class="suite-flow-toggle" for="suite-selected-only">
+                        <input id="suite-selected-only"
+                               type="checkbox"
+                               @bind="_showSelectedOnly"
+                               data-testid="suite-selected-only" />
+                        <span>Show selected only</span>
+                    </label>
+                </div>
+                <div class="suite-flow-summary" data-testid="suite-flow-summary">
+                    <span class="pill">@filteredFlows.Count shown</span>
+                    <span class="pill">@selectedCount selected</span>
+                    @if (_showSelectedOnly)
                     {
-                        <label class="check-item" title="@flow.FlowId">
-                            <input type="checkbox"
-                                   checked="@State.SelectedSuite.FlowIds.Contains(flow.FlowId)"
-                                   @onchange="args => ToggleSuiteFlow(flow.FlowId, args.Value)" />
-                            <span>
-                                <strong title="@flow.Name">@flow.Name</strong>
-                                <small>@flow.FlowId</small>
-                            </span>
-                            @if (!string.IsNullOrWhiteSpace(flow.CapabilityId))
-                            {
-                                <span class="check-item-badge" title="@flow.CapabilityId">@flow.CapabilityId</span>
-                            }
-                        </label>
+                        <span class="pill">Selected-only filter on</span>
+                    }
+                    @if (!string.IsNullOrWhiteSpace(_flowFilter))
+                    {
+                        <span class="pill">Filter: @_flowFilter</span>
                     }
                 </div>
+                @if (selectedCount > 0)
+                {
+                    <div class="suite-selected-flow-chips" data-testid="suite-selected-flow-chips">
+                        @foreach (var flow in allFlows.Where(flow => State.SelectedSuite.FlowIds.Contains(flow.FlowId)).Take(6))
+                        {
+                            <span class="check-item-badge" title="@flow.FlowId">@flow.Name</span>
+                        }
+                        @if (selectedCount > 6)
+                        {
+                            <span class="check-item-badge">+@(selectedCount - 6) more</span>
+                        }
+                    </div>
+                }
+                @if (filteredFlows.Count == 0)
+                {
+                    <div class="subpanel-empty" data-testid="suite-flow-filter-empty">No flows match the current filter. Clear the search or disable selected-only to see the full list.</div>
+                }
+                else
+                {
+                    <div class="flow-checklist" data-testid="suite-flow-checklist">
+                        @foreach (var flow in filteredFlows)
+                        {
+                            <label class="check-item" title="@flow.FlowId">
+                                <input type="checkbox"
+                                       checked="@State.SelectedSuite.FlowIds.Contains(flow.FlowId)"
+                                       @onchange="args => ToggleSuiteFlow(flow.FlowId, args.Value)" />
+                                <span>
+                                    <strong title="@flow.Name">@flow.Name</strong>
+                                    <small>@flow.FlowId</small>
+                                </span>
+                                @if (!string.IsNullOrWhiteSpace(flow.CapabilityId))
+                                {
+                                    <span class="check-item-badge" title="@flow.CapabilityId">@flow.CapabilityId</span>
+                                }
+                            </label>
+                        }
+                    </div>
+                }
             </div>
         </div>
 
@@ -131,4 +181,30 @@ else
         foreach (var flow in State.AvailableFlows)
             State.ToggleSuiteFlow(flow.FlowId, false);
     }
+
+    private IEnumerable<NormalizedFlow> FilterFlows(IEnumerable<NormalizedFlow> flows)
+    {
+        var query = _flowFilter.Trim();
+
+        return flows.Where(flow =>
+        {
+            var isSelected = State.SelectedSuite?.FlowIds.Contains(flow.FlowId) == true;
+            if (_showSelectedOnly && !isSelected)
+            {
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(query))
+            {
+                return true;
+            }
+
+            return flow.Name.Contains(query, StringComparison.OrdinalIgnoreCase)
+                || flow.FlowId.Contains(query, StringComparison.OrdinalIgnoreCase)
+                || (!string.IsNullOrWhiteSpace(flow.CapabilityId) && flow.CapabilityId.Contains(query, StringComparison.OrdinalIgnoreCase));
+        });
+    }
+
+    private string _flowFilter = string.Empty;
+    private bool _showSelectedOnly;
 }

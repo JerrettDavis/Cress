@@ -15,6 +15,7 @@ The user guide focuses on the day-to-day authoring workflow: opening a project, 
 
 ## Guide map
 
+- [Feature map](feature-matrix.md)
 - [Studio overview](studio-overview.md)
 - [Recording workflows](recording-workflows.md)
 - [Authoring flows](authoring-flows.md)
@@ -63,3 +64,5 @@ See [Environment orchestration](../developer-guide/environment-orchestration.md)
 ## Where screenshots and wizard-style flows fit
 
 The product uses recording pickers, source/designer surfaces, results panels, and metrics views as the key guided workflow surfaces. The pages in this section walk through those screens step by step with the repository screenshots.
+
+The [feature map](feature-matrix.md) is the inventory page that ties those workflow surfaces to their screenshots and should be updated whenever a feature changes.

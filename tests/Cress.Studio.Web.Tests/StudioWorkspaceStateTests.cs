@@ -26,6 +26,38 @@ public sealed class StudioWorkspaceStateTests : IDisposable
     }
 
     [Fact]
+    public void RemoveRecentWorkspace_drops_entry_and_retargets_input_when_needed()
+    {
+        using var scope = CreateState();
+        var first = CreateDirectory("recent-remove-a");
+        var second = CreateDirectory("recent-remove-b");
+
+        scope.State.SetProjectPath(first);
+        scope.State.SetRecentWorkspaces([first, second]);
+
+        scope.State.RemoveRecentWorkspace(first);
+
+        Assert.Single(scope.State.RecentWorkspaces);
+        Assert.Equal(second, scope.State.RecentWorkspaces[0]);
+        Assert.Equal(second, scope.State.ProjectPathInput);
+    }
+
+    [Fact]
+    public void ClearRecentWorkspaces_clears_history_and_falls_back_to_suggested_workspace()
+    {
+        using var scope = CreateState();
+        var recent = CreateDirectory("recent-clear");
+
+        scope.State.SetProjectPath(recent);
+        scope.State.SetRecentWorkspaces([recent]);
+
+        scope.State.ClearRecentWorkspaces();
+
+        Assert.Empty(scope.State.RecentWorkspaces);
+        Assert.Equal(scope.State.SuggestedWorkspacePath, scope.State.ProjectPathInput);
+    }
+
+    [Fact]
     public void WorkspacePicker_can_choose_a_folder_without_loading()
     {
         using var scope = CreateState();
@@ -87,6 +119,45 @@ public sealed class StudioWorkspaceStateTests : IDisposable
 
         Assert.True(scope.State.HasLoadedProject);
         Assert.Contains("Loaded", scope.State.StatusMessage, StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
+    public void ChooseWorkspaceFromPicker_can_load_selected_workspace_immediately()
+    {
+        using var scope = CreateState();
+        var projectRoot = CreateProject("picker-load");
+
+        scope.State.SetProjectPath(Path.Combine(projectRoot, "missing", "child"));
+        scope.State.OpenWorkspacePicker();
+
+        Assert.True(scope.State.IsWorkspacePickerOpen);
+
+        scope.State.ChooseWorkspaceFromPicker(projectRoot, loadImmediately: true);
+
+        Assert.False(scope.State.IsWorkspacePickerOpen);
+        Assert.True(scope.State.HasLoadedProject);
+        Assert.Equal(projectRoot, scope.State.ProjectPathInput);
+        Assert.Contains(projectRoot, scope.State.RecentWorkspaces);
+    }
+
+    [Fact]
+    public void BrowseWorkspacePath_reports_missing_directory_and_parent_navigation_recovers()
+    {
+        using var scope = CreateState();
+        var root = CreateDirectory("picker-parent");
+        var child = Path.Combine(root, "child");
+        Directory.CreateDirectory(child);
+
+        scope.State.BrowseWorkspacePath(Path.Combine(child, "missing"));
+        Assert.Contains("no longer exists", scope.State.WorkspaceBrowserError, StringComparison.OrdinalIgnoreCase);
+
+        scope.State.BrowseWorkspacePath(child);
+        Assert.Equal(child, scope.State.WorkspaceBrowserCurrentPath);
+
+        scope.State.BrowseWorkspaceParent();
+
+        Assert.Equal(root, scope.State.WorkspaceBrowserCurrentPath);
+        Assert.Null(scope.State.WorkspaceBrowserError);
     }
 
     [Fact]

@@ -204,6 +204,124 @@ public sealed class DocumentBuilderTests
             cts.Token));
     }
 
+    [Fact]
+    public async Task BuildAsync_falls_back_to_project_folder_name_when_config_has_no_name()
+    {
+        using var workspace = new TemporaryWorkspace();
+        var projectPath = workspace.CreateProjectRoot();
+        workspace.WriteFile(Path.Combine(projectPath, ".cress", "config.yaml"), """
+        version: 1
+        project:
+          name: ""
+          defaultProfile: local
+        paths:
+          capabilities: capabilities
+          flows: flows
+          models: models
+          fixtures: fixtures
+          steps: steps
+          artifacts: .cress/artifacts
+          reports: reports
+        """);
+
+        var builder = CreateBuilder();
+
+        var model = await builder.BuildAsync(new DocumentBuildOptions
+        {
+            ProjectPath = projectPath
+        });
+
+        Assert.Equal("project", model.Meta.ProjectName);
+    }
+
+    [Fact]
+    public async Task BuildAsync_detects_jpg_screenshots_without_media_type_and_honors_limit()
+    {
+        using var workspace = new TemporaryWorkspace();
+        var projectPath = workspace.CreateProjectRoot();
+        workspace.WriteFile(Path.Combine(projectPath, ".cress", "config.yaml"), """
+        version: 1
+        project:
+          name: Screenshot sample
+          defaultProfile: local
+        paths:
+          capabilities: capabilities
+          flows: flows
+          models: models
+          fixtures: fixtures
+          steps: steps
+          artifacts: .cress/artifacts
+          reports: reports
+        """);
+
+        WriteRunArtifact(
+            workspace,
+            projectPath,
+            "2026-05-07-003",
+            new RunResult
+            {
+                Metadata = new RunMetadata
+                {
+                    RunId = "run-003",
+                    ArtifactRoot = "artifact-root-003",
+                    ProjectName = "Screenshot sample",
+                    Profile = "local",
+                    StartedAt = new DateTimeOffset(2026, 5, 7, 12, 0, 0, TimeSpan.Zero),
+                    EndedAt = new DateTimeOffset(2026, 5, 7, 12, 0, 30, TimeSpan.Zero),
+                    DurationMs = 30_000
+                },
+                Flows =
+                [
+                    new FlowRunResult
+                    {
+                        FlowId = "flow.gallery",
+                        Name = "Gallery flow",
+                        Outcome = RunOutcome.Passed,
+                        Steps =
+                        [
+                            new StepRunResult
+                            {
+                                Name = "capture.first",
+                                Outcome = RunOutcome.Passed,
+                                Artifacts =
+                                [
+                                    new EvidenceArtifact
+                                    {
+                                        Category = "screenshot",
+                                        RelativePath = "shots\\first.jpg"
+                                    }
+                                ]
+                            },
+                            new StepRunResult
+                            {
+                                Name = "capture.second",
+                                Outcome = RunOutcome.Passed,
+                                Artifacts =
+                                [
+                                    new EvidenceArtifact
+                                    {
+                                        Category = "screenshot",
+                                        RelativePath = "shots\\second.jpg"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            });
+
+        var builder = CreateBuilder();
+
+        var model = await builder.BuildAsync(new DocumentBuildOptions
+        {
+            ProjectPath = projectPath,
+            MaxScreenshots = 1
+        });
+
+        var screenshot = Assert.Single(model.Screenshots);
+        Assert.EndsWith("first.jpg", screenshot.FilePath, StringComparison.OrdinalIgnoreCase);
+    }
+
     private static DocumentBuilder CreateBuilder()
         => new(
             new RunResultRepository(),

@@ -39,29 +39,69 @@
                 <p>Find the right run quickly, then inspect flows, steps, and artifacts below.</p>
             </div>
         </div>
-        <input class="text-input" @bind="State.RunFilter" @bind:event="oninput" placeholder="Filter runs" data-testid="results-run-filter" />
         @{
-            var filteredRuns = State.Runs.Where(run => string.IsNullOrWhiteSpace(State.RunFilter)
-                || run.Result.Metadata.RunId.Contains(State.RunFilter, StringComparison.OrdinalIgnoreCase)
-                || State.DescribeRun(run).Contains(State.RunFilter, StringComparison.OrdinalIgnoreCase))
-                .ToList();
+            var filteredRuns = FilterRuns(State.Runs).ToList();
+            var failedRuns = filteredRuns.Count(HasRunFailures);
         }
+        <div class="suite-flow-tools">
+            <div class="field-stack suite-flow-search">
+                <label for="results-run-filter">Search runs</label>
+                <div class="explorer-search-field">
+                    <span class="explorer-search-icon" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+                        </svg>
+                    </span>
+                    <input id="results-run-filter"
+                           class="text-input explorer-search-input"
+                           @bind="State.RunFilter"
+                           @bind:event="oninput"
+                           placeholder="Filter by run id, profile, or status"
+                           data-testid="results-run-filter" />
+                    @if (!string.IsNullOrWhiteSpace(State.RunFilter))
+                    {
+                        <button type="button" class="explorer-search-clear" aria-label="Clear run filter" @onclick="ClearRunFilter">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
+                            </svg>
+                        </button>
+                    }
+                </div>
+            </div>
+            <label class="suite-flow-toggle" for="results-failed-only">
+                <input id="results-failed-only"
+                       type="checkbox"
+                       @bind="_showFailedRunsOnly"
+                       data-testid="results-failed-only" />
+                <span>Show failed only</span>
+            </label>
+        </div>
+        <div class="suite-flow-summary results-run-summary" data-testid="results-run-summary">
+            <span class="pill">@filteredRuns.Count shown</span>
+            <span class="pill">@failedRuns failed</span>
+            @if (_showFailedRunsOnly)
+            {
+                <span class="pill">Failed-only filter on</span>
+            }
+            @if (!string.IsNullOrWhiteSpace(State.RunFilter))
+            {
+                <span class="pill">Filter: @State.RunFilter</span>
+            }
+        </div>
         @if (State.Runs.Count == 0)
         {
             <p class="subpanel-empty" data-testid="results-runs-empty">No runs yet — click Run all to start.</p>
         }
         else if (filteredRuns.Count == 0)
         {
-            <p class="subpanel-empty">No runs match the filter.</p>
+            <p class="subpanel-empty" data-testid="results-runs-filter-empty">No runs match the current filters. Clear the search or disable failed-only to see more runs.</p>
         }
         else
         {
             <div class="stack-list" data-testid="results-runs-list">
                 @foreach (var run in filteredRuns)
                 {
-                    var allPassed = run.Result.Flows.All(f => f.Outcome == RunOutcome.Passed);
-                    var anyFailed = run.Result.Flows.Any(f => f.Outcome == RunOutcome.Failed);
-                    var statusClass = allPassed ? "run-status--passed" : anyFailed ? "run-status--failed" : "run-status--partial";
+                    var statusClass = GetRunStatusClass(run);
                     <button type="button" class="@GetExplorerButtonClass(State.SelectedRun?.Result.Metadata.RunId == run.Result.Metadata.RunId)" @onclick="() => State.SelectRun(run)" data-testid="@($"results-run-{ToTestIdSegment(run.Result.Metadata.RunId)}")">
                         <span class="run-status-row">
                             <span class="run-status-dot @statusClass" aria-hidden="true"></span>
@@ -94,8 +134,7 @@
             <div class="stack-list run-flows-list" data-testid="results-flows-list">
                 @foreach (var flow in State.SelectedRun.Result.Flows)
                 {
-                    var flowPassed = flow.Outcome == RunOutcome.Passed;
-                    var flowStatusClass = flowPassed ? "run-status--passed" : "run-status--failed";
+                    var flowStatusClass = GetOutcomeStatusClass(flow.Outcome);
                     <button type="button" class="@GetExplorerButtonClass(State.SelectedRunFlow?.FlowId == flow.FlowId)" @onclick="() => State.SelectRunFlow(flow)" data-testid="@($"results-flow-{ToTestIdSegment(flow.FlowId)}")">
                         <span class="run-status-row">
                             <span class="run-status-dot @flowStatusClass" aria-hidden="true"></span>
@@ -128,8 +167,7 @@
             <div class="stack-list run-steps-list" data-testid="results-steps-list">
                 @foreach (var step in State.SelectedRunSteps)
                 {
-                    var stepPassed = step.Outcome == RunOutcome.Passed;
-                    var stepStatusClass = stepPassed ? "run-status--passed" : "run-status--failed";
+                    var stepStatusClass = GetOutcomeStatusClass(step.Outcome);
                     <button type="button" class="@GetExplorerButtonClass(ReferenceEquals(State.SelectedRunStep, step))" @onclick="() => State.SelectRunStep(step)" data-testid="@($"results-step-{ToTestIdSegment(step.Name)}")">
                         <span class="run-status-row">
                             <span class="run-status-dot @stepStatusClass" aria-hidden="true"></span>
@@ -201,6 +239,8 @@
 </aside>
 
 @code {
+    private bool _showFailedRunsOnly;
+
     protected override void OnInitialized()
     {
         State.Changed += HandleStateChanged;
@@ -213,6 +253,56 @@
 
     private void HandleStateChanged()
         => InvokeAsync(StateHasChanged);
+
+    private void ClearRunFilter()
+    {
+        State.RunFilter = string.Empty;
+    }
+
+    private IEnumerable<StoredRunResult> FilterRuns(IEnumerable<StoredRunResult> runs)
+        => runs.Where(RunMatchesFilter);
+
+    private bool RunMatchesFilter(StoredRunResult run)
+    {
+        if (_showFailedRunsOnly && !HasRunFailures(run))
+        {
+            return false;
+        }
+
+        if (string.IsNullOrWhiteSpace(State.RunFilter))
+        {
+            return true;
+        }
+
+        return run.Result.Metadata.RunId.Contains(State.RunFilter, StringComparison.OrdinalIgnoreCase)
+            || State.DescribeRun(run).Contains(State.RunFilter, StringComparison.OrdinalIgnoreCase)
+            || DescribeRunStatus(run).Contains(State.RunFilter, StringComparison.OrdinalIgnoreCase);
+    }
+
+    private static bool HasRunFailures(StoredRunResult run)
+        => !run.Result.Passed
+           || run.Result.Flows.Any(flow => flow.Outcome is RunOutcome.Failed or RunOutcome.Errored or RunOutcome.Blocked);
+
+    private static string GetRunStatusClass(StoredRunResult run)
+        => HasRunFailures(run) ? "run-status--failed"
+            : run.Result.Flows.Any(flow => flow.Outcome == RunOutcome.Skipped) ? "run-status--partial"
+            : "run-status--passed";
+
+    private static string GetOutcomeStatusClass(RunOutcome outcome)
+        => outcome switch
+        {
+            RunOutcome.Passed => "run-status--passed",
+            RunOutcome.Skipped => "run-status--partial",
+            _ => "run-status--failed"
+        };
+
+    private static string DescribeRunStatus(StoredRunResult run)
+        => GetRunStatusClass(run) switch
+        {
+            "run-status--passed" => "passed success green",
+            "run-status--partial" => "partial skipped warning amber",
+            _ => "failed errored blocked danger red"
+        };
 
     private static string GetExplorerButtonClass(bool selected)
         => selected ? "explorer-button selected" : "explorer-button";

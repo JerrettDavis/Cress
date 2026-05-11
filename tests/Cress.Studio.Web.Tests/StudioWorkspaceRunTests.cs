@@ -288,6 +288,187 @@ public sealed class StudioWorkspaceRunTests : IDisposable
         Assert.Contains(scope.State.LiveTimelineEntries, entry => entry.Headline.Contains("Run cancellation requested.", StringComparison.Ordinal));
     }
 
+    [Fact]
+    public async Task RerunFailedAsync_reports_when_selected_run_has_no_failed_flows()
+    {
+        var runner = new FakeRunnerService();
+        using var scope = CreateState(runner);
+        var projectRoot = CreateProject("rerun-passed");
+        scope.State.SetProjectPath(projectRoot);
+        scope.State.LoadProject();
+
+        var passedRun = new StoredRunResult
+        {
+            ArtifactDirectory = CreateDirectory("passed-run"),
+            Result = new RunResult
+            {
+                Metadata = new RunMetadata
+                {
+                    RunId = "run-passed",
+                    ArtifactRoot = CreateDirectory("passed-run-artifacts"),
+                    Profile = "local",
+                    StartedAt = DateTimeOffset.UtcNow,
+                    EndedAt = DateTimeOffset.UtcNow,
+                    DurationMs = 25
+                },
+                Flows =
+                [
+                    new FlowRunResult
+                    {
+                        FlowId = "flow.search",
+                        Name = "Search flow",
+                        SourceFile = Path.Combine(projectRoot, "flows", "search.flow.yaml"),
+                        Outcome = RunOutcome.Passed
+                    }
+                ]
+            }
+        };
+
+        scope.State.Runs.Insert(0, passedRun);
+        scope.State.SelectRun(passedRun);
+
+        await scope.State.RerunFailedAsync();
+
+        Assert.Empty(runner.Requests);
+        Assert.Contains("no failed flows", scope.State.StatusMessage, StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
+    public async Task RunSelectedSuiteAsync_dispatches_suite_options_when_flow_ids_are_empty()
+    {
+        var runner = new FakeRunnerService();
+        using var scope = CreateState(runner);
+        var projectRoot = CreateProject("suite-runner");
+        WriteFile(projectRoot, Path.Combine(".cress", "profiles", "ci.yaml"), """
+        baseUrl: https://ci.example.test
+        evidence:
+          screenshotPolicy: off
+        """);
+        scope.State.SetProjectPath(projectRoot);
+        scope.State.LoadProject();
+        scope.State.CreateNewSuite();
+
+        scope.State.SelectedSuite!.Name = "Smoke suite";
+        scope.State.SelectedSuite.Profile = "ci";
+        scope.State.SelectedSuite.ReportFormatsText = "html, markdown";
+
+        await scope.State.RunSelectedSuiteAsync();
+
+        var request = Assert.Single(runner.Requests);
+        Assert.Null(request.Options.FlowPath);
+        Assert.Empty(request.Options.FlowPaths);
+        Assert.Equal("ci", request.Options.Profile);
+        Assert.Equal(["html", "markdown"], request.Options.ReportFormats);
+        Assert.Contains("Smoke suite completed", scope.State.StatusMessage, StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
+    public async Task RunSelectedSuiteAsync_blocks_unresolved_flow_selection_before_dispatch()
+    {
+        var runner = new FakeRunnerService();
+        using var scope = CreateState(runner);
+        var projectRoot = CreateProject("suite-missing-flow");
+        scope.State.SetProjectPath(projectRoot);
+        scope.State.LoadProject();
+        scope.State.CreateNewSuite();
+
+        scope.State.SelectedSuite!.FlowIds.Add("flow.missing");
+
+        await scope.State.RunSelectedSuiteAsync();
+
+        Assert.Empty(runner.Requests);
+        Assert.Contains(scope.State.Diagnostics, diagnostic => diagnostic.Code == "STE003");
+        Assert.Equal("Suite selection did not resolve to runnable flows.", scope.State.StatusMessage);
+    }
+
+    [Fact]
+    public async Task RunSelectedSuiteAsync_preserves_canceled_suite_status()
+    {
+        var runner = new FakeRunnerService
+        {
+            WaitForCancellation = true
+        };
+        using var scope = CreateState(runner);
+        var projectRoot = CreateProject("suite-cancel");
+        scope.State.SetProjectPath(projectRoot);
+        scope.State.LoadProject();
+        scope.State.CreateNewSuite();
+        scope.State.SelectedSuite!.Name = "Cancelable suite";
+        scope.State.SelectedSuite.FlowIds.Add("flow.search");
+
+        var runTask = scope.State.RunSelectedSuiteAsync();
+        await Task.Delay(150);
+        scope.State.StopActiveRun();
+        await runTask;
+
+        Assert.Equal("Canceled", scope.State.LiveRunStatus);
+        Assert.Equal("Suite Cancelable suite canceled.", scope.State.StatusMessage);
+        Assert.Equal("Suite Cancelable suite canceled.", scope.State.LiveRunHeadline);
+    }
+
+    [Fact]
+    public void SelectArtifact_with_unknown_extension_uses_fallback_preview_text()
+    {
+        using var scope = CreateState();
+        var projectRoot = CreateProject("artifact-fallback");
+        scope.State.SetProjectPath(projectRoot);
+        scope.State.LoadProject();
+
+        var artifactRoot = CreateDirectory("artifact-fallback-root");
+        var binaryPath = Path.Combine(artifactRoot, "payload.bin");
+        File.WriteAllBytes(binaryPath, [5, 4, 3, 2, 1]);
+
+        var run = new StoredRunResult
+        {
+            ArtifactDirectory = artifactRoot,
+            Result = new RunResult
+            {
+                Metadata = new RunMetadata
+                {
+                    RunId = "run-binary",
+                    ArtifactRoot = artifactRoot,
+                    Profile = "local",
+                    StartedAt = DateTimeOffset.UtcNow,
+                    EndedAt = DateTimeOffset.UtcNow,
+                    DurationMs = 10
+                },
+                Flows =
+                [
+                    new FlowRunResult
+                    {
+                        FlowId = "flow.search",
+                        Name = "Search flow",
+                        SourceFile = Path.Combine(projectRoot, "flows", "search.flow.yaml"),
+                        Outcome = RunOutcome.Passed,
+                        Steps =
+                        [
+                            new StepRunResult
+                            {
+                                Name = "http.get",
+                                Outcome = RunOutcome.Passed,
+                                Artifacts =
+                                [
+                                    new EvidenceArtifact
+                                    {
+                                        Category = "binary",
+                                        RelativePath = "payload.bin",
+                                        Description = "Binary payload"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        };
+
+        scope.State.SelectRun(run);
+
+        Assert.Contains(".bin files", scope.State.PreviewText, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains(binaryPath, scope.State.PreviewText, StringComparison.Ordinal);
+        Assert.Equal(string.Empty, scope.State.PreviewImageDataUrl);
+    }
+
     private StateScope CreateState(FakeRunnerService? runner = null)
     {
         var services = new ServiceCollection();

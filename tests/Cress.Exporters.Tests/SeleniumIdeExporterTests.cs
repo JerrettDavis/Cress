@@ -70,6 +70,47 @@ public sealed class SeleniumIdeExporterTests
         Assert.Equal("https://example.com", doc.RootElement.GetProperty("url").GetString());
     }
 
+    [Fact]
+    public void Export_NormalizedFlow_ProducesEquivalentSideDocument()
+    {
+        var flow = new NormalizedFlow
+        {
+            Version = 1,
+            FlowId = "normalized",
+            Name = "Normalized",
+            Summary = "summary",
+            Tags = ["smoke"],
+            Actions =
+            [
+                new NormalizedExecutable
+                {
+                    Name = "browser.navigate",
+                    Inputs = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+                    {
+                        ["url"] = "https://example.com/app"
+                    }
+                }
+            ],
+            Expectations =
+            [
+                new NormalizedExecutable
+                {
+                    Name = "ui.assert-window-title",
+                    Inputs = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+                    {
+                        ["title"] = "Example"
+                    }
+                }
+            ]
+        };
+
+        var output = _sut.Export(flow);
+        var commands = GetCommands(output);
+
+        Assert.Contains(commands, c => c.Command == "open" && c.Target == "/app");
+        Assert.Contains(commands, c => c.Command == "assertTitle" && c.Target == "Example");
+    }
+
     // -------------------------------------------------------------------------
     // ui.click
     // -------------------------------------------------------------------------
@@ -125,6 +166,65 @@ public sealed class SeleniumIdeExporterTests
         Assert.StartsWith("xpath=", click.Target);
     }
 
+    [Theory]
+    [InlineData("name", "email", "name=email")]
+    [InlineData("label", "Email", "css=[aria-label=\"Email\"]")]
+    [InlineData("text", "Continue", "linkText=Continue")]
+    [InlineData("placeholder", "Search", "css=[placeholder=\"Search\"]")]
+    public void Export_ClickByAdditionalLocator_UsesExpectedTarget(string key, string value, string expectedTarget)
+    {
+        var flow = MakeFlow("f", [
+            new FlowAction
+            {
+                Step = "ui.click",
+                With = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+                {
+                    [key] = value
+                }
+            }
+        ]);
+        var commands = GetCommands(_sut.Export(flow));
+
+        var click = commands.Single(c => c.Command == "click");
+        Assert.Equal(expectedTarget, click.Target);
+    }
+
+    [Fact]
+    public void Export_ClickByRoleAndLabel_PrefersLabelResolutionOrder()
+    {
+        var flow = MakeFlow("f", [
+            new FlowAction { Step = "ui.click", With = With("role", "button", "label", "Sign in") }
+        ]);
+        var commands = GetCommands(_sut.Export(flow));
+
+        var click = commands.Single(c => c.Command == "click");
+        Assert.Equal("css=[aria-label=\"Sign in\"]", click.Target);
+    }
+
+    [Fact]
+    public void Export_ClickByRoleOnly_EmitsRoleTarget()
+    {
+        var flow = MakeFlow("f", [
+            new FlowAction { Step = "ui.click", With = With("role", "button") }
+        ]);
+        var commands = GetCommands(_sut.Export(flow));
+
+        var click = commands.Single(c => c.Command == "click");
+        Assert.Equal("css=[role=\"button\"]", click.Target);
+    }
+
+    [Fact]
+    public void Export_ClickWithoutLocator_EmitsTodoSelector()
+    {
+        var flow = MakeFlow("f", [
+            new FlowAction { Step = "ui.click" }
+        ]);
+        var commands = GetCommands(_sut.Export(flow));
+
+        var click = commands.Single(c => c.Command == "click");
+        Assert.Equal("css=/* TODO: add selector */", click.Target);
+    }
+
     // -------------------------------------------------------------------------
     // ui.fill → type
     // -------------------------------------------------------------------------
@@ -139,6 +239,54 @@ public sealed class SeleniumIdeExporterTests
 
         var type = commands.Single(c => c.Command == "type");
         Assert.Equal("user@test.com", type.Value);
+    }
+
+    [Theory]
+    [InlineData("ENTER", "${KEY_ENTER}")]
+    [InlineData("tab", "${KEY_TAB}")]
+    [InlineData("Left", "${KEY_LEFT}")]
+    [InlineData("F12", "${KEY_F12}")]
+    [InlineData("CustomKey", "CustomKey")]
+    public void Export_PressKey_MapsKeysToSeleniumNotation(string key, string expectedValue)
+    {
+        var flow = MakeFlow("f", [
+            new FlowAction { Step = "ui.press-key", With = With("key", key) }
+        ]);
+        var commands = GetCommands(_sut.Export(flow));
+
+        var sendKeys = commands.Single(c => c.Command == "sendKeys");
+        Assert.Equal("css=body", sendKeys.Target);
+        Assert.Equal(expectedValue, sendKeys.Value);
+    }
+
+    [Fact]
+    public void Export_SelectCheckUncheckAndScreenshot_EmitExpectedCommands()
+    {
+        var flow = MakeFlow("f", [
+            new FlowAction { Step = "ui.select", With = With("testId", "country", "value", "Canada") },
+            new FlowAction { Step = "ui.check", With = With("testId", "terms") },
+            new FlowAction { Step = "ui.uncheck", With = With("testId", "terms") },
+            new FlowAction { Step = "ui.screenshot" }
+        ]);
+        var commands = GetCommands(_sut.Export(flow));
+
+        Assert.Contains(commands, c => c.Command == "select" && c.Value == "label=Canada");
+        Assert.Contains(commands, c => c.Command == "check");
+        Assert.Contains(commands, c => c.Command == "uncheck");
+        Assert.Contains(commands, c => c.Command == "storeScreenshot" && c.Value == "screenshot");
+    }
+
+    [Fact]
+    public void Export_UnknownAndUnmappedSteps_EmitComments()
+    {
+        var flow = MakeFlow("f", [
+            new FlowAction { Step = "unknown", With = With("comment", "custom comment") },
+            new FlowAction { Step = "desktop.magic" }
+        ]);
+        var commands = GetCommands(_sut.Export(flow));
+
+        Assert.Contains(commands, c => c.Command == "//" && c.Target == "custom comment");
+        Assert.Contains(commands, c => c.Command == "//" && c.Target.Contains("desktop.magic", StringComparison.Ordinal));
     }
 
     // -------------------------------------------------------------------------
@@ -156,6 +304,30 @@ public sealed class SeleniumIdeExporterTests
         // Should be a comment command ("//"), NOT a real Selenium command
         Assert.Contains(commands, c => c.Command == "//" && c.Target.Contains("HTTP GET"));
         Assert.DoesNotContain(commands, c => c.Command == "open" && c.Target.Contains("api.example.com"));
+    }
+
+    [Fact]
+    public void Export_UsesHttpUrlAsBaseUrlWhenNoNavigateStepExists()
+    {
+        var flow = MakeFlow("f", [
+            new FlowAction { Step = "http.post", With = With("url", "https://api.example.com/v1/users") }
+        ]);
+        var output = _sut.Export(flow);
+        using var doc = JsonDocument.Parse(output);
+
+        Assert.Equal("https://api.example.com", doc.RootElement.GetProperty("url").GetString());
+    }
+
+    [Fact]
+    public void Export_FallsBackToLocalhostWhenNoUrlExists()
+    {
+        var flow = MakeFlow("f", [
+            new FlowAction { Step = "ui.click", With = With("testId", "save") }
+        ]);
+        var output = _sut.Export(flow);
+        using var doc = JsonDocument.Parse(output);
+
+        Assert.Equal("http://localhost", doc.RootElement.GetProperty("url").GetString());
     }
 
     // -------------------------------------------------------------------------
@@ -185,6 +357,28 @@ public sealed class SeleniumIdeExporterTests
         var commands = GetCommands(_sut.Export(flow));
 
         Assert.Contains(commands, c => c.Command == "assertElementPresent");
+    }
+
+    [Fact]
+    public void Export_AdditionalExpectations_EmitExpectedCommandsAndComments()
+    {
+        var flow = MakeFlow("f", [],
+            expectations: [
+                new FlowExpectation { Expect = "browser.assert-url", With = With("expected", "/dashboard") },
+                new FlowExpectation { Expect = "http.assert-url", With = With("url", "/api/orders") },
+                new FlowExpectation { Expect = "ui.assert-window-title", With = With("title", "Dashboard") },
+                new FlowExpectation { Expect = "http.assert-status", With = With("status", "200") },
+                new FlowExpectation { Expect = "http.assert-json", With = With("path", "$.data.id") },
+                new FlowExpectation { Expect = "desktop.assert-magic" }
+            ]);
+        var commands = GetCommands(_sut.Export(flow));
+
+        Assert.Contains(commands, c => c.Command == "assertLocation" && c.Target == "/dashboard");
+        Assert.Contains(commands, c => c.Command == "assertLocation" && c.Target == "/api/orders");
+        Assert.Contains(commands, c => c.Command == "assertTitle" && c.Target == "Dashboard");
+        Assert.Contains(commands, c => c.Command == "//" && c.Target.Contains("HTTP status assertion", StringComparison.Ordinal));
+        Assert.Contains(commands, c => c.Command == "//" && c.Target.Contains("$.data.id", StringComparison.Ordinal));
+        Assert.Contains(commands, c => c.Command == "//" && c.Target.Contains("desktop.assert-magic", StringComparison.Ordinal));
     }
 
     // -------------------------------------------------------------------------

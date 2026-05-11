@@ -84,6 +84,62 @@ public sealed class RecordingTargetPickerTests : TestContext
     }
 
     [Fact]
+    public void RecordingTargetPicker_desktop_filter_reduces_visible_targets()
+    {
+        var recorder = new FakeStudioRecorderService
+        {
+            Targets =
+            [
+                new RecordingTargetInfo { ProcessId = 1234, ProcessName = "notepad", MainWindowTitle = "Notes", IsAttachable = true },
+                new RecordingTargetInfo { ProcessId = 4567, ProcessName = "calc", MainWindowTitle = "Calculator", IsAttachable = true }
+            ]
+        };
+
+        var state = CreateState(recorder);
+        state.OpenRecorderPicker();
+
+        var cut = RenderComponent<Cress.Studio.Web.Components.Studio.RecordingTargetPicker>();
+
+        cut.WaitForAssertion(() =>
+        {
+            Assert.Contains("notepad", cut.Markup);
+            Assert.Contains("calc", cut.Markup);
+        });
+
+        cut.Find("[data-testid='recording-picker-desktop-filter']").Input("calc");
+
+        Assert.DoesNotContain("notepad", cut.Markup);
+        Assert.Contains("calc", cut.Markup);
+        Assert.Contains("1 shown", cut.Markup);
+    }
+
+    [Fact]
+    public void RecordingTargetPicker_attachable_only_toggle_hides_unattachable_targets()
+    {
+        var recorder = new FakeStudioRecorderService
+        {
+            Targets =
+            [
+                new RecordingTargetInfo { ProcessId = 1234, ProcessName = "notepad", MainWindowTitle = "Notes", IsAttachable = true },
+                new RecordingTargetInfo { ProcessId = 4567, ProcessName = "admin-app", MainWindowTitle = "Elevated", IsAttachable = false }
+            ]
+        };
+
+        var state = CreateState(recorder);
+        state.OpenRecorderPicker();
+
+        var cut = RenderComponent<Cress.Studio.Web.Components.Studio.RecordingTargetPicker>();
+
+        cut.WaitForAssertion(() => Assert.Contains("admin-app", cut.Markup));
+
+        cut.Find("[data-testid='recording-picker-desktop-attachable-only']").Change(true);
+
+        Assert.Contains("notepad", cut.Markup);
+        Assert.DoesNotContain("admin-app", cut.Markup);
+        Assert.Contains("Attachable-only filter on", cut.Markup);
+    }
+
+    [Fact]
     public void RecordingTargetPicker_shows_empty_message_when_no_targets_found()
     {
         var recorder = new FakeStudioRecorderService { Targets = [] };

@@ -1,6 +1,11 @@
 @implements IDisposable
 @inject StudioWorkspaceState State
 
+@{
+    var recentActivity = FilterRecentActivity(State.RunInsights.RecentActivity).ToList();
+    var flakyFlows = FilterFlakyFlows(State.RunInsights.FlakyFlows).ToList();
+}
+
 <section class="subpanel">
     <div class="subpanel-header">
         <div>
@@ -8,14 +13,48 @@
             <p>Recent runs and workspace changes stay visible without burying the current task.</p>
         </div>
     </div>
-    <div class="stack-list">
-        @if (State.RunInsights.RecentActivity.Count == 0)
+    <div class="suite-flow-tools">
+        <div class="field-stack suite-flow-search">
+            <label for="run-insights-filter">Filter activity and flaky flows</label>
+            <div class="explorer-search-field">
+                <span class="explorer-search-icon" aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+                    </svg>
+                </span>
+                <input id="run-insights-filter"
+                       class="text-input explorer-search-input"
+                       @bind="_insightsFilter"
+                       @bind:event="oninput"
+                       placeholder="Find a run, flow, or trend"
+                       data-testid="run-insights-filter" />
+                @if (!string.IsNullOrWhiteSpace(_insightsFilter))
+                {
+                    <button type="button" class="explorer-search-clear" aria-label="Clear insights filter" @onclick="ClearFilter">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
+                        </svg>
+                    </button>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="suite-flow-summary" data-testid="run-insights-summary">
+        <span class="pill">@recentActivity.Count activity items</span>
+        <span class="pill">@flakyFlows.Count flaky flows</span>
+        @if (!string.IsNullOrWhiteSpace(_insightsFilter))
         {
-            <p class="subpanel-empty">No recent activity yet — run a flow to see history here.</p>
+            <span class="pill">Filter: @_insightsFilter</span>
+        }
+    </div>
+    <div class="stack-list">
+        @if (recentActivity.Count == 0)
+        {
+            <p class="subpanel-empty" data-testid="run-insights-activity-empty">No recent activity matches the current filter.</p>
         }
         else
         {
-            @foreach (var item in State.RunInsights.RecentActivity)
+            @foreach (var item in recentActivity)
             {
                 <div class="explorer-button insights-activity-item">
                     <strong>@item.Headline</strong>
@@ -33,9 +72,9 @@
             <p>Highlight unstable flows so retries and trends are obvious at a glance.</p>
         </div>
     </div>
-    @if (State.RunInsights.FlakyFlows.Count == 0)
+    @if (flakyFlows.Count == 0)
     {
-        <p class="subpanel-empty">No flaky flows detected — all flows are stable.</p>
+        <p class="subpanel-empty" data-testid="run-insights-flake-empty">No flaky flows match the current filter.</p>
     }
     else
     {
@@ -49,7 +88,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in State.RunInsights.FlakyFlows.Take(8))
+                @foreach (var item in flakyFlows.Take(8))
                 {
                     <tr>
                         <td>
@@ -113,6 +152,8 @@
 </section>
 
 @code {
+    private string _insightsFilter = string.Empty;
+
     protected override void OnInitialized()
     {
         State.Changed += HandleStateChanged;
@@ -125,4 +166,18 @@
 
     private void HandleStateChanged()
         => InvokeAsync(StateHasChanged);
+
+    private void ClearFilter()
+        => _insightsFilter = string.Empty;
+
+    private IEnumerable<StudioRecentActivityItem> FilterRecentActivity(IEnumerable<StudioRecentActivityItem> items)
+        => items.Where(item => string.IsNullOrWhiteSpace(_insightsFilter)
+            || item.Headline.Contains(_insightsFilter, StringComparison.OrdinalIgnoreCase)
+            || item.Detail.Contains(_insightsFilter, StringComparison.OrdinalIgnoreCase));
+
+    private IEnumerable<StudioFlowHealthItem> FilterFlakyFlows(IEnumerable<StudioFlowHealthItem> items)
+        => items.Where(item => string.IsNullOrWhiteSpace(_insightsFilter)
+            || item.Name.Contains(_insightsFilter, StringComparison.OrdinalIgnoreCase)
+            || item.FlowId.Contains(_insightsFilter, StringComparison.OrdinalIgnoreCase)
+            || item.Trend.Contains(_insightsFilter, StringComparison.OrdinalIgnoreCase));
 }

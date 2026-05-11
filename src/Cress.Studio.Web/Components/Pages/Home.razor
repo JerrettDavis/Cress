@@ -100,15 +100,66 @@
                     }
                     else
                     {
-                        <div class="workspace-list" data-testid="recent-workspaces-list">
-                            @foreach (var recent in State.RecentWorkspaces)
+                        var filteredRecentWorkspaces = FilterRecentWorkspaces(State.RecentWorkspaces).ToList();
+                        <div class="field-stack explorer-search-wrap">
+                            <label for="recent-workspace-filter">Search recent workspaces</label>
+                            <div class="explorer-search-field">
+                                <span class="explorer-search-icon" aria-hidden="true">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+                                    </svg>
+                                </span>
+                                <input id="recent-workspace-filter"
+                                       class="text-input explorer-search-input"
+                                       @bind="_recentWorkspaceFilter"
+                                       @bind:event="oninput"
+                                       placeholder="Filter by folder or path"
+                                       data-testid="recent-workspace-filter" />
+                                @if (!string.IsNullOrWhiteSpace(_recentWorkspaceFilter))
+                                {
+                                    <button type="button" class="explorer-search-clear" aria-label="Clear recent workspace filter" @onclick="ClearRecentWorkspaceFilter">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
+                                        </svg>
+                                    </button>
+                                }
+                            </div>
+                        </div>
+                        <div class="suite-flow-summary" data-testid="recent-workspace-summary">
+                            <span class="pill">@filteredRecentWorkspaces.Count shown</span>
+                            <span class="pill">@State.RecentWorkspaces.Count recent</span>
+                            @if (!string.IsNullOrWhiteSpace(_recentWorkspaceFilter))
                             {
-                                <button type="button" class="explorer-button workspace-list-button" @onclick="@(() => LoadRecentWorkspace(recent))" data-testid="@($"recent-workspace-{ToTestIdSegment(recent)}")">
-                                    <strong>@Path.GetFileName(recent)</strong>
-                                    <span>@recent</span>
-                                </button>
+                                <span class="pill">Filter: @_recentWorkspaceFilter</span>
                             }
                         </div>
+                        <div class="helper-actions">
+                            <button type="button" class="action-button" @onclick="ClearRecentWorkspaces" data-testid="clear-recent-workspaces">Clear recent</button>
+                        </div>
+
+                        @if (filteredRecentWorkspaces.Count == 0)
+                        {
+                            <p class="subpanel-empty" data-testid="recent-workspace-filter-empty">No recent workspaces match the current filter.</p>
+                        }
+                        else
+                        {
+                            <div class="demo-card-list" data-testid="recent-workspaces-list">
+                                @foreach (var recent in filteredRecentWorkspaces)
+                                {
+                                    <article class="demo-card" data-testid="@($"recent-workspace-card-{ToTestIdSegment(recent)}")">
+                                        <div class="demo-card-copy">
+                                            <strong>@Path.GetFileName(recent)</strong>
+                                            <p>@recent</p>
+                                        </div>
+                                        <div class="helper-actions">
+                                            <button type="button" class="action-button success" @onclick="@(() => LoadRecentWorkspace(recent))" data-testid="@($"load-recent-workspace-{ToTestIdSegment(recent)}")">Load recent</button>
+                                            <button type="button" class="action-button" @onclick="@(() => UseRecentWorkspace(recent))" data-testid="@($"use-recent-workspace-{ToTestIdSegment(recent)}")">Use path</button>
+                                            <button type="button" class="action-button" @onclick="@(() => RemoveRecentWorkspace(recent))" data-testid="@($"remove-recent-workspace-{ToTestIdSegment(recent)}")">Remove</button>
+                                        </div>
+                                    </article>
+                                }
+                            </div>
+                        }
                     }
                 </section>
 
@@ -119,28 +170,70 @@
                             <p>Open concrete service, browser, or desktop samples without hunting through the repo or switching to the legacy desktop shell.</p>
                         </div>
                     </div>
-
-                    <div class="demo-card-list" data-testid="demo-workspaces-list">
-                        @foreach (var demo in State.DemoWorkspaces)
+                    @{
+                        var filteredDemos = FilterDemos(State.DemoWorkspaces).ToList();
+                    }
+                    <div class="field-stack explorer-search-wrap">
+                        <label for="demo-filter">Search demos</label>
+                        <div class="explorer-search-field">
+                            <span class="explorer-search-icon" aria-hidden="true">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+                                </svg>
+                            </span>
+                            <input id="demo-filter"
+                                   class="text-input explorer-search-input"
+                                   @bind="_demoFilter"
+                                   @bind:event="oninput"
+                                   placeholder="Filter by demo, platform, or tag"
+                                   data-testid="demo-filter" />
+                            @if (!string.IsNullOrWhiteSpace(_demoFilter))
+                            {
+                                <button type="button" class="explorer-search-clear" aria-label="Clear demo filter" @onclick="ClearDemoFilter">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
+                                    </svg>
+                                </button>
+                            }
+                        </div>
+                    </div>
+                    <div class="suite-flow-summary" data-testid="demo-filter-summary">
+                        <span class="pill">@filteredDemos.Count shown</span>
+                        <span class="pill">@State.DemoWorkspaces.Count demos</span>
+                        @if (!string.IsNullOrWhiteSpace(_demoFilter))
                         {
-                            <article class="demo-card" data-testid="@($"demo-card-{ToTestIdSegment(demo.Id)}")">
-                                <div class="demo-card-copy">
-                                    <strong>@demo.Title</strong>
-                                    <p>@demo.Description</p>
-                                    <div class="demo-card-tags">
-                                        @foreach (var tag in demo.Tags)
-                                        {
-                                            <span class="pill">@tag</span>
-                                        }
-                                    </div>
-                                </div>
-                                <div class="helper-actions">
-                                    <button type="button" class="action-button success" @onclick="@(() => LoadDemoWorkspace(demo.Id))" data-testid="@($"load-demo-{ToTestIdSegment(demo.Id)}")">Load demo</button>
-                                    <button type="button" class="action-button" @onclick="@(() => UseDemoWorkspace(demo.Id))" data-testid="@($"use-demo-path-{ToTestIdSegment(demo.Id)}")">Use path</button>
-                                </div>
-                            </article>
+                            <span class="pill">Filter: @_demoFilter</span>
                         }
                     </div>
+
+                    @if (filteredDemos.Count == 0)
+                    {
+                        <p class="subpanel-empty" data-testid="demo-filter-empty">No demos match the current filter.</p>
+                    }
+                    else
+                    {
+                        <div class="demo-card-list" data-testid="demo-workspaces-list">
+                            @foreach (var demo in filteredDemos)
+                            {
+                                <article class="demo-card" data-testid="@($"demo-card-{ToTestIdSegment(demo.Id)}")">
+                                    <div class="demo-card-copy">
+                                        <strong>@demo.Title</strong>
+                                        <p>@demo.Description</p>
+                                        <div class="demo-card-tags">
+                                            @foreach (var tag in demo.Tags)
+                                            {
+                                                <span class="pill">@tag</span>
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="helper-actions">
+                                        <button type="button" class="action-button success" @onclick="@(() => LoadDemoWorkspace(demo.Id))" data-testid="@($"load-demo-{ToTestIdSegment(demo.Id)}")">Load demo</button>
+                                        <button type="button" class="action-button" @onclick="@(() => UseDemoWorkspace(demo.Id))" data-testid="@($"use-demo-path-{ToTestIdSegment(demo.Id)}")">Use path</button>
+                                    </div>
+                                </article>
+                            }
+                        </div>
+                    }
                 </section>
 
                 <section class="subpanel" data-testid="runner-nodes-panel">
@@ -150,32 +243,93 @@
                             <p>The embedded local node powers runs today, and this same surface is where remote-node orchestration will grow.</p>
                         </div>
                     </div>
-
-                    <div class="workspace-list" data-testid="runner-nodes-list">
-                        @foreach (var node in State.RunnerNodes)
+                    @{
+                        var filteredRunnerNodes = FilterRunnerNodes(State.RunnerNodes).ToList();
+                        var issueNodeCount = State.RunnerNodes.Count(HasRunnerNodeIssue);
+                        var busyNodeCount = State.RunnerNodes.Count(static node => node.Status == StudioRunnerNodeStatus.Busy);
+                    }
+                    <div class="field-stack explorer-search-wrap">
+                        <label for="runner-node-filter">Search nodes</label>
+                        <div class="explorer-search-field">
+                            <span class="explorer-search-icon" aria-hidden="true">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+                                </svg>
+                            </span>
+                            <input id="runner-node-filter"
+                                   class="text-input explorer-search-input"
+                                   @bind="_runnerNodeFilter"
+                                   @bind:event="oninput"
+                                   placeholder="Filter by node, location, transport, or capability"
+                                   data-testid="runner-node-filter" />
+                            @if (!string.IsNullOrWhiteSpace(_runnerNodeFilter))
+                            {
+                                <button type="button" class="explorer-search-clear" aria-label="Clear node filter" @onclick="ClearRunnerNodeFilter">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
+                                    </svg>
+                                </button>
+                            }
+                        </div>
+                    </div>
+                    <label class="filter-toggle" data-testid="runner-node-issues-toggle-label">
+                        <input type="checkbox" @bind="_showRunnerNodeIssuesOnly" data-testid="runner-node-issues-only" />
+                        <span>Show nodes that need attention</span>
+                    </label>
+                    <div class="suite-flow-summary" data-testid="runner-node-summary">
+                        <span class="pill">@filteredRunnerNodes.Count shown</span>
+                        <span class="pill">@State.RunnerNodes.Count total</span>
+                        @if (issueNodeCount > 0)
                         {
-                            <div class="node-card @(State.SelectedRunnerNodeId == node.Id ? "node-card--selected" : string.Empty)" data-testid="@($"runner-node-{ToTestIdSegment(node.Id)}")">
-                                <div>
-                                    <strong>@node.Name</strong>
-                                    <div class="muted" data-testid="@($"runner-node-display-{ToTestIdSegment(node.Id)}")">@node.DisplayName</div>
-                                    <div class="muted" data-testid="@($"runner-node-status-{ToTestIdSegment(node.Id)}")">Status: @FormatNodeStatus(node) • Heartbeat @FormatRelativeTime(node.LastHeartbeatUtc)</div>
-                                </div>
-                                <p>@node.Description</p>
-                                <div class="demo-card-tags">
-                                    <span class="pill">@node.Transport</span>
-                                    <span class="pill">@node.Location</span>
-                                    @foreach (var capability in node.Capabilities)
-                                    {
-                                        <span class="pill">@capability</span>
-                                    }
-                                </div>
-                                @if (!string.IsNullOrWhiteSpace(node.LastError))
-                                {
-                                    <div class="workspace-picker-error">@node.LastError</div>
-                                }
-                            </div>
+                            <span class="pill">Needs attention: @issueNodeCount</span>
+                        }
+                        @if (busyNodeCount > 0)
+                        {
+                            <span class="pill">Busy: @busyNodeCount</span>
+                        }
+                        @if (_showRunnerNodeIssuesOnly)
+                        {
+                            <span class="pill">Issues only</span>
                         }
                     </div>
+
+                    @if (filteredRunnerNodes.Count == 0)
+                    {
+                        <p class="subpanel-empty" data-testid="runner-node-empty">No execution nodes match the current filter.</p>
+                    }
+                    else
+                    {
+                        <div class="workspace-list" data-testid="runner-nodes-list">
+                            @foreach (var node in filteredRunnerNodes)
+                            {
+                                <div class="node-card @(State.SelectedRunnerNodeId == node.Id ? "node-card--selected" : string.Empty)" data-testid="@($"runner-node-{ToTestIdSegment(node.Id)}")">
+                                    <div class="node-card-head">
+                                        <div>
+                                            <strong>@node.Name</strong>
+                                            <div class="muted" data-testid="@($"runner-node-display-{ToTestIdSegment(node.Id)}")">@node.DisplayName</div>
+                                            <div class="muted" data-testid="@($"runner-node-status-{ToTestIdSegment(node.Id)}")">Status: @FormatNodeStatus(node) • Heartbeat @FormatRelativeTime(node.LastHeartbeatUtc)</div>
+                                        </div>
+                                        <span class="@GetRunnerNodeStatusClass(node)" data-testid="@($"runner-node-status-pill-{ToTestIdSegment(node.Id)}")">
+                                            @GetRunnerNodeStatusLabel(node)
+                                        </span>
+                                    </div>
+                                    <p>@node.Description</p>
+                                    <div class="demo-card-tags">
+                                        <span class="pill">@node.Transport</span>
+                                        <span class="pill">@node.Location</span>
+                                        @foreach (var capability in node.Capabilities)
+                                        {
+                                            <span class="pill">@capability</span>
+                                        }
+                                    </div>
+                                    @if (!string.IsNullOrWhiteSpace(node.LastError))
+                                    {
+                                        <div class="workspace-picker-error">@node.LastError</div>
+                                    }
+                                </div>
+                            }
+                        </div>
+                    }
                 </section>
             </div>
         </section>
@@ -444,6 +598,10 @@
     private string? _lastObservedSuiteFilePath;
     private string? _pendingScrollTargetId;
     private string _recentWorkspacesSnapshot = string.Empty;
+    private string _recentWorkspaceFilter = string.Empty;
+    private string _demoFilter = string.Empty;
+    private string _runnerNodeFilter = string.Empty;
+    private bool _showRunnerNodeIssuesOnly;
 
     protected override void OnInitialized()
     {
@@ -503,6 +661,88 @@
         InvokeAsync(StateHasChanged);
     }
 
+    private void ClearDemoFilter()
+        => _demoFilter = string.Empty;
+
+    private void ClearRecentWorkspaceFilter()
+        => _recentWorkspaceFilter = string.Empty;
+
+    private IEnumerable<string> FilterRecentWorkspaces(IEnumerable<string> workspaces)
+        => workspaces.Where(RecentWorkspaceMatchesFilter);
+
+    private bool RecentWorkspaceMatchesFilter(string workspace)
+    {
+        if (string.IsNullOrWhiteSpace(_recentWorkspaceFilter))
+        {
+            return true;
+        }
+
+        var folderName = Path.GetFileName(workspace);
+        return folderName.Contains(_recentWorkspaceFilter, StringComparison.OrdinalIgnoreCase)
+            || workspace.Contains(_recentWorkspaceFilter, StringComparison.OrdinalIgnoreCase);
+    }
+
+    private IEnumerable<StudioDemoWorkspace> FilterDemos(IEnumerable<StudioDemoWorkspace> demos)
+        => demos.Where(DemoMatchesFilter);
+
+    private bool DemoMatchesFilter(StudioDemoWorkspace demo)
+    {
+        if (string.IsNullOrWhiteSpace(_demoFilter))
+        {
+            return true;
+        }
+
+        return demo.Title.Contains(_demoFilter, StringComparison.OrdinalIgnoreCase)
+            || demo.Description.Contains(_demoFilter, StringComparison.OrdinalIgnoreCase)
+            || demo.Tags.Any(tag => tag.Contains(_demoFilter, StringComparison.OrdinalIgnoreCase));
+    }
+
+    private void ClearRunnerNodeFilter()
+        => _runnerNodeFilter = string.Empty;
+
+    private IEnumerable<StudioRunnerNodeSnapshot> FilterRunnerNodes(IEnumerable<StudioRunnerNodeSnapshot> nodes)
+        => nodes.Where(RunnerNodeMatchesFilter);
+
+    private bool RunnerNodeMatchesFilter(StudioRunnerNodeSnapshot node)
+    {
+        if (_showRunnerNodeIssuesOnly && !HasRunnerNodeIssue(node))
+        {
+            return false;
+        }
+
+        if (string.IsNullOrWhiteSpace(_runnerNodeFilter))
+        {
+            return true;
+        }
+
+        var normalizedStatus = FormatNodeStatus(node);
+        return node.Name.Contains(_runnerNodeFilter, StringComparison.OrdinalIgnoreCase)
+            || node.DisplayName.Contains(_runnerNodeFilter, StringComparison.OrdinalIgnoreCase)
+            || node.Description.Contains(_runnerNodeFilter, StringComparison.OrdinalIgnoreCase)
+            || node.Location.Contains(_runnerNodeFilter, StringComparison.OrdinalIgnoreCase)
+            || node.Transport.ToString().Contains(_runnerNodeFilter, StringComparison.OrdinalIgnoreCase)
+            || normalizedStatus.Contains(_runnerNodeFilter, StringComparison.OrdinalIgnoreCase)
+            || node.Capabilities.Any(capability => capability.Contains(_runnerNodeFilter, StringComparison.OrdinalIgnoreCase));
+    }
+
+    private static bool HasRunnerNodeIssue(StudioRunnerNodeSnapshot node)
+        => node.Status is StudioRunnerNodeStatus.Degraded or StudioRunnerNodeStatus.Offline
+            || !string.IsNullOrWhiteSpace(node.LastError);
+
+    private static string GetRunnerNodeStatusLabel(StudioRunnerNodeSnapshot node)
+        => HasRunnerNodeIssue(node) ? "Needs attention" : node.Status switch
+        {
+            StudioRunnerNodeStatus.Busy => "Busy",
+            _ => "Healthy"
+        };
+
+    private static string GetRunnerNodeStatusClass(StudioRunnerNodeSnapshot node)
+        => HasRunnerNodeIssue(node)
+            ? "node-status-pill node-status-pill--issue"
+            : node.Status == StudioRunnerNodeStatus.Busy
+                ? "node-status-pill node-status-pill--busy"
+                : "node-status-pill";
+
     private void UpdateShellSectionFromUri()
     {
         var relative = Navigation.ToBaseRelativePath(Navigation.Uri);
@@ -540,6 +780,15 @@
 
     private void LoadRecentWorkspace(string path)
         => State.LoadRecentWorkspace(path);
+
+    private void UseRecentWorkspace(string path)
+        => State.SetProjectPath(path);
+
+    private void RemoveRecentWorkspace(string path)
+        => State.RemoveRecentWorkspace(path);
+
+    private void ClearRecentWorkspaces()
+        => State.ClearRecentWorkspaces();
 
     private void UseDemoWorkspace(string demoId)
     {

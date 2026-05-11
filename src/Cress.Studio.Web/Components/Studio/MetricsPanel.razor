@@ -181,6 +181,7 @@ else
                 .Take(20)
                 .ToList();
             const int HeatCols = 20;
+            var heatmapSummary = SummarizeHeatmap(heatFlows, HeatCols);
         }
         @if (heatFlows.Count == 0)
         {
@@ -188,18 +189,35 @@ else
         }
         else
         {
+            <div class="metrics-heatmap-summary" data-testid="metrics-heatmap-summary">
+                <p>Showing @heatFlows.Count flows across @HeatCols recent run slots. Passed, failed, and not-run states are labeled below so the heatmap does not rely on color alone.</p>
+                <div class="metrics-heatmap-legend" role="list" aria-label="Heatmap legend">
+                    <span class="metrics-heatmap-legend-item" role="listitem">
+                        <span class="metrics-heatmap-cell metrics-heatmap-cell--pass" aria-hidden="true"></span>
+                        <span>Passed (@heatmapSummary.Passed)</span>
+                    </span>
+                    <span class="metrics-heatmap-legend-item" role="listitem">
+                        <span class="metrics-heatmap-cell metrics-heatmap-cell--fail" aria-hidden="true"></span>
+                        <span>Failed (@heatmapSummary.Failed)</span>
+                    </span>
+                    <span class="metrics-heatmap-legend-item" role="listitem">
+                        <span class="metrics-heatmap-cell metrics-heatmap-cell--none" aria-hidden="true"></span>
+                        <span>Not run (@heatmapSummary.NotRun)</span>
+                    </span>
+                </div>
+            </div>
             <div class="metrics-heatmap" role="table" aria-label="Flake heatmap grid">
                 @foreach (var hf in heatFlows)
                 {
                     var cells = BuildHeatCellsForFlow(hf.FlowId, HeatCols);
                     <div class="metrics-heatmap-row" role="row">
                         <span class="metrics-heatmap-label" role="rowheader" title="@hf.FlowId">@hf.FlowId</span>
-                        <div class="metrics-heatmap-cells" role="gridcell">
+                        <div class="metrics-heatmap-cells" role="presentation">
                             @foreach (var cell in cells)
                             {
                                 <span class="metrics-heatmap-cell metrics-heatmap-cell--@cell.CssClass"
-                                      title="@cell.Tooltip"
-                                      tabindex="0"
+                                       title="@cell.Tooltip"
+                                       tabindex="0"
                                       role="cell"
                                       aria-label="@cell.Tooltip"></span>
                             }
@@ -325,6 +343,8 @@ else
     // -------------------------------------------------------------------------
 
     private sealed record HeatCell(string CssClass, string Tooltip);
+    private sealed record HeatmapSummary(int Passed, int Failed, int NotRun);
+
     private List<HeatCell> BuildHeatCellsForFlow(string flowId, int cols)
     {
         var cells = new List<HeatCell>(cols);
@@ -351,5 +371,33 @@ else
             cells.Add(new HeatCell(css, tooltip));
         }
         return cells;
+    }
+
+    private HeatmapSummary SummarizeHeatmap(IReadOnlyList<FlowMetrics> heatFlows, int cols)
+    {
+        var passed = 0;
+        var failed = 0;
+        var notRun = 0;
+
+        foreach (var flow in heatFlows)
+        {
+            foreach (var cell in BuildHeatCellsForFlow(flow.FlowId, cols))
+            {
+                switch (cell.CssClass)
+                {
+                    case "pass":
+                        passed++;
+                        break;
+                    case "fail":
+                        failed++;
+                        break;
+                    default:
+                        notRun++;
+                        break;
+                }
+            }
+        }
+
+        return new HeatmapSummary(passed, failed, notRun);
     }
 }

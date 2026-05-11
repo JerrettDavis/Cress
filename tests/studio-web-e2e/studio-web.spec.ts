@@ -4,16 +4,28 @@ import { expect, test, type Locator, type Page } from '@playwright/test';
 
 const captureDocsScreenshots = process.env.CRESS_CAPTURE_DOCS_SCREENSHOTS === '1';
 const docsScreenshotRoot = path.join(process.cwd(), 'docs', 'images', 'studio');
+const recentWorkspaceStorageKey = 'cress.recentWorkspaces';
+const seededRecentWorkspaceStorageKey = 'cress.seededRecentWorkspaces';
 
 test.beforeEach(async ({ page }) => {
-  await page.addInitScript(() => window.localStorage.clear());
+  await page.addInitScript(({ recentKey, seededKey }) => {
+    window.localStorage.clear();
+    const seeded = window.sessionStorage.getItem(seededKey);
+    if (seeded) {
+      window.localStorage.setItem(recentKey, seeded);
+    }
+  }, { recentKey: recentWorkspaceStorageKey, seededKey: seededRecentWorkspaceStorageKey });
   await page.goto('/workspace');
   await expect(page.getByTestId('studio-shell')).toBeVisible();
 });
 
 test('navigates between workspace, designer, and results using stable shell selectors', async ({ page }) => {
+  await seedRecentWorkspaces(page);
+  await expect(page.getByTestId('recent-workspaces-list')).toBeVisible();
   await expect(page.getByTestId('workspace-section')).toBeVisible();
-  await captureDocScreenshot(page, 'landing.png', page.getByTestId('workspace-section'));
+  await page.getByTestId('demo-filter').fill('browser');
+  await page.getByTestId('runner-node-filter').fill('local');
+  await captureDocScreenshot(page, 'landing.png', page.getByTestId('studio-shell'));
 
   await page.getByTestId('nav-link-designer').click();
   await expect(page).toHaveURL(/\/designer$/);
@@ -39,6 +51,8 @@ test('loads the suggested workspace through the in-app picker and exposes explor
 
   await clickUntilVisible(page, page.getByTestId('open-workspace-picker'), page.getByTestId('workspace-picker-dialog'));
   await expect(page.getByTestId('workspace-picker-location')).not.toHaveValue('');
+  await page.getByTestId('workspace-picker-filter').fill('spec');
+  await captureDocScreenshot(page, 'workspace-picker.png', page.getByTestId('workspace-picker-dialog'));
 
   await page.getByTestId('workspace-picker-load-current').click();
 
@@ -105,6 +119,22 @@ test('supports the guided use-path onboarding flow before loading a workspace', 
   await expect(page.locator('[data-testid^="explorer-flow-"]').first()).toBeVisible();
 });
 
+test('filters and manages recent workspaces before loading a project', async ({ page }) => {
+  await seedRecentWorkspaces(page);
+
+  await page.getByTestId('recent-workspace-filter').fill('web');
+  await expect(page.locator('[data-testid^="recent-workspace-card-"]')).toHaveCount(1);
+
+  await page.locator('[data-testid^="use-recent-workspace-"]').first().click();
+  await expect(page.getByTestId('workspace-path-input')).toHaveValue(/web-smoke/i);
+
+  await page.locator('[data-testid^="remove-recent-workspace-"]').first().click();
+  await expect(page.getByTestId('recent-workspace-filter-empty')).toBeVisible();
+
+  await page.getByTestId('clear-recent-workspaces').click();
+  await expect(page.getByText('No recent workspaces yet.')).toBeVisible();
+});
+
 test('filters explorer content and exposes flow actions after a demo is loaded', async ({ page }) => {
   await loadBuiltInDemo(page);
   await expect(page.locator('[data-testid^="explorer-flow-"]')).toHaveCount(2);
@@ -153,4 +183,20 @@ async function captureDocScreenshot(page: Page, fileName: string, target: Locato
   await target.screenshot({
     path: path.join(docsScreenshotRoot, fileName)
   });
+}
+
+async function seedRecentWorkspaces(page: Page): Promise<void> {
+  const recentWorkspaces = [
+    path.win32.join(process.cwd(), 'specs', 'httpbin-smoke'),
+    path.win32.join(process.cwd(), 'specs', 'web-smoke')
+  ];
+
+  await page.evaluate(({ recentKey, seededKey, paths }) => {
+    const serialized = JSON.stringify(paths);
+    window.sessionStorage.setItem(seededKey, serialized);
+    window.localStorage.setItem(recentKey, serialized);
+  }, { recentKey: recentWorkspaceStorageKey, seededKey: seededRecentWorkspaceStorageKey, paths: recentWorkspaces });
+
+  await page.reload();
+  await expect(page.getByTestId('studio-shell')).toBeVisible();
 }

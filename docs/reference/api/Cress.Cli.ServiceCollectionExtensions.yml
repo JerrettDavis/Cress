@@ -1,0 +1,507 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Cli.ServiceCollectionExtensions
+  commentId: T:Cress.Cli.ServiceCollectionExtensions
+  id: ServiceCollectionExtensions
+  parent: Cress.Cli
+  children:
+  - Cress.Cli.ServiceCollectionExtensions.AddCressCli(Microsoft.Extensions.DependencyInjection.IServiceCollection)
+  - Cress.Cli.ServiceCollectionExtensions.AddCressCliCommand(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Func{System.IServiceProvider,System.CommandLine.Command})
+  langs:
+  - csharp
+  - vb
+  name: ServiceCollectionExtensions
+  nameWithType: ServiceCollectionExtensions
+  fullName: Cress.Cli.ServiceCollectionExtensions
+  type: Class
+  source:
+    remote:
+      path: src/Cress.Cli/CliComposition.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: ServiceCollectionExtensions
+    path: ../src/Cress.Cli/CliComposition.cs
+    startLine: 55
+  assemblies:
+  - cress
+  namespace: Cress.Cli
+  syntax:
+    content: public static class ServiceCollectionExtensions
+    content.vb: Public Module ServiceCollectionExtensions
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Cress.Cli.ServiceCollectionExtensions.AddCressCli(Microsoft.Extensions.DependencyInjection.IServiceCollection)
+  commentId: M:Cress.Cli.ServiceCollectionExtensions.AddCressCli(Microsoft.Extensions.DependencyInjection.IServiceCollection)
+  id: AddCressCli(Microsoft.Extensions.DependencyInjection.IServiceCollection)
+  isExtensionMethod: true
+  parent: Cress.Cli.ServiceCollectionExtensions
+  langs:
+  - csharp
+  - vb
+  name: AddCressCli(IServiceCollection)
+  nameWithType: ServiceCollectionExtensions.AddCressCli(IServiceCollection)
+  fullName: Cress.Cli.ServiceCollectionExtensions.AddCressCli(Microsoft.Extensions.DependencyInjection.IServiceCollection)
+  type: Method
+  source:
+    remote:
+      path: src/Cress.Cli/CliComposition.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: AddCressCli
+    path: ../src/Cress.Cli/CliComposition.cs
+    startLine: 57
+  assemblies:
+  - cress
+  namespace: Cress.Cli
+  syntax:
+    content: public static IServiceCollection AddCressCli(this IServiceCollection services)
+    parameters:
+    - id: services
+      type: Microsoft.Extensions.DependencyInjection.IServiceCollection
+    return:
+      type: Microsoft.Extensions.DependencyInjection.IServiceCollection
+    content.vb: Public Shared Function AddCressCli(services As IServiceCollection) As IServiceCollection
+  overload: Cress.Cli.ServiceCollectionExtensions.AddCressCli*
+- uid: Cress.Cli.ServiceCollectionExtensions.AddCressCliCommand(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Func{System.IServiceProvider,System.CommandLine.Command})
+  commentId: M:Cress.Cli.ServiceCollectionExtensions.AddCressCliCommand(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Func{System.IServiceProvider,System.CommandLine.Command})
+  id: AddCressCliCommand(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Func{System.IServiceProvider,System.CommandLine.Command})
+  isExtensionMethod: true
+  parent: Cress.Cli.ServiceCollectionExtensions
+  langs:
+  - csharp
+  - vb
+  name: AddCressCliCommand(IServiceCollection, Func<IServiceProvider, Command>)
+  nameWithType: ServiceCollectionExtensions.AddCressCliCommand(IServiceCollection, Func<IServiceProvider, Command>)
+  fullName: Cress.Cli.ServiceCollectionExtensions.AddCressCliCommand(Microsoft.Extensions.DependencyInjection.IServiceCollection, System.Func<System.IServiceProvider, System.CommandLine.Command>)
+  type: Method
+  source:
+    remote:
+      path: src/Cress.Cli/CliComposition.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: AddCressCliCommand
+    path: ../src/Cress.Cli/CliComposition.cs
+    startLine: 71
+  assemblies:
+  - cress
+  namespace: Cress.Cli
+  syntax:
+    content: public static IServiceCollection AddCressCliCommand(this IServiceCollection services, Func<IServiceProvider, Command> factory)
+    parameters:
+    - id: services
+      type: Microsoft.Extensions.DependencyInjection.IServiceCollection
+    - id: factory
+      type: System.Func{System.IServiceProvider,System.CommandLine.Command}
+    return:
+      type: Microsoft.Extensions.DependencyInjection.IServiceCollection
+    content.vb: Public Shared Function AddCressCliCommand(services As IServiceCollection, factory As Func(Of IServiceProvider, Command)) As IServiceCollection
+  overload: Cress.Cli.ServiceCollectionExtensions.AddCressCliCommand*
+  nameWithType.vb: ServiceCollectionExtensions.AddCressCliCommand(IServiceCollection, Func(Of IServiceProvider, Command))
+  fullName.vb: Cress.Cli.ServiceCollectionExtensions.AddCressCliCommand(Microsoft.Extensions.DependencyInjection.IServiceCollection, System.Func(Of System.IServiceProvider, System.CommandLine.Command))
+  name.vb: AddCressCliCommand(IServiceCollection, Func(Of IServiceProvider, Command))
+references:
+- uid: Cress.Cli
+  commentId: N:Cress.Cli
+  href: Cress.html
+  name: Cress.Cli
+  nameWithType: Cress.Cli
+  fullName: Cress.Cli
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Cli
+    name: Cli
+    href: Cress.Cli.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Cli
+    name: Cli
+    href: Cress.Cli.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Cress.Cli.ServiceCollectionExtensions.AddCressCli*
+  commentId: Overload:Cress.Cli.ServiceCollectionExtensions.AddCressCli
+  href: Cress.Cli.ServiceCollectionExtensions.html#Cress_Cli_ServiceCollectionExtensions_AddCressCli_Microsoft_Extensions_DependencyInjection_IServiceCollection_
+  name: AddCressCli
+  nameWithType: ServiceCollectionExtensions.AddCressCli
+  fullName: Cress.Cli.ServiceCollectionExtensions.AddCressCli
+- uid: Microsoft.Extensions.DependencyInjection.IServiceCollection
+  commentId: T:Microsoft.Extensions.DependencyInjection.IServiceCollection
+  parent: Microsoft.Extensions.DependencyInjection
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.iservicecollection
+  name: IServiceCollection
+  nameWithType: IServiceCollection
+  fullName: Microsoft.Extensions.DependencyInjection.IServiceCollection
+- uid: Microsoft.Extensions.DependencyInjection
+  commentId: N:Microsoft.Extensions.DependencyInjection
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft
+  name: Microsoft.Extensions.DependencyInjection
+  nameWithType: Microsoft.Extensions.DependencyInjection
+  fullName: Microsoft.Extensions.DependencyInjection
+  spec.csharp:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Extensions
+    name: Extensions
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions
+  - name: .
+  - uid: Microsoft.Extensions.DependencyInjection
+    name: DependencyInjection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection
+  spec.vb:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Extensions
+    name: Extensions
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions
+  - name: .
+  - uid: Microsoft.Extensions.DependencyInjection
+    name: DependencyInjection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection
+- uid: Cress.Cli.ServiceCollectionExtensions.AddCressCliCommand*
+  commentId: Overload:Cress.Cli.ServiceCollectionExtensions.AddCressCliCommand
+  href: Cress.Cli.ServiceCollectionExtensions.html#Cress_Cli_ServiceCollectionExtensions_AddCressCliCommand_Microsoft_Extensions_DependencyInjection_IServiceCollection_System_Func_System_IServiceProvider_System_CommandLine_Command__
+  name: AddCressCliCommand
+  nameWithType: ServiceCollectionExtensions.AddCressCliCommand
+  fullName: Cress.Cli.ServiceCollectionExtensions.AddCressCliCommand
+- uid: System.Func{System.IServiceProvider,System.CommandLine.Command}
+  commentId: T:System.Func{System.IServiceProvider,System.CommandLine.Command}
+  parent: System
+  definition: System.Func`2
+  href: https://learn.microsoft.com/dotnet/api/system.func-2
+  name: Func<IServiceProvider, Command>
+  nameWithType: Func<IServiceProvider, Command>
+  fullName: System.Func<System.IServiceProvider, System.CommandLine.Command>
+  nameWithType.vb: Func(Of IServiceProvider, Command)
+  fullName.vb: System.Func(Of System.IServiceProvider, System.CommandLine.Command)
+  name.vb: Func(Of IServiceProvider, Command)
+  spec.csharp:
+  - uid: System.Func`2
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-2
+  - name: <
+  - uid: System.IServiceProvider
+    name: IServiceProvider
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iserviceprovider
+  - name: ','
+  - name: " "
+  - uid: System.CommandLine.Command
+    name: Command
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.commandline.command
+  - name: '>'
+  spec.vb:
+  - uid: System.Func`2
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-2
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.IServiceProvider
+    name: IServiceProvider
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iserviceprovider
+  - name: ','
+  - name: " "
+  - uid: System.CommandLine.Command
+    name: Command
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.commandline.command
+  - name: )
+- uid: System.Func`2
+  commentId: T:System.Func`2
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.func-2
+  name: Func<T, TResult>
+  nameWithType: Func<T, TResult>
+  fullName: System.Func<T, TResult>
+  nameWithType.vb: Func(Of T, TResult)
+  fullName.vb: System.Func(Of T, TResult)
+  name.vb: Func(Of T, TResult)
+  spec.csharp:
+  - uid: System.Func`2
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-2
+  - name: <
+  - name: T
+  - name: ','
+  - name: " "
+  - name: TResult
+  - name: '>'
+  spec.vb:
+  - uid: System.Func`2
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-2
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: ','
+  - name: " "
+  - name: TResult
+  - name: )

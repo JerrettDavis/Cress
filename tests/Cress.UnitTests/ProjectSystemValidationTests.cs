@@ -111,6 +111,65 @@ public sealed class ProjectSystemValidationTests
     }
 
     [Fact]
+    public void ProfileLoader_Load_reports_missing_profile_file()
+    {
+        using var workspace = new TestWorkspace();
+        var loader = new ProfileLoader();
+
+        var result = loader.Load(workspace.GetPath("project"), "missing");
+
+        Assert.False(result.Success);
+        Assert.Equal("PRF002", Assert.Single(result.Diagnostics).Code);
+    }
+
+    [Fact]
+    public void ProfileLoader_Load_reports_invalid_yaml_location()
+    {
+        using var workspace = new TestWorkspace();
+        var profilePath = workspace.GetPath("project", ".cress", "profiles", "qa.yaml");
+        Directory.CreateDirectory(Path.GetDirectoryName(profilePath)!);
+        File.WriteAllText(profilePath, "baseUrl: [");
+
+        var loader = new ProfileLoader();
+
+        var result = loader.Load(workspace.GetPath("project"), "qa");
+
+        Assert.False(result.Success);
+        var diagnostic = Assert.Single(result.Diagnostics);
+        Assert.Equal("PRF004", diagnostic.Code);
+        Assert.NotNull(diagnostic.Line);
+        Assert.NotNull(diagnostic.Column);
+        Assert.Contains("qa.yaml", diagnostic.File, StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
+    public void ProfileLoader_LoadActive_uses_default_profile_when_profile_name_is_blank()
+    {
+        using var workspace = new TestWorkspace();
+        workspace.WriteFile(Path.Combine("project", ".cress", "profiles", "local.yaml"), """
+        baseUrl: https://example.test
+        profile: ""
+        """);
+
+        var loader = new ProfileLoader();
+        var config = new CressConfig
+        {
+            Version = 1,
+            Project = new ProjectConfig
+            {
+                Name = "Validation sample",
+                DefaultProfile = "local"
+            }
+        };
+
+        var result = loader.LoadActive(workspace.GetPath("project"), config);
+
+        Assert.True(result.Success);
+        Assert.NotNull(result.Value);
+        Assert.Equal("local", result.Value!.Profile);
+    }
+
+    [Fact]
     public void ProjectValidator_reports_missing_project_root()
     {
         var validator = CreateValidator();
@@ -191,6 +250,34 @@ public sealed class ProjectSystemValidationTests
         Assert.Contains(result.Diagnostics, diagnostic => diagnostic.Code == "FLW011");
         Assert.Contains(result.Diagnostics, diagnostic => diagnostic.Code == "REG001");
         Assert.Contains(result.Diagnostics, diagnostic => diagnostic.Code == "FIX005");
+    }
+
+    [Fact]
+    public void ProjectValidator_aggregates_invalid_profile_flow_capability_step_and_fixture_diagnostics()
+    {
+        using var workspace = new TestWorkspace();
+        WriteProjectLayout(workspace);
+        workspace.WriteFile(Path.Combine("project", ".cress", "profiles", "local.yaml"), "baseUrl: [");
+        workspace.WriteFile(Path.Combine("project", "capabilities", "broken.md"), """
+        ---
+        version: [
+        ---
+
+        # Broken capability
+        """);
+        workspace.WriteFile(Path.Combine("project", "flows", "broken.flow.yaml"), "version: [");
+        workspace.WriteFile(Path.Combine("project", "steps", "broken.yaml"), "version: [");
+        workspace.WriteFile(Path.Combine("project", "fixtures", "broken.yaml"), "version: [");
+
+        var validator = CreateValidator();
+
+        var result = validator.Validate(workspace.GetPath("project"));
+
+        Assert.Contains(result.Diagnostics, diagnostic => diagnostic.Code == "PRF004");
+        Assert.Contains(result.Diagnostics, diagnostic => diagnostic.Code == "CAP002");
+        Assert.Contains(result.Diagnostics, diagnostic => diagnostic.Code == "FLW001");
+        Assert.Contains(result.Diagnostics, diagnostic => diagnostic.Code == "STP001");
+        Assert.Contains(result.Diagnostics, diagnostic => diagnostic.Code == "FIX001");
     }
 
     private static ProjectValidator CreateValidator()

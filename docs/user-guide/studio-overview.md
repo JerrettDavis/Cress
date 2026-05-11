@@ -12,6 +12,13 @@ dotnet run --project src\Cress.AppHost\Cress.AppHost.csproj --configuration Rele
 
 The landing page is the orientation point for new users.
 
+It now gives you one place to:
+
+- start from suggested, recent, or built-in demo workspaces
+- search and prune recent workspace history without leaving the page
+- filter the demo list before loading a project
+- scan execution-node readiness before you run anything
+
 ![Studio landing page](../images/studio/landing.png)
 
 ## 2. Load a project
@@ -23,8 +30,11 @@ Once loaded, the project view gives you the explorer, selected flow context, and
 At this stage you can:
 
 - browse capabilities, flows, fixtures, and run history
+- use the status bar and theme controls without leaving the shell
 - switch between designer, source, results, and metrics
 - confirm that the project structure loaded correctly
+
+If you need to browse to a different folder first, use the in-app workspace picker and its built-in folder filter rather than leaving the shell.
 
 ## 3. Use Source for durable edits
 

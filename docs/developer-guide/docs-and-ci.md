@@ -20,10 +20,24 @@ Use this after:
 The reused Studio screenshots under `docs\images\studio\` are generated from the browser E2E flow so the docs stay aligned with the validated product surfaces.
 
 ```powershell
-cmd /c scripts\run-playwright-docs-e2e.cmd
+npm run test:e2e:docs
 ```
 
-This refreshes screenshots such as the landing page, loaded workspace, flow designer, source tab, recording picker, results panel, and metrics tab directly from the same Playwright scenarios used to validate the documented Studio workflow.
+This docs-focused run:
+
+1. enables `CRESS_CAPTURE_DOCS_SCREENSHOTS=1`
+2. writes screenshot artifacts from Playwright into `artifacts\playwright\`
+3. refreshes the reusable docs screenshots under `docs\images\studio\`
+
+It refreshes screenshots such as the landing page, workspace picker, loaded workspace, flow designer, source tab, recording picker, results panel, and metrics tab directly from the same Playwright scenarios used to validate the documented Studio workflow.
+
+For the regular browser suite, use:
+
+```powershell
+npm run test:e2e
+```
+
+That keeps Playwright failure screenshots, traces, and videos without rewriting the checked-in docs images.
 
 ## Site structure
 
@@ -62,5 +76,18 @@ If you add or change:
 
 - CLI commands or options, update the [CLI reference](../api/cli-reference.md)
 - project file conventions, update the [project schema guide](../api/project-schema.md)
-- Studio flows or screenshots, update the relevant user guides
+- Studio flows or screenshots, update the relevant user guides **and the [feature matrix](../user-guide/feature-matrix.md)**
 - repo structure or developer workflow, update this section and the root `README.md`
+
+## Feature map and screenshot policy
+
+The [feature map](../user-guide/feature-matrix.md) is the canonical inventory for user-visible features.
+
+For **every feature change**:
+
+1. update the matching row in the feature matrix
+2. add a new row if the feature is new
+3. refresh the screenshot if the UI changed materially
+4. keep the linked guide current so the matrix never points at stale behavior
+
+If the feature is primarily visual, do not consider the docs update done until the screenshot-backed matrix entry has been updated too.

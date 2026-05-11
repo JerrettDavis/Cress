@@ -108,6 +108,7 @@ public sealed class StudioWorkspaceState : IDisposable
 
     // Used to cancel the auto-clear timer when a new error arrives before the 8 s expires.
     private CancellationTokenSource? _errorClearCts;
+    private readonly object _liveRunEventsGate = new();
     private CancellationTokenSource? _activeRunCts;
     private CancellationTokenSource? _liveTickerCts;
 
@@ -492,6 +493,48 @@ public sealed class StudioWorkspaceState : IDisposable
     {
         SetProjectPath(path);
         LoadProject();
+    }
+
+    public void RemoveRecentWorkspace(string path)
+    {
+        if (string.IsNullOrWhiteSpace(path))
+        {
+            return;
+        }
+
+        var normalized = Path.GetFullPath(path.Trim());
+        var removed = RecentWorkspaces.RemoveAll(existing => string.Equals(existing, normalized, StringComparison.OrdinalIgnoreCase)) > 0;
+        if (!removed)
+        {
+            return;
+        }
+
+        if (string.Equals(ProjectPathInput, normalized, StringComparison.OrdinalIgnoreCase))
+        {
+            ProjectPathInput = RecentWorkspaces.FirstOrDefault() ?? SuggestedWorkspacePath;
+        }
+
+        UpdateReadyWorkspaceStatus();
+        NotifyChanged();
+    }
+
+    public void ClearRecentWorkspaces()
+    {
+        if (RecentWorkspaces.Count == 0)
+        {
+            return;
+        }
+
+        var currentPathWasRecent = RecentWorkspaces.Any(path => string.Equals(path, ProjectPathInput, StringComparison.OrdinalIgnoreCase));
+        RecentWorkspaces.Clear();
+
+        if (currentPathWasRecent || string.IsNullOrWhiteSpace(ProjectPathInput))
+        {
+            ProjectPathInput = SuggestedWorkspacePath;
+        }
+
+        UpdateReadyWorkspaceStatus();
+        NotifyChanged();
     }
 
     public void LoadDemoWorkspace(string demoId)
@@ -957,10 +1000,11 @@ public sealed class StudioWorkspaceState : IDisposable
                 RetryCountOverride = ParseRetryOverride(),
                 ScreenshotPolicyOverride = ScreenshotPolicy
             }, reloadAtEnd: true);
+            ApplySuiteCompletionStatus(suiteDocument.Name);
             return;
         }
 
-        LiveEvents.Clear();
+        ClearLiveEventHeadlines();
         LiveRunHeadline = $"Running suite {suiteDocument.Name}...";
         NotifyChanged();
 
@@ -978,10 +1022,16 @@ public sealed class StudioWorkspaceState : IDisposable
                     RetryCountOverride = ParseRetryOverride(),
                     ScreenshotPolicyOverride = ScreenshotPolicy
                 }, reloadAtEnd: false, clearLiveEvents: false);
+
+                if (string.Equals(LiveRunStatus, "Canceled", StringComparison.OrdinalIgnoreCase))
+                {
+                    ApplySuiteCompletionStatus(suiteDocument.Name);
+                    return;
+                }
             }
 
             LoadProjectCore(Snapshot.Catalog.ProjectRoot, profile, null, suiteDocument.FilePath);
-            StatusMessage = $"Suite {suiteDocument.Name} completed.";
+            ApplySuiteCompletionStatus(suiteDocument.Name);
         }
         catch (OperationCanceledException)
         {
@@ -1035,11 +1085,6 @@ public sealed class StudioWorkspaceState : IDisposable
 
         InitializeLiveRunState(options, clearLiveEvents);
         StartLiveTicker();
-        if (clearLiveEvents)
-        {
-            LiveEvents.Clear();
-            LiveTimelineEntries.Clear();
-        }
 
         IsBusy = true;
         LiveRunStatus = "Dispatching";
@@ -1367,8 +1412,7 @@ public sealed class StudioWorkspaceState : IDisposable
     {
         if (clearLiveEvents)
         {
-            LiveEvents.Clear();
-            LiveTimelineEntries.Clear();
+            ClearLiveRunEvents();
         }
 
         LiveRunId = null;
@@ -1562,21 +1606,41 @@ public sealed class StudioWorkspaceState : IDisposable
 
     private void AddLiveTimelineEntry(StudioLiveRunEntry entry, bool addStringEvent)
     {
-        LiveTimelineEntries.Insert(0, entry);
-        if (LiveTimelineEntries.Count > 200)
+        lock (_liveRunEventsGate)
         {
-            LiveTimelineEntries.RemoveRange(200, LiveTimelineEntries.Count - 200);
-        }
+            LiveTimelineEntries.Insert(0, entry);
+            if (LiveTimelineEntries.Count > 200)
+            {
+                LiveTimelineEntries.RemoveRange(200, LiveTimelineEntries.Count - 200);
+            }
 
-        if (!addStringEvent)
-        {
-            return;
-        }
+            if (!addStringEvent)
+            {
+                return;
+            }
 
-        LiveEvents.Insert(0, entry.Headline);
-        if (LiveEvents.Count > 200)
+            LiveEvents.Insert(0, entry.Headline);
+            if (LiveEvents.Count > 200)
+            {
+                LiveEvents.RemoveRange(200, LiveEvents.Count - 200);
+            }
+        }
+    }
+
+    private void ClearLiveEventHeadlines()
+    {
+        lock (_liveRunEventsGate)
         {
-            LiveEvents.RemoveRange(200, LiveEvents.Count - 200);
+            LiveEvents.Clear();
+        }
+    }
+
+    private void ClearLiveRunEvents()
+    {
+        lock (_liveRunEventsGate)
+        {
+            LiveEvents.Clear();
+            LiveTimelineEntries.Clear();
         }
     }
 
@@ -1751,6 +1815,13 @@ public sealed class StudioWorkspaceState : IDisposable
         }
     }
 
+    private void UpdateReadyWorkspaceStatus()
+    {
+        StatusMessage = string.IsNullOrWhiteSpace(ProjectPathInput)
+            ? "Choose a workspace path, browse for a folder, or open a demo."
+            : $"Ready to load {ProjectPathInput}.";
+    }
+
     private static IReadOnlyList<StudioDemoWorkspace> BuildDemoWorkspaces()
     {
         var demos = new List<StudioDemoWorkspace>();
@@ -1908,6 +1979,27 @@ public sealed class StudioWorkspaceState : IDisposable
            $"Drivers: {string.Join(", ", step.Drivers)}{Environment.NewLine}" +
            $"Plugin: {step.Implementation?.Plugin}{Environment.NewLine}" +
            $"Operation: {step.Implementation?.Operation}";
+
+    private void ApplySuiteCompletionStatus(string suiteName)
+    {
+        if (string.Equals(LiveRunStatus, "Canceled", StringComparison.OrdinalIgnoreCase))
+        {
+            LiveRunHeadline = $"Suite {suiteName} canceled.";
+            StatusMessage = $"Suite {suiteName} canceled.";
+        }
+        else if (string.Equals(LiveRunStatus, "Failed", StringComparison.OrdinalIgnoreCase))
+        {
+            LiveRunHeadline = $"Suite {suiteName} completed with failures.";
+            StatusMessage = $"Suite {suiteName} completed with failures.";
+        }
+        else
+        {
+            LiveRunHeadline = $"Suite {suiteName} completed.";
+            StatusMessage = $"Suite {suiteName} completed.";
+        }
+
+        NotifyChanged();
+    }
 
     private static string BuildSuiteSummary(StudioSuiteEditorModel suite)
     {

@@ -9,16 +9,54 @@
             <p>Preview screenshots, structured reports, and supporting evidence side by side.</p>
         </div>
     </div>
-    <input class="text-input" @bind="State.ArtifactFilter" @bind:event="oninput" placeholder="Filter artifacts" />
-    <div class="stack-list">
-        @{
-            var filtered = State.SelectedRunArtifacts.Where(item => string.IsNullOrWhiteSpace(State.ArtifactFilter)
-                || item.DisplayName.Contains(State.ArtifactFilter, StringComparison.OrdinalIgnoreCase)
-                || item.Detail.Contains(State.ArtifactFilter, StringComparison.OrdinalIgnoreCase)).ToList();
+    @{
+        var filtered = FilterArtifacts(State.SelectedRunArtifacts).ToList();
+        var imageCount = filtered.Count(item => GetArtifactKind(item) == "image");
+    }
+    <div class="suite-flow-tools">
+        <div class="field-stack suite-flow-search">
+            <label for="artifact-filter">Search artifacts</label>
+            <div class="explorer-search-field">
+                <span class="explorer-search-icon" aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+                    </svg>
+                </span>
+                <input id="artifact-filter" class="text-input explorer-search-input" @bind="State.ArtifactFilter" @bind:event="oninput" placeholder="Filter artifacts" data-testid="artifact-filter" />
+                @if (!string.IsNullOrWhiteSpace(State.ArtifactFilter))
+                {
+                    <button type="button" class="explorer-search-clear" aria-label="Clear artifact filter" @onclick="ClearArtifactFilter">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
+                        </svg>
+                    </button>
+                }
+            </div>
+        </div>
+        <div class="artifact-filter-buttons" role="group" aria-label="Artifact type filter">
+            @foreach (var filter in ArtifactTypeFilters)
+            {
+                <button type="button"
+                        class="action-button @GetArtifactFilterButtonClass(filter.Key)"
+                        data-testid="@($"artifact-type-{filter.Key}")"
+                        @onclick="() => _artifactTypeFilter = filter.Key">
+                    @filter.Label
+                </button>
+            }
+        </div>
+    </div>
+    <div class="suite-flow-summary" data-testid="artifact-filter-summary">
+        <span class="pill">@filtered.Count shown</span>
+        <span class="pill">@imageCount images</span>
+        @if (_artifactTypeFilter != "all")
+        {
+            <span class="pill">Type: @ArtifactTypeFilters.First(filter => filter.Key == _artifactTypeFilter).Label</span>
         }
+    </div>
+    <div class="stack-list">
         @if (filtered.Count == 0)
         {
-            <p class="subpanel-empty">No artifacts match the current filter.</p>
+            <p class="subpanel-empty" data-testid="artifact-filter-empty">No artifacts match the current filters.</p>
         }
         else
         {
@@ -46,7 +84,7 @@
             <h3>Preview</h3>
             <p>Open the selected report or evidence asset directly in context.</p>
         </div>
-        <button type="button" class="action-button" @onclick="OpenArtifactAsync" disabled="@(State.SelectedArtifact is null)">Open artifact</button>
+        <button type="button" class="action-button" data-testid="artifact-open-button" @onclick="OpenArtifactAsync" disabled="@(State.SelectedArtifact is null)">Open artifact</button>
     </div>
     @if (!string.IsNullOrWhiteSpace(State.PreviewImageDataUrl))
     {
@@ -63,6 +101,16 @@
 </section>
 
 @code {
+    private string _artifactTypeFilter = "all";
+    private static readonly (string Key, string Label)[] ArtifactTypeFilters =
+    [
+        ("all", "All"),
+        ("image", "Images"),
+        ("report", "Reports"),
+        ("text", "Text"),
+        ("other", "Other")
+    ];
+
     protected override void OnInitialized()
     {
         State.Changed += HandleStateChanged;
@@ -76,6 +124,24 @@
     private void HandleStateChanged()
         => InvokeAsync(StateHasChanged);
 
+    private void ClearArtifactFilter()
+        => State.ArtifactFilter = string.Empty;
+
+    private IEnumerable<StudioArtifactItem> FilterArtifacts(IEnumerable<StudioArtifactItem> items)
+        => items.Where(ArtifactMatchesFilter);
+
+    private bool ArtifactMatchesFilter(StudioArtifactItem item)
+    {
+        if (_artifactTypeFilter != "all" && GetArtifactKind(item) != _artifactTypeFilter)
+        {
+            return false;
+        }
+
+        return string.IsNullOrWhiteSpace(State.ArtifactFilter)
+            || item.DisplayName.Contains(State.ArtifactFilter, StringComparison.OrdinalIgnoreCase)
+            || item.Detail.Contains(State.ArtifactFilter, StringComparison.OrdinalIgnoreCase);
+    }
+
     private async Task OpenArtifactAsync()
     {
         var path = State.SelectedArtifact?.Path;
@@ -88,6 +154,9 @@
     private static string GetArtifactButtonClass(bool selected)
         => selected ? "explorer-button selected" : "explorer-button";
 
+    private string GetArtifactFilterButtonClass(string filter)
+        => _artifactTypeFilter == filter ? "primary" : string.Empty;
+
     private static string GetArtifactTypeLabel(string displayName)
     {
         var ext = System.IO.Path.GetExtension(displayName).ToLowerInvariant();
@@ -99,6 +168,18 @@
             ".md" or ".txt" => "doc",
             ".pdf" => "pdf",
             _ => "file"
+        };
+    }
+
+    private static string GetArtifactKind(StudioArtifactItem artifact)
+    {
+        var ext = System.IO.Path.GetExtension(artifact.Path).ToLowerInvariant();
+        return ext switch
+        {
+            ".png" or ".jpg" or ".jpeg" or ".gif" or ".svg" or ".webp" => "image",
+            ".json" or ".html" or ".htm" or ".xml" or ".pdf" => "report",
+            ".md" or ".txt" or ".log" => "text",
+            _ => "other"
         };
     }
 }

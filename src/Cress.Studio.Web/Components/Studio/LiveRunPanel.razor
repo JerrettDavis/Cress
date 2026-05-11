@@ -72,7 +72,7 @@
         }
     </div>
 
-    <section class="live-run-current" data-testid="live-run-current">
+    <section class="live-run-current" data-testid="live-run-current" role="status" aria-live="polite" aria-atomic="true">
         <div class="live-run-current-copy">
             <span class="live-run-section-kicker">Current checkpoint</span>
             <strong data-testid="live-run-current-title">@BuildCurrentCheckpointTitle()</strong>
@@ -102,6 +102,16 @@
     {
         <div class="field-stack">
             <label>Timeline and live log</label>
+            <div class="live-run-log-summary" data-testid="live-run-log-summary">
+                @if (State.HasLiveTimeline)
+                {
+                    <span>Showing the latest @Math.Min(State.LiveTimelineEntries.Count, 24) of @State.LiveTimelineEntries.Count timeline events.</span>
+                }
+                else
+                {
+                    <span>The timeline will populate as the run starts reporting progress.</span>
+                }
+            </div>
             @if (!State.HasLiveTimeline)
             {
                 <div class="subpanel-empty" data-testid="live-run-log-empty">No live events yet.</div>

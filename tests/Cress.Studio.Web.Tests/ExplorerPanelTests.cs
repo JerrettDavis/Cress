@@ -11,6 +11,37 @@ namespace Cress.Studio.Web.Tests;
 
 public sealed class ExplorerPanelTests : TestContext
 {
+    private static StudioProjectSnapshot CreateSnapshot()
+        => new()
+        {
+            Catalog = new ProjectCatalog
+            {
+                NormalizedFlows =
+                [
+                    new NormalizedFlow { FlowId = "flow-alpha", Name = "Alpha flow", SourceFile = @"C:\workspace\flows\alpha.flow.yaml" },
+                    new NormalizedFlow { FlowId = "flow-beta", Name = "Beta flow", SourceFile = @"C:\workspace\flows\beta.flow.yaml" }
+                ],
+                Capabilities =
+                [
+                    new CressCapability { Id = "cap-auth", Name = "Authentication" }
+                ],
+                FixtureDefinitions = new Dictionary<string, FixtureDefinition>(StringComparer.OrdinalIgnoreCase)
+                {
+                    ["browser"] = new FixtureDefinition { Name = "browser", Type = "playwright.browser" }
+                },
+                StepRegistry = new StepRegistrySnapshot(
+                    new Dictionary<string, StepDefinition>(StringComparer.OrdinalIgnoreCase)
+                    {
+                        ["log-in"] = new StepDefinition
+                        {
+                            Name = "Log in",
+                            Implementation = new StepImplementationBinding { Plugin = "builtin", Operation = "login" }
+                        }
+                    },
+                    new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase))
+            }
+        };
+
     private StudioWorkspaceState CreateState()
     {
         Services.AddCressStudioBackend();
@@ -41,18 +72,7 @@ public sealed class ExplorerPanelTests : TestContext
     public void ExplorerPanel_renders_both_flow_names_when_snapshot_has_two_flows()
     {
         var state = CreateState();
-
-        var snapshot = new StudioProjectSnapshot
-        {
-            Catalog = new ProjectCatalog
-            {
-                NormalizedFlows =
-                [
-                    new NormalizedFlow { FlowId = "flow-alpha", Name = "Alpha flow", SourceFile = @"C:\workspace\flows\alpha.flow.yaml" },
-                    new NormalizedFlow { FlowId = "flow-beta",  Name = "Beta flow",  SourceFile = @"C:\workspace\flows\beta.flow.yaml" }
-                ]
-            }
-        };
+        var snapshot = CreateSnapshot();
 
         SetPrivate(state, "Snapshot", snapshot);
 
@@ -66,14 +86,7 @@ public sealed class ExplorerPanelTests : TestContext
     public void ExplorerPanel_renders_runs_section_when_runs_exist()
     {
         var state = CreateState();
-
-        var snapshot = new StudioProjectSnapshot
-        {
-            Catalog = new ProjectCatalog
-            {
-                NormalizedFlows = []
-            }
-        };
+        var snapshot = CreateSnapshot();
 
         SetPrivate(state, "Snapshot", snapshot);
 
@@ -103,14 +116,7 @@ public sealed class ExplorerPanelTests : TestContext
     public void ExplorerPanel_filter_input_is_bound_to_state_explorer_filter()
     {
         var state = CreateState();
-
-        var snapshot = new StudioProjectSnapshot
-        {
-            Catalog = new ProjectCatalog
-            {
-                NormalizedFlows = []
-            }
-        };
+        var snapshot = CreateSnapshot();
 
         SetPrivate(state, "Snapshot", snapshot);
 
@@ -122,5 +128,66 @@ public sealed class ExplorerPanelTests : TestContext
         filterInput.Input("my-filter");
 
         Assert.Equal("my-filter", state.ExplorerFilter);
+    }
+
+    [Fact]
+    public void ExplorerPanel_filter_summary_reports_match_counts()
+    {
+        var state = CreateState();
+        SetPrivate(state, "Snapshot", CreateSnapshot());
+        state.Suites.Add(new StudioSuiteDocument { Id = "smoke", Name = "Smoke suite", FilePath = @"C:\workspace\suites\smoke.suite.yaml" });
+
+        var cut = RenderComponent<Cress.Studio.Web.Components.Studio.ExplorerPanel>();
+
+        cut.Find("#explorerFilter").Input("auth");
+
+        var summary = cut.Find("[data-testid='explorer-filter-summary']").TextContent;
+        Assert.Contains("1 matches", summary);
+        Assert.Contains("1 capabilities", summary);
+        Assert.Contains("0 flows", summary);
+    }
+
+    [Fact]
+    public void ExplorerPanel_filter_opens_matching_collapsed_sections()
+    {
+        var state = CreateState();
+        SetPrivate(state, "Snapshot", CreateSnapshot());
+
+        var run = new StoredRunResult
+        {
+            Result = new RunResult
+            {
+                Metadata = new RunMetadata
+                {
+                    RunId = "nightly-auth-run",
+                    Profile = "local",
+                    StartedAt = new DateTimeOffset(2026, 3, 1, 9, 0, 0, TimeSpan.Zero)
+                },
+                Flows = []
+            }
+        };
+
+        state.Runs.Add(run);
+
+        var cut = RenderComponent<Cress.Studio.Web.Components.Studio.ExplorerPanel>();
+
+        cut.Find("#explorerFilter").Input("nightly");
+
+        Assert.True(cut.Find("[data-testid='explorer-runs-section']").HasAttribute("open"));
+        Assert.Contains("nightly-auth-run", cut.Markup);
+    }
+
+    [Fact]
+    public void ExplorerPanel_shows_global_empty_state_when_filter_matches_nothing()
+    {
+        var state = CreateState();
+        SetPrivate(state, "Snapshot", CreateSnapshot());
+
+        var cut = RenderComponent<Cress.Studio.Web.Components.Studio.ExplorerPanel>();
+
+        cut.Find("#explorerFilter").Input("does-not-exist");
+
+        Assert.Contains("No explorer items match the current filter", cut.Markup);
+        Assert.True(cut.Find("[data-testid='explorer-filter-summary']").TextContent.Contains("0 matches", StringComparison.Ordinal));
     }
 }

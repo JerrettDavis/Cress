@@ -1,4 +1,3 @@
-using System.Reflection;
 using System.Text.Json;
 using Cress.Core.Models;
 using Cress.Sdk;
@@ -7,12 +6,17 @@ namespace Cress.Execution;
 
 public sealed class PluginHost
 {
-    private readonly Dictionary<string, IReadOnlyList<ICressPluginModule>> _cache = new(StringComparer.OrdinalIgnoreCase);
+    private readonly IDotNetPluginModuleLoader _dotNetPluginModuleLoader;
     private static readonly string? NodeHostScriptPath = RepositoryAssetLocator.FindRepositoryAsset(Path.Combine("node", "cress-plugin-host-node", "host.js"));
+
+    public PluginHost(IDotNetPluginModuleLoader? dotNetPluginModuleLoader = null)
+    {
+        _dotNetPluginModuleLoader = dotNetPluginModuleLoader ?? new ReflectionDotNetPluginModuleLoader();
+    }
 
     public async Task<DriverExecutionResult> InvokeStepAsync(ProjectCatalog catalog, PlanAction action, FlowExecutionContext context, CancellationToken cancellationToken)
     {
-        var modules = LoadDotNetModules(catalog.ProjectRoot, action.Plugin);
+        var modules = _dotNetPluginModuleLoader.LoadModules(catalog.ProjectRoot, action.Plugin);
         if (modules.Count == 0)
         {
             if (TryResolveNodePluginRoot(catalog.ProjectRoot, action.Plugin, out var pluginRoot))
@@ -20,65 +24,27 @@ public sealed class PluginHost
                 return await InvokeNodeStepAsync(catalog, pluginRoot!, action, context, cancellationToken);
             }
 
-            return new DriverExecutionResult
-            {
-                Outcome = RunOutcome.Failed,
-                Message = $"Plugin '{action.Plugin}' could not be loaded.",
-                FailureClassification = "plugin-not-found"
-            };
+            return CreateFailureResult($"Plugin '{action.Plugin}' could not be loaded.", "plugin-not-found");
         }
 
-        foreach (var module in modules)
+        var handler = FindStepHandler(modules, action.Operation);
+        if (handler is null)
         {
-            var handler = module.GetStepHandlers().FirstOrDefault(item => item.Operation.Equals(action.Operation, StringComparison.OrdinalIgnoreCase));
-            if (handler is null)
-            {
-                continue;
-            }
-
-            var result = await handler.Execute(new StepExecutionContext
-            {
-                FlowId = context.FlowId,
-                StepName = action.Name,
-                ArtifactDirectory = context.ArtifactRoot,
-                BaseUrl = context.EffectiveConfig.Profile.BaseUrl,
-                Inputs = action.Inputs,
-                Variables = new Dictionary<string, string>(context.Variables, StringComparer.OrdinalIgnoreCase),
-                Fixtures = new Dictionary<string, string>(context.Fixtures, StringComparer.OrdinalIgnoreCase),
-                Logger = context.Logger,
-                Drivers = context.Drivers
-            }, cancellationToken);
-
-            return new DriverExecutionResult
-            {
-                Outcome = result.Success ? RunOutcome.Passed : RunOutcome.Failed,
-                Message = result.Message,
-                FailureClassification = result.FailureClassification,
-                Outputs = result.Outputs,
-                Artifacts = result.Artifacts
-            };
+            return CreateFailureResult($"Operation '{action.Operation}' was not found in plugin '{action.Plugin}'.", "plugin-operation-not-found");
         }
 
-        return new DriverExecutionResult
-        {
-            Outcome = RunOutcome.Failed,
-            Message = $"Operation '{action.Operation}' was not found in plugin '{action.Plugin}'.",
-            FailureClassification = "plugin-operation-not-found"
-        };
+        var result = await handler.Execute(CreateStepExecutionContext(action, context), cancellationToken);
+        return ToDriverResult(result);
     }
 
     public async Task<DriverExecutionResult> InvokeFixtureAsync(ProjectCatalog catalog, PlanAction action, FlowExecutionContext context, CancellationToken cancellationToken)
     {
         if (string.IsNullOrWhiteSpace(action.Plugin) || string.IsNullOrWhiteSpace(action.Operation))
         {
-            return new DriverExecutionResult
-            {
-                Outcome = RunOutcome.Passed,
-                Message = "No fixture provider was configured; using metadata-only fixture resolution."
-            };
+            return CreateMetadataOnlyFixtureResult();
         }
 
-        var modules = LoadDotNetModules(catalog.ProjectRoot, action.Plugin);
+        var modules = _dotNetPluginModuleLoader.LoadModules(catalog.ProjectRoot, action.Plugin);
         if (modules.Count == 0)
         {
             if (TryResolveNodePluginRoot(catalog.ProjectRoot, action.Plugin, out var pluginRoot))
@@ -86,55 +52,24 @@ public sealed class PluginHost
                 return await InvokeNodeFixtureAsync(catalog, pluginRoot!, action, context, cancellationToken);
             }
 
-            return new DriverExecutionResult
-            {
-                Outcome = RunOutcome.Failed,
-                Message = $"Fixture plugin '{action.Plugin}' could not be loaded.",
-                FailureClassification = "fixture-plugin-not-found"
-            };
+            return CreateFailureResult($"Fixture plugin '{action.Plugin}' could not be loaded.", "fixture-plugin-not-found");
         }
 
-        foreach (var module in modules)
+        var handler = FindFixtureProvider(modules, action.Operation);
+        if (handler is null)
         {
-            var handler = module.GetFixtureProviders().FirstOrDefault(item => item.Operation.Equals(action.Operation, StringComparison.OrdinalIgnoreCase));
-            if (handler is null)
-            {
-                continue;
-            }
-
-            var result = await handler.Execute(new FixtureExecutionContext
-            {
-                FlowId = context.FlowId,
-                FixtureAlias = action.Inputs.TryGetValue("alias", out var alias) ? alias : action.Fixture ?? string.Empty,
-                FixtureName = action.Fixture ?? string.Empty,
-                ArtifactDirectory = context.ArtifactRoot,
-                Bindings = action.Inputs,
-                Variables = new Dictionary<string, string>(context.Variables, StringComparer.OrdinalIgnoreCase),
-                Logger = context.Logger
-            }, cancellationToken);
-
-            return new DriverExecutionResult
-            {
-                Outcome = result.Success ? RunOutcome.Passed : RunOutcome.Failed,
-                Message = result.Message,
-                Outputs = result.Outputs,
-                Artifacts = result.Artifacts
-            };
+            return CreateFailureResult($"Fixture operation '{action.Operation}' was not found in plugin '{action.Plugin}'.", "fixture-operation-not-found");
         }
 
-        return new DriverExecutionResult
-        {
-            Outcome = RunOutcome.Failed,
-            Message = $"Fixture operation '{action.Operation}' was not found in plugin '{action.Plugin}'.",
-            FailureClassification = "fixture-operation-not-found"
-        };
+        var result = await handler.Execute(CreateFixtureExecutionContext(action, context), cancellationToken);
+        return ToDriverResult(result);
     }
 
     public IReadOnlyList<Diagnostic> Probe(ProjectCatalog catalog, string pluginName)
     {
         try
         {
-            var modules = LoadDotNetModules(catalog.ProjectRoot, pluginName);
+            var modules = _dotNetPluginModuleLoader.LoadModules(catalog.ProjectRoot, pluginName);
             if (modules.Count > 0)
             {
                 return [];
@@ -378,45 +313,75 @@ public sealed class PluginHost
         };
     }
 
-    private IReadOnlyList<ICressPluginModule> LoadDotNetModules(string projectRoot, string? pluginName)
-    {
-        if (string.IsNullOrWhiteSpace(pluginName))
+    private static StepHandlerRegistration? FindStepHandler(IEnumerable<ICressPluginModule> modules, string? operation)
+        => modules
+            .SelectMany(module => module.GetStepHandlers())
+            .FirstOrDefault(item => item.Operation.Equals(operation, StringComparison.OrdinalIgnoreCase));
+
+    private static FixtureProviderRegistration? FindFixtureProvider(IEnumerable<ICressPluginModule> modules, string? operation)
+        => modules
+            .SelectMany(module => module.GetFixtureProviders())
+            .FirstOrDefault(item => item.Operation.Equals(operation, StringComparison.OrdinalIgnoreCase));
+
+    private static StepExecutionContext CreateStepExecutionContext(PlanAction action, FlowExecutionContext context)
+        => new()
         {
-            return [];
-        }
+            FlowId = context.FlowId,
+            StepName = action.Name,
+            ArtifactDirectory = context.ArtifactRoot,
+            BaseUrl = context.EffectiveConfig.Profile.BaseUrl,
+            Inputs = action.Inputs,
+            Variables = new Dictionary<string, string>(context.Variables, StringComparer.OrdinalIgnoreCase),
+            Fixtures = new Dictionary<string, string>(context.Fixtures, StringComparer.OrdinalIgnoreCase),
+            Logger = context.Logger,
+            Drivers = context.Drivers
+        };
 
-        if (_cache.TryGetValue(pluginName, out var cached))
+    private static FixtureExecutionContext CreateFixtureExecutionContext(PlanAction action, FlowExecutionContext context)
+        => new()
         {
-            return cached;
-        }
+            FlowId = context.FlowId,
+            FixtureAlias = action.Inputs.TryGetValue("alias", out var alias) ? alias : action.Fixture ?? string.Empty,
+            FixtureName = action.Fixture ?? string.Empty,
+            ArtifactDirectory = context.ArtifactRoot,
+            Bindings = action.Inputs,
+            Variables = new Dictionary<string, string>(context.Variables, StringComparer.OrdinalIgnoreCase),
+            Logger = context.Logger
+        };
 
-        var candidates = Directory.Exists(Path.Combine(projectRoot, "steps", "dotnet"))
-            ? Directory.EnumerateFiles(Path.Combine(projectRoot, "steps", "dotnet"), $"{pluginName}.dll", SearchOption.AllDirectories)
-                .Where(path => path.Contains($"{Path.DirectorySeparatorChar}bin{Path.DirectorySeparatorChar}", StringComparison.OrdinalIgnoreCase))
-                .Where(path => !path.Contains($"{Path.DirectorySeparatorChar}ref{Path.DirectorySeparatorChar}", StringComparison.OrdinalIgnoreCase))
-                .OrderByDescending(File.GetLastWriteTimeUtc)
-                .Take(1)
-            : [];
-
-        var modules = new List<ICressPluginModule>();
-        foreach (var candidate in candidates)
+    private static DriverExecutionResult CreateMetadataOnlyFixtureResult()
+        => new()
         {
-            var assembly = Assembly.LoadFrom(Path.GetFullPath(candidate));
-            foreach (var type in assembly.GetTypes().Where(type =>
-                         typeof(ICressPluginModule).IsAssignableFrom(type) &&
-                         !type.IsAbstract &&
-                         type.GetConstructor(Type.EmptyTypes) is not null))
-            {
-                if (Activator.CreateInstance(type) is ICressPluginModule module)
-                {
-                    modules.Add(module);
-                }
-            }
-        }
+            Outcome = RunOutcome.Passed,
+            Message = "No fixture provider was configured; using metadata-only fixture resolution."
+        };
 
-        _cache[pluginName] = modules;
-        return modules;
-    }
+    private static DriverExecutionResult CreateFailureResult(string message, string failureClassification)
+        => new()
+        {
+            Outcome = RunOutcome.Failed,
+            Message = message,
+            FailureClassification = failureClassification
+        };
+
+    private static DriverExecutionResult ToDriverResult(StepExecutionResult result)
+        => new()
+        {
+            Outcome = result.Success ? RunOutcome.Passed : RunOutcome.Failed,
+            Message = result.Message,
+            FailureClassification = result.FailureClassification,
+            Outputs = result.Outputs,
+            Artifacts = result.Artifacts
+        };
+
+    private static DriverExecutionResult ToDriverResult(FixtureExecutionResult result)
+        => new()
+        {
+            Outcome = result.Success ? RunOutcome.Passed : RunOutcome.Failed,
+            Message = result.Message,
+            Outputs = result.Outputs,
+            Artifacts = result.Artifacts
+        };
 
     private sealed record NodeExecutionResponse(
         string Status,

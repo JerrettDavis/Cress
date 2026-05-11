@@ -34,6 +34,7 @@ public sealed class ThemeToggleTests : TestContext
 
         Assert.Single(activeButtons);
         Assert.Equal("System theme", activeButtons[0].GetAttribute("aria-label"));
+        Assert.Contains("Theme: System", cut.Find("[data-testid='theme-toggle-summary']").TextContent);
     }
 
     [Fact]
@@ -47,5 +48,6 @@ public sealed class ThemeToggleTests : TestContext
         var activeButtons = cut.FindAll(".tab-button.active");
         Assert.Single(activeButtons);
         Assert.Equal("Light theme", activeButtons[0].GetAttribute("aria-label"));
+        Assert.Contains("Theme: Light", cut.Find("[data-testid='theme-toggle-summary']").TextContent);
     }
 }

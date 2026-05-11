@@ -78,6 +78,8 @@ The existing product screenshots are included throughout the guides so teams can
 
 ![Cress Studio project view](images/studio/project-loaded.png)
 
+Need a screenshot-backed inventory of what ships today? Start with the [feature map](user-guide/feature-matrix.md).
+
 ## Documentation map
 
 - [Getting started](getting-started/index.md)

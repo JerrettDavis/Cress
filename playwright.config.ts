@@ -3,9 +3,11 @@ import { defineConfig, devices } from '@playwright/test';
 const port = 5076;
 const baseURL = `http://127.0.0.1:${port}`;
 const dotnet = '"C:\\Program Files\\dotnet\\dotnet.exe"';
+const captureDocsScreenshots = process.env.CRESS_CAPTURE_DOCS_SCREENSHOTS === '1';
 
 export default defineConfig({
   testDir: 'tests/studio-web-e2e',
+  outputDir: 'artifacts/playwright',
   fullyParallel: false,
   workers: 1,
   timeout: 60000,
@@ -17,7 +19,7 @@ export default defineConfig({
     baseURL,
     browserName: 'chromium',
     headless: true,
-    screenshot: 'only-on-failure',
+    screenshot: captureDocsScreenshots ? 'on' : 'only-on-failure',
     trace: 'retain-on-failure',
     video: 'retain-on-failure',
     testIdAttribute: 'data-testid'

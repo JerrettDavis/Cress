@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using Cress.Core.Models;
-using JerrettDavis.Flawright;
+using Flawright;
+using FlawrightClient = Flawright.Flawright;
 
 namespace Cress.Execution.Drivers;
 
@@ -207,7 +208,7 @@ public sealed class FlawrightRuntimeDriver : IRuntimeDriver
                 StartupTimeout = TimeSpan.FromMilliseconds(timeout)
             };
 
-            var flawright = await Flawright.LaunchAsync(launchOptions, BuildFlawrightOptions(timeout), cancellationToken).ConfigureAwait(false);
+            var flawright = await FlawrightClient.LaunchAsync(launchOptions, BuildFlawrightOptions(timeout), cancellationToken).ConfigureAwait(false);
             var browser = flawright.Browser;
             var page = await ResolvePageAsync(browser, GetWindowTitle(action), timeout, cancellationToken).ConfigureAwait(false);
 
@@ -260,7 +261,7 @@ public sealed class FlawrightRuntimeDriver : IRuntimeDriver
             }
 
             var timeout = ResolveTimeoutMs(action);
-            var flawright = await Flawright.AttachAsync(attachOptions, BuildFlawrightOptions(timeout), cancellationToken).ConfigureAwait(false);
+            var flawright = await FlawrightClient.AttachAsync(attachOptions, BuildFlawrightOptions(timeout), cancellationToken).ConfigureAwait(false);
             var browser = flawright.Browser;
             var page = await ResolvePageAsync(browser, GetWindowTitle(action), timeout, cancellationToken).ConfigureAwait(false);
 

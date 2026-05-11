@@ -25,6 +25,45 @@
                 </div>
             </div>
 
+            @{
+                var filteredEntries = FilterEntries(State.WorkspaceBrowserEntries).ToList();
+                var workspaceMatches = filteredEntries.Count(entry => entry.IsCressWorkspace);
+            }
+
+            <div class="field-stack explorer-search-wrap workspace-picker-filter-wrap">
+                <label for="workspace-picker-filter">Search folders</label>
+                <div class="explorer-search-field">
+                    <span class="explorer-search-icon" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+                        </svg>
+                    </span>
+                    <input id="workspace-picker-filter"
+                           class="text-input explorer-search-input"
+                           @bind="_entryFilter"
+                           @bind:event="oninput"
+                           placeholder="Filter by folder name or path"
+                           data-testid="workspace-picker-filter" />
+                    @if (!string.IsNullOrWhiteSpace(_entryFilter))
+                    {
+                        <button type="button" class="explorer-search-clear" aria-label="Clear workspace filter" @onclick="ClearFilter">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
+                            </svg>
+                        </button>
+                    }
+                </div>
+            </div>
+
+            <div class="suite-flow-summary workspace-picker-summary" data-testid="workspace-picker-summary">
+                <span class="pill">@filteredEntries.Count shown</span>
+                <span class="pill">@workspaceMatches workspaces</span>
+                @if (!string.IsNullOrWhiteSpace(_entryFilter))
+                {
+                    <span class="pill">Filter: @_entryFilter</span>
+                }
+            </div>
+
             @if (!string.IsNullOrWhiteSpace(State.WorkspaceBrowserError))
             {
                 <div class="workspace-picker-error" data-testid="workspace-picker-error">@State.WorkspaceBrowserError</div>
@@ -34,10 +73,14 @@
             {
                 <p class="subpanel-empty" data-testid="workspace-picker-empty">No folders are available here. Move up a level or choose another root.</p>
             }
+            else if (filteredEntries.Count == 0)
+            {
+                <p class="subpanel-empty" data-testid="workspace-picker-filter-empty">No folders match the current filter. Clear the search to see the full folder list.</p>
+            }
             else
             {
                 <div class="workspace-picker-list" data-testid="workspace-picker-list">
-                    @foreach (var entry in State.WorkspaceBrowserEntries)
+                    @foreach (var entry in filteredEntries)
                     {
                         <div class="workspace-picker-row" data-testid="@($"workspace-picker-row-{ToTestIdSegment(entry.Path)}")">
                             <div class="workspace-picker-entry" data-testid="@($"workspace-picker-entry-{ToTestIdSegment(entry.Path)}")">
@@ -72,6 +115,8 @@
 }
 
 @code {
+    private string _entryFilter = string.Empty;
+
     protected override void OnInitialized()
     {
         State.Changed += HandleStateChanged;
@@ -86,7 +131,13 @@
         => InvokeAsync(StateHasChanged);
 
     private void Close()
-        => State.CloseWorkspacePicker();
+    {
+        _entryFilter = string.Empty;
+        State.CloseWorkspacePicker();
+    }
+
+    private void ClearFilter()
+        => _entryFilter = string.Empty;
 
     private void Browse(string path)
         => State.BrowseWorkspacePath(path);
@@ -108,6 +159,21 @@
 
     private void LoadCurrentFolder()
         => State.ChooseWorkspaceFromPicker(State.WorkspaceBrowserCurrentPath, loadImmediately: true);
+
+    private IEnumerable<StudioDirectoryEntry> FilterEntries(IEnumerable<StudioDirectoryEntry> entries)
+        => entries.Where(EntryMatchesFilter);
+
+    private bool EntryMatchesFilter(StudioDirectoryEntry entry)
+    {
+        if (string.IsNullOrWhiteSpace(_entryFilter))
+        {
+            return true;
+        }
+
+        return entry.Name.Contains(_entryFilter, StringComparison.OrdinalIgnoreCase)
+            || entry.Path.Contains(_entryFilter, StringComparison.OrdinalIgnoreCase)
+            || (entry.IsCressWorkspace && "workspace".Contains(_entryFilter, StringComparison.OrdinalIgnoreCase));
+    }
 
     private static string ToTestIdSegment(string? value)
     {

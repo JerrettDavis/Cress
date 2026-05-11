@@ -52,6 +52,62 @@
                 }
                 else
                 {
+                    var filteredTargets = FilterDesktopTargets(_targets).ToList();
+                    var attachableCount = filteredTargets.Count(target => target.IsAttachable);
+
+                    <div class="suite-flow-tools">
+                        <div class="field-stack suite-flow-search">
+                            <label for="desktop-target-filter">Search processes</label>
+                            <div class="explorer-search-field">
+                                <span class="explorer-search-icon" aria-hidden="true">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+                                    </svg>
+                                </span>
+                                <input id="desktop-target-filter"
+                                       class="text-input explorer-search-input"
+                                       @bind="_desktopFilter"
+                                       @bind:event="oninput"
+                                       placeholder="Filter by process, title, or PID"
+                                       data-testid="recording-picker-desktop-filter" />
+                                @if (!string.IsNullOrWhiteSpace(_desktopFilter))
+                                {
+                                    <button type="button" class="explorer-search-clear" aria-label="Clear process filter" @onclick="ClearDesktopFilter">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
+                                        </svg>
+                                    </button>
+                                }
+                            </div>
+                        </div>
+                        <label class="suite-flow-toggle" for="desktop-attachable-only">
+                            <input id="desktop-attachable-only"
+                                   type="checkbox"
+                                   @bind="_showAttachableOnly"
+                                   data-testid="recording-picker-desktop-attachable-only" />
+                            <span>Show attachable only</span>
+                        </label>
+                    </div>
+
+                    <div class="suite-flow-summary" data-testid="recording-picker-desktop-summary">
+                        <span class="pill">@filteredTargets.Count shown</span>
+                        <span class="pill">@attachableCount attachable</span>
+                        @if (_showAttachableOnly)
+                        {
+                            <span class="pill">Attachable-only filter on</span>
+                        }
+                        @if (!string.IsNullOrWhiteSpace(_desktopFilter))
+                        {
+                            <span class="pill">Filter: @_desktopFilter</span>
+                        }
+                    </div>
+
+                    @if (filteredTargets.Count == 0)
+                    {
+                        <p class="subpanel-empty" data-testid="recording-picker-desktop-empty-filter">No running processes match the current filters.</p>
+                    }
+                    else
+                    {
                     <table class="data-table">
                         <thead>
                             <tr>
@@ -62,7 +118,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var target in _targets)
+                            @foreach (var target in filteredTargets)
                             {
                                 <tr>
                                     <td>@target.ProcessName</td>
@@ -81,6 +137,7 @@
                             }
                         </tbody>
                     </table>
+                    }
                 }
             </div>
         }
@@ -102,9 +159,15 @@
                             data-testid="recording-picker-web-url"
                             placeholder="https://example.com"
                            @bind="_webUrl"
-                           @bind:event="oninput"
-                           autocomplete="url"
-                           spellcheck="false" />
+                            @bind:event="oninput"
+                            autocomplete="url"
+                            spellcheck="false" />
+                </div>
+
+                <div class="picker-presets" data-testid="recording-picker-web-presets">
+                    <span class="field-hint">Quick start</span>
+                    <button type="button" class="action-button" data-testid="recording-picker-web-preset-localhost" @onclick="ApplyLocalhostPreset">Localhost</button>
+                    <button type="button" class="action-button" data-testid="recording-picker-web-preset-example" @onclick="ApplyExamplePreset">Example site</button>
                 </div>
 
                 <div class="field-stack" style="margin-top:0.5rem">
@@ -115,6 +178,10 @@
                         <option value="webkit">WebKit</option>
                     </select>
                 </div>
+
+                <p class="field-hint recording-picker-web-status" data-testid="recording-picker-web-status" aria-live="polite">
+                    @GetWebStatusMessage()
+                </p>
 
                 <p class="field-hint" style="margin-top:0.5rem">
                     A browser window will open. Navigate and interact normally; events are captured live.
@@ -149,6 +216,8 @@
     private List<RecordingTargetInfo> _targets = [];
     private bool _loading = true;
     private Tab _activeTab = Tab.Desktop;
+    private string _desktopFilter = string.Empty;
+    private bool _showAttachableOnly;
 
     // Web tab state
     private string _webUrl = string.Empty;
@@ -199,6 +268,29 @@
         await LoadTargetsAsync();
     }
 
+    private IEnumerable<RecordingTargetInfo> FilterDesktopTargets(IEnumerable<RecordingTargetInfo> targets)
+        => targets.Where(DesktopTargetMatchesFilter);
+
+    private bool DesktopTargetMatchesFilter(RecordingTargetInfo target)
+    {
+        if (_showAttachableOnly && !target.IsAttachable)
+        {
+            return false;
+        }
+
+        if (string.IsNullOrWhiteSpace(_desktopFilter))
+        {
+            return true;
+        }
+
+        return target.ProcessName.Contains(_desktopFilter, StringComparison.OrdinalIgnoreCase)
+            || target.MainWindowTitle.Contains(_desktopFilter, StringComparison.OrdinalIgnoreCase)
+            || target.ProcessId.ToString(System.Globalization.CultureInfo.InvariantCulture).Contains(_desktopFilter, StringComparison.OrdinalIgnoreCase);
+    }
+
+    private void ClearDesktopFilter()
+        => _desktopFilter = string.Empty;
+
     private async Task AttachAsync(RecordingTargetInfo target)
     {
         await State.BeginRecordingAsync(target.ProcessId);
@@ -229,11 +321,46 @@
                && (uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps);
     }
 
+    private void ApplyWebPreset(string url)
+        => _webUrl = url;
+
+    private void ApplyLocalhostPreset()
+        => ApplyWebPreset("http://localhost:5000");
+
+    private void ApplyExamplePreset()
+        => ApplyWebPreset("https://example.com");
+
+    private string GetWebStatusMessage()
+    {
+        var url = _webUrl?.Trim() ?? string.Empty;
+        if (string.IsNullOrWhiteSpace(url))
+        {
+            return "Enter a full http:// or https:// URL, or choose a preset to get started.";
+        }
+
+        if (!IsWebUrlValid())
+        {
+            return "Use a full http:// or https:// URL, for example https://example.com.";
+        }
+
+        return $"Recording will open {url} in {GetBrowserLabel(_webBrowser)}.";
+    }
+
+    private static string GetBrowserLabel(string browser)
+        => browser switch
+        {
+            "firefox" => "Firefox",
+            "webkit" => "WebKit",
+            _ => "Chromium"
+        };
+
     private void Cancel()
     {
         State.CloseRecorderPicker();
         _loading = true; // reset so next open re-enumerates
         _activeTab = Tab.Desktop;
+        _desktopFilter = string.Empty;
+        _showAttachableOnly = false;
         _webUrl = string.Empty;
         _webBrowser = "chromium";
     }

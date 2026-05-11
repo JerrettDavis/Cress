@@ -2,7 +2,8 @@ using System.Diagnostics;
 using Cress.Recorder;
 using Cress.Recorder.Inference;
 using Cress.Recorder.Serialization;
-using JerrettDavis.Flawright;
+using Flawright;
+using FlawrightClient = Flawright.Flawright;
 
 // ---- argument parsing ----
 string? launchExe = null;
@@ -146,7 +147,7 @@ if (autoDemo)
 
     try
     {
-        await using var app = await Flawright.AttachAsync(
+        await using var app = await FlawrightClient.AttachAsync(
             new AttachOptions { ProcessId = attachPid },
             new FlawrightOptions
             {

@@ -37,6 +37,57 @@ public sealed class CypressExporterTests
         Assert.Contains("cy.visit('https://example.com/app')", output);
     }
 
+    [Fact]
+    public void Export_NormalizedFlow_ProducesEquivalentCyFile()
+    {
+        var flow = new NormalizedFlow
+        {
+            Version = 1,
+            FlowId = "normalized",
+            Name = "Normalized",
+            Summary = "summary",
+            Tags = ["smoke"],
+            Actions =
+            [
+                new NormalizedExecutable
+                {
+                    Name = "browser.wait-for-url",
+                    Inputs = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+                    {
+                        ["url"] = "/dashboard"
+                    }
+                }
+            ],
+            Expectations =
+            [
+                new NormalizedExecutable
+                {
+                    Name = "ui.assert-window-title",
+                    Inputs = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+                    {
+                        ["title"] = "Dashboard"
+                    }
+                }
+            ]
+        };
+
+        var output = _sut.Export(flow);
+
+        Assert.Contains("cy.url().should('include', '/dashboard')", output);
+        Assert.Contains("cy.title().should('include', 'Dashboard')", output);
+    }
+
+    [Fact]
+    public void Export_BrowserWaitForUrl_EmitsCyUrlAssertion()
+    {
+        var flow = MakeFlow("wait", [
+            new FlowAction { Step = "browser.wait-for-url", With = With("url", "/dashboard") }
+        ]);
+        var output = _sut.Export(flow);
+
+        Assert.Contains("cy.url().should('include', '/dashboard')", output);
+    }
+
     // -------------------------------------------------------------------------
     // ui.click — locator strategies
     // -------------------------------------------------------------------------
@@ -120,6 +171,37 @@ public sealed class CypressExporterTests
         Assert.Contains("automationId is a desktop concept", output);
     }
 
+    [Theory]
+    [InlineData("label", "Email", "cy.findByLabelText('Email').click()")]
+    [InlineData("name", "email", "cy.get('[name=\"email\"]').click()")]
+    public void Export_ClickByAdditionalLocator_EmitsExpectedCommand(string key, string value, string expected)
+    {
+        var flow = MakeFlow("f", [
+            new FlowAction
+            {
+                Step = "ui.click",
+                With = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+                {
+                    [key] = value
+                }
+            }
+        ]);
+        var output = _sut.Export(flow);
+
+        Assert.Contains(expected, output);
+    }
+
+    [Fact]
+    public void Export_ClickWithoutLocator_EmitsTodoSelector()
+    {
+        var flow = MakeFlow("f", [
+            new FlowAction { Step = "ui.click" }
+        ]);
+        var output = _sut.Export(flow);
+
+        Assert.Contains("cy.get('/* TODO: add selector */').click()", output);
+    }
+
     // -------------------------------------------------------------------------
     // ui.fill
     // -------------------------------------------------------------------------
@@ -146,6 +228,85 @@ public sealed class CypressExporterTests
         Assert.Contains("cy.get('#search').type('hello')", output);
     }
 
+    [Theory]
+    [InlineData("placeholder", "Search", "cy.findByPlaceholderText('Search').type('hello')")]
+    [InlineData("testId", "search-box", "cy.findByTestId('search-box').type('hello')")]
+    [InlineData("name", "query", "cy.get('[name=\"query\"]').type('hello')")]
+    public void Export_FillByAdditionalLocator_EmitsExpectedCommand(string key, string locator, string expected)
+    {
+        var flow = MakeFlow("f", [
+            new FlowAction
+            {
+                Step = "ui.fill",
+                With = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+                {
+                    [key] = locator,
+                    ["value"] = "hello"
+                }
+            }
+        ]);
+        var output = _sut.Export(flow);
+
+        Assert.Contains(expected, output);
+    }
+
+    [Fact]
+    public void Export_FillByXpath_EmitsXpathCommentAndCommand()
+    {
+        var flow = MakeFlow("f", [
+            new FlowAction { Step = "ui.fill", With = With("xpath", "//input[@id='search']", "value", "hello") }
+        ]);
+        var output = _sut.Export(flow);
+
+        Assert.Contains("cy.xpath('//input[@id=\\'search\\']').type('hello')", output);
+        Assert.Contains("requires cypress-xpath plugin", output);
+    }
+
+    [Fact]
+    public void Export_FillWithoutLocator_EmitsTodoComment()
+    {
+        var flow = MakeFlow("f", [
+            new FlowAction { Step = "ui.fill", With = With("value", "hello") }
+        ]);
+        var output = _sut.Export(flow);
+
+        Assert.Contains("TODO: no supported locator for ui.fill", output);
+    }
+
+    [Theory]
+    [InlineData("ENTER", "cy.focused().type('{ENTER}')")]
+    [InlineData("Tab", "cy.focused().type('{Tab}')")]
+    public void Export_PressKey_EmitsFocusedType(string key, string expected)
+    {
+        var flow = MakeFlow("f", [
+            new FlowAction { Step = "ui.press-key", With = With("key", key) }
+        ]);
+        var output = _sut.Export(flow);
+
+        Assert.Contains(expected, output);
+    }
+
+    [Fact]
+    public void Export_SelectCheckUncheckScreenshotUnknownAndUnmapped_AreRendered()
+    {
+        var flow = MakeFlow("f", [
+            new FlowAction { Step = "ui.select", With = With("testId", "country", "value", "Canada") },
+            new FlowAction { Step = "ui.check", With = With("testId", "terms") },
+            new FlowAction { Step = "ui.uncheck", With = With("testId", "terms") },
+            new FlowAction { Step = "ui.screenshot" },
+            new FlowAction { Step = "unknown", With = With("comment", "custom comment") },
+            new FlowAction { Step = "desktop.magic" }
+        ]);
+        var output = _sut.Export(flow);
+
+        Assert.Contains("cy.findByTestId('country').select('Canada')", output);
+        Assert.Contains("cy.findByTestId('terms').check()", output);
+        Assert.Contains("cy.findByTestId('terms').uncheck()", output);
+        Assert.Contains("// cy.screenshot(); // ui.screenshot", output);
+        Assert.Contains("// custom comment", output);
+        Assert.Contains("// TODO: unmapped step 'desktop.magic'", output);
+    }
+
     // -------------------------------------------------------------------------
     // HTTP steps
     // -------------------------------------------------------------------------
@@ -161,6 +322,28 @@ public sealed class CypressExporterTests
         Assert.Contains("cy.request(", output);
         Assert.Contains("method: 'GET'", output);
         Assert.Contains("https://api.example.com/items", output);
+    }
+
+    [Fact]
+    public void Export_HttpPost_IncludesHeadersAndBody()
+    {
+        var flow = MakeFlow("f", [
+            new FlowAction
+            {
+                Step = "http.post",
+                With = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+                {
+                    ["url"] = "https://api.example.com/items",
+                    ["headers.Authorization"] = "Bearer token",
+                    ["body"] = "{ foo: 'bar' }"
+                }
+            }
+        ]);
+        var output = _sut.Export(flow);
+
+        Assert.Contains("method: 'POST'", output);
+        Assert.Contains("'Authorization': 'Bearer token'", output);
+        Assert.Contains("body: { foo: 'bar' }", output);
     }
 
     // -------------------------------------------------------------------------
@@ -201,6 +384,26 @@ public sealed class CypressExporterTests
         var output = _sut.Export(flow);
 
         Assert.Contains("cy.url().should('include', '/dashboard')", output);
+    }
+
+    [Fact]
+    public void Export_AdditionalExpectations_EmitExpectedCommentsAndAssertions()
+    {
+        var flow = MakeFlow("f", [],
+            expectations: [
+                new FlowExpectation { Expect = "http.assert-url", With = With("url", "/api/orders") },
+                new FlowExpectation { Expect = "http.assert-status", With = With("status", "201") },
+                new FlowExpectation { Expect = "http.assert-json", With = With("path", "$.data.id") },
+                new FlowExpectation { Expect = "ui.assert-window-title", With = With("title", "Dashboard") },
+                new FlowExpectation { Expect = "desktop.assert-magic" }
+            ]);
+        var output = _sut.Export(flow);
+
+        Assert.Contains("cy.url().should('include', '/api/orders')", output);
+        Assert.Contains("response status should be 201", output);
+        Assert.Contains("$.data.id", output);
+        Assert.Contains("cy.title().should('include', 'Dashboard')", output);
+        Assert.Contains("TODO: unmapped expectation 'desktop.assert-magic'", output);
     }
 
     // -------------------------------------------------------------------------

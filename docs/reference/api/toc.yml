@@ -1,5 +1,18 @@
 ### YamlMime:TableOfContent
 items:
+- uid: Cress.Cli
+  name: Cress.Cli
+  type: Namespace
+  items:
+  - uid: Cress.Cli.CressCliApplication
+    name: CressCliApplication
+    type: Class
+  - uid: Cress.Cli.ICressCliCommand
+    name: ICressCliCommand
+    type: Interface
+  - uid: Cress.Cli.ServiceCollectionExtensions
+    name: ServiceCollectionExtensions
+    type: Class
 - uid: Cress.Cli.Commands
   name: Cress.Cli.Commands
   type: Namespace
@@ -225,6 +238,9 @@ items:
   - uid: Cress.Execution.GeneratedStubSet
     name: GeneratedStubSet
     type: Class
+  - uid: Cress.Execution.IDotNetPluginModuleLoader
+    name: IDotNetPluginModuleLoader
+    type: Interface
   - uid: Cress.Execution.IDriverSession
     name: IDriverSession
     type: Interface
@@ -242,6 +258,9 @@ items:
     type: Class
   - uid: Cress.Execution.ProjectCatalogService
     name: ProjectCatalogService
+    type: Class
+  - uid: Cress.Execution.ReflectionDotNetPluginModuleLoader
+    name: ReflectionDotNetPluginModuleLoader
     type: Class
   - uid: Cress.Execution.ReportGenerator
     name: ReportGenerator

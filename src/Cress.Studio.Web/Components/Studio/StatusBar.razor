@@ -4,6 +4,7 @@
 <div class="studio-statusbar" aria-live="polite" aria-label="Studio status" data-testid="status-bar">
     <div class="statusbar-item" aria-label="Current status" data-testid="status-bar-status">
         <span class="statusbar-dot @DotClass" aria-hidden="true"></span>
+        <span class="statusbar-badge" data-testid="status-bar-state-label">@StatusLabel</span>
         <span>Status</span>
         <span>: </span>
         <strong title="@State.StatusMessage" data-testid="status-bar-status-text">@State.StatusMessage</strong>
@@ -21,7 +22,15 @@
     <div class="statusbar-item" aria-label="Last run" data-testid="status-bar-last-run">
         <span>Last run</span>
         <span>: </span>
-        <span title="@(_lastRunDescription)" data-testid="status-bar-last-run-text">@(_lastRunDescription)</span>
+        @if (_lastRun is null)
+        {
+            <span title="@(_lastRunDescription)" data-testid="status-bar-last-run-text">@(_lastRunDescription)</span>
+        }
+        else
+        {
+            <span class="statusbar-badge" data-testid="status-bar-last-run-id">@_lastRun.Result.Metadata.RunId</span>
+            <span title="@(_lastRunDescription)" data-testid="status-bar-last-run-text">@(_lastRunDescription)</span>
+        }
     </div>
 </div>
 
@@ -45,6 +54,14 @@
             return "statusbar-dot--idle";
         }
     }
+
+    private string StatusLabel => DotClass switch
+    {
+        "statusbar-dot--running" => "Running",
+        "statusbar-dot--error" => "Issue",
+        "statusbar-dot--success" => "Ready",
+        _ => "Idle"
+    };
 
     protected override void OnInitialized()
     {

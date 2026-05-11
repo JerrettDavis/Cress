@@ -2,6 +2,8 @@
   href: index.md
 - name: Studio overview
   href: studio-overview.md
+- name: Feature map
+  href: feature-matrix.md
 - name: Recording workflows
   href: recording-workflows.md
 - name: Authoring flows

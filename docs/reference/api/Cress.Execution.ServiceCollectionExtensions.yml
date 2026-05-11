@@ -6,6 +6,7 @@ items:
   parent: Cress.Execution
   children:
   - Cress.Execution.ServiceCollectionExtensions.AddCressRuntime(Microsoft.Extensions.DependencyInjection.IServiceCollection)
+  - Cress.Execution.ServiceCollectionExtensions.AddRuntimeDriver``1(Microsoft.Extensions.DependencyInjection.IServiceCollection)
   langs:
   - csharp
   - vb
@@ -20,7 +21,7 @@ items:
       repo: https://github.com/JerrettDavis/Cress.git
     id: ServiceCollectionExtensions
     path: ../src/Cress.Execution/ServiceCollectionExtensions.cs
-    startLine: 7
+    startLine: 8
   assemblies:
   - Cress.Execution
   namespace: Cress.Execution
@@ -56,7 +57,7 @@ items:
       repo: https://github.com/JerrettDavis/Cress.git
     id: AddCressRuntime
     path: ../src/Cress.Execution/ServiceCollectionExtensions.cs
-    startLine: 9
+    startLine: 10
   assemblies:
   - Cress.Execution
   namespace: Cress.Execution
@@ -69,6 +70,43 @@ items:
       type: Microsoft.Extensions.DependencyInjection.IServiceCollection
     content.vb: Public Shared Function AddCressRuntime(services As IServiceCollection) As IServiceCollection
   overload: Cress.Execution.ServiceCollectionExtensions.AddCressRuntime*
+- uid: Cress.Execution.ServiceCollectionExtensions.AddRuntimeDriver``1(Microsoft.Extensions.DependencyInjection.IServiceCollection)
+  commentId: M:Cress.Execution.ServiceCollectionExtensions.AddRuntimeDriver``1(Microsoft.Extensions.DependencyInjection.IServiceCollection)
+  id: AddRuntimeDriver``1(Microsoft.Extensions.DependencyInjection.IServiceCollection)
+  isExtensionMethod: true
+  parent: Cress.Execution.ServiceCollectionExtensions
+  langs:
+  - csharp
+  - vb
+  name: AddRuntimeDriver<TRuntimeDriver>(IServiceCollection)
+  nameWithType: ServiceCollectionExtensions.AddRuntimeDriver<TRuntimeDriver>(IServiceCollection)
+  fullName: Cress.Execution.ServiceCollectionExtensions.AddRuntimeDriver<TRuntimeDriver>(Microsoft.Extensions.DependencyInjection.IServiceCollection)
+  type: Method
+  source:
+    remote:
+      path: src/Cress.Execution/ServiceCollectionExtensions.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: AddRuntimeDriver
+    path: ../src/Cress.Execution/ServiceCollectionExtensions.cs
+    startLine: 16
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Execution
+  syntax:
+    content: 'public static IServiceCollection AddRuntimeDriver<TRuntimeDriver>(this IServiceCollection services) where TRuntimeDriver : class, IRuntimeDriver'
+    parameters:
+    - id: services
+      type: Microsoft.Extensions.DependencyInjection.IServiceCollection
+    typeParameters:
+    - id: TRuntimeDriver
+    return:
+      type: Microsoft.Extensions.DependencyInjection.IServiceCollection
+    content.vb: Public Shared Function AddRuntimeDriver(Of TRuntimeDriver As {Class, IRuntimeDriver})(services As IServiceCollection) As IServiceCollection
+  overload: Cress.Execution.ServiceCollectionExtensions.AddRuntimeDriver*
+  nameWithType.vb: ServiceCollectionExtensions.AddRuntimeDriver(Of TRuntimeDriver)(IServiceCollection)
+  fullName.vb: Cress.Execution.ServiceCollectionExtensions.AddRuntimeDriver(Of TRuntimeDriver)(Microsoft.Extensions.DependencyInjection.IServiceCollection)
+  name.vb: AddRuntimeDriver(Of TRuntimeDriver)(IServiceCollection)
 references:
 - uid: Cress.Execution
   commentId: N:Cress.Execution
@@ -380,3 +418,9 @@ references:
     name: DependencyInjection
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection
+- uid: Cress.Execution.ServiceCollectionExtensions.AddRuntimeDriver*
+  commentId: Overload:Cress.Execution.ServiceCollectionExtensions.AddRuntimeDriver
+  href: Cress.Execution.ServiceCollectionExtensions.html#Cress_Execution_ServiceCollectionExtensions_AddRuntimeDriver__1_Microsoft_Extensions_DependencyInjection_IServiceCollection_
+  name: AddRuntimeDriver
+  nameWithType: ServiceCollectionExtensions.AddRuntimeDriver
+  fullName: Cress.Execution.ServiceCollectionExtensions.AddRuntimeDriver

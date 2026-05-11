@@ -210,8 +210,23 @@ public sealed class MetricsPanelTests : TestContext
         Assert.Contains("metrics-heatmap", cut.Markup);
 
         // 3 flows × 20 cols = 60 cells
-        var cells = cut.FindAll(".metrics-heatmap-cell");
+        var cells = cut.FindAll(".metrics-heatmap [role='cell']");
         Assert.Equal(3 * 20, cells.Count);
+    }
+
+    [Fact]
+    public void MetricsPanel_renders_heatmap_legend_and_summary_text()
+    {
+        var state = CreateState();
+        SetPrivate(state, "CurrentMetrics", MakeMetrics(flowCount: 2));
+
+        var cut = RenderComponent<Cress.Studio.Web.Components.Studio.MetricsPanel>();
+
+        var summary = cut.Find("[data-testid='metrics-heatmap-summary']").TextContent;
+        Assert.Contains("heatmap does not rely on color alone", summary);
+        Assert.Contains("Passed", summary);
+        Assert.Contains("Failed", summary);
+        Assert.Contains("Not run", summary);
     }
 
     [Fact]

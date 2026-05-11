@@ -62,6 +62,8 @@ public sealed class QuickActionSelectorTests : TestContext
         Assert.Contains("Apply smoke metadata", cut.Markup);
         Assert.Contains("Add fixture row", cut.Markup);
         Assert.Single(cut.FindAll("select"));
+        Assert.Contains("2 available", cut.Markup);
+        Assert.Contains("optgroup", cut.Markup);
     }
 
     [Fact]
@@ -87,7 +89,36 @@ public sealed class QuickActionSelectorTests : TestContext
 
         var cut = RenderComponent<Cress.Studio.Web.Components.Studio.QuickActionSelector>();
 
-        var applyButton = cut.Find("button");
+        var applyButton = cut.Find("[data-testid='quick-action-apply']");
         Assert.NotNull(applyButton.GetAttribute("disabled"));
+    }
+
+    [Fact]
+    public void QuickActionSelector_shows_selected_action_description()
+    {
+        var state = CreateState();
+
+        var document = FlowDocumentViewModel.FromDocument(new FlowEditorDocument
+        {
+            FilePath = @"C:\workspace\flows\test.flow.yaml",
+            Id = "test-flow",
+            Name = "Test flow"
+        });
+
+        SetPrivate(state, "SelectedFlow", document);
+        SetPrivate(state, "FlowAnalysis", new FlowEditorAnalysis
+        {
+            QuickActions =
+            [
+                new FlowQuickAction("metadata.smoke", "Apply smoke metadata", "Adds smoke tags.", "Metadata"),
+                new FlowQuickAction("fixture.session", "Add fixture row", "Adds a fixture.", "Fixtures")
+            ]
+        });
+
+        var cut = RenderComponent<Cress.Studio.Web.Components.Studio.QuickActionSelector>();
+
+        cut.Find("[data-testid='quick-action-select']").Change("fixture.session");
+
+        Assert.Contains("Fixtures - Adds a fixture.", cut.Find("[data-testid='quick-action-description']").TextContent);
     }
 }

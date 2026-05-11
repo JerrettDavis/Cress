@@ -55,6 +55,47 @@ public sealed class ArtifactPreviewPanelTests : TestContext
     }
 
     [Fact]
+    public void ArtifactPreviewPanel_type_filter_shows_only_matching_artifacts()
+    {
+        var state = CreateState();
+        JSInterop.SetupVoid("navigator.clipboard.writeText", _ => true);
+
+        state.SelectedRunArtifacts.Add(new StudioArtifactItem("screenshot: step-1.png", "On failure • 24.3 KB", @"C:\artifacts\step-1.png"));
+        state.SelectedRunArtifacts.Add(new StudioArtifactItem("report.json", @"C:\artifacts\report.json", @"C:\artifacts\report.json"));
+
+        var cut = RenderComponent<Cress.Studio.Web.Components.Studio.ArtifactPreviewPanel>();
+
+        cut.Find("[data-testid='artifact-type-image']").Click();
+
+        Assert.Contains("screenshot: step-1.png", cut.Markup);
+        Assert.DoesNotContain("report.json", cut.Markup);
+        Assert.Contains("1 shown", cut.Markup);
+        Assert.Contains("1 images", cut.Markup);
+    }
+
+    [Fact]
+    public void ArtifactPreviewPanel_search_clear_button_restores_artifact_list()
+    {
+        var state = CreateState();
+        JSInterop.SetupVoid("navigator.clipboard.writeText", _ => true);
+
+        state.SelectedRunArtifacts.Add(new StudioArtifactItem("screenshot: step-1.png", "On failure • 24.3 KB", @"C:\artifacts\step-1.png"));
+        state.SelectedRunArtifacts.Add(new StudioArtifactItem("report: html", @"C:\artifacts\report.html", @"C:\artifacts\report.html"));
+
+        var cut = RenderComponent<Cress.Studio.Web.Components.Studio.ArtifactPreviewPanel>();
+
+        cut.Find("[data-testid='artifact-filter']").Input("report");
+
+        Assert.DoesNotContain("screenshot: step-1.png", cut.Markup);
+        Assert.Contains("report: html", cut.Markup);
+
+        cut.Find("[aria-label='Clear artifact filter']").Click();
+
+        Assert.Contains("screenshot: step-1.png", cut.Markup);
+        Assert.Contains("report: html", cut.Markup);
+    }
+
+    [Fact]
     public void ArtifactPreviewPanel_open_artifact_button_is_disabled_when_no_selection()
     {
         CreateState();
@@ -62,7 +103,7 @@ public sealed class ArtifactPreviewPanelTests : TestContext
 
         var cut = RenderComponent<Cress.Studio.Web.Components.Studio.ArtifactPreviewPanel>();
 
-        var openButton = cut.Find("button");
+        var openButton = cut.Find("[data-testid='artifact-open-button']");
         Assert.NotNull(openButton.GetAttribute("disabled"));
     }
 }

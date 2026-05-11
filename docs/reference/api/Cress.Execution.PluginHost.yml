@@ -5,6 +5,7 @@ items:
   id: PluginHost
   parent: Cress.Execution
   children:
+  - Cress.Execution.PluginHost.#ctor(Cress.Execution.IDotNetPluginModuleLoader)
   - Cress.Execution.PluginHost.InvokeFixtureAsync(Cress.Execution.ProjectCatalog,Cress.Core.Models.PlanAction,Cress.Execution.FlowExecutionContext,System.Threading.CancellationToken)
   - Cress.Execution.PluginHost.InvokeStepAsync(Cress.Execution.ProjectCatalog,Cress.Core.Models.PlanAction,Cress.Execution.FlowExecutionContext,System.Threading.CancellationToken)
   - Cress.Execution.PluginHost.Probe(Cress.Execution.ProjectCatalog,System.String)
@@ -22,7 +23,7 @@ items:
       repo: https://github.com/JerrettDavis/Cress.git
     id: PluginHost
     path: ../src/Cress.Execution/PluginHost.cs
-    startLine: 7
+    startLine: 6
   assemblies:
   - Cress.Execution
   namespace: Cress.Execution
@@ -38,6 +39,38 @@ items:
   - System.Object.GetType
   - System.Object.ReferenceEquals(System.Object,System.Object)
   - System.Object.ToString
+- uid: Cress.Execution.PluginHost.#ctor(Cress.Execution.IDotNetPluginModuleLoader)
+  commentId: M:Cress.Execution.PluginHost.#ctor(Cress.Execution.IDotNetPluginModuleLoader)
+  id: '#ctor(Cress.Execution.IDotNetPluginModuleLoader)'
+  parent: Cress.Execution.PluginHost
+  langs:
+  - csharp
+  - vb
+  name: PluginHost(IDotNetPluginModuleLoader?)
+  nameWithType: PluginHost.PluginHost(IDotNetPluginModuleLoader?)
+  fullName: Cress.Execution.PluginHost.PluginHost(Cress.Execution.IDotNetPluginModuleLoader?)
+  type: Constructor
+  source:
+    remote:
+      path: src/Cress.Execution/PluginHost.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: .ctor
+    path: ../src/Cress.Execution/PluginHost.cs
+    startLine: 11
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Execution
+  syntax:
+    content: public PluginHost(IDotNetPluginModuleLoader? dotNetPluginModuleLoader = null)
+    parameters:
+    - id: dotNetPluginModuleLoader
+      type: Cress.Execution.IDotNetPluginModuleLoader
+    content.vb: Public Sub New(dotNetPluginModuleLoader As IDotNetPluginModuleLoader = Nothing)
+  overload: Cress.Execution.PluginHost.#ctor*
+  nameWithType.vb: PluginHost.New(IDotNetPluginModuleLoader)
+  fullName.vb: Cress.Execution.PluginHost.New(Cress.Execution.IDotNetPluginModuleLoader)
+  name.vb: New(IDotNetPluginModuleLoader)
 - uid: Cress.Execution.PluginHost.InvokeStepAsync(Cress.Execution.ProjectCatalog,Cress.Core.Models.PlanAction,Cress.Execution.FlowExecutionContext,System.Threading.CancellationToken)
   commentId: M:Cress.Execution.PluginHost.InvokeStepAsync(Cress.Execution.ProjectCatalog,Cress.Core.Models.PlanAction,Cress.Execution.FlowExecutionContext,System.Threading.CancellationToken)
   id: InvokeStepAsync(Cress.Execution.ProjectCatalog,Cress.Core.Models.PlanAction,Cress.Execution.FlowExecutionContext,System.Threading.CancellationToken)
@@ -56,7 +89,7 @@ items:
       repo: https://github.com/JerrettDavis/Cress.git
     id: InvokeStepAsync
     path: ../src/Cress.Execution/PluginHost.cs
-    startLine: 12
+    startLine: 16
   assemblies:
   - Cress.Execution
   namespace: Cress.Execution
@@ -93,7 +126,7 @@ items:
       repo: https://github.com/JerrettDavis/Cress.git
     id: InvokeFixtureAsync
     path: ../src/Cress.Execution/PluginHost.cs
-    startLine: 69
+    startLine: 39
   assemblies:
   - Cress.Execution
   namespace: Cress.Execution
@@ -130,7 +163,7 @@ items:
       repo: https://github.com/JerrettDavis/Cress.git
     id: Probe
     path: ../src/Cress.Execution/PluginHost.cs
-    startLine: 132
+    startLine: 67
   assemblies:
   - Cress.Execution
   namespace: Cress.Execution
@@ -384,6 +417,22 @@ references:
   name: System
   nameWithType: System
   fullName: System
+- uid: Cress.Execution.PluginHost.#ctor*
+  commentId: Overload:Cress.Execution.PluginHost.#ctor
+  href: Cress.Execution.PluginHost.html#Cress_Execution_PluginHost__ctor_Cress_Execution_IDotNetPluginModuleLoader_
+  name: PluginHost
+  nameWithType: PluginHost.PluginHost
+  fullName: Cress.Execution.PluginHost.PluginHost
+  nameWithType.vb: PluginHost.New
+  fullName.vb: Cress.Execution.PluginHost.New
+  name.vb: New
+- uid: Cress.Execution.IDotNetPluginModuleLoader
+  commentId: T:Cress.Execution.IDotNetPluginModuleLoader
+  parent: Cress.Execution
+  href: Cress.Execution.IDotNetPluginModuleLoader.html
+  name: IDotNetPluginModuleLoader
+  nameWithType: IDotNetPluginModuleLoader
+  fullName: Cress.Execution.IDotNetPluginModuleLoader
 - uid: Cress.Execution.PluginHost.InvokeStepAsync*
   commentId: Overload:Cress.Execution.PluginHost.InvokeStepAsync
   href: Cress.Execution.PluginHost.html#Cress_Execution_PluginHost_InvokeStepAsync_Cress_Execution_ProjectCatalog_Cress_Core_Models_PlanAction_Cress_Execution_FlowExecutionContext_System_Threading_CancellationToken_

@@ -90,4 +90,37 @@ public sealed class RunInsightsPanelTests : TestContext
         Assert.Contains("45", cut.Markup);
         Assert.Contains("P F P F", cut.Markup);
     }
+
+    [Fact]
+    public void RunInsightsPanel_filter_narrows_recent_activity_and_flake_watch()
+    {
+        var state = CreateState();
+
+        var insights = new StudioRunInsights
+        {
+            RecentActivity =
+            [
+                new StudioRecentActivityItem { Headline = "run-001 • 3/3 passed", Detail = "local • checkout" },
+                new StudioRecentActivityItem { Headline = "run-002 • 2/3 passed", Detail = "ci • login" }
+            ],
+            FlakyFlows =
+            [
+                new StudioFlowHealthItem { FlowId = "checkout-flow", Name = "Checkout flow", FlakeScore = 40, Trend = "P F", RetryRecoveries = 1 },
+                new StudioFlowHealthItem { FlowId = "login-flow", Name = "Login flow", FlakeScore = 15, Trend = "P P", RetryRecoveries = 0 }
+            ]
+        };
+
+        SetPrivate(state, "Snapshot", new StudioProjectSnapshot { RunInsights = insights });
+
+        var cut = RenderComponent<Cress.Studio.Web.Components.Studio.RunInsightsPanel>();
+
+        cut.Find("[data-testid='run-insights-filter']").Input("checkout");
+
+        Assert.Contains("run-001", cut.Markup);
+        Assert.DoesNotContain("run-002", cut.Markup);
+        Assert.Contains("Checkout flow", cut.Markup);
+        Assert.DoesNotContain("Login flow", cut.Markup);
+        Assert.Contains("1 activity items", cut.Markup);
+        Assert.Contains("1 flaky flows", cut.Markup);
+    }
 }

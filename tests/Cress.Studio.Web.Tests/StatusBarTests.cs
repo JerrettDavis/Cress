@@ -31,6 +31,7 @@ public sealed class StatusBarTests : TestContext
         Assert.Contains("No selection", cut.Markup);
         Assert.Contains("Last run", cut.Markup);
         Assert.Contains("—", cut.Markup);
+        Assert.Contains("Idle", cut.Find("[data-testid='status-bar-state-label']").TextContent);
     }
 
     [Fact]
@@ -57,6 +58,7 @@ public sealed class StatusBarTests : TestContext
 
         Assert.Contains("Last run", cut.Markup);
         Assert.DoesNotContain(">—<", cut.Markup);
+        Assert.Contains("run-001", cut.Find("[data-testid='status-bar-last-run-id']").TextContent);
         Assert.Contains("local", cut.Markup);
     }
 }

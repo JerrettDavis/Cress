@@ -99,6 +99,19 @@ public sealed class WebRecordingTargetPickerTests : TestContext
     }
 
     [Fact]
+    public void Web_tab_shows_visible_validation_message_for_invalid_URL()
+    {
+        var (state, _) = CreateState();
+        state.OpenRecorderPicker();
+
+        var cut = RenderComponent<Cress.Studio.Web.Components.Studio.RecordingTargetPicker>();
+        cut.Find("#picker-tab-web").Click();
+        cut.Find("#web-url").Input("not-a-url");
+
+        Assert.Contains("Use a full http:// or https:// URL", cut.Find("[data-testid='recording-picker-web-status']").TextContent);
+    }
+
+    [Fact]
     public void Start_recording_button_is_enabled_for_valid_https_URL()
     {
         var (state, _) = CreateState();
@@ -112,6 +125,21 @@ public sealed class WebRecordingTargetPickerTests : TestContext
         // The button should no longer carry the disabled attribute.
         var startBtn = cut.Find("button[title*='Start recording in browser']");
         Assert.False(startBtn.HasAttribute("disabled"), "Start button should be enabled for a valid URL");
+    }
+
+    [Fact]
+    public void Clicking_a_web_preset_populates_url_and_enables_start()
+    {
+        var (state, _) = CreateState();
+        state.OpenRecorderPicker();
+
+        var cut = RenderComponent<Cress.Studio.Web.Components.Studio.RecordingTargetPicker>();
+        cut.Find("#picker-tab-web").Click();
+        cut.Find("[data-testid='recording-picker-web-preset-example']").Click();
+
+        Assert.Equal("https://example.com", cut.Find("#web-url").GetAttribute("value"));
+        Assert.Contains("Recording will open https://example.com in Chromium.", cut.Find("[data-testid='recording-picker-web-status']").TextContent);
+        Assert.False(cut.Find("button[title*='Start recording in browser']").HasAttribute("disabled"));
     }
 
     [Fact]

@@ -1,0 +1,210 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Execution.IDotNetPluginModuleLoader
+  commentId: T:Cress.Execution.IDotNetPluginModuleLoader
+  id: IDotNetPluginModuleLoader
+  parent: Cress.Execution
+  children:
+  - Cress.Execution.IDotNetPluginModuleLoader.LoadModules(System.String,System.String)
+  langs:
+  - csharp
+  - vb
+  name: IDotNetPluginModuleLoader
+  nameWithType: IDotNetPluginModuleLoader
+  fullName: Cress.Execution.IDotNetPluginModuleLoader
+  type: Interface
+  source:
+    remote:
+      path: src/Cress.Execution/DotNetPluginModuleLoader.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: IDotNetPluginModuleLoader
+    path: ../src/Cress.Execution/DotNetPluginModuleLoader.cs
+    startLine: 6
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Execution
+  syntax:
+    content: public interface IDotNetPluginModuleLoader
+    content.vb: Public Interface IDotNetPluginModuleLoader
+- uid: Cress.Execution.IDotNetPluginModuleLoader.LoadModules(System.String,System.String)
+  commentId: M:Cress.Execution.IDotNetPluginModuleLoader.LoadModules(System.String,System.String)
+  id: LoadModules(System.String,System.String)
+  parent: Cress.Execution.IDotNetPluginModuleLoader
+  langs:
+  - csharp
+  - vb
+  name: LoadModules(string, string?)
+  nameWithType: IDotNetPluginModuleLoader.LoadModules(string, string?)
+  fullName: Cress.Execution.IDotNetPluginModuleLoader.LoadModules(string, string?)
+  type: Method
+  source:
+    remote:
+      path: src/Cress.Execution/DotNetPluginModuleLoader.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: LoadModules
+    path: ../src/Cress.Execution/DotNetPluginModuleLoader.cs
+    startLine: 8
+  assemblies:
+  - Cress.Execution
+  namespace: Cress.Execution
+  syntax:
+    content: IReadOnlyList<ICressPluginModule> LoadModules(string projectRoot, string? pluginName)
+    parameters:
+    - id: projectRoot
+      type: System.String
+    - id: pluginName
+      type: System.String
+    return:
+      type: System.Collections.Generic.IReadOnlyList{Cress.Sdk.ICressPluginModule}
+    content.vb: Function LoadModules(projectRoot As String, pluginName As String) As IReadOnlyList(Of ICressPluginModule)
+  overload: Cress.Execution.IDotNetPluginModuleLoader.LoadModules*
+  nameWithType.vb: IDotNetPluginModuleLoader.LoadModules(String, String)
+  fullName.vb: Cress.Execution.IDotNetPluginModuleLoader.LoadModules(String, String)
+  name.vb: LoadModules(String, String)
+references:
+- uid: Cress.Execution
+  commentId: N:Cress.Execution
+  href: Cress.html
+  name: Cress.Execution
+  nameWithType: Cress.Execution
+  fullName: Cress.Execution
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Execution
+    name: Execution
+    href: Cress.Execution.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Execution
+    name: Execution
+    href: Cress.Execution.html
+- uid: Cress.Execution.IDotNetPluginModuleLoader.LoadModules*
+  commentId: Overload:Cress.Execution.IDotNetPluginModuleLoader.LoadModules
+  href: Cress.Execution.IDotNetPluginModuleLoader.html#Cress_Execution_IDotNetPluginModuleLoader_LoadModules_System_String_System_String_
+  name: LoadModules
+  nameWithType: IDotNetPluginModuleLoader.LoadModules
+  fullName: Cress.Execution.IDotNetPluginModuleLoader.LoadModules
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: System.Collections.Generic.IReadOnlyList{Cress.Sdk.ICressPluginModule}
+  commentId: T:System.Collections.Generic.IReadOnlyList{Cress.Sdk.ICressPluginModule}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IReadOnlyList`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  name: IReadOnlyList<ICressPluginModule>
+  nameWithType: IReadOnlyList<ICressPluginModule>
+  fullName: System.Collections.Generic.IReadOnlyList<Cress.Sdk.ICressPluginModule>
+  nameWithType.vb: IReadOnlyList(Of ICressPluginModule)
+  fullName.vb: System.Collections.Generic.IReadOnlyList(Of Cress.Sdk.ICressPluginModule)
+  name.vb: IReadOnlyList(Of ICressPluginModule)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: <
+  - uid: Cress.Sdk.ICressPluginModule
+    name: ICressPluginModule
+    href: Cress.Sdk.ICressPluginModule.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Cress.Sdk.ICressPluginModule
+    name: ICressPluginModule
+    href: Cress.Sdk.ICressPluginModule.html
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Collections.Generic.IReadOnlyList`1
+  commentId: T:System.Collections.Generic.IReadOnlyList`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  name: IReadOnlyList<T>
+  nameWithType: IReadOnlyList<T>
+  fullName: System.Collections.Generic.IReadOnlyList<T>
+  nameWithType.vb: IReadOnlyList(Of T)
+  fullName.vb: System.Collections.Generic.IReadOnlyList(Of T)
+  name.vb: IReadOnlyList(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic

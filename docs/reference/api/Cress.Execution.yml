@@ -9,12 +9,14 @@ items:
   - Cress.Execution.FlawrightServiceCollectionExtensions
   - Cress.Execution.FlowExecutionContext
   - Cress.Execution.GeneratedStubSet
+  - Cress.Execution.IDotNetPluginModuleLoader
   - Cress.Execution.IDriverSession
   - Cress.Execution.IRuntimeDriver
   - Cress.Execution.PlanGenerator
   - Cress.Execution.PluginHost
   - Cress.Execution.ProjectCatalog
   - Cress.Execution.ProjectCatalogService
+  - Cress.Execution.ReflectionDotNetPluginModuleLoader
   - Cress.Execution.ReportGenerator
   - Cress.Execution.RunResultRepository
   - Cress.Execution.RuntimeOrchestrator
@@ -35,6 +37,19 @@ items:
   assemblies:
   - Cress.Execution
 references:
+- uid: Cress.Execution.IDotNetPluginModuleLoader
+  commentId: T:Cress.Execution.IDotNetPluginModuleLoader
+  parent: Cress.Execution
+  href: Cress.Execution.IDotNetPluginModuleLoader.html
+  name: IDotNetPluginModuleLoader
+  nameWithType: IDotNetPluginModuleLoader
+  fullName: Cress.Execution.IDotNetPluginModuleLoader
+- uid: Cress.Execution.ReflectionDotNetPluginModuleLoader
+  commentId: T:Cress.Execution.ReflectionDotNetPluginModuleLoader
+  href: Cress.Execution.ReflectionDotNetPluginModuleLoader.html
+  name: ReflectionDotNetPluginModuleLoader
+  nameWithType: ReflectionDotNetPluginModuleLoader
+  fullName: Cress.Execution.ReflectionDotNetPluginModuleLoader
 - uid: Cress.Execution.IRuntimeDriver
   commentId: T:Cress.Execution.IRuntimeDriver
   parent: Cress.Execution

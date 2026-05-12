@@ -9,7 +9,7 @@
     --font-sans: "Segoe UI", "Segoe UI Variable", system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
     --font-mono: "Cascadia Code", "Fira Code", Consolas, "Courier New", monospace;
 
-    --radius: 8px;
+    --radius: 6px;
     --shadow-sm: 0 8px 24px rgba(15, 23, 42, 0.08);
     --shadow-md: 0 18px 40px rgba(15, 23, 42, 0.12);
 
@@ -296,7 +296,7 @@ svg {
     align-items: center;
     padding: 0.75rem 0.85rem;
     border: 1px solid color-mix(in srgb, var(--color-accent) 8%, var(--color-border));
-    border-radius: 12px;
+    border-radius: 8px;
     background: var(--color-surface);
     box-shadow: var(--shadow-sm);
 }
@@ -308,7 +308,7 @@ svg {
     flex: 0 0 auto;
     width: 1.75rem;
     height: 1.75rem;
-    border-radius: 8px;
+    border-radius: 6px;
     background: var(--color-accent);
     color: var(--color-on-accent);
     font-weight: 800;
@@ -372,7 +372,7 @@ svg {
     width: 100%;
     padding: 0.82rem 0.85rem;
     border: 1px solid color-mix(in srgb, var(--color-accent) 8%, var(--color-border));
-    border-radius: 12px;
+    border-radius: 8px;
     background: var(--color-surface);
     color: var(--color-foreground);
     text-decoration: none;
@@ -415,7 +415,7 @@ svg {
     flex: 0 0 auto;
     width: 2rem;
     height: 2rem;
-    border-radius: 8px;
+    border-radius: 6px;
     background: color-mix(in srgb, var(--color-accent-soft) 82%, var(--color-surface));
     color: var(--color-accent);
 }
@@ -514,7 +514,7 @@ svg {
     color: inherit;
     font-size: 10px;
     line-height: 1;
-    border-radius: 999px;
+    border-radius: 4px;
 }
 
 .statusbar-dot {
@@ -551,7 +551,7 @@ svg {
 .subpanel {
     position: relative;
     border: 1px solid var(--color-border);
-    border-radius: 12px;
+    border-radius: 8px;
     background: var(--color-surface);
     box-shadow: var(--shadow-sm);
     overflow: hidden;
@@ -686,7 +686,7 @@ svg {
     gap: 0.45rem;
     padding: 1rem;
     border: 1px solid color-mix(in srgb, var(--color-border) 78%, var(--color-accent) 22%);
-    border-radius: 10px;
+    border-radius: 6px;
     background: var(--color-surface-alt);
     box-shadow: none;
 }
@@ -720,7 +720,7 @@ svg {
     border: 1px solid var(--color-border);
     background: var(--color-surface-inset);
     overflow-wrap: anywhere;
-    border-radius: 14px;
+    border-radius: 8px;
 }
 
 .demo-card-list,
@@ -738,7 +738,7 @@ svg {
     padding: 0.85rem;
     border: 1px solid var(--color-border);
     background: var(--color-surface-inset);
-    border-radius: 14px;
+    border-radius: 6px;
 }
 
 .demo-card p,
@@ -787,7 +787,7 @@ svg {
     align-items: center;
     white-space: nowrap;
     padding: 0.18rem 0.5rem;
-    border-radius: 999px;
+    border-radius: 6px;
     border: 1px solid color-mix(in srgb, var(--color-accent) 35%, var(--color-border));
     background: color-mix(in srgb, var(--color-accent-soft) 60%, var(--color-surface-inset));
     color: var(--color-accent);
@@ -1439,8 +1439,8 @@ details[open] > summary .summary-chevron {
 .summary-card {
     padding: 0.85rem 0.95rem;
     border: 1px solid color-mix(in srgb, var(--color-accent) 10%, var(--color-border));
-    border-radius: 16px;
-    background: linear-gradient(180deg, color-mix(in srgb, var(--color-surface-alt) 90%, var(--color-accent-soft)) 0%, var(--color-surface-alt) 100%);
+    border-radius: 8px;
+    background: var(--color-surface-alt);
     cursor: default;
     user-select: none;
     box-shadow: inset 0 1px 0 color-mix(in srgb, var(--color-accent) 10%, transparent);
@@ -1682,7 +1682,7 @@ input[type="checkbox"] {
     border-bottom: 1px solid color-mix(in srgb, var(--panel-accent, var(--color-accent)) 12%, var(--color-border));
     margin: -0.5rem -0.75rem 0.5rem;
     padding: 0.4rem 0.75rem;
-    border-radius: 12px 12px 0 0;
+    border-radius: 8px 8px 0 0;
 }
 
 /* Run status dots — square for IDE feel */
@@ -1741,7 +1741,7 @@ input[type="checkbox"] {
     font-size: 11px;
     font-style: normal;
     border: 1px dashed color-mix(in srgb, var(--color-accent) 22%, var(--color-border));
-    border-radius: 10px;
+    border-radius: 6px;
     background: color-mix(in srgb, var(--color-surface-alt) 92%, var(--color-accent-soft));
 }
 
@@ -1763,7 +1763,7 @@ input[type="checkbox"] {
     width: fit-content;
     padding: 0.2rem 0.45rem;
     border: 1px solid color-mix(in srgb, var(--color-accent) 20%, var(--color-border));
-    border-radius: 999px;
+    border-radius: 6px;
     background: color-mix(in srgb, var(--color-accent-soft) 72%, var(--color-surface));
     color: var(--color-accent);
     font-size: 10px;
@@ -1774,8 +1774,18 @@ input[type="checkbox"] {
 
 .explorer-empty {
     border: 1px dashed color-mix(in srgb, var(--color-accent) 18%, var(--color-border));
-    border-radius: 10px;
+    border-radius: 6px;
     background: color-mix(in srgb, var(--color-surface-alt) 95%, var(--color-accent-soft));
+}
+
+.subpanel-empty strong {
+    color: var(--color-foreground);
+    font-size: 0.88rem;
+    font-weight: 700;
+}
+
+.subpanel-empty span {
+    color: var(--color-muted);
 }
 
 .metrics-empty p,
@@ -2315,7 +2325,7 @@ input[type="checkbox"] {
     display: inline-flex;
     align-items: center;
     gap: 0.25rem;
-    border-radius: 999px;
+    border-radius: 6px;
     padding: 0.2rem 0.6rem;
     font-size: 0.78rem;
     line-height: 1.2;

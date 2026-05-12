@@ -230,7 +230,10 @@
         </div>
         @if (string.IsNullOrWhiteSpace(State.SelectedRunComparison.Summary))
         {
-            <p class="subpanel-empty">No comparison available — select a run to generate a diff.</p>
+            <div class="subpanel-empty results-comparison-empty" data-testid="results-comparison-empty">
+                <strong>No comparison available yet</strong>
+                <span>Select a run above to generate a readable diff and surface regressions or retry improvements.</span>
+            </div>
         }
         else
         {

@@ -23,9 +23,11 @@ test('navigates between workspace, designer, and results using stable shell sele
   await seedRecentWorkspaces(page);
   await expect(page.getByTestId('recent-workspaces-list')).toBeVisible();
   await expect(page.getByTestId('workspace-section')).toBeVisible();
+  await captureDocScreenshot(page, 'landing.png', page.getByTestId('studio-shell'));
+
+  await page.getByTestId('toggle-onboarding-panels').click();
   await page.getByTestId('demo-filter').fill('browser');
   await page.getByTestId('runner-node-filter').fill('local');
-  await captureDocScreenshot(page, 'landing.png', page.getByTestId('studio-shell'));
 
   await page.getByTestId('nav-link-designer').click();
   await expect(page).toHaveURL(/\/designer$/);
@@ -108,6 +110,7 @@ test('validates the documented Studio authoring loop and captures the reused doc
 });
 
 test('supports the guided use-path onboarding flow before loading a workspace', async ({ page }) => {
+  await page.getByTestId('toggle-onboarding-panels').click();
   await expect(page.getByTestId('demo-workspaces-list')).toBeVisible();
 
   const firstUsePathButton = page.locator('[data-testid^="use-demo-path-"]').first();
@@ -123,6 +126,7 @@ test('supports the guided use-path onboarding flow before loading a workspace', 
 
 test('filters and manages recent workspaces before loading a project', async ({ page }) => {
   await seedRecentWorkspaces(page);
+  await page.getByTestId('toggle-onboarding-panels').click();
 
   await page.getByTestId('recent-workspace-filter').fill('web');
   await expect(page.locator('[data-testid^="recent-workspace-card-"]')).toHaveCount(1);

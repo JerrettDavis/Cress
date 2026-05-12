@@ -136,10 +136,18 @@ internal sealed class CompanionManagerForm : Form
         {
             SelectByProcessId(_targetsList, selectedTargetId.Value);
         }
+        else if (_targetsList.Items.Count > 0)
+        {
+            _targetsList.SelectedIndex = 0;
+        }
 
         if (selectedSessionId.HasValue)
         {
             SelectByProcessId(_sessionsList, selectedSessionId.Value);
+        }
+        else if (_sessionsList.Items.Count > 0)
+        {
+            _sessionsList.SelectedIndex = 0;
         }
 
         RefreshDetails();
@@ -278,7 +286,9 @@ internal sealed class CompanionManagerForm : Form
     private static void ConfigureListBox(ListBox listBox, string accessibleName)
     {
         listBox.AccessibleName = accessibleName;
+        listBox.FormattingEnabled = true;
         listBox.HorizontalScrollbar = true;
+        listBox.IntegralHeight = false;
         listBox.BorderStyle = BorderStyle.FixedSingle;
         listBox.Font = new Font("Segoe UI", 10, FontStyle.Regular);
     }

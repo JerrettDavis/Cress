@@ -17,6 +17,7 @@ The user guide focuses on the day-to-day authoring workflow: opening a project, 
 
 - [Feature map](feature-matrix.md)
 - [Studio overview](studio-overview.md)
+- [Desktop companion](desktop-companion.md)
 - [Recording workflows](recording-workflows.md)
 - [Authoring flows](authoring-flows.md)
 - [Running and debugging](running-and-debugging.md)

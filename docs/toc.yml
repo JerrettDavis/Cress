@@ -16,6 +16,8 @@
       href: user-guide/index.md
     - name: Studio overview
       href: user-guide/studio-overview.md
+    - name: Desktop companion
+      href: user-guide/desktop-companion.md
     - name: Feature matrix
       href: user-guide/feature-matrix.md
     - name: Recording workflows

@@ -24,6 +24,19 @@ The recording flow is the closest thing to a wizard in Cress: you choose a targe
 
 ![Desktop recording picker](../images/studio/desktop-recording-picker.png)
 
+## Recording flow with the desktop companion
+
+Use the desktop companion when you want a native manager plus an anchored overlay while still keeping Studio Web as the authoring surface.
+
+1. Start the desktop companion.
+2. Open Studio Web and switch the recording workflow to **Desktop companion**.
+3. Start the session for the target window.
+4. Interact with the app while the companion keeps controls near the titlebar.
+5. Pause, resume, or stop from the manager, overlay, or Studio.
+6. Save and normalize the resulting flow in Studio.
+
+For the full walkthrough, installation, and feature breakdown, see [Desktop companion](desktop-companion.md).
+
 ## What to fix after recording
 
 Treat the first recorded draft as scaffolding, not the final artifact.

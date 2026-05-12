@@ -1,4 +1,5 @@
 import fs from 'node:fs/promises';
+import { spawn, type ChildProcess } from 'node:child_process';
 import path from 'node:path';
 import { expect, test, type Locator, type Page } from '@playwright/test';
 
@@ -6,6 +7,18 @@ const captureDocsScreenshots = process.env.CRESS_CAPTURE_DOCS_SCREENSHOTS === '1
 const docsScreenshotRoot = path.join(process.cwd(), 'docs', 'images', 'studio');
 const recentWorkspaceStorageKey = 'cress.recentWorkspaces';
 const seededRecentWorkspaceStorageKey = 'cress.seededRecentWorkspaces';
+const companionBaseURL = process.env.CRESS_COMPANION_URL ?? 'http://127.0.0.1:7421/';
+const companionPort = new URL(companionBaseURL).port || '7421';
+const companionExecutable = path.join(
+  process.cwd(),
+  'src',
+  'Cress.Companion.Windows',
+  'bin',
+  'Release',
+  'net10.0-windows',
+  'Cress.Companion.Windows.exe'
+);
+const studioBaseURL = 'http://127.0.0.1:5088';
 
 test.beforeEach(async ({ page }) => {
   await page.addInitScript(({ recentKey, seededKey }) => {
@@ -180,6 +193,53 @@ test('filters explorer content and exposes flow actions after a demo is loaded',
   await expect(page.getByTestId('global-controls-open-results')).toBeEnabled();
 });
 
+test('pairs with the desktop companion end to end through the recording picker', async ({ page }) => {
+  test.skip(process.platform !== 'win32', 'Desktop companion e2e coverage is Windows-only.');
+
+  const companion = await launchCompanion();
+
+  try {
+    await loadBuiltInDemo(page);
+    await page.getByTestId('global-controls-toggle').click();
+    await page.getByTestId('global-controls-drawer').getByTestId('record-button-open').click();
+    await page.getByTestId('recording-picker-tab-companion').click();
+
+    await expect(page.getByTestId('recording-picker-companion-status')).toContainText(/Desktop companion is/i);
+    await expect(page.getByTestId('recording-picker-companion-targets')).toBeVisible();
+
+    const targetRow = page
+      .getByTestId('recording-picker-companion-targets')
+      .locator('tbody tr')
+      .filter({ hasText: /Cress/i })
+      .first();
+
+    await expect(targetRow).toBeVisible();
+    await targetRow.getByTestId('recording-picker-companion-start').click();
+
+    await expect(page.getByTestId('recording-target-picker')).toBeHidden();
+    await expect(page.getByTestId('global-controls-companion')).toContainText(/1 session\(s\)|Recording/i);
+
+    await page.getByTestId('global-controls-drawer').getByTestId('record-button-open').click();
+    await page.getByTestId('recording-picker-tab-companion').click();
+
+    const sessionTable = page.getByTestId('recording-picker-companion-sessions');
+    await expect(sessionTable).toBeVisible();
+    await expect(sessionTable).toContainText(/Recording/i);
+
+    await sessionTable.getByRole('button', { name: 'Pause' }).click();
+    await expect(sessionTable).toContainText(/Paused/i);
+
+    await sessionTable.getByRole('button', { name: 'Resume' }).click();
+    await expect(sessionTable).toContainText(/Recording/i);
+
+    await sessionTable.getByRole('button', { name: 'Stop' }).click();
+    await expect(page.getByTestId('recording-picker-companion-status')).toContainText(/Desktop companion is/i);
+  }
+  finally {
+    await stopCompanion(companion);
+  }
+});
+
 async function loadBuiltInDemo(page: Page): Promise<void> {
   await page.getByTestId('load-suggested-workspace').click();
   await expect(page.getByTestId('workspace-path-input')).toHaveValue(/httpbin-smoke/i);
@@ -226,4 +286,55 @@ async function seedRecentWorkspaces(page: Page): Promise<void> {
 
   await page.reload();
   await expect(page.getByTestId('studio-shell')).toBeVisible();
+}
+
+async function launchCompanion(): Promise<ChildProcess> {
+  const companion = spawn(
+    companionExecutable,
+    [],
+    {
+      cwd: process.cwd(),
+      env: {
+        ...process.env,
+        CRESS_COMPANION_PORT: companionPort,
+        CRESS_STUDIO_URL: studioBaseURL
+      },
+      windowsHide: true,
+      stdio: 'ignore'
+    }
+  );
+
+  await waitForCompanionAvailability(true);
+  return companion;
+}
+
+async function stopCompanion(companion: ChildProcess): Promise<void> {
+  if (companion.exitCode === null) {
+    companion.kill();
+  }
+
+  await waitForCompanionAvailability(false);
+}
+
+async function waitForCompanionAvailability(shouldBeAvailable: boolean): Promise<void> {
+  const healthUrl = new URL('health', companionBaseURL).toString();
+
+  for (let attempt = 0; attempt < 40; attempt += 1) {
+    try {
+      const response = await fetch(healthUrl, { cache: 'no-store' });
+      if (shouldBeAvailable && response.ok) {
+        return;
+      }
+    } catch {
+      if (!shouldBeAvailable) {
+        return;
+      }
+    }
+
+    await new Promise(resolve => setTimeout(resolve, 250));
+  }
+
+  if (shouldBeAvailable) {
+    throw new Error(`Desktop companion did not come online at ${healthUrl}.`);
+  }
 }

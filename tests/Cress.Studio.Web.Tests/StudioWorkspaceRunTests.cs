@@ -257,6 +257,23 @@ public sealed class StudioWorkspaceRunTests : IDisposable
     }
 
     [Fact]
+    public async Task WorkspaceState_blocks_browser_runs_when_local_base_url_is_unreachable()
+    {
+        var runner = new FakeRunnerService();
+        using var scope = CreateState(runner);
+        var projectRoot = CreateBrowserProject("browser-run-blocked", "http://127.0.0.1:1");
+        scope.State.SetProjectPath(projectRoot);
+        scope.State.LoadProject();
+
+        await scope.State.RunSelectedAsync();
+
+        Assert.Empty(runner.Requests);
+        Assert.Equal("Blocked", scope.State.LiveRunStatus);
+        Assert.Contains("127.0.0.1:1", scope.State.StatusMessage, StringComparison.Ordinal);
+        Assert.Contains(scope.State.LiveTimelineEntries, entry => entry.Category == "Validation");
+    }
+
+    [Fact]
     public async Task WorkspaceState_can_cancel_an_active_run_and_track_live_progress()
     {
         var runner = new FakeRunnerService
@@ -562,6 +579,70 @@ public sealed class StudioWorkspaceRunTests : IDisposable
           shared.fixture:
             type: seed.customer
             strategy: static
+        """);
+        return root;
+    }
+
+    private string CreateBrowserProject(string name, string baseUrl)
+    {
+        var root = CreateDirectory(name);
+        WriteFile(root, Path.Combine(".cress", "config.yaml"), """
+        version: 1
+        project:
+          name: Studio browser sample
+          defaultProfile: local
+        paths:
+          capabilities: capabilities
+          flows: flows
+          fixtures: fixtures
+          steps: steps
+          artifacts: .cress/artifacts
+          reports: reports
+        drivers:
+          playwright:
+            enabled: true
+        """);
+        WriteFile(root, Path.Combine(".cress", "profiles", "local.yaml"), $$"""
+        baseUrl: {{baseUrl}}
+        playwright:
+          headless: true
+        """);
+        WriteFile(root, Path.Combine("capabilities", "web.md"), """
+        ---
+        version: 1
+        id: capability.web
+        owner: qa
+        risk: medium
+        ---
+
+        # Web capability
+        """);
+        WriteFile(root, Path.Combine("flows", "browser.flow.yaml"), """
+        version: 1
+        id: flow.browser
+        name: Browser flow
+        capability: capability.web
+        when:
+          - step: browser.navigate
+            with:
+              url: /login
+        then:
+          - expect: ui.assert-text
+            with:
+              testId: heading
+              text: Login
+        """);
+        WriteFile(root, Path.Combine("steps", "web.yaml"), """
+        version: 1
+        steps:
+          - name: browser.navigate
+            implementation:
+              plugin: builtin.playwright
+              operation: navigate
+          - name: ui.assert-text
+            implementation:
+              plugin: builtin.playwright
+              operation: assert-text
         """);
         return root;
     }

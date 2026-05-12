@@ -96,19 +96,19 @@ public sealed class FlowToGherkinConverterTests
             When =
             [
                 new FlowAction { Step = "ui.launch", With = new() { ["application"] = "calc.exe" } },
-                new FlowAction { Step = "ui.invoke", With = new() { ["selector"] = "Clear Button" } }
+                new FlowAction { Step = "ui.invoke", With = new() { ["selector"] = "#clearButton" } }
             ],
             Then =
             [
-                new FlowExpectation { Expect = "ui.assert-text", With = new() { ["selector"] = "Calculator Results", ["text"] = "Display is 4" } }
+                new FlowExpectation { Expect = "ui.assert-text", With = new() { ["selector"] = "#CalculatorResults", ["text"] = "Display is 4" } }
             ]
         };
 
         var result = converter.Convert(flow);
 
-        Assert.Contains("Given I launch the \"calc.exe\" application", result);
-        Assert.Contains("And I invoke Clear Button", result);
-        Assert.Contains("Then Calculator Results should display \"Display is 4\"", result);
+        Assert.Contains("Given the user launches the calc.exe application", result);
+        Assert.Contains("And the user clicks the clear button", result);
+        Assert.Contains("Then the Calculator Results accessibility text should display \"Display is 4\"", result);
     }
 
     [Fact]

@@ -82,7 +82,7 @@ public sealed class GherkinIngesterTests
 
               Scenario: Calculator: 2 + 2 = 4
                 Given the ApplicationFrameHost application is open
-                And I invoke clearButton
+                And the user clicks the clear button
                 Then the window title should be "REVIEW: replace with expected window title"
             """;
 
@@ -147,7 +147,7 @@ public sealed class GherkinIngesterTests
             Feature: Given Test
               Scenario: Given Test
                 Given the ApplicationFrameHost application is open
-                When I invoke clearButton
+                When the user clicks the clear button
                 Then the window title should be "Calculator"
             """;
 
@@ -164,12 +164,12 @@ public sealed class GherkinIngesterTests
 
     [Theory]
     [InlineData("ui.attach",      "the ApplicationFrameHost application is open", "processName", "ApplicationFrameHost")]
-    [InlineData("ui.launch",      "I launch the \"calc.exe\" application",         "application", "calc.exe")]
-    [InlineData("ui.close",       "I close the application",                       null,          null)]
-    [InlineData("ui.invoke",      "I invoke Clear Button",                         "selector",    "Clear Button")]
-    [InlineData("ui.invoke",      "I invoke clearButton",                           "automationId","clearButton")]
-    [InlineData("ui.press-key",   "I press Enter",                                  "key",         "Enter")]
-    [InlineData("ui.screenshot",  "I take a screenshot",                            null,          null)]
+    [InlineData("ui.launch",      "the user launches the calc.exe application",    "application", "calc.exe")]
+    [InlineData("ui.close",       "the user closes the application",                null,          null)]
+    [InlineData("ui.invoke",      "the user clicks the clear button",               "selector",    "clear button")]
+    [InlineData("ui.invoke",      "the user clicks the number 2 button",            "selector",    "number 2 button")]
+    [InlineData("ui.press-key",   "the user presses Enter",                         "key",         "Enter")]
+    [InlineData("ui.screenshot",  "the user captures a screenshot",                 null,          null)]
     [InlineData("http.get",       "I GET https://example.com",                      "url",         "https://example.com")]
     [InlineData("http.assert-status", "the response status should be 200",          "status",      "200")]
     [InlineData("http.assert-body-contains", "the response body should contain \"ok\"", "text",   "ok")]

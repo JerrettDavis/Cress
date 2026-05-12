@@ -100,4 +100,18 @@ public sealed class PhraseLibraryTests
         Assert.NotNull(phrase);
         Assert.Contains("{testId}", phrase.Template);
     }
+
+    [Fact]
+    public void Expand_HumanizesDesktopSelectors()
+    {
+        var phrase = new StepPhrase("ui.invoke", GherkinKeyword.When, "the user clicks the {selector}");
+        var with = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+        {
+            ["selector"] = "#num2Button"
+        };
+
+        var text = PhraseLibrary.Expand(phrase, with);
+
+        Assert.Equal("the user clicks the number 2 button", text);
+    }
 }

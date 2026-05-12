@@ -14,16 +14,137 @@ public sealed class HomeInteractionTests : TestContext, IDisposable
     private readonly List<string> _temporaryRoots = [];
 
     [Theory]
-    [InlineData("", "workspace-section")]
-    [InlineData("designer", "designer-section")]
-    public void Home_highlights_section_from_route(string route, string focusedTestId)
+    [InlineData("workspace", "workspace-section", "workspace")]
+    [InlineData("designer", "designer-section", "designer")]
+    public void Home_highlights_section_from_route(string route, string focusedTestId, string expectedScrollTarget)
     {
         CreateState();
-        Services.GetRequiredService<NavigationManager>().NavigateTo($"http://localhost/{route}".TrimEnd('/'));
+        Services.GetRequiredService<NavigationManager>().NavigateTo($"http://localhost/{route}");
 
         var cut = RenderComponent<Home>();
 
         Assert.Contains("panel-focus", cut.Find($"[data-testid='{focusedTestId}']").GetAttribute("class"));
+        Assert.Contains(JSInterop.Invocations, invocation =>
+            invocation.Identifier == "cressStudio.scrollSectionIntoView"
+            && string.Equals(invocation.Arguments.SingleOrDefault()?.ToString(), expectedScrollTarget, StringComparison.Ordinal));
+    }
+
+    [Fact]
+    public void Home_root_route_keeps_landing_view_in_place()
+    {
+        CreateState();
+        Services.GetRequiredService<NavigationManager>().NavigateTo("http://localhost/");
+
+        var cut = RenderComponent<Home>();
+
+        Assert.NotNull(cut.Find("[data-testid='onboarding-panel']"));
+        Assert.NotNull(cut.Find("[data-testid='startup-wizard-nav']"));
+        Assert.NotNull(cut.Find("[data-testid='workflow-progress']"));
+        Assert.DoesNotContain(JSInterop.Invocations, invocation => invocation.Identifier == "cressStudio.scrollSectionIntoView");
+    }
+
+    [Fact]
+    public void Home_before_loading_project_shows_progressive_previews_instead_of_full_authoring_stack()
+    {
+        CreateState();
+
+        var cut = RenderComponent<Home>();
+
+        Assert.NotNull(cut.Find("[data-testid='designer-section']"));
+        Assert.NotNull(cut.Find("[data-testid='results-panel']"));
+        Assert.NotNull(cut.Find("[data-testid='workspace-next-step-callout']"));
+        Assert.Empty(cut.FindAll("[data-testid='designer-tab-overview']"));
+        Assert.Empty(cut.FindAll("[data-testid='more-actions']"));
+        Assert.Empty(cut.FindAll("[data-testid='open-selected-file']"));
+    }
+
+    [Fact]
+    public void Home_shows_busy_banner_when_workspace_is_busy()
+    {
+        var state = CreateState();
+        SetPrivate(state, nameof(StudioWorkspaceState.IsBusy), true);
+        SetPrivate(state, nameof(StudioWorkspaceState.LiveRunHeadline), "Running checkout flow");
+        SetPrivate(state, nameof(StudioWorkspaceState.LiveCurrentStepMessage), "Waiting for the next response.");
+
+        var cut = RenderComponent<Home>();
+
+        Assert.Contains("studio-shell--busy", cut.Find("[data-testid='studio-shell']").GetAttribute("class"));
+        Assert.Contains("Running checkout flow", cut.Find("[data-testid='studio-busy-banner']").TextContent);
+        Assert.Contains("Waiting for the next response.", cut.Find("[data-testid='studio-busy-banner']").TextContent);
+    }
+
+    [Fact]
+    public void Home_loaded_workspace_route_hides_designer_and_results_pages()
+    {
+        var state = CreateState();
+        var projectRoot = CreateProject("workspace-only");
+        state.SetProjectPath(projectRoot);
+        state.LoadProject();
+        Services.GetRequiredService<NavigationManager>().NavigateTo("http://localhost/workspace");
+
+        var cut = RenderComponent<Home>();
+
+        Assert.NotNull(cut.Find("[data-testid='workspace-section']"));
+        Assert.Empty(cut.FindAll("[data-testid='designer-section']"));
+        Assert.Empty(cut.FindAll("[data-testid='results-panel']"));
+    }
+
+    [Fact]
+    public void Home_loaded_designer_route_hides_workspace_and_results_pages()
+    {
+        var state = CreateState();
+        var projectRoot = CreateProject("designer-only");
+        state.SetProjectPath(projectRoot);
+        state.LoadProject();
+        Services.GetRequiredService<NavigationManager>().NavigateTo("http://localhost/designer");
+
+        var cut = RenderComponent<Home>();
+
+        Assert.NotNull(cut.Find("[data-testid='designer-section']"));
+        Assert.NotNull(cut.Find("[data-testid='explorer-panel']"));
+        Assert.Empty(cut.FindAll("[data-testid='workspace-section']"));
+        Assert.Empty(cut.FindAll("[data-testid='results-panel']"));
+    }
+
+    [Fact]
+    public void Home_loaded_results_route_hides_workspace_and_designer_pages()
+    {
+        var state = CreateState();
+        var projectRoot = CreateProject("results-only");
+        state.SetProjectPath(projectRoot);
+        state.LoadProject();
+        Services.GetRequiredService<NavigationManager>().NavigateTo("http://localhost/results");
+
+        var cut = RenderComponent<Home>();
+
+        Assert.NotNull(cut.Find("[data-testid='results-panel']"));
+        Assert.Empty(cut.FindAll("[data-testid='workspace-section']"));
+        Assert.Empty(cut.FindAll("[data-testid='designer-section']"));
+    }
+
+    [Fact]
+    public void Home_updates_visible_page_when_navigation_changes_after_initial_render()
+    {
+        var state = CreateState();
+        var projectRoot = CreateProject("route-change");
+        state.SetProjectPath(projectRoot);
+        state.LoadProject();
+
+        var navigation = Services.GetRequiredService<NavigationManager>();
+        navigation.NavigateTo("http://localhost/workspace");
+
+        var cut = RenderComponent<Home>();
+        Assert.NotNull(cut.Find("[data-testid='workspace-section']"));
+
+        navigation.NavigateTo("http://localhost/designer");
+        cut.Render();
+        Assert.NotNull(cut.Find("[data-testid='designer-section']"));
+        Assert.Empty(cut.FindAll("[data-testid='workspace-section']"));
+
+        navigation.NavigateTo("http://localhost/results");
+        cut.Render();
+        Assert.NotNull(cut.Find("[data-testid='results-panel']"));
+        Assert.Empty(cut.FindAll("[data-testid='designer-section']"));
     }
 
     [Fact]
@@ -48,6 +169,7 @@ public sealed class HomeInteractionTests : TestContext, IDisposable
         var projectRoot = CreateProject("home-actions");
         state.SetProjectPath(projectRoot);
         state.LoadProject();
+        Services.GetRequiredService<NavigationManager>().NavigateTo("http://localhost/designer");
 
         var cut = RenderComponent<Home>();
 
@@ -61,56 +183,52 @@ public sealed class HomeInteractionTests : TestContext, IDisposable
     }
 
     [Fact]
-    public void Home_hero_load_demo_button_loads_first_demo_workspace()
+    public void Home_samples_mode_shows_demo_guidance()
     {
-        var state = CreateState();
+        CreateState();
 
         var cut = RenderComponent<Home>();
-        cut.Find("[data-testid='hero-load-demo']").Click();
+        cut.Find("[data-testid='startup-mode-samples']").Click();
 
-        Assert.True(state.HasLoadedProject);
-        Assert.DoesNotContain("hero-panel", cut.Markup, StringComparison.OrdinalIgnoreCase);
+        Assert.NotNull(cut.Find("[data-testid='startup-samples-panel']"));
+        Assert.NotNull(cut.Find("[data-testid='demo-filter']"));
     }
 
     [Fact]
-    public void Home_use_demo_path_button_sets_workspace_without_loading_project()
+    public void Home_open_mode_surfaces_recent_and_suggested_sections()
     {
-        var state = CreateState();
-        var demo = Assert.Single(state.DemoWorkspaces, item => item.Id == "calc-smoke");
-
+        CreateState();
         var cut = RenderComponent<Home>();
-        cut.Find("[data-testid='use-demo-path-calc-smoke']").Click();
 
-        Assert.False(state.HasLoadedProject);
-        Assert.Equal(demo.ProjectPath, state.ProjectPathInput);
+        Assert.NotNull(cut.Find("[data-testid='suggested-workspace-panel']"));
+        Assert.NotNull(cut.Find("[data-testid='recent-workspaces-panel']"));
     }
 
     [Fact]
-    public void Home_browse_workspaces_button_opens_workspace_picker()
+    public void Home_open_mode_keeps_workspace_picker_accessible()
     {
         var state = CreateState();
 
         var cut = RenderComponent<Home>();
-        cut.Find("[data-testid='hero-browse-workspaces']").Click();
+        var browseButton = cut.FindAll("[data-testid='open-workspace-picker-from-suggested']").FirstOrDefault()
+            ?? cut.FindAll("button").First(button => button.TextContent.Contains("Browse workspaces", StringComparison.Ordinal));
+        browseButton.Click();
 
         Assert.True(state.IsWorkspacePickerOpen);
         Assert.Contains("Browse for a workspace", cut.Markup, StringComparison.OrdinalIgnoreCase);
     }
 
     [Fact]
-    public void Home_demo_filter_narrows_visible_demo_cards()
+    public void Home_wizard_can_switch_to_samples_mode()
     {
         CreateState();
 
         var cut = RenderComponent<Home>();
-        cut.Find("[data-testid='toggle-onboarding-panels']").Click();
+        cut.Find("[data-testid='startup-mode-samples']").Click();
 
-        cut.Find("[data-testid='demo-filter']").Input("browser");
-
-        Assert.Contains("Browser search-style demo", cut.Markup);
-        Assert.DoesNotContain("HTTP smoke demo", cut.Markup);
-        Assert.DoesNotContain("Calculator desktop demo", cut.Markup);
-        Assert.Contains("1 shown", cut.Markup);
+        Assert.NotNull(cut.Find("[data-testid='startup-samples-panel']"));
+        Assert.NotNull(cut.Find("[data-testid='demo-filter']"));
+        Assert.Contains("Start from a sample or demo", cut.Markup, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -168,6 +286,7 @@ public sealed class HomeInteractionTests : TestContext, IDisposable
         ]));
         var workspace = CreateProject("workspace-summary");
         state.SetProjectPath(workspace);
+        state.LoadProject();
         state.SelectedProfile = "local";
         state.RetryCountOverrideText = "oops";
         state.ScreenshotPolicy = "every-step";
@@ -182,6 +301,21 @@ public sealed class HomeInteractionTests : TestContext, IDisposable
         Assert.Contains("Screenshots: Every step", summary, StringComparison.Ordinal);
         Assert.Contains("Node: Browser lab (Busy)", summary, StringComparison.Ordinal);
         Assert.Contains("Retry override must be a non-negative integer.", summary, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void Home_workspace_advanced_controls_are_grouped_under_a_collapsed_advanced_panel()
+    {
+        CreateState();
+
+        var cut = RenderComponent<Home>();
+        var advancedPanel = cut.Find("[data-testid='workspace-advanced-panel']");
+
+        Assert.False(advancedPanel.HasAttribute("open"));
+        Assert.Contains("Retry override", advancedPanel.TextContent, StringComparison.Ordinal);
+        Assert.Contains("Screenshot policy", advancedPanel.TextContent, StringComparison.Ordinal);
+        Assert.Contains("Execution node", advancedPanel.TextContent, StringComparison.Ordinal);
+        Assert.Contains("Show advanced controls", advancedPanel.TextContent, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -213,72 +347,39 @@ public sealed class HomeInteractionTests : TestContext, IDisposable
     }
 
     [Fact]
-    public void Home_runner_node_filter_narrows_visible_nodes()
+    public void Home_wizard_switches_between_open_and_new_modes()
     {
-        CreateState(runnerService: new FakeRunnerService(
-        [
-            CreateNode("local", "Embedded local", "Local embedded runner", StudioRunnerTransportKind.Embedded, "This machine", ["web", "http"], StudioRunnerNodeStatus.Healthy),
-            CreateNode("remote-browser", "Browser lab", "Remote browser node", StudioRunnerTransportKind.RemoteHttp, "Lab rack", ["browser"], StudioRunnerNodeStatus.Busy, activeRunId: "run-42"),
-            CreateNode("remote-desktop", "Desktop lab", "Remote desktop node", StudioRunnerTransportKind.RemoteHttp, "QA floor", ["desktop"], StudioRunnerNodeStatus.Degraded, lastError: "Recorder not responding")
-        ]));
-
+        CreateState();
         var cut = RenderComponent<Home>();
-        cut.Find("[data-testid='toggle-onboarding-panels']").Click();
+        Assert.NotNull(cut.Find("[data-testid='startup-open-panel']"));
 
-        cut.Find("[data-testid='runner-node-filter']").Input("desktop");
+        cut.Find("[data-testid='startup-mode-new']").Click();
 
-        var renderedNodes = cut.FindAll("[data-testid^='runner-node-']")
-            .Where(element => element.TagName.Equals("DIV", StringComparison.OrdinalIgnoreCase))
-            .Select(element => element.TextContent)
-            .ToList();
-
-        Assert.Contains(renderedNodes, content => content.Contains("Desktop lab", StringComparison.Ordinal));
-        Assert.DoesNotContain(renderedNodes, content => content.Contains("Embedded local", StringComparison.Ordinal));
-        Assert.DoesNotContain(renderedNodes, content => content.Contains("Browser lab", StringComparison.Ordinal));
-        Assert.Contains("1 shown", cut.Markup);
+        Assert.NotNull(cut.Find("[data-testid='startup-new-panel']"));
+        Assert.Empty(cut.FindAll("[data-testid='startup-open-panel']"));
     }
 
     [Fact]
-    public void Home_runner_node_issue_toggle_limits_list_to_attention_needed_nodes()
+    public void Home_new_mode_prioritizes_folder_selection()
     {
-        CreateState(runnerService: new FakeRunnerService(
-        [
-            CreateNode("local", "Embedded local", "Local embedded runner", StudioRunnerTransportKind.Embedded, "This machine", ["web"], StudioRunnerNodeStatus.Healthy),
-            CreateNode("remote-offline", "Remote offline", "Remote fallback node", StudioRunnerTransportKind.RemoteHttp, "West", ["browser"], StudioRunnerNodeStatus.Offline, lastError: "Heartbeat expired"),
-            CreateNode("remote-degraded", "Remote degraded", "Remote desktop node", StudioRunnerTransportKind.RemoteHttp, "East", ["desktop"], StudioRunnerNodeStatus.Degraded, lastError: "Queue backlog")
-        ]));
-
+        var state = CreateState();
         var cut = RenderComponent<Home>();
-        cut.Find("[data-testid='toggle-onboarding-panels']").Click();
+        cut.Find("[data-testid='startup-mode-new']").Click();
+        cut.Find("[data-testid='startup-new-browse']").Click();
 
-        cut.Find("[data-testid='runner-node-issues-only']").Change(true);
-
-        var renderedNodes = cut.FindAll("[data-testid^='runner-node-']")
-            .Where(element => element.TagName.Equals("DIV", StringComparison.OrdinalIgnoreCase))
-            .Select(element => element.TextContent)
-            .ToList();
-
-        Assert.DoesNotContain(renderedNodes, content => content.Contains("Embedded local", StringComparison.Ordinal));
-        Assert.Contains(renderedNodes, content => content.Contains("Remote offline", StringComparison.Ordinal));
-        Assert.Contains(renderedNodes, content => content.Contains("Remote degraded", StringComparison.Ordinal));
-        Assert.Contains("Needs attention: 2", cut.Markup);
-        Assert.Contains("Issues only", cut.Markup);
+        Assert.True(state.IsWorkspacePickerOpen);
     }
 
     [Fact]
-    public void Home_onboarding_defaults_to_focused_panels_until_user_expands_all()
+    public void Home_onboarding_defaults_to_single_open_mode_panel()
     {
         CreateState();
 
         var cut = RenderComponent<Home>();
 
-        Assert.Null(cut.Find("[data-testid='demo-workspaces-panel']").GetAttribute("open"));
-        Assert.Null(cut.Find("[data-testid='runner-nodes-panel']").GetAttribute("open"));
-
-        cut.Find("[data-testid='toggle-onboarding-panels']").Click();
-
-        Assert.NotNull(cut.Find("[data-testid='demo-workspaces-panel']").GetAttribute("open"));
-        Assert.NotNull(cut.Find("[data-testid='runner-nodes-panel']").GetAttribute("open"));
+        Assert.NotNull(cut.Find("[data-testid='startup-open-panel']"));
+        Assert.Empty(cut.FindAll("[data-testid='startup-new-panel']"));
+        Assert.Empty(cut.FindAll("[data-testid='startup-samples-panel']"));
     }
 
     private StudioWorkspaceState CreateState(string[]? recentWorkspaces = null, IStudioRunnerService? runnerService = null)
@@ -335,6 +436,13 @@ public sealed class HomeInteractionTests : TestContext, IDisposable
         {
             await task;
         }
+    }
+
+    private static void SetPrivate<T>(object target, string propertyName, T value)
+    {
+        var property = target.GetType().GetProperty(propertyName, System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic)
+            ?? throw new InvalidOperationException($"Property '{propertyName}' was not found.");
+        property.SetValue(target, value);
     }
 
     private string CreateProject(string name)

@@ -25,19 +25,15 @@ test('navigates between workspace, designer, and results using stable shell sele
   await expect(page.getByTestId('workspace-section')).toBeVisible();
   await captureDocScreenshot(page, 'landing.png', page.getByTestId('studio-shell'));
 
-  await page.getByTestId('toggle-onboarding-panels').click();
-  await page.getByTestId('demo-filter').fill('browser');
-  await page.getByTestId('runner-node-filter').fill('local');
-
   await page.getByTestId('nav-link-designer').click();
   await expect(page).toHaveURL(/\/designer$/);
   await expect(page.getByTestId('designer-section')).toBeVisible();
-  await expect(page.getByTestId('designer-tab-overview')).toBeVisible();
+  await expect(page.getByTestId('designer-section')).toContainText('Author when the workspace is ready');
 
   await page.getByTestId('nav-link-results').click();
   await expect(page).toHaveURL(/\/results$/);
   await expect(page.getByTestId('results-panel')).toBeVisible();
-  await expect(page.getByTestId('results-live-headline')).toContainText('No run in progress');
+  await expect(page.getByTestId('results-panel')).toContainText('Review only when there is signal');
 
   await page.getByTestId('nav-link-workspace').click();
   await expect(page).toHaveURL(/\/workspace$/);
@@ -60,8 +56,30 @@ test('loads the suggested workspace through the in-app picker and exposes explor
 
   await expect(page.getByTestId('workspace-picker-dialog')).toBeHidden();
   await expect(page.getByTestId('status-bar-status-text')).toContainText('Loaded');
+  await page.getByTestId('nav-link-designer').click();
+  await expect(page).toHaveURL(/\/designer$/);
   await expect(page.getByTestId('explorer-panel')).toBeVisible();
   await expect(page.locator('[data-testid^="explorer-flow-"]').first()).toBeVisible();
+});
+
+test('keeps the global control center available across routes after a demo loads', async ({ page }) => {
+  await loadBuiltInDemo(page);
+
+  await page.getByTestId('global-controls-toggle').click();
+  await expect(page.getByTestId('global-controls-drawer')).toBeVisible();
+  await expect(page.getByTestId('global-controls-actions')).toContainText('Run all');
+  await expect(page.getByTestId('global-controls-run-all')).toBeEnabled();
+  await expect(page.getByTestId('global-controls-run-flow')).toBeEnabled();
+  await expect(page.getByTestId('global-controls-open-results')).toBeEnabled();
+
+  await page.getByTestId('global-controls-open-results').click();
+  await expect(page).toHaveURL(/\/results$/);
+  await expect(page.getByTestId('results-panel')).toBeVisible();
+  await expect(page.getByTestId('global-controls-drawer')).toBeHidden();
+
+  await page.getByTestId('global-controls-toggle').click();
+  await expect(page.getByTestId('global-controls-drawer')).toBeVisible();
+  await expect(page.getByTestId('global-controls-monitor')).toContainText('No run or recording session is active yet.');
 });
 
 test('validates the documented Studio authoring loop and captures the reused docs screenshots', async ({ page }) => {
@@ -90,6 +108,8 @@ test('validates the documented Studio authoring loop and captures the reused doc
   await expect(page.getByTestId('metrics-panel')).toBeVisible();
   await captureDocScreenshot(page, 'metrics-tab.png', page.getByTestId('designer-section'));
 
+  await page.getByTestId('global-controls-toggle').click();
+  await expect(page.getByTestId('global-controls-drawer')).toBeVisible();
   await page.getByTestId('record-button-open').click();
   await expect(page.getByTestId('recording-target-picker')).toBeVisible();
   await expect(page.getByTestId('recording-picker-panel-desktop')).toBeVisible();
@@ -102,7 +122,7 @@ test('validates the documented Studio authoring loop and captures the reused doc
   await page.getByTestId('recording-picker-cancel').click();
   await expect(page.getByTestId('recording-target-picker')).toBeHidden();
 
-  await page.getByTestId('nav-link-results').click();
+  await page.getByTestId('global-controls-open-results').click();
   await expect(page).toHaveURL(/\/results$/);
   await expect(page.getByTestId('results-panel')).toBeVisible();
   await expect(page.getByTestId('results-run-filter')).toBeVisible();
@@ -110,23 +130,24 @@ test('validates the documented Studio authoring loop and captures the reused doc
 });
 
 test('supports the guided use-path onboarding flow before loading a workspace', async ({ page }) => {
-  await page.getByTestId('toggle-onboarding-panels').click();
+  await page.getByTestId('startup-mode-samples').click();
   await expect(page.getByTestId('demo-workspaces-list')).toBeVisible();
 
   const firstUsePathButton = page.locator('[data-testid^="use-demo-path-"]').first();
   await firstUsePathButton.click();
 
   await expect(page.getByTestId('workspace-path-input')).toHaveValue(/smoke/i);
-  await expect(page.getByTestId('explorer-empty')).toBeVisible();
+  await expect(page.getByTestId('workspace-section')).toContainText('Later stages stay dimmed until the workspace loads.');
 
   await page.getByTestId('load-project').click();
   await expect(page.getByTestId('status-bar-status-text')).toContainText('Loaded');
+  await page.getByTestId('nav-link-designer').click();
+  await expect(page).toHaveURL(/\/designer$/);
   await expect(page.locator('[data-testid^="explorer-flow-"]').first()).toBeVisible();
 });
 
 test('filters and manages recent workspaces before loading a project', async ({ page }) => {
   await seedRecentWorkspaces(page);
-  await page.getByTestId('toggle-onboarding-panels').click();
 
   await page.getByTestId('recent-workspace-filter').fill('web');
   await expect(page.locator('[data-testid^="recent-workspace-card-"]')).toHaveCount(1);
@@ -143,6 +164,8 @@ test('filters and manages recent workspaces before loading a project', async ({ 
 
 test('filters explorer content and exposes flow actions after a demo is loaded', async ({ page }) => {
   await loadBuiltInDemo(page);
+  await page.getByTestId('nav-link-designer').click();
+  await expect(page).toHaveURL(/\/designer$/);
   await expect(page.locator('[data-testid^="explorer-flow-"]')).toHaveCount(2);
 
   await page.getByTestId('explorer-filter').fill('post');
@@ -152,17 +175,15 @@ test('filters explorer content and exposes flow actions after a demo is loaded',
   await filteredFlow.click();
 
   await expect(page.getByTestId('designer-tab-flow')).toBeVisible();
-  await expect(page.getByTestId('run-flow')).toBeEnabled();
-  await expect(page.getByTestId('open-selected-file')).toBeEnabled();
-
-  await page.getByTestId('more-actions').click();
-  await expect(page.getByTestId('new-flow')).toBeEnabled();
+  await page.getByTestId('global-controls-toggle').click();
+  await expect(page.getByTestId('global-controls-run-flow')).toBeEnabled();
+  await expect(page.getByTestId('global-controls-open-results')).toBeEnabled();
 });
 
 async function loadBuiltInDemo(page: Page): Promise<void> {
-  await clickUntilVisible(page, page.getByTestId('quick-load-first-demo'), page.locator('[data-testid^="explorer-flow-"]').first());
+  await page.getByTestId('load-suggested-workspace').click();
   await expect(page.getByTestId('workspace-path-input')).toHaveValue(/httpbin-smoke/i);
-  await expect(page.locator('[data-testid^="explorer-flow-"]').first()).toBeVisible();
+  await expect(page.getByTestId('status-bar-status-text')).toContainText('Loaded');
 }
 
 async function clickUntilVisible(page: Page, trigger: Locator, target: Locator): Promise<void> {

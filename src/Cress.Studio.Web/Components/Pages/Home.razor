@@ -9,140 +9,101 @@
 
 <PageTitle>Cress Studio Web</PageTitle>
 
-<div class="studio-shell" data-testid="studio-shell">
-    @if (!State.HasLoadedProject)
+<div class="studio-shell @(State.IsBusy ? "studio-shell--busy" : null)" data-testid="studio-shell" data-busy="@State.IsBusy.ToString().ToLowerInvariant()">
+    @if (State.IsBusy)
     {
-        <section class="card hero-panel" aria-labelledby="studio-home-title" data-testid="hero-panel">
-            <div class="hero-header">
-                <div>
-                    <div class="hero-kicker">Primary experience</div>
-                    <h1 id="studio-home-title">Cress Studio Web</h1>
-                    <p class="hero-copy">Open a real workspace, design resilient flows, orchestrate runs, and inspect evidence from the web-first shell we are actively investing in.</p>
-                </div>
-                <div class="hero-badges">
-                    <span class="pill">Web-first authoring</span>
-                    <span class="pill">Live run visibility</span>
-                    <span class="pill">Remote-node ready</span>
+        <section class="busy-banner" role="status" aria-live="polite" data-testid="studio-busy-banner">
+            <div class="busy-banner-head">
+                <span class="busy-spinner" aria-hidden="true"></span>
+                <div class="busy-banner-copy">
+                    <strong>@(string.IsNullOrWhiteSpace(State.LiveRunHeadline) ? "Working…" : State.LiveRunHeadline)</strong>
+                    <span>@State.LiveCurrentStepMessage</span>
                 </div>
             </div>
-            <div class="hero-actions" data-testid="hero-actions">
-                <button type="button" class="action-button primary" @onclick="LoadFirstDemo" disabled="@(State.DemoWorkspaces.Count == 0)" data-testid="hero-load-demo">Load a demo</button>
-                <button type="button" class="action-button" @onclick="OpenWorkspacePicker" data-testid="hero-browse-workspaces">Browse workspaces</button>
-            </div>
-            <div class="hero-highlights" data-testid="hero-highlights">
-                <article class="hero-highlight">
-                    <strong>Blazor-first shell</strong>
-                    <p>The browser experience is now the preferred product surface for onboarding, authoring, execution, and evidence review.</p>
-                </article>
-                <article class="hero-highlight">
-                    <strong>Guided workspace startup</strong>
-                    <p>Suggested workspaces, recent folders, and built-in demos get you to a runnable project quickly instead of dropping you into repo trivia.</p>
-                </article>
-                <article class="hero-highlight">
-                    <strong>Unified studio shell</strong>
-                    <p>Workspace setup, design, execution, and evidence review now live in one web-first surface instead of split shells.</p>
-                </article>
+            <div class="busy-skeleton-row" aria-hidden="true">
+                <span class="busy-skeleton busy-skeleton--long"></span>
+                <span class="busy-skeleton busy-skeleton--medium"></span>
+                <span class="busy-skeleton busy-skeleton--short"></span>
             </div>
         </section>
     }
-    else
+
+    @if (State.HasLoadedProject)
     {
         <h1 id="studio-home-title" class="visually-hidden">Test automation studio</h1>
     }
 
     @if (!State.HasLoadedProject)
     {
-        <section class="card onboarding-panel" aria-labelledby="studio-quickstart-title" data-testid="onboarding-panel">
+        <section class="card onboarding-panel onboarding-panel--startup" aria-labelledby="studio-home-title" data-testid="onboarding-panel">
             <div class="panel-header">
                 <div class="panel-heading">
-                    <span class="panel-kicker">Onboarding</span>
-                    <h2 id="studio-quickstart-title">Start with a real workspace</h2>
-                    <p>Start with the essentials first, then expand demo and node setup only when you need more options.</p>
+                    <span class="panel-kicker">Start here</span>
+                    <h1 id="studio-home-title">Choose how to open a workspace</h1>
+                    <p>Pick one path, finish setup, and load the workspace. The rest of the studio stays visually quiet until the project is real.</p>
                 </div>
-                <div class="helper-actions">
-                    <button type="button" class="action-button" @onclick="ToggleOnboardingPanels" data-testid="toggle-onboarding-panels">
-                        @GetOnboardingPanelToggleLabel()
-                    </button>
+                <div class="suite-flow-summary startup-choice-summary">
+                    @if (!string.IsNullOrWhiteSpace(State.SuggestedWorkspacePath))
+                    {
+                        <span class="pill">Suggested ready</span>
+                    }
+                    <span class="pill">@State.RecentWorkspaces.Count recent</span>
+                    <span class="pill">@State.DemoWorkspaces.Count demos</span>
                 </div>
             </div>
 
-            <div class="onboarding-grid">
-                <details class="subpanel onboarding-step" open="@ShouldOpenOnboardingPanel("suggested")" data-testid="suggested-workspace-panel">
-                    <summary class="onboarding-step-summary" data-testid="suggested-workspace-summary">
-                        <div class="onboarding-step-copy">
-                            <div class="onboarding-step-title">
-                                <span class="summary-chevron" aria-hidden="true">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-                                </span>
-                                <div>
-                                    <span class="panel-kicker">Step 1</span>
-                                    <strong>Suggested workspace</strong>
-                                </div>
-                            </div>
-                            <span>Start from a known Cress sample or repo root instead of falling into framework internals.</span>
-                        </div>
-                        <span class="pill">Recommended</span>
-                    </summary>
-                    <div class="onboarding-step-body">
-                        @if (string.IsNullOrWhiteSpace(State.SuggestedWorkspacePath))
-                        {
-                            <p class="subpanel-empty">No suggested workspace was detected in this environment. Browse for a folder or load a demo.</p>
-                        }
-                        else
-                        {
-                            <div class="workspace-chip" data-testid="suggested-workspace-path">
-                                <strong>@State.SuggestedWorkspacePath</strong>
+            <div class="startup-wizard-nav" role="tablist" aria-label="Startup workflow" data-testid="startup-wizard-nav">
+                <button type="button" class="@GetStartupModeButtonClass("new")" @onclick='() => SetStartupMode("new")' data-testid="startup-mode-new">1. New</button>
+                <button type="button" class="@GetStartupModeButtonClass("open")" @onclick='() => SetStartupMode("open")' data-testid="startup-mode-open">2. Open</button>
+                <button type="button" class="@GetStartupModeButtonClass("samples")" @onclick='() => SetStartupMode("samples")' data-testid="startup-mode-samples">3. Samples / demos</button>
+            </div>
+
+            <section class="subpanel startup-wizard-panel" data-testid="startup-wizard-panel">
+                @switch (_startupMode)
+                {
+                    case "new":
+                        <div class="startup-mode-stack" data-testid="startup-new-panel">
+                            <div class="startup-mode-copy">
+                                <span class="panel-kicker">Step 1</span>
+                                <h3>Start a new workspace</h3>
+                                <p>Choose a folder for a new project or point Cress at a workspace you want to shape from scratch. Path, profile, retries, and node selection stay in the next setup step.</p>
                             </div>
                             <div class="helper-actions">
-                                <button type="button" class="action-button primary" @onclick="UseSuggestedWorkspace" data-testid="use-suggested-workspace">Use suggested</button>
-                                <button type="button" class="action-button success" @onclick="LoadSuggestedWorkspace" data-testid="load-suggested-workspace">Load suggested</button>
-                                <button type="button" class="action-button" @onclick="OpenWorkspacePicker" data-testid="open-workspace-picker-from-suggested">Browse folders</button>
+                                <button type="button" class="action-button primary" @onclick="OpenWorkspacePicker" data-testid="startup-new-browse">Choose folder</button>
+                                @if (!string.IsNullOrWhiteSpace(State.SuggestedWorkspacePath))
+                                {
+                                    <button type="button" class="action-button" @onclick="UseSuggestedWorkspace" data-testid="startup-new-use-suggested">Use suggested path</button>
+                                }
                             </div>
-                        }
-                    </div>
-                </details>
-
-                <details class="subpanel onboarding-step" open="@ShouldOpenOnboardingPanel("recent")" data-testid="recent-workspaces-panel">
-                    <summary class="onboarding-step-summary" data-testid="recent-workspaces-summary">
-                        <div class="onboarding-step-copy">
-                            <div class="onboarding-step-title">
-                                <span class="summary-chevron" aria-hidden="true">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-                                </span>
-                                <div>
-                                    <span class="panel-kicker">Step 2</span>
-                                    <strong>Recent workspaces</strong>
-                                </div>
-                            </div>
-                            <span>Jump back into the last folders you opened from this browser session profile.</span>
                         </div>
-                        <span class="pill">@State.RecentWorkspaces.Count recent</span>
-                    </summary>
-                    <div class="onboarding-step-body">
-                        @if (!State.HasRecentWorkspaces)
-                        {
-                            <p class="subpanel-empty">No recent workspaces yet. Load a project once and it will appear here automatically.</p>
-                        }
-                        else
-                        {
-                            var filteredRecentWorkspaces = FilterRecentWorkspaces(State.RecentWorkspaces).ToList();
+                        break;
+                    case "samples":
+                        <div class="startup-mode-stack" data-testid="startup-samples-panel">
+                            <div class="startup-mode-copy">
+                                <span class="panel-kicker">Step 3</span>
+                                <h3>Start from a sample or demo</h3>
+                                <p>Use a concrete sample when you want to explore the designer quickly without searching the repository first.</p>
+                            </div>
+                            @{
+                                var filteredDemos = FilterDemos(State.DemoWorkspaces).ToList();
+                            }
                             <div class="field-stack explorer-search-wrap">
-                                <label for="recent-workspace-filter">Search recent workspaces</label>
+                                <label for="demo-filter">Search demos</label>
                                 <div class="explorer-search-field">
                                     <span class="explorer-search-icon" aria-hidden="true">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                             <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
                                         </svg>
                                     </span>
-                                    <input id="recent-workspace-filter"
+                                    <input id="demo-filter"
                                            class="text-input explorer-search-input"
-                                           @bind="_recentWorkspaceFilter"
+                                           @bind="_demoFilter"
                                            @bind:event="oninput"
-                                           placeholder="Filter by folder or path"
-                                           data-testid="recent-workspace-filter" />
-                                    @if (!string.IsNullOrWhiteSpace(_recentWorkspaceFilter))
+                                           placeholder="Filter by demo, platform, or tag"
+                                           data-testid="demo-filter" />
+                                    @if (!string.IsNullOrWhiteSpace(_demoFilter))
                                     {
-                                        <button type="button" class="explorer-search-clear" aria-label="Clear recent workspace filter" @onclick="ClearRecentWorkspaceFilter">
+                                        <button type="button" class="explorer-search-clear" aria-label="Clear demo filter" @onclick="ClearDemoFilter">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                                                 <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
                                             </svg>
@@ -150,240 +111,177 @@
                                     }
                                 </div>
                             </div>
-                            <div class="suite-flow-summary" data-testid="recent-workspace-summary">
-                                <span class="pill">@filteredRecentWorkspaces.Count shown</span>
-                                <span class="pill">@State.RecentWorkspaces.Count recent</span>
-                                @if (!string.IsNullOrWhiteSpace(_recentWorkspaceFilter))
+                            <div class="suite-flow-summary" data-testid="demo-filter-summary">
+                                <span class="pill">@filteredDemos.Count shown</span>
+                                <span class="pill">@State.DemoWorkspaces.Count demos</span>
+                                @if (!string.IsNullOrWhiteSpace(_demoFilter))
                                 {
-                                    <span class="pill">Filter: @_recentWorkspaceFilter</span>
+                                    <span class="pill">Filter: @_demoFilter</span>
                                 }
                             </div>
-                            <div class="helper-actions">
-                                <button type="button" class="action-button" @onclick="ClearRecentWorkspaces" data-testid="clear-recent-workspaces">Clear recent</button>
-                            </div>
 
-                            @if (filteredRecentWorkspaces.Count == 0)
+                            @if (filteredDemos.Count == 0)
                             {
-                                <p class="subpanel-empty" data-testid="recent-workspace-filter-empty">No recent workspaces match the current filter.</p>
+                                <p class="subpanel-empty" data-testid="demo-filter-empty">No demos match the current filter.</p>
                             }
                             else
                             {
-                                <div class="demo-card-list" data-testid="recent-workspaces-list">
-                                    @foreach (var recent in filteredRecentWorkspaces)
+                                <div class="demo-card-list" data-testid="demo-workspaces-list">
+                                    @foreach (var demo in filteredDemos)
                                     {
-                                        <article class="demo-card" data-testid="@($"recent-workspace-card-{ToTestIdSegment(recent)}")">
+                                        <article class="demo-card" data-testid="@($"demo-card-{ToTestIdSegment(demo.Id)}")">
                                             <div class="demo-card-copy">
-                                                <strong>@Path.GetFileName(recent)</strong>
-                                                <p>@recent</p>
+                                                <strong>@demo.Title</strong>
+                                                <p>@demo.Description</p>
+                                                <div class="demo-card-tags">
+                                                    @foreach (var tag in demo.Tags)
+                                                    {
+                                                        <span class="pill">@tag</span>
+                                                    }
+                                                </div>
                                             </div>
                                             <div class="helper-actions">
-                                                <button type="button" class="action-button success" @onclick="@(() => LoadRecentWorkspace(recent))" data-testid="@($"load-recent-workspace-{ToTestIdSegment(recent)}")">Load recent</button>
-                                                <button type="button" class="action-button" @onclick="@(() => UseRecentWorkspace(recent))" data-testid="@($"use-recent-workspace-{ToTestIdSegment(recent)}")">Use path</button>
-                                                <button type="button" class="action-button" @onclick="@(() => RemoveRecentWorkspace(recent))" data-testid="@($"remove-recent-workspace-{ToTestIdSegment(recent)}")">Remove</button>
+                                                <button type="button" class="action-button success" @onclick="@(() => LoadDemoWorkspace(demo.Id))" data-testid="@($"load-demo-{ToTestIdSegment(demo.Id)}")">Load demo</button>
+                                                <button type="button" class="action-button" @onclick="@(() => UseDemoWorkspace(demo.Id))" data-testid="@($"use-demo-path-{ToTestIdSegment(demo.Id)}")">Use path</button>
                                             </div>
                                         </article>
                                     }
                                 </div>
                             }
-                        }
-                    </div>
-                </details>
-
-                <details class="subpanel onboarding-step" open="@ShouldOpenOnboardingPanel("demos")" data-testid="demo-workspaces-panel">
-                    <summary class="onboarding-step-summary" data-testid="demo-workspaces-summary">
-                        <div class="onboarding-step-copy">
-                            <div class="onboarding-step-title">
-                                <span class="summary-chevron" aria-hidden="true">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-                                </span>
-                                <div>
-                                    <span class="panel-kicker">Optional</span>
-                                    <strong>Built-in demos</strong>
-                                </div>
+                        </div>
+                        break;
+                    default:
+                        <div class="startup-mode-stack" data-testid="startup-open-panel">
+                            <div class="startup-mode-copy">
+                                <span class="panel-kicker">Step 2</span>
+                                <h3>Open an existing workspace</h3>
+                                <p>Use the recommended path when it is correct, or jump back into a recent project without scanning the whole repository.</p>
                             </div>
-                            <span>Open concrete service, browser, or desktop samples without hunting through the repo.</span>
-                        </div>
-                        <span class="pill">@State.DemoWorkspaces.Count demos</span>
-                    </summary>
-                    <div class="onboarding-step-body">
-                        @{
-                            var filteredDemos = FilterDemos(State.DemoWorkspaces).ToList();
-                        }
-                        <div class="field-stack explorer-search-wrap">
-                            <label for="demo-filter">Search demos</label>
-                            <div class="explorer-search-field">
-                                <span class="explorer-search-icon" aria-hidden="true">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-                                    </svg>
-                                </span>
-                                <input id="demo-filter"
-                                       class="text-input explorer-search-input"
-                                       @bind="_demoFilter"
-                                       @bind:event="oninput"
-                                       placeholder="Filter by demo, platform, or tag"
-                                       data-testid="demo-filter" />
-                                @if (!string.IsNullOrWhiteSpace(_demoFilter))
-                                {
-                                    <button type="button" class="explorer-search-clear" aria-label="Clear demo filter" @onclick="ClearDemoFilter">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                            <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
-                                        </svg>
-                                    </button>
-                                }
-                            </div>
-                        </div>
-                        <div class="suite-flow-summary" data-testid="demo-filter-summary">
-                            <span class="pill">@filteredDemos.Count shown</span>
-                            <span class="pill">@State.DemoWorkspaces.Count demos</span>
-                            @if (!string.IsNullOrWhiteSpace(_demoFilter))
-                            {
-                                <span class="pill">Filter: @_demoFilter</span>
-                            }
-                        </div>
 
-                        @if (filteredDemos.Count == 0)
-                        {
-                            <p class="subpanel-empty" data-testid="demo-filter-empty">No demos match the current filter.</p>
-                        }
-                        else
-                        {
-                            <div class="demo-card-list" data-testid="demo-workspaces-list">
-                                @foreach (var demo in filteredDemos)
-                                {
-                                    <article class="demo-card" data-testid="@($"demo-card-{ToTestIdSegment(demo.Id)}")">
-                                        <div class="demo-card-copy">
-                                            <strong>@demo.Title</strong>
-                                            <p>@demo.Description</p>
-                                            <div class="demo-card-tags">
-                                                @foreach (var tag in demo.Tags)
+                            <div class="startup-open-grid">
+                                <section class="startup-open-block" data-testid="suggested-workspace-panel">
+                                    <div class="startup-open-head">
+                                        <strong>Suggested workspace</strong>
+                                        <span class="pill">Recommended</span>
+                                    </div>
+                                    @if (string.IsNullOrWhiteSpace(State.SuggestedWorkspacePath))
+                                    {
+                                        <p class="subpanel-empty">No suggested workspace was detected in this environment. Browse for a folder or start from a demo instead.</p>
+                                    }
+                                    else
+                                    {
+                                        <div class="workspace-chip" data-testid="suggested-workspace-path">
+                                            <strong>@State.SuggestedWorkspacePath</strong>
+                                        </div>
+                                        <div class="helper-actions">
+                                            <button type="button" class="action-button primary" @onclick="UseSuggestedWorkspace" data-testid="use-suggested-workspace">Use suggested</button>
+                                            <button type="button" class="action-button success" @onclick="LoadSuggestedWorkspace" data-testid="load-suggested-workspace">Load suggested</button>
+                                            <button type="button" class="action-button" @onclick="OpenWorkspacePicker" data-testid="open-workspace-picker-from-suggested">Browse folders</button>
+                                        </div>
+                                    }
+                                </section>
+
+                                <section class="startup-open-block" data-testid="recent-workspaces-panel">
+                                    <div class="startup-open-head">
+                                        <strong>Recent projects</strong>
+                                        <span class="pill">@State.RecentWorkspaces.Count recent</span>
+                                    </div>
+                                    @if (!State.HasRecentWorkspaces)
+                                    {
+                                        <p class="subpanel-empty">No recent workspaces yet. Load a project once and it will appear here automatically.</p>
+                                        <div class="helper-actions">
+                                            <button type="button" class="action-button" @onclick="OpenWorkspacePicker">Browse workspaces</button>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        var filteredRecentWorkspaces = FilterRecentWorkspaces(State.RecentWorkspaces).ToList();
+                                        <div class="field-stack explorer-search-wrap">
+                                            <label for="recent-workspace-filter">Search recent workspaces</label>
+                                            <div class="explorer-search-field">
+                                                <span class="explorer-search-icon" aria-hidden="true">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+                                                    </svg>
+                                                </span>
+                                                <input id="recent-workspace-filter"
+                                                       class="text-input explorer-search-input"
+                                                       @bind="_recentWorkspaceFilter"
+                                                       @bind:event="oninput"
+                                                       placeholder="Filter by folder or path"
+                                                       data-testid="recent-workspace-filter" />
+                                                @if (!string.IsNullOrWhiteSpace(_recentWorkspaceFilter))
                                                 {
-                                                    <span class="pill">@tag</span>
+                                                    <button type="button" class="explorer-search-clear" aria-label="Clear recent workspace filter" @onclick="ClearRecentWorkspaceFilter">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                                            <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
+                                                        </svg>
+                                                    </button>
                                                 }
                                             </div>
                                         </div>
-                                        <div class="helper-actions">
-                                            <button type="button" class="action-button success" @onclick="@(() => LoadDemoWorkspace(demo.Id))" data-testid="@($"load-demo-{ToTestIdSegment(demo.Id)}")">Load demo</button>
-                                            <button type="button" class="action-button" @onclick="@(() => UseDemoWorkspace(demo.Id))" data-testid="@($"use-demo-path-{ToTestIdSegment(demo.Id)}")">Use path</button>
-                                        </div>
-                                    </article>
-                                }
-                            </div>
-                        }
-                    </div>
-                </details>
-
-                <details class="subpanel onboarding-step" open="@ShouldOpenOnboardingPanel("nodes")" data-testid="runner-nodes-panel">
-                    <summary class="onboarding-step-summary" data-testid="runner-nodes-summary">
-                        <div class="onboarding-step-copy">
-                            <div class="onboarding-step-title">
-                                <span class="summary-chevron" aria-hidden="true">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-                                </span>
-                                <div>
-                                    <span class="panel-kicker">Optional</span>
-                                    <strong>Execution nodes</strong>
-                                </div>
-                            </div>
-                            <span>Check capacity and health when you need to choose between embedded and remote execution.</span>
-                        </div>
-                        <span class="pill">@State.RunnerNodes.Count nodes</span>
-                    </summary>
-                    <div class="onboarding-step-body">
-                        @{
-                            var filteredRunnerNodes = FilterRunnerNodes(State.RunnerNodes).ToList();
-                            var issueNodeCount = State.RunnerNodes.Count(HasRunnerNodeIssue);
-                            var busyNodeCount = State.RunnerNodes.Count(static node => node.Status == StudioRunnerNodeStatus.Busy);
-                        }
-                        <div class="field-stack explorer-search-wrap">
-                            <label for="runner-node-filter">Search nodes</label>
-                            <div class="explorer-search-field">
-                                <span class="explorer-search-icon" aria-hidden="true">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-                                    </svg>
-                                </span>
-                                <input id="runner-node-filter"
-                                       class="text-input explorer-search-input"
-                                       @bind="_runnerNodeFilter"
-                                       @bind:event="oninput"
-                                       placeholder="Filter by node, location, transport, or capability"
-                                       data-testid="runner-node-filter" />
-                                @if (!string.IsNullOrWhiteSpace(_runnerNodeFilter))
-                                {
-                                    <button type="button" class="explorer-search-clear" aria-label="Clear node filter" @onclick="ClearRunnerNodeFilter">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                            <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
-                                        </svg>
-                                    </button>
-                                }
-                            </div>
-                        </div>
-                        <label class="filter-toggle" data-testid="runner-node-issues-toggle-label">
-                            <input type="checkbox" @bind="_showRunnerNodeIssuesOnly" data-testid="runner-node-issues-only" />
-                            <span>Show nodes that need attention</span>
-                        </label>
-                        <div class="suite-flow-summary" data-testid="runner-node-summary">
-                            <span class="pill">@filteredRunnerNodes.Count shown</span>
-                            <span class="pill">@State.RunnerNodes.Count total</span>
-                            @if (issueNodeCount > 0)
-                            {
-                                <span class="pill">Needs attention: @issueNodeCount</span>
-                            }
-                            @if (busyNodeCount > 0)
-                            {
-                                <span class="pill">Busy: @busyNodeCount</span>
-                            }
-                            @if (_showRunnerNodeIssuesOnly)
-                            {
-                                <span class="pill">Issues only</span>
-                            }
-                        </div>
-
-                        @if (filteredRunnerNodes.Count == 0)
-                        {
-                            <p class="subpanel-empty" data-testid="runner-node-empty">No execution nodes match the current filter.</p>
-                        }
-                        else
-                        {
-                            <div class="workspace-list" data-testid="runner-nodes-list">
-                                @foreach (var node in filteredRunnerNodes)
-                                {
-                                    <div class="node-card @(State.SelectedRunnerNodeId == node.Id ? "node-card--selected" : string.Empty)" data-testid="@($"runner-node-{ToTestIdSegment(node.Id)}")">
-                                        <div class="node-card-head">
-                                            <div>
-                                                <strong>@node.Name</strong>
-                                                <div class="muted" data-testid="@($"runner-node-display-{ToTestIdSegment(node.Id)}")">@node.DisplayName</div>
-                                                <div class="muted" data-testid="@($"runner-node-status-{ToTestIdSegment(node.Id)}")">Status: @FormatNodeStatus(node) • Heartbeat @FormatRelativeTime(node.LastHeartbeatUtc)</div>
-                                            </div>
-                                            <span class="@GetRunnerNodeStatusClass(node)" data-testid="@($"runner-node-status-pill-{ToTestIdSegment(node.Id)}")">
-                                                @GetRunnerNodeStatusLabel(node)
-                                            </span>
-                                        </div>
-                                        <p>@node.Description</p>
-                                        <div class="demo-card-tags">
-                                            <span class="pill">@node.Transport</span>
-                                            <span class="pill">@node.Location</span>
-                                            @foreach (var capability in node.Capabilities)
+                                        <div class="suite-flow-summary" data-testid="recent-workspace-summary">
+                                            <span class="pill">@filteredRecentWorkspaces.Count shown</span>
+                                            <span class="pill">@State.RecentWorkspaces.Count recent</span>
+                                            @if (!string.IsNullOrWhiteSpace(_recentWorkspaceFilter))
                                             {
-                                                <span class="pill">@capability</span>
+                                                <span class="pill">Filter: @_recentWorkspaceFilter</span>
                                             }
                                         </div>
-                                        @if (!string.IsNullOrWhiteSpace(node.LastError))
+                                        <div class="helper-actions">
+                                            <button type="button" class="action-button" @onclick="ClearRecentWorkspaces" data-testid="clear-recent-workspaces">Clear recent</button>
+                                        </div>
+
+                                        @if (filteredRecentWorkspaces.Count == 0)
                                         {
-                                            <div class="workspace-picker-error">@node.LastError</div>
+                                            <p class="subpanel-empty" data-testid="recent-workspace-filter-empty">No recent workspaces match the current filter.</p>
                                         }
-                                    </div>
-                                }
+                                        else
+                                        {
+                                            <div class="demo-card-list" data-testid="recent-workspaces-list">
+                                                @foreach (var recent in filteredRecentWorkspaces)
+                                                {
+                                                    <article class="demo-card" data-testid="@($"recent-workspace-card-{ToTestIdSegment(recent)}")">
+                                                        <div class="demo-card-copy">
+                                                            <strong>@Path.GetFileName(recent)</strong>
+                                                            <p>@recent</p>
+                                                        </div>
+                                                        <div class="helper-actions">
+                                                            <button type="button" class="action-button success" @onclick="@(() => LoadRecentWorkspace(recent))" data-testid="@($"load-recent-workspace-{ToTestIdSegment(recent)}")">Load recent</button>
+                                                            <button type="button" class="action-button" @onclick="@(() => UseRecentWorkspace(recent))" data-testid="@($"use-recent-workspace-{ToTestIdSegment(recent)}")">Use path</button>
+                                                            <button type="button" class="action-button" @onclick="@(() => RemoveRecentWorkspace(recent))" data-testid="@($"remove-recent-workspace-{ToTestIdSegment(recent)}")">Remove</button>
+                                                        </div>
+                                                    </article>
+                                                }
+                                            </div>
+                                        }
+                                    }
+                                </section>
                             </div>
-                        }
-                    </div>
-                </details>
-            </div>
+                        </div>
+                        break;
+                }
+            </section>
         </section>
     }
 
+    @if (ShouldShowWorkspacePage())
+    {
     <section id="workspace" class="@GetSectionClass("workspace", "card toolbar-panel")" aria-labelledby="workspace-setup-title" data-testid="workspace-section">
+        <div class="workflow-progress-shell" aria-label="Workflow progression" data-testid="workflow-progress">
+            <div class="workflow-progress-copy">
+                <span class="pill">Step @GetCurrentWorkflowStepNumber() of 4</span>
+                <strong>@GetCurrentWorkflowHeadline()</strong>
+                <span>@GetCurrentWorkflowSupportCopy()</span>
+            </div>
+            <div class="workflow-progress-rail" aria-hidden="true">
+                <span class="@GetWorkflowStepTokenClass("choose")" data-testid="workflow-stage-choose">Choose</span>
+                <span class="@GetWorkflowStepTokenClass("load")" data-testid="workflow-stage-load">Load</span>
+                <span class="@GetWorkflowStepTokenClass("design")" data-testid="workflow-stage-design">Author</span>
+                <span class="@GetWorkflowStepTokenClass("review")" data-testid="workflow-stage-review">Review</span>
+            </div>
+        </div>
+
         <div class="panel-header">
             <div class="panel-heading">
                 <span class="panel-kicker">Setup</span>
@@ -422,54 +320,76 @@
                 </div>
             </div>
 
-            <div class="toolbar-grid">
-                <div class="field-stack">
-                    <label for="retryOverride">Retry override</label>
-                    <input id="retryOverride" class="text-input" @bind="State.RetryCountOverrideText" data-testid="retry-override-input" />
-                    <span class="field-hint">Increase retries for flake investigation without editing the saved suite or flow definition.</span>
-                </div>
-                <div class="field-stack">
-                    <label for="screenshotPolicy">Screenshot policy</label>
-                    <select id="screenshotPolicy" class="text-input" @bind="State.ScreenshotPolicy" data-testid="screenshot-policy-select">
-                        <option value="on-failure">On failure</option>
-                        <option value="every-step">Every step</option>
-                        <option value="off">Off</option>
-                    </select>
-                    <span class="field-hint">Capture enough evidence for triage while keeping routine runs lightweight.</span>
-                </div>
-            </div>
-
-            <div class="toolbar-grid">
-                <div class="field-stack">
-                    <label for="runnerNode">Execution node</label>
-                    <select id="runnerNode" class="text-input" @bind="State.SelectedRunnerNodeId" data-testid="runner-node-select">
-                        @foreach (var node in State.RunnerNodes)
-                        {
-                            <option value="@node.Id">@node.DisplayName</option>
-                        }
-                    </select>
-                    <span class="field-hint">The local embedded node runs flows in-process today; remote nodes will plug into this same orchestration slot.</span>
-                </div>
-                <div class="field-stack">
-                    <label>Quick workspace actions</label>
-                    <div class="helper-actions">
-                        <button type="button" class="action-button" @onclick="UseSuggestedWorkspace" disabled="@string.IsNullOrWhiteSpace(State.SuggestedWorkspacePath)" data-testid="quick-use-suggested-path">Use suggested path</button>
-                        <button type="button" class="action-button" @onclick="OpenWorkspacePicker" data-testid="quick-open-workspace-picker">Browse folders</button>
-                        <button type="button" class="action-button" @onclick="LoadFirstDemo" disabled="@(State.DemoWorkspaces.Count == 0)" data-testid="quick-load-first-demo">Load first demo</button>
+            <details class="subpanel workspace-advanced-panel" data-testid="workspace-advanced-panel">
+                <summary class="onboarding-step-summary workspace-advanced-summary" data-testid="workspace-advanced-summary">
+                    <div class="onboarding-step-copy">
+                        <div class="onboarding-step-title">
+                            <span class="summary-chevron" aria-hidden="true">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                            </span>
+                            <div>
+                                <span class="panel-kicker">Optional</span>
+                                <strong>Advanced setup</strong>
+                            </div>
+                        </div>
+                        <span>Tune reliability, screenshot capture, execution node choice, and quick-start shortcuts only when you need more than the default load path.</span>
                     </div>
-                    <span class="field-hint">Use demos and recent folders to get into the designer quickly instead of typing paths from memory.</span>
+                    <span class="pill">Show advanced controls</span>
+                </summary>
+                <div class="onboarding-step-body workspace-advanced-body">
+                    <div class="toolbar-grid">
+                        <div class="field-stack">
+                            <label for="retryOverride">Retry override</label>
+                            <input id="retryOverride" class="text-input" @bind="State.RetryCountOverrideText" data-testid="retry-override-input" />
+                            <span class="field-hint">Increase retries for flake investigation without editing the saved suite or flow definition.</span>
+                        </div>
+                        <div class="field-stack">
+                            <label for="screenshotPolicy">Screenshot policy</label>
+                            <select id="screenshotPolicy" class="text-input" @bind="State.ScreenshotPolicy" data-testid="screenshot-policy-select">
+                                <option value="on-failure">On failure</option>
+                                <option value="every-step">Every step</option>
+                                <option value="off">Off</option>
+                            </select>
+                            <span class="field-hint">Capture enough evidence for triage while keeping routine runs lightweight.</span>
+                        </div>
+                    </div>
+
+                    <div class="toolbar-grid">
+                        <div class="field-stack">
+                            <label for="runnerNode">Execution node</label>
+                            <select id="runnerNode" class="text-input" @bind="State.SelectedRunnerNodeId" data-testid="runner-node-select">
+                                @foreach (var node in State.RunnerNodes)
+                                {
+                                    <option value="@node.Id">@node.DisplayName</option>
+                                }
+                            </select>
+                            <span class="field-hint">The local embedded node runs flows in-process today; remote nodes will plug into this same orchestration slot.</span>
+                        </div>
+                        <div class="field-stack">
+                            <label>Quick workspace actions</label>
+                            <div class="helper-actions">
+                                <button type="button" class="action-button" @onclick="UseSuggestedWorkspace" disabled="@string.IsNullOrWhiteSpace(State.SuggestedWorkspacePath)" data-testid="quick-use-suggested-path">Use suggested path</button>
+                                <button type="button" class="action-button" @onclick="OpenWorkspacePicker" data-testid="quick-open-workspace-picker">Browse folders</button>
+                                <button type="button" class="action-button" @onclick="LoadFirstDemo" disabled="@(State.DemoWorkspaces.Count == 0)" data-testid="quick-load-first-demo">Load first demo</button>
+                            </div>
+                            <span class="field-hint">Use demos and recent folders to get into the designer quickly instead of typing paths from memory.</span>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </details>
         </div>
         <div class="suite-flow-summary workspace-setup-summary" data-testid="workspace-setup-summary">
             <span class="pill" title="@State.ProjectPathInput">Workspace: @GetWorkspacePathSummary()</span>
             <span class="pill">Profile: @GetProfileSummary()</span>
-            <span class="pill">Retries: @GetRetryOverrideSummary()</span>
-            <span class="pill">Screenshots: @GetScreenshotPolicySummary()</span>
-            <span class="pill">Node: @GetRunnerNodeSelectionSummary()</span>
-            @if (!HasValidRetryOverride())
+            @if (State.HasLoadedProject)
             {
-                <span class="pill workspace-summary-pill--warning" data-testid="workspace-setup-warning">Retry override must be a non-negative integer.</span>
+                <span class="pill">Retries: @GetRetryOverrideSummary()</span>
+                <span class="pill">Screenshots: @GetScreenshotPolicySummary()</span>
+                <span class="pill">Node: @GetRunnerNodeSelectionSummary()</span>
+                @if (!HasValidRetryOverride())
+                {
+                    <span class="pill workspace-summary-pill--warning" data-testid="workspace-setup-warning">Retry override must be a non-negative integer.</span>
+                }
             }
         </div>
 
@@ -481,174 +401,241 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
                     Load project
                 </button>
-                <button type="button" class="action-button" @onclick="RefreshProjectAsync" disabled="@(!State.HasLoadedProject || State.IsBusy)" data-testid="refresh-project"
-                        title="Re-scan the project directory and rebuild the snapshot">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
-                    Refresh
-                </button>
-                <span class="toolbar-divider" aria-hidden="true"></span>
-                <button type="button" class="action-button success" @onclick="RunAllAsync" disabled="@(!State.HasLoadedProject || State.IsBusy)" data-testid="run-all"
-                        title="Execute every flow in the loaded project">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                    Run all
-                </button>
-                <button type="button" class="action-button success" @onclick="RunSelectedAsync" disabled="@(!State.HasSelectedFlow || State.IsBusy)" data-testid="run-flow"
-                        title="Run the currently selected flow">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/><line x1="19" y1="3" x2="19" y2="21"/></svg>
-                    Run flow
-                </button>
-                <button type="button" class="action-button success" @onclick="RunSuiteAsync" disabled="@(!State.HasSelectedSuite || State.IsBusy)" data-testid="run-suite"
-                        title="Run the currently selected suite">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
-                    Run suite
-                </button>
-                <span class="toolbar-divider" aria-hidden="true"></span>
-                <button type="button" class="action-button" @onclick="OpenFileAsync" disabled="@(string.IsNullOrEmpty(State.SelectedFlow?.FilePath))" data-testid="open-selected-file"
-                        title="Copy the selected flow's file path to the clipboard">Open file</button>
-                <button type="button" class="action-button" @onclick="SaveFlowAsync" disabled="@(!State.HasSelectedFlow || State.IsBusy)" data-testid="save-flow"
-                        title="Persist the current flow edits to disk">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
-                    Save flow
-                </button>
-                <span class="toolbar-divider" aria-hidden="true"></span>
-                <RecordButton />
-                <QuickActionSelector />
+                @if (State.HasLoadedProject)
+                {
+                    <button type="button" class="action-button" @onclick="RefreshProjectAsync" disabled="@(!State.HasLoadedProject || State.IsBusy)" data-testid="refresh-project"
+                            title="Re-scan the project directory and rebuild the snapshot">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+                        Refresh
+                    </button>
+                    <span class="toolbar-divider" aria-hidden="true"></span>
+                    <button type="button" class="action-button success" @onclick="RunAllAsync" disabled="@(!State.HasLoadedProject || State.IsBusy)" data-testid="run-all"
+                            title="Execute every flow in the loaded project">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                        Run all
+                    </button>
+                    <button type="button" class="action-button success" @onclick="RunSelectedAsync" disabled="@(!State.HasSelectedFlow || State.IsBusy)" data-testid="run-flow"
+                            title="Run the currently selected flow">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/><line x1="19" y1="3" x2="19" y2="21"/></svg>
+                        Run flow
+                    </button>
+                    <button type="button" class="action-button success" @onclick="RunSuiteAsync" disabled="@(!State.HasSelectedSuite || State.IsBusy)" data-testid="run-suite"
+                            title="Run the currently selected suite">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+                        Run suite
+                    </button>
+                    <span class="toolbar-divider" aria-hidden="true"></span>
+                    <button type="button" class="action-button" @onclick="OpenFileAsync" disabled="@(string.IsNullOrEmpty(State.SelectedFlow?.FilePath))" data-testid="open-selected-file"
+                            title="Copy the selected flow's file path to the clipboard">Open file</button>
+                    <button type="button" class="action-button" @onclick="SaveFlowAsync" disabled="@(!State.HasSelectedFlow || State.IsBusy)" data-testid="save-flow"
+                            title="Persist the current flow edits to disk">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+                        Save flow
+                    </button>
+                    <span class="toolbar-divider" aria-hidden="true"></span>
+                    <RecordButton />
+                    <QuickActionSelector />
+                }
+                else
+                {
+                    <span class="workflow-inline-note" data-testid="workspace-inline-note">Later stages stay dimmed until the workspace loads.</span>
+                }
             </div>
-            <details class="toolbar-more">
-                <summary class="action-button" aria-label="More actions" data-testid="more-actions">More actions</summary>
-                <div class="toolbar-more-panel">
-                    <button type="button" class="action-button" @onclick="CreateFlowAsync" disabled="@(!State.HasLoadedProject || State.IsBusy)" data-testid="new-flow">New flow</button>
-                    <button type="button" class="action-button" @onclick="ApplySourceAsync" disabled="@(!State.HasSelectedFlow || State.IsBusy)">Apply source</button>
-                    <button type="button" class="action-button" @onclick="RebuildSourceAsync" disabled="@(!State.HasSelectedFlow || State.IsBusy)">Rebuild source</button>
-                    <button type="button" class="action-button" @onclick="CreateSuiteAsync" disabled="@(!State.HasLoadedProject || State.IsBusy)">New suite</button>
-                    <button type="button" class="action-button" @onclick="SaveSuiteAsync" disabled="@(!State.HasSelectedSuite || State.IsBusy)">Save suite</button>
-                    <button type="button" class="action-button danger" @onclick="DeleteSuiteAsync" disabled="@(!State.HasSelectedSuite || State.IsBusy)" title="Permanently delete the selected suite">Delete suite</button>
-                    <button type="button" class="action-button success" @onclick="RerunFailedAsync" disabled="@(State.SelectedRun is null || State.IsBusy)" title="Re-execute only the failed flows from the selected run">Rerun failed</button>
-                    <button type="button" class="action-button success" @onclick="RerunFromStepAsync" disabled="@(State.SelectedRunFlow is null || State.IsBusy)" title="Resume the selected run from the last failing step">Rerun from step</button>
-                </div>
-            </details>
+            @if (State.HasLoadedProject)
+            {
+                <details class="toolbar-more">
+                    <summary class="action-button" aria-label="More actions" data-testid="more-actions">More actions</summary>
+                    <div class="toolbar-more-panel">
+                        <button type="button" class="action-button" @onclick="CreateFlowAsync" disabled="@(!State.HasLoadedProject || State.IsBusy)" data-testid="new-flow">New flow</button>
+                        <button type="button" class="action-button" @onclick="ApplySourceAsync" disabled="@(!State.HasSelectedFlow || State.IsBusy)">Apply source</button>
+                        <button type="button" class="action-button" @onclick="RebuildSourceAsync" disabled="@(!State.HasSelectedFlow || State.IsBusy)">Rebuild source</button>
+                        <button type="button" class="action-button" @onclick="CreateSuiteAsync" disabled="@(!State.HasLoadedProject || State.IsBusy)">New suite</button>
+                        <button type="button" class="action-button" @onclick="SaveSuiteAsync" disabled="@(!State.HasSelectedSuite || State.IsBusy)">Save suite</button>
+                        <button type="button" class="action-button danger" @onclick="DeleteSuiteAsync" disabled="@(!State.HasSelectedSuite || State.IsBusy)" title="Permanently delete the selected suite">Delete suite</button>
+                        <button type="button" class="action-button success" @onclick="RerunFailedAsync" disabled="@(State.SelectedRun is null || State.IsBusy)" title="Re-execute only the failed flows from the selected run">Rerun failed</button>
+                        <button type="button" class="action-button success" @onclick="RerunFromStepAsync" disabled="@(State.SelectedRunFlow is null || State.IsBusy)" title="Resume the selected run from the last failing step">Rerun from step</button>
+                    </div>
+                </details>
+            }
         </div>
 
-        <LiveRunPanel />
-    </section>
-
-    <div class="studio-grid">
-        <ExplorerPanel />
-
-        <section id="designer" class="@GetSectionClass("designer", "card editor-panel")" aria-labelledby="designer-title" data-testid="designer-section">
-            <div class="panel-header">
-                <div class="panel-heading">
-                    <span class="panel-kicker">Authoring</span>
-                    <h2 id="designer-title">Designer</h2>
-                    <p>Switch between overview, editable flow metadata, suite composition, and raw source without losing context.</p>
-                </div>
-                <div class="tab-row" role="tablist" aria-label="Designer views">
-                    <button type="button" class="@GetTabClass("overview")" @onclick='() => SetEditorTab("overview")' data-testid="designer-tab-overview">Overview</button>
-                    <button type="button" class="@GetTabClass("flow")" @onclick='() => SetEditorTab("flow")' data-testid="designer-tab-flow">Flow editor</button>
-                    <button type="button" class="@GetTabClass("suite")" @onclick='() => SetEditorTab("suite")' data-testid="designer-tab-suite">Suite editor</button>
-                    <button type="button" class="@GetTabClass("source")" @onclick='() => SetEditorTab("source")' data-testid="designer-tab-source">Source</button>
-                    <button type="button" class="@GetTabClass("metrics")" @onclick='() => SetEditorTab("metrics")' data-testid="designer-tab-metrics">Metrics</button>
-                </div>
+        @if (State.HasLoadedProject)
+        {
+            <LiveRunPanel />
+        }
+        else
+        {
+            <div class="workflow-next-step-callout" data-testid="workspace-next-step-callout">
+                <strong>Next up</strong>
+                <span>Once the project loads, the explorer, designer, and run evidence surfaces expand in place instead of crowding the initial setup step.</span>
             </div>
+        }
+    </section>
+    }
 
-            @switch (_editorTab)
-            {
-                case "flow":
-                    <FlowDesigner Document="State.SelectedFlow"
-                                  Analysis="State.FlowAnalysis"
-                                  CapabilityOptions="State.CapabilityOptions"
-                                  OnAddFixture="State.AddFixtureRowAsync"
-                                  OnRemoveFixture="State.RemoveFixtureRowAsync"
-                                  OnAddAction="State.AddActionRowAsync"
-                                  OnRemoveAction="State.RemoveActionRowAsync"
-                                  OnAddExpectation="State.AddExpectationRowAsync"
-                                  OnRemoveExpectation="State.RemoveExpectationRowAsync"
-                                  OnChanged="State.RefreshFlowAnalysis"
-                                  OnQuickAction="State.ApplyQuickAction" />
-                    break;
-                case "suite":
-                    <SuiteEditor />
-                    break;
-                case "source":
-                    <div class="field-stack">
-                        <label>Selected source</label>
-                        <textarea class="text-input source-input" data-testid="designer-source-editor" @bind="State.SourceEditorText" readonly="@(State.SelectedFlow is null)"></textarea>
-                        <span class="field-hint">Source editing writes directly through the shared flow document service and can be round-tripped back into the form designer.</span>
+    @if (State.HasLoadedProject && ShouldShowDesignerPage())
+    {
+        <div class="studio-grid studio-grid--designer-page">
+            <ExplorerPanel />
+
+            <section id="designer" class="@GetSectionClass("designer", "card editor-panel")" aria-labelledby="designer-title" data-testid="designer-section">
+                <div class="panel-header">
+                    <div class="panel-heading">
+                        <span class="panel-kicker">Authoring</span>
+                        <h2 id="designer-title">Designer</h2>
+                        <p>Switch between overview, editable flow metadata, suite composition, and raw source without losing context.</p>
                     </div>
-                    break;
-                case "metrics":
-                    <MetricsPanel />
-                    break;
-                default:
-                    <div class="overview-grid">
-                        <div class="summary-cards">
-                            <div class="summary-card">
-                                <span>Flows</span>
-                                <strong>@State.FlowCount</strong>
+                    <div class="tab-row" role="tablist" aria-label="Designer views">
+                        <button type="button" class="@GetTabClass("overview")" @onclick='() => SetEditorTab("overview")' data-testid="designer-tab-overview">Overview</button>
+                        <button type="button" class="@GetTabClass("flow")" @onclick='() => SetEditorTab("flow")' data-testid="designer-tab-flow">Flow editor</button>
+                        <button type="button" class="@GetTabClass("suite")" @onclick='() => SetEditorTab("suite")' data-testid="designer-tab-suite">Suite editor</button>
+                        <button type="button" class="@GetTabClass("source")" @onclick='() => SetEditorTab("source")' data-testid="designer-tab-source">Source</button>
+                        <button type="button" class="@GetTabClass("metrics")" @onclick='() => SetEditorTab("metrics")' data-testid="designer-tab-metrics">Metrics</button>
+                    </div>
+                </div>
+
+                @switch (_editorTab)
+                {
+                    case "flow":
+                        <FlowDesigner Document="State.SelectedFlow"
+                                      Analysis="State.FlowAnalysis"
+                                      CapabilityOptions="State.CapabilityOptions"
+                                      OnAddFixture="State.AddFixtureRowAsync"
+                                      OnRemoveFixture="State.RemoveFixtureRowAsync"
+                                      OnAddAction="State.AddActionRowAsync"
+                                      OnRemoveAction="State.RemoveActionRowAsync"
+                                      OnAddExpectation="State.AddExpectationRowAsync"
+                                      OnRemoveExpectation="State.RemoveExpectationRowAsync"
+                                      OnChanged="State.RefreshFlowAnalysis"
+                                      OnQuickAction="State.ApplyQuickAction" />
+                        break;
+                    case "suite":
+                        <SuiteEditor />
+                        break;
+                    case "source":
+                        <div class="field-stack">
+                            <label>Selected source</label>
+                            <textarea class="text-input source-input" data-testid="designer-source-editor" @bind="State.SourceEditorText" readonly="@(State.SelectedFlow is null)"></textarea>
+                            <span class="field-hint">Source editing writes directly through the shared flow document service and can be round-tripped back into the form designer.</span>
+                        </div>
+                        break;
+                    case "metrics":
+                        <MetricsPanel />
+                        break;
+                    default:
+                        <div class="overview-grid">
+                            <div class="summary-cards">
+                                <div class="summary-card">
+                                    <span>Flows</span>
+                                    <strong>@State.FlowCount</strong>
+                                </div>
+                                <div class="summary-card">
+                                    <span>Capabilities</span>
+                                    <strong>@State.CapabilityCount</strong>
+                                </div>
+                                <div class="summary-card">
+                                    <span>Fixtures</span>
+                                    <strong>@State.FixtureCount</strong>
+                                </div>
+                                <div class="summary-card">
+                                    <span>Runs</span>
+                                    <strong>@State.Runs.Count</strong>
+                                </div>
                             </div>
-                            <div class="summary-card">
-                                <span>Capabilities</span>
-                                <strong>@State.CapabilityCount</strong>
-                            </div>
-                            <div class="summary-card">
-                                <span>Fixtures</span>
-                                <strong>@State.FixtureCount</strong>
-                            </div>
-                            <div class="summary-card">
-                                <span>Runs</span>
-                                <strong>@State.Runs.Count</strong>
+
+                            <div class="overview-sections">
+                                <section class="subpanel">
+                                    <div class="subpanel-header">
+                                        <div>
+                                            <h3>Capability coverage</h3>
+                                            <p>Spot whether core capabilities have healthy flow depth and current run outcomes.</p>
+                                        </div>
+                                    </div>
+                                    <table class="data-table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Capability</th>
+                                                <th scope="col">Flows</th>
+                                                <th scope="col">Latest</th>
+                                                <th scope="col">Criteria</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in State.Snapshot?.CapabilityCoverage ?? [])
+                                            {
+                                                <tr>
+                                                    <td>@item.CapabilityName <div class="muted">@item.CapabilityId</div></td>
+                                                    <td>@item.FlowCount</td>
+                                                    <td>@item.LatestOutcome</td>
+                                                    <td>@item.AcceptanceCriteriaCount</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </section>
+                                <section class="subpanel">
+                                    <div class="subpanel-header">
+                                        <div>
+                                            <h3>Selected asset</h3>
+                                            <p>Keep path, metadata, and summary context visible while switching tabs.</p>
+                                        </div>
+                                    </div>
+                                    <pre class="summary-pre">@State.SelectedAssetSummary</pre>
+                                </section>
+                                <LiveRunPanel Compact="true" />
+                                <RunInsightsPanel />
                             </div>
                         </div>
+                        break;
+                }
+            </section>
 
-                        <div class="overview-sections">
-                            <section class="subpanel">
-                                <div class="subpanel-header">
-                                    <div>
-                                        <h3>Capability coverage</h3>
-                                        <p>Spot whether core capabilities have healthy flow depth and current run outcomes.</p>
-                                    </div>
-                                </div>
-                                <table class="data-table">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">Capability</th>
-                                            <th scope="col">Flows</th>
-                                            <th scope="col">Latest</th>
-                                            <th scope="col">Criteria</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach (var item in State.Snapshot?.CapabilityCoverage ?? [])
-                                        {
-                                            <tr>
-                                                <td>@item.CapabilityName <div class="muted">@item.CapabilityId</div></td>
-                                                <td>@item.FlowCount</td>
-                                                <td>@item.LatestOutcome</td>
-                                                <td>@item.AcceptanceCriteriaCount</td>
-                                            </tr>
-                                        }
-                                    </tbody>
-                                </table>
-                            </section>
-                             <section class="subpanel">
-                                 <div class="subpanel-header">
-                                     <div>
-                                         <h3>Selected asset</h3>
-                                         <p>Keep path, metadata, and summary context visible while switching tabs.</p>
-                                     </div>
-                                 </div>
-                                 <pre class="summary-pre">@State.SelectedAssetSummary</pre>
-                             </section>
-                             <LiveRunPanel Compact="true" />
-                             <RunInsightsPanel />
-                         </div>
-                     </div>
-                    break;
+        </div>
+    }
+
+    @if (!State.HasLoadedProject && (ShouldShowDesignerPreview() || ShouldShowResultsPreview()))
+    {
+        <div class="workflow-preview-grid @(ShouldShowDesignerPreview() && ShouldShowResultsPreview() ? string.Empty : "workflow-preview-grid--single")">
+            @if (ShouldShowDesignerPreview())
+            {
+            <section id="designer" class="@GetSectionClass("designer", "card workflow-preview-card workflow-preview-card--designer")" aria-labelledby="designer-title" data-testid="designer-section">
+                <div class="workflow-preview-head">
+                    <div>
+                        <span class="panel-kicker">Step 3</span>
+                        <h2 id="designer-title">Designer</h2>
+                    </div>
+                    <span class="pill">After load</span>
+                </div>
+                <div class="workflow-preview-copy">
+                    <strong>Author when the workspace is ready</strong>
+                    <span>Explorer context, flow editing, suites, source round-tripping, and metrics open here after the initial load succeeds.</span>
+                </div>
+            </section>
             }
-        </section>
 
+            @if (ShouldShowResultsPreview())
+            {
+            <aside id="results" class="@GetSectionClass("results", "card workflow-preview-card workflow-preview-card--results")" aria-labelledby="results-title" data-testid="results-panel">
+                <div class="workflow-preview-head">
+                    <div>
+                        <span class="panel-kicker">Step 4</span>
+                        <h2 id="results-title">Runs and evidence</h2>
+                    </div>
+                    <span class="pill">After runs</span>
+                </div>
+                <div class="workflow-preview-copy">
+                    <strong>Review only when there is signal</strong>
+                    <span>Live output, recent runs, diagnostics, comparisons, and artifacts stay quiet until you have something worth inspecting.</span>
+                </div>
+            </aside>
+            }
+        </div>
+    }
+
+    @if (State.HasLoadedProject && ShouldShowResultsPage())
+    {
         <ResultsPanel />
-    </div>
+    }
 
     <RecordingTargetPicker />
     <RecordingSavePanel />
@@ -659,19 +646,18 @@
 @code {
     private string _editorTab = "overview";
     private string _shellSection = "workspace";
+    private string _startupMode = "open";
     private string? _lastObservedFlowFilePath;
     private string? _lastObservedSuiteFilePath;
     private string? _pendingScrollTargetId;
     private string _recentWorkspacesSnapshot = string.Empty;
     private string _recentWorkspaceFilter = string.Empty;
     private string _demoFilter = string.Empty;
-    private string _runnerNodeFilter = string.Empty;
-    private bool _showRunnerNodeIssuesOnly;
-    private bool _showAllOnboardingPanels;
 
     protected override void OnInitialized()
     {
         State.Changed += HandleStateChanged;
+        Navigation.LocationChanged += HandleLocationChanged;
         UpdateShellSectionFromUri();
     }
 
@@ -705,6 +691,7 @@
     public void Dispose()
     {
         State.Changed -= HandleStateChanged;
+        Navigation.LocationChanged -= HandleLocationChanged;
     }
 
     private void HandleStateChanged()
@@ -725,6 +712,12 @@
         _lastObservedSuiteFilePath = currentSuitePath;
 
         InvokeAsync(StateHasChanged);
+    }
+
+    private void HandleLocationChanged(object? sender, Microsoft.AspNetCore.Components.Routing.LocationChangedEventArgs args)
+    {
+        UpdateShellSectionFromUri();
+        _ = InvokeAsync(StateHasChanged);
     }
 
     private void ClearDemoFilter()
@@ -763,51 +756,12 @@
             || demo.Tags.Any(tag => tag.Contains(_demoFilter, StringComparison.OrdinalIgnoreCase));
     }
 
-    private void ClearRunnerNodeFilter()
-        => _runnerNodeFilter = string.Empty;
-
-    private IEnumerable<StudioRunnerNodeSnapshot> FilterRunnerNodes(IEnumerable<StudioRunnerNodeSnapshot> nodes)
-        => nodes.Where(RunnerNodeMatchesFilter);
-
-    private bool RunnerNodeMatchesFilter(StudioRunnerNodeSnapshot node)
-    {
-        if (_showRunnerNodeIssuesOnly && !HasRunnerNodeIssue(node))
-        {
-            return false;
-        }
-
-        if (string.IsNullOrWhiteSpace(_runnerNodeFilter))
-        {
-            return true;
-        }
-
-        var normalizedStatus = FormatNodeStatus(node);
-        return node.Name.Contains(_runnerNodeFilter, StringComparison.OrdinalIgnoreCase)
-            || node.DisplayName.Contains(_runnerNodeFilter, StringComparison.OrdinalIgnoreCase)
-            || node.Description.Contains(_runnerNodeFilter, StringComparison.OrdinalIgnoreCase)
-            || node.Location.Contains(_runnerNodeFilter, StringComparison.OrdinalIgnoreCase)
-            || node.Transport.ToString().Contains(_runnerNodeFilter, StringComparison.OrdinalIgnoreCase)
-            || normalizedStatus.Contains(_runnerNodeFilter, StringComparison.OrdinalIgnoreCase)
-            || node.Capabilities.Any(capability => capability.Contains(_runnerNodeFilter, StringComparison.OrdinalIgnoreCase));
-    }
-
-    private static bool HasRunnerNodeIssue(StudioRunnerNodeSnapshot node)
-        => node.Status is StudioRunnerNodeStatus.Degraded or StudioRunnerNodeStatus.Offline
-            || !string.IsNullOrWhiteSpace(node.LastError);
-
     private static string GetRunnerNodeStatusLabel(StudioRunnerNodeSnapshot node)
-        => HasRunnerNodeIssue(node) ? "Needs attention" : node.Status switch
+        => node.Status switch
         {
             StudioRunnerNodeStatus.Busy => "Busy",
             _ => "Healthy"
         };
-
-    private static string GetRunnerNodeStatusClass(StudioRunnerNodeSnapshot node)
-        => HasRunnerNodeIssue(node)
-            ? "node-status-pill node-status-pill--issue"
-            : node.Status == StudioRunnerNodeStatus.Busy
-                ? "node-status-pill node-status-pill--busy"
-                : "node-status-pill";
 
     private string GetWorkspacePathSummary()
     {
@@ -855,27 +809,86 @@
             : $"{node.DisplayName} ({GetRunnerNodeStatusLabel(node)})";
     }
 
-    private string GetOnboardingPanelToggleLabel()
-        => _showAllOnboardingPanels ? "Focus essentials" : "Show all panels";
+    private string GetWorkflowStepTokenClass(string stage)
+        => $"workflow-step-token workflow-step-token--{GetWorkflowStageState(stage)}";
 
-    private void ToggleOnboardingPanels()
-        => _showAllOnboardingPanels = !_showAllOnboardingPanels;
+    private int GetCurrentWorkflowStepNumber()
+        => GetWorkflowStageState("review") == "active" ? 4
+            : GetWorkflowStageState("design") == "active" ? 3
+            : GetWorkflowStageState("load") == "active" ? 2
+            : 1;
 
-    private bool ShouldOpenOnboardingPanel(string panel)
+    private string GetCurrentWorkflowHeadline()
+        => !State.HasLoadedProject
+            ? "Choose a workspace, confirm the setup, then load it."
+            : _shellSection switch
+            {
+                "designer" => "Author flows and suites without leaving the loaded workspace.",
+                "results" => "Review runs, evidence, and diagnostics after execution.",
+                _ => "Refresh the loaded workspace or move forward into authoring."
+            };
+
+    private string GetCurrentWorkflowSupportCopy()
+        => !State.HasLoadedProject
+            ? "The authoring and review surfaces stay visually quiet until the workspace is real."
+            : _shellSection switch
+            {
+                "designer" => "The setup step is complete, so the shell promotes flow editing and source work.",
+                "results" => "Execution detail is now in focus because setup and authoring already happened.",
+                _ => "Workspace setup stays in focus here while the designer and results pages remain one click away."
+            };
+
+    private string GetStartupModeButtonClass(string mode)
+        => string.Equals(_startupMode, mode, StringComparison.OrdinalIgnoreCase)
+            ? "startup-mode-button startup-mode-button--active"
+            : "startup-mode-button";
+
+    private void SetStartupMode(string mode)
+        => _startupMode = mode;
+
+    private string GetWorkflowStageClass(string stage)
+        => $"workflow-stage workflow-stage--{GetWorkflowStageState(stage)}";
+
+    private string GetWorkflowStageState(string stage)
     {
-        if (_showAllOnboardingPanels)
+        if (!State.HasLoadedProject)
         {
-            return true;
+            return stage switch
+            {
+                "choose" => "active",
+                "load" => "pending",
+                _ => "locked"
+            };
         }
 
-        return panel switch
+        return stage switch
         {
-            "suggested" => true,
-            "recent" => State.HasRecentWorkspaces,
-            "demos" => !State.HasRecentWorkspaces && string.IsNullOrWhiteSpace(State.SuggestedWorkspacePath),
-            _ => false
+            "choose" => "complete",
+            "load" when string.Equals(_shellSection, "workspace", StringComparison.OrdinalIgnoreCase) => "active",
+            "load" when string.Equals(_shellSection, "designer", StringComparison.OrdinalIgnoreCase) || string.Equals(_shellSection, "results", StringComparison.OrdinalIgnoreCase) => "complete",
+            "design" when string.Equals(_shellSection, "designer", StringComparison.OrdinalIgnoreCase) => "active",
+            "design" when string.Equals(_shellSection, "results", StringComparison.OrdinalIgnoreCase) => "complete",
+            "review" when string.Equals(_shellSection, "results", StringComparison.OrdinalIgnoreCase) => "active",
+            _ => "pending"
         };
     }
+
+    private bool ShouldShowWorkspacePage()
+        => !State.HasLoadedProject || string.Equals(_shellSection, "workspace", StringComparison.OrdinalIgnoreCase);
+
+    private bool ShouldShowDesignerPage()
+        => string.Equals(_shellSection, "designer", StringComparison.OrdinalIgnoreCase);
+
+    private bool ShouldShowResultsPage()
+        => string.Equals(_shellSection, "results", StringComparison.OrdinalIgnoreCase);
+
+    private bool ShouldShowDesignerPreview()
+        => string.Equals(_shellSection, "workspace", StringComparison.OrdinalIgnoreCase)
+            || string.Equals(_shellSection, "designer", StringComparison.OrdinalIgnoreCase);
+
+    private bool ShouldShowResultsPreview()
+        => string.Equals(_shellSection, "workspace", StringComparison.OrdinalIgnoreCase)
+            || string.Equals(_shellSection, "results", StringComparison.OrdinalIgnoreCase);
 
     private string GetWorkspacePathReadinessHeadline()
         => EvaluateWorkspacePathReadiness().Headline;
@@ -915,7 +928,7 @@
     {
         var relative = Navigation.ToBaseRelativePath(Navigation.Uri);
         var normalized = string.IsNullOrWhiteSpace(relative)
-            ? "workspace"
+            ? string.Empty
             : relative.Trim('/').ToLowerInvariant();
 
         _shellSection = normalized switch
@@ -924,7 +937,13 @@
             "results" => "results",
             _ => "workspace"
         };
-        _pendingScrollTargetId = _shellSection;
+        _pendingScrollTargetId = normalized switch
+        {
+            "designer" => "designer",
+            "results" => "results",
+            "workspace" => "workspace",
+            _ => null
+        };
     }
 
     private Task LoadProjectAsync()
@@ -1059,16 +1078,6 @@
         => string.Equals(_shellSection, section, StringComparison.OrdinalIgnoreCase)
             ? $"{baseClass} panel-focus"
             : baseClass;
-
-    private static string FormatNodeStatus(StudioRunnerNodeSnapshot node)
-        => node.Status switch
-        {
-            StudioRunnerNodeStatus.Busy when !string.IsNullOrWhiteSpace(node.ActiveRunId) => $"Busy ({node.ActiveRunId})",
-            StudioRunnerNodeStatus.Busy => "Busy",
-            StudioRunnerNodeStatus.Degraded => "Degraded",
-            StudioRunnerNodeStatus.Offline => "Offline",
-            _ => "Healthy"
-        };
 
     private static string FormatRelativeTime(DateTimeOffset timestamp)
     {

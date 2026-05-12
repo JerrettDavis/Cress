@@ -47,4 +47,59 @@ public sealed class FlowGherkinPreviewBuilderTests
         Assert.Contains("When browser.open with url=https://www.google.com", preview);
         Assert.Contains("Then browser.title_contains with value=Google", preview);
     }
+
+    [Fact]
+    public void Build_humanizes_desktop_ui_steps()
+    {
+        var document = FlowDocumentViewModel.FromDocument(new FlowEditorDocument
+        {
+            Id = "calculator-flow",
+            Name = "Calculator: 2 + 2 = 4",
+            Actions =
+            [
+                new EditableExecutable
+                {
+                    Name = "ui.launch",
+                    InputsText = "application=calc.exe"
+                },
+                new EditableExecutable
+                {
+                    Name = "ui.attach",
+                    InputsText = "processName=ApplicationFrameHost\nwindowTitle=Calculator"
+                },
+                new EditableExecutable
+                {
+                    Name = "ui.invoke",
+                    InputsText = "selector=#clearButton"
+                },
+                new EditableExecutable
+                {
+                    Name = "ui.invoke",
+                    InputsText = "selector=#num2Button"
+                },
+                new EditableExecutable
+                {
+                    Name = "ui.screenshot",
+                    InputsText = "name=calc-result"
+                }
+            ],
+            Expectations =
+            [
+                new EditableExecutable
+                {
+                    Name = "ui.assert-text",
+                    InputsText = "selector=#CalculatorResults\ntext=Display is 4."
+                }
+            ]
+        });
+
+        var preview = FlowGherkinPreviewBuilder.Build(document);
+
+        Assert.Contains("Given the user launches the calc.exe application", preview);
+        Assert.Contains("And the \"Calculator\" window is open in the ApplicationFrameHost process", preview);
+        Assert.Contains("And the user clicks the clear button", preview);
+        Assert.Contains("And the user clicks the number 2 button", preview);
+        Assert.Contains("And the user captures a screenshot named \"calc-result\"", preview);
+        Assert.Contains("Then the Calculator Results accessibility text should display \"Display is 4.\"", preview);
+    }
 }

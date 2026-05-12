@@ -23,11 +23,10 @@ public sealed class HomePageIntegrationTests : IClassFixture<WebApplicationFacto
         Assert.Contains("Cress Studio Web", html, StringComparison.OrdinalIgnoreCase);
         Assert.Contains("Workspace setup", html, StringComparison.OrdinalIgnoreCase);
         Assert.Contains("Studio navigation", html, StringComparison.OrdinalIgnoreCase);
-        Assert.Contains("Runs, evidence, and diagnostics", html, StringComparison.OrdinalIgnoreCase);
-        Assert.Contains("Web-first authoring", html, StringComparison.OrdinalIgnoreCase);
-        Assert.Contains("Flake watch", html, StringComparison.OrdinalIgnoreCase);
-        Assert.Contains("Current checkpoint", html, StringComparison.OrdinalIgnoreCase);
-        Assert.Contains("Show live log", html, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("Runs and evidence", html, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("Choose how to open a workspace", html, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("Later stages stay dimmed until the workspace loads", html, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("The rest of the studio stays visually quiet until the project is real", html, StringComparison.OrdinalIgnoreCase);
     }
 
     [Fact]
@@ -37,7 +36,7 @@ public sealed class HomePageIntegrationTests : IClassFixture<WebApplicationFacto
 
         var html = await client.GetStringAsync("/");
 
-        Assert.Contains("Open file", html, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("Load project", html, StringComparison.OrdinalIgnoreCase);
     }
 
     [Fact]
@@ -51,10 +50,7 @@ public sealed class HomePageIntegrationTests : IClassFixture<WebApplicationFacto
 
         var html = await client.GetStringAsync("/");
 
-        // The static render includes the component tag or its surrounding markup.
-        // "Open file" being present confirms the toolbar-actions section rendered, meaning
-        // QuickActionSelector was also included in that section.
-        Assert.Contains("Open file", html, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("Load project", html, StringComparison.OrdinalIgnoreCase);
     }
 
     [Fact]
@@ -72,70 +68,66 @@ public sealed class HomePageIntegrationTests : IClassFixture<WebApplicationFacto
     [Fact]
     public async Task Home_page_composes_run_insights_panel_component()
     {
-        // RunInsightsPanel always renders its three section headings regardless of data.
+        // Before a workspace is loaded, the shell now uses progressive previews instead of
+        // rendering the full insights stack upfront.
         using var client = _factory.CreateClient();
 
         var html = await client.GetStringAsync("/");
 
-        Assert.Contains("Flake watch", html, StringComparison.OrdinalIgnoreCase);
-        Assert.Contains("Recent activity", html, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("Review only when there is signal", html, StringComparison.OrdinalIgnoreCase);
     }
 
     [Fact]
     public async Task Home_page_composes_suite_editor_component()
     {
-        // The SuiteEditor component renders inside the "suite" designer tab.
-        // On initial page load the designer is on the overview tab, so the SuiteEditor
-        // itself is not rendered. The presence of the "Suite editor" tab button confirms
-        // the page is wired to include the SuiteEditor in the designer section.
+        // Before load, the designer is represented as a compact preview card so setup stays
+        // foregrounded.
         using var client = _factory.CreateClient();
 
         var html = await client.GetStringAsync("/");
 
-        Assert.Contains("Suite editor", html, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("Author when the workspace is ready", html, StringComparison.OrdinalIgnoreCase);
     }
 
     [Fact]
     public async Task Home_page_composes_artifact_preview_panel_component()
     {
-        // ArtifactPreviewPanel always renders its "Artifacts and reports" heading.
+        // Results stay collapsed into a preview until the first real run exists.
         using var client = _factory.CreateClient();
 
         var html = await client.GetStringAsync("/");
 
-        Assert.Contains("Artifacts and reports", html, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("Review only when there is signal", html, StringComparison.OrdinalIgnoreCase);
     }
 
     [Fact]
     public async Task Home_page_composes_explorer_panel_component()
     {
-        // ExplorerPanel renders a placeholder when no project is loaded.
+        // The initial landing flow should emphasize setup over the full explorer stack.
         using var client = _factory.CreateClient();
 
         var html = await client.GetStringAsync("/");
 
-        Assert.Contains("Load a Cress workspace", html, StringComparison.OrdinalIgnoreCase);
-        Assert.Contains("explorer-title", html, StringComparison.OrdinalIgnoreCase);
+        Assert.DoesNotContain("explorer-title", html, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("Author when the workspace is ready", html, StringComparison.OrdinalIgnoreCase);
     }
 
     [Fact]
     public async Task Home_page_renders_record_button_in_toolbar()
     {
-        // RecordButton is embedded in the toolbar and should be in the initial SSR output.
+        // Recording is deferred until a workspace is loaded, so the initial surface stays
+        // focused on setup.
         using var client = _factory.CreateClient();
 
         var html = await client.GetStringAsync("/");
 
-        // The RecordButton renders either "Record" (idle) or "Stop recording" (active).
-        // On initial load it's always idle — confirm "Record" is present.
-        Assert.Contains("Record", html, StringComparison.OrdinalIgnoreCase);
-        Assert.Contains("record-idle", html, StringComparison.OrdinalIgnoreCase);
+        Assert.DoesNotContain("record-idle", html, StringComparison.OrdinalIgnoreCase);
     }
 
     [Theory]
     [InlineData("/workspace", "Workspace setup")]
-    [InlineData("/designer", "Designer views")]
-    [InlineData("/results", "Runs, evidence, and diagnostics")]
+    [InlineData("/designer", "Designer")]
+    [InlineData("/results", "Runs and evidence")]
     public async Task Studio_routes_render_expected_sections(string route, string expectedText)
     {
         using var client = _factory.CreateClient();

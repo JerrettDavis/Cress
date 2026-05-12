@@ -51,6 +51,7 @@
 
 @code {
     private string _current = "system";
+    private string _effectiveTheme = "dark";
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -60,6 +61,9 @@
             {
                 var stored = await JS.InvokeAsync<string>("getTheme");
                 _current = stored ?? "system";
+                _effectiveTheme = _current == "system"
+                    ? await JS.InvokeAsync<string>("getEffectiveTheme")
+                    : _current;
                 StateHasChanged();
             }
             catch
@@ -75,6 +79,9 @@
         try
         {
             await JS.InvokeVoidAsync("setTheme", value);
+            _effectiveTheme = value == "system"
+                ? await JS.InvokeAsync<string>("getEffectiveTheme")
+                : value;
         }
         catch
         {
@@ -95,8 +102,8 @@
 
     private string CurrentThemeHint => _current switch
     {
-        "light" => "Studio stays in the light palette until you switch again.",
-        "dark" => "Studio stays in the dark palette until you switch again.",
-        _ => "Studio follows the operating system theme preference."
+        "light" => "Pinned to light mode.",
+        "dark" => "Pinned to dark mode.",
+        _ => $"Following OS - {char.ToUpperInvariant(_effectiveTheme[0])}{_effectiveTheme[1..]} now."
     };
 }

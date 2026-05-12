@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <ProjectReference Include="..\Cress.Companion.Core\Cress.Companion.Core.csproj" />
     <ProjectReference Include="..\Cress.Core\Cress.Core.csproj" />
     <ProjectReference Include="..\Cress.Gherkin\Cress.Gherkin.csproj" />
     <ProjectReference Include="..\Cress.ProjectSystem\Cress.ProjectSystem.csproj" />

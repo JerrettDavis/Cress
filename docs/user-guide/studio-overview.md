@@ -53,12 +53,30 @@ At this stage you can:
 - scan the setup, explorer, designer, and results surfaces as clearly separated regions instead of one flat shell
 - get stronger empty-state callouts whenever a panel is waiting for a selection, a run, or matching data
 - use the status bar and theme controls without leaving the shell
+- pair with the optional desktop companion to launch titlebar-adjacent recording overlays and keep active desktop sessions visible in the recording picker and control center
 - switch between designer, source, results, and metrics
 - confirm that the project structure loaded correctly
 
 If you need to browse to a different folder first, use the in-app workspace picker and its built-in folder filter rather than leaving the shell.
 
-## 3. Use Source for durable edits
+## 3. Record with the desktop companion when you need multi-app desktop capture
+
+The Windows-only desktop companion is optional, but it is the best fit when you need a recording surface that stays visually attached to desktop apps while you move between Studio routes.
+
+Start it with:
+
+```powershell
+dotnet run --project src\Cress.Companion.Windows\Cress.Companion.Windows.csproj --configuration Release
+```
+
+Once running, Studio Web can discover it from the recording picker and the control center. Use it to:
+
+- attach to multiple desktop apps from one manager window
+- keep a small anchored overlay near the target window titlebar instead of switching back to Studio for every control
+- pause, resume, and stop live desktop sessions while still seeing the latest inferred step text in Studio Web
+- expose a local bridge that lets Studio track those sessions without replacing the main Blazor authoring experience
+
+## 4. Use Source for durable edits
 
 Recorded flows become maintainable when you normalize them in the source editor.
 
@@ -71,7 +89,7 @@ Typical edits:
 - add tags, capabilities, and acceptance criteria links
 - move environment-specific data into profiles and variables
 
-## 4. Inspect evidence in Results
+## 5. Inspect evidence in Results
 
 The results view is where authors answer the two most important questions: **what failed** and **why**.
 
@@ -84,7 +102,7 @@ Use it to review:
 - traces and run artifacts
 - per-step outcomes
 
-## 5. Watch health in Metrics
+## 6. Watch health in Metrics
 
 The metrics view helps teams shift from one-off runs to sustainable automation quality.
 

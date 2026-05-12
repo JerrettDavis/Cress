@@ -4,7 +4,7 @@
 [![CodeQL](https://github.com/JerrettDavis/Cress/actions/workflows/codeql.yml/badge.svg)](https://github.com/JerrettDavis/Cress/actions/workflows/codeql.yml)
 [![Docs](https://github.com/JerrettDavis/Cress/actions/workflows/docs.yml/badge.svg)](https://github.com/JerrettDavis/Cress/actions/workflows/docs.yml)
 
-Cress is a **.NET 10 / C# latest** end-to-end testing platform for Windows, with a **Blazor-first Studio experience**, Node-based automation components, and an Aspire AppHost for centralized orchestration and monitoring.
+Cress is a **.NET 10 / C# latest** end-to-end testing platform for Windows, with a **Blazor-first Studio experience**, an optional **desktop companion** for anchored in-app recording overlays, Node-based automation components, and an Aspire AppHost for centralized orchestration and monitoring.
 
 ## Guides and examples
 
@@ -57,6 +57,12 @@ dotnet run --project src\Cress.AppHost\Cress.AppHost.csproj --configuration Rele
 The AppHost orchestrates:
 
 - `Cress.Studio.Web` as an Aspire project resource
+
+The optional desktop companion runs separately when you want titlebar-adjacent recording overlays and multi-app desktop monitoring:
+
+```powershell
+dotnet run --project src\Cress.Companion.Windows\Cress.Companion.Windows.csproj --configuration Release
+```
 
 The AppHost browser launch opens the Aspire dashboard first. Open the `studio-web` resource endpoint to see the Studio shell itself. When you run `Cress.Studio.Web` directly, `/` stays on the landing and onboarding view, while `/workspace` jumps straight to workspace setup.
 

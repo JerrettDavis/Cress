@@ -17,6 +17,7 @@ public sealed class WebRecordingTargetPickerTests : TestContext
         Services.AddCressStudioBackend();
         var fake = recorder ?? new FakeStudioRecorderService();
         Services.AddSingleton<IStudioRecorderService>(fake);
+        Services.AddSingleton<IStudioCompanionClient>(new FakeStudioCompanionClient());
         Services.AddSingleton<StudioWorkspaceState>();
         var state = Services.GetRequiredService<StudioWorkspaceState>();
         return (state, fake);

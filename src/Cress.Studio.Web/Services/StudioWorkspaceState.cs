@@ -1,4 +1,5 @@
 using System.Text;
+using Cress.Companion;
 using Cress.Core.Models;
 using Cress.Execution;
 using Cress.ProjectSystem;
@@ -19,6 +20,7 @@ public sealed class StudioWorkspaceState : IDisposable
     private readonly StudioRunInsightsService _runInsightsService;
     private readonly RunMetricsService _runMetricsService;
     private readonly IStudioRecorderService _recorderService;
+    private readonly IStudioCompanionClient _companionClient;
     private readonly ProjectLocator _projectLocator;
     private readonly Dictionary<string, int> _liveFlowOrder = new(StringComparer.OrdinalIgnoreCase);
     private readonly Dictionary<string, int> _liveFlowStepOffsets = new(StringComparer.OrdinalIgnoreCase);
@@ -34,6 +36,7 @@ public sealed class StudioWorkspaceState : IDisposable
         StudioRunInsightsService runInsightsService,
         RunMetricsService runMetricsService,
         IStudioRecorderService recorderService,
+        IStudioCompanionClient companionClient,
         ProjectLocator projectLocator)
     {
         _projectService = projectService;
@@ -44,6 +47,7 @@ public sealed class StudioWorkspaceState : IDisposable
         _runInsightsService = runInsightsService;
         _runMetricsService = runMetricsService;
         _recorderService = recorderService;
+        _companionClient = companionClient;
         _projectLocator = projectLocator;
 
         _recorderService.StateChanged += OnRecorderStateChanged;
@@ -77,6 +81,12 @@ public sealed class StudioWorkspaceState : IDisposable
                                          ?? _recorderService.CurrentTarget?.ProcessName;
     public IReadOnlyList<RecordedEvent> CurrentEvents => _recorderService.CurrentEvents;
     public IReadOnlyList<InferredStep> CurrentInferredSteps => _recorderService.CurrentInferredSteps;
+    public IReadOnlyList<CompanionTargetInfo> CompanionTargets => _companionTargets;
+    public CompanionServiceSnapshot CompanionSnapshot { get; private set; } = CreateUnavailableCompanionSnapshot();
+    public string CompanionStatusMessage { get; private set; } = "Desktop companion unavailable. Launch the Windows companion to anchor overlays and pair with Studio.";
+    public bool IsCompanionLoading { get; private set; }
+    public bool IsCompanionAvailable => CompanionSnapshot.IsAvailable;
+    public bool HasCompanionSessions => CompanionSnapshot.Sessions.Count > 0;
 
     /// <summary>True when the target picker modal should be visible.</summary>
     public bool IsRecorderPickerOpen { get; private set; }
@@ -91,6 +101,7 @@ public sealed class StudioWorkspaceState : IDisposable
     /// Non-null when the last recording operation failed. Auto-clears after 8 seconds.
     /// </summary>
     public string? RecordingError { get; private set; }
+    private readonly List<CompanionTargetInfo> _companionTargets = [];
 
     public string SuggestedWorkspacePath { get; }
     public List<string> RecentWorkspaces { get; } = [];
@@ -116,6 +127,8 @@ public sealed class StudioWorkspaceState : IDisposable
     public void OpenRecorderPicker()
     {
         IsRecorderPickerOpen = true;
+        _ = RefreshCompanionAsync();
+        _ = LoadCompanionTargetsAsync();
         NotifyChanged();
     }
 
@@ -187,6 +200,65 @@ public sealed class StudioWorkspaceState : IDisposable
         }
     }
 
+    public async Task RefreshCompanionAsync(bool includePreview = false)
+    {
+        IsCompanionLoading = true;
+        NotifyChanged();
+
+        CompanionSnapshot = await _companionClient.GetSnapshotAsync(includePreview);
+        CompanionStatusMessage = BuildCompanionStatusMessage(CompanionSnapshot);
+        IsCompanionLoading = false;
+        NotifyChanged();
+    }
+
+    public async Task LoadCompanionTargetsAsync()
+    {
+        IsCompanionLoading = true;
+        NotifyChanged();
+
+        var targets = await _companionClient.ListTargetsAsync();
+        _companionTargets.Clear();
+        _companionTargets.AddRange(targets);
+        CompanionSnapshot = await _companionClient.GetSnapshotAsync();
+        CompanionStatusMessage = BuildCompanionStatusMessage(CompanionSnapshot);
+        IsCompanionLoading = false;
+        NotifyChanged();
+    }
+
+    public async Task BeginCompanionRecordingAsync(int processId)
+    {
+        IsRecorderPickerOpen = false;
+        ClearRecordingError();
+
+        try
+        {
+            await _companionClient.StartRecordingAsync(processId);
+            await LoadCompanionTargetsAsync();
+        }
+        catch (Exception ex)
+        {
+            SetRecordingError($"Desktop companion error: {ex.Message}");
+        }
+    }
+
+    public async Task PauseCompanionRecordingAsync(int processId)
+    {
+        await _companionClient.PauseRecordingAsync(processId);
+        await RefreshCompanionAsync();
+    }
+
+    public async Task ResumeCompanionRecordingAsync(int processId)
+    {
+        await _companionClient.ResumeRecordingAsync(processId);
+        await RefreshCompanionAsync();
+    }
+
+    public async Task StopCompanionRecordingAsync(int processId)
+    {
+        await _companionClient.StopRecordingAsync(processId);
+        await RefreshCompanionAsync();
+    }
+
     public void Dispose()
     {
         _recorderService.StateChanged -= OnRecorderStateChanged;
@@ -245,6 +317,32 @@ public sealed class StudioWorkspaceState : IDisposable
             InvalidOperationException when ex.Message.Contains("node") => $"Web recording error: {ex.Message}",
             _ => $"Web recording error: {ex.Message}"
         };
+    }
+
+    private static CompanionServiceSnapshot CreateUnavailableCompanionSnapshot()
+        => new()
+        {
+            IsAvailable = false,
+            GeneratedAtUtc = DateTimeOffset.UtcNow,
+            Sessions = []
+        };
+
+    private static string BuildCompanionStatusMessage(CompanionServiceSnapshot snapshot)
+    {
+        if (!snapshot.IsAvailable)
+        {
+            return "Desktop companion unavailable. Launch the Windows companion to anchor overlays and pair with Studio.";
+        }
+
+        if (snapshot.Sessions.Count == 0)
+        {
+            return "Desktop companion is online. Start a session to pin an anchored recorder beside the target window titlebar.";
+        }
+
+        var activeCount = snapshot.Sessions.Count(session => session.Status is CompanionSessionStatus.Recording or CompanionSessionStatus.Paused);
+        return activeCount == 1
+            ? "Desktop companion is tracking 1 app. Live sessions stay visible in the control center and recording picker."
+            : $"Desktop companion is tracking {activeCount} apps. Live sessions stay visible in the control center and recording picker.";
     }
 
     private void OnRecorderStateChanged()

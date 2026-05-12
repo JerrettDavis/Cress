@@ -32,6 +32,16 @@
                     @onclick="() => SwitchTab(Tab.Web)">
                 Web
             </button>
+            <button type="button"
+                    role="tab"
+                    class="picker-tab @(_activeTab == Tab.Companion ? "picker-tab--active" : string.Empty)"
+                    data-testid="recording-picker-tab-companion"
+                    aria-selected="@(_activeTab == Tab.Companion)"
+                    aria-controls="picker-panel-companion"
+                    id="picker-tab-companion"
+                    @onclick="() => SwitchTab(Tab.Companion)">
+                Desktop companion
+            </button>
         </div>
 
         @* ── Desktop panel ───────────────────────────────────────────────── *@
@@ -200,8 +210,110 @@
             </div>
         }
 
+        @if (_activeTab == Tab.Companion)
+        {
+            <div id="picker-panel-companion"
+                 role="tabpanel"
+                 aria-labelledby="picker-tab-companion"
+                 class="modal-body"
+                 data-testid="recording-picker-panel-companion">
+                <p class="field-hint recording-picker-web-status" data-testid="recording-picker-companion-status" aria-live="polite">
+                    @State.CompanionStatusMessage
+                </p>
+
+                @if (State.IsCompanionLoading)
+                {
+                    <p class="muted">Checking the desktop companion and enumerating attachable windows...</p>
+                }
+                else
+                {
+                    @if (State.HasCompanionSessions)
+                    {
+                        <div class="subpanel" style="margin-bottom:0.75rem">
+                            <div class="panel-header">
+                                <div>
+                                    <h4>Live sessions</h4>
+                                    <p class="field-hint">Manage the anchored overlays and active desktop recordings already running through the companion.</p>
+                                </div>
+                            </div>
+                            <table class="data-table" data-testid="recording-picker-companion-sessions">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">App</th>
+                                        <th scope="col">Status</th>
+                                        <th scope="col">Events</th>
+                                        <th scope="col">Latest step</th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var session in State.CompanionSnapshot.Sessions)
+                                    {
+                                        <tr>
+                                            <td>@session.WindowTitle</td>
+                                            <td>@session.Status</td>
+                                            <td>@session.CapturedEventCount</td>
+                                            <td>@session.LastStepSummary</td>
+                                            <td>
+                                                @if (session.Status == Cress.Companion.CompanionSessionStatus.Paused)
+                                                {
+                                                    <button type="button" class="action-button success" @onclick="() => State.ResumeCompanionRecordingAsync(session.ProcessId)">Resume</button>
+                                                }
+                                                else if (session.Status == Cress.Companion.CompanionSessionStatus.Recording)
+                                                {
+                                                    <button type="button" class="action-button" @onclick="() => State.PauseCompanionRecordingAsync(session.ProcessId)">Pause</button>
+                                                }
+                                                <button type="button" class="action-button danger" style="margin-left:0.5rem" @onclick="() => State.StopCompanionRecordingAsync(session.ProcessId)">Stop</button>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+
+                    @if (State.CompanionTargets.Count == 0)
+                    {
+                        <p class="subpanel-empty" data-testid="recording-picker-companion-empty">No attachable windows were reported by the desktop companion.</p>
+                    }
+                    else
+                    {
+                        <table class="data-table" data-testid="recording-picker-companion-targets">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Process</th>
+                                    <th scope="col">Window title</th>
+                                    <th scope="col">PID</th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var target in State.CompanionTargets)
+                                {
+                                    <tr>
+                                        <td>@target.ProcessName</td>
+                                        <td>@target.WindowTitle</td>
+                                        <td>@target.ProcessId</td>
+                                        <td>
+                                            <button type="button"
+                                                    class="action-button success"
+                                                    disabled="@(!target.IsAttachable)"
+                                                    data-testid="recording-picker-companion-start"
+                                                    @onclick="() => State.BeginCompanionRecordingAsync(target.ProcessId)">
+                                                Start in companion
+                                            </button>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+                }
+            </div>
+        }
+
         <div class="modal-footer">
-            @if (_activeTab == Tab.Desktop)
+            @if (_activeTab == Tab.Desktop || _activeTab == Tab.Companion)
             {
                 <button type="button" class="action-button" @onclick="RefreshAsync">Refresh</button>
             }
@@ -211,7 +323,7 @@
 }
 
 @code {
-    private enum Tab { Desktop, Web }
+    private enum Tab { Desktop, Web, Companion }
 
     private List<RecordingTargetInfo> _targets = [];
     private bool _loading = true;
@@ -264,6 +376,12 @@
 
     private async Task RefreshAsync()
     {
+        if (_activeTab == Tab.Companion)
+        {
+            await State.LoadCompanionTargetsAsync();
+            return;
+        }
+
         _loading = true;
         await LoadTargetsAsync();
     }
@@ -310,6 +428,10 @@
         {
             // Kick off target loading when switching back to Desktop.
             _ = LoadTargetsAsync();
+        }
+        else if (tab == Tab.Companion)
+        {
+            _ = State.LoadCompanionTargetsAsync();
         }
     }
 

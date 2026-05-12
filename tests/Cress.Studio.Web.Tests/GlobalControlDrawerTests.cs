@@ -10,10 +10,11 @@ namespace Cress.Studio.Web.Tests;
 
 public sealed class GlobalControlDrawerTests : TestContext
 {
-    private StudioWorkspaceState CreateState(FakeStudioRecorderService? recorderService = null)
+    private StudioWorkspaceState CreateState(FakeStudioRecorderService? recorderService = null, FakeStudioCompanionClient? companionClient = null)
     {
         Services.AddCressStudioBackend();
         Services.AddSingleton<Cress.Studio.Services.IStudioRecorderService>(recorderService ?? new FakeStudioRecorderService());
+        Services.AddSingleton<Cress.Studio.Services.IStudioCompanionClient>(companionClient ?? new FakeStudioCompanionClient());
         Services.AddSingleton<StudioWorkspaceState>();
         return Services.GetRequiredService<StudioWorkspaceState>();
     }
@@ -62,6 +63,41 @@ public sealed class GlobalControlDrawerTests : TestContext
         Assert.Contains("Clicked confirm", cut.Markup);
         Assert.Contains("checkout-step.png", cut.Markup);
         Assert.Contains("Latest screenshot preview is loading.", cut.Markup);
+    }
+
+    [Fact]
+    public async Task GlobalControlDrawer_shows_companion_sessions_when_available()
+    {
+        var companion = new FakeStudioCompanionClient
+        {
+            Snapshot = new Cress.Companion.CompanionServiceSnapshot
+            {
+                IsAvailable = true,
+                GeneratedAtUtc = DateTimeOffset.UtcNow,
+                Sessions =
+                [
+                    new Cress.Companion.CompanionSessionSnapshot
+                    {
+                        ProcessId = 4321,
+                        ProcessName = "notepad",
+                        WindowTitle = "Release notes",
+                        Status = Cress.Companion.CompanionSessionStatus.Recording,
+                        StartedAtUtc = DateTimeOffset.UtcNow,
+                        LastStepSummary = "Click(automationId=saveButton)"
+                    }
+                ]
+            }
+        };
+
+        var state = CreateState(companionClient: companion);
+        await state.RefreshCompanionAsync();
+
+        var cut = RenderComponent<GlobalControlDrawer>();
+        cut.Find("[data-testid='global-controls-toggle']").Click();
+
+        Assert.Contains("Desktop companion", cut.Markup);
+        Assert.Contains("Release notes", cut.Markup);
+        Assert.Contains("Click(automationId=saveButton)", cut.Markup);
     }
 
     [Fact]

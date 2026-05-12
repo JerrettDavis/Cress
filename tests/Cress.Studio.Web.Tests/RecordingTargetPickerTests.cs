@@ -10,11 +10,12 @@ namespace Cress.Studio.Web.Tests;
 
 public sealed class RecordingTargetPickerTests : TestContext
 {
-    private StudioWorkspaceState CreateState(IStudioRecorderService? recorderService = null)
+    private StudioWorkspaceState CreateState(IStudioRecorderService? recorderService = null, FakeStudioCompanionClient? companionClient = null)
     {
         Services.AddCressStudioBackend();
         var fake = recorderService ?? new FakeStudioRecorderService();
         Services.AddSingleton<IStudioRecorderService>(fake);
+        Services.AddSingleton<IStudioCompanionClient>(companionClient ?? new FakeStudioCompanionClient());
         Services.AddSingleton<StudioWorkspaceState>();
         return Services.GetRequiredService<StudioWorkspaceState>();
     }
@@ -151,6 +152,56 @@ public sealed class RecordingTargetPickerTests : TestContext
         cut.WaitForAssertion(() =>
         {
             Assert.Contains("No windows with visible titles", cut.Markup);
+        });
+    }
+
+    [Fact]
+    public void RecordingTargetPicker_companion_tab_shows_targets_and_sessions()
+    {
+        var companion = new FakeStudioCompanionClient
+        {
+            Targets =
+            [
+                new Cress.Companion.CompanionTargetInfo
+                {
+                    ProcessId = 4200,
+                    ProcessName = "wordpad",
+                    WindowTitle = "Draft",
+                    IsAttachable = true
+                }
+            ],
+            Snapshot = new Cress.Companion.CompanionServiceSnapshot
+            {
+                IsAvailable = true,
+                GeneratedAtUtc = DateTimeOffset.UtcNow,
+                Sessions =
+                [
+                    new Cress.Companion.CompanionSessionSnapshot
+                    {
+                        ProcessId = 4200,
+                        ProcessName = "wordpad",
+                        WindowTitle = "Draft",
+                        Status = Cress.Companion.CompanionSessionStatus.Recording,
+                        StartedAtUtc = DateTimeOffset.UtcNow,
+                        CapturedEventCount = 8,
+                        LastStepSummary = "Click(automationId=saveButton)"
+                    }
+                ]
+            }
+        };
+
+        var state = CreateState(companionClient: companion);
+        state.OpenRecorderPicker();
+
+        var cut = RenderComponent<Cress.Studio.Web.Components.Studio.RecordingTargetPicker>();
+        cut.Find("#picker-tab-companion").Click();
+
+        cut.WaitForAssertion(() =>
+        {
+            Assert.Contains("Desktop companion is tracking 1 app", cut.Markup);
+            Assert.Contains("Draft", cut.Markup);
+            Assert.Contains("Click(automationId=saveButton)", cut.Markup);
+            Assert.Contains("Start in companion", cut.Markup);
         });
     }
 }

@@ -138,6 +138,31 @@ public sealed class RecordingSavePanelTests : TestContext
         property.SetValue(target, value);
     }
 
+    private static string CreateProjectRoot()
+    {
+        var root = Path.Combine(Path.GetTempPath(), "cress-recording-save-tests", Guid.NewGuid().ToString("N"));
+        Directory.CreateDirectory(Path.Combine(root, ".cress", "profiles"));
+        Directory.CreateDirectory(Path.Combine(root, "flows"));
+        File.WriteAllText(Path.Combine(root, ".cress", "config.yaml"), """
+        version: 1
+        project:
+          name: Recording sample
+          defaultProfile: local
+        paths:
+          capabilities: capabilities
+          flows: flows
+          models: models
+          fixtures: fixtures
+          steps: steps
+          artifacts: .cress/artifacts
+          reports: reports
+        """);
+        File.WriteAllText(Path.Combine(root, ".cress", "profiles", "local.yaml"), """
+        baseUrl: https://example.test
+        """);
+        return root;
+    }
+
     [Fact]
     public void RecordingSavePanel_assertion_target_reruns_inference_and_updates_steps()
     {
@@ -199,6 +224,98 @@ public sealed class RecordingSavePanelTests : TestContext
         var replayBtn = cut.Find("button[disabled]");
         Assert.NotNull(replayBtn);
         Assert.Contains("Replay just-recorded", cut.Markup);
+    }
+
+    [Fact]
+    public async Task RecordingSavePanel_save_requires_a_path()
+    {
+        var (state, _) = CreateState();
+        OpenSavePanelWith(state, new List<InferredStep> { MakeClickStep("btn1") });
+
+        var cut = RenderComponent<Cress.Studio.Web.Components.Studio.RecordingSavePanel>();
+        cut.Find("#rec-save-path").Change(string.Empty);
+
+        var saveButton = cut.FindAll("button").First(button => button.TextContent.Contains("Save", StringComparison.Ordinal));
+        await cut.InvokeAsync(() => saveButton.Click());
+
+        Assert.Contains("Please enter a save path.", cut.Markup);
+    }
+
+    [Fact]
+    public async Task RecordingSavePanel_save_persists_flow_and_enables_replay()
+    {
+        var (state, _) = CreateState();
+        var projectRoot = CreateProjectRoot();
+
+        try
+        {
+            SetPrivate(state, "Snapshot", new StudioProjectSnapshot
+            {
+                Catalog = new ProjectCatalog { ProjectRoot = projectRoot }
+            });
+            state.SetProjectPath(projectRoot);
+            OpenSavePanelWith(state, new List<InferredStep> { MakeClickStep("btn1") });
+
+            var cut = RenderComponent<Cress.Studio.Web.Components.Studio.RecordingSavePanel>();
+            var savePath = Path.Combine(projectRoot, "flows", "recorded", "captured.flow.yaml");
+            cut.Find("#rec-save-path").Change(savePath);
+
+            var saveButton = cut.FindAll("button").First(button => button.TextContent.Contains("Save", StringComparison.Ordinal));
+            await cut.InvokeAsync(() => saveButton.Click());
+
+            Assert.True(File.Exists(savePath));
+            var replayButton = cut.FindAll("button").First(button => button.TextContent.Contains("Replay just-recorded", StringComparison.Ordinal));
+            Assert.False(replayButton.HasAttribute("disabled"));
+        }
+        finally
+        {
+            if (Directory.Exists(projectRoot))
+            {
+                Directory.Delete(projectRoot, recursive: true);
+            }
+        }
+    }
+
+    [Fact]
+    public async Task RecordingSavePanel_replay_reports_missing_project_when_saved_path_exists_but_no_project_is_loaded()
+    {
+        var (state, _) = CreateState();
+        OpenSavePanelWith(state, new List<InferredStep> { MakeClickStep("btn1") });
+
+        var cut = RenderComponent<Cress.Studio.Web.Components.Studio.RecordingSavePanel>();
+        var savedPathField = cut.Instance.GetType().GetField("_savedPath", BindingFlags.NonPublic | BindingFlags.Instance)!;
+        savedPathField.SetValue(cut.Instance, @"C:\temp\recorded.flow.yaml");
+        await cut.InvokeAsync(() => cut.Instance.GetType()
+            .GetMethod("StateHasChanged", BindingFlags.NonPublic | BindingFlags.Instance)!
+            .Invoke(cut.Instance, null));
+
+        var replayButton = cut.FindAll("button").First(button => button.TextContent.Contains("Replay just-recorded", StringComparison.Ordinal));
+        await cut.InvokeAsync(() => replayButton.Click());
+
+        Assert.Contains("Cannot replay: no project is loaded.", cut.Markup);
+        Assert.Contains("diagnostic--error", cut.Markup);
+    }
+
+    [Fact]
+    public void RecordingSavePanel_discard_closes_panel_and_resets_form_state()
+    {
+        var (state, _) = CreateState();
+        OpenSavePanelWith(state, new List<InferredStep> { MakeClickStep("btn1") });
+
+        var cut = RenderComponent<Cress.Studio.Web.Components.Studio.RecordingSavePanel>();
+        cut.Find("#rec-flow-id").Change("custom-flow");
+        cut.Find("#rec-flow-name").Change("Custom flow");
+
+        cut.FindAll("button").First(button => button.TextContent.Contains("Discard", StringComparison.Ordinal)).Click();
+
+        Assert.False(state.IsRecorderSavePanelOpen);
+        Assert.DoesNotContain("Save recording", cut.Markup);
+
+        state.OpenSavePanel();
+        cut.Render();
+
+        Assert.DoesNotContain("custom-flow", cut.Markup);
+        Assert.DoesNotContain("Custom flow", cut.Markup);
     }
 
     [Fact]

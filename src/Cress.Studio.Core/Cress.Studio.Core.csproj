@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Cress.Core\Cress.Core.csproj" />
+    <ProjectReference Include="..\Cress.Gherkin\Cress.Gherkin.csproj" />
     <ProjectReference Include="..\Cress.ProjectSystem\Cress.ProjectSystem.csproj" />
     <ProjectReference Include="..\Cress.Specs\Cress.Specs.csproj" />
     <ProjectReference Include="..\Cress.Validation\Cress.Validation.csproj" />

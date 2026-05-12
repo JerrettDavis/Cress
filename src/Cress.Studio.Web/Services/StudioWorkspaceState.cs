@@ -1080,6 +1080,35 @@ public sealed class StudioWorkspaceState : IDisposable
             return;
         }
 
+        var preflightError = await ValidateRunPrerequisitesAsync(options);
+        if (!string.IsNullOrWhiteSpace(preflightError))
+        {
+            if (clearLiveEvents)
+            {
+                ClearLiveRunEvents();
+            }
+
+            IsBusy = false;
+            LiveRunId = null;
+            LiveRunStatus = "Blocked";
+            LiveRunHeadline = "Run prerequisites need attention.";
+            LiveCurrentStep = "—";
+            LiveCurrentStepMessage = preflightError;
+            StatusMessage = preflightError;
+            AddLiveTimelineEntry(new StudioLiveRunEntry(
+                DateTimeOffset.UtcNow,
+                "Validation",
+                LiveRunHeadline,
+                preflightError,
+                "Warning",
+                FlowName: null,
+                StepName: null,
+                LogLevel: "WARN"),
+                addStringEvent: true);
+            NotifyChanged();
+            return;
+        }
+
         _activeRunCts?.Cancel();
         _activeRunCts?.Dispose();
         _activeRunCts = new CancellationTokenSource();
@@ -1653,6 +1682,37 @@ public sealed class StudioWorkspaceState : IDisposable
         }
     }
 
+    private async Task<string?> ValidateRunPrerequisitesAsync(RunOptions options)
+    {
+        if (Snapshot is null)
+        {
+            return null;
+        }
+
+        var profile = Snapshot.Catalog.EffectiveConfig.Profile;
+        if (string.IsNullOrWhiteSpace(profile.BaseUrl)
+            || !Uri.TryCreate(profile.BaseUrl, UriKind.Absolute, out var baseUri)
+            || !baseUri.IsLoopback
+            || !RunTargetsBrowserWorkflow(options))
+        {
+            return null;
+        }
+
+        try
+        {
+            using var client = new HttpClient { Timeout = TimeSpan.FromSeconds(2) };
+            using var response = await client.GetAsync(baseUri, HttpCompletionOption.ResponseHeadersRead);
+            return null;
+        }
+        catch
+        {
+            return $"The current browser workflow expects a local app at {baseUri}, but nothing responded there. Start the sample app or update the active profile baseUrl before running.";
+        }
+    }
+
+    private bool RunTargetsBrowserWorkflow(RunOptions options)
+        => ResolveRunFlows(options).Any(flow => flow.Actions.Any(action => action.Name.StartsWith("browser.", StringComparison.OrdinalIgnoreCase)));
+
     private IReadOnlyList<NormalizedFlow> ResolveRunFlows(RunOptions options)
     {
         if (Snapshot is null)
@@ -1846,8 +1906,8 @@ public sealed class StudioWorkspaceState : IDisposable
             id: "web-smoke",
             relativeConfigPath: Path.Combine("specs", "web-smoke", ".cress", "config.yaml"),
             title: "Browser search-style demo",
-            description: "Explore a browser workflow with login, search, and navigation steps authored in the same Studio surface used for Playwright-backed tests.",
-            tags: ["web", "playwright", "search"]);
+            description: "Explore a browser workflow with login, search, and navigation steps authored in the same Studio surface used for Playwright-backed tests. Requires a local web app at the configured baseUrl before you run it.",
+            tags: ["web", "playwright", "search", "requires-app"]);
 
         AddDemo(demos,
             id: "calc-smoke",

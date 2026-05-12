@@ -73,4 +73,37 @@ public sealed class FlowDesignerTests : TestContext
         Assert.Contains("flow-graph-node-flow-end", cut.Markup);
         Assert.Equal(3, cut.FindAll("table").Count);
     }
+
+    [Fact]
+    public void FlowDesigner_renders_human_friendly_action_translations()
+    {
+        var document = FlowDocumentViewModel.FromDocument(new FlowEditorDocument
+        {
+            Id = "calc-flow",
+            Name = "Calculator flow",
+            Actions =
+            [
+                new EditableExecutable
+                {
+                    Name = "ui.invoke",
+                    InputsText = "selector=#clearButton"
+                }
+            ],
+            Expectations =
+            [
+                new EditableExecutable
+                {
+                    Name = "ui.assert-text",
+                    InputsText = "selector=#CalculatorResults\ntext=Display is 4."
+                }
+            ]
+        });
+
+        var cut = RenderComponent<Cress.Studio.Web.Components.Studio.FlowDesigner>(parameters => parameters
+            .Add(item => item.Document, document)
+            .Add(item => item.Analysis, new FlowEditorAnalysis()));
+
+        Assert.Contains("When the user clicks the clear button", cut.Find("[data-testid='action-translation-0']").TextContent);
+        Assert.Contains("Then the Calculator Results accessibility text should display \"Display is 4.\"", cut.Find("[data-testid='expectation-translation-0']").TextContent);
+    }
 }

@@ -1,4 +1,5 @@
 using Bunit;
+using Microsoft.JSInterop;
 
 namespace Cress.Studio.Web.Tests;
 
@@ -8,6 +9,7 @@ public sealed class ThemeToggleTests : TestContext
     {
         // getTheme is called in OnAfterRenderAsync; return "system" as the default stored value.
         JSInterop.Setup<string>("getTheme").SetResult("system");
+        JSInterop.Setup<string>("getEffectiveTheme").SetResult("dark");
         // setTheme is called on button clicks.
         JSInterop.SetupVoid("setTheme", _ => true);
     }
@@ -35,6 +37,7 @@ public sealed class ThemeToggleTests : TestContext
         Assert.Single(activeButtons);
         Assert.Equal("System theme", activeButtons[0].GetAttribute("aria-label"));
         Assert.Contains("Theme: System", cut.Find("[data-testid='theme-toggle-summary']").TextContent);
+        Assert.Contains("Following OS - Dark now.", cut.Find("[data-testid='theme-toggle-summary']").TextContent);
     }
 
     [Fact]
@@ -49,5 +52,54 @@ public sealed class ThemeToggleTests : TestContext
         Assert.Single(activeButtons);
         Assert.Equal("Light theme", activeButtons[0].GetAttribute("aria-label"));
         Assert.Contains("Theme: Light", cut.Find("[data-testid='theme-toggle-summary']").TextContent);
+        Assert.Contains("Pinned to light mode.", cut.Find("[data-testid='theme-toggle-summary']").TextContent);
+    }
+
+    [Fact]
+    public void ThemeToggle_dark_button_updates_summary()
+    {
+        var cut = RenderComponent<Cress.Studio.Web.Components.Studio.ThemeToggle>();
+
+        cut.Find("[aria-label='Dark theme']").Click();
+
+        var activeButtons = cut.FindAll(".tab-button.active");
+        Assert.Single(activeButtons);
+        Assert.Equal("Dark theme", activeButtons[0].GetAttribute("aria-label"));
+        Assert.Contains("Theme: Dark", cut.Find("[data-testid='theme-toggle-summary']").TextContent);
+        Assert.Contains("Pinned to dark mode.", cut.Find("[data-testid='theme-toggle-summary']").TextContent);
+    }
+
+    [Fact]
+    public void ThemeToggle_keeps_defaults_when_initial_js_lookup_is_unavailable()
+    {
+        JSInterop.Mode = JSRuntimeMode.Strict;
+        JSInterop.Setup<string>("getTheme").SetException(new JSException("Unavailable"));
+
+        var cut = RenderComponent<Cress.Studio.Web.Components.Studio.ThemeToggle>();
+
+        var activeButtons = cut.FindAll(".tab-button.active");
+        Assert.Single(activeButtons);
+        Assert.Equal("System theme", activeButtons[0].GetAttribute("aria-label"));
+        Assert.Contains("Theme: System", cut.Find("[data-testid='theme-toggle-summary']").TextContent);
+        Assert.Contains("Following OS - Dark now.", cut.Find("[data-testid='theme-toggle-summary']").TextContent);
+    }
+
+    [Fact]
+    public void ThemeToggle_updates_selection_even_when_set_theme_js_call_fails()
+    {
+        JSInterop.Mode = JSRuntimeMode.Strict;
+        JSInterop.Setup<string>("getTheme").SetResult("system");
+        JSInterop.Setup<string>("getEffectiveTheme").SetResult("dark");
+        JSInterop.SetupVoid("setTheme", _ => true).SetException(new JSException("Unavailable"));
+
+        var cut = RenderComponent<Cress.Studio.Web.Components.Studio.ThemeToggle>();
+
+        cut.Find("[aria-label='Light theme']").Click();
+
+        var activeButtons = cut.FindAll(".tab-button.active");
+        Assert.Single(activeButtons);
+        Assert.Equal("Light theme", activeButtons[0].GetAttribute("aria-label"));
+        Assert.Contains("Theme: Light", cut.Find("[data-testid='theme-toggle-summary']").TextContent);
+        Assert.Contains("Pinned to light mode.", cut.Find("[data-testid='theme-toggle-summary']").TextContent);
     }
 }

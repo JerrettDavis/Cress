@@ -58,6 +58,8 @@ The AppHost orchestrates:
 
 - `Cress.Studio.Web` as an Aspire project resource
 
+The AppHost browser launch opens the Aspire dashboard first. Open the `studio-web` resource endpoint to see the Studio shell itself. When you run `Cress.Studio.Web` directly, `/` stays on the landing and onboarding view, while `/workspace` jumps straight to workspace setup.
+
 ## Validation
 
 ```powershell

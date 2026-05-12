@@ -1,0 +1,321 @@
+@implements IDisposable
+@inject NavigationManager Navigation
+@inject StudioWorkspaceState State
+
+<div class="global-controls">
+    <button type="button"
+            class="@GetToggleButtonClass()"
+            aria-expanded="@_isOpen.ToString().ToLowerInvariant()"
+            aria-controls="global-controls-drawer"
+            data-testid="global-controls-toggle"
+            @onclick="ToggleDrawer">
+        <span class="global-controls-toggle-copy">
+            <strong>Control center</strong>
+            <span>@BuildToggleSummary()</span>
+        </span>
+        <span class="@GetStatusBadgeClass()" data-testid="global-controls-status">@BuildPrimaryStatusLabel()</span>
+    </button>
+</div>
+
+@if (_isOpen)
+{
+    <button type="button"
+            class="global-controls-backdrop"
+            aria-label="Close control center"
+            @onclick="CloseDrawer"></button>
+
+    <aside id="global-controls-drawer"
+           class="global-controls-drawer"
+           aria-label="Studio control center"
+           data-testid="global-controls-drawer">
+        <div class="global-controls-header">
+            <div>
+                <span class="panel-kicker">Always available</span>
+                <h2>Studio control center</h2>
+                <p>Run, record, and monitor the current workspace without leaving the page you are on.</p>
+            </div>
+            <button type="button" class="action-button" @onclick="CloseDrawer">Close</button>
+        </div>
+
+        <div class="global-controls-body">
+            <section class="global-controls-card" data-testid="global-controls-actions">
+                <div class="global-controls-card-head">
+                    <div>
+                        <h3>Quick actions</h3>
+                        <p>Start or stop the current flow, suite, or recording session from any route.</p>
+                    </div>
+                    <div class="global-controls-chip-row">
+                        @if (State.HasSelectedFlow)
+                        {
+                            <span class="pill">@State.SelectedFlow!.Name</span>
+                        }
+                        @if (State.HasSelectedSuite)
+                        {
+                            <span class="pill">@State.SelectedSuite!.Name</span>
+                        }
+                        @if (State.SelectedRunnerNode is not null)
+                        {
+                            <span class="pill">@State.SelectedRunnerNode.DisplayName</span>
+                        }
+                    </div>
+                </div>
+
+                <div class="global-controls-action-grid">
+                    <button type="button"
+                            class="action-button success"
+                            @onclick="RunAllAsync"
+                            disabled="@(!State.HasLoadedProject || State.IsBusy)"
+                            data-testid="global-controls-run-all">
+                        Run all
+                    </button>
+                    <button type="button"
+                            class="action-button success"
+                            @onclick="RunSelectedAsync"
+                            disabled="@(!State.HasSelectedFlow || State.IsBusy)"
+                            data-testid="global-controls-run-flow">
+                        Run flow
+                    </button>
+                    <button type="button"
+                            class="action-button success"
+                            @onclick="RunSuiteAsync"
+                            disabled="@(!State.HasSelectedSuite || State.IsBusy)"
+                            data-testid="global-controls-run-suite">
+                        Run suite
+                    </button>
+                    <button type="button"
+                            class="action-button danger"
+                            @onclick="State.StopActiveRun"
+                            disabled="@(!State.CanStopRun)"
+                            data-testid="global-controls-stop-run">
+                        Stop run
+                    </button>
+                </div>
+
+                <div class="global-controls-secondary-actions">
+                    <RecordButton />
+                    <button type="button"
+                            class="action-button"
+                            @onclick="OpenResults"
+                            disabled="@(!State.HasLoadedProject)"
+                            data-testid="global-controls-open-results">
+                        Open results
+                    </button>
+                </div>
+            </section>
+
+            <section class="global-controls-card" data-testid="global-controls-monitor">
+                <div class="global-controls-card-head">
+                    <div>
+                        <h3>Live monitor</h3>
+                        <p>Keep the current run or recording context visible while you move between workspace, designer, and results.</p>
+                    </div>
+                    <span class="@GetStatusBadgeClass()">@BuildPrimaryStatusLabel()</span>
+                </div>
+
+                <div class="global-controls-monitor-grid">
+                    <div class="summary-card">
+                        <span>Status</span>
+                        <strong>@BuildPrimaryStatusLabel()</strong>
+                        <div class="muted">@State.LiveRunHeadline</div>
+                    </div>
+                    <div class="summary-card">
+                        <span>Flow</span>
+                        <strong>@State.LiveCurrentFlow</strong>
+                        <div class="muted">@BuildFlowSummary()</div>
+                    </div>
+                    <div class="summary-card">
+                        <span>Step</span>
+                        <strong>@State.LiveCurrentStep</strong>
+                        <div class="muted">@State.LiveCurrentStepMessage</div>
+                    </div>
+                    <div class="summary-card">
+                        <span>Recorder</span>
+                        <strong>@BuildRecordingStatus()</strong>
+                        <div class="muted">@BuildRecordingSummary()</div>
+                    </div>
+                </div>
+
+                @if (!State.HasLiveRunActivity && !State.IsRecording)
+                {
+                    <p class="subpanel-empty" data-testid="global-controls-monitor-empty">No run or recording session is active yet.</p>
+                }
+            </section>
+
+            <section class="global-controls-card" data-testid="global-controls-log">
+                <div class="global-controls-card-head">
+                    <div>
+                        <h3>Recent events</h3>
+                        <p>Keep the latest timeline and log messages within reach without switching to the results view.</p>
+                    </div>
+                    <span class="pill">@Math.Min(State.LiveTimelineEntries.Count, 6) visible</span>
+                </div>
+
+                @if (State.LiveTimelineEntries.Count == 0)
+                {
+                    <p class="subpanel-empty" data-testid="global-controls-log-empty">The drawer will show recent run events as soon as the next execution starts reporting progress.</p>
+                }
+                else
+                {
+                    <ol class="global-controls-log-list" data-testid="global-controls-log-list">
+                        @foreach (var entry in State.LiveTimelineEntries.Take(6))
+                        {
+                            <li class="global-controls-log-item">
+                                <div class="global-controls-log-meta">
+                                    <span class="@GetLogBadgeClass(entry)">@entry.Category</span>
+                                    <span>@entry.TimestampUtc.ToLocalTime().ToString("HH:mm:ss")</span>
+                                </div>
+                                <strong>@entry.Headline</strong>
+                                @if (!string.IsNullOrWhiteSpace(entry.Detail))
+                                {
+                                    <span>@entry.Detail</span>
+                                }
+                            </li>
+                        }
+                    </ol>
+                }
+            </section>
+
+            <section class="global-controls-card" data-testid="global-controls-preview">
+                <div class="global-controls-card-head">
+                    <div>
+                        <h3>Latest preview</h3>
+                        <p>Keep the currently selected screenshot or report preview nearby while you stay on the current page.</p>
+                    </div>
+                    @if (State.SelectedArtifact is not null)
+                    {
+                        <span class="pill">@State.SelectedArtifact.DisplayName</span>
+                    }
+                </div>
+
+                @if (!string.IsNullOrWhiteSpace(State.PreviewImageDataUrl))
+                {
+                    <img src="@State.PreviewImageDataUrl" alt="Latest selected artifact preview" class="global-controls-preview-image" />
+                }
+                else if (!string.IsNullOrWhiteSpace(State.PreviewText))
+                {
+                    <pre class="global-controls-preview-text">@TrimPreview(State.PreviewText)</pre>
+                }
+                else
+                {
+                    <p class="subpanel-empty" data-testid="global-controls-preview-empty">Select a result artifact to keep its latest screenshot or report preview in this drawer.</p>
+                }
+            </section>
+        </div>
+    </aside>
+}
+
+@code {
+    private bool _isOpen;
+    private bool _hadAttention;
+
+    protected override void OnInitialized()
+    {
+        _hadAttention = HasAttention();
+        State.Changed += HandleStateChanged;
+    }
+
+    public void Dispose()
+    {
+        State.Changed -= HandleStateChanged;
+    }
+
+    private void HandleStateChanged()
+    {
+        var hasAttention = HasAttention();
+        if (hasAttention && !_hadAttention)
+        {
+            _isOpen = true;
+        }
+
+        _hadAttention = hasAttention;
+        InvokeAsync(StateHasChanged);
+    }
+
+    private void ToggleDrawer()
+        => _isOpen = !_isOpen;
+
+    private void CloseDrawer()
+        => _isOpen = false;
+
+    private Task RunAllAsync() => State.RunAllAsync();
+
+    private Task RunSelectedAsync() => State.RunSelectedAsync();
+
+    private Task RunSuiteAsync() => State.RunSelectedSuiteAsync();
+
+    private void OpenResults()
+    {
+        Navigation.NavigateTo("/results");
+        _isOpen = false;
+    }
+
+    private bool HasAttention()
+        => State.IsRecording
+           || State.IsBusy
+           || State.HasLiveRunActivity
+           || !string.IsNullOrWhiteSpace(State.RecordingError);
+
+    private string BuildPrimaryStatusLabel()
+    {
+        if (State.IsRecording)
+        {
+            return "Recording";
+        }
+
+        if (State.IsBusy || State.HasLiveRunActivity)
+        {
+            return State.LiveRunStatus;
+        }
+
+        return State.HasLoadedProject ? "Ready" : "Idle";
+    }
+
+    private string BuildToggleSummary()
+    {
+        if (State.IsRecording)
+        {
+            return $"{State.RecordedEventCount} events captured";
+        }
+
+        if (State.IsBusy || State.HasLiveRunActivity)
+        {
+            return State.LiveCurrentStepMessage;
+        }
+
+        return State.HasLoadedProject
+            ? "Run or record without leaving this page"
+            : "Load a project to enable run controls";
+    }
+
+    private string GetToggleButtonClass()
+        => HasAttention()
+            ? "action-button global-controls-toggle global-controls-toggle--active"
+            : "action-button global-controls-toggle";
+
+    private string GetStatusBadgeClass()
+        => $"pill global-controls-status-badge global-controls-status-badge--{BuildPrimaryStatusLabel().ToLowerInvariant().Replace(' ', '-')}";
+
+    private string BuildFlowSummary()
+        => State.LiveTotalFlows > 0
+            ? $"Flow {Math.Max(State.LiveCurrentFlowIndex, State.LiveCompletedFlows + (State.IsBusy ? 1 : 0))} / {State.LiveTotalFlows}"
+            : "No live flow selected";
+
+    private string BuildRecordingStatus()
+        => State.IsRecording ? "Active" : "Idle";
+
+    private string BuildRecordingSummary()
+        => State.IsRecording
+            ? $"{FormatElapsed(State.RecordedElapsed)} • {State.RecordedEventCount} events"
+            : State.RecordingTargetName ?? "No recorder target";
+
+    private static string GetLogBadgeClass(StudioLiveRunEntry entry)
+        => $"pill global-controls-log-badge global-controls-log-badge--{entry.Status.ToLowerInvariant().Replace(' ', '-')}";
+
+    private static string TrimPreview(string value)
+        => value.Length <= 1200 ? value : $"{value[..1200]}…";
+
+    private static string FormatElapsed(TimeSpan elapsed)
+        => elapsed.TotalHours >= 1
+            ? elapsed.ToString(@"hh\:mm\:ss")
+            : elapsed.ToString(@"mm\:ss");
+}

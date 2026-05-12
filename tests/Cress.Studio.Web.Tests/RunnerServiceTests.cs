@@ -65,7 +65,10 @@ public sealed class RunnerServiceTests
         var dispatchTask = service.DispatchAsync(request, progress: null);
         await started.Task.WaitAsync(TimeSpan.FromSeconds(5));
 
-        var runningSnapshot = service.ListNodes().Single();
+        var runningSnapshot = await WaitForSnapshotAsync(
+            service,
+            snapshot => snapshot.ActiveRunId == "run-123",
+            TimeSpan.FromSeconds(5));
         Assert.Equal(StudioRunnerNodeStatus.Busy, runningSnapshot.Status);
         Assert.Equal("run-123", runningSnapshot.ActiveRunId);
         Assert.Equal(request.DispatchId, runningSnapshot.ActiveDispatchId);
@@ -99,6 +102,26 @@ public sealed class RunnerServiceTests
         {
             Assert.Contains("flawright", snapshot.Capabilities);
         }
+    }
+
+    private static async Task<StudioRunnerNodeSnapshot> WaitForSnapshotAsync(
+        StudioRunnerService service,
+        Func<StudioRunnerNodeSnapshot, bool> predicate,
+        TimeSpan timeout)
+    {
+        var deadline = DateTimeOffset.UtcNow + timeout;
+        while (DateTimeOffset.UtcNow < deadline)
+        {
+            var snapshot = service.ListNodes().Single();
+            if (predicate(snapshot))
+            {
+                return snapshot;
+            }
+
+            await Task.Delay(25);
+        }
+
+        return service.ListNodes().Single();
     }
 
     private sealed class FakeStudioRunnerExecutor(Func<string, RunOptions, IProgress<RuntimeProgressUpdate>?, CancellationToken, Task<RunResult>> executeAsync)

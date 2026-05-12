@@ -201,6 +201,10 @@ else
                             <tr>
                                 <td>
                                     <input class="text-input" @bind="row.Name" @bind:event="oninput" @bind:after="NotifyChanged" />
+                                    @if (!string.IsNullOrWhiteSpace(row.Name))
+                                    {
+                                        <small class="form-helper action-translation-hint" data-testid="@($"action-translation-{index}")">@BuildExecutableHint(row.Name, row.InputsText, expectation: false)</small>
+                                    }
                                     @foreach (var diagnostic in GetDiagnostics($"action:{index}"))
                                     {
                                         <small class="inline-hint">@diagnostic.Message</small>
@@ -241,6 +245,10 @@ else
                             <tr>
                                 <td>
                                     <input class="text-input" @bind="row.Name" @bind:event="oninput" @bind:after="NotifyChanged" />
+                                    @if (!string.IsNullOrWhiteSpace(row.Name))
+                                    {
+                                        <small class="form-helper action-translation-hint" data-testid="@($"expectation-translation-{index}")">@BuildExecutableHint(row.Name, row.InputsText, expectation: true)</small>
+                                    }
                                     @foreach (var diagnostic in GetDiagnostics($"expectation:{index}"))
                                     {
                                         <small class="inline-hint">@diagnostic.Message</small>
@@ -272,6 +280,12 @@ else
 
     private IEnumerable<FlowEditorDiagnostic> GetDiagnostics(string target)
         => Analysis.Diagnostics.Where(item => string.Equals(item.Target, target, StringComparison.OrdinalIgnoreCase));
+
+    private static string BuildExecutableHint(string? name, string? inputsText, bool expectation)
+        => FlowGherkinPreviewBuilder.BuildExecutablePreview(
+            name,
+            inputsText,
+            expectation ? Cress.Gherkin.Phrases.GherkinKeyword.Then : Cress.Gherkin.Phrases.GherkinKeyword.When);
 
     private Task NotifyChanged()
         => OnChanged.InvokeAsync();

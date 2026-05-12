@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Cress.Companion.Core\Cress.Companion.Core.csproj" />
+    <ProjectReference Include="..\..\src\Cress.Companion.Windows\Cress.Companion.Windows.csproj" />
     <ProjectReference Include="..\..\src\Cress.Recorder\Cress.Recorder.csproj" />
   </ItemGroup>
 </Project>

@@ -1,7 +1,8 @@
 import { defineConfig, devices } from '@playwright/test';
 
-const port = 5076;
+const port = 5088;
 const baseURL = `http://127.0.0.1:${port}`;
+const companionBaseURL = process.env.CRESS_COMPANION_URL ?? 'http://127.0.0.1:7421/';
 const dotnet = '"C:\\Program Files\\dotnet\\dotnet.exe"';
 const captureDocsScreenshots = process.env.CRESS_CAPTURE_DOCS_SCREENSHOTS === '1';
 
@@ -25,9 +26,13 @@ export default defineConfig({
     testIdAttribute: 'data-testid'
   },
   webServer: {
-    command: `${dotnet} run --project src\\Cress.Studio.Web\\Cress.Studio.Web.csproj --configuration Release --no-launch-profile --urls ${baseURL}`,
+    command: `${dotnet} run --project src\\Cress.Studio.Web\\Cress.Studio.Web.csproj --configuration Debug --no-launch-profile --urls ${baseURL}`,
+    env: {
+      ...process.env,
+      CRESS_COMPANION_URL: companionBaseURL
+    },
     url: baseURL,
-    reuseExistingServer: !process.env.CI,
+    reuseExistingServer: false,
     timeout: 120000
   },
   projects: [

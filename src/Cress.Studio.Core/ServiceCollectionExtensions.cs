@@ -23,6 +23,7 @@ public static class ServiceCollectionExtensions
             .AddSingleton<StudioAuthoringService>()
             .AddSingleton<StudioRunInsightsService>()
             .AddSingleton<RunMetricsService>()
+            .AddSingleton<IStudioCompanionClient, StudioCompanionClient>()
             .AddSingleton<IStudioRunnerExecutor, StudioRuntimeRunnerExecutor>()
             .AddSingleton<IStudioRunnerNode, StudioEmbeddedRunnerNode>()
             .AddSingleton<IStudioRunnerService, StudioRunnerService>()

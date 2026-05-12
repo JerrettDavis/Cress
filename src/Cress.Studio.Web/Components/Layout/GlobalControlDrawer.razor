@@ -175,6 +175,39 @@
                 }
             </section>
 
+            <section class="global-controls-card" data-testid="global-controls-companion">
+                <div class="global-controls-card-head">
+                    <div>
+                        <h3>Desktop companion</h3>
+                        <p>Track the anchored overlays recording Windows apps outside the browser and keep that state visible inside Studio.</p>
+                    </div>
+                    <span class="pill">@State.CompanionSnapshot.Sessions.Count session(s)</span>
+                </div>
+
+                <p class="muted">@State.CompanionStatusMessage</p>
+
+                @if (!State.HasCompanionSessions)
+                {
+                    <p class="subpanel-empty" data-testid="global-controls-companion-empty">No desktop companion sessions are active yet.</p>
+                }
+                else
+                {
+                    <ol class="global-controls-log-list" data-testid="global-controls-companion-list">
+                        @foreach (var session in State.CompanionSnapshot.Sessions.Take(4))
+                        {
+                            <li class="global-controls-log-item">
+                                <div class="global-controls-log-meta">
+                                    <span class="pill">@session.Status</span>
+                                    <span>@session.ProcessName</span>
+                                </div>
+                                <strong>@session.WindowTitle</strong>
+                                <span>@session.LastStepSummary</span>
+                            </li>
+                        }
+                    </ol>
+                }
+            </section>
+
             <section class="global-controls-card" data-testid="global-controls-preview">
                 <div class="global-controls-card-head">
                     <div>
@@ -212,6 +245,7 @@
     {
         _hadAttention = HasAttention();
         State.Changed += HandleStateChanged;
+        _ = State.RefreshCompanionAsync();
     }
 
     public void Dispose()
@@ -232,7 +266,13 @@
     }
 
     private void ToggleDrawer()
-        => _isOpen = !_isOpen;
+    {
+        _isOpen = !_isOpen;
+        if (_isOpen)
+        {
+            _ = State.RefreshCompanionAsync();
+        }
+    }
 
     private void CloseDrawer()
         => _isOpen = false;

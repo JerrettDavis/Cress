@@ -27,8 +27,8 @@
     width: 100%;
     padding: 0.82rem 0.85rem;
     border: 1px solid color-mix(in srgb, var(--color-accent) 8%, var(--color-border));
-    border-radius: 16px;
-    background: linear-gradient(180deg, color-mix(in srgb, var(--color-surface-raised) 88%, var(--color-accent-soft)) 0%, var(--color-surface) 100%);
+    border-radius: 12px;
+    background: var(--color-surface);
     color: var(--color-foreground);
     text-decoration: none;
     box-shadow: var(--shadow-sm);
@@ -49,14 +49,14 @@
 .nav-link:hover,
 .nav-link:focus-visible {
     border-color: var(--color-accent-border);
-    background: linear-gradient(180deg, color-mix(in srgb, var(--color-accent-soft) 72%, var(--color-surface-raised)) 0%, color-mix(in srgb, var(--color-surface) 86%, var(--color-accent-soft)) 100%);
+    background: var(--color-accent-soft);
     color: var(--color-foreground);
     transform: translateY(-1px);
 }
 
 .nav-link.active {
     border-color: var(--color-accent-border);
-    background: linear-gradient(180deg, color-mix(in srgb, var(--color-accent-soft) 82%, var(--color-surface-raised)) 0%, color-mix(in srgb, var(--color-accent-soft) 68%, var(--color-surface)) 100%);
+    background: color-mix(in srgb, var(--color-accent-soft) 72%, var(--color-surface));
     color: var(--color-foreground);
     box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-accent) 18%, transparent), var(--shadow-sm);
 }
@@ -68,8 +68,8 @@
     flex-shrink: 0;
     width: 2rem;
     height: 2rem;
-    border-radius: 12px;
-    background: color-mix(in srgb, var(--color-accent-soft) 75%, transparent);
+    border-radius: 8px;
+    background: color-mix(in srgb, var(--color-accent-soft) 82%, var(--color-surface));
     color: var(--color-accent);
 }
 

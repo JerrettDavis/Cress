@@ -103,6 +103,7 @@ public sealed class HomeInteractionTests : TestContext, IDisposable
         CreateState();
 
         var cut = RenderComponent<Home>();
+        cut.Find("[data-testid='toggle-onboarding-panels']").Click();
 
         cut.Find("[data-testid='demo-filter']").Input("browser");
 
@@ -222,6 +223,7 @@ public sealed class HomeInteractionTests : TestContext, IDisposable
         ]));
 
         var cut = RenderComponent<Home>();
+        cut.Find("[data-testid='toggle-onboarding-panels']").Click();
 
         cut.Find("[data-testid='runner-node-filter']").Input("desktop");
 
@@ -247,6 +249,7 @@ public sealed class HomeInteractionTests : TestContext, IDisposable
         ]));
 
         var cut = RenderComponent<Home>();
+        cut.Find("[data-testid='toggle-onboarding-panels']").Click();
 
         cut.Find("[data-testid='runner-node-issues-only']").Change(true);
 
@@ -260,6 +263,22 @@ public sealed class HomeInteractionTests : TestContext, IDisposable
         Assert.Contains(renderedNodes, content => content.Contains("Remote degraded", StringComparison.Ordinal));
         Assert.Contains("Needs attention: 2", cut.Markup);
         Assert.Contains("Issues only", cut.Markup);
+    }
+
+    [Fact]
+    public void Home_onboarding_defaults_to_focused_panels_until_user_expands_all()
+    {
+        CreateState();
+
+        var cut = RenderComponent<Home>();
+
+        Assert.Null(cut.Find("[data-testid='demo-workspaces-panel']").GetAttribute("open"));
+        Assert.Null(cut.Find("[data-testid='runner-nodes-panel']").GetAttribute("open"));
+
+        cut.Find("[data-testid='toggle-onboarding-panels']").Click();
+
+        Assert.NotNull(cut.Find("[data-testid='demo-workspaces-panel']").GetAttribute("open"));
+        Assert.NotNull(cut.Find("[data-testid='runner-nodes-panel']").GetAttribute("open"));
     }
 
     private StudioWorkspaceState CreateState(string[]? recentWorkspaces = null, IStudioRunnerService? runnerService = null)

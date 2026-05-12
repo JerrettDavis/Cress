@@ -712,6 +712,55 @@ svg {
     gap: 1rem;
 }
 
+.onboarding-step {
+    padding: 0;
+    background: var(--color-surface-alt);
+}
+
+.onboarding-step-summary {
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 0.9rem 1rem;
+}
+
+.onboarding-step-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    min-width: 0;
+}
+
+.onboarding-step-title {
+    display: flex;
+    gap: 0.55rem;
+    align-items: flex-start;
+}
+
+.onboarding-step-title strong {
+    display: block;
+    font-size: 0.95rem;
+    line-height: 1.3;
+}
+
+.onboarding-step-copy > span:last-child {
+    color: var(--color-muted);
+    font-size: 0.82rem;
+    line-height: 1.5;
+}
+
+.onboarding-step .panel-kicker {
+    margin-bottom: 0.15rem;
+}
+
+.onboarding-step-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 0 1rem 1rem;
+    border-top: 1px solid color-mix(in srgb, var(--color-accent) 10%, var(--color-border));
+}
+
 .workspace-chip {
     display: flex;
     flex-direction: column;

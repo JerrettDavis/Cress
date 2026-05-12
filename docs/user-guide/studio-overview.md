@@ -14,6 +14,7 @@ The landing page is the orientation point for new users.
 
 It now gives you one place to:
 
+- stay focused on the essential workspace steps by default and expand the optional panels only when you need them
 - start from suggested, recent, or built-in demo workspaces
 - search and prune recent workspace history without leaving the page
 - filter the demo list before loading a project

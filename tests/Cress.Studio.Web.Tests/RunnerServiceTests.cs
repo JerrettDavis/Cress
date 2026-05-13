@@ -104,6 +104,147 @@ public sealed class RunnerServiceTests
         }
     }
 
+    [Fact]
+    public void RunnerService_lists_nodes_in_name_order_and_replays_change_notifications()
+    {
+        var first = new FakeStudioRunnerNode(new StudioRunnerNodeSnapshot(
+            Id: "zeta",
+            Name: "Zeta node",
+            DisplayName: "Zeta",
+            Description: "Later node",
+            Transport: StudioRunnerTransportKind.RemoteHttp,
+            Location: "lab-z",
+            Capabilities: ["http"],
+            Status: StudioRunnerNodeStatus.Healthy,
+            LastHeartbeatUtc: DateTimeOffset.UtcNow,
+            LastCompletedUtc: null,
+            ActiveDispatchId: null,
+            ActiveRunId: null,
+            LastRunId: null,
+            QueueDepth: 0,
+            LastError: null));
+        var second = new FakeStudioRunnerNode(new StudioRunnerNodeSnapshot(
+            Id: "alpha",
+            Name: "Alpha node",
+            DisplayName: "Alpha",
+            Description: "Earlier node",
+            Transport: StudioRunnerTransportKind.Embedded,
+            Location: "lab-a",
+            Capabilities: ["http"],
+            Status: StudioRunnerNodeStatus.Healthy,
+            LastHeartbeatUtc: DateTimeOffset.UtcNow,
+            LastCompletedUtc: null,
+            ActiveDispatchId: null,
+            ActiveRunId: null,
+            LastRunId: null,
+            QueueDepth: 0,
+            LastError: null));
+        var service = new StudioRunnerService([first, second]);
+        var changedCount = 0;
+        service.Changed += () => changedCount++;
+
+        var snapshots = service.ListNodes();
+
+        Assert.Collection(
+            snapshots,
+            snapshot => Assert.Equal("Alpha node", snapshot.Name),
+            snapshot => Assert.Equal("Zeta node", snapshot.Name));
+
+        second.RaiseChanged();
+
+        Assert.Equal(1, changedCount);
+    }
+
+    [Fact]
+    public async Task RunnerService_throws_when_node_is_not_registered()
+    {
+        var service = new StudioRunnerService([]);
+        var request = StudioRunnerDispatchRequest.Create(
+            nodeId: "missing-node",
+            projectRoot: "C:\\repo\\specs\\sample",
+            options: new RunOptions(),
+            requestedBy: "test-user",
+            requestedFrom: "test");
+
+        var error = await Assert.ThrowsAsync<InvalidOperationException>(() => service.DispatchAsync(request, progress: null));
+
+        Assert.Contains("missing-node", error.Message, StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
+    public async Task EmbeddedRunner_marks_snapshot_degraded_when_execution_fails()
+    {
+        var node = new StudioEmbeddedRunnerNode(new FakeStudioRunnerExecutor((_, _, _, _) => throw new InvalidOperationException("boom")));
+        var request = StudioRunnerDispatchRequest.Create(
+            StudioEmbeddedRunnerNode.LocalNodeId,
+            projectRoot: "C:\\repo\\specs\\sample",
+            options: new RunOptions(),
+            requestedBy: "test-user",
+            requestedFrom: "test");
+
+        var error = await Assert.ThrowsAsync<InvalidOperationException>(() => node.DispatchAsync(request, progress: null));
+        var snapshot = node.Snapshot;
+
+        Assert.Equal("boom", error.Message);
+        Assert.Equal(StudioRunnerNodeStatus.Degraded, snapshot.Status);
+        Assert.Null(snapshot.ActiveDispatchId);
+        Assert.Null(snapshot.ActiveRunId);
+        Assert.Equal("boom", snapshot.LastError);
+        Assert.NotNull(snapshot.LastCompletedUtc);
+    }
+
+    [Fact]
+    public async Task EmbeddedRunner_resets_snapshot_when_execution_is_cancelled()
+    {
+        var started = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var node = new StudioEmbeddedRunnerNode(new FakeStudioRunnerExecutor(async (_, _, _, cancellationToken) =>
+        {
+            started.SetResult();
+            await Task.Delay(Timeout.InfiniteTimeSpan, cancellationToken);
+            return new RunResult();
+        }));
+        var request = StudioRunnerDispatchRequest.Create(
+            StudioEmbeddedRunnerNode.LocalNodeId,
+            projectRoot: "C:\\repo\\specs\\sample",
+            options: new RunOptions(),
+            requestedBy: "test-user",
+            requestedFrom: "test");
+        using var cts = new CancellationTokenSource();
+        var dispatchTask = node.DispatchAsync(request, progress: null, cts.Token);
+
+        await started.Task.WaitAsync(TimeSpan.FromSeconds(5));
+        cts.Cancel();
+
+        await Assert.ThrowsAnyAsync<OperationCanceledException>(() => dispatchTask);
+
+        var snapshot = node.Snapshot;
+        Assert.Equal(StudioRunnerNodeStatus.Healthy, snapshot.Status);
+        Assert.Null(snapshot.ActiveDispatchId);
+        Assert.Null(snapshot.ActiveRunId);
+        Assert.Null(snapshot.LastError);
+        Assert.NotNull(snapshot.LastCompletedUtc);
+    }
+
+    [Fact]
+    public void DispatchRequest_create_populates_request_metadata()
+    {
+        var options = new RunOptions { Profile = "ci" };
+
+        var request = StudioRunnerDispatchRequest.Create(
+            StudioEmbeddedRunnerNode.LocalNodeId,
+            projectRoot: "C:\\repo\\specs\\sample",
+            options: options,
+            requestedBy: "test-user",
+            requestedFrom: "runner-tests");
+
+        Assert.Equal(StudioEmbeddedRunnerNode.LocalNodeId, request.NodeId);
+        Assert.Equal("C:\\repo\\specs\\sample", request.ProjectRoot);
+        Assert.Same(options, request.Options);
+        Assert.Equal("test-user", request.RequestedBy);
+        Assert.Equal("runner-tests", request.RequestedFrom);
+        Assert.StartsWith("dispatch-", request.DispatchId, StringComparison.Ordinal);
+    }
+
     private static async Task<StudioRunnerNodeSnapshot> WaitForSnapshotAsync(
         StudioRunnerService service,
         Func<StudioRunnerNodeSnapshot, bool> predicate,
@@ -133,5 +274,25 @@ public sealed class RunnerServiceTests
             IProgress<RuntimeProgressUpdate>? progress,
             CancellationToken cancellationToken)
             => executeAsync(projectRoot, options, progress, cancellationToken);
+    }
+
+    private sealed class FakeStudioRunnerNode(StudioRunnerNodeSnapshot snapshot) : IStudioRunnerNode
+    {
+        public event Action? Changed;
+
+        public StudioRunnerNodeSnapshot Snapshot { get; } = snapshot;
+
+        public Task<StudioRunnerDispatchResult> DispatchAsync(
+            StudioRunnerDispatchRequest request,
+            IProgress<RuntimeProgressUpdate>? progress,
+            CancellationToken cancellationToken = default)
+            => Task.FromResult(new StudioRunnerDispatchResult(
+                request.NodeId,
+                request.DispatchId,
+                DateTimeOffset.UtcNow,
+                DateTimeOffset.UtcNow,
+                new RunResult()));
+
+        public void RaiseChanged() => Changed?.Invoke();
     }
 }

@@ -1,0 +1,556 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Studio.Services.IStudioCompanionClient
+  commentId: T:Cress.Studio.Services.IStudioCompanionClient
+  id: IStudioCompanionClient
+  parent: Cress.Studio.Services
+  children:
+  - Cress.Studio.Services.IStudioCompanionClient.GetSnapshotAsync(System.Boolean,System.Threading.CancellationToken)
+  - Cress.Studio.Services.IStudioCompanionClient.ListTargetsAsync(System.Threading.CancellationToken)
+  - Cress.Studio.Services.IStudioCompanionClient.PauseRecordingAsync(System.Int32,System.Threading.CancellationToken)
+  - Cress.Studio.Services.IStudioCompanionClient.ResumeRecordingAsync(System.Int32,System.Threading.CancellationToken)
+  - Cress.Studio.Services.IStudioCompanionClient.StartRecordingAsync(System.Int32,System.Boolean,System.Threading.CancellationToken)
+  - Cress.Studio.Services.IStudioCompanionClient.StopRecordingAsync(System.Int32,System.Threading.CancellationToken)
+  langs:
+  - csharp
+  - vb
+  name: IStudioCompanionClient
+  nameWithType: IStudioCompanionClient
+  fullName: Cress.Studio.Services.IStudioCompanionClient
+  type: Interface
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/IStudioCompanionClient.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: IStudioCompanionClient
+    path: ../src/Cress.Studio.Core/Services/IStudioCompanionClient.cs
+    startLine: 4
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  syntax:
+    content: public interface IStudioCompanionClient
+    content.vb: Public Interface IStudioCompanionClient
+- uid: Cress.Studio.Services.IStudioCompanionClient.GetSnapshotAsync(System.Boolean,System.Threading.CancellationToken)
+  commentId: M:Cress.Studio.Services.IStudioCompanionClient.GetSnapshotAsync(System.Boolean,System.Threading.CancellationToken)
+  id: GetSnapshotAsync(System.Boolean,System.Threading.CancellationToken)
+  parent: Cress.Studio.Services.IStudioCompanionClient
+  langs:
+  - csharp
+  - vb
+  name: GetSnapshotAsync(bool, CancellationToken)
+  nameWithType: IStudioCompanionClient.GetSnapshotAsync(bool, CancellationToken)
+  fullName: Cress.Studio.Services.IStudioCompanionClient.GetSnapshotAsync(bool, System.Threading.CancellationToken)
+  type: Method
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/IStudioCompanionClient.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: GetSnapshotAsync
+    path: ../src/Cress.Studio.Core/Services/IStudioCompanionClient.cs
+    startLine: 6
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  syntax:
+    content: Task<CompanionServiceSnapshot> GetSnapshotAsync(bool includePreview = false, CancellationToken cancellationToken = default)
+    parameters:
+    - id: includePreview
+      type: System.Boolean
+    - id: cancellationToken
+      type: System.Threading.CancellationToken
+    return:
+      type: System.Threading.Tasks.Task{Cress.Companion.CompanionServiceSnapshot}
+    content.vb: Function GetSnapshotAsync(includePreview As Boolean = False, cancellationToken As CancellationToken = Nothing) As Task(Of CompanionServiceSnapshot)
+  overload: Cress.Studio.Services.IStudioCompanionClient.GetSnapshotAsync*
+  nameWithType.vb: IStudioCompanionClient.GetSnapshotAsync(Boolean, CancellationToken)
+  fullName.vb: Cress.Studio.Services.IStudioCompanionClient.GetSnapshotAsync(Boolean, System.Threading.CancellationToken)
+  name.vb: GetSnapshotAsync(Boolean, CancellationToken)
+- uid: Cress.Studio.Services.IStudioCompanionClient.ListTargetsAsync(System.Threading.CancellationToken)
+  commentId: M:Cress.Studio.Services.IStudioCompanionClient.ListTargetsAsync(System.Threading.CancellationToken)
+  id: ListTargetsAsync(System.Threading.CancellationToken)
+  parent: Cress.Studio.Services.IStudioCompanionClient
+  langs:
+  - csharp
+  - vb
+  name: ListTargetsAsync(CancellationToken)
+  nameWithType: IStudioCompanionClient.ListTargetsAsync(CancellationToken)
+  fullName: Cress.Studio.Services.IStudioCompanionClient.ListTargetsAsync(System.Threading.CancellationToken)
+  type: Method
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/IStudioCompanionClient.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: ListTargetsAsync
+    path: ../src/Cress.Studio.Core/Services/IStudioCompanionClient.cs
+    startLine: 8
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  syntax:
+    content: Task<IReadOnlyList<CompanionTargetInfo>> ListTargetsAsync(CancellationToken cancellationToken = default)
+    parameters:
+    - id: cancellationToken
+      type: System.Threading.CancellationToken
+    return:
+      type: System.Threading.Tasks.Task{System.Collections.Generic.IReadOnlyList{Cress.Companion.CompanionTargetInfo}}
+    content.vb: Function ListTargetsAsync(cancellationToken As CancellationToken = Nothing) As Task(Of IReadOnlyList(Of CompanionTargetInfo))
+  overload: Cress.Studio.Services.IStudioCompanionClient.ListTargetsAsync*
+- uid: Cress.Studio.Services.IStudioCompanionClient.StartRecordingAsync(System.Int32,System.Boolean,System.Threading.CancellationToken)
+  commentId: M:Cress.Studio.Services.IStudioCompanionClient.StartRecordingAsync(System.Int32,System.Boolean,System.Threading.CancellationToken)
+  id: StartRecordingAsync(System.Int32,System.Boolean,System.Threading.CancellationToken)
+  parent: Cress.Studio.Services.IStudioCompanionClient
+  langs:
+  - csharp
+  - vb
+  name: StartRecordingAsync(int, bool, CancellationToken)
+  nameWithType: IStudioCompanionClient.StartRecordingAsync(int, bool, CancellationToken)
+  fullName: Cress.Studio.Services.IStudioCompanionClient.StartRecordingAsync(int, bool, System.Threading.CancellationToken)
+  type: Method
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/IStudioCompanionClient.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: StartRecordingAsync
+    path: ../src/Cress.Studio.Core/Services/IStudioCompanionClient.cs
+    startLine: 10
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  syntax:
+    content: Task<CompanionSessionSnapshot> StartRecordingAsync(int processId, bool overlayEnabled = true, CancellationToken cancellationToken = default)
+    parameters:
+    - id: processId
+      type: System.Int32
+    - id: overlayEnabled
+      type: System.Boolean
+    - id: cancellationToken
+      type: System.Threading.CancellationToken
+    return:
+      type: System.Threading.Tasks.Task{Cress.Companion.CompanionSessionSnapshot}
+    content.vb: Function StartRecordingAsync(processId As Integer, overlayEnabled As Boolean = True, cancellationToken As CancellationToken = Nothing) As Task(Of CompanionSessionSnapshot)
+  overload: Cress.Studio.Services.IStudioCompanionClient.StartRecordingAsync*
+  nameWithType.vb: IStudioCompanionClient.StartRecordingAsync(Integer, Boolean, CancellationToken)
+  fullName.vb: Cress.Studio.Services.IStudioCompanionClient.StartRecordingAsync(Integer, Boolean, System.Threading.CancellationToken)
+  name.vb: StartRecordingAsync(Integer, Boolean, CancellationToken)
+- uid: Cress.Studio.Services.IStudioCompanionClient.PauseRecordingAsync(System.Int32,System.Threading.CancellationToken)
+  commentId: M:Cress.Studio.Services.IStudioCompanionClient.PauseRecordingAsync(System.Int32,System.Threading.CancellationToken)
+  id: PauseRecordingAsync(System.Int32,System.Threading.CancellationToken)
+  parent: Cress.Studio.Services.IStudioCompanionClient
+  langs:
+  - csharp
+  - vb
+  name: PauseRecordingAsync(int, CancellationToken)
+  nameWithType: IStudioCompanionClient.PauseRecordingAsync(int, CancellationToken)
+  fullName: Cress.Studio.Services.IStudioCompanionClient.PauseRecordingAsync(int, System.Threading.CancellationToken)
+  type: Method
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/IStudioCompanionClient.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: PauseRecordingAsync
+    path: ../src/Cress.Studio.Core/Services/IStudioCompanionClient.cs
+    startLine: 12
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  syntax:
+    content: Task<CompanionSessionSnapshot> PauseRecordingAsync(int processId, CancellationToken cancellationToken = default)
+    parameters:
+    - id: processId
+      type: System.Int32
+    - id: cancellationToken
+      type: System.Threading.CancellationToken
+    return:
+      type: System.Threading.Tasks.Task{Cress.Companion.CompanionSessionSnapshot}
+    content.vb: Function PauseRecordingAsync(processId As Integer, cancellationToken As CancellationToken = Nothing) As Task(Of CompanionSessionSnapshot)
+  overload: Cress.Studio.Services.IStudioCompanionClient.PauseRecordingAsync*
+  nameWithType.vb: IStudioCompanionClient.PauseRecordingAsync(Integer, CancellationToken)
+  fullName.vb: Cress.Studio.Services.IStudioCompanionClient.PauseRecordingAsync(Integer, System.Threading.CancellationToken)
+  name.vb: PauseRecordingAsync(Integer, CancellationToken)
+- uid: Cress.Studio.Services.IStudioCompanionClient.ResumeRecordingAsync(System.Int32,System.Threading.CancellationToken)
+  commentId: M:Cress.Studio.Services.IStudioCompanionClient.ResumeRecordingAsync(System.Int32,System.Threading.CancellationToken)
+  id: ResumeRecordingAsync(System.Int32,System.Threading.CancellationToken)
+  parent: Cress.Studio.Services.IStudioCompanionClient
+  langs:
+  - csharp
+  - vb
+  name: ResumeRecordingAsync(int, CancellationToken)
+  nameWithType: IStudioCompanionClient.ResumeRecordingAsync(int, CancellationToken)
+  fullName: Cress.Studio.Services.IStudioCompanionClient.ResumeRecordingAsync(int, System.Threading.CancellationToken)
+  type: Method
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/IStudioCompanionClient.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: ResumeRecordingAsync
+    path: ../src/Cress.Studio.Core/Services/IStudioCompanionClient.cs
+    startLine: 14
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  syntax:
+    content: Task<CompanionSessionSnapshot> ResumeRecordingAsync(int processId, CancellationToken cancellationToken = default)
+    parameters:
+    - id: processId
+      type: System.Int32
+    - id: cancellationToken
+      type: System.Threading.CancellationToken
+    return:
+      type: System.Threading.Tasks.Task{Cress.Companion.CompanionSessionSnapshot}
+    content.vb: Function ResumeRecordingAsync(processId As Integer, cancellationToken As CancellationToken = Nothing) As Task(Of CompanionSessionSnapshot)
+  overload: Cress.Studio.Services.IStudioCompanionClient.ResumeRecordingAsync*
+  nameWithType.vb: IStudioCompanionClient.ResumeRecordingAsync(Integer, CancellationToken)
+  fullName.vb: Cress.Studio.Services.IStudioCompanionClient.ResumeRecordingAsync(Integer, System.Threading.CancellationToken)
+  name.vb: ResumeRecordingAsync(Integer, CancellationToken)
+- uid: Cress.Studio.Services.IStudioCompanionClient.StopRecordingAsync(System.Int32,System.Threading.CancellationToken)
+  commentId: M:Cress.Studio.Services.IStudioCompanionClient.StopRecordingAsync(System.Int32,System.Threading.CancellationToken)
+  id: StopRecordingAsync(System.Int32,System.Threading.CancellationToken)
+  parent: Cress.Studio.Services.IStudioCompanionClient
+  langs:
+  - csharp
+  - vb
+  name: StopRecordingAsync(int, CancellationToken)
+  nameWithType: IStudioCompanionClient.StopRecordingAsync(int, CancellationToken)
+  fullName: Cress.Studio.Services.IStudioCompanionClient.StopRecordingAsync(int, System.Threading.CancellationToken)
+  type: Method
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/IStudioCompanionClient.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: StopRecordingAsync
+    path: ../src/Cress.Studio.Core/Services/IStudioCompanionClient.cs
+    startLine: 16
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  syntax:
+    content: Task<CompanionSessionSnapshot> StopRecordingAsync(int processId, CancellationToken cancellationToken = default)
+    parameters:
+    - id: processId
+      type: System.Int32
+    - id: cancellationToken
+      type: System.Threading.CancellationToken
+    return:
+      type: System.Threading.Tasks.Task{Cress.Companion.CompanionSessionSnapshot}
+    content.vb: Function StopRecordingAsync(processId As Integer, cancellationToken As CancellationToken = Nothing) As Task(Of CompanionSessionSnapshot)
+  overload: Cress.Studio.Services.IStudioCompanionClient.StopRecordingAsync*
+  nameWithType.vb: IStudioCompanionClient.StopRecordingAsync(Integer, CancellationToken)
+  fullName.vb: Cress.Studio.Services.IStudioCompanionClient.StopRecordingAsync(Integer, System.Threading.CancellationToken)
+  name.vb: StopRecordingAsync(Integer, CancellationToken)
+references:
+- uid: Cress.Studio.Services
+  commentId: N:Cress.Studio.Services
+  href: Cress.html
+  name: Cress.Studio.Services
+  nameWithType: Cress.Studio.Services
+  fullName: Cress.Studio.Services
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Studio
+    name: Studio
+    href: Cress.Studio.html
+  - name: .
+  - uid: Cress.Studio.Services
+    name: Services
+    href: Cress.Studio.Services.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Studio
+    name: Studio
+    href: Cress.Studio.html
+  - name: .
+  - uid: Cress.Studio.Services
+    name: Services
+    href: Cress.Studio.Services.html
+- uid: Cress.Studio.Services.IStudioCompanionClient.GetSnapshotAsync*
+  commentId: Overload:Cress.Studio.Services.IStudioCompanionClient.GetSnapshotAsync
+  href: Cress.Studio.Services.IStudioCompanionClient.html#Cress_Studio_Services_IStudioCompanionClient_GetSnapshotAsync_System_Boolean_System_Threading_CancellationToken_
+  name: GetSnapshotAsync
+  nameWithType: IStudioCompanionClient.GetSnapshotAsync
+  fullName: Cress.Studio.Services.IStudioCompanionClient.GetSnapshotAsync
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System.Threading.CancellationToken
+  commentId: T:System.Threading.CancellationToken
+  parent: System.Threading
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken
+  name: CancellationToken
+  nameWithType: CancellationToken
+  fullName: System.Threading.CancellationToken
+- uid: System.Threading.Tasks.Task{Cress.Companion.CompanionServiceSnapshot}
+  commentId: T:System.Threading.Tasks.Task{Cress.Companion.CompanionServiceSnapshot}
+  parent: System.Threading.Tasks
+  definition: System.Threading.Tasks.Task`1
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<CompanionServiceSnapshot>
+  nameWithType: Task<CompanionServiceSnapshot>
+  fullName: System.Threading.Tasks.Task<Cress.Companion.CompanionServiceSnapshot>
+  nameWithType.vb: Task(Of CompanionServiceSnapshot)
+  fullName.vb: System.Threading.Tasks.Task(Of Cress.Companion.CompanionServiceSnapshot)
+  name.vb: Task(Of CompanionServiceSnapshot)
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - uid: Cress.Companion.CompanionServiceSnapshot
+    name: CompanionServiceSnapshot
+    href: Cress.Companion.CompanionServiceSnapshot.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Cress.Companion.CompanionServiceSnapshot
+    name: CompanionServiceSnapshot
+    href: Cress.Companion.CompanionServiceSnapshot.html
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Threading
+  commentId: N:System.Threading
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Threading
+  nameWithType: System.Threading
+  fullName: System.Threading
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+- uid: System.Threading.Tasks.Task`1
+  commentId: T:System.Threading.Tasks.Task`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<TResult>
+  nameWithType: Task<TResult>
+  fullName: System.Threading.Tasks.Task<TResult>
+  nameWithType.vb: Task(Of TResult)
+  fullName.vb: System.Threading.Tasks.Task(Of TResult)
+  name.vb: Task(Of TResult)
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - name: TResult
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TResult
+  - name: )
+- uid: System.Threading.Tasks
+  commentId: N:System.Threading.Tasks
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Threading.Tasks
+  nameWithType: System.Threading.Tasks
+  fullName: System.Threading.Tasks
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+- uid: Cress.Studio.Services.IStudioCompanionClient.ListTargetsAsync*
+  commentId: Overload:Cress.Studio.Services.IStudioCompanionClient.ListTargetsAsync
+  href: Cress.Studio.Services.IStudioCompanionClient.html#Cress_Studio_Services_IStudioCompanionClient_ListTargetsAsync_System_Threading_CancellationToken_
+  name: ListTargetsAsync
+  nameWithType: IStudioCompanionClient.ListTargetsAsync
+  fullName: Cress.Studio.Services.IStudioCompanionClient.ListTargetsAsync
+- uid: System.Threading.Tasks.Task{System.Collections.Generic.IReadOnlyList{Cress.Companion.CompanionTargetInfo}}
+  commentId: T:System.Threading.Tasks.Task{System.Collections.Generic.IReadOnlyList{Cress.Companion.CompanionTargetInfo}}
+  parent: System.Threading.Tasks
+  definition: System.Threading.Tasks.Task`1
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<IReadOnlyList<CompanionTargetInfo>>
+  nameWithType: Task<IReadOnlyList<CompanionTargetInfo>>
+  fullName: System.Threading.Tasks.Task<System.Collections.Generic.IReadOnlyList<Cress.Companion.CompanionTargetInfo>>
+  nameWithType.vb: Task(Of IReadOnlyList(Of CompanionTargetInfo))
+  fullName.vb: System.Threading.Tasks.Task(Of System.Collections.Generic.IReadOnlyList(Of Cress.Companion.CompanionTargetInfo))
+  name.vb: Task(Of IReadOnlyList(Of CompanionTargetInfo))
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: <
+  - uid: Cress.Companion.CompanionTargetInfo
+    name: CompanionTargetInfo
+    href: Cress.Companion.CompanionTargetInfo.html
+  - name: '>'
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Cress.Companion.CompanionTargetInfo
+    name: CompanionTargetInfo
+    href: Cress.Companion.CompanionTargetInfo.html
+  - name: )
+  - name: )
+- uid: Cress.Studio.Services.IStudioCompanionClient.StartRecordingAsync*
+  commentId: Overload:Cress.Studio.Services.IStudioCompanionClient.StartRecordingAsync
+  href: Cress.Studio.Services.IStudioCompanionClient.html#Cress_Studio_Services_IStudioCompanionClient_StartRecordingAsync_System_Int32_System_Boolean_System_Threading_CancellationToken_
+  name: StartRecordingAsync
+  nameWithType: IStudioCompanionClient.StartRecordingAsync
+  fullName: Cress.Studio.Services.IStudioCompanionClient.StartRecordingAsync
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System.Threading.Tasks.Task{Cress.Companion.CompanionSessionSnapshot}
+  commentId: T:System.Threading.Tasks.Task{Cress.Companion.CompanionSessionSnapshot}
+  parent: System.Threading.Tasks
+  definition: System.Threading.Tasks.Task`1
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<CompanionSessionSnapshot>
+  nameWithType: Task<CompanionSessionSnapshot>
+  fullName: System.Threading.Tasks.Task<Cress.Companion.CompanionSessionSnapshot>
+  nameWithType.vb: Task(Of CompanionSessionSnapshot)
+  fullName.vb: System.Threading.Tasks.Task(Of Cress.Companion.CompanionSessionSnapshot)
+  name.vb: Task(Of CompanionSessionSnapshot)
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - uid: Cress.Companion.CompanionSessionSnapshot
+    name: CompanionSessionSnapshot
+    href: Cress.Companion.CompanionSessionSnapshot.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Cress.Companion.CompanionSessionSnapshot
+    name: CompanionSessionSnapshot
+    href: Cress.Companion.CompanionSessionSnapshot.html
+  - name: )
+- uid: Cress.Studio.Services.IStudioCompanionClient.PauseRecordingAsync*
+  commentId: Overload:Cress.Studio.Services.IStudioCompanionClient.PauseRecordingAsync
+  href: Cress.Studio.Services.IStudioCompanionClient.html#Cress_Studio_Services_IStudioCompanionClient_PauseRecordingAsync_System_Int32_System_Threading_CancellationToken_
+  name: PauseRecordingAsync
+  nameWithType: IStudioCompanionClient.PauseRecordingAsync
+  fullName: Cress.Studio.Services.IStudioCompanionClient.PauseRecordingAsync
+- uid: Cress.Studio.Services.IStudioCompanionClient.ResumeRecordingAsync*
+  commentId: Overload:Cress.Studio.Services.IStudioCompanionClient.ResumeRecordingAsync
+  href: Cress.Studio.Services.IStudioCompanionClient.html#Cress_Studio_Services_IStudioCompanionClient_ResumeRecordingAsync_System_Int32_System_Threading_CancellationToken_
+  name: ResumeRecordingAsync
+  nameWithType: IStudioCompanionClient.ResumeRecordingAsync
+  fullName: Cress.Studio.Services.IStudioCompanionClient.ResumeRecordingAsync
+- uid: Cress.Studio.Services.IStudioCompanionClient.StopRecordingAsync*
+  commentId: Overload:Cress.Studio.Services.IStudioCompanionClient.StopRecordingAsync
+  href: Cress.Studio.Services.IStudioCompanionClient.html#Cress_Studio_Services_IStudioCompanionClient_StopRecordingAsync_System_Int32_System_Threading_CancellationToken_
+  name: StopRecordingAsync
+  nameWithType: IStudioCompanionClient.StopRecordingAsync
+  fullName: Cress.Studio.Services.IStudioCompanionClient.StopRecordingAsync

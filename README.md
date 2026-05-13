@@ -64,6 +64,17 @@ The optional desktop companion runs separately when you want titlebar-adjacent r
 dotnet run --project src\Cress.Companion.Windows\Cress.Companion.Windows.csproj --configuration Release
 ```
 
+To build the Windows release assets for the companion locally, use:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts\Publish-CompanionInstaller.ps1 -Version 0.1.0-local
+```
+
+That produces:
+
+- a self-contained Windows x64 portable zip in `artifacts\packages\`
+- a Windows MSI installer in `installer\Cress.Companion.Installer\bin\Release\`
+
 The AppHost browser launch opens the Aspire dashboard first. Open the `studio-web` resource endpoint to see the Studio shell itself. When you run `Cress.Studio.Web` directly, `/` stays on the landing and onboarding view, while `/workspace` jumps straight to workspace setup.
 
 ## Validation
@@ -102,6 +113,7 @@ GitHub Actions now validates the repo with:
 | `conventional-commits.yml` | Enforces Conventional Commit pull request titles plus commit headlines on pull requests and direct pushes to `main` |
 | `dependency-review.yml` | Pull request dependency risk review |
 | `docs.yml` | DocFX site build, preview artifact publishing, and GitHub Pages deployment |
+| `release.yml` | Builds the desktop companion portable zip + MSI installer and publishes them with the CLI package on version tags |
 
 The CI workflows publish:
 
@@ -110,6 +122,7 @@ The CI workflows publish:
 - a filtered core-coverage artifact and 90% line-coverage gate for the cross-platform engine/export/import surface
 - Codecov uploads for both the full report and the gated core report
 - AppHost startup logs
+- desktop companion portable zip and MSI preview artifacts
 - DocFX site preview artifacts
 - a sticky PR summary with both the full report and the gated core report
 

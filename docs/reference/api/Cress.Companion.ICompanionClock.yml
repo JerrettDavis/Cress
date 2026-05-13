@@ -1,0 +1,102 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Companion.ICompanionClock
+  commentId: T:Cress.Companion.ICompanionClock
+  id: ICompanionClock
+  parent: Cress.Companion
+  children:
+  - Cress.Companion.ICompanionClock.UtcNow
+  langs:
+  - csharp
+  - vb
+  name: ICompanionClock
+  nameWithType: ICompanionClock
+  fullName: Cress.Companion.ICompanionClock
+  type: Interface
+  source:
+    remote:
+      path: src/Cress.Companion.Core/DesktopCompanionAbstractions.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: ICompanionClock
+    path: ../src/Cress.Companion.Core/DesktopCompanionAbstractions.cs
+    startLine: 33
+  assemblies:
+  - Cress.Companion.Core
+  namespace: Cress.Companion
+  syntax:
+    content: public interface ICompanionClock
+    content.vb: Public Interface ICompanionClock
+- uid: Cress.Companion.ICompanionClock.UtcNow
+  commentId: P:Cress.Companion.ICompanionClock.UtcNow
+  id: UtcNow
+  parent: Cress.Companion.ICompanionClock
+  langs:
+  - csharp
+  - vb
+  name: UtcNow
+  nameWithType: ICompanionClock.UtcNow
+  fullName: Cress.Companion.ICompanionClock.UtcNow
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Companion.Core/DesktopCompanionAbstractions.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: UtcNow
+    path: ../src/Cress.Companion.Core/DesktopCompanionAbstractions.cs
+    startLine: 35
+  assemblies:
+  - Cress.Companion.Core
+  namespace: Cress.Companion
+  syntax:
+    content: DateTimeOffset UtcNow { get; }
+    parameters: []
+    return:
+      type: System.DateTimeOffset
+    content.vb: ReadOnly Property UtcNow As DateTimeOffset
+  overload: Cress.Companion.ICompanionClock.UtcNow*
+references:
+- uid: Cress.Companion
+  commentId: N:Cress.Companion
+  href: Cress.html
+  name: Cress.Companion
+  nameWithType: Cress.Companion
+  fullName: Cress.Companion
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Companion
+    name: Companion
+    href: Cress.Companion.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Companion
+    name: Companion
+    href: Cress.Companion.html
+- uid: Cress.Companion.ICompanionClock.UtcNow*
+  commentId: Overload:Cress.Companion.ICompanionClock.UtcNow
+  href: Cress.Companion.ICompanionClock.html#Cress_Companion_ICompanionClock_UtcNow
+  name: UtcNow
+  nameWithType: ICompanionClock.UtcNow
+  fullName: Cress.Companion.ICompanionClock.UtcNow
+- uid: System.DateTimeOffset
+  commentId: T:System.DateTimeOffset
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.datetimeoffset
+  name: DateTimeOffset
+  nameWithType: DateTimeOffset
+  fullName: System.DateTimeOffset
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System

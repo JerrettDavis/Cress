@@ -1,0 +1,114 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Companion.ICompanionPreviewProvider
+  commentId: T:Cress.Companion.ICompanionPreviewProvider
+  id: ICompanionPreviewProvider
+  parent: Cress.Companion
+  children:
+  - Cress.Companion.ICompanionPreviewProvider.CapturePreview(Cress.Companion.CompanionWindowBounds)
+  langs:
+  - csharp
+  - vb
+  name: ICompanionPreviewProvider
+  nameWithType: ICompanionPreviewProvider
+  fullName: Cress.Companion.ICompanionPreviewProvider
+  type: Interface
+  source:
+    remote:
+      path: src/Cress.Companion.Core/DesktopCompanionAbstractions.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: ICompanionPreviewProvider
+    path: ../src/Cress.Companion.Core/DesktopCompanionAbstractions.cs
+    startLine: 28
+  assemblies:
+  - Cress.Companion.Core
+  namespace: Cress.Companion
+  syntax:
+    content: public interface ICompanionPreviewProvider
+    content.vb: Public Interface ICompanionPreviewProvider
+- uid: Cress.Companion.ICompanionPreviewProvider.CapturePreview(Cress.Companion.CompanionWindowBounds)
+  commentId: M:Cress.Companion.ICompanionPreviewProvider.CapturePreview(Cress.Companion.CompanionWindowBounds)
+  id: CapturePreview(Cress.Companion.CompanionWindowBounds)
+  parent: Cress.Companion.ICompanionPreviewProvider
+  langs:
+  - csharp
+  - vb
+  name: CapturePreview(CompanionWindowBounds)
+  nameWithType: ICompanionPreviewProvider.CapturePreview(CompanionWindowBounds)
+  fullName: Cress.Companion.ICompanionPreviewProvider.CapturePreview(Cress.Companion.CompanionWindowBounds)
+  type: Method
+  source:
+    remote:
+      path: src/Cress.Companion.Core/DesktopCompanionAbstractions.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: CapturePreview
+    path: ../src/Cress.Companion.Core/DesktopCompanionAbstractions.cs
+    startLine: 30
+  assemblies:
+  - Cress.Companion.Core
+  namespace: Cress.Companion
+  syntax:
+    content: string? CapturePreview(CompanionWindowBounds bounds)
+    parameters:
+    - id: bounds
+      type: Cress.Companion.CompanionWindowBounds
+    return:
+      type: System.String
+    content.vb: Function CapturePreview(bounds As CompanionWindowBounds) As String
+  overload: Cress.Companion.ICompanionPreviewProvider.CapturePreview*
+references:
+- uid: Cress.Companion
+  commentId: N:Cress.Companion
+  href: Cress.html
+  name: Cress.Companion
+  nameWithType: Cress.Companion
+  fullName: Cress.Companion
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Companion
+    name: Companion
+    href: Cress.Companion.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Companion
+    name: Companion
+    href: Cress.Companion.html
+- uid: Cress.Companion.ICompanionPreviewProvider.CapturePreview*
+  commentId: Overload:Cress.Companion.ICompanionPreviewProvider.CapturePreview
+  href: Cress.Companion.ICompanionPreviewProvider.html#Cress_Companion_ICompanionPreviewProvider_CapturePreview_Cress_Companion_CompanionWindowBounds_
+  name: CapturePreview
+  nameWithType: ICompanionPreviewProvider.CapturePreview
+  fullName: Cress.Companion.ICompanionPreviewProvider.CapturePreview
+- uid: Cress.Companion.CompanionWindowBounds
+  commentId: T:Cress.Companion.CompanionWindowBounds
+  parent: Cress.Companion
+  href: Cress.Companion.CompanionWindowBounds.html
+  name: CompanionWindowBounds
+  nameWithType: CompanionWindowBounds
+  fullName: Cress.Companion.CompanionWindowBounds
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System

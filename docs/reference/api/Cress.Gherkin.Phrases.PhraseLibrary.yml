@@ -24,7 +24,7 @@ items:
       repo: https://github.com/JerrettDavis/Cress.git
     id: PhraseLibrary
     path: ../src/Cress.Gherkin/Phrases/PhraseLibrary.cs
-    startLine: 10
+    startLine: 11
   assemblies:
   - Cress.Gherkin
   namespace: Cress.Gherkin.Phrases
@@ -65,7 +65,7 @@ items:
       repo: https://github.com/JerrettDavis/Cress.git
     id: CreateDefault
     path: ../src/Cress.Gherkin/Phrases/PhraseLibrary.cs
-    startLine: 20
+    startLine: 21
   assemblies:
   - Cress.Gherkin
   namespace: Cress.Gherkin.Phrases
@@ -95,7 +95,7 @@ items:
       repo: https://github.com/JerrettDavis/Cress.git
     id: CreateWithOverrides
     path: ../src/Cress.Gherkin/Phrases/PhraseLibrary.cs
-    startLine: 26
+    startLine: 27
   assemblies:
   - Cress.Gherkin
   namespace: Cress.Gherkin.Phrases
@@ -134,7 +134,7 @@ items:
       repo: https://github.com/JerrettDavis/Cress.git
     id: GetAllPhrases
     path: ../src/Cress.Gherkin/Phrases/PhraseLibrary.cs
-    startLine: 57
+    startLine: 58
   assemblies:
   - Cress.Gherkin
   namespace: Cress.Gherkin.Phrases
@@ -164,7 +164,7 @@ items:
       repo: https://github.com/JerrettDavis/Cress.git
     id: Resolve
     path: ../src/Cress.Gherkin/Phrases/PhraseLibrary.cs
-    startLine: 64
+    startLine: 65
   assemblies:
   - Cress.Gherkin
   namespace: Cress.Gherkin.Phrases
@@ -207,7 +207,7 @@ items:
       repo: https://github.com/JerrettDavis/Cress.git
     id: Expand
     path: ../src/Cress.Gherkin/Phrases/PhraseLibrary.cs
-    startLine: 87
+    startLine: 88
   assemblies:
   - Cress.Gherkin
   namespace: Cress.Gherkin.Phrases

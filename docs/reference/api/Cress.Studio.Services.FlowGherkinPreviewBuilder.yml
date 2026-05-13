@@ -6,6 +6,7 @@ items:
   parent: Cress.Studio.Services
   children:
   - Cress.Studio.Services.FlowGherkinPreviewBuilder.Build(Cress.Studio.ViewModels.FlowDocumentViewModel)
+  - Cress.Studio.Services.FlowGherkinPreviewBuilder.BuildExecutablePreview(System.String,System.String,Cress.Gherkin.Phrases.GherkinKeyword)
   langs:
   - csharp
   - vb
@@ -20,7 +21,7 @@ items:
       repo: https://github.com/JerrettDavis/Cress.git
     id: FlowGherkinPreviewBuilder
     path: ../src/Cress.Studio.Core/Services/FlowGherkinPreviewBuilder.cs
-    startLine: 5
+    startLine: 6
   assemblies:
   - Cress.Studio.Core
   namespace: Cress.Studio.Services
@@ -55,7 +56,7 @@ items:
       repo: https://github.com/JerrettDavis/Cress.git
     id: Build
     path: ../src/Cress.Studio.Core/Services/FlowGherkinPreviewBuilder.cs
-    startLine: 7
+    startLine: 10
   assemblies:
   - Cress.Studio.Core
   namespace: Cress.Studio.Services
@@ -71,6 +72,44 @@ items:
   nameWithType.vb: FlowGherkinPreviewBuilder.Build(FlowDocumentViewModel)
   fullName.vb: Cress.Studio.Services.FlowGherkinPreviewBuilder.Build(Cress.Studio.ViewModels.FlowDocumentViewModel)
   name.vb: Build(FlowDocumentViewModel)
+- uid: Cress.Studio.Services.FlowGherkinPreviewBuilder.BuildExecutablePreview(System.String,System.String,Cress.Gherkin.Phrases.GherkinKeyword)
+  commentId: M:Cress.Studio.Services.FlowGherkinPreviewBuilder.BuildExecutablePreview(System.String,System.String,Cress.Gherkin.Phrases.GherkinKeyword)
+  id: BuildExecutablePreview(System.String,System.String,Cress.Gherkin.Phrases.GherkinKeyword)
+  parent: Cress.Studio.Services.FlowGherkinPreviewBuilder
+  langs:
+  - csharp
+  - vb
+  name: BuildExecutablePreview(string?, string?, GherkinKeyword)
+  nameWithType: FlowGherkinPreviewBuilder.BuildExecutablePreview(string?, string?, GherkinKeyword)
+  fullName: Cress.Studio.Services.FlowGherkinPreviewBuilder.BuildExecutablePreview(string?, string?, Cress.Gherkin.Phrases.GherkinKeyword)
+  type: Method
+  source:
+    remote:
+      path: src/Cress.Studio.Core/Services/FlowGherkinPreviewBuilder.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: BuildExecutablePreview
+    path: ../src/Cress.Studio.Core/Services/FlowGherkinPreviewBuilder.cs
+    startLine: 40
+  assemblies:
+  - Cress.Studio.Core
+  namespace: Cress.Studio.Services
+  syntax:
+    content: public static string BuildExecutablePreview(string? name, string? inputsText, GherkinKeyword fallbackKeyword = GherkinKeyword.When)
+    parameters:
+    - id: name
+      type: System.String
+    - id: inputsText
+      type: System.String
+    - id: fallbackKeyword
+      type: Cress.Gherkin.Phrases.GherkinKeyword
+    return:
+      type: System.String
+    content.vb: Public Shared Function BuildExecutablePreview(name As String, inputsText As String, fallbackKeyword As GherkinKeyword = GherkinKeyword.When) As String
+  overload: Cress.Studio.Services.FlowGherkinPreviewBuilder.BuildExecutablePreview*
+  nameWithType.vb: FlowGherkinPreviewBuilder.BuildExecutablePreview(String, String, GherkinKeyword)
+  fullName.vb: Cress.Studio.Services.FlowGherkinPreviewBuilder.BuildExecutablePreview(String, String, Cress.Gherkin.Phrases.GherkinKeyword)
+  name.vb: BuildExecutablePreview(String, String, GherkinKeyword)
 references:
 - uid: Cress.Studio.Services
   commentId: N:Cress.Studio.Services
@@ -393,3 +432,46 @@ references:
   - uid: Cress.Studio.ViewModels
     name: ViewModels
     href: Cress.Studio.ViewModels.html
+- uid: Cress.Studio.Services.FlowGherkinPreviewBuilder.BuildExecutablePreview*
+  commentId: Overload:Cress.Studio.Services.FlowGherkinPreviewBuilder.BuildExecutablePreview
+  href: Cress.Studio.Services.FlowGherkinPreviewBuilder.html#Cress_Studio_Services_FlowGherkinPreviewBuilder_BuildExecutablePreview_System_String_System_String_Cress_Gherkin_Phrases_GherkinKeyword_
+  name: BuildExecutablePreview
+  nameWithType: FlowGherkinPreviewBuilder.BuildExecutablePreview
+  fullName: Cress.Studio.Services.FlowGherkinPreviewBuilder.BuildExecutablePreview
+- uid: Cress.Gherkin.Phrases.GherkinKeyword
+  commentId: T:Cress.Gherkin.Phrases.GherkinKeyword
+  parent: Cress.Gherkin.Phrases
+  href: Cress.Gherkin.Phrases.GherkinKeyword.html
+  name: GherkinKeyword
+  nameWithType: GherkinKeyword
+  fullName: Cress.Gherkin.Phrases.GherkinKeyword
+- uid: Cress.Gherkin.Phrases
+  commentId: N:Cress.Gherkin.Phrases
+  href: Cress.html
+  name: Cress.Gherkin.Phrases
+  nameWithType: Cress.Gherkin.Phrases
+  fullName: Cress.Gherkin.Phrases
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Gherkin
+    name: Gherkin
+    href: Cress.Gherkin.html
+  - name: .
+  - uid: Cress.Gherkin.Phrases
+    name: Phrases
+    href: Cress.Gherkin.Phrases.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Gherkin
+    name: Gherkin
+    href: Cress.Gherkin.html
+  - name: .
+  - uid: Cress.Gherkin.Phrases
+    name: Phrases
+    href: Cress.Gherkin.Phrases.html

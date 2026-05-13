@@ -51,11 +51,13 @@ When the bridge is reachable, Studio shows companion targets and live sessions d
 
 1. Launch the Windows app you want to capture.
 2. Start the desktop companion.
-3. In the manager, confirm the app appears under **Available windows**.
+3. In the manager, confirm the app appears under **Attachable windows**.
 4. Start the session from Studio Web or the companion manager.
 5. Interact with the target app.
 6. Use the companion overlay or manager to pause, resume, or stop the session.
 7. Return to Studio Web to review the inferred steps and save the resulting flow.
+
+The refreshed manager keeps the current target or session in a dedicated **Focus view** so the latest preview, actions, and bridge details stay readable without flooding the rest of the window with dense diagnostic text.
 
 ## Use the control center for cross-route monitoring
 

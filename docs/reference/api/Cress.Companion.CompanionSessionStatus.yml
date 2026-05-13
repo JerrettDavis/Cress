@@ -1,0 +1,166 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Companion.CompanionSessionStatus
+  commentId: T:Cress.Companion.CompanionSessionStatus
+  id: CompanionSessionStatus
+  parent: Cress.Companion
+  children:
+  - Cress.Companion.CompanionSessionStatus.Faulted
+  - Cress.Companion.CompanionSessionStatus.Paused
+  - Cress.Companion.CompanionSessionStatus.Recording
+  - Cress.Companion.CompanionSessionStatus.Stopped
+  langs:
+  - csharp
+  - vb
+  name: CompanionSessionStatus
+  nameWithType: CompanionSessionStatus
+  fullName: Cress.Companion.CompanionSessionStatus
+  type: Enum
+  source:
+    remote:
+      path: src/Cress.Companion.Core/CompanionContracts.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: CompanionSessionStatus
+    path: ../src/Cress.Companion.Core/CompanionContracts.cs
+    startLine: 4
+  assemblies:
+  - Cress.Companion.Core
+  namespace: Cress.Companion
+  syntax:
+    content: public enum CompanionSessionStatus
+    content.vb: Public Enum CompanionSessionStatus
+- uid: Cress.Companion.CompanionSessionStatus.Recording
+  commentId: F:Cress.Companion.CompanionSessionStatus.Recording
+  id: Recording
+  parent: Cress.Companion.CompanionSessionStatus
+  langs:
+  - csharp
+  - vb
+  name: Recording
+  nameWithType: CompanionSessionStatus.Recording
+  fullName: Cress.Companion.CompanionSessionStatus.Recording
+  type: Field
+  source:
+    remote:
+      path: src/Cress.Companion.Core/CompanionContracts.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Recording
+    path: ../src/Cress.Companion.Core/CompanionContracts.cs
+    startLine: 6
+  assemblies:
+  - Cress.Companion.Core
+  namespace: Cress.Companion
+  syntax:
+    content: Recording = 0
+    return:
+      type: Cress.Companion.CompanionSessionStatus
+- uid: Cress.Companion.CompanionSessionStatus.Paused
+  commentId: F:Cress.Companion.CompanionSessionStatus.Paused
+  id: Paused
+  parent: Cress.Companion.CompanionSessionStatus
+  langs:
+  - csharp
+  - vb
+  name: Paused
+  nameWithType: CompanionSessionStatus.Paused
+  fullName: Cress.Companion.CompanionSessionStatus.Paused
+  type: Field
+  source:
+    remote:
+      path: src/Cress.Companion.Core/CompanionContracts.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Paused
+    path: ../src/Cress.Companion.Core/CompanionContracts.cs
+    startLine: 7
+  assemblies:
+  - Cress.Companion.Core
+  namespace: Cress.Companion
+  syntax:
+    content: Paused = 1
+    return:
+      type: Cress.Companion.CompanionSessionStatus
+- uid: Cress.Companion.CompanionSessionStatus.Stopped
+  commentId: F:Cress.Companion.CompanionSessionStatus.Stopped
+  id: Stopped
+  parent: Cress.Companion.CompanionSessionStatus
+  langs:
+  - csharp
+  - vb
+  name: Stopped
+  nameWithType: CompanionSessionStatus.Stopped
+  fullName: Cress.Companion.CompanionSessionStatus.Stopped
+  type: Field
+  source:
+    remote:
+      path: src/Cress.Companion.Core/CompanionContracts.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Stopped
+    path: ../src/Cress.Companion.Core/CompanionContracts.cs
+    startLine: 8
+  assemblies:
+  - Cress.Companion.Core
+  namespace: Cress.Companion
+  syntax:
+    content: Stopped = 2
+    return:
+      type: Cress.Companion.CompanionSessionStatus
+- uid: Cress.Companion.CompanionSessionStatus.Faulted
+  commentId: F:Cress.Companion.CompanionSessionStatus.Faulted
+  id: Faulted
+  parent: Cress.Companion.CompanionSessionStatus
+  langs:
+  - csharp
+  - vb
+  name: Faulted
+  nameWithType: CompanionSessionStatus.Faulted
+  fullName: Cress.Companion.CompanionSessionStatus.Faulted
+  type: Field
+  source:
+    remote:
+      path: src/Cress.Companion.Core/CompanionContracts.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Faulted
+    path: ../src/Cress.Companion.Core/CompanionContracts.cs
+    startLine: 9
+  assemblies:
+  - Cress.Companion.Core
+  namespace: Cress.Companion
+  syntax:
+    content: Faulted = 3
+    return:
+      type: Cress.Companion.CompanionSessionStatus
+references:
+- uid: Cress.Companion
+  commentId: N:Cress.Companion
+  href: Cress.html
+  name: Cress.Companion
+  nameWithType: Cress.Companion
+  fullName: Cress.Companion
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Companion
+    name: Companion
+    href: Cress.Companion.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Companion
+    name: Companion
+    href: Cress.Companion.html
+- uid: Cress.Companion.CompanionSessionStatus
+  commentId: T:Cress.Companion.CompanionSessionStatus
+  parent: Cress.Companion
+  href: Cress.Companion.CompanionSessionStatus.html
+  name: CompanionSessionStatus
+  nameWithType: CompanionSessionStatus
+  fullName: Cress.Companion.CompanionSessionStatus

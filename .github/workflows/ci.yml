@@ -54,6 +54,13 @@ jobs:
       - name: Pack Cress CLI tool
         run: dotnet pack src\Cress.Cli\Cress.Cli.csproj --configuration Release --no-build --output artifacts\packages /p:ContinuousIntegrationBuild=true
 
+      - name: Publish Cress Companion installer assets
+        shell: pwsh
+        run: |
+          .\scripts\Publish-CompanionInstaller.ps1 `
+            -Version 0.1.0-ci `
+            -Configuration Release
+
       - name: Smoke test packed Cress CLI tool
         shell: pwsh
         run: |
@@ -171,6 +178,15 @@ jobs:
         with:
           name: cress-cli-packages
           path: artifacts\packages\*.nupkg
+
+      - name: Upload companion installer assets
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cress-companion-packages
+          path: |
+            artifacts\packages\Cress.DesktopCompanion-*.zip
+            installer\Cress.Companion.Installer\bin\**\*.msi
 
       - name: Add coverage summary to PR
         if: always() && github.event_name == 'pull_request'

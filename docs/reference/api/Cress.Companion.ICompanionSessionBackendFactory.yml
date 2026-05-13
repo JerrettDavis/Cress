@@ -1,0 +1,117 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Companion.ICompanionSessionBackendFactory
+  commentId: T:Cress.Companion.ICompanionSessionBackendFactory
+  id: ICompanionSessionBackendFactory
+  parent: Cress.Companion
+  children:
+  - Cress.Companion.ICompanionSessionBackendFactory.Create(System.Int32)
+  langs:
+  - csharp
+  - vb
+  name: ICompanionSessionBackendFactory
+  nameWithType: ICompanionSessionBackendFactory
+  fullName: Cress.Companion.ICompanionSessionBackendFactory
+  type: Interface
+  source:
+    remote:
+      path: src/Cress.Companion.Core/DesktopCompanionAbstractions.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: ICompanionSessionBackendFactory
+    path: ../src/Cress.Companion.Core/DesktopCompanionAbstractions.cs
+    startLine: 13
+  assemblies:
+  - Cress.Companion.Core
+  namespace: Cress.Companion
+  syntax:
+    content: public interface ICompanionSessionBackendFactory
+    content.vb: Public Interface ICompanionSessionBackendFactory
+- uid: Cress.Companion.ICompanionSessionBackendFactory.Create(System.Int32)
+  commentId: M:Cress.Companion.ICompanionSessionBackendFactory.Create(System.Int32)
+  id: Create(System.Int32)
+  parent: Cress.Companion.ICompanionSessionBackendFactory
+  langs:
+  - csharp
+  - vb
+  name: Create(int)
+  nameWithType: ICompanionSessionBackendFactory.Create(int)
+  fullName: Cress.Companion.ICompanionSessionBackendFactory.Create(int)
+  type: Method
+  source:
+    remote:
+      path: src/Cress.Companion.Core/DesktopCompanionAbstractions.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Create
+    path: ../src/Cress.Companion.Core/DesktopCompanionAbstractions.cs
+    startLine: 15
+  assemblies:
+  - Cress.Companion.Core
+  namespace: Cress.Companion
+  syntax:
+    content: ICompanionSessionBackend Create(int processId)
+    parameters:
+    - id: processId
+      type: System.Int32
+    return:
+      type: Cress.Companion.ICompanionSessionBackend
+    content.vb: Function Create(processId As Integer) As ICompanionSessionBackend
+  overload: Cress.Companion.ICompanionSessionBackendFactory.Create*
+  nameWithType.vb: ICompanionSessionBackendFactory.Create(Integer)
+  fullName.vb: Cress.Companion.ICompanionSessionBackendFactory.Create(Integer)
+  name.vb: Create(Integer)
+references:
+- uid: Cress.Companion
+  commentId: N:Cress.Companion
+  href: Cress.html
+  name: Cress.Companion
+  nameWithType: Cress.Companion
+  fullName: Cress.Companion
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Companion
+    name: Companion
+    href: Cress.Companion.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Companion
+    name: Companion
+    href: Cress.Companion.html
+- uid: Cress.Companion.ICompanionSessionBackendFactory.Create*
+  commentId: Overload:Cress.Companion.ICompanionSessionBackendFactory.Create
+  href: Cress.Companion.ICompanionSessionBackendFactory.html#Cress_Companion_ICompanionSessionBackendFactory_Create_System_Int32_
+  name: Create
+  nameWithType: ICompanionSessionBackendFactory.Create
+  fullName: Cress.Companion.ICompanionSessionBackendFactory.Create
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Cress.Companion.ICompanionSessionBackend
+  commentId: T:Cress.Companion.ICompanionSessionBackend
+  parent: Cress.Companion
+  href: Cress.Companion.ICompanionSessionBackend.html
+  name: ICompanionSessionBackend
+  nameWithType: ICompanionSessionBackend
+  fullName: Cress.Companion.ICompanionSessionBackend
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System

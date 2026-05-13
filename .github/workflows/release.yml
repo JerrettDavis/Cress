@@ -1,0 +1,90 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Version label to package, for example 1.2.3 or 1.2.3-beta.1
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+env:
+  DOTNET_NOLOGO: true
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+
+jobs:
+  build-release-assets:
+    name: Build release assets
+    runs-on: windows-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+
+      - name: Derive release version
+        id: version
+        shell: pwsh
+        run: |
+          if ('${{ github.event_name }}' -eq 'workflow_dispatch') {
+            $version = '${{ inputs.version }}'
+          }
+          else {
+            $version = '${{ github.ref_name }}'.TrimStart('v')
+          }
+          "value=$version" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
+
+      - name: Restore
+        run: dotnet restore Cress.sln
+
+      - name: Build
+        run: dotnet build Cress.sln --configuration Release --no-restore /p:ContinuousIntegrationBuild=true /p:Version=${{ steps.version.outputs.value }}
+
+      - name: Pack Cress CLI tool
+        run: >
+          dotnet pack src\Cress.Cli\Cress.Cli.csproj
+          --configuration Release
+          --no-build
+          --output artifacts\packages
+          /p:ContinuousIntegrationBuild=true
+          /p:Version=${{ steps.version.outputs.value }}
+
+      - name: Publish Cress Companion installer assets
+        id: companion_assets
+        shell: pwsh
+        run: |
+          .\scripts\Publish-CompanionInstaller.ps1 `
+            -Version '${{ steps.version.outputs.value }}' `
+            -Configuration Release
+
+      - name: Upload release artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-assets
+          path: |
+            artifacts\packages\*.nupkg
+            artifacts\packages\Cress.DesktopCompanion-*.zip
+            ${{ steps.companion_assets.outputs.msi_path }}
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          generate_release_notes: true
+          prerelease: ${{ contains(github.ref_name, '-') }}
+          files: |
+            artifacts\packages\*.nupkg
+            artifacts\packages\Cress.DesktopCompanion-*.zip
+            ${{ steps.companion_assets.outputs.msi_path }}

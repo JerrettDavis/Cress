@@ -1,0 +1,375 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Companion.ProcessWindowInspector
+  commentId: T:Cress.Companion.ProcessWindowInspector
+  id: ProcessWindowInspector
+  parent: Cress.Companion
+  children:
+  - Cress.Companion.ProcessWindowInspector.Inspect(System.Int32)
+  langs:
+  - csharp
+  - vb
+  name: ProcessWindowInspector
+  nameWithType: ProcessWindowInspector
+  fullName: Cress.Companion.ProcessWindowInspector
+  type: Class
+  source:
+    remote:
+      path: src/Cress.Companion.Core/ProcessWindowInspector.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: ProcessWindowInspector
+    path: ../src/Cress.Companion.Core/ProcessWindowInspector.cs
+    startLine: 5
+  assemblies:
+  - Cress.Companion.Core
+  namespace: Cress.Companion
+  syntax:
+    content: 'public sealed class ProcessWindowInspector : ICompanionWindowInspector'
+    content.vb: Public NotInheritable Class ProcessWindowInspector Implements ICompanionWindowInspector
+  inheritance:
+  - System.Object
+  implements:
+  - Cress.Companion.ICompanionWindowInspector
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Cress.Companion.ProcessWindowInspector.Inspect(System.Int32)
+  commentId: M:Cress.Companion.ProcessWindowInspector.Inspect(System.Int32)
+  id: Inspect(System.Int32)
+  parent: Cress.Companion.ProcessWindowInspector
+  langs:
+  - csharp
+  - vb
+  name: Inspect(int)
+  nameWithType: ProcessWindowInspector.Inspect(int)
+  fullName: Cress.Companion.ProcessWindowInspector.Inspect(int)
+  type: Method
+  source:
+    remote:
+      path: src/Cress.Companion.Core/ProcessWindowInspector.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Inspect
+    path: ../src/Cress.Companion.Core/ProcessWindowInspector.cs
+    startLine: 7
+  assemblies:
+  - Cress.Companion.Core
+  namespace: Cress.Companion
+  example: []
+  syntax:
+    content: public CompanionWindowState Inspect(int processId)
+    parameters:
+    - id: processId
+      type: System.Int32
+    return:
+      type: Cress.Companion.CompanionWindowState
+    content.vb: Public Function Inspect(processId As Integer) As CompanionWindowState
+  overload: Cress.Companion.ProcessWindowInspector.Inspect*
+  implements:
+  - Cress.Companion.ICompanionWindowInspector.Inspect(System.Int32)
+  nameWithType.vb: ProcessWindowInspector.Inspect(Integer)
+  fullName.vb: Cress.Companion.ProcessWindowInspector.Inspect(Integer)
+  name.vb: Inspect(Integer)
+references:
+- uid: Cress.Companion
+  commentId: N:Cress.Companion
+  href: Cress.html
+  name: Cress.Companion
+  nameWithType: Cress.Companion
+  fullName: Cress.Companion
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Companion
+    name: Companion
+    href: Cress.Companion.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Companion
+    name: Companion
+    href: Cress.Companion.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: Cress.Companion.ICompanionWindowInspector
+  commentId: T:Cress.Companion.ICompanionWindowInspector
+  parent: Cress.Companion
+  href: Cress.Companion.ICompanionWindowInspector.html
+  name: ICompanionWindowInspector
+  nameWithType: ICompanionWindowInspector
+  fullName: Cress.Companion.ICompanionWindowInspector
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Cress.Companion.ProcessWindowInspector.Inspect*
+  commentId: Overload:Cress.Companion.ProcessWindowInspector.Inspect
+  href: Cress.Companion.ProcessWindowInspector.html#Cress_Companion_ProcessWindowInspector_Inspect_System_Int32_
+  name: Inspect
+  nameWithType: ProcessWindowInspector.Inspect
+  fullName: Cress.Companion.ProcessWindowInspector.Inspect
+- uid: Cress.Companion.ICompanionWindowInspector.Inspect(System.Int32)
+  commentId: M:Cress.Companion.ICompanionWindowInspector.Inspect(System.Int32)
+  parent: Cress.Companion.ICompanionWindowInspector
+  isExternal: true
+  href: Cress.Companion.ICompanionWindowInspector.html#Cress_Companion_ICompanionWindowInspector_Inspect_System_Int32_
+  name: Inspect(int)
+  nameWithType: ICompanionWindowInspector.Inspect(int)
+  fullName: Cress.Companion.ICompanionWindowInspector.Inspect(int)
+  nameWithType.vb: ICompanionWindowInspector.Inspect(Integer)
+  fullName.vb: Cress.Companion.ICompanionWindowInspector.Inspect(Integer)
+  name.vb: Inspect(Integer)
+  spec.csharp:
+  - uid: Cress.Companion.ICompanionWindowInspector.Inspect(System.Int32)
+    name: Inspect
+    href: Cress.Companion.ICompanionWindowInspector.html#Cress_Companion_ICompanionWindowInspector_Inspect_System_Int32_
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+  spec.vb:
+  - uid: Cress.Companion.ICompanionWindowInspector.Inspect(System.Int32)
+    name: Inspect
+    href: Cress.Companion.ICompanionWindowInspector.html#Cress_Companion_ICompanionWindowInspector_Inspect_System_Int32_
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Cress.Companion.CompanionWindowState
+  commentId: T:Cress.Companion.CompanionWindowState
+  parent: Cress.Companion
+  href: Cress.Companion.CompanionWindowState.html
+  name: CompanionWindowState
+  nameWithType: CompanionWindowState
+  fullName: Cress.Companion.CompanionWindowState

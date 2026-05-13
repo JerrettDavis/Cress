@@ -56,6 +56,25 @@ The `docs.yml` workflow:
 4. uploads a preview artifact for pull requests and manual inspection
 5. deploys to GitHub Pages from `main`
 
+## Companion installer and release packaging
+
+The repository now uses a dedicated packaging path for the Windows desktop companion:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts\Publish-CompanionInstaller.ps1 -Version 0.1.0-local
+```
+
+That script:
+
+1. publishes `src\Cress.Companion.Windows\Cress.Companion.Windows.csproj` as a self-contained `win-x64` app
+2. creates a portable zip in `artifacts\packages\`
+3. builds the WiX-based MSI installer in `installer\Cress.Companion.Installer\bin\Release\`
+
+For CI and release automation:
+
+1. `ci.yml` smoke-validates the companion publish + installer path on Windows
+2. `release.yml` builds the companion MSI and portable zip on version tags and publishes them to GitHub Releases alongside the CLI package
+
 ## Coverage reporting in CI
 
 The `ci.yml` workflow now publishes **two** coverage views:
@@ -77,6 +96,7 @@ If you add or change:
 - CLI commands or options, update the [CLI reference](../api/cli-reference.md)
 - project file conventions, update the [project schema guide](../api/project-schema.md)
 - Studio flows or screenshots, update the relevant user guides **and the [feature matrix](../user-guide/feature-matrix.md)**
+- desktop companion installation or release behavior, update the companion guide plus this packaging section
 - repo structure or developer workflow, update this section and the root `README.md`
 
 ## Feature map and screenshot policy

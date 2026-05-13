@@ -32,6 +32,10 @@ npm-debug.log*
 # Generated artifacts (session work, regeneratable)
 artifacts/
 reports/
+installer/**/Generated/
+installer/**/*.wixobj
+installer/**/*.wixpdb
+installer/**/*.wxs.g.*
 
 # Spec project run output (regenerated each run)
 specs/*/artifacts/

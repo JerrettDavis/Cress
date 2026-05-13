@@ -48,6 +48,7 @@ These features do not have a primary screenshot-driven surface, but they still b
 | Playwright-backed web automation | Browser automation | Execute browser flows with durable locators, screenshots, and mixed UI/API assertions. | [Testing web apps](testing-web-apps.md) |
 | Flawright-backed desktop automation | Windows desktop automation | Launch or attach to desktop apps and capture screenshot-heavy evidence for desktop flows. | [Testing desktop apps](testing-desktop-apps.md) |
 | Desktop companion | Anchored overlay recording and monitoring | Run the optional Windows companion to pin recording overlays near target app titlebars, manage multiple desktop sessions, and pair live session state back into Studio Web. | [Desktop companion](desktop-companion.md) |
+| Desktop companion | Windows installer and portable release assets | Install or distribute the companion through a proper MSI or a self-contained portable zip instead of building from source on every target machine. | [Desktop companion](desktop-companion.md) |
 | Living docs | Executable documentation output | Publish HTML living docs and evidence-backed summaries from real runs. | [Running and debugging](running-and-debugging.md) |
 | Native test generation | xUnit, NUnit, and MSTest output | Generate framework-native C# tests that still execute through the Cress engine. | [Framework integrations](../developer-guide/test-framework-integrations.md) |
 

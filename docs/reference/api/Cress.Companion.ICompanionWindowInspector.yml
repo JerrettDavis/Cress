@@ -1,0 +1,117 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Companion.ICompanionWindowInspector
+  commentId: T:Cress.Companion.ICompanionWindowInspector
+  id: ICompanionWindowInspector
+  parent: Cress.Companion
+  children:
+  - Cress.Companion.ICompanionWindowInspector.Inspect(System.Int32)
+  langs:
+  - csharp
+  - vb
+  name: ICompanionWindowInspector
+  nameWithType: ICompanionWindowInspector
+  fullName: Cress.Companion.ICompanionWindowInspector
+  type: Interface
+  source:
+    remote:
+      path: src/Cress.Companion.Core/DesktopCompanionAbstractions.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: ICompanionWindowInspector
+    path: ../src/Cress.Companion.Core/DesktopCompanionAbstractions.cs
+    startLine: 23
+  assemblies:
+  - Cress.Companion.Core
+  namespace: Cress.Companion
+  syntax:
+    content: public interface ICompanionWindowInspector
+    content.vb: Public Interface ICompanionWindowInspector
+- uid: Cress.Companion.ICompanionWindowInspector.Inspect(System.Int32)
+  commentId: M:Cress.Companion.ICompanionWindowInspector.Inspect(System.Int32)
+  id: Inspect(System.Int32)
+  parent: Cress.Companion.ICompanionWindowInspector
+  langs:
+  - csharp
+  - vb
+  name: Inspect(int)
+  nameWithType: ICompanionWindowInspector.Inspect(int)
+  fullName: Cress.Companion.ICompanionWindowInspector.Inspect(int)
+  type: Method
+  source:
+    remote:
+      path: src/Cress.Companion.Core/DesktopCompanionAbstractions.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Inspect
+    path: ../src/Cress.Companion.Core/DesktopCompanionAbstractions.cs
+    startLine: 25
+  assemblies:
+  - Cress.Companion.Core
+  namespace: Cress.Companion
+  syntax:
+    content: CompanionWindowState Inspect(int processId)
+    parameters:
+    - id: processId
+      type: System.Int32
+    return:
+      type: Cress.Companion.CompanionWindowState
+    content.vb: Function Inspect(processId As Integer) As CompanionWindowState
+  overload: Cress.Companion.ICompanionWindowInspector.Inspect*
+  nameWithType.vb: ICompanionWindowInspector.Inspect(Integer)
+  fullName.vb: Cress.Companion.ICompanionWindowInspector.Inspect(Integer)
+  name.vb: Inspect(Integer)
+references:
+- uid: Cress.Companion
+  commentId: N:Cress.Companion
+  href: Cress.html
+  name: Cress.Companion
+  nameWithType: Cress.Companion
+  fullName: Cress.Companion
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Companion
+    name: Companion
+    href: Cress.Companion.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Companion
+    name: Companion
+    href: Cress.Companion.html
+- uid: Cress.Companion.ICompanionWindowInspector.Inspect*
+  commentId: Overload:Cress.Companion.ICompanionWindowInspector.Inspect
+  href: Cress.Companion.ICompanionWindowInspector.html#Cress_Companion_ICompanionWindowInspector_Inspect_System_Int32_
+  name: Inspect
+  nameWithType: ICompanionWindowInspector.Inspect
+  fullName: Cress.Companion.ICompanionWindowInspector.Inspect
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Cress.Companion.CompanionWindowState
+  commentId: T:Cress.Companion.CompanionWindowState
+  parent: Cress.Companion
+  href: Cress.Companion.CompanionWindowState.html
+  name: CompanionWindowState
+  nameWithType: CompanionWindowState
+  fullName: Cress.Companion.CompanionWindowState
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System

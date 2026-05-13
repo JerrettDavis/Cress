@@ -59,6 +59,67 @@ items:
   - uid: Cress.Cli.Commands.ValidateCommand
     name: ValidateCommand
     type: Class
+- uid: Cress.Companion
+  name: Cress.Companion
+  type: Namespace
+  items:
+  - uid: Cress.Companion.CompanionServiceSnapshot
+    name: CompanionServiceSnapshot
+    type: Class
+  - uid: Cress.Companion.CompanionSessionSnapshot
+    name: CompanionSessionSnapshot
+    type: Class
+  - uid: Cress.Companion.CompanionSessionStatus
+    name: CompanionSessionStatus
+    type: Enum
+  - uid: Cress.Companion.CompanionTargetInfo
+    name: CompanionTargetInfo
+    type: Class
+  - uid: Cress.Companion.CompanionWindowBounds
+    name: CompanionWindowBounds
+    type: Class
+  - uid: Cress.Companion.CompanionWindowState
+    name: CompanionWindowState
+    type: Class
+  - uid: Cress.Companion.DesktopCompanionCoordinator
+    name: DesktopCompanionCoordinator
+    type: Class
+  - uid: Cress.Companion.DesktopCompanionOptions
+    name: DesktopCompanionOptions
+    type: Class
+  - uid: Cress.Companion.ICompanionClock
+    name: ICompanionClock
+    type: Interface
+  - uid: Cress.Companion.ICompanionPreviewProvider
+    name: ICompanionPreviewProvider
+    type: Interface
+  - uid: Cress.Companion.ICompanionSessionBackend
+    name: ICompanionSessionBackend
+    type: Interface
+  - uid: Cress.Companion.ICompanionSessionBackendFactory
+    name: ICompanionSessionBackendFactory
+    type: Interface
+  - uid: Cress.Companion.ICompanionTargetCatalog
+    name: ICompanionTargetCatalog
+    type: Interface
+  - uid: Cress.Companion.ICompanionWindowInspector
+    name: ICompanionWindowInspector
+    type: Interface
+  - uid: Cress.Companion.ProcessCompanionTargetCatalog
+    name: ProcessCompanionTargetCatalog
+    type: Class
+  - uid: Cress.Companion.ProcessWindowInspector
+    name: ProcessWindowInspector
+    type: Class
+  - uid: Cress.Companion.RecordingSessionBackendFactory
+    name: RecordingSessionBackendFactory
+    type: Class
+  - uid: Cress.Companion.ScreenPreviewProvider
+    name: ScreenPreviewProvider
+    type: Class
+  - uid: Cress.Companion.SystemCompanionClock
+    name: SystemCompanionClock
+    type: Class
 - uid: Cress.Core.Models
   name: Cress.Core.Models
   type: Namespace
@@ -586,6 +647,9 @@ items:
   - uid: Cress.Studio.Services.FlowQuickAction
     name: FlowQuickAction
     type: Class
+  - uid: Cress.Studio.Services.IStudioCompanionClient
+    name: IStudioCompanionClient
+    type: Interface
   - uid: Cress.Studio.Services.IStudioRecorderService
     name: IStudioRecorderService
     type: Interface
@@ -627,6 +691,9 @@ items:
     type: Class
   - uid: Cress.Studio.Services.StudioCapabilityCoverage
     name: StudioCapabilityCoverage
+    type: Class
+  - uid: Cress.Studio.Services.StudioCompanionClient
+    name: StudioCompanionClient
     type: Class
   - uid: Cress.Studio.Services.StudioEmbeddedRunnerNode
     name: StudioEmbeddedRunnerNode

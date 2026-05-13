@@ -1,0 +1,198 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Companion.ICompanionTargetCatalog
+  commentId: T:Cress.Companion.ICompanionTargetCatalog
+  id: ICompanionTargetCatalog
+  parent: Cress.Companion
+  children:
+  - Cress.Companion.ICompanionTargetCatalog.ListTargetsAsync
+  langs:
+  - csharp
+  - vb
+  name: ICompanionTargetCatalog
+  nameWithType: ICompanionTargetCatalog
+  fullName: Cress.Companion.ICompanionTargetCatalog
+  type: Interface
+  source:
+    remote:
+      path: src/Cress.Companion.Core/DesktopCompanionAbstractions.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: ICompanionTargetCatalog
+    path: ../src/Cress.Companion.Core/DesktopCompanionAbstractions.cs
+    startLine: 18
+  assemblies:
+  - Cress.Companion.Core
+  namespace: Cress.Companion
+  syntax:
+    content: public interface ICompanionTargetCatalog
+    content.vb: Public Interface ICompanionTargetCatalog
+- uid: Cress.Companion.ICompanionTargetCatalog.ListTargetsAsync
+  commentId: M:Cress.Companion.ICompanionTargetCatalog.ListTargetsAsync
+  id: ListTargetsAsync
+  parent: Cress.Companion.ICompanionTargetCatalog
+  langs:
+  - csharp
+  - vb
+  name: ListTargetsAsync()
+  nameWithType: ICompanionTargetCatalog.ListTargetsAsync()
+  fullName: Cress.Companion.ICompanionTargetCatalog.ListTargetsAsync()
+  type: Method
+  source:
+    remote:
+      path: src/Cress.Companion.Core/DesktopCompanionAbstractions.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: ListTargetsAsync
+    path: ../src/Cress.Companion.Core/DesktopCompanionAbstractions.cs
+    startLine: 20
+  assemblies:
+  - Cress.Companion.Core
+  namespace: Cress.Companion
+  syntax:
+    content: Task<IReadOnlyList<CompanionTargetInfo>> ListTargetsAsync()
+    return:
+      type: System.Threading.Tasks.Task{System.Collections.Generic.IReadOnlyList{Cress.Companion.CompanionTargetInfo}}
+    content.vb: Function ListTargetsAsync() As Task(Of IReadOnlyList(Of CompanionTargetInfo))
+  overload: Cress.Companion.ICompanionTargetCatalog.ListTargetsAsync*
+references:
+- uid: Cress.Companion
+  commentId: N:Cress.Companion
+  href: Cress.html
+  name: Cress.Companion
+  nameWithType: Cress.Companion
+  fullName: Cress.Companion
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Companion
+    name: Companion
+    href: Cress.Companion.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Companion
+    name: Companion
+    href: Cress.Companion.html
+- uid: Cress.Companion.ICompanionTargetCatalog.ListTargetsAsync*
+  commentId: Overload:Cress.Companion.ICompanionTargetCatalog.ListTargetsAsync
+  href: Cress.Companion.ICompanionTargetCatalog.html#Cress_Companion_ICompanionTargetCatalog_ListTargetsAsync
+  name: ListTargetsAsync
+  nameWithType: ICompanionTargetCatalog.ListTargetsAsync
+  fullName: Cress.Companion.ICompanionTargetCatalog.ListTargetsAsync
+- uid: System.Threading.Tasks.Task{System.Collections.Generic.IReadOnlyList{Cress.Companion.CompanionTargetInfo}}
+  commentId: T:System.Threading.Tasks.Task{System.Collections.Generic.IReadOnlyList{Cress.Companion.CompanionTargetInfo}}
+  parent: System.Threading.Tasks
+  definition: System.Threading.Tasks.Task`1
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<IReadOnlyList<CompanionTargetInfo>>
+  nameWithType: Task<IReadOnlyList<CompanionTargetInfo>>
+  fullName: System.Threading.Tasks.Task<System.Collections.Generic.IReadOnlyList<Cress.Companion.CompanionTargetInfo>>
+  nameWithType.vb: Task(Of IReadOnlyList(Of CompanionTargetInfo))
+  fullName.vb: System.Threading.Tasks.Task(Of System.Collections.Generic.IReadOnlyList(Of Cress.Companion.CompanionTargetInfo))
+  name.vb: Task(Of IReadOnlyList(Of CompanionTargetInfo))
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: <
+  - uid: Cress.Companion.CompanionTargetInfo
+    name: CompanionTargetInfo
+    href: Cress.Companion.CompanionTargetInfo.html
+  - name: '>'
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Cress.Companion.CompanionTargetInfo
+    name: CompanionTargetInfo
+    href: Cress.Companion.CompanionTargetInfo.html
+  - name: )
+  - name: )
+- uid: System.Threading.Tasks.Task`1
+  commentId: T:System.Threading.Tasks.Task`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<TResult>
+  nameWithType: Task<TResult>
+  fullName: System.Threading.Tasks.Task<TResult>
+  nameWithType.vb: Task(Of TResult)
+  fullName.vb: System.Threading.Tasks.Task(Of TResult)
+  name.vb: Task(Of TResult)
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - name: TResult
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TResult
+  - name: )
+- uid: System.Threading.Tasks
+  commentId: N:System.Threading.Tasks
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Threading.Tasks
+  nameWithType: System.Threading.Tasks
+  fullName: System.Threading.Tasks
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks

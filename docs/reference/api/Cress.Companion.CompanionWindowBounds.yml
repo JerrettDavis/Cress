@@ -1,0 +1,539 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Companion.CompanionWindowBounds
+  commentId: T:Cress.Companion.CompanionWindowBounds
+  id: CompanionWindowBounds
+  parent: Cress.Companion
+  children:
+  - Cress.Companion.CompanionWindowBounds.#ctor(System.Int32,System.Int32,System.Int32,System.Int32)
+  - Cress.Companion.CompanionWindowBounds.Height
+  - Cress.Companion.CompanionWindowBounds.Left
+  - Cress.Companion.CompanionWindowBounds.Top
+  - Cress.Companion.CompanionWindowBounds.Width
+  langs:
+  - csharp
+  - vb
+  name: CompanionWindowBounds
+  nameWithType: CompanionWindowBounds
+  fullName: Cress.Companion.CompanionWindowBounds
+  type: Class
+  source:
+    remote:
+      path: src/Cress.Companion.Core/CompanionContracts.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: CompanionWindowBounds
+    path: ../src/Cress.Companion.Core/CompanionContracts.cs
+    startLine: 21
+  assemblies:
+  - Cress.Companion.Core
+  namespace: Cress.Companion
+  syntax:
+    content: 'public sealed record CompanionWindowBounds : IEquatable<CompanionWindowBounds>'
+    content.vb: Public NotInheritable Class CompanionWindowBounds Implements IEquatable(Of CompanionWindowBounds)
+  inheritance:
+  - System.Object
+  implements:
+  - System.IEquatable{Cress.Companion.CompanionWindowBounds}
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Cress.Companion.CompanionWindowBounds.#ctor(System.Int32,System.Int32,System.Int32,System.Int32)
+  commentId: M:Cress.Companion.CompanionWindowBounds.#ctor(System.Int32,System.Int32,System.Int32,System.Int32)
+  id: '#ctor(System.Int32,System.Int32,System.Int32,System.Int32)'
+  parent: Cress.Companion.CompanionWindowBounds
+  langs:
+  - csharp
+  - vb
+  name: CompanionWindowBounds(int, int, int, int)
+  nameWithType: CompanionWindowBounds.CompanionWindowBounds(int, int, int, int)
+  fullName: Cress.Companion.CompanionWindowBounds.CompanionWindowBounds(int, int, int, int)
+  type: Constructor
+  source:
+    remote:
+      path: src/Cress.Companion.Core/CompanionContracts.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: .ctor
+    path: ../src/Cress.Companion.Core/CompanionContracts.cs
+    startLine: 21
+  assemblies:
+  - Cress.Companion.Core
+  namespace: Cress.Companion
+  syntax:
+    content: public CompanionWindowBounds(int Left, int Top, int Width, int Height)
+    parameters:
+    - id: Left
+      type: System.Int32
+    - id: Top
+      type: System.Int32
+    - id: Width
+      type: System.Int32
+    - id: Height
+      type: System.Int32
+    content.vb: Public Sub New(Left As Integer, Top As Integer, Width As Integer, Height As Integer)
+  overload: Cress.Companion.CompanionWindowBounds.#ctor*
+  nameWithType.vb: CompanionWindowBounds.New(Integer, Integer, Integer, Integer)
+  fullName.vb: Cress.Companion.CompanionWindowBounds.New(Integer, Integer, Integer, Integer)
+  name.vb: New(Integer, Integer, Integer, Integer)
+- uid: Cress.Companion.CompanionWindowBounds.Left
+  commentId: P:Cress.Companion.CompanionWindowBounds.Left
+  id: Left
+  parent: Cress.Companion.CompanionWindowBounds
+  langs:
+  - csharp
+  - vb
+  name: Left
+  nameWithType: CompanionWindowBounds.Left
+  fullName: Cress.Companion.CompanionWindowBounds.Left
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Companion.Core/CompanionContracts.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Left
+    path: ../src/Cress.Companion.Core/CompanionContracts.cs
+    startLine: 21
+  assemblies:
+  - Cress.Companion.Core
+  namespace: Cress.Companion
+  syntax:
+    content: public int Left { get; init; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property Left As Integer
+  overload: Cress.Companion.CompanionWindowBounds.Left*
+- uid: Cress.Companion.CompanionWindowBounds.Top
+  commentId: P:Cress.Companion.CompanionWindowBounds.Top
+  id: Top
+  parent: Cress.Companion.CompanionWindowBounds
+  langs:
+  - csharp
+  - vb
+  name: Top
+  nameWithType: CompanionWindowBounds.Top
+  fullName: Cress.Companion.CompanionWindowBounds.Top
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Companion.Core/CompanionContracts.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Top
+    path: ../src/Cress.Companion.Core/CompanionContracts.cs
+    startLine: 21
+  assemblies:
+  - Cress.Companion.Core
+  namespace: Cress.Companion
+  syntax:
+    content: public int Top { get; init; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property Top As Integer
+  overload: Cress.Companion.CompanionWindowBounds.Top*
+- uid: Cress.Companion.CompanionWindowBounds.Width
+  commentId: P:Cress.Companion.CompanionWindowBounds.Width
+  id: Width
+  parent: Cress.Companion.CompanionWindowBounds
+  langs:
+  - csharp
+  - vb
+  name: Width
+  nameWithType: CompanionWindowBounds.Width
+  fullName: Cress.Companion.CompanionWindowBounds.Width
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Companion.Core/CompanionContracts.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Width
+    path: ../src/Cress.Companion.Core/CompanionContracts.cs
+    startLine: 21
+  assemblies:
+  - Cress.Companion.Core
+  namespace: Cress.Companion
+  syntax:
+    content: public int Width { get; init; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property Width As Integer
+  overload: Cress.Companion.CompanionWindowBounds.Width*
+- uid: Cress.Companion.CompanionWindowBounds.Height
+  commentId: P:Cress.Companion.CompanionWindowBounds.Height
+  id: Height
+  parent: Cress.Companion.CompanionWindowBounds
+  langs:
+  - csharp
+  - vb
+  name: Height
+  nameWithType: CompanionWindowBounds.Height
+  fullName: Cress.Companion.CompanionWindowBounds.Height
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Companion.Core/CompanionContracts.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Height
+    path: ../src/Cress.Companion.Core/CompanionContracts.cs
+    startLine: 21
+  assemblies:
+  - Cress.Companion.Core
+  namespace: Cress.Companion
+  syntax:
+    content: public int Height { get; init; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property Height As Integer
+  overload: Cress.Companion.CompanionWindowBounds.Height*
+references:
+- uid: Cress.Companion
+  commentId: N:Cress.Companion
+  href: Cress.html
+  name: Cress.Companion
+  nameWithType: Cress.Companion
+  fullName: Cress.Companion
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Companion
+    name: Companion
+    href: Cress.Companion.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Companion
+    name: Companion
+    href: Cress.Companion.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.IEquatable{Cress.Companion.CompanionWindowBounds}
+  commentId: T:System.IEquatable{Cress.Companion.CompanionWindowBounds}
+  parent: System
+  definition: System.IEquatable`1
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<CompanionWindowBounds>
+  nameWithType: IEquatable<CompanionWindowBounds>
+  fullName: System.IEquatable<Cress.Companion.CompanionWindowBounds>
+  nameWithType.vb: IEquatable(Of CompanionWindowBounds)
+  fullName.vb: System.IEquatable(Of Cress.Companion.CompanionWindowBounds)
+  name.vb: IEquatable(Of CompanionWindowBounds)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - uid: Cress.Companion.CompanionWindowBounds
+    name: CompanionWindowBounds
+    href: Cress.Companion.CompanionWindowBounds.html
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Cress.Companion.CompanionWindowBounds
+    name: CompanionWindowBounds
+    href: Cress.Companion.CompanionWindowBounds.html
+  - name: )
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.IEquatable`1
+  commentId: T:System.IEquatable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<T>
+  nameWithType: IEquatable<T>
+  fullName: System.IEquatable<T>
+  nameWithType.vb: IEquatable(Of T)
+  fullName.vb: System.IEquatable(Of T)
+  name.vb: IEquatable(Of T)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Cress.Companion.CompanionWindowBounds.#ctor*
+  commentId: Overload:Cress.Companion.CompanionWindowBounds.#ctor
+  href: Cress.Companion.CompanionWindowBounds.html#Cress_Companion_CompanionWindowBounds__ctor_System_Int32_System_Int32_System_Int32_System_Int32_
+  name: CompanionWindowBounds
+  nameWithType: CompanionWindowBounds.CompanionWindowBounds
+  fullName: Cress.Companion.CompanionWindowBounds.CompanionWindowBounds
+  nameWithType.vb: CompanionWindowBounds.New
+  fullName.vb: Cress.Companion.CompanionWindowBounds.New
+  name.vb: New
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Cress.Companion.CompanionWindowBounds.Left*
+  commentId: Overload:Cress.Companion.CompanionWindowBounds.Left
+  href: Cress.Companion.CompanionWindowBounds.html#Cress_Companion_CompanionWindowBounds_Left
+  name: Left
+  nameWithType: CompanionWindowBounds.Left
+  fullName: Cress.Companion.CompanionWindowBounds.Left
+- uid: Cress.Companion.CompanionWindowBounds.Top*
+  commentId: Overload:Cress.Companion.CompanionWindowBounds.Top
+  href: Cress.Companion.CompanionWindowBounds.html#Cress_Companion_CompanionWindowBounds_Top
+  name: Top
+  nameWithType: CompanionWindowBounds.Top
+  fullName: Cress.Companion.CompanionWindowBounds.Top
+- uid: Cress.Companion.CompanionWindowBounds.Width*
+  commentId: Overload:Cress.Companion.CompanionWindowBounds.Width
+  href: Cress.Companion.CompanionWindowBounds.html#Cress_Companion_CompanionWindowBounds_Width
+  name: Width
+  nameWithType: CompanionWindowBounds.Width
+  fullName: Cress.Companion.CompanionWindowBounds.Width
+- uid: Cress.Companion.CompanionWindowBounds.Height*
+  commentId: Overload:Cress.Companion.CompanionWindowBounds.Height
+  href: Cress.Companion.CompanionWindowBounds.html#Cress_Companion_CompanionWindowBounds_Height
+  name: Height
+  nameWithType: CompanionWindowBounds.Height
+  fullName: Cress.Companion.CompanionWindowBounds.Height

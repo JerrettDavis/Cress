@@ -141,7 +141,7 @@ GitHub Actions now validates the repo with:
 | `conventional-commits.yml` | Enforces Conventional Commit pull request titles plus commit headlines on pull requests and direct pushes to `main` |
 | `dependency-review.yml` | Pull request dependency risk review |
 | `docs.yml` | DocFX site build, preview artifact publishing, and GitHub Pages deployment |
-| `release.yml` | Builds the CLI package plus the companion and Studio portable zip/MSI/tool assets on version tags |
+| `release.yml` | Builds the CLI package plus the companion and Studio portable zip/MSI/tool assets, publishes preview releases/packages from `main`, and cuts tagged/manual GitHub releases |
 
 The CI workflows publish:
 
@@ -154,6 +154,11 @@ The CI workflows publish:
 - Studio portable zip, MSI installer, and `cress-studio` tool preview artifacts
 - DocFX site preview artifacts
 - a sticky PR summary with both the full report and the gated core report
+
+`release.yml` now has two publishing lanes:
+
+- pushes to `main` create a prerelease preview for that commit and push the generated NuGet packages to GitHub Packages
+- version tags (and manual dispatch with an explicit version) create the corresponding GitHub Release with the packaged CLI, companion, and Studio assets
 
 For repository protection, mark **PR title** and **PR commits** from `conventional-commits.yml` as required status checks on `main`. The same workflow also validates direct pushes to `main` with the **Push commits** check.
 

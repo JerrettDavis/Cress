@@ -2,6 +2,8 @@ name: Release
 
 on:
   push:
+    branches:
+      - main
     tags:
       - 'v*'
   workflow_dispatch:
@@ -10,14 +12,21 @@ on:
         description: Version label to package, for example 1.2.3 or 1.2.3-beta.1
         required: true
         type: string
+      prerelease:
+        description: Mark a manually dispatched release as prerelease
+        required: false
+        default: false
+        type: boolean
 
 permissions:
   contents: write
+  packages: write
 
 env:
   DOTNET_NOLOGO: true
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
   DOTNET_CLI_TELEMETRY_OPTOUT: true
+  PACKAGE_FEED_URL: https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json
 
 jobs:
   build-release-assets:
@@ -34,23 +43,49 @@ jobs:
         with:
           global-json-file: global.json
 
-      - name: Derive release version
-        id: version
+      - name: Derive release metadata
+        id: release
         shell: pwsh
         run: |
-          if ('${{ github.event_name }}' -eq 'workflow_dispatch') {
+          $eventName = '${{ github.event_name }}'
+          $refType = '${{ github.ref_type }}'
+          $refName = '${{ github.ref_name }}'
+          $sha = '${{ github.sha }}'
+          $shortSha = $sha.Substring(0, 7)
+
+          if ($eventName -eq 'workflow_dispatch') {
             $version = '${{ inputs.version }}'
+            $tag = "v$version"
+            $name = $tag
+            $prerelease = if ('${{ inputs.prerelease }}' -eq 'true' -or $version.Contains('-')) { 'true' } else { 'false' }
+            $channel = 'manual'
+          }
+          elseif ($refType -eq 'tag') {
+            $version = $refName.TrimStart('v')
+            $tag = $refName
+            $name = $tag
+            $prerelease = if ($refName.Contains('-')) { 'true' } else { 'false' }
+            $channel = 'stable'
           }
           else {
-            $version = '${{ github.ref_name }}'.TrimStart('v')
+            $version = "0.1.0-main.${{ github.run_number }}"
+            $tag = "main-preview-$shortSha"
+            $name = "main-preview-$shortSha"
+            $prerelease = 'true'
+            $channel = 'preview'
           }
-          "value=$version" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
+
+          "version=$version" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
+          "tag=$tag" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
+          "name=$name" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
+          "prerelease=$prerelease" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
+          "channel=$channel" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
 
       - name: Restore
         run: dotnet restore Cress.sln
 
       - name: Build
-        run: dotnet build Cress.sln --configuration Release --no-restore /p:ContinuousIntegrationBuild=true /p:Version=${{ steps.version.outputs.value }}
+        run: dotnet build Cress.sln --configuration Release --no-restore /p:ContinuousIntegrationBuild=true /p:Version=${{ steps.release.outputs.version }}
 
       - name: Pack Cress CLI tool
         run: >
@@ -59,14 +94,14 @@ jobs:
           --no-build
           --output artifacts\packages
           /p:ContinuousIntegrationBuild=true
-          /p:Version=${{ steps.version.outputs.value }}
+          /p:Version=${{ steps.release.outputs.version }}
 
       - name: Publish Cress Companion installer assets
         id: companion_assets
         shell: pwsh
         run: |
           .\scripts\Publish-CompanionInstaller.ps1 `
-            -Version '${{ steps.version.outputs.value }}' `
+            -Version '${{ steps.release.outputs.version }}' `
             -Configuration Release
 
       - name: Publish Cress Studio installer assets
@@ -74,13 +109,13 @@ jobs:
         shell: pwsh
         run: |
           .\scripts\Publish-StudioInstaller.ps1 `
-            -Version '${{ steps.version.outputs.value }}' `
+            -Version '${{ steps.release.outputs.version }}' `
             -Configuration Release
 
       - name: Upload release artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: release-assets
+          name: release-assets-${{ steps.release.outputs.channel }}
           path: |
             artifacts\packages\*.nupkg
             artifacts\packages\Cress.DesktopCompanion-*.zip
@@ -88,12 +123,35 @@ jobs:
             ${{ steps.companion_assets.outputs.msi_path }}
             ${{ steps.studio_assets.outputs.msi_path }}
 
+      - name: Create manual release tag
+        if: ${{ steps.release.outputs.channel == 'manual' }}
+        shell: pwsh
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git tag '${{ steps.release.outputs.tag }}' '${{ github.sha }}'
+          git push origin "refs/tags/${{ steps.release.outputs.tag }}"
+
+      - name: Publish NuGet packages to GitHub Packages
+        shell: pwsh
+        run: |
+          Get-ChildItem artifacts\packages\*.nupkg |
+            Where-Object { $_.Name -notlike '*.symbols.nupkg' } |
+            ForEach-Object {
+              dotnet nuget push $_.FullName `
+                --source '${{ env.PACKAGE_FEED_URL }}' `
+                --api-key '${{ secrets.GITHUB_TOKEN }}' `
+                --skip-duplicate
+            }
+
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ github.ref_name }}
+          tag_name: ${{ steps.release.outputs.tag }}
+          name: ${{ steps.release.outputs.name }}
+          target_commitish: ${{ github.sha }}
           generate_release_notes: true
-          prerelease: ${{ contains(github.ref_name, '-') }}
+          prerelease: ${{ steps.release.outputs.prerelease == 'true' }}
           files: |
             artifacts\packages\*.nupkg
             artifacts\packages\Cress.DesktopCompanion-*.zip

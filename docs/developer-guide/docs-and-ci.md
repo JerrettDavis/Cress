@@ -73,7 +73,7 @@ That script:
 For CI and release automation:
 
 1. `ci.yml` smoke-validates the companion publish + installer path on Windows
-2. `release.yml` builds the companion MSI and portable zip on version tags and publishes them to GitHub Releases alongside the CLI package
+2. `release.yml` builds the companion MSI and portable zip for both `main` preview publishes and tagged/manual releases, then pushes the resulting packages to GitHub Releases and GitHub Packages as appropriate
 
 ## Studio installer and release packaging
 
@@ -95,7 +95,7 @@ That script:
 For CI and release automation:
 
 1. `ci.yml` smoke-validates the Studio publish + installer path and installs the packed `Cress.Studio.Tool`
-2. `release.yml` publishes the Studio MSI, portable zip, and tool package on version tags
+2. `release.yml` publishes the Studio MSI, portable zip, and tool package for `main` preview publishes and for tagged/manual releases
 
 ## Coverage reporting in CI
 

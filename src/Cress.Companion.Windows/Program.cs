@@ -9,11 +9,16 @@ internal static class Program
     {
         ApplicationConfiguration.Initialize();
 
+        var useDeterministicTarget = string.Equals(
+            Environment.GetEnvironmentVariable("CRESS_COMPANION_E2E_TARGET"),
+            "1",
+            StringComparison.Ordinal);
+
         using var coordinator = new DesktopCompanionCoordinator(
-            new RecordingSessionBackendFactory(),
-            new ProcessCompanionTargetCatalog(),
-            new ProcessWindowInspector(),
-            new ScreenPreviewProvider(),
+            useDeterministicTarget ? new DeterministicCompanionSessionBackendFactory() : new RecordingSessionBackendFactory(),
+            useDeterministicTarget ? new DeterministicCompanionTargetCatalog() : new ProcessCompanionTargetCatalog(),
+            useDeterministicTarget ? new DeterministicCompanionWindowInspector() : new ProcessWindowInspector(),
+            useDeterministicTarget ? new DeterministicCompanionPreviewProvider() : new ScreenPreviewProvider(),
             new SystemCompanionClock());
 
         using var bridgeServer = new CompanionBridgeServer(coordinator, ResolvePort());

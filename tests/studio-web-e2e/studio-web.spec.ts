@@ -197,7 +197,6 @@ test('pairs with the desktop companion end to end through the recording picker',
   test.skip(process.platform !== 'win32', 'Desktop companion e2e coverage is Windows-only.');
 
   const companion = await launchCompanion();
-  const target = await launchCompanionTargetWindow();
 
   try {
     await loadBuiltInDemo(page);
@@ -208,19 +207,20 @@ test('pairs with the desktop companion end to end through the recording picker',
     await expect(page.getByTestId('recording-picker-companion-status')).toContainText(/Desktop companion is/i);
     await expect(page.getByTestId('recording-picker-companion-targets')).toBeVisible();
 
-    expect(target.reportedProcessId).toBeGreaterThan(0);
-    const startResponse = await page.request.post(
-      new URL(`api/companion/sessions/${target.reportedProcessId}/start`, companionBaseURL).toString(),
-      {
-        data: {
-          overlayEnabled: true
-        }
-      }
-    );
-    expect(startResponse.ok()).toBeTruthy();
+    const targetRow = page
+      .getByTestId('recording-picker-companion-targets')
+      .locator('tbody tr')
+      .filter({ hasText: /Companion demo/i })
+      .first();
 
-    await page.getByTestId('recording-target-picker').getByRole('button', { name: 'Refresh' }).click();
+    await expect(targetRow).toBeVisible();
+    await targetRow.getByTestId('recording-picker-companion-start').click();
+
+    await expect(page.getByTestId('recording-target-picker')).toBeHidden();
     await expect(page.getByTestId('global-controls-companion')).toContainText(/1 session\(s\)|Recording/i);
+
+    await page.getByTestId('global-controls-drawer').getByTestId('record-button-open').click();
+    await page.getByTestId('recording-picker-tab-companion').click();
 
     const sessionTable = page.getByTestId('recording-picker-companion-sessions');
     await expect(sessionTable).toBeVisible();
@@ -236,8 +236,6 @@ test('pairs with the desktop companion end to end through the recording picker',
     await expect(page.getByTestId('recording-picker-companion-status')).toContainText(/Desktop companion is/i);
   }
   finally {
-    await stopProcessById(target.reportedProcessId);
-    await stopChildProcess(target.process);
     await stopCompanion(companion);
   }
 });
@@ -299,7 +297,8 @@ async function launchCompanion(): Promise<ChildProcess> {
       env: {
         ...process.env,
         CRESS_COMPANION_PORT: companionPort,
-        CRESS_STUDIO_URL: studioBaseURL
+        CRESS_STUDIO_URL: studioBaseURL,
+        CRESS_COMPANION_E2E_TARGET: '1'
       },
       windowsHide: true,
       stdio: 'ignore'
@@ -308,28 +307,6 @@ async function launchCompanion(): Promise<ChildProcess> {
 
   await waitForCompanionAvailability(true);
   return companion;
-}
-
-async function launchCompanionTargetWindow(): Promise<{ process: ChildProcess; reportedProcessId: number }> {
-  const targetProcess = spawn(
-    'notepad.exe',
-    [],
-    {
-      cwd: process.cwd(),
-      windowsHide: false,
-      stdio: 'ignore'
-    }
-  );
-
-  if (targetProcess.pid === undefined) {
-    throw new Error('Failed to launch the desktop companion target window.');
-  }
-
-  const target = await waitForCompanionTarget('Notepad', /Notepad/i);
-  return {
-    process: targetProcess,
-    reportedProcessId: target.processId
-  };
 }
 
 async function stopCompanion(companion: ChildProcess): Promise<void> {
@@ -355,18 +332,6 @@ async function stopChildProcess(child: ChildProcess): Promise<void> {
   }
 }
 
-async function stopProcessById(processId: number): Promise<void> {
-  if (!Number.isFinite(processId) || processId <= 0) {
-    return;
-  }
-
-  await new Promise<void>(resolve => {
-    const killer = spawn('taskkill.exe', ['/PID', `${processId}`, '/T', '/F'], { stdio: 'ignore', windowsHide: true });
-    killer.once('exit', () => resolve());
-    killer.once('error', () => resolve());
-  });
-}
-
 async function waitForCompanionAvailability(shouldBeAvailable: boolean): Promise<void> {
   const healthUrl = new URL('health', companionBaseURL).toString();
 
@@ -390,26 +355,3 @@ async function waitForCompanionAvailability(shouldBeAvailable: boolean): Promise
   }
 }
 
-async function waitForCompanionTarget(processName: string, windowTitlePattern: RegExp): Promise<{ processId: number }> {
-  const targetsUrl = new URL('api/companion/targets', companionBaseURL).toString();
-
-  for (let attempt = 0; attempt < 40; attempt += 1) {
-    try {
-      const response = await fetch(targetsUrl, { cache: 'no-store' });
-      if (response.ok) {
-        const targets = await response.json() as Array<{ processId: number; processName: string; windowTitle: string }>;
-        const target = targets.find(candidate =>
-          candidate.processName === processName && windowTitlePattern.test(candidate.windowTitle));
-        if (target) {
-          return { processId: target.processId };
-        }
-      }
-    } catch {
-      // Keep polling until the companion has enumerated the spawned target window.
-    }
-
-    await new Promise(resolve => setTimeout(resolve, 250));
-  }
-
-  throw new Error(`Desktop companion never reported a ${processName} target window.`);
-}

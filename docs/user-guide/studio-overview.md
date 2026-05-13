@@ -4,8 +4,33 @@ Studio and Studio Web are the fastest way to understand the workspace because th
 
 ## Launch the environment
 
+You can use Studio in three main ways:
+
+1. **Aspire AppHost** while developing the full repo
+2. **installed or portable Studio bundle** when you want the production-ready Windows shell
+3. **`cress-studio` dotnet tool** when you want a local Windows tool install without unpacking the portable zip yourself
+
 ```powershell
 dotnet run --project src\Cress.AppHost\Cress.AppHost.csproj --configuration Release --launch-profile http
+```
+
+For the production-ready Windows bundle:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts\Publish-StudioInstaller.ps1 -Version 0.1.0-local
+```
+
+That packaging flow gives you:
+
+- `Cress.Studio.Setup-<version>.msi` with Start Menu entries for **Cress Studio** and **Cress Studio (Browser)**
+- `Cress.Studio-win-x64-<version>.zip` with `Launch Cress Studio Desktop.cmd` and `Launch Cress Studio Browser.cmd`
+- `Cress.Studio.Tool.<version>.nupkg` for the Windows `cress-studio` tool
+
+For the tool path after packing or downloading the package:
+
+```powershell
+dotnet tool install --tool-path .\.tools\studio --prerelease --add-source artifacts\packages Cress.Studio.Tool
+.\.tools\studio\cress-studio --desktop
 ```
 
 ## 1. Start at the landing page
@@ -42,6 +67,11 @@ After load, the main routes now behave like focused pages:
 - `/workspace` keeps you on setup and loading
 - `/designer` shows the explorer plus authoring surfaces
 - `/results` isolates execution review, diagnostics, and comparison
+
+The packaged Studio bundle uses the same Blazor shell for both Windows launch styles:
+
+- the **desktop shell** wraps the Studio URL in an embedded WebView2 window
+- the **browser host** keeps the local Studio service running while your default browser owns the main tab experience
 
 ![Project loaded in Studio](../images/studio/project-loaded.png)
 

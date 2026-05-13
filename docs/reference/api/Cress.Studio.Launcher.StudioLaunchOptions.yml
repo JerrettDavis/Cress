@@ -1,0 +1,756 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Studio.Launcher.StudioLaunchOptions
+  commentId: T:Cress.Studio.Launcher.StudioLaunchOptions
+  id: StudioLaunchOptions
+  parent: Cress.Studio.Launcher
+  children:
+  - Cress.Studio.Launcher.StudioLaunchOptions.#ctor(Cress.Studio.Launcher.StudioLaunchMode,System.String,System.Nullable{System.Int32})
+  - Cress.Studio.Launcher.StudioLaunchOptions.GetUsage(System.String)
+  - Cress.Studio.Launcher.StudioLaunchOptions.Mode
+  - Cress.Studio.Launcher.StudioLaunchOptions.Parse(System.Collections.Generic.IReadOnlyList{System.String})
+  - Cress.Studio.Launcher.StudioLaunchOptions.Port
+  - Cress.Studio.Launcher.StudioLaunchOptions.WebRootPath
+  langs:
+  - csharp
+  - vb
+  name: StudioLaunchOptions
+  nameWithType: StudioLaunchOptions
+  fullName: Cress.Studio.Launcher.StudioLaunchOptions
+  type: Class
+  source:
+    remote:
+      path: src/Cress.Studio.Launcher/StudioLaunchOptions.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: StudioLaunchOptions
+    path: ../src/Cress.Studio.Launcher/StudioLaunchOptions.cs
+    startLine: 2
+  assemblies:
+  - Cress.Studio.Launcher
+  namespace: Cress.Studio.Launcher
+  syntax:
+    content: 'public sealed record StudioLaunchOptions : IEquatable<StudioLaunchOptions>'
+    content.vb: Public NotInheritable Class StudioLaunchOptions Implements IEquatable(Of StudioLaunchOptions)
+  inheritance:
+  - System.Object
+  implements:
+  - System.IEquatable{Cress.Studio.Launcher.StudioLaunchOptions}
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Cress.Studio.Launcher.StudioLaunchOptions.#ctor(Cress.Studio.Launcher.StudioLaunchMode,System.String,System.Nullable{System.Int32})
+  commentId: M:Cress.Studio.Launcher.StudioLaunchOptions.#ctor(Cress.Studio.Launcher.StudioLaunchMode,System.String,System.Nullable{System.Int32})
+  id: '#ctor(Cress.Studio.Launcher.StudioLaunchMode,System.String,System.Nullable{System.Int32})'
+  parent: Cress.Studio.Launcher.StudioLaunchOptions
+  langs:
+  - csharp
+  - vb
+  name: StudioLaunchOptions(StudioLaunchMode, string?, int?)
+  nameWithType: StudioLaunchOptions.StudioLaunchOptions(StudioLaunchMode, string?, int?)
+  fullName: Cress.Studio.Launcher.StudioLaunchOptions.StudioLaunchOptions(Cress.Studio.Launcher.StudioLaunchMode, string?, int?)
+  type: Constructor
+  source:
+    remote:
+      path: src/Cress.Studio.Launcher/StudioLaunchOptions.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: .ctor
+    path: ../src/Cress.Studio.Launcher/StudioLaunchOptions.cs
+    startLine: 2
+  assemblies:
+  - Cress.Studio.Launcher
+  namespace: Cress.Studio.Launcher
+  syntax:
+    content: public StudioLaunchOptions(StudioLaunchMode Mode, string? WebRootPath, int? Port)
+    parameters:
+    - id: Mode
+      type: Cress.Studio.Launcher.StudioLaunchMode
+    - id: WebRootPath
+      type: System.String
+    - id: Port
+      type: System.Nullable{System.Int32}
+    content.vb: Public Sub New(Mode As StudioLaunchMode, WebRootPath As String, Port As Integer?)
+  overload: Cress.Studio.Launcher.StudioLaunchOptions.#ctor*
+  nameWithType.vb: StudioLaunchOptions.New(StudioLaunchMode, String, Integer?)
+  fullName.vb: Cress.Studio.Launcher.StudioLaunchOptions.New(Cress.Studio.Launcher.StudioLaunchMode, String, Integer?)
+  name.vb: New(StudioLaunchMode, String, Integer?)
+- uid: Cress.Studio.Launcher.StudioLaunchOptions.Mode
+  commentId: P:Cress.Studio.Launcher.StudioLaunchOptions.Mode
+  id: Mode
+  parent: Cress.Studio.Launcher.StudioLaunchOptions
+  langs:
+  - csharp
+  - vb
+  name: Mode
+  nameWithType: StudioLaunchOptions.Mode
+  fullName: Cress.Studio.Launcher.StudioLaunchOptions.Mode
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Studio.Launcher/StudioLaunchOptions.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Mode
+    path: ../src/Cress.Studio.Launcher/StudioLaunchOptions.cs
+    startLine: 3
+  assemblies:
+  - Cress.Studio.Launcher
+  namespace: Cress.Studio.Launcher
+  syntax:
+    content: public StudioLaunchMode Mode { get; init; }
+    parameters: []
+    return:
+      type: Cress.Studio.Launcher.StudioLaunchMode
+    content.vb: Public Property Mode As StudioLaunchMode
+  overload: Cress.Studio.Launcher.StudioLaunchOptions.Mode*
+- uid: Cress.Studio.Launcher.StudioLaunchOptions.WebRootPath
+  commentId: P:Cress.Studio.Launcher.StudioLaunchOptions.WebRootPath
+  id: WebRootPath
+  parent: Cress.Studio.Launcher.StudioLaunchOptions
+  langs:
+  - csharp
+  - vb
+  name: WebRootPath
+  nameWithType: StudioLaunchOptions.WebRootPath
+  fullName: Cress.Studio.Launcher.StudioLaunchOptions.WebRootPath
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Studio.Launcher/StudioLaunchOptions.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: WebRootPath
+    path: ../src/Cress.Studio.Launcher/StudioLaunchOptions.cs
+    startLine: 4
+  assemblies:
+  - Cress.Studio.Launcher
+  namespace: Cress.Studio.Launcher
+  syntax:
+    content: public string? WebRootPath { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property WebRootPath As String
+  overload: Cress.Studio.Launcher.StudioLaunchOptions.WebRootPath*
+- uid: Cress.Studio.Launcher.StudioLaunchOptions.Port
+  commentId: P:Cress.Studio.Launcher.StudioLaunchOptions.Port
+  id: Port
+  parent: Cress.Studio.Launcher.StudioLaunchOptions
+  langs:
+  - csharp
+  - vb
+  name: Port
+  nameWithType: StudioLaunchOptions.Port
+  fullName: Cress.Studio.Launcher.StudioLaunchOptions.Port
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Studio.Launcher/StudioLaunchOptions.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Port
+    path: ../src/Cress.Studio.Launcher/StudioLaunchOptions.cs
+    startLine: 5
+  assemblies:
+  - Cress.Studio.Launcher
+  namespace: Cress.Studio.Launcher
+  syntax:
+    content: public int? Port { get; init; }
+    parameters: []
+    return:
+      type: System.Nullable{System.Int32}
+    content.vb: Public Property Port As Integer?
+  overload: Cress.Studio.Launcher.StudioLaunchOptions.Port*
+- uid: Cress.Studio.Launcher.StudioLaunchOptions.Parse(System.Collections.Generic.IReadOnlyList{System.String})
+  commentId: M:Cress.Studio.Launcher.StudioLaunchOptions.Parse(System.Collections.Generic.IReadOnlyList{System.String})
+  id: Parse(System.Collections.Generic.IReadOnlyList{System.String})
+  parent: Cress.Studio.Launcher.StudioLaunchOptions
+  langs:
+  - csharp
+  - vb
+  name: Parse(IReadOnlyList<string>)
+  nameWithType: StudioLaunchOptions.Parse(IReadOnlyList<string>)
+  fullName: Cress.Studio.Launcher.StudioLaunchOptions.Parse(System.Collections.Generic.IReadOnlyList<string>)
+  type: Method
+  source:
+    remote:
+      path: src/Cress.Studio.Launcher/StudioLaunchOptions.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Parse
+    path: ../src/Cress.Studio.Launcher/StudioLaunchOptions.cs
+    startLine: 7
+  assemblies:
+  - Cress.Studio.Launcher
+  namespace: Cress.Studio.Launcher
+  syntax:
+    content: public static StudioLaunchOptions Parse(IReadOnlyList<string> args)
+    parameters:
+    - id: args
+      type: System.Collections.Generic.IReadOnlyList{System.String}
+    return:
+      type: Cress.Studio.Launcher.StudioLaunchOptions
+    content.vb: Public Shared Function Parse(args As IReadOnlyList(Of String)) As StudioLaunchOptions
+  overload: Cress.Studio.Launcher.StudioLaunchOptions.Parse*
+  nameWithType.vb: StudioLaunchOptions.Parse(IReadOnlyList(Of String))
+  fullName.vb: Cress.Studio.Launcher.StudioLaunchOptions.Parse(System.Collections.Generic.IReadOnlyList(Of String))
+  name.vb: Parse(IReadOnlyList(Of String))
+- uid: Cress.Studio.Launcher.StudioLaunchOptions.GetUsage(System.String)
+  commentId: M:Cress.Studio.Launcher.StudioLaunchOptions.GetUsage(System.String)
+  id: GetUsage(System.String)
+  parent: Cress.Studio.Launcher.StudioLaunchOptions
+  langs:
+  - csharp
+  - vb
+  name: GetUsage(string)
+  nameWithType: StudioLaunchOptions.GetUsage(string)
+  fullName: Cress.Studio.Launcher.StudioLaunchOptions.GetUsage(string)
+  type: Method
+  source:
+    remote:
+      path: src/Cress.Studio.Launcher/StudioLaunchOptions.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: GetUsage
+    path: ../src/Cress.Studio.Launcher/StudioLaunchOptions.cs
+    startLine: 52
+  assemblies:
+  - Cress.Studio.Launcher
+  namespace: Cress.Studio.Launcher
+  syntax:
+    content: public static string GetUsage(string commandName)
+    parameters:
+    - id: commandName
+      type: System.String
+    return:
+      type: System.String
+    content.vb: Public Shared Function GetUsage(commandName As String) As String
+  overload: Cress.Studio.Launcher.StudioLaunchOptions.GetUsage*
+  nameWithType.vb: StudioLaunchOptions.GetUsage(String)
+  fullName.vb: Cress.Studio.Launcher.StudioLaunchOptions.GetUsage(String)
+  name.vb: GetUsage(String)
+references:
+- uid: Cress.Studio.Launcher
+  commentId: N:Cress.Studio.Launcher
+  href: Cress.html
+  name: Cress.Studio.Launcher
+  nameWithType: Cress.Studio.Launcher
+  fullName: Cress.Studio.Launcher
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Studio
+    name: Studio
+    href: Cress.Studio.html
+  - name: .
+  - uid: Cress.Studio.Launcher
+    name: Launcher
+    href: Cress.Studio.Launcher.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Studio
+    name: Studio
+    href: Cress.Studio.html
+  - name: .
+  - uid: Cress.Studio.Launcher
+    name: Launcher
+    href: Cress.Studio.Launcher.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.IEquatable{Cress.Studio.Launcher.StudioLaunchOptions}
+  commentId: T:System.IEquatable{Cress.Studio.Launcher.StudioLaunchOptions}
+  parent: System
+  definition: System.IEquatable`1
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<StudioLaunchOptions>
+  nameWithType: IEquatable<StudioLaunchOptions>
+  fullName: System.IEquatable<Cress.Studio.Launcher.StudioLaunchOptions>
+  nameWithType.vb: IEquatable(Of StudioLaunchOptions)
+  fullName.vb: System.IEquatable(Of Cress.Studio.Launcher.StudioLaunchOptions)
+  name.vb: IEquatable(Of StudioLaunchOptions)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - uid: Cress.Studio.Launcher.StudioLaunchOptions
+    name: StudioLaunchOptions
+    href: Cress.Studio.Launcher.StudioLaunchOptions.html
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Cress.Studio.Launcher.StudioLaunchOptions
+    name: StudioLaunchOptions
+    href: Cress.Studio.Launcher.StudioLaunchOptions.html
+  - name: )
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.IEquatable`1
+  commentId: T:System.IEquatable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<T>
+  nameWithType: IEquatable<T>
+  fullName: System.IEquatable<T>
+  nameWithType.vb: IEquatable(Of T)
+  fullName.vb: System.IEquatable(Of T)
+  name.vb: IEquatable(Of T)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Cress.Studio.Launcher.StudioLaunchOptions.#ctor*
+  commentId: Overload:Cress.Studio.Launcher.StudioLaunchOptions.#ctor
+  href: Cress.Studio.Launcher.StudioLaunchOptions.html#Cress_Studio_Launcher_StudioLaunchOptions__ctor_Cress_Studio_Launcher_StudioLaunchMode_System_String_System_Nullable_System_Int32__
+  name: StudioLaunchOptions
+  nameWithType: StudioLaunchOptions.StudioLaunchOptions
+  fullName: Cress.Studio.Launcher.StudioLaunchOptions.StudioLaunchOptions
+  nameWithType.vb: StudioLaunchOptions.New
+  fullName.vb: Cress.Studio.Launcher.StudioLaunchOptions.New
+  name.vb: New
+- uid: Cress.Studio.Launcher.StudioLaunchMode
+  commentId: T:Cress.Studio.Launcher.StudioLaunchMode
+  parent: Cress.Studio.Launcher
+  href: Cress.Studio.Launcher.StudioLaunchMode.html
+  name: StudioLaunchMode
+  nameWithType: StudioLaunchMode
+  fullName: Cress.Studio.Launcher.StudioLaunchMode
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: System.Nullable{System.Int32}
+  commentId: T:System.Nullable{System.Int32}
+  parent: System
+  definition: System.Nullable`1
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int?
+  nameWithType: int?
+  fullName: int?
+  nameWithType.vb: Integer?
+  fullName.vb: Integer?
+  name.vb: Integer?
+  spec.csharp:
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: '?'
+  spec.vb:
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: '?'
+- uid: System.Nullable`1
+  commentId: T:System.Nullable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.nullable-1
+  name: Nullable<T>
+  nameWithType: Nullable<T>
+  fullName: System.Nullable<T>
+  nameWithType.vb: Nullable(Of T)
+  fullName.vb: System.Nullable(Of T)
+  name.vb: Nullable(Of T)
+  spec.csharp:
+  - uid: System.Nullable`1
+    name: Nullable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.nullable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Nullable`1
+    name: Nullable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.nullable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Cress.Studio.Launcher.StudioLaunchOptions.Mode*
+  commentId: Overload:Cress.Studio.Launcher.StudioLaunchOptions.Mode
+  href: Cress.Studio.Launcher.StudioLaunchOptions.html#Cress_Studio_Launcher_StudioLaunchOptions_Mode
+  name: Mode
+  nameWithType: StudioLaunchOptions.Mode
+  fullName: Cress.Studio.Launcher.StudioLaunchOptions.Mode
+- uid: Cress.Studio.Launcher.StudioLaunchOptions.WebRootPath*
+  commentId: Overload:Cress.Studio.Launcher.StudioLaunchOptions.WebRootPath
+  href: Cress.Studio.Launcher.StudioLaunchOptions.html#Cress_Studio_Launcher_StudioLaunchOptions_WebRootPath
+  name: WebRootPath
+  nameWithType: StudioLaunchOptions.WebRootPath
+  fullName: Cress.Studio.Launcher.StudioLaunchOptions.WebRootPath
+- uid: Cress.Studio.Launcher.StudioLaunchOptions.Port*
+  commentId: Overload:Cress.Studio.Launcher.StudioLaunchOptions.Port
+  href: Cress.Studio.Launcher.StudioLaunchOptions.html#Cress_Studio_Launcher_StudioLaunchOptions_Port
+  name: Port
+  nameWithType: StudioLaunchOptions.Port
+  fullName: Cress.Studio.Launcher.StudioLaunchOptions.Port
+- uid: Cress.Studio.Launcher.StudioLaunchOptions.Parse*
+  commentId: Overload:Cress.Studio.Launcher.StudioLaunchOptions.Parse
+  href: Cress.Studio.Launcher.StudioLaunchOptions.html#Cress_Studio_Launcher_StudioLaunchOptions_Parse_System_Collections_Generic_IReadOnlyList_System_String__
+  name: Parse
+  nameWithType: StudioLaunchOptions.Parse
+  fullName: Cress.Studio.Launcher.StudioLaunchOptions.Parse
+- uid: System.Collections.Generic.IReadOnlyList{System.String}
+  commentId: T:System.Collections.Generic.IReadOnlyList{System.String}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IReadOnlyList`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  name: IReadOnlyList<string>
+  nameWithType: IReadOnlyList<string>
+  fullName: System.Collections.Generic.IReadOnlyList<string>
+  nameWithType.vb: IReadOnlyList(Of String)
+  fullName.vb: System.Collections.Generic.IReadOnlyList(Of String)
+  name.vb: IReadOnlyList(Of String)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+- uid: Cress.Studio.Launcher.StudioLaunchOptions
+  commentId: T:Cress.Studio.Launcher.StudioLaunchOptions
+  parent: Cress.Studio.Launcher
+  href: Cress.Studio.Launcher.StudioLaunchOptions.html
+  name: StudioLaunchOptions
+  nameWithType: StudioLaunchOptions
+  fullName: Cress.Studio.Launcher.StudioLaunchOptions
+- uid: System.Collections.Generic.IReadOnlyList`1
+  commentId: T:System.Collections.Generic.IReadOnlyList`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  name: IReadOnlyList<T>
+  nameWithType: IReadOnlyList<T>
+  fullName: System.Collections.Generic.IReadOnlyList<T>
+  nameWithType.vb: IReadOnlyList(Of T)
+  fullName.vb: System.Collections.Generic.IReadOnlyList(Of T)
+  name.vb: IReadOnlyList(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: Cress.Studio.Launcher.StudioLaunchOptions.GetUsage*
+  commentId: Overload:Cress.Studio.Launcher.StudioLaunchOptions.GetUsage
+  href: Cress.Studio.Launcher.StudioLaunchOptions.html#Cress_Studio_Launcher_StudioLaunchOptions_GetUsage_System_String_
+  name: GetUsage
+  nameWithType: StudioLaunchOptions.GetUsage
+  fullName: Cress.Studio.Launcher.StudioLaunchOptions.GetUsage

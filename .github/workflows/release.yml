@@ -69,6 +69,14 @@ jobs:
             -Version '${{ steps.version.outputs.value }}' `
             -Configuration Release
 
+      - name: Publish Cress Studio installer assets
+        id: studio_assets
+        shell: pwsh
+        run: |
+          .\scripts\Publish-StudioInstaller.ps1 `
+            -Version '${{ steps.version.outputs.value }}' `
+            -Configuration Release
+
       - name: Upload release artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -76,7 +84,9 @@ jobs:
           path: |
             artifacts\packages\*.nupkg
             artifacts\packages\Cress.DesktopCompanion-*.zip
+            artifacts\packages\Cress.Studio-*.zip
             ${{ steps.companion_assets.outputs.msi_path }}
+            ${{ steps.studio_assets.outputs.msi_path }}
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
@@ -87,4 +97,6 @@ jobs:
           files: |
             artifacts\packages\*.nupkg
             artifacts\packages\Cress.DesktopCompanion-*.zip
+            artifacts\packages\Cress.Studio-*.zip
             ${{ steps.companion_assets.outputs.msi_path }}
+            ${{ steps.studio_assets.outputs.msi_path }}

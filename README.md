@@ -75,6 +75,34 @@ That produces:
 - a self-contained Windows x64 portable zip in `artifacts\packages\`
 - a Windows MSI installer in `installer\Cress.Companion.Installer\bin\Release\`
 
+## Installable Studio distributions
+
+The Studio now ships as a **single Windows bundle** that supports both launch styles:
+
+- **wrapped desktop shell** through `Cress.Studio.Windows.exe`
+- **browser-hosted shell** through the same local bundle with `--browser`
+
+Build the Studio release assets locally with:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts\Publish-StudioInstaller.ps1 -Version 0.1.0-local
+```
+
+That produces:
+
+- `artifacts\packages\Cress.Studio-win-x64-<version>.zip` with both desktop and browser launchers
+- `installer\Cress.Studio.Installer\bin\Release\Cress.Studio.Setup-<version>.msi`
+- `artifacts\packages\Cress.Studio.Tool.<version>.nupkg` for the Windows `cress-studio` dotnet tool
+
+The MSI installs Start Menu entries for **Cress Studio** and **Cress Studio (Browser)**. The portable zip includes matching `.cmd` launchers beside the bundled executables.
+
+For the Studio dotnet tool path:
+
+```powershell
+dotnet tool install --tool-path .\.tools\studio --prerelease --add-source artifacts\packages Cress.Studio.Tool
+.\.tools\studio\cress-studio --browser
+```
+
 The AppHost browser launch opens the Aspire dashboard first. Open the `studio-web` resource endpoint to see the Studio shell itself. When you run `Cress.Studio.Web` directly, `/` stays on the landing and onboarding view, while `/workspace` jumps straight to workspace setup.
 
 ## Validation
@@ -113,7 +141,7 @@ GitHub Actions now validates the repo with:
 | `conventional-commits.yml` | Enforces Conventional Commit pull request titles plus commit headlines on pull requests and direct pushes to `main` |
 | `dependency-review.yml` | Pull request dependency risk review |
 | `docs.yml` | DocFX site build, preview artifact publishing, and GitHub Pages deployment |
-| `release.yml` | Builds the desktop companion portable zip + MSI installer and publishes them with the CLI package on version tags |
+| `release.yml` | Builds the CLI package plus the companion and Studio portable zip/MSI/tool assets on version tags |
 
 The CI workflows publish:
 
@@ -123,6 +151,7 @@ The CI workflows publish:
 - Codecov uploads for both the full report and the gated core report
 - AppHost startup logs
 - desktop companion portable zip and MSI preview artifacts
+- Studio portable zip, MSI installer, and `cress-studio` tool preview artifacts
 - DocFX site preview artifacts
 - a sticky PR summary with both the full report and the gated core report
 

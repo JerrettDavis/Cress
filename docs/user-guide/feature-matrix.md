@@ -44,6 +44,9 @@ These features do not have a primary screenshot-driven surface, but they still b
 | Surface | Feature | What it enables | Guide |
 | --- | --- | --- | --- |
 | CLI | Project bootstrap, validation, execution, reporting, and docs generation | Use `cress` in local dev and CI for setup, validation, run orchestration, diagnostics, and report generation. | [CLI reference](../api/cli-reference.md) |
+| Studio distribution | Wrapped Windows shell | Launch the same Studio Web experience in a Discord-style desktop shell backed by the local packaged Studio host. | [Studio overview](studio-overview.md) |
+| Studio distribution | Browser-hosted Windows shell | Launch the packaged Studio service in your default browser while a lightweight local host window keeps the session alive. | [Studio overview](studio-overview.md) |
+| Studio distribution | MSI, portable zip, and `cress-studio` tool | Install Studio through Start Menu shortcuts, run it portably, or launch it through a Windows dotnet tool without building from source. | [Studio overview](studio-overview.md) |
 | HTTP driver | Service and API automation | Run service smoke flows with request/response assertions and evidence capture. | [Testing services](testing-services.md) |
 | Playwright-backed web automation | Browser automation | Execute browser flows with durable locators, screenshots, and mixed UI/API assertions. | [Testing web apps](testing-web-apps.md) |
 | Flawright-backed desktop automation | Windows desktop automation | Launch or attach to desktop apps and capture screenshot-heavy evidence for desktop flows. | [Testing desktop apps](testing-desktop-apps.md) |

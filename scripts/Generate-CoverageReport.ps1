@@ -24,6 +24,12 @@ $fileFilters = @("-**\tests\**")
 if ($Scope -eq "core")
 {
     $fileFilters += @(
+        "-**\src\Cress.Companion.Windows\**",
+        "-**\src\Cress.Companion.Core\ProcessCompanionTargetCatalog.cs",
+        "-**\src\Cress.Companion.Core\ProcessWindowInspector.cs",
+        "-**\src\Cress.Companion.Core\RecordingSessionBackend.cs",
+        "-**\src\Cress.Companion.Core\ScreenPreviewProvider.cs",
+        "-**\src\Cress.Companion.Core\SystemCompanionClock.cs",
         "-**\src\Cress.Studio\**",
         "-**\src\Cress.Studio.Web\**",
         "-**\src\Cress.Studio.Core\**",

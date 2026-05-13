@@ -75,6 +75,28 @@ For CI and release automation:
 1. `ci.yml` smoke-validates the companion publish + installer path on Windows
 2. `release.yml` builds the companion MSI and portable zip on version tags and publishes them to GitHub Releases alongside the CLI package
 
+## Studio installer and release packaging
+
+The repository now uses a matching Windows packaging path for Studio:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts\Publish-StudioInstaller.ps1 -Version 0.1.0-local
+```
+
+That script:
+
+1. publishes the wrapped Studio host from `src\Cress.Studio.Windows\Cress.Studio.Windows.csproj`
+2. publishes the Studio web payload from `src\Cress.Studio.Web\Cress.Studio.Web.csproj`
+3. stages one shared bundle that can launch Studio in desktop or browser mode
+4. creates a portable zip in `artifacts\packages\`
+5. builds the WiX-based MSI installer in `installer\Cress.Studio.Installer\bin\Release\`
+6. packs the Windows `cress-studio` dotnet tool into `artifacts\packages\`
+
+For CI and release automation:
+
+1. `ci.yml` smoke-validates the Studio publish + installer path and installs the packed `Cress.Studio.Tool`
+2. `release.yml` publishes the Studio MSI, portable zip, and tool package on version tags
+
 ## Coverage reporting in CI
 
 The `ci.yml` workflow now publishes **two** coverage views:
@@ -97,6 +119,7 @@ If you add or change:
 - project file conventions, update the [project schema guide](../api/project-schema.md)
 - Studio flows or screenshots, update the relevant user guides **and the [feature matrix](../user-guide/feature-matrix.md)**
 - desktop companion installation or release behavior, update the companion guide plus this packaging section
+- Studio installation, packaging, or launch behavior, update the Studio overview, feature matrix, README, and this packaging section
 - repo structure or developer workflow, update this section and the root `README.md`
 
 ## Feature map and screenshot policy

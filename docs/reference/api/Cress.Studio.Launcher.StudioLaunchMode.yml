@@ -1,0 +1,120 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Studio.Launcher.StudioLaunchMode
+  commentId: T:Cress.Studio.Launcher.StudioLaunchMode
+  id: StudioLaunchMode
+  parent: Cress.Studio.Launcher
+  children:
+  - Cress.Studio.Launcher.StudioLaunchMode.Browser
+  - Cress.Studio.Launcher.StudioLaunchMode.Desktop
+  langs:
+  - csharp
+  - vb
+  name: StudioLaunchMode
+  nameWithType: StudioLaunchMode
+  fullName: Cress.Studio.Launcher.StudioLaunchMode
+  type: Enum
+  source:
+    remote:
+      path: src/Cress.Studio.Launcher/StudioLaunchMode.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: StudioLaunchMode
+    path: ../src/Cress.Studio.Launcher/StudioLaunchMode.cs
+    startLine: 2
+  assemblies:
+  - Cress.Studio.Launcher
+  namespace: Cress.Studio.Launcher
+  syntax:
+    content: public enum StudioLaunchMode
+    content.vb: Public Enum StudioLaunchMode
+- uid: Cress.Studio.Launcher.StudioLaunchMode.Desktop
+  commentId: F:Cress.Studio.Launcher.StudioLaunchMode.Desktop
+  id: Desktop
+  parent: Cress.Studio.Launcher.StudioLaunchMode
+  langs:
+  - csharp
+  - vb
+  name: Desktop
+  nameWithType: StudioLaunchMode.Desktop
+  fullName: Cress.Studio.Launcher.StudioLaunchMode.Desktop
+  type: Field
+  source:
+    remote:
+      path: src/Cress.Studio.Launcher/StudioLaunchMode.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Desktop
+    path: ../src/Cress.Studio.Launcher/StudioLaunchMode.cs
+    startLine: 4
+  assemblies:
+  - Cress.Studio.Launcher
+  namespace: Cress.Studio.Launcher
+  syntax:
+    content: Desktop = 0
+    return:
+      type: Cress.Studio.Launcher.StudioLaunchMode
+- uid: Cress.Studio.Launcher.StudioLaunchMode.Browser
+  commentId: F:Cress.Studio.Launcher.StudioLaunchMode.Browser
+  id: Browser
+  parent: Cress.Studio.Launcher.StudioLaunchMode
+  langs:
+  - csharp
+  - vb
+  name: Browser
+  nameWithType: StudioLaunchMode.Browser
+  fullName: Cress.Studio.Launcher.StudioLaunchMode.Browser
+  type: Field
+  source:
+    remote:
+      path: src/Cress.Studio.Launcher/StudioLaunchMode.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Browser
+    path: ../src/Cress.Studio.Launcher/StudioLaunchMode.cs
+    startLine: 5
+  assemblies:
+  - Cress.Studio.Launcher
+  namespace: Cress.Studio.Launcher
+  syntax:
+    content: Browser = 1
+    return:
+      type: Cress.Studio.Launcher.StudioLaunchMode
+references:
+- uid: Cress.Studio.Launcher
+  commentId: N:Cress.Studio.Launcher
+  href: Cress.html
+  name: Cress.Studio.Launcher
+  nameWithType: Cress.Studio.Launcher
+  fullName: Cress.Studio.Launcher
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Studio
+    name: Studio
+    href: Cress.Studio.html
+  - name: .
+  - uid: Cress.Studio.Launcher
+    name: Launcher
+    href: Cress.Studio.Launcher.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Studio
+    name: Studio
+    href: Cress.Studio.html
+  - name: .
+  - uid: Cress.Studio.Launcher
+    name: Launcher
+    href: Cress.Studio.Launcher.html
+- uid: Cress.Studio.Launcher.StudioLaunchMode
+  commentId: T:Cress.Studio.Launcher.StudioLaunchMode
+  parent: Cress.Studio.Launcher
+  href: Cress.Studio.Launcher.StudioLaunchMode.html
+  name: StudioLaunchMode
+  nameWithType: StudioLaunchMode
+  fullName: Cress.Studio.Launcher.StudioLaunchMode

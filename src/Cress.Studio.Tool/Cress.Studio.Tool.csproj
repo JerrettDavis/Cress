@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <PackAsTool>true</PackAsTool>
+    <ToolCommandName>cress-studio</ToolCommandName>
+    <PackageId>Cress.Studio.Tool</PackageId>
+    <PackageTitle>Cress Studio launcher</PackageTitle>
+    <Description>Dotnet tool that launches the packaged Windows Cress Studio bundle in desktop or browser mode.</Description>
+    <Authors>Jerrett Davis</Authors>
+    <PackageProjectUrl>https://github.com/JerrettDavis/Cress</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/JerrettDavis/Cress</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <PackageTags>studio;blazor;desktop;webview2;dotnet-tool</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <StudioBundleDir Condition="'$(StudioBundleDir)' == ''">$(MSBuildThisFileDirectory)..\..\artifacts\studio-bundle\Cress.Studio\</StudioBundleDir>
+  </PropertyGroup>
+
+  <ItemGroup Condition="Exists('$(StudioBundleDir)')">
+    <None Include="$(StudioBundleDir)**\*"
+          Pack="true"
+          PackagePath="tools\$(TargetFramework)\any\studio\%(RecursiveDir)%(Filename)%(Extension)"
+          Link="studio\%(RecursiveDir)%(Filename)%(Extension)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+</Project>

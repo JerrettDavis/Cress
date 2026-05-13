@@ -61,6 +61,13 @@ jobs:
             -Version 0.1.0-ci `
             -Configuration Release
 
+      - name: Publish Cress Studio installer assets
+        shell: pwsh
+        run: |
+          .\scripts\Publish-StudioInstaller.ps1 `
+            -Version 0.1.0-ci `
+            -Configuration Release
+
       - name: Smoke test packed Cress CLI tool
         shell: pwsh
         run: |
@@ -75,6 +82,80 @@ jobs:
             Cress.Cli
 
           & (Join-Path $toolDir 'cress.exe') --help
+
+      - name: Smoke test packed Cress Studio tool
+        shell: pwsh
+        run: |
+          $toolDir = Join-Path $PWD 'artifacts\studio-tool-install'
+          if (Test-Path $toolDir) {
+            Remove-Item -Path $toolDir -Recurse -Force
+          }
+
+          dotnet tool install `
+            --tool-path $toolDir `
+            --prerelease `
+            --add-source artifacts\packages `
+            Cress.Studio.Tool
+
+          & (Join-Path $toolDir 'cress-studio.exe') --help
+
+      - name: Smoke test Studio portable launch
+        shell: pwsh
+        run: |
+          $portableDir = Join-Path $PWD 'artifacts\studio-portable'
+          if (Test-Path $portableDir) {
+            Remove-Item -Path $portableDir -Recurse -Force
+          }
+
+          $portableZip = Get-ChildItem artifacts\packages\Cress.Studio-*.zip | Select-Object -First 1
+          if (-not $portableZip) {
+            throw 'Studio portable zip was not produced.'
+          }
+
+          Expand-Archive -Path $portableZip.FullName -DestinationPath $portableDir -Force
+
+          .\scripts\SmokeTest-StudioLaunch.ps1 `
+            -FilePath (Join-Path $portableDir 'Cress.Studio.Windows.exe') `
+            -Arguments @('--browser', '--no-open-browser', '--port', '5097') `
+            -Port 5097
+
+      - name: Smoke test Studio MSI install and launch
+        shell: pwsh
+        run: |
+          $msi = Get-ChildItem installer\Cress.Studio.Installer\bin -Recurse -Filter *.msi | Select-Object -First 1
+          if (-not $msi) {
+            throw 'Studio MSI was not produced.'
+          }
+
+          $install = Start-Process `
+            -FilePath msiexec.exe `
+            -ArgumentList @('/i', $msi.FullName, '/quiet', '/norestart') `
+            -PassThru `
+            -Wait
+
+          if ($install.ExitCode -ne 0) {
+            throw "Studio MSI install failed with exit code $($install.ExitCode)."
+          }
+
+          $installedExe = 'C:\Program Files\Jerrett Davis\Cress Studio\Cress.Studio.Windows.exe'
+          if (-not (Test-Path $installedExe)) {
+            throw "Installed Studio executable was not found at '$installedExe'."
+          }
+
+          .\scripts\SmokeTest-StudioLaunch.ps1 `
+            -FilePath $installedExe `
+            -Arguments @('--browser', '--no-open-browser', '--port', '5098') `
+            -Port 5098
+
+      - name: Smoke test Studio tool launch
+        shell: pwsh
+        run: |
+          $toolDir = Join-Path $PWD 'artifacts\studio-tool-install'
+          .\scripts\SmokeTest-StudioLaunch.ps1 `
+            -FilePath (Join-Path $toolDir 'cress-studio.exe') `
+            -Arguments @('--browser', '--no-open-browser', '--port', '5099') `
+            -Port 5099 `
+            -AllowLauncherExit
 
       - name: Test with coverage
         run: >
@@ -187,6 +268,16 @@ jobs:
           path: |
             artifacts\packages\Cress.DesktopCompanion-*.zip
             installer\Cress.Companion.Installer\bin\**\*.msi
+
+      - name: Upload Studio installer assets
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cress-studio-packages
+          path: |
+            artifacts\packages\Cress.Studio-*.zip
+            artifacts\packages\Cress.Studio.Tool*.nupkg
+            installer\Cress.Studio.Installer\bin\**\*.msi
 
       - name: Add coverage summary to PR
         if: always() && github.event_name == 'pull_request'

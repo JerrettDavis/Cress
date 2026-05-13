@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs"
+     xmlns:ui="http://wixtoolset.org/schemas/v4/wxs/ui">
+  <Package
+    Name="Cress Studio"
+    Manufacturer="Jerrett Davis"
+    Version="$(var.InstallerProductVersion)"
+    UpgradeCode="F28B77A1-03AF-44A4-9BF5-9380394E86A7"
+    InstallerVersion="500"
+    Scope="perMachine">
+
+    <MajorUpgrade DowngradeErrorMessage="A newer version of Cress Studio is already installed." />
+
+    <MediaTemplate EmbedCab="yes" />
+    <ui:WixUI Id="WixUI_InstallDir" InstallDirectory="INSTALLDIR" />
+
+    <Feature Id="StudioFeature" Title="Cress Studio" Level="1">
+      <ComponentGroupRef Id="StudioApplicationFiles" />
+      <ComponentRef Id="StudioDesktopShortcutComponent" />
+      <ComponentRef Id="StudioBrowserShortcutComponent" />
+      <ComponentRef Id="StudioUninstallShortcutComponent" />
+    </Feature>
+  </Package>
+
+  <Fragment>
+    <StandardDirectory Id="ProgramFiles64Folder">
+      <Directory Id="CompanyFolder" Name="Jerrett Davis">
+        <Directory Id="INSTALLDIR" Name="Cress Studio" />
+      </Directory>
+    </StandardDirectory>
+
+    <StandardDirectory Id="ProgramMenuFolder">
+      <Directory Id="StudioProgramMenuFolder" Name="Cress Studio" />
+    </StandardDirectory>
+  </Fragment>
+
+  <Fragment>
+    <Component Id="StudioDesktopShortcutComponent" Directory="StudioProgramMenuFolder" Guid="57D4BB49-7C73-442A-95F1-7995DC149126">
+      <Shortcut
+        Id="StudioDesktopShortcut"
+        Name="Cress Studio"
+        Description="Wrapped Cress Studio desktop shell"
+        Target="[INSTALLDIR]Cress.Studio.Windows.exe"
+        WorkingDirectory="INSTALLDIR" />
+      <RemoveFolder Id="RemoveStudioProgramMenuFolder" Directory="StudioProgramMenuFolder" On="uninstall" />
+      <RegistryValue
+        Root="HKCU"
+        Key="Software\Jerrett Davis\Cress Studio"
+        Name="DesktopShortcut"
+        Type="integer"
+        Value="1"
+        KeyPath="yes" />
+    </Component>
+
+    <Component Id="StudioBrowserShortcutComponent" Directory="StudioProgramMenuFolder" Guid="E9A4FDDD-A9F5-43D0-9819-D3F87F647613">
+      <Shortcut
+        Id="StudioBrowserShortcut"
+        Name="Cress Studio (Browser)"
+        Description="Launch Cress Studio in the default browser"
+        Target="[INSTALLDIR]Cress.Studio.Windows.exe"
+        Arguments="--browser"
+        WorkingDirectory="INSTALLDIR" />
+      <RegistryValue
+        Root="HKCU"
+        Key="Software\Jerrett Davis\Cress Studio"
+        Name="BrowserShortcut"
+        Type="integer"
+        Value="1"
+        KeyPath="yes" />
+    </Component>
+
+    <Component Id="StudioUninstallShortcutComponent" Directory="StudioProgramMenuFolder" Guid="0A6A90A7-07D6-4A34-8EEB-75E16309E5C6">
+      <Shortcut
+        Id="StudioUninstallShortcut"
+        Name="Uninstall Cress Studio"
+        Target="[SystemFolder]msiexec.exe"
+        Arguments="/x [ProductCode]" />
+      <RegistryValue
+        Root="HKCU"
+        Key="Software\Jerrett Davis\Cress Studio"
+        Name="UninstallShortcut"
+        Type="integer"
+        Value="1"
+        KeyPath="yes" />
+    </Component>
+  </Fragment>
+</Wix>

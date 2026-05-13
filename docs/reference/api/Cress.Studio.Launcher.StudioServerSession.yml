@@ -1,0 +1,574 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Studio.Launcher.StudioServerSession
+  commentId: T:Cress.Studio.Launcher.StudioServerSession
+  id: StudioServerSession
+  parent: Cress.Studio.Launcher
+  children:
+  - Cress.Studio.Launcher.StudioServerSession.BaseAddress
+  - Cress.Studio.Launcher.StudioServerSession.Dispose
+  - Cress.Studio.Launcher.StudioServerSession.StartAsync(Cress.Studio.Launcher.StudioLaunchOptions,System.Threading.CancellationToken)
+  langs:
+  - csharp
+  - vb
+  name: StudioServerSession
+  nameWithType: StudioServerSession
+  fullName: Cress.Studio.Launcher.StudioServerSession
+  type: Class
+  source:
+    remote:
+      path: src/Cress.Studio.Launcher/StudioServerSession.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: StudioServerSession
+    path: ../src/Cress.Studio.Launcher/StudioServerSession.cs
+    startLine: 6
+  assemblies:
+  - Cress.Studio.Launcher
+  namespace: Cress.Studio.Launcher
+  syntax:
+    content: 'public sealed class StudioServerSession : IDisposable'
+    content.vb: Public NotInheritable Class StudioServerSession Implements IDisposable
+  inheritance:
+  - System.Object
+  implements:
+  - System.IDisposable
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Cress.Studio.Launcher.StudioServerSession.BaseAddress
+  commentId: P:Cress.Studio.Launcher.StudioServerSession.BaseAddress
+  id: BaseAddress
+  parent: Cress.Studio.Launcher.StudioServerSession
+  langs:
+  - csharp
+  - vb
+  name: BaseAddress
+  nameWithType: StudioServerSession.BaseAddress
+  fullName: Cress.Studio.Launcher.StudioServerSession.BaseAddress
+  type: Property
+  source:
+    remote:
+      path: src/Cress.Studio.Launcher/StudioServerSession.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: BaseAddress
+    path: ../src/Cress.Studio.Launcher/StudioServerSession.cs
+    startLine: 27
+  assemblies:
+  - Cress.Studio.Launcher
+  namespace: Cress.Studio.Launcher
+  syntax:
+    content: public Uri BaseAddress { get; }
+    parameters: []
+    return:
+      type: System.Uri
+    content.vb: Public ReadOnly Property BaseAddress As Uri
+  overload: Cress.Studio.Launcher.StudioServerSession.BaseAddress*
+- uid: Cress.Studio.Launcher.StudioServerSession.StartAsync(Cress.Studio.Launcher.StudioLaunchOptions,System.Threading.CancellationToken)
+  commentId: M:Cress.Studio.Launcher.StudioServerSession.StartAsync(Cress.Studio.Launcher.StudioLaunchOptions,System.Threading.CancellationToken)
+  id: StartAsync(Cress.Studio.Launcher.StudioLaunchOptions,System.Threading.CancellationToken)
+  parent: Cress.Studio.Launcher.StudioServerSession
+  langs:
+  - csharp
+  - vb
+  name: StartAsync(StudioLaunchOptions, CancellationToken)
+  nameWithType: StudioServerSession.StartAsync(StudioLaunchOptions, CancellationToken)
+  fullName: Cress.Studio.Launcher.StudioServerSession.StartAsync(Cress.Studio.Launcher.StudioLaunchOptions, System.Threading.CancellationToken)
+  type: Method
+  source:
+    remote:
+      path: src/Cress.Studio.Launcher/StudioServerSession.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: StartAsync
+    path: ../src/Cress.Studio.Launcher/StudioServerSession.cs
+    startLine: 29
+  assemblies:
+  - Cress.Studio.Launcher
+  namespace: Cress.Studio.Launcher
+  syntax:
+    content: public static Task<StudioServerSession> StartAsync(StudioLaunchOptions options, CancellationToken cancellationToken = default)
+    parameters:
+    - id: options
+      type: Cress.Studio.Launcher.StudioLaunchOptions
+    - id: cancellationToken
+      type: System.Threading.CancellationToken
+    return:
+      type: System.Threading.Tasks.Task{Cress.Studio.Launcher.StudioServerSession}
+    content.vb: Public Shared Function StartAsync(options As StudioLaunchOptions, cancellationToken As CancellationToken = Nothing) As Task(Of StudioServerSession)
+  overload: Cress.Studio.Launcher.StudioServerSession.StartAsync*
+- uid: Cress.Studio.Launcher.StudioServerSession.Dispose
+  commentId: M:Cress.Studio.Launcher.StudioServerSession.Dispose
+  id: Dispose
+  parent: Cress.Studio.Launcher.StudioServerSession
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: StudioServerSession.Dispose()
+  fullName: Cress.Studio.Launcher.StudioServerSession.Dispose()
+  type: Method
+  source:
+    remote:
+      path: src/Cress.Studio.Launcher/StudioServerSession.cs
+      branch: main
+      repo: https://github.com/JerrettDavis/Cress.git
+    id: Dispose
+    path: ../src/Cress.Studio.Launcher/StudioServerSession.cs
+    startLine: 68
+  assemblies:
+  - Cress.Studio.Launcher
+  namespace: Cress.Studio.Launcher
+  summary: Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+  example: []
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: Cress.Studio.Launcher.StudioServerSession.Dispose*
+  implements:
+  - System.IDisposable.Dispose
+references:
+- uid: Cress.Studio.Launcher
+  commentId: N:Cress.Studio.Launcher
+  href: Cress.html
+  name: Cress.Studio.Launcher
+  nameWithType: Cress.Studio.Launcher
+  fullName: Cress.Studio.Launcher
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Studio
+    name: Studio
+    href: Cress.Studio.html
+  - name: .
+  - uid: Cress.Studio.Launcher
+    name: Launcher
+    href: Cress.Studio.Launcher.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Studio
+    name: Studio
+    href: Cress.Studio.html
+  - name: .
+  - uid: Cress.Studio.Launcher
+    name: Launcher
+    href: Cress.Studio.Launcher.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.IDisposable
+  commentId: T:System.IDisposable
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.idisposable
+  name: IDisposable
+  nameWithType: IDisposable
+  fullName: System.IDisposable
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Cress.Studio.Launcher.StudioServerSession.BaseAddress*
+  commentId: Overload:Cress.Studio.Launcher.StudioServerSession.BaseAddress
+  href: Cress.Studio.Launcher.StudioServerSession.html#Cress_Studio_Launcher_StudioServerSession_BaseAddress
+  name: BaseAddress
+  nameWithType: StudioServerSession.BaseAddress
+  fullName: Cress.Studio.Launcher.StudioServerSession.BaseAddress
+- uid: System.Uri
+  commentId: T:System.Uri
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.uri
+  name: Uri
+  nameWithType: Uri
+  fullName: System.Uri
+- uid: Cress.Studio.Launcher.StudioServerSession.StartAsync*
+  commentId: Overload:Cress.Studio.Launcher.StudioServerSession.StartAsync
+  href: Cress.Studio.Launcher.StudioServerSession.html#Cress_Studio_Launcher_StudioServerSession_StartAsync_Cress_Studio_Launcher_StudioLaunchOptions_System_Threading_CancellationToken_
+  name: StartAsync
+  nameWithType: StudioServerSession.StartAsync
+  fullName: Cress.Studio.Launcher.StudioServerSession.StartAsync
+- uid: Cress.Studio.Launcher.StudioLaunchOptions
+  commentId: T:Cress.Studio.Launcher.StudioLaunchOptions
+  parent: Cress.Studio.Launcher
+  href: Cress.Studio.Launcher.StudioLaunchOptions.html
+  name: StudioLaunchOptions
+  nameWithType: StudioLaunchOptions
+  fullName: Cress.Studio.Launcher.StudioLaunchOptions
+- uid: System.Threading.CancellationToken
+  commentId: T:System.Threading.CancellationToken
+  parent: System.Threading
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken
+  name: CancellationToken
+  nameWithType: CancellationToken
+  fullName: System.Threading.CancellationToken
+- uid: System.Threading.Tasks.Task{Cress.Studio.Launcher.StudioServerSession}
+  commentId: T:System.Threading.Tasks.Task{Cress.Studio.Launcher.StudioServerSession}
+  parent: System.Threading.Tasks
+  definition: System.Threading.Tasks.Task`1
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<StudioServerSession>
+  nameWithType: Task<StudioServerSession>
+  fullName: System.Threading.Tasks.Task<Cress.Studio.Launcher.StudioServerSession>
+  nameWithType.vb: Task(Of StudioServerSession)
+  fullName.vb: System.Threading.Tasks.Task(Of Cress.Studio.Launcher.StudioServerSession)
+  name.vb: Task(Of StudioServerSession)
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - uid: Cress.Studio.Launcher.StudioServerSession
+    name: StudioServerSession
+    href: Cress.Studio.Launcher.StudioServerSession.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Cress.Studio.Launcher.StudioServerSession
+    name: StudioServerSession
+    href: Cress.Studio.Launcher.StudioServerSession.html
+  - name: )
+- uid: System.Threading
+  commentId: N:System.Threading
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Threading
+  nameWithType: System.Threading
+  fullName: System.Threading
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+- uid: System.Threading.Tasks.Task`1
+  commentId: T:System.Threading.Tasks.Task`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<TResult>
+  nameWithType: Task<TResult>
+  fullName: System.Threading.Tasks.Task<TResult>
+  nameWithType.vb: Task(Of TResult)
+  fullName.vb: System.Threading.Tasks.Task(Of TResult)
+  name.vb: Task(Of TResult)
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - name: TResult
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TResult
+  - name: )
+- uid: System.Threading.Tasks
+  commentId: N:System.Threading.Tasks
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Threading.Tasks
+  nameWithType: System.Threading.Tasks
+  fullName: System.Threading.Tasks
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+- uid: Cress.Studio.Launcher.StudioServerSession.Dispose*
+  commentId: Overload:Cress.Studio.Launcher.StudioServerSession.Dispose
+  href: Cress.Studio.Launcher.StudioServerSession.html#Cress_Studio_Launcher_StudioServerSession_Dispose
+  name: Dispose
+  nameWithType: StudioServerSession.Dispose
+  fullName: Cress.Studio.Launcher.StudioServerSession.Dispose
+- uid: System.IDisposable.Dispose
+  commentId: M:System.IDisposable.Dispose
+  parent: System.IDisposable
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
+  name: Dispose()
+  nameWithType: IDisposable.Dispose()
+  fullName: System.IDisposable.Dispose()
+  spec.csharp:
+  - uid: System.IDisposable.Dispose
+    name: Dispose
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.IDisposable.Dispose
+    name: Dispose
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
+  - name: (
+  - name: )

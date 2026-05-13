@@ -601,6 +601,28 @@ items:
   - uid: Cress.Studio.ServiceCollectionExtensions
     name: ServiceCollectionExtensions
     type: Class
+- uid: Cress.Studio.Launcher
+  name: Cress.Studio.Launcher
+  type: Namespace
+  items:
+  - uid: Cress.Studio.Launcher.StudioBundleLocator
+    name: StudioBundleLocator
+    type: Class
+  - uid: Cress.Studio.Launcher.StudioLaunchMode
+    name: StudioLaunchMode
+    type: Enum
+  - uid: Cress.Studio.Launcher.StudioLaunchOptions
+    name: StudioLaunchOptions
+    type: Class
+  - uid: Cress.Studio.Launcher.StudioLaunchUi
+    name: StudioLaunchUi
+    type: Class
+  - uid: Cress.Studio.Launcher.StudioServerSession
+    name: StudioServerSession
+    type: Class
+  - uid: Cress.Studio.Launcher.StudioUsageException
+    name: StudioUsageException
+    type: Class
 - uid: Cress.Studio.Services
   name: Cress.Studio.Services
   type: Namespace

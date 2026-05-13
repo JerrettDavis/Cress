@@ -1,0 +1,90 @@
+### YamlMime:ManagedReference
+items:
+- uid: Cress.Studio.Launcher
+  commentId: N:Cress.Studio.Launcher
+  id: Cress.Studio.Launcher
+  children:
+  - Cress.Studio.Launcher.StudioBundleLocator
+  - Cress.Studio.Launcher.StudioLaunchMode
+  - Cress.Studio.Launcher.StudioLaunchOptions
+  - Cress.Studio.Launcher.StudioLaunchUi
+  - Cress.Studio.Launcher.StudioServerSession
+  - Cress.Studio.Launcher.StudioUsageException
+  langs:
+  - csharp
+  - vb
+  name: Cress.Studio.Launcher
+  nameWithType: Cress.Studio.Launcher
+  fullName: Cress.Studio.Launcher
+  type: Namespace
+  assemblies:
+  - Cress.Studio.Launcher
+references:
+- uid: Cress.Studio.Launcher.StudioBundleLocator
+  commentId: T:Cress.Studio.Launcher.StudioBundleLocator
+  href: Cress.Studio.Launcher.StudioBundleLocator.html
+  name: StudioBundleLocator
+  nameWithType: StudioBundleLocator
+  fullName: Cress.Studio.Launcher.StudioBundleLocator
+- uid: Cress.Studio.Launcher.StudioLaunchMode
+  commentId: T:Cress.Studio.Launcher.StudioLaunchMode
+  parent: Cress.Studio.Launcher
+  href: Cress.Studio.Launcher.StudioLaunchMode.html
+  name: StudioLaunchMode
+  nameWithType: StudioLaunchMode
+  fullName: Cress.Studio.Launcher.StudioLaunchMode
+- uid: Cress.Studio.Launcher.StudioLaunchOptions
+  commentId: T:Cress.Studio.Launcher.StudioLaunchOptions
+  parent: Cress.Studio.Launcher
+  href: Cress.Studio.Launcher.StudioLaunchOptions.html
+  name: StudioLaunchOptions
+  nameWithType: StudioLaunchOptions
+  fullName: Cress.Studio.Launcher.StudioLaunchOptions
+- uid: Cress.Studio.Launcher.StudioUsageException
+  commentId: T:Cress.Studio.Launcher.StudioUsageException
+  href: Cress.Studio.Launcher.StudioUsageException.html
+  name: StudioUsageException
+  nameWithType: StudioUsageException
+  fullName: Cress.Studio.Launcher.StudioUsageException
+- uid: Cress.Studio.Launcher.StudioLaunchUi
+  commentId: T:Cress.Studio.Launcher.StudioLaunchUi
+  href: Cress.Studio.Launcher.StudioLaunchUi.html
+  name: StudioLaunchUi
+  nameWithType: StudioLaunchUi
+  fullName: Cress.Studio.Launcher.StudioLaunchUi
+- uid: Cress.Studio.Launcher.StudioServerSession
+  commentId: T:Cress.Studio.Launcher.StudioServerSession
+  href: Cress.Studio.Launcher.StudioServerSession.html
+  name: StudioServerSession
+  nameWithType: StudioServerSession
+  fullName: Cress.Studio.Launcher.StudioServerSession
+- uid: Cress.Studio.Launcher
+  commentId: N:Cress.Studio.Launcher
+  href: Cress.html
+  name: Cress.Studio.Launcher
+  nameWithType: Cress.Studio.Launcher
+  fullName: Cress.Studio.Launcher
+  spec.csharp:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Studio
+    name: Studio
+    href: Cress.Studio.html
+  - name: .
+  - uid: Cress.Studio.Launcher
+    name: Launcher
+    href: Cress.Studio.Launcher.html
+  spec.vb:
+  - uid: Cress
+    name: Cress
+    href: Cress.html
+  - name: .
+  - uid: Cress.Studio
+    name: Studio
+    href: Cress.Studio.html
+  - name: .
+  - uid: Cress.Studio.Launcher
+    name: Launcher
+    href: Cress.Studio.Launcher.html

@@ -1,0 +1,15 @@
+<Project Sdk="WixToolset.Sdk/5.0.2">
+  <PropertyGroup>
+    <OutputType>Package</OutputType>
+    <InstallerPlatform>x64</InstallerPlatform>
+    <PackageVersionLabel Condition="'$(PackageVersionLabel)' == ''">0.1.0-local</PackageVersionLabel>
+    <InstallerProductVersion Condition="'$(InstallerProductVersion)' == ''">0.1.0</InstallerProductVersion>
+    <OutputName>Cress.Studio.Setup-$(PackageVersionLabel)</OutputName>
+    <GeneratedWiXFile>Generated\StudioFiles.g.wxs</GeneratedWiXFile>
+    <DefineConstants>PackageVersionLabel=$(PackageVersionLabel);InstallerProductVersion=$(InstallerProductVersion)</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="WixToolset.UI.wixext" />
+  </ItemGroup>
+</Project>

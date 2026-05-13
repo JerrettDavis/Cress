@@ -86,6 +86,17 @@ The recommended loop is:
 
 ![Metrics tab](../images/studio/metrics-tab.png)
 
+## Repository policy checks
+
+This repository also ships a dedicated `conventional-commits.yml` workflow so GitHub can enforce Conventional Commits before changes land on `main`.
+
+Require these checks in your branch protection rules:
+
+1. **PR title** - validates the pull request title with the Conventional Commit headline format
+2. **PR commits** - validates every commit headline in the pull request
+
+The same workflow also runs **Push commits** on direct pushes to `main` so bypassed or administrative pushes still follow the same policy. Git-generated merge commits are ignored in that push-only path because the authored commits and the pull request title are already validated earlier.
+
 ## Relationship to generated framework tests
 
 The GitHub Action and the framework exports solve different adoption problems:

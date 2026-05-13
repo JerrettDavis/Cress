@@ -99,6 +99,7 @@ GitHub Actions now validates the repo with:
 | --- | --- |
 | `ci.yml` | Windows build, CI-safe .NET coverage run, Node tests, coverage publishing, and Aspire AppHost smoke validation |
 | `codeql.yml` | Static analysis for C# and JavaScript |
+| `conventional-commits.yml` | Enforces Conventional Commit pull request titles plus commit headlines on pull requests and direct pushes to `main` |
 | `dependency-review.yml` | Pull request dependency risk review |
 | `docs.yml` | DocFX site build, preview artifact publishing, and GitHub Pages deployment |
 
@@ -111,6 +112,8 @@ The CI workflows publish:
 - AppHost startup logs
 - DocFX site preview artifacts
 - a sticky PR summary with both the full report and the gated core report
+
+For repository protection, mark **PR title** and **PR commits** from `conventional-commits.yml` as required status checks on `main`. The same workflow also validates direct pushes to `main` with the **Push commits** check.
 
 Desktop-display automation remains covered by the local Windows suite, but the hosted GitHub runner uses the CI-safe subset because Flawright and full Studio E2E can be disrupted by the shared desktop session model on `windows-latest`.
 

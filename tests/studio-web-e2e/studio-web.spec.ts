@@ -19,6 +19,14 @@ const companionExecutable = path.join(
   'Cress.Companion.Windows.exe'
 );
 const studioBaseURL = 'http://127.0.0.1:5088';
+type DocScreenshotMode = 'element' | 'viewport';
+
+interface DocScreenshotOptions {
+  readonly mode?: DocScreenshotMode;
+  readonly maxHeight?: number;
+  readonly padding?: number;
+  readonly scrollBlock?: ScrollLogicalPosition;
+}
 
 test.beforeEach(async ({ page }) => {
   await page.addInitScript(({ recentKey, seededKey }) => {
@@ -63,7 +71,7 @@ test('loads the suggested workspace through the in-app picker and exposes explor
   await clickUntilVisible(page, page.getByTestId('open-workspace-picker'), page.getByTestId('workspace-picker-dialog'));
   await expect(page.getByTestId('workspace-picker-location')).not.toHaveValue('');
   await page.getByTestId('workspace-picker-filter').fill('spec');
-  await captureDocScreenshot(page, 'workspace-picker.png', page.getByTestId('workspace-picker-dialog'));
+  await captureDocScreenshot(page, 'workspace-picker.png', page.getByTestId('workspace-picker-dialog'), { mode: 'element' });
 
   await page.getByTestId('workspace-picker-load-current').click();
 
@@ -111,26 +119,26 @@ test('validates the documented Studio authoring loop and captures the reused doc
   await page.getByTestId('designer-tab-flow').click();
   await expect(page.getByTestId('flow-graph')).toBeVisible();
   await expect(page.getByTestId('flow-gherkin-preview')).toBeVisible();
-  await captureDocScreenshot(page, 'flow-designer.png', page.getByTestId('designer-section'));
+  await captureDocScreenshot(page, 'flow-designer.png', page.getByTestId('designer-section'), { maxHeight: 940 });
 
   await page.getByTestId('designer-tab-source').click();
   await expect(page.getByTestId('designer-source-editor')).toBeVisible();
-  await captureDocScreenshot(page, 'source-tab.png', page.getByTestId('designer-section'));
+  await captureDocScreenshot(page, 'source-tab.png', page.getByTestId('studio-shell'), { maxHeight: 860 });
 
   await page.getByTestId('designer-tab-metrics').click();
   await expect(page.getByTestId('metrics-panel')).toBeVisible();
-  await captureDocScreenshot(page, 'metrics-tab.png', page.getByTestId('designer-section'));
+  await captureDocScreenshot(page, 'metrics-tab.png', page.getByTestId('designer-section'), { maxHeight: 820 });
 
   await page.getByTestId('global-controls-toggle').click();
   await expect(page.getByTestId('global-controls-drawer')).toBeVisible();
   await page.getByTestId('record-button-open').click();
   await expect(page.getByTestId('recording-target-picker')).toBeVisible();
   await expect(page.getByTestId('recording-picker-panel-desktop')).toBeVisible();
-  await captureDocScreenshot(page, 'desktop-recording-picker.png', page.getByTestId('recording-target-picker'));
+  await captureDocScreenshot(page, 'desktop-recording-picker.png', page.getByTestId('recording-target-picker'), { mode: 'element' });
 
   await page.getByTestId('recording-picker-tab-web').click();
   await expect(page.getByTestId('recording-picker-panel-web')).toBeVisible();
-  await captureDocScreenshot(page, 'web-recording-picker.png', page.getByTestId('recording-target-picker'));
+  await captureDocScreenshot(page, 'web-recording-picker.png', page.getByTestId('recording-target-picker'), { mode: 'element' });
 
   await page.getByTestId('recording-picker-cancel').click();
   await expect(page.getByTestId('recording-target-picker')).toBeHidden();
@@ -139,7 +147,7 @@ test('validates the documented Studio authoring loop and captures the reused doc
   await expect(page).toHaveURL(/\/results$/);
   await expect(page.getByTestId('results-panel')).toBeVisible();
   await expect(page.getByTestId('results-run-filter')).toBeVisible();
-  await captureDocScreenshot(page, 'results-panel.png', page.getByTestId('results-panel'));
+  await captureDocScreenshot(page, 'results-panel.png', page.getByTestId('results-panel'), { maxHeight: 960 });
 });
 
 test('supports the guided use-path onboarding flow before loading a workspace', async ({ page }) => {
@@ -206,6 +214,7 @@ test('pairs with the desktop companion end to end through the recording picker',
 
     await expect(page.getByTestId('recording-picker-companion-status')).toContainText(/Desktop companion is/i);
     await expect(page.getByTestId('recording-picker-companion-targets')).toBeVisible();
+    await captureDocScreenshot(page, 'desktop-companion-picker.png', page.getByTestId('studio-shell'), { maxHeight: 940 });
 
     const targetRow = page
       .getByTestId('recording-picker-companion-targets')
@@ -218,6 +227,7 @@ test('pairs with the desktop companion end to end through the recording picker',
 
     await expect(page.getByTestId('recording-target-picker')).toBeHidden();
     await expect(page.getByTestId('global-controls-companion')).toContainText(/1 session\(s\)|Recording/i);
+    await captureDocScreenshot(page, 'desktop-companion-control-center.png', page.getByTestId('studio-shell'), { maxHeight: 980 });
 
     await page.getByTestId('global-controls-drawer').getByTestId('record-button-open').click();
     await page.getByTestId('recording-picker-tab-companion').click();
@@ -260,16 +270,72 @@ async function clickUntilVisible(page: Page, trigger: Locator, target: Locator):
   await expect(target).toBeVisible();
 }
 
-async function captureDocScreenshot(page: Page, fileName: string, target: Locator): Promise<void> {
+async function captureDocScreenshot(
+  page: Page,
+  fileName: string,
+  target: Locator,
+  options: DocScreenshotOptions = {},
+): Promise<void> {
   if (!captureDocsScreenshots) {
     return;
   }
 
   await fs.mkdir(docsScreenshotRoot, { recursive: true });
   await expect(target).toBeVisible();
-  await target.screenshot({
-    path: path.join(docsScreenshotRoot, fileName)
+  await target.evaluate((element, block) => {
+    element.scrollIntoView({ behavior: 'instant', block, inline: 'nearest' });
+  }, options.scrollBlock ?? 'start');
+  await page.waitForTimeout(150);
+
+  const outputPath = path.join(docsScreenshotRoot, fileName);
+  if ((options.mode ?? 'viewport') === 'element') {
+    await target.screenshot({
+      path: outputPath
+    });
+    return;
+  }
+
+  await page.screenshot({
+    path: outputPath,
+    clip: await createViewportDocClip(page, target, options)
   });
+}
+
+async function createViewportDocClip(
+  page: Page,
+  target: Locator,
+  options: DocScreenshotOptions,
+): Promise<{ x: number; y: number; width: number; height: number }> {
+  const viewport = page.viewportSize();
+  if (!viewport) {
+    throw new Error('Cannot capture docs screenshots without a viewport size.');
+  }
+
+  const box = await target.boundingBox();
+  if (!box) {
+    throw new Error('Cannot capture docs screenshot for a detached target.');
+  }
+
+  const scrollPosition = await page.evaluate(() => ({
+    x: window.scrollX,
+    y: window.scrollY
+  }));
+
+  const padding = options.padding ?? 24;
+  const clipX = Math.max(scrollPosition.x, Math.floor(box.x) - padding);
+  const clipY = Math.max(scrollPosition.y, Math.floor(box.y) - padding);
+  const availableWidth = viewport.width - (clipX - scrollPosition.x);
+  const availableHeight = viewport.height - (clipY - scrollPosition.y);
+  const desiredWidth = Math.ceil(box.width) + (padding * 2);
+  const desiredHeight = Math.ceil(box.height) + (padding * 2);
+  const maxHeight = options.maxHeight ?? (viewport.height - (padding * 2));
+
+  return {
+    x: clipX,
+    y: clipY,
+    width: Math.max(1, Math.min(desiredWidth, availableWidth)),
+    height: Math.max(1, Math.min(desiredHeight, availableHeight, maxHeight))
+  };
 }
 
 async function seedRecentWorkspaces(page: Page): Promise<void> {

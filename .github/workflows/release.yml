@@ -123,15 +123,6 @@ jobs:
             ${{ steps.companion_assets.outputs.msi_path }}
             ${{ steps.studio_assets.outputs.msi_path }}
 
-      - name: Create manual release tag
-        if: ${{ steps.release.outputs.channel == 'manual' }}
-        shell: pwsh
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git tag '${{ steps.release.outputs.tag }}' '${{ github.sha }}'
-          git push origin "refs/tags/${{ steps.release.outputs.tag }}"
-
       - name: Publish NuGet packages to GitHub Packages
         shell: pwsh
         run: |

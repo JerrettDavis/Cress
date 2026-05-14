@@ -2,6 +2,7 @@ using Cress.Core.Models;
 using Cress.ProjectSystem;
 using Cress.Specs;
 using Cress.Validation;
+using System.Reflection;
 
 namespace Cress.UnitTests;
 
@@ -170,6 +171,62 @@ public sealed class ProjectSystemValidationTests
     }
 
     [Fact]
+    public void ProfileLoader_LoadActive_uses_explicit_profile_when_provided()
+    {
+        using var workspace = new TestWorkspace();
+        workspace.WriteFile(Path.Combine("project", ".cress", "profiles", "local.yaml"), "profile: local");
+        workspace.WriteFile(Path.Combine("project", ".cress", "profiles", "ci.yaml"), "profile: ci");
+
+        var loader = new ProfileLoader();
+        var config = new CressConfig
+        {
+            Version = 1,
+            Project = new ProjectConfig
+            {
+                Name = "Validation sample",
+                DefaultProfile = "local"
+            }
+        };
+
+        var result = loader.LoadActive(workspace.GetPath("project"), config, "ci");
+
+        Assert.True(result.Success);
+        Assert.NotNull(result.Value);
+        Assert.Equal("ci", result.Value!.Profile);
+    }
+
+    [Fact]
+    public void ProfileLoader_private_load_file_uses_default_profile_when_yaml_deserializes_to_null()
+    {
+        using var workspace = new TestWorkspace();
+        var profilePath = workspace.GetPath("project", ".cress", "profiles", "empty.yaml");
+        Directory.CreateDirectory(Path.GetDirectoryName(profilePath)!);
+        File.WriteAllText(profilePath, string.Empty);
+
+        var result = InvokeProfileLoadFile(profilePath, "empty", strict: false);
+
+        Assert.NotNull(result.Value);
+        Assert.Equal("empty", result.Value!.Profile);
+        Assert.Empty(result.Diagnostics);
+    }
+
+    [Fact]
+    public void ProfileLoader_private_load_file_reports_missing_profile_when_default_name_is_blank()
+    {
+        using var workspace = new TestWorkspace();
+        var profilePath = workspace.GetPath("project", ".cress", "profiles", "blank.yaml");
+        Directory.CreateDirectory(Path.GetDirectoryName(profilePath)!);
+        File.WriteAllText(profilePath, "profile: \"\"");
+
+        var result = InvokeProfileLoadFile(profilePath, "   ", strict: false);
+
+        Assert.False(result.Success);
+        var diagnostic = Assert.Single(result.Diagnostics);
+        Assert.Equal("PRF003", diagnostic.Code);
+        Assert.NotNull(result.Value);
+    }
+
+    [Fact]
     public void ProjectValidator_reports_missing_project_root()
     {
         var validator = CreateValidator();
@@ -291,6 +348,13 @@ public sealed class ProjectSystemValidationTests
             new CapabilityParser(),
             new StepManifestParser(),
             new FixtureManifestParser());
+    }
+
+    private static OperationResult<CressProfile> InvokeProfileLoadFile(string profilePath, string defaultProfileName, bool strict)
+    {
+        var method = typeof(ProfileLoader).GetMethod("LoadFile", BindingFlags.NonPublic | BindingFlags.Static);
+        Assert.NotNull(method);
+        return Assert.IsType<OperationResult<CressProfile>>(method.Invoke(null, [profilePath, defaultProfileName, strict]));
     }
 
     private static void WriteProjectLayout(TestWorkspace workspace)

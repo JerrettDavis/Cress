@@ -111,6 +111,36 @@ public sealed class SeleniumIdeExporterTests
         Assert.Contains(commands, c => c.Command == "assertTitle" && c.Target == "Example");
     }
 
+    [Fact]
+    public void Export_NormalizedFlow_AllowsMissingInputDictionaries()
+    {
+        var flow = new NormalizedFlow
+        {
+            Version = 1,
+            FlowId = "normalized-empty",
+            Name = "Normalized Empty",
+            Actions =
+            [
+                new NormalizedExecutable
+                {
+                    Name = "ui.click"
+                }
+            ],
+            Expectations =
+            [
+                new NormalizedExecutable
+                {
+                    Name = "ui.assert-visible"
+                }
+            ]
+        };
+
+        var commands = GetCommands(_sut.Export(flow));
+
+        Assert.Contains(commands, c => c.Command == "click" && c.Target == "css=/* TODO: add selector */");
+        Assert.Contains(commands, c => c.Command == "assertElementPresent" && c.Target == "css=/* TODO: add selector */");
+    }
+
     // -------------------------------------------------------------------------
     // ui.click
     // -------------------------------------------------------------------------
@@ -225,6 +255,30 @@ public sealed class SeleniumIdeExporterTests
         Assert.Equal("css=/* TODO: add selector */", click.Target);
     }
 
+    [Fact]
+    public void Export_BrowserWaitForUrl_EmitsWaitForBodyDataUrlSelector()
+    {
+        var flow = MakeFlow("f", [
+            new FlowAction { Step = "browser.wait-for-url", With = With("url", "/dashboard") }
+        ]);
+
+        var wait = GetCommands(_sut.Export(flow)).Single(c => c.Command == "waitForElementPresent");
+
+        Assert.Equal("css=body[data-url*=\"/dashboard\"]", wait.Target);
+    }
+
+    [Fact]
+    public void Export_BrowserWaitForUrl_UsesEmptySubstring_WhenUrlMissing()
+    {
+        var flow = MakeFlow("f", [
+            new FlowAction { Step = "browser.wait-for-url" }
+        ]);
+
+        var wait = GetCommands(_sut.Export(flow)).Single(c => c.Command == "waitForElementPresent");
+
+        Assert.Equal("css=body[data-url*=\"\"]", wait.Target);
+    }
+
     // -------------------------------------------------------------------------
     // ui.fill → type
     // -------------------------------------------------------------------------
@@ -239,6 +293,18 @@ public sealed class SeleniumIdeExporterTests
 
         var type = commands.Single(c => c.Command == "type");
         Assert.Equal("user@test.com", type.Value);
+    }
+
+    [Fact]
+    public void Export_FillWithoutValue_UsesEmptyString()
+    {
+        var flow = MakeFlow("f", [
+            new FlowAction { Step = "ui.fill", With = With("cssSelector", "#email") }
+        ]);
+
+        var type = GetCommands(_sut.Export(flow)).Single(c => c.Command == "type");
+
+        Assert.Equal(string.Empty, type.Value);
     }
 
     [Theory]
@@ -307,6 +373,22 @@ public sealed class SeleniumIdeExporterTests
     }
 
     [Fact]
+    public void Export_AllHttpVerbs_EmitCommentCommands()
+    {
+        var flow = MakeFlow("f", [
+            new FlowAction { Step = "http.put", With = With("url", "https://api.example.com/v1/users/1") },
+            new FlowAction { Step = "http.delete", With = With("url", "https://api.example.com/v1/users/1") },
+            new FlowAction { Step = "http.patch", With = With("url", "https://api.example.com/v1/users/1") }
+        ]);
+
+        var comments = GetCommands(_sut.Export(flow)).Where(c => c.Command == "//").Select(c => c.Target).ToList();
+
+        Assert.Contains(comments, target => target.Contains("HTTP PUT", StringComparison.Ordinal));
+        Assert.Contains(comments, target => target.Contains("HTTP DELETE", StringComparison.Ordinal));
+        Assert.Contains(comments, target => target.Contains("HTTP PATCH", StringComparison.Ordinal));
+    }
+
+    [Fact]
     public void Export_UsesHttpUrlAsBaseUrlWhenNoNavigateStepExists()
     {
         var flow = MakeFlow("f", [
@@ -328,6 +410,45 @@ public sealed class SeleniumIdeExporterTests
         using var doc = JsonDocument.Parse(output);
 
         Assert.Equal("http://localhost", doc.RootElement.GetProperty("url").GetString());
+    }
+
+    [Fact]
+    public void Export_UsesRawNavigateUrl_WhenItIsNotAbsolute()
+    {
+        var flow = MakeFlow("f", [
+            new FlowAction { Step = "browser.navigate", With = With("url", "relative/page") }
+        ]);
+
+        using var doc = JsonDocument.Parse(_sut.Export(flow));
+
+        Assert.Equal("relative/page", doc.RootElement.GetProperty("url").GetString());
+        Assert.Contains(GetCommands(doc.RootElement.GetRawText()), c => c.Command == "open" && c.Target == "relative/page");
+    }
+
+    [Fact]
+    public void Export_UsesFullNavigateUrl_WhenItTargetsDifferentOrigin()
+    {
+        var flow = MakeFlow("f", [
+            new FlowAction { Step = "browser.navigate", With = With("url", "https://example.com/app") },
+            new FlowAction { Step = "browser.navigate", With = With("url", "https://other.example.net/dashboard") }
+        ]);
+
+        var opens = GetCommands(_sut.Export(flow)).Where(c => c.Command == "open").ToList();
+
+        Assert.Equal("/app", opens[0].Target);
+        Assert.Equal("https://other.example.net/dashboard", opens[1].Target);
+    }
+
+    [Fact]
+    public void Export_UnknownStepWithoutComment_UsesStepNameAsCommentText()
+    {
+        var flow = MakeFlow("f", [
+            new FlowAction { Step = "unknown" }
+        ]);
+
+        var comment = GetCommands(_sut.Export(flow)).Single(c => c.Command == "//");
+
+        Assert.Equal("unknown", comment.Target);
     }
 
     // -------------------------------------------------------------------------

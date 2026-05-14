@@ -7,25 +7,61 @@ namespace Cress.Studio.Launcher;
 public static class StudioLaunchUi
 {
     public static async Task<int> RunAsync(StudioLaunchOptions options, CancellationToken cancellationToken = default)
+        => await RunAsync(
+            options,
+            static async (launchOptions, token) => await StudioServerSession.StartAsync(launchOptions, token).ConfigureAwait(true),
+            Application.Run,
+            cancellationToken).ConfigureAwait(true);
+
+    internal static async Task<int> RunAsync(
+        StudioLaunchOptions options,
+        Func<StudioLaunchOptions, CancellationToken, Task<IStudioServerSession>> startSession,
+        Action<Form> runApplication,
+        CancellationToken cancellationToken = default)
     {
-        using var session = await StudioServerSession.StartAsync(options, cancellationToken).ConfigureAwait(true);
-        using Form form = options.Mode == StudioLaunchMode.Desktop
-            ? new StudioShellForm(session.BaseAddress)
-            : new StudioBrowserForm(session.BaseAddress, options.LaunchBrowserClient);
-        Application.Run(form);
+        ArgumentNullException.ThrowIfNull(options);
+        ArgumentNullException.ThrowIfNull(startSession);
+        ArgumentNullException.ThrowIfNull(runApplication);
+
+        using var session = await startSession(options, cancellationToken).ConfigureAwait(true);
+        using Form form = CreateForm(options, session.BaseAddress);
+        runApplication(form);
         return 0;
     }
 
-    private sealed class StudioBrowserForm : Form
+    internal static Form CreateForm(StudioLaunchOptions options, Uri baseAddress)
+        => options.Mode == StudioLaunchMode.Desktop
+            ? new StudioShellForm(baseAddress)
+            : new StudioBrowserForm(baseAddress, options.LaunchBrowserClient);
+
+    internal static Font ResolveTitleFont(Font? messageBoxFont = null, Font? defaultFont = null)
+        => new(messageBoxFont ?? defaultFont ?? Control.DefaultFont, FontStyle.Bold);
+
+    internal static void LaunchExternalUri(Uri address, Func<ProcessStartInfo, Process?>? processStarter = null)
+    {
+        ArgumentNullException.ThrowIfNull(address);
+
+        var startInfo = new ProcessStartInfo
+        {
+            FileName = address.ToString(),
+            UseShellExecute = true
+        };
+
+        (processStarter ?? Process.Start)(startInfo);
+    }
+
+    internal sealed class StudioBrowserForm : Form
     {
         private readonly Uri _baseAddress;
         private readonly bool _launchBrowserClient;
+        private readonly Action<Uri> _launchUri;
         private bool _opened;
 
-        public StudioBrowserForm(Uri baseAddress, bool launchBrowserClient)
+        public StudioBrowserForm(Uri baseAddress, bool launchBrowserClient, Action<Uri>? launchUri = null)
         {
             _baseAddress = baseAddress;
             _launchBrowserClient = launchBrowserClient;
+            _launchUri = launchUri ?? (uri => LaunchExternalUri(uri));
 
             Text = "Cress Studio Browser Host";
             MinimumSize = new Size(560, 260);
@@ -34,7 +70,7 @@ public static class StudioLaunchUi
             var titleLabel = new Label
             {
                 AutoSize = true,
-                Font = new Font(SystemFonts.MessageBoxFont ?? Control.DefaultFont, FontStyle.Bold),
+                Font = ResolveTitleFont(SystemFonts.MessageBoxFont, Control.DefaultFont),
                 Text = "Cress Studio is running"
             };
 
@@ -114,23 +150,29 @@ public static class StudioLaunchUi
             }
 
             _opened = true;
-            Process.Start(new ProcessStartInfo
-            {
-                FileName = _baseAddress.ToString(),
-                UseShellExecute = true
-            });
+            _launchUri(_baseAddress);
         }
     }
 
-    private sealed class StudioShellForm : Form
+    internal sealed class StudioShellForm : Form
     {
         private readonly Uri _baseAddress;
+        private readonly Action<Uri> _launchUri;
+        private readonly Func<Task> _ensureWebViewReady;
+        private readonly Action _configureWebView;
+        private readonly Action<Uri> _navigateInShell;
         private readonly ToolStripStatusLabel _statusLabel;
         private readonly WebView2 _webView;
 
-        public StudioShellForm(Uri baseAddress)
+        public StudioShellForm(
+            Uri baseAddress,
+            Action<Uri>? launchUri = null,
+            Func<Task>? ensureWebViewReady = null,
+            Action? configureWebView = null,
+            Action<Uri>? navigateInShell = null)
         {
             _baseAddress = baseAddress;
+            _launchUri = launchUri ?? (uri => LaunchExternalUri(uri));
 
             Text = "Cress Studio";
             MinimumSize = new Size(1024, 720);
@@ -155,6 +197,9 @@ public static class StudioLaunchUi
             {
                 Dock = DockStyle.Fill
             };
+            _ensureWebViewReady = ensureWebViewReady ?? new Func<Task>(() => _webView.EnsureCoreWebView2Async());
+            _configureWebView = configureWebView ?? (() => _webView.CoreWebView2.Settings.AreDefaultContextMenusEnabled = true);
+            _navigateInShell = navigateInShell ?? (uri => _webView.Source = uri);
 
             var statusStrip = new StatusStrip();
             _statusLabel = new ToolStripStatusLabel($"Connecting to {_baseAddress}");
@@ -170,13 +215,13 @@ public static class StudioLaunchUi
             Shown += HandleShown;
         }
 
-        private async void HandleShown(object? sender, EventArgs e)
+        internal async Task InitializeAsync()
         {
             try
             {
-                await _webView.EnsureCoreWebView2Async().ConfigureAwait(true);
-                _webView.CoreWebView2.Settings.AreDefaultContextMenusEnabled = true;
-                _webView.Source = _baseAddress;
+                await _ensureWebViewReady().ConfigureAwait(true);
+                _configureWebView();
+                _navigateInShell(_baseAddress);
                 _statusLabel.Text = _baseAddress.ToString();
             }
             catch (WebView2RuntimeNotFoundException)
@@ -186,13 +231,14 @@ public static class StudioLaunchUi
             }
         }
 
+        private async void HandleShown(object? sender, EventArgs e)
+        {
+            await InitializeAsync().ConfigureAwait(true);
+        }
+
         private void OpenInBrowser()
         {
-            Process.Start(new ProcessStartInfo
-            {
-                FileName = _baseAddress.ToString(),
-                UseShellExecute = true
-            });
+            _launchUri(_baseAddress);
         }
     }
 }

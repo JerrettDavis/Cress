@@ -1,6 +1,9 @@
 using System.Collections.Concurrent;
 using Cress.Core.Models;
 using Cress.Execution;
+using Cress.Execution.Drivers;
+using Cress.ProjectSystem;
+using Cress.Specs;
 using Cress.Studio.Services;
 
 namespace Cress.Studio.Web.Tests;
@@ -226,6 +229,50 @@ public sealed class RunnerServiceTests
     }
 
     [Fact]
+    public async Task EmbeddedRunner_progress_without_run_id_updates_heartbeat_only()
+    {
+        var started = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var release = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var executor = new FakeStudioRunnerExecutor(async (_, _, progress, cancellationToken) =>
+        {
+            progress?.Report(new RuntimeProgressUpdate
+            {
+                Kind = RuntimeProgressKind.FlowStarted,
+                Message = "Heartbeat only"
+            });
+
+            started.SetResult();
+            await release.Task.WaitAsync(cancellationToken);
+
+            return new RunResult
+            {
+                Metadata = new RunMetadata
+                {
+                    RunId = "run-heartbeat"
+                }
+            };
+        });
+        var node = new StudioEmbeddedRunnerNode(executor);
+        var request = StudioRunnerDispatchRequest.Create(
+            StudioEmbeddedRunnerNode.LocalNodeId,
+            projectRoot: "C:\\repo\\specs\\sample",
+            options: new RunOptions(),
+            requestedBy: "test-user",
+            requestedFrom: "test");
+
+        var dispatchTask = node.DispatchAsync(request, progress: null);
+        await started.Task.WaitAsync(TimeSpan.FromSeconds(5));
+
+        var snapshot = node.Snapshot;
+        Assert.Equal(StudioRunnerNodeStatus.Busy, snapshot.Status);
+        Assert.Equal(request.DispatchId, snapshot.ActiveDispatchId);
+        Assert.Null(snapshot.ActiveRunId);
+
+        release.SetResult();
+        await dispatchTask;
+    }
+
+    [Fact]
     public void DispatchRequest_create_populates_request_metadata()
     {
         var options = new RunOptions { Profile = "ci" };
@@ -243,6 +290,73 @@ public sealed class RunnerServiceTests
         Assert.Equal("test-user", request.RequestedBy);
         Assert.Equal("runner-tests", request.RequestedFrom);
         Assert.StartsWith("dispatch-", request.DispatchId, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public async Task RuntimeRunnerExecutor_forwards_execution_to_orchestrator()
+    {
+        var executor = new StudioRuntimeRunnerExecutor(CreateRuntimeOrchestrator());
+        var options = new RunOptions { Profile = "ci" };
+        var progress = new Progress<RuntimeProgressUpdate>();
+        using var cts = new CancellationTokenSource();
+
+        var result = await executor.ExecuteAsync("C:\\repo\\missing", options, progress, cts.Token);
+
+        var diagnostic = Assert.Single(result.Diagnostics);
+        Assert.Equal("PRJ001", diagnostic.Code);
+    }
+
+    [Fact]
+    public void DispatchResult_and_snapshot_expose_configured_values()
+    {
+        var runResult = new RunResult
+        {
+            Metadata = new RunMetadata
+            {
+                RunId = "run-999"
+            }
+        };
+        var dispatchedAt = new DateTimeOffset(2026, 5, 14, 21, 0, 0, TimeSpan.Zero);
+        var completedAt = dispatchedAt.AddSeconds(5);
+        var result = new StudioRunnerDispatchResult("node-1", "dispatch-1", dispatchedAt, completedAt, runResult);
+        var snapshot = new StudioRunnerNodeSnapshot(
+            Id: "node-1",
+            Name: "Node One",
+            DisplayName: "Node One Display",
+            Description: "Executes flows",
+            Transport: StudioRunnerTransportKind.RemoteHttp,
+            Location: "Lab A",
+            Capabilities: ["http", "playwright"],
+            Status: StudioRunnerNodeStatus.Offline,
+            LastHeartbeatUtc: dispatchedAt,
+            LastCompletedUtc: completedAt,
+            ActiveDispatchId: "dispatch-1",
+            ActiveRunId: "run-999",
+            LastRunId: "run-998",
+            QueueDepth: 2,
+            LastError: "offline");
+
+        Assert.Equal("node-1", result.NodeId);
+        Assert.Equal("dispatch-1", result.DispatchId);
+        Assert.Equal(dispatchedAt, result.DispatchedAt);
+        Assert.Equal(completedAt, result.CompletedAt);
+        Assert.Same(runResult, result.Result);
+
+        Assert.Equal("node-1", snapshot.Id);
+        Assert.Equal("Node One", snapshot.Name);
+        Assert.Equal("Node One Display", snapshot.DisplayName);
+        Assert.Equal("Executes flows", snapshot.Description);
+        Assert.Equal(StudioRunnerTransportKind.RemoteHttp, snapshot.Transport);
+        Assert.Equal("Lab A", snapshot.Location);
+        Assert.Equal(["http", "playwright"], snapshot.Capabilities);
+        Assert.Equal(StudioRunnerNodeStatus.Offline, snapshot.Status);
+        Assert.Equal(dispatchedAt, snapshot.LastHeartbeatUtc);
+        Assert.Equal(completedAt, snapshot.LastCompletedUtc);
+        Assert.Equal("dispatch-1", snapshot.ActiveDispatchId);
+        Assert.Equal("run-999", snapshot.ActiveRunId);
+        Assert.Equal("run-998", snapshot.LastRunId);
+        Assert.Equal(2, snapshot.QueueDepth);
+        Assert.Equal("offline", snapshot.LastError);
     }
 
     private static async Task<StudioRunnerNodeSnapshot> WaitForSnapshotAsync(
@@ -294,5 +408,36 @@ public sealed class RunnerServiceTests
                 new RunResult()));
 
         public void RaiseChanged() => Changed?.Invoke();
+    }
+
+    private static RuntimeOrchestrator CreateRuntimeOrchestrator()
+        => new(
+            CreateCatalogService(),
+            new PlanGenerator(),
+            new ConfigLoader(new ProjectLocator()),
+            new PluginHost(),
+            new ReportGenerator(),
+            [new HttpRuntimeDriver(), new PlaywrightRuntimeDriver()]);
+
+    private static ProjectCatalogService CreateCatalogService()
+    {
+        var locator = new ProjectLocator();
+        var configLoader = new ConfigLoader(locator);
+        var profileLoader = new ProfileLoader();
+        var flowParser = new FlowParser();
+        var flowNormalizer = new FlowNormalizer();
+        var capabilityParser = new CapabilityParser();
+        var stepParser = new StepManifestParser();
+        var fixtureParser = new FixtureManifestParser();
+        return new ProjectCatalogService(
+            locator,
+            configLoader,
+            profileLoader,
+            flowParser,
+            flowNormalizer,
+            capabilityParser,
+            stepParser,
+            fixtureParser,
+            new StepRegistry());
     }
 }

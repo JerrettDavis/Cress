@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Reflection;
 using Cress.Execution;
 using Cress.Sdk;
 
@@ -39,6 +40,59 @@ public sealed class ReflectionDotNetPluginModuleLoaderTests
 
         Assert.Equal("FirstOperation", Assert.Single(Assert.Single(firstModules).GetStepHandlers()).Operation);
         Assert.Equal("SecondOperation", Assert.Single(Assert.Single(secondModules).GetStepHandlers()).Operation);
+    }
+
+    [Fact]
+    public async Task LoadModules_reuses_cached_modules_for_same_project_root()
+    {
+        using var workspace = new TestWorkspace();
+        var pluginRoot = CreatePluginProject(workspace, "cached-plugin", "CachedOperation");
+        await BuildPluginProjectAsync(pluginRoot, workspace.GetPath("project"));
+
+        var loader = new ReflectionDotNetPluginModuleLoader();
+
+        var firstLoad = loader.LoadModules(workspace.GetPath("project"), "cached-plugin");
+        var secondLoad = loader.LoadModules(workspace.GetPath("project"), "cached-plugin");
+
+        Assert.Same(firstLoad, secondLoad);
+        Assert.Equal("CachedOperation", Assert.Single(Assert.Single(firstLoad).GetStepHandlers()).Operation);
+        Assert.Equal("CachedOperation", Assert.Single(Assert.Single(secondLoad).GetStepHandlers()).Operation);
+    }
+
+    [Fact]
+    public void LoadModules_returns_empty_for_blank_plugin_name_or_missing_plugin()
+    {
+        using var workspace = new TestWorkspace();
+        var loader = new ReflectionDotNetPluginModuleLoader();
+
+        Assert.Empty(loader.LoadModules(workspace.GetPath("project"), ""));
+        Assert.Empty(loader.LoadModules(workspace.GetPath("project"), "missing-plugin"));
+    }
+
+    [Fact]
+    public void Runtime_plugin_assembly_detection_filters_ref_and_missing_deps()
+    {
+        using var workspace = new TestWorkspace();
+        var method = typeof(ReflectionDotNetPluginModuleLoader).GetMethod("IsRuntimePluginAssembly", BindingFlags.Static | BindingFlags.NonPublic);
+        Assert.NotNull(method);
+
+        var binDirectory = workspace.GetPath("project", "steps", "dotnet", "sample", "bin", "Debug", "net10.0");
+        var refDirectory = Path.Combine(binDirectory, "ref");
+        Directory.CreateDirectory(binDirectory);
+        Directory.CreateDirectory(refDirectory);
+
+        var runtimeAssembly = Path.Combine(binDirectory, "sample.dll");
+        var refAssembly = Path.Combine(refDirectory, "sample.dll");
+        File.WriteAllText(runtimeAssembly, "stub");
+        File.WriteAllText(refAssembly, "stub");
+
+        Assert.False(Assert.IsType<bool>(method.Invoke(null, [runtimeAssembly])));
+
+        File.WriteAllText(Path.Combine(binDirectory, "sample.deps.json"), "{}");
+
+        Assert.True(Assert.IsType<bool>(method.Invoke(null, [runtimeAssembly])));
+        Assert.False(Assert.IsType<bool>(method.Invoke(null, [refAssembly])));
+        Assert.False(Assert.IsType<bool>(method.Invoke(null, [Path.Combine(workspace.RootPath, "sample.dll")])));
     }
 
     private static string CreatePluginProject(TestWorkspace workspace, string pluginName, string operationName)

@@ -8,15 +8,19 @@ internal delegate byte[] ScreenPreviewCapture(int left, int top, int width, int 
 public sealed class ScreenPreviewProvider : ICompanionPreviewProvider
 {
     private readonly ScreenPreviewCapture _capture;
+    private readonly int _maxWidth;
+    private readonly int _maxHeight;
 
     public ScreenPreviewProvider()
-        : this(CapturePng)
+        : this(CapturePng, 640, 360)
     {
     }
 
-    internal ScreenPreviewProvider(ScreenPreviewCapture capture)
+    internal ScreenPreviewProvider(ScreenPreviewCapture capture, int maxWidth = 640, int maxHeight = 360)
     {
         _capture = capture;
+        _maxWidth = maxWidth;
+        _maxHeight = maxHeight;
     }
 
     public string? CapturePreview(CompanionWindowBounds bounds)
@@ -26,8 +30,8 @@ public sealed class ScreenPreviewProvider : ICompanionPreviewProvider
             return null;
         }
 
-        var width = Math.Min(bounds.Width, 640);
-        var height = Math.Min(bounds.Height, 360);
+        var width = Math.Min(bounds.Width, _maxWidth);
+        var height = Math.Min(bounds.Height, _maxHeight);
         if (width <= 0 || height <= 0)
         {
             return null;
@@ -37,7 +41,7 @@ public sealed class ScreenPreviewProvider : ICompanionPreviewProvider
         return $"data:image/png;base64,{Convert.ToBase64String(bytes)}";
     }
 
-    private static byte[] CapturePng(int left, int top, int width, int height)
+    internal static byte[] CapturePng(int left, int top, int width, int height)
     {
         using var bitmap = new Bitmap(width, height);
         using (var graphics = Graphics.FromImage(bitmap))

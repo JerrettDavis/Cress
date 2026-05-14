@@ -26,8 +26,34 @@ internal interface IWebRecordingClient : IDisposable
     Task<IReadOnlyList<RecordedEvent>> StopAsync();
 }
 
+internal interface IProcessInfo : IDisposable
+{
+    IntPtr MainWindowHandle { get; }
+    string MainWindowTitle { get; }
+    int Id { get; }
+    string ProcessName { get; }
+    string? MainModuleFileName { get; }
+}
+
 internal delegate IWebRecordingClient WebRecordingClientFactory();
 internal delegate RecordingTargetInfo ResolveRecordingTarget(int processId);
+internal delegate IEnumerable<IProcessInfo> ProcessInfoEnumerator();
+
+internal sealed class ProcessInfoAdapter(Process process) : IProcessInfo
+{
+    public IntPtr MainWindowHandle => process.MainWindowHandle;
+
+    public string MainWindowTitle => process.MainWindowTitle;
+
+    public int Id => process.Id;
+
+    public string ProcessName => process.ProcessName;
+
+    public string? MainModuleFileName => process.MainModule?.FileName;
+
+    public void Dispose() => process.Dispose();
+}
+
 
 internal sealed class DesktopRecordingSessionAdapter(RecordingSession session) : IDesktopRecordingSession
 {
@@ -80,6 +106,7 @@ public sealed class StudioRecorderService : IStudioRecorderService, IDisposable
     private readonly IDesktopRecordingSessionFactory _sessionFactory;
     private readonly WebRecordingClientFactory _webClientFactory;
     private readonly ResolveRecordingTarget _resolveTarget;
+    private readonly ProcessInfoEnumerator _enumerateProcesses;
     private readonly object _lock = new();
 
     private IDesktopRecordingSession? _session;
@@ -134,7 +161,8 @@ public sealed class StudioRecorderService : IStudioRecorderService, IDisposable
             orchestrator,
             new DesktopRecordingSessionFactory(),
             static () => new WebRecordingClientAdapter(new WebRecorderClient()),
-            ResolveDesktopTarget)
+            ResolveDesktopTarget,
+            EnumerateProcesses)
     {
     }
 
@@ -142,12 +170,14 @@ public sealed class StudioRecorderService : IStudioRecorderService, IDisposable
         RuntimeOrchestrator orchestrator,
         IDesktopRecordingSessionFactory sessionFactory,
         WebRecordingClientFactory webClientFactory,
-        ResolveRecordingTarget resolveTarget)
+        ResolveRecordingTarget resolveTarget,
+        ProcessInfoEnumerator? enumerateProcesses = null)
     {
         _orchestrator = orchestrator;
         _sessionFactory = sessionFactory;
         _webClientFactory = webClientFactory;
         _resolveTarget = resolveTarget;
+        _enumerateProcesses = enumerateProcesses ?? EnumerateProcesses;
         _debounceTimer = new System.Threading.Timer(
             _ => FirePendingNotification(),
             null,
@@ -159,8 +189,9 @@ public sealed class StudioRecorderService : IStudioRecorderService, IDisposable
     {
         var results = new List<RecordingTargetInfo>();
 
-        foreach (var process in Process.GetProcesses())
+        foreach (var processInfo in _enumerateProcesses())
         {
+            using var process = processInfo;
             try
             {
                 if (process.MainWindowHandle == IntPtr.Zero)
@@ -178,7 +209,7 @@ public sealed class StudioRecorderService : IStudioRecorderService, IDisposable
                 bool isAttachable = true;
                 try
                 {
-                    moduleFileName = process.MainModule?.FileName;
+                    moduleFileName = process.MainModuleFileName;
                 }
                 catch (ComponentModel.Win32Exception)
                 {
@@ -476,6 +507,9 @@ public sealed class StudioRecorderService : IStudioRecorderService, IDisposable
 
         StateChanged?.Invoke();
     }
+
+    private static IEnumerable<IProcessInfo> EnumerateProcesses()
+        => Process.GetProcesses().Select(static process => (IProcessInfo)new ProcessInfoAdapter(process));
 
     private static RecordingTargetInfo ResolveDesktopTarget(int processId)
     {

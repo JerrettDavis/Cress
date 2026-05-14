@@ -19,9 +19,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\src\Cress.Cli\Cress.Cli.csproj" />
     <ProjectReference Include="..\..\src\Cress.Core\Cress.Core.csproj" />
     <ProjectReference Include="..\..\src\Cress.ProjectSystem\Cress.ProjectSystem.csproj" />
+    <ProjectReference Include="..\..\src\Cress.ServiceDefaults\Cress.ServiceDefaults.csproj" />
     <ProjectReference Include="..\..\src\Cress.Specs\Cress.Specs.csproj" />
     <ProjectReference Include="..\..\src\Cress.Validation\Cress.Validation.csproj" />
     <ProjectReference Include="..\..\src\Cress.Execution\Cress.Execution.csproj" />

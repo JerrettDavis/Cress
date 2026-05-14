@@ -172,6 +172,29 @@ public sealed class FlowToGherkinConverterTests
         Assert.Contains("# TODO: add phrase for custom.unknown-op", result);
     }
 
+    [Fact]
+    public void Convert_CressFlow_EmitsGivenSectionAndIndentedSummary()
+    {
+        var converter = BuildConverter();
+        var flow = new CressFlow
+        {
+            Version = 1,
+            Id = "desktop-flow",
+            Name = "Desktop flow",
+            Summary = "First line\nSecond line",
+            Given = ["the app is installed", "the user is signed in"],
+            When = [new FlowAction { Step = "http.get", With = new() { ["url"] = "https://example.com" } }],
+            Then = [new FlowExpectation { Expect = "http.assert-status", With = new() { ["status"] = "200" } }]
+        };
+
+        var result = converter.Convert(flow);
+
+        Assert.Contains("  First line", result);
+        Assert.Contains("  Second line", result);
+        Assert.Contains("Given the app is installed", result);
+        Assert.Contains("And the user is signed in", result);
+    }
+
     // -------------------------------------------------------------------------
     // NormalizedFlow conversion
     // -------------------------------------------------------------------------
@@ -212,6 +235,31 @@ public sealed class FlowToGherkinConverterTests
         Assert.Contains("Scenario:", result);
         Assert.Contains("When", result);
         Assert.Contains("Then", result);
+    }
+
+    [Fact]
+    public void Convert_NormalizedFlow_UnknownStep_EmitsTodoComment()
+    {
+        var converter = BuildConverter();
+        var flow = new NormalizedFlow
+        {
+            FlowId = "custom.flow",
+            Name = "Custom flow",
+            Actions =
+            [
+                new NormalizedExecutable
+                {
+                    Kind = "step",
+                    Name = "custom.unknown-op",
+                    Inputs = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase),
+                    Source = new SourceReference { Section = "when", Index = 0 }
+                }
+            ]
+        };
+
+        var result = converter.Convert(flow);
+
+        Assert.Contains("When # TODO: add phrase for custom.unknown-op", result);
     }
 
     // -------------------------------------------------------------------------
@@ -256,19 +304,6 @@ public sealed class FlowToGherkinConverterTests
         Assert.True(hasStepLine, $"No step lines found in:\n{feature}");
     }
 
-    private static string FindSolutionRoot()
-    {
-        var dir = AppContext.BaseDirectory;
-        while (!string.IsNullOrEmpty(dir))
-        {
-            if (File.Exists(Path.Combine(dir, "Cress.sln")))
-            {
-                return dir;
-            }
-
-            dir = Path.GetDirectoryName(dir)!;
-        }
-
-        throw new InvalidOperationException("Could not locate solution root from " + AppContext.BaseDirectory);
-    }
+    private static string FindSolutionRoot([System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "")
+        => Path.GetFullPath(Path.Combine(Path.GetDirectoryName(sourceFilePath)!, "..", ".."));
 }

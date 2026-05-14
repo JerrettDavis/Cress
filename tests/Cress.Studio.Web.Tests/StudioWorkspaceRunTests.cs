@@ -306,6 +306,97 @@ public sealed class StudioWorkspaceRunTests : IDisposable
     }
 
     [Fact]
+    public async Task WorkspaceState_records_warning_and_error_timeline_entries_for_failed_runs()
+    {
+        var runner = new FakeRunnerService
+        {
+            DispatchHandler = (request, progress, cancellationToken) =>
+            {
+                progress?.Report(new RuntimeProgressUpdate
+                {
+                    Kind = RuntimeProgressKind.RunStarted,
+                    RunId = "run-failed-live",
+                    FlowCount = 1,
+                    Message = "Started"
+                });
+                progress?.Report(new RuntimeProgressUpdate
+                {
+                    Kind = RuntimeProgressKind.Log,
+                    RunId = "run-failed-live",
+                    FlowId = "flow.search",
+                    FlowName = "Search flow",
+                    FlowIndex = 1,
+                    FlowCount = 1,
+                    LogLevel = "WARN",
+                    Message = "Transient slowness detected."
+                });
+                progress?.Report(new RuntimeProgressUpdate
+                {
+                    Kind = RuntimeProgressKind.Log,
+                    RunId = "run-failed-live",
+                    FlowId = "flow.search",
+                    FlowName = "Search flow",
+                    FlowIndex = 1,
+                    FlowCount = 1,
+                    LogLevel = "ERROR",
+                    Message = "Request failed."
+                });
+
+                var result = new RunResult
+                {
+                    Metadata = new RunMetadata
+                    {
+                        RunId = "run-failed-live",
+                        ArtifactRoot = request.ProjectRoot,
+                        Profile = request.Options.Profile ?? "local",
+                        StartedAt = DateTimeOffset.UtcNow,
+                        EndedAt = DateTimeOffset.UtcNow,
+                        DurationMs = 200
+                    },
+                    Flows =
+                    [
+                        new FlowRunResult
+                        {
+                            FlowId = "flow.search",
+                            Name = "Search flow",
+                            SourceFile = request.Options.FlowPath,
+                            Outcome = RunOutcome.Failed,
+                            FailureMessage = "boom"
+                        }
+                    ]
+                };
+
+                progress?.Report(new RuntimeProgressUpdate
+                {
+                    Kind = RuntimeProgressKind.RunCompleted,
+                    RunId = "run-failed-live",
+                    Message = "Completed with failures",
+                    Run = result
+                });
+
+                return Task.FromResult(new StudioRunnerDispatchResult(
+                    request.NodeId,
+                    request.DispatchId,
+                    DateTimeOffset.UtcNow,
+                    DateTimeOffset.UtcNow,
+                    result));
+            }
+        };
+        using var scope = CreateState(runner);
+        var projectRoot = CreateProject("runner-warn-error");
+        scope.State.SetProjectPath(projectRoot);
+        scope.State.LoadProject();
+
+        await scope.State.RunSelectedAsync();
+
+        Assert.Equal("Failed", scope.State.LiveRunStatus);
+        Assert.Contains("failures", scope.State.LiveRunHeadline, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains(scope.State.LiveTimelineEntries, entry => entry.Category == "Log" && entry.Status == "Warning" && entry.Detail == "Transient slowness detected.");
+        Assert.Contains(scope.State.LiveTimelineEntries, entry => entry.Category == "Log" && entry.Status == "Error" && entry.Detail == "Request failed.");
+        Assert.Contains(scope.State.LiveTimelineEntries, entry => entry.Category == "Run" && entry.Status == "Failed");
+    }
+
+    [Fact]
     public async Task RerunFailedAsync_reports_when_selected_run_has_no_failed_flows()
     {
         var runner = new FakeRunnerService();
@@ -351,6 +442,83 @@ public sealed class StudioWorkspaceRunTests : IDisposable
     }
 
     [Fact]
+    public void WorkspaceState_select_run_builds_comparison_against_previous_run()
+    {
+        using var scope = CreateState();
+        var projectRoot = CreateProject("run-comparison");
+        scope.State.SetProjectPath(projectRoot);
+        scope.State.LoadProject();
+
+        var previousRun = new StoredRunResult
+        {
+            ArtifactDirectory = CreateDirectory("comparison-prev"),
+            Result = new RunResult
+            {
+                Metadata = new RunMetadata
+                {
+                    RunId = "run-prev",
+                    ArtifactRoot = CreateDirectory("comparison-prev-artifacts"),
+                    Profile = "local",
+                    StartedAt = DateTimeOffset.UtcNow.AddMinutes(-5),
+                    EndedAt = DateTimeOffset.UtcNow.AddMinutes(-5).AddSeconds(2),
+                    DurationMs = 2000
+                },
+                Flows =
+                [
+                    new FlowRunResult
+                    {
+                        FlowId = "flow.search",
+                        Name = "Search flow",
+                        SourceFile = Path.Combine(projectRoot, "flows", "search.flow.yaml"),
+                        Outcome = RunOutcome.Failed,
+                        DurationMs = 2000
+                    }
+                ]
+            }
+        };
+
+        var currentRun = new StoredRunResult
+        {
+            ArtifactDirectory = CreateDirectory("comparison-current"),
+            Result = new RunResult
+            {
+                Metadata = new RunMetadata
+                {
+                    RunId = "run-current",
+                    ArtifactRoot = CreateDirectory("comparison-current-artifacts"),
+                    Profile = "local",
+                    StartedAt = DateTimeOffset.UtcNow,
+                    EndedAt = DateTimeOffset.UtcNow.AddSeconds(1),
+                    DurationMs = 1000
+                },
+                Flows =
+                [
+                    new FlowRunResult
+                    {
+                        FlowId = "flow.search",
+                        Name = "Search flow",
+                        SourceFile = Path.Combine(projectRoot, "flows", "search.flow.yaml"),
+                        Outcome = RunOutcome.Passed,
+                        DurationMs = 1000
+                    }
+                ]
+            }
+        };
+
+        scope.State.Runs.Clear();
+        scope.State.Runs.Add(currentRun);
+        scope.State.Runs.Add(previousRun);
+
+        scope.State.SelectRun(currentRun);
+
+        Assert.Contains("recovery", scope.State.SelectedRunComparison.Summary, StringComparison.OrdinalIgnoreCase);
+        var item = Assert.Single(scope.State.SelectedRunComparison.Items);
+        Assert.Equal(RunOutcome.Passed, item.CurrentOutcome);
+        Assert.Equal(RunOutcome.Failed, item.PreviousOutcome);
+        Assert.Equal(-1000, item.DurationDeltaMs);
+    }
+
+    [Fact]
     public async Task RunSelectedSuiteAsync_dispatches_suite_options_when_flow_ids_are_empty()
     {
         var runner = new FakeRunnerService();
@@ -377,6 +545,110 @@ public sealed class StudioWorkspaceRunTests : IDisposable
         Assert.Equal("ci", request.Options.Profile);
         Assert.Equal(["html", "markdown"], request.Options.ReportFormats);
         Assert.Contains("Smoke suite completed", scope.State.StatusMessage, StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
+    public async Task RunSelectedSuiteAsync_dispatches_each_selected_flow_and_reports_failed_suite_summary()
+    {
+        var runner = new FakeRunnerService
+        {
+            DispatchHandler = (request, progress, cancellationToken) =>
+            {
+                var flowPath = request.Options.FlowPath ?? string.Empty;
+                var flowId = flowPath.Contains("checkout", StringComparison.OrdinalIgnoreCase) ? "flow.checkout" : "flow.search";
+                var flowName = flowId == "flow.checkout" ? "Checkout flow" : "Search flow";
+                var outcome = flowId == "flow.search" ? RunOutcome.Failed : RunOutcome.Passed;
+
+                progress?.Report(new RuntimeProgressUpdate
+                {
+                    Kind = RuntimeProgressKind.RunStarted,
+                    RunId = $"run-{flowId}",
+                    FlowCount = 1,
+                    Message = "Started"
+                });
+                progress?.Report(new RuntimeProgressUpdate
+                {
+                    Kind = RuntimeProgressKind.FlowStarted,
+                    RunId = $"run-{flowId}",
+                    FlowId = flowId,
+                    FlowName = flowName,
+                    FlowIndex = 1,
+                    FlowCount = 1,
+                    StepCount = 2,
+                    Message = $"Starting {flowName}."
+                });
+
+                var result = new RunResult
+                {
+                    Metadata = new RunMetadata
+                    {
+                        RunId = $"run-{flowId}",
+                        ArtifactRoot = request.ProjectRoot,
+                        Profile = request.Options.Profile ?? "local",
+                        StartedAt = DateTimeOffset.UtcNow,
+                        EndedAt = DateTimeOffset.UtcNow,
+                        DurationMs = 100
+                    },
+                    Flows =
+                    [
+                        new FlowRunResult
+                        {
+                            FlowId = flowId,
+                            Name = flowName,
+                            SourceFile = flowPath,
+                            Outcome = outcome,
+                            FailureMessage = outcome == RunOutcome.Failed ? "boom" : null
+                        }
+                    ]
+                };
+
+                progress?.Report(new RuntimeProgressUpdate
+                {
+                    Kind = RuntimeProgressKind.RunCompleted,
+                    RunId = $"run-{flowId}",
+                    Message = outcome == RunOutcome.Failed ? "Failed" : "Passed",
+                    Run = result
+                });
+
+                return Task.FromResult(new StudioRunnerDispatchResult(
+                    request.NodeId,
+                    request.DispatchId,
+                    DateTimeOffset.UtcNow,
+                    DateTimeOffset.UtcNow,
+                    result));
+            }
+        };
+        using var scope = CreateState(runner);
+        var projectRoot = CreateProject("suite-multi-flow");
+        WriteFile(projectRoot, Path.Combine("flows", "checkout.flow.yaml"), """
+        version: 1
+        id: flow.checkout
+        name: Checkout flow
+        when:
+          - step: http.get
+            with:
+              url: https://example.test/checkout
+        then:
+          - expect: http.assert-status
+            with:
+              status: "200"
+        """);
+        scope.State.SetProjectPath(projectRoot);
+        scope.State.LoadProject();
+        scope.State.CreateNewSuite();
+        scope.State.SelectedSuite!.Name = "Regression suite";
+        scope.State.SelectedSuite.FlowIds.Add("flow.search");
+        scope.State.SelectedSuite.FlowIds.Add("flow.checkout");
+
+        await scope.State.RunSelectedSuiteAsync();
+
+        Assert.Equal(2, runner.Requests.Count);
+        Assert.Contains(runner.Requests, request => request.Options.FlowPath?.EndsWith("search.flow.yaml", StringComparison.OrdinalIgnoreCase) == true);
+        Assert.Contains(runner.Requests, request => request.Options.FlowPath?.EndsWith("checkout.flow.yaml", StringComparison.OrdinalIgnoreCase) == true);
+        Assert.Equal("Suite Regression suite completed with failures.", scope.State.StatusMessage);
+        Assert.Equal("Suite Regression suite completed with failures.", scope.State.LiveRunHeadline);
+        Assert.Contains(scope.State.LiveEvents, entry => entry.Contains("Search flow", StringComparison.Ordinal));
+        Assert.Contains(scope.State.LiveEvents, entry => entry.Contains("Checkout flow", StringComparison.Ordinal));
     }
 
     [Fact]
@@ -677,6 +949,7 @@ public sealed class StudioWorkspaceRunTests : IDisposable
 
         public List<StudioRunnerDispatchRequest> Requests { get; } = [];
         public bool WaitForCancellation { get; set; }
+        public Func<StudioRunnerDispatchRequest, IProgress<RuntimeProgressUpdate>?, CancellationToken, Task<StudioRunnerDispatchResult>>? DispatchHandler { get; set; }
 
         private readonly IReadOnlyList<StudioRunnerNodeSnapshot> _nodes =
         [
@@ -707,6 +980,11 @@ public sealed class StudioWorkspaceRunTests : IDisposable
             CancellationToken cancellationToken = default)
         {
             Requests.Add(request);
+            if (DispatchHandler is not null)
+            {
+                return await DispatchHandler(request, progress, cancellationToken);
+            }
+
             progress?.Report(new RuntimeProgressUpdate
             {
                 Kind = RuntimeProgressKind.RunStarted,

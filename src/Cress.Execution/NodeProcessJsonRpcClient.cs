@@ -180,16 +180,19 @@ internal static class RepositoryAssetLocator
 {
     public static string? FindRepositoryAsset(string relativePath)
     {
-        var directory = new DirectoryInfo(AppContext.BaseDirectory);
-        while (directory is not null)
+        foreach (var root in EnumerateSearchRoots())
         {
-            var candidate = Path.Combine(directory.FullName, relativePath);
-            if (File.Exists(candidate) || Directory.Exists(candidate))
+            var directory = new DirectoryInfo(root);
+            while (directory is not null)
             {
-                return candidate;
-            }
+                var candidate = Path.Combine(directory.FullName, relativePath);
+                if (File.Exists(candidate) || Directory.Exists(candidate))
+                {
+                    return candidate;
+                }
 
-            directory = directory.Parent;
+                directory = directory.Parent;
+            }
         }
 
         return null;
@@ -205,5 +208,23 @@ internal static class RepositoryAssetLocator
         }
 
         return "node";
+    }
+
+    private static IEnumerable<string> EnumerateSearchRoots()
+    {
+        var roots = new[]
+        {
+            Environment.GetEnvironmentVariable("CRESS_REPOSITORY_ROOT"),
+            AppContext.BaseDirectory,
+            Environment.CurrentDirectory
+        };
+
+        foreach (var root in roots)
+        {
+            if (!string.IsNullOrWhiteSpace(root))
+            {
+                yield return Path.GetFullPath(root);
+            }
+        }
     }
 }

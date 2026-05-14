@@ -510,6 +510,114 @@ public sealed class ExecutionPipelineTests
         }
     }
 
+    [Fact]
+    public void StepStubGenerator_UnsupportedLanguage_ReturnsDiagnostic()
+    {
+        using var workspace = new TestWorkspace();
+        WriteProjectFiles(workspace, "http://localhost:5000", profileExtras: string.Empty);
+        workspace.WriteFile(Path.Combine("project", "flows", "generated.flow.yaml"), """
+        version: 1
+        id: generated-flow
+        name: Generated flow
+        when:
+          - step: custom.generated_step
+        """);
+
+        var catalogService = CreateCatalogService();
+        var generator = new StepStubGenerator();
+        var catalog = catalogService.Load(workspace.GetPath("project"));
+        var generation = generator.Generate(catalog.Value!, catalog.Value!.NormalizedFlows, "python", force: false);
+
+        var diagnostic = Assert.Single(generation.Diagnostics);
+        Assert.Equal(DiagnosticSeverity.Error, diagnostic.Severity);
+        Assert.Equal("GEN001", diagnostic.Code);
+        Assert.Equal(workspace.GetPath("project"), diagnostic.File);
+        Assert.Empty(generation.Value!.Files);
+        Assert.Equal(["custom.generated_step"], generation.Value.Steps);
+    }
+
+    [Fact]
+    public void StepStubGenerator_DotNetStubAlreadyExists_WithoutForce_ReturnsWarning()
+    {
+        using var workspace = new TestWorkspace();
+        WriteProjectFiles(workspace, "http://localhost:5000", profileExtras: string.Empty);
+        workspace.WriteFile(Path.Combine("project", "flows", "generated.flow.yaml"), """
+        version: 1
+        id: generated-flow
+        name: Generated flow
+        when:
+          - step: custom.generated_step
+        """);
+
+        var pluginRoot = workspace.GetPath("project", "steps", "dotnet", "customgeneratedstep");
+        Directory.CreateDirectory(pluginRoot);
+
+        var catalogService = CreateCatalogService();
+        var generator = new StepStubGenerator();
+        var catalog = catalogService.Load(workspace.GetPath("project"));
+        var generation = generator.Generate(catalog.Value!, catalog.Value!.NormalizedFlows, "dotnet", force: false);
+
+        var diagnostic = Assert.Single(generation.Diagnostics);
+        Assert.Equal(DiagnosticSeverity.Warning, diagnostic.Severity);
+        Assert.Equal("GEN002", diagnostic.Code);
+        Assert.Equal(pluginRoot, diagnostic.File);
+        Assert.Empty(generation.Value!.Files);
+    }
+
+    [Fact]
+    public void StepStubGenerator_TypeScriptStubAlreadyExists_WithoutForce_ReturnsWarning()
+    {
+        using var workspace = new TestWorkspace();
+        WriteProjectFiles(workspace, "http://localhost:5000", profileExtras: string.Empty);
+        workspace.WriteFile(Path.Combine("project", "flows", "generated.flow.yaml"), """
+        version: 1
+        id: generated-flow
+        name: Generated flow
+        when:
+          - step: custom.generated_step
+        """);
+
+        var pluginRoot = workspace.GetPath("project", "steps", "node", "customgeneratedstep");
+        Directory.CreateDirectory(pluginRoot);
+
+        var catalogService = CreateCatalogService();
+        var generator = new StepStubGenerator();
+        var catalog = catalogService.Load(workspace.GetPath("project"));
+        var generation = generator.Generate(catalog.Value!, catalog.Value!.NormalizedFlows, "typescript", force: false);
+
+        var diagnostic = Assert.Single(generation.Diagnostics);
+        Assert.Equal(DiagnosticSeverity.Warning, diagnostic.Severity);
+        Assert.Equal("GEN003", diagnostic.Code);
+        Assert.Equal(pluginRoot, diagnostic.File);
+        Assert.Empty(generation.Value!.Files);
+    }
+
+    [Fact]
+    public void StepStubGenerator_DotNetStubWithoutInputs_OmitsInputsBlockFromManifest()
+    {
+        using var workspace = new TestWorkspace();
+        WriteProjectFiles(workspace, "http://localhost:5000", profileExtras: string.Empty);
+        workspace.WriteFile(Path.Combine("project", "flows", "generated.flow.yaml"), """
+        version: 1
+        id: generated-flow
+        name: Generated flow
+        when:
+          - step: custom.generated_step
+        """);
+
+        var catalogService = CreateCatalogService();
+        var generator = new StepStubGenerator();
+        var catalog = catalogService.Load(workspace.GetPath("project"));
+        var generation = generator.Generate(catalog.Value!, catalog.Value!.NormalizedFlows, "dotnet", force: true);
+
+        Assert.DoesNotContain(generation.Diagnostics, diagnostic => diagnostic.Severity == DiagnosticSeverity.Error);
+
+        var manifestPath = workspace.GetPath("project", "steps", "manifests", "generated", "customgeneratedstep.yaml");
+        var manifest = File.ReadAllText(manifestPath);
+        Assert.DoesNotContain("inputs:", manifest, StringComparison.Ordinal);
+        Assert.Contains("operation: \"Execute\"", manifest, StringComparison.Ordinal);
+    }
+
     private static RuntimeOrchestrator CreateRuntimeOrchestrator(Func<HttpMessageHandler>? httpHandlerFactory = null)
     {
         var configLoader = new ConfigLoader(new ProjectLocator());
@@ -626,21 +734,8 @@ public sealed class ExecutionPipelineTests
         return relative.StartsWith(".", StringComparison.Ordinal) ? $"file:{relative}" : $"file:./{relative}";
     }
 
-    private static string GetRepositoryRoot()
-    {
-        var directory = new DirectoryInfo(AppContext.BaseDirectory);
-        while (directory is not null)
-        {
-            if (File.Exists(Path.Combine(directory.FullName, "docs", "plans", "PLAN.md")))
-            {
-                return directory.FullName;
-            }
-
-            directory = directory.Parent;
-        }
-
-        throw new InvalidOperationException("Repository root could not be located from the test assembly.");
-    }
+    private static string GetRepositoryRoot([System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "")
+        => Path.GetFullPath(Path.Combine(Path.GetDirectoryName(sourceFilePath)!, "..", ".."));
 
     private static string GetNodeExecutablePath()
         => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "nodejs", "node.exe");

@@ -70,6 +70,17 @@ public class PlaywrightCodegenImporterTests
     }
 
     [Fact]
+    public void GetByLabel_Click_MapsTo_UiClick_WithLabel()
+    {
+        var code = "  await page.getByLabel('Email').click();";
+        var flow = _importer.Import(code, "test");
+
+        var action = Assert.Single(flow.When);
+        Assert.Equal("ui.click", action.Step);
+        Assert.Equal("Email", action.With!["label"]);
+    }
+
+    [Fact]
     public void GetByText_Click_MapsTo_UiClick_WithText()
     {
         var code = "  await page.getByText('Welcome').click();";
@@ -78,6 +89,18 @@ public class PlaywrightCodegenImporterTests
         var action = Assert.Single(flow.When);
         Assert.Equal("ui.click", action.Step);
         Assert.Equal("Welcome", action.With!["text"]);
+    }
+
+    [Fact]
+    public void GetByPlaceholder_Fill_MapsTo_UiFill_WithPlaceholder()
+    {
+        var code = "  await page.getByPlaceholder('Search').fill('query');";
+        var flow = _importer.Import(code, "test");
+
+        var action = Assert.Single(flow.When);
+        Assert.Equal("ui.fill", action.Step);
+        Assert.Equal("Search", action.With!["placeholder"]);
+        Assert.Equal("query", action.With["value"]);
     }
 
     [Fact]
@@ -92,6 +115,17 @@ public class PlaywrightCodegenImporterTests
     }
 
     [Fact]
+    public void LocatorXpath_Click_WithDoubleQuotedLocator_MapsTo_UiClick_WithXpath()
+    {
+        var code = "  await page.locator(\"xpath=//div[@data-id='ok']\").click();";
+        var flow = _importer.Import(code, "test");
+
+        var action = Assert.Single(flow.When);
+        Assert.Equal("ui.click", action.Step);
+        Assert.Equal("//div[@data-id='ok']", action.With!["xpath"]);
+    }
+
+    [Fact]
     public void LocatorCss_Click_MapsTo_UiClick_WithCssSelector()
     {
         var code = "  await page.locator('.submit-button').click();";
@@ -100,6 +134,18 @@ public class PlaywrightCodegenImporterTests
         var action = Assert.Single(flow.When);
         Assert.Equal("ui.click", action.Step);
         Assert.Equal(".submit-button", action.With!["cssSelector"]);
+    }
+
+    [Fact]
+    public void LocatorFill_MapsTo_UiFill_WithCssSelector_AndValue()
+    {
+        var code = "  await page.locator('.search-box').fill('term');";
+        var flow = _importer.Import(code, "test");
+
+        var action = Assert.Single(flow.When);
+        Assert.Equal("ui.fill", action.Step);
+        Assert.Equal(".search-box", action.With!["cssSelector"]);
+        Assert.Equal("term", action.With["value"]);
     }
 
     [Fact]
@@ -149,6 +195,28 @@ public class PlaywrightCodegenImporterTests
     }
 
     [Fact]
+    public void ExpectToBeVisible_WithTestId_MapsTo_TestIdLocator()
+    {
+        var code = "  await expect(page.getByTestId('dashboard')).toBeVisible();";
+        var flow = _importer.Import(code, "test");
+
+        var expectation = Assert.Single(flow.Then);
+        Assert.Equal("ui.assert-visible", expectation.Expect);
+        Assert.Equal("dashboard", expectation.With!["testId"]);
+    }
+
+    [Fact]
+    public void ExpectToBeVisible_WithUnknownLocator_PreservesLocatorExpression()
+    {
+        var code = "  await expect(page.locator('.status-pill')).toBeVisible();";
+        var flow = _importer.Import(code, "test");
+
+        var expectation = Assert.Single(flow.Then);
+        Assert.Equal("ui.assert-visible", expectation.Expect);
+        Assert.Equal("locator('.status-pill')", expectation.With!["locatorExpr"]);
+    }
+
+    [Fact]
     public void UnrecognizedCall_EmitsUnknownStep_WithTodoComment()
     {
         var code = "  await page.hover('#menu-item');";
@@ -195,6 +263,17 @@ public class PlaywrightCodegenImporterTests
 
         Assert.Equal("user login flow", flow.Name);
         Assert.Equal("user-login-flow", flow.Id);
+    }
+
+    [Fact]
+    public void EmptyInput_FallsBackToImportedFlowName()
+    {
+        var flow = _importer.Import(string.Empty);
+
+        Assert.Equal("imported-flow", flow.Name);
+        Assert.Equal("imported-flow", flow.Id);
+        Assert.Empty(flow.When);
+        Assert.Empty(flow.Then);
     }
 
     // -------------------------------------------------------------------------

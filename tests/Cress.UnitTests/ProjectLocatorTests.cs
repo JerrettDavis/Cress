@@ -20,4 +20,35 @@ public sealed class ProjectLocatorTests
 
         Assert.Equal(projectRoot, result);
     }
+
+    [Fact]
+    public void FindProjectRoot_ReturnsNullForBlankStartDirectory()
+    {
+        var locator = new ProjectLocator();
+
+        Assert.Null(locator.FindProjectRoot(""));
+        Assert.Null(locator.FindProjectRoot("   "));
+    }
+
+    [Fact]
+    public void TryFindProjectRoot_ReturnsFalseAndEmptyValueWhenProjectIsMissing()
+    {
+        using var workspace = new TestWorkspace();
+        var locator = new ProjectLocator();
+
+        var found = locator.TryFindProjectRoot(workspace.GetPath("missing"), out var projectRoot);
+
+        Assert.False(found);
+        Assert.Equal(string.Empty, projectRoot);
+    }
+
+    [Fact]
+    public void GetConfigPath_ReturnsCressConfigLocation()
+    {
+        var locator = new ProjectLocator();
+
+        Assert.Equal(
+            Path.Combine(@"C:\repo\sample", ".cress", "config.yaml"),
+            locator.GetConfigPath(@"C:\repo\sample"));
+    }
 }

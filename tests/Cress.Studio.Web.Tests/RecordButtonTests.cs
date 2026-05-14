@@ -103,4 +103,49 @@ public sealed class RecordButtonTests : TestContext
         Assert.Contains("Access denied", cut.Markup);
         Assert.Contains("record-error", cut.Markup);
     }
+
+    [Fact]
+    public void RecordButton_clicking_stop_button_ends_recording_and_opens_save_panel()
+    {
+        var recorder = new FakeStudioRecorderService
+        {
+            IsRecording = true,
+            CurrentTarget = new RecordingTargetInfo
+            {
+                ProcessId = 1234,
+                ProcessName = "calc",
+                MainWindowTitle = "Calculator"
+            }
+        };
+        var state = CreateState(recorder);
+
+        var cut = RenderComponent<Cress.Studio.Web.Components.Studio.RecordButton>();
+        cut.Find("[data-testid='record-button-stop']").Click();
+
+        Assert.False(recorder.IsRecording);
+        Assert.True(state.IsRecorderSavePanelOpen);
+    }
+
+    [Fact]
+    public void RecordButton_formats_elapsed_time_in_hours_when_needed()
+    {
+        var recorder = new FakeStudioRecorderService
+        {
+            IsRecording = true,
+            Elapsed = TimeSpan.FromHours(1) + TimeSpan.FromMinutes(2) + TimeSpan.FromSeconds(3),
+            CapturedEventCount = 7,
+            CurrentTarget = new RecordingTargetInfo
+            {
+                ProcessId = 1234,
+                ProcessName = "calc",
+                MainWindowTitle = "Calculator"
+            }
+        };
+
+        CreateState(recorder);
+
+        var cut = RenderComponent<Cress.Studio.Web.Components.Studio.RecordButton>();
+
+        Assert.Contains("1h 02m 03s", cut.Markup, StringComparison.Ordinal);
+    }
 }

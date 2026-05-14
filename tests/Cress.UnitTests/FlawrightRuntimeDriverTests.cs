@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Reflection;
 using Cress.Core.Models;
 using Cress.Execution;
 using Cress.Execution.Drivers;
@@ -30,6 +31,75 @@ public sealed class FlawrightRuntimeDriverTests
         Assert.Equal("--demo", result.Value.Flawright.Arguments);
         Assert.Equal("Sample App", result.Value.Flawright.WindowTitle);
         Assert.Equal(12345, result.Value.Flawright.LaunchTimeoutMs);
+    }
+
+    [Fact]
+    public void HealthCheck_CommandNameApplicationPath_ReportsPathLookupInfo()
+    {
+        using var workspace = new TestWorkspace();
+        var driver = new FlawrightRuntimeDriver();
+        var catalog = CreateCatalog(workspace.GetPath("project"), "sample-app.exe");
+
+        var diagnostics = driver.HealthCheck(catalog);
+
+        var diagnostic = Assert.Single(diagnostics, item => item.Code == "DRV103");
+        Assert.Equal(DiagnosticSeverity.Info, diagnostic.Severity);
+        Assert.Contains("PATH at runtime", diagnostic.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void HealthCheck_RelativeMissingApplicationPath_ReportsWarning()
+    {
+        using var workspace = new TestWorkspace();
+        var driver = new FlawrightRuntimeDriver();
+        var catalog = CreateCatalog(workspace.GetPath("project"), Path.Combine("tools", "missing-app.exe"));
+
+        var diagnostics = driver.HealthCheck(catalog);
+
+        var diagnostic = Assert.Single(diagnostics, item => item.Code == "DRV104");
+        Assert.Equal(DiagnosticSeverity.Warning, diagnostic.Severity);
+        Assert.Contains("does not exist", diagnostic.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void HealthCheck_ExistingRelativeApplicationPath_ReportsResolvedInfo()
+    {
+        using var workspace = new TestWorkspace();
+        var driver = new FlawrightRuntimeDriver();
+        var relativePath = Path.Combine("tools", "sample-app.exe");
+        var fullPath = workspace.GetPath("project", relativePath);
+        Directory.CreateDirectory(Path.GetDirectoryName(fullPath)!);
+        File.WriteAllText(fullPath, "stub");
+
+        var catalog = CreateCatalog(workspace.GetPath("project"), relativePath);
+
+        var diagnostics = driver.HealthCheck(catalog);
+
+        var diagnostic = Assert.Single(diagnostics, item => item.Code == "DRV103");
+        Assert.Equal(DiagnosticSeverity.Info, diagnostic.Severity);
+        Assert.Contains(fullPath, diagnostic.Message, StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Theory]
+    [InlineData(@"C:\apps\sample.exe", @"C:\apps\sample.exe")]
+    [InlineData(@"tools\sample.exe", @"tools\sample.exe")]
+    [InlineData("sample-app.exe", "sample-app.exe")]
+    public void ResolveConfiguredPath_HandlesAbsoluteRelativeAndCommandNames(string candidate, string expectedSuffixOrValue)
+    {
+        var method = typeof(FlawrightRuntimeDriver).GetMethod("ResolveConfiguredPath", BindingFlags.Static | BindingFlags.NonPublic);
+        Assert.NotNull(method);
+
+        var projectRoot = @"C:\repo\project";
+        var resolved = Assert.IsType<string>(method.Invoke(null, [projectRoot, candidate]));
+
+        if (Path.IsPathRooted(candidate) || candidate.Contains('\\') || candidate.Contains('/'))
+        {
+            Assert.EndsWith(expectedSuffixOrValue, resolved, StringComparison.OrdinalIgnoreCase);
+        }
+        else
+        {
+            Assert.Equal(expectedSuffixOrValue, resolved);
+        }
     }
 
     [Fact]
@@ -311,19 +381,23 @@ public sealed class FlawrightRuntimeDriverTests
         Assert.True(process.ExitCode == 0, $"{fileName} {string.Join(' ', arguments)} failed.{Environment.NewLine}{output}{Environment.NewLine}{error}");
     }
 
-    private static string GetRepositoryRoot()
-    {
-        var directory = new DirectoryInfo(AppContext.BaseDirectory);
-        while (directory is not null)
+    private static string GetRepositoryRoot([System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "")
+        => Path.GetFullPath(Path.Combine(Path.GetDirectoryName(sourceFilePath)!, "..", ".."));
+
+    private static ProjectCatalog CreateCatalog(string projectRoot, string applicationPath)
+        => new()
         {
-            if (File.Exists(Path.Combine(directory.FullName, "docs", "plans", "PLAN.md")))
+            ProjectRoot = projectRoot,
+            EffectiveConfig = new EffectiveConfig
             {
-                return directory.FullName;
+                ActiveProfile = "local",
+                Profile = new CressProfile
+                {
+                    Flawright = new FlawrightProfileConfig
+                    {
+                        ApplicationPath = applicationPath
+                    }
+                }
             }
-
-            directory = directory.Parent;
-        }
-
-        throw new InvalidOperationException("Repository root could not be located from the test assembly.");
-    }
+        };
 }

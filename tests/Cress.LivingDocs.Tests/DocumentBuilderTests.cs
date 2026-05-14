@@ -322,6 +322,85 @@ public sealed class DocumentBuilderTests
         Assert.EndsWith("first.jpg", screenshot.FilePath, StringComparison.OrdinalIgnoreCase);
     }
 
+    [Fact]
+    public async Task BuildAsync_uses_flow_id_when_run_name_is_missing_and_collects_image_media_type_artifact()
+    {
+        using var workspace = new TemporaryWorkspace();
+        var projectPath = workspace.CreateProjectRoot();
+        workspace.WriteFile(Path.Combine(projectPath, ".cress", "config.yaml"), """
+        version: 1
+        project:
+          name: Media sample
+          defaultProfile: local
+        paths:
+          capabilities: capabilities
+          flows: flows
+          models: models
+          fixtures: fixtures
+          steps: steps
+          artifacts: .cress/artifacts
+          reports: reports
+        """);
+
+        WriteRunArtifact(
+            workspace,
+            projectPath,
+            "2026-05-07-004",
+            new RunResult
+            {
+                Metadata = new RunMetadata
+                {
+                    RunId = "run-004",
+                    ArtifactRoot = "artifact-root-004",
+                    ProjectName = "Media sample",
+                    Profile = "local",
+                    StartedAt = new DateTimeOffset(2026, 5, 7, 13, 0, 0, TimeSpan.Zero),
+                    EndedAt = new DateTimeOffset(2026, 5, 7, 13, 0, 30, TimeSpan.Zero),
+                    DurationMs = 30_000
+                },
+                Flows =
+                [
+                    new FlowRunResult
+                    {
+                        FlowId = "flow.unnamed",
+                        Name = "",
+                        Outcome = RunOutcome.Passed,
+                        DurationMs = 250,
+                        Steps =
+                        [
+                            new StepRunResult
+                            {
+                                Name = "capture.preview",
+                                Outcome = RunOutcome.Passed,
+                                Artifacts =
+                                [
+                                    new EvidenceArtifact
+                                    {
+                                        Category = "screenshot",
+                                        RelativePath = "shots\\preview.bin",
+                                        MediaType = "image/gif"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            });
+
+        var builder = CreateBuilder();
+
+        var model = await builder.BuildAsync(new DocumentBuildOptions
+        {
+            ProjectPath = projectPath,
+            MaxScreenshots = 2
+        });
+
+        Assert.Single(model.Flows);
+        Assert.Equal("flow.unnamed", model.Flows[0].Name);
+        var screenshot = Assert.Single(model.Screenshots);
+        Assert.EndsWith("preview.bin", screenshot.FilePath, StringComparison.OrdinalIgnoreCase);
+    }
+
     private static DocumentBuilder CreateBuilder()
         => new(
             new RunResultRepository(),

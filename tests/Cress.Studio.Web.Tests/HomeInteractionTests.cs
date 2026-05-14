@@ -347,6 +347,129 @@ public sealed class HomeInteractionTests : TestContext, IDisposable
     }
 
     [Fact]
+    public void Home_workspace_path_readiness_reports_invalid_path_format()
+    {
+        var state = CreateState();
+        state.ProjectPathInput = "invalid\0path";
+
+        var cut = RenderComponent<Home>();
+        var readiness = cut.Find("[data-testid='workspace-path-readiness']").TextContent;
+
+        Assert.Contains("Path is not valid", readiness, StringComparison.Ordinal);
+        Assert.Contains("valid local folder path", readiness, StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
+    public void Home_workspace_path_readiness_prompts_for_blank_path()
+    {
+        var state = CreateState();
+        SetAutoProperty(state, nameof(StudioWorkspaceState.SuggestedWorkspacePath), string.Empty);
+        state.ProjectPathInput = string.Empty;
+
+        var cut = RenderComponent<Home>();
+        var readiness = cut.Find("[data-testid='workspace-path-readiness']").TextContent;
+
+        Assert.Contains("Choose a workspace path", readiness, StringComparison.Ordinal);
+        Assert.Contains("Browse for a folder", readiness, StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
+    public void Home_workspace_path_readiness_reports_existing_non_cress_folder()
+    {
+        var state = CreateState();
+        var folder = CreateDirectory("plain-folder");
+        state.SetProjectPath(folder);
+
+        var cut = RenderComponent<Home>();
+        var readiness = cut.Find("[data-testid='workspace-path-readiness']").TextContent;
+
+        Assert.Contains("Folder exists", readiness, StringComparison.Ordinal);
+        Assert.Contains("inspect whether it contains flows", readiness, StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
+    public void Home_recent_workspace_filter_can_show_empty_state_and_clear_back_to_results()
+    {
+        var first = CreateDirectory("recent-alpha");
+        var second = CreateDirectory("recent-beta");
+        CreateState(recentWorkspaces: [first, second]);
+
+        var cut = RenderComponent<Home>();
+        cut.Find("[data-testid='recent-workspace-filter']").Input("zzz");
+
+        Assert.NotNull(cut.Find("[data-testid='recent-workspace-filter-empty']"));
+        Assert.Contains("Filter: zzz", cut.Find("[data-testid='recent-workspace-summary']").TextContent, StringComparison.Ordinal);
+
+        cut.Find("button[aria-label='Clear recent workspace filter']").Click();
+
+        Assert.Empty(cut.FindAll("[data-testid='recent-workspace-filter-empty']"));
+        Assert.Equal(2, cut.FindAll("[data-testid^='recent-workspace-card-']").Count);
+    }
+
+    [Theory]
+    [InlineData("http://localhost/designer")]
+    [InlineData("http://localhost/results")]
+    public void Home_before_load_routes_surface_single_preview_for_requested_stage(string uri)
+    {
+        CreateState();
+        Services.GetRequiredService<NavigationManager>().NavigateTo(uri);
+
+        var cut = RenderComponent<Home>();
+
+        Assert.Contains("workflow-step-token--active", cut.Find("[data-testid='workflow-stage-choose']").GetAttribute("class") ?? string.Empty, StringComparison.Ordinal);
+        Assert.Contains("workflow-step-token--pending", cut.Find("[data-testid='workflow-stage-load']").GetAttribute("class") ?? string.Empty, StringComparison.Ordinal);
+        Assert.Contains("workflow-preview-grid--single", cut.Markup, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void Home_loaded_workspace_route_advances_workflow_tokens()
+    {
+        var state = CreateState();
+        var projectRoot = CreateProject("workflow-workspace");
+        state.SetProjectPath(projectRoot);
+        state.LoadProject();
+        Services.GetRequiredService<NavigationManager>().NavigateTo("http://localhost/workspace");
+
+        var cut = RenderComponent<Home>();
+
+        Assert.Contains("workflow-step-token--complete", cut.Find("[data-testid='workflow-stage-choose']").GetAttribute("class") ?? string.Empty, StringComparison.Ordinal);
+        Assert.Contains("workflow-step-token--active", cut.Find("[data-testid='workflow-stage-load']").GetAttribute("class") ?? string.Empty, StringComparison.Ordinal);
+        Assert.Contains("workflow-step-token--pending", cut.Find("[data-testid='workflow-stage-design']").GetAttribute("class") ?? string.Empty, StringComparison.Ordinal);
+        Assert.Contains("workflow-step-token--pending", cut.Find("[data-testid='workflow-stage-review']").GetAttribute("class") ?? string.Empty, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void Home_loaded_workspace_route_updates_workflow_copy_for_setup_stage()
+    {
+        var state = CreateState();
+        var projectRoot = CreateProject("workflow-copy");
+        state.SetProjectPath(projectRoot);
+        state.LoadProject();
+        Services.GetRequiredService<NavigationManager>().NavigateTo("http://localhost/workspace");
+
+        var cut = RenderComponent<Home>();
+        var workflow = cut.Find("[data-testid='workflow-progress']").TextContent;
+
+        Assert.Contains("Step 2 of 4", workflow, StringComparison.Ordinal);
+        Assert.Contains("Refresh the loaded workspace or move forward into authoring.", workflow, StringComparison.Ordinal);
+        Assert.Contains("Workspace setup stays in focus here while the designer and results pages remain one click away.", workflow, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void Home_advanced_quick_actions_disable_suggested_and_demo_buttons_when_unavailable()
+    {
+        var state = CreateState();
+        SetAutoProperty(state, nameof(StudioWorkspaceState.SuggestedWorkspacePath), string.Empty);
+        SetAutoProperty(state, nameof(StudioWorkspaceState.DemoWorkspaces), Array.Empty<StudioDemoWorkspace>());
+
+        var cut = RenderComponent<Home>();
+
+        Assert.True(cut.Find("[data-testid='quick-use-suggested-path']").HasAttribute("disabled"));
+        Assert.True(cut.Find("[data-testid='quick-load-first-demo']").HasAttribute("disabled"));
+        Assert.False(cut.Find("[data-testid='quick-open-workspace-picker']").HasAttribute("disabled"));
+    }
+
+    [Fact]
     public void Home_wizard_switches_between_open_and_new_modes()
     {
         CreateState();
@@ -380,6 +503,193 @@ public sealed class HomeInteractionTests : TestContext, IDisposable
         Assert.NotNull(cut.Find("[data-testid='startup-open-panel']"));
         Assert.Empty(cut.FindAll("[data-testid='startup-new-panel']"));
         Assert.Empty(cut.FindAll("[data-testid='startup-samples-panel']"));
+    }
+
+    [Fact]
+    public void Home_demo_filter_can_show_empty_state_and_clear_back_to_results()
+    {
+        var demoProject = CreateProject("demo-filter-http");
+        var state = CreateState();
+        SetAutoProperty(state, nameof(StudioWorkspaceState.DemoWorkspaces), new[]
+        {
+            new StudioDemoWorkspace(
+                "httpbin-smoke",
+                "HTTP smoke demo",
+                "Self-contained demo for tests.",
+                demoProject,
+                ["service", "smoke"],
+                null)
+        });
+
+        var cut = RenderComponent<Home>();
+        cut.Find("[data-testid='startup-mode-samples']").Click();
+        cut.Find("[data-testid='demo-filter']").Input("desktop");
+
+        Assert.NotNull(cut.Find("[data-testid='demo-filter-empty']"));
+        Assert.Contains("Filter: desktop", cut.Find("[data-testid='demo-filter-summary']").TextContent, StringComparison.Ordinal);
+
+        cut.Find("button[aria-label='Clear demo filter']").Click();
+
+        Assert.Empty(cut.FindAll("[data-testid='demo-filter-empty']"));
+        Assert.Single(cut.FindAll("[data-testid^='demo-card-']"));
+    }
+
+    [Fact]
+    public void Home_sample_demo_actions_can_use_path_and_load_demo()
+    {
+        var demoProject = CreateProject("demo-action-http");
+        var state = CreateState();
+        SetAutoProperty(state, nameof(StudioWorkspaceState.DemoWorkspaces), new[]
+        {
+            new StudioDemoWorkspace(
+                "httpbin-smoke",
+                "HTTP smoke demo",
+                "Self-contained demo for tests.",
+                demoProject,
+                ["service", "smoke"],
+                "local")
+        });
+
+        var cut = RenderComponent<Home>();
+        cut.Find("[data-testid='startup-mode-samples']").Click();
+        cut.Find("[data-testid='use-demo-path-httpbin-smoke']").Click();
+        Assert.Equal(demoProject, state.ProjectPathInput);
+
+        cut.Find("[data-testid='load-demo-httpbin-smoke']").Click();
+        Assert.True(state.HasLoadedProject);
+        Assert.Equal(demoProject, state.ProjectPathInput);
+    }
+
+    [Fact]
+    public void Home_suggested_workspace_actions_can_use_and_load_suggested_path()
+    {
+        var suggestedProject = CreateProject("suggested-home");
+        var state = CreateState();
+        SetAutoProperty(state, nameof(StudioWorkspaceState.SuggestedWorkspacePath), suggestedProject);
+        state.SetProjectPath(string.Empty);
+
+        var cut = RenderComponent<Home>();
+        cut.Find("[data-testid='use-suggested-workspace']").Click();
+        Assert.Equal(suggestedProject, state.ProjectPathInput);
+
+        state.SetProjectPath(string.Empty);
+        cut.Render();
+        cut.Find("[data-testid='load-suggested-workspace']").Click();
+        Assert.True(state.HasLoadedProject);
+        Assert.Equal(suggestedProject, state.ProjectPathInput);
+    }
+
+    [Fact]
+    public void Home_quick_load_first_demo_loads_demo_workspace()
+    {
+        var firstDemoProject = CreateProject("demo-first");
+        var secondDemoProject = CreateProject("demo-second");
+        var state = CreateState();
+        SetAutoProperty(state, nameof(StudioWorkspaceState.DemoWorkspaces), new[]
+        {
+            new StudioDemoWorkspace("demo-first", "First demo", "First", firstDemoProject, ["first"], "local"),
+            new StudioDemoWorkspace("demo-second", "Second demo", "Second", secondDemoProject, ["second"], "local")
+        });
+
+        var cut = RenderComponent<Home>();
+        cut.Find("[data-testid='quick-load-first-demo']").Click();
+
+        Assert.True(state.HasLoadedProject);
+        Assert.Equal(firstDemoProject, state.ProjectPathInput);
+    }
+
+    [Fact]
+    public void Home_private_summary_helpers_reflect_trimmed_path_profile_retry_and_screenshot_policy()
+    {
+        var state = CreateState();
+        var workspace = CreateProject("summary-private");
+        state.ProjectPathInput = workspace + Path.DirectorySeparatorChar;
+        state.SelectedProfile = string.Empty;
+        state.RetryCountOverrideText = string.Empty;
+        state.ScreenshotPolicy = "on-failure";
+
+        var cut = RenderComponent<Home>();
+
+        Assert.Equal("summary-private", InvokePrivate<string>(cut.Instance, "GetWorkspacePathSummary"));
+        Assert.Equal("Default", InvokePrivate<string>(cut.Instance, "GetProfileSummary"));
+        Assert.Equal("Project default", InvokePrivate<string>(cut.Instance, "GetRetryOverrideSummary"));
+        Assert.Equal("On failure", InvokePrivate<string>(cut.Instance, "GetScreenshotPolicySummary"));
+
+        state.RetryCountOverrideText = "3";
+        state.ScreenshotPolicy = "off";
+        cut.Render();
+        Assert.Equal("3", InvokePrivate<string>(cut.Instance, "GetRetryOverrideSummary"));
+        Assert.Equal("Off", InvokePrivate<string>(cut.Instance, "GetScreenshotPolicySummary"));
+
+        state.RetryCountOverrideText = "-1";
+        state.ScreenshotPolicy = "every-step";
+        cut.Render();
+        Assert.Equal("Invalid", InvokePrivate<string>(cut.Instance, "GetRetryOverrideSummary"));
+        Assert.Equal("Every step", InvokePrivate<string>(cut.Instance, "GetScreenshotPolicySummary"));
+    }
+
+    [Fact]
+    public void Home_private_workflow_helpers_track_stage_state_across_loaded_routes()
+    {
+        var state = CreateState();
+        var workspace = CreateProject("workflow-private");
+        state.SetProjectPath(workspace);
+        state.LoadProject();
+        var navigation = Services.GetRequiredService<NavigationManager>();
+
+        navigation.NavigateTo("http://localhost/workspace");
+        var cut = RenderComponent<Home>();
+
+        Assert.Equal("complete", InvokePrivate<string>(cut.Instance, "GetWorkflowStageState", "choose"));
+        Assert.Equal("active", InvokePrivate<string>(cut.Instance, "GetWorkflowStageState", "load"));
+        Assert.Equal("pending", InvokePrivate<string>(cut.Instance, "GetWorkflowStageState", "design"));
+        Assert.Equal("pending", InvokePrivate<string>(cut.Instance, "GetWorkflowStageState", "review"));
+        Assert.Equal(2, InvokePrivate<int>(cut.Instance, "GetCurrentWorkflowStepNumber"));
+        Assert.Equal("Refresh the loaded workspace or move forward into authoring.", InvokePrivate<string>(cut.Instance, "GetCurrentWorkflowHeadline"));
+
+        navigation.NavigateTo("http://localhost/designer");
+        cut.Render();
+        Assert.Equal("complete", InvokePrivate<string>(cut.Instance, "GetWorkflowStageState", "load"));
+        Assert.Equal("active", InvokePrivate<string>(cut.Instance, "GetWorkflowStageState", "design"));
+        Assert.Equal(3, InvokePrivate<int>(cut.Instance, "GetCurrentWorkflowStepNumber"));
+        Assert.Equal("Author flows and suites without leaving the loaded workspace.", InvokePrivate<string>(cut.Instance, "GetCurrentWorkflowHeadline"));
+
+        navigation.NavigateTo("http://localhost/results");
+        cut.Render();
+        Assert.Equal("complete", InvokePrivate<string>(cut.Instance, "GetWorkflowStageState", "design"));
+        Assert.Equal("active", InvokePrivate<string>(cut.Instance, "GetWorkflowStageState", "review"));
+        Assert.Equal(4, InvokePrivate<int>(cut.Instance, "GetCurrentWorkflowStepNumber"));
+        Assert.Equal("Review runs, evidence, and diagnostics after execution.", InvokePrivate<string>(cut.Instance, "GetCurrentWorkflowHeadline"));
+        Assert.Equal("Execution detail is now in focus because setup and authoring already happened.", InvokePrivate<string>(cut.Instance, "GetCurrentWorkflowSupportCopy"));
+    }
+
+    [Fact]
+    public void Home_private_visibility_helpers_follow_loaded_and_unloaded_shell_sections()
+    {
+        CreateState();
+        var navigation = Services.GetRequiredService<NavigationManager>();
+        navigation.NavigateTo("http://localhost/designer");
+
+        var cut = RenderComponent<Home>();
+
+        Assert.True(InvokePrivate<bool>(cut.Instance, "ShouldShowWorkspacePage"));
+        Assert.True(InvokePrivate<bool>(cut.Instance, "ShouldShowDesignerPage"));
+        Assert.False(InvokePrivate<bool>(cut.Instance, "ShouldShowResultsPage"));
+        Assert.True(InvokePrivate<bool>(cut.Instance, "ShouldShowDesignerPreview"));
+        Assert.False(InvokePrivate<bool>(cut.Instance, "ShouldShowResultsPreview"));
+
+        var state = Services.GetRequiredService<StudioWorkspaceState>();
+        var workspace = CreateProject("visibility-private");
+        state.SetProjectPath(workspace);
+        state.LoadProject();
+        navigation.NavigateTo("http://localhost/results");
+        cut.Render();
+
+        Assert.False(InvokePrivate<bool>(cut.Instance, "ShouldShowWorkspacePage"));
+        Assert.False(InvokePrivate<bool>(cut.Instance, "ShouldShowDesignerPage"));
+        Assert.True(InvokePrivate<bool>(cut.Instance, "ShouldShowResultsPage"));
+        Assert.False(InvokePrivate<bool>(cut.Instance, "ShouldShowDesignerPreview"));
+        Assert.True(InvokePrivate<bool>(cut.Instance, "ShouldShowResultsPreview"));
     }
 
     private StudioWorkspaceState CreateState(string[]? recentWorkspaces = null, IStudioRunnerService? runnerService = null)
@@ -438,11 +748,27 @@ public sealed class HomeInteractionTests : TestContext, IDisposable
         }
     }
 
+    private static T InvokePrivate<T>(object target, string methodName, params object[]? arguments)
+    {
+        var method = target.GetType().GetMethod(methodName, System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)
+            ?? throw new InvalidOperationException($"Method '{methodName}' was not found.");
+        var result = method.Invoke(target, arguments);
+        Assert.IsType<T>(result);
+        return (T)result!;
+    }
+
     private static void SetPrivate<T>(object target, string propertyName, T value)
     {
         var property = target.GetType().GetProperty(propertyName, System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic)
             ?? throw new InvalidOperationException($"Property '{propertyName}' was not found.");
         property.SetValue(target, value);
+    }
+
+    private static void SetAutoProperty<T>(object target, string propertyName, T value)
+    {
+        var field = target.GetType().GetField($"<{propertyName}>k__BackingField", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)
+            ?? throw new InvalidOperationException($"Backing field for '{propertyName}' was not found.");
+        field.SetValue(target, value);
     }
 
     private string CreateProject(string name)

@@ -158,6 +158,25 @@ public sealed class GherkinIngesterTests
         Assert.Equal("ui.invoke", flow.When[1].Step);
     }
 
+    [Fact]
+    public void Ingest_ButAfterThen_MapsToThenSection()
+    {
+        var ingester = BuildIngester();
+        var feature = """
+            Feature: But After Then
+              Scenario: But After Then
+                When I GET https://example.com
+                Then the response status should be 200
+                But the response body should contain "ok"
+            """;
+
+        var flow = ingester.Ingest(feature);
+
+        Assert.Single(flow.When);
+        Assert.Equal(2, flow.Then.Count);
+        Assert.Equal("http.assert-body-contains", flow.Then[1].Expect);
+    }
+
     // -------------------------------------------------------------------------
     // Phrase round-trip for each phrase in the default library
     // -------------------------------------------------------------------------
@@ -257,6 +276,60 @@ public sealed class GherkinIngesterTests
         Assert.NotNull(stub);
         Assert.NotNull(stub.With);
         Assert.Equal("TODO: review", stub.With["summary"]);
+    }
+
+    [Fact]
+    public void Ingest_UnknownStep_ProducesUnknownStub()
+    {
+        var ingester = BuildIngester();
+        var feature = """
+            Feature: Unknown step
+              Scenario: Unknown step
+                When the rocket should launch now
+                Then the response status should be 200
+            """;
+
+        var flow = ingester.Ingest(feature);
+
+        var stub = Assert.Single(flow.When);
+        Assert.Equal("unknown", stub.Step);
+        Assert.Equal("the rocket should launch now", stub.With!["text"]);
+        Assert.Equal("TODO: review", stub.With["summary"]);
+    }
+
+    [Fact]
+    public void Ingest_PureCommentLine_IsIgnored()
+    {
+        var ingester = BuildIngester();
+        var feature = """
+            Feature: Comment skip
+              Scenario: Comment skip
+                When I GET https://example.com
+                # comment only
+                Then the response status should be 200
+            """;
+
+        var flow = ingester.Ingest(feature);
+
+        Assert.Single(flow.When);
+        Assert.Single(flow.Then);
+    }
+
+    [Fact]
+    public void Ingest_EmptyFeatureName_FallsBackToIngestedFlowId()
+    {
+        var ingester = BuildIngester();
+        var feature = """
+            Feature:
+              Scenario: Empty Feature
+                When I GET https://example.com
+                Then the response status should be 200
+            """;
+
+        var flow = ingester.Ingest(feature);
+
+        Assert.Equal(string.Empty, flow.Name);
+        Assert.Equal("ingested-flow", flow.Id);
     }
 
     // -------------------------------------------------------------------------
@@ -433,19 +506,6 @@ public sealed class GherkinIngesterTests
     // Helpers
     // -------------------------------------------------------------------------
 
-    private static string FindSolutionRoot()
-    {
-        var dir = AppContext.BaseDirectory;
-        while (!string.IsNullOrEmpty(dir))
-        {
-            if (File.Exists(Path.Combine(dir, "Cress.sln")))
-            {
-                return dir;
-            }
-
-            dir = Path.GetDirectoryName(dir)!;
-        }
-
-        throw new InvalidOperationException("Could not locate solution root from " + AppContext.BaseDirectory);
-    }
+    private static string FindSolutionRoot([System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "")
+        => Path.GetFullPath(Path.Combine(Path.GetDirectoryName(sourceFilePath)!, "..", ".."));
 }

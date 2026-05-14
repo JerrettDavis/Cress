@@ -4,6 +4,7 @@ using Cress.Core.Models;
 using Cress.Execution;
 using Cress.Studio;
 using Cress.Studio.Services;
+using Cress.Studio.ViewModels;
 using Cress.Studio.Web.Services;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -189,5 +190,93 @@ public sealed class ExplorerPanelTests : TestContext
 
         Assert.Contains("No explorer items match the current filter", cut.Markup);
         Assert.True(cut.Find("[data-testid='explorer-filter-summary']").TextContent.Contains("0 matches", StringComparison.Ordinal));
+    }
+
+    [Fact]
+    public void ExplorerPanel_clear_filter_button_restores_full_workspace_tree()
+    {
+        var state = CreateState();
+        SetPrivate(state, "Snapshot", CreateSnapshot());
+
+        var cut = RenderComponent<Cress.Studio.Web.Components.Studio.ExplorerPanel>();
+
+        cut.Find("#explorerFilter").Input("alpha");
+        Assert.Equal("alpha", state.ExplorerFilter);
+
+        cut.Find("[aria-label='Clear filter']").Click();
+
+        Assert.Equal(string.Empty, state.ExplorerFilter);
+        Assert.Contains("Alpha flow", cut.Markup, StringComparison.Ordinal);
+        Assert.Contains("Beta flow", cut.Markup, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ExplorerPanel_flow_selected_state_and_suite_button_select_items()
+    {
+        var state = CreateState();
+        var snapshot = CreateSnapshot();
+        SetPrivate(state, "Snapshot", snapshot);
+        SetPrivate(state, nameof(StudioWorkspaceState.SelectedFlow), new FlowDocumentViewModel
+        {
+            FilePath = @"C:\workspace\flows\alpha.flow.yaml",
+            Name = "Alpha flow"
+        });
+
+        var suite = new StudioSuiteDocument { Id = "smoke", Name = "Smoke suite", FilePath = @"C:\workspace\suites\smoke.suite.yaml" };
+        state.Suites.Add(suite);
+
+        var cut = RenderComponent<Cress.Studio.Web.Components.Studio.ExplorerPanel>();
+
+        Assert.Contains("selected", cut.Find("[data-testid='explorer-flow-flow-alpha']").GetAttribute("class"));
+
+        cut.Find("[data-testid='explorer-suite-smoke']").Click();
+        Assert.Equal(suite.FilePath, state.SelectedSuite?.FilePath);
+        Assert.Contains("selected", cut.Find("[data-testid='explorer-suite-smoke']").GetAttribute("class"));
+    }
+
+    [Fact]
+    public void ExplorerPanel_capabilities_fixtures_and_steps_show_defined_empty_messages_without_items()
+    {
+        var state = CreateState();
+        SetPrivate(state, "Snapshot", new StudioProjectSnapshot
+        {
+            Catalog = new ProjectCatalog
+            {
+                NormalizedFlows = [],
+                Capabilities = [],
+                FixtureDefinitions = new Dictionary<string, FixtureDefinition>(StringComparer.OrdinalIgnoreCase),
+                StepRegistry = new StepRegistrySnapshot(
+                    new Dictionary<string, StepDefinition>(StringComparer.OrdinalIgnoreCase),
+                    new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase))
+            }
+        });
+
+        var cut = RenderComponent<Cress.Studio.Web.Components.Studio.ExplorerPanel>();
+
+        Assert.Contains("No capabilities defined.", cut.Markup, StringComparison.Ordinal);
+        Assert.Contains("No fixtures defined.", cut.Markup, StringComparison.Ordinal);
+        Assert.Contains("No steps defined.", cut.Markup, StringComparison.Ordinal);
+        Assert.Contains("No runs yet — click Run all to start.", cut.Markup, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ExplorerPanel_filter_mismatch_messages_render_for_each_section()
+    {
+        var state = CreateState();
+        SetPrivate(state, "Snapshot", CreateSnapshot());
+        state.Suites.Add(new StudioSuiteDocument { Id = "smoke", Name = "Smoke suite", FilePath = @"C:\workspace\suites\smoke.suite.yaml" });
+
+        var cut = RenderComponent<Cress.Studio.Web.Components.Studio.ExplorerPanel>();
+        cut.Find("#explorerFilter").Input("smoke");
+
+        Assert.Contains("No flows match the filter.", cut.Markup, StringComparison.Ordinal);
+        Assert.DoesNotContain("No suites match the filter.", cut.Markup);
+
+        cut.Find("#explorerFilter").Input("fixture-miss");
+
+        Assert.Contains("No suites match the filter.", cut.Markup, StringComparison.Ordinal);
+        Assert.Contains("No capabilities match the filter.", cut.Markup, StringComparison.Ordinal);
+        Assert.Contains("No fixtures match the filter.", cut.Markup, StringComparison.Ordinal);
+        Assert.Contains("No steps match the filter.", cut.Markup, StringComparison.Ordinal);
     }
 }

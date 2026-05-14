@@ -131,4 +131,98 @@ public sealed class RecordingLivePanelTests : TestContext
 
         Assert.Contains("Interact with the target application", cut.Markup);
     }
+
+    [Fact]
+    public void RecordingLivePanel_formats_event_labels_icons_and_elapsed_values()
+    {
+        var recorder = new FakeStudioRecorderService
+        {
+            IsRecording = true,
+            CurrentTarget = new RecordingTargetInfo { ProcessId = 5, ProcessName = "x", MainWindowTitle = "X" },
+            Elapsed = TimeSpan.FromMinutes(12).Add(TimeSpan.FromSeconds(34))
+        };
+        var now = DateTimeOffset.UtcNow;
+        recorder.SimulateEvent(new RecordedEvent
+        {
+            Sequence = 1,
+            Timestamp = now,
+            Kind = EventKind.FocusChanged,
+            Element = new ElementInfo { Name = "Search", ControlType = "Edit" }
+        });
+        recorder.SimulateEvent(new RecordedEvent
+        {
+            Sequence = 2,
+            Timestamp = now.AddMilliseconds(250),
+            Kind = EventKind.WindowOpened,
+            Element = new ElementInfo { ControlType = "Window" }
+        });
+        recorder.SimulateEvent(new RecordedEvent
+        {
+            Sequence = 3,
+            Timestamp = now.AddMilliseconds(500),
+            Kind = (EventKind)999,
+            Element = new ElementInfo()
+        });
+        CreateState(recorder);
+
+        var cut = RenderComponent<Cress.Studio.Web.Components.Studio.RecordingLivePanel>();
+
+        Assert.Contains("12:34", cut.Markup, StringComparison.Ordinal);
+        Assert.Contains("3 events", cut.Markup, StringComparison.Ordinal);
+        Assert.Contains("Edit \"Search\"", cut.FindAll(".recording-event-label")[0].TextContent, StringComparison.Ordinal);
+        Assert.Contains("Window", cut.Markup, StringComparison.Ordinal);
+        Assert.Equal("●", cut.FindAll(".recording-event-icon")[2].TextContent);
+        Assert.Contains("event-kind--focus", cut.Markup, StringComparison.Ordinal);
+        Assert.Contains("event-kind--window", cut.Markup, StringComparison.Ordinal);
+        Assert.Contains("00:00.250", cut.Markup, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void RecordingLivePanel_shows_placeholder_target_name_when_missing()
+    {
+        var recorder = new FakeStudioRecorderService
+        {
+            IsRecording = true,
+            CurrentTarget = null
+        };
+        CreateState(recorder);
+
+        var cut = RenderComponent<Cress.Studio.Web.Components.Studio.RecordingLivePanel>();
+
+        Assert.Contains("…", cut.Markup, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void RecordingLivePanel_limits_rendered_events_to_latest_hundred_and_requests_scroll()
+    {
+        JSInterop.SetupVoid("cressRecording.scrollToBottom", _ => true);
+
+        var recorder = new FakeStudioRecorderService
+        {
+            IsRecording = true,
+            CurrentTarget = new RecordingTargetInfo { ProcessId = 5, ProcessName = "x", MainWindowTitle = "X" }
+        };
+        var now = DateTimeOffset.UtcNow;
+        for (var i = 0; i < 105; i++)
+        {
+            recorder.SimulateEvent(new RecordedEvent
+            {
+                Sequence = i + 1,
+                Timestamp = now.AddMilliseconds(i),
+                Kind = EventKind.Invoke,
+                Element = new ElementInfo { AutomationId = $"btn-{i}", ControlType = "Button" }
+            });
+        }
+
+        CreateState(recorder);
+        var cut = RenderComponent<Cress.Studio.Web.Components.Studio.RecordingLivePanel>();
+        cut.WaitForAssertion(() =>
+        {
+            Assert.Equal(100, cut.FindAll(".recording-event-row").Count);
+            Assert.DoesNotContain("btn-0", cut.Markup);
+            Assert.Contains("btn-104", cut.Markup);
+        });
+
+        Assert.Contains(JSInterop.Invocations, invocation => invocation.Identifier == "cressRecording.scrollToBottom");
+    }
 }

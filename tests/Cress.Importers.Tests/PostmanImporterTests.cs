@@ -277,6 +277,32 @@ public class PostmanImporterTests
         Assert.Contains(bodyMode, with["body"]);
     }
 
+    [Theory]
+    [InlineData("graphql")]
+    [InlineData("file")]
+    public void AdditionalUnsupportedBodyModes_EmitTodoComment(string bodyMode)
+    {
+        var json = $$"""
+            {
+              "item": [
+                {
+                  "name": "Submit form",
+                  "request": {
+                    "method": "POST",
+                    "header": [],
+                    "body": { "mode": "{{bodyMode}}", "{{bodyMode}}": [] },
+                    "url": { "raw": "https://api.example.com/submit" }
+                  }
+                }
+              ]
+            }
+            """;
+
+        var flows = _importer.Import(json);
+
+        Assert.Contains(bodyMode, flows[0].When[0].With!["body"]);
+    }
+
     // -------------------------------------------------------------------------
     // --single-flow: produces 1 flow with N steps
     // -------------------------------------------------------------------------
@@ -383,6 +409,103 @@ public class PostmanImporterTests
         var url = flows[0].When[0].With!["url"];
 
         Assert.Equal("https://api.example.com/users/profile", url);
+    }
+
+    [Fact]
+    public void Url_StringForm_IsPreserved()
+    {
+        var json = """
+            {
+              "item": [
+                {
+                  "name": "Get resource",
+                  "request": {
+                    "method": "GET",
+                    "header": [],
+                    "url": "https://api.example.com/resource"
+                  }
+                }
+              ]
+            }
+            """;
+
+        var flows = _importer.Import(json);
+
+        Assert.Equal("https://api.example.com/resource", flows[0].When[0].With!["url"]);
+    }
+
+    [Fact]
+    public void Url_ReconstructedFromHostPathAndQuery_SkipsDisabledItems()
+    {
+        var json = """
+            {
+              "item": [
+                {
+                  "name": "Search",
+                  "request": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "protocol": "https",
+                      "host": ["api", "example", "com"],
+                      "path": ["search"],
+                      "query": [
+                        { "key": "q", "value": "cress" },
+                        { "key": "debug", "value": "true", "disabled": true }
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+            """;
+
+        var flows = _importer.Import(json);
+
+        Assert.Equal("https://api.example.com/search?q=cress", flows[0].When[0].With!["url"]);
+    }
+
+    [Fact]
+    public void UnknownMethod_FallsBackToHttpGet()
+    {
+        var json = """
+            {
+              "item": [
+                {
+                  "name": "Custom request",
+                  "request": {
+                    "method": "TRACE",
+                    "header": [],
+                    "url": { "raw": "https://api.example.com/resource" }
+                  }
+                }
+              ]
+            }
+            """;
+
+        var flows = _importer.Import(json);
+
+        Assert.Equal("http.get", flows[0].When[0].Step);
+    }
+
+    [Fact]
+    public void SingleFlow_WithoutCollectionName_FallsBackToPostmanImport()
+    {
+        var json = """
+            {
+              "item": [
+                {
+                  "name": "Get resource",
+                  "request": { "method": "GET", "header": [], "url": { "raw": "https://api.example.com/resource" } }
+                }
+              ]
+            }
+            """;
+
+        var flow = Assert.Single(_importer.Import(json, singleFlow: true));
+
+        Assert.Equal("postman-import", flow.Name);
+        Assert.Equal("postman-import", flow.Id);
     }
 
     // -------------------------------------------------------------------------

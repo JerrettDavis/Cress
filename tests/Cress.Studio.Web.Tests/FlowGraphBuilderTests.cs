@@ -62,4 +62,49 @@ public sealed class FlowGraphBuilderTests
         Assert.Equal("payment=visa +1 more", graph.Nodes[3].Subtitle);
         Assert.Equal("draft", graph.Nodes[^1].Subtitle);
     }
+
+    [Fact]
+    public void Build_handles_null_and_summarizes_sparse_rows()
+    {
+        Assert.Empty(FlowGraphBuilder.Build(null).Nodes);
+
+        var document = FlowDocumentViewModel.FromDocument(new FlowEditorDocument
+        {
+            Id = "sparse-flow",
+            Name = "Sparse flow",
+            Fixtures =
+            [
+                new EditableFixture
+                {
+                    Source = "data/orders.json"
+                }
+            ],
+            Actions =
+            [
+                new EditableExecutable
+                {
+                    Name = "first.step",
+                    InputsText = ""
+                },
+                new EditableExecutable()
+            ],
+            Expectations =
+            [
+                new EditableExecutable
+                {
+                    Name = "check.result",
+                    InputsText = "status=ok"
+                }
+            ]
+        });
+
+        var graph = FlowGraphBuilder.Build(document);
+        var edge = new FlowGraphEdge("edge-a", "start", "end", "next");
+
+        Assert.Equal("data/orders.json", graph.Nodes[1].Subtitle);
+        Assert.Equal("No inputs", graph.Nodes[2].Subtitle);
+        Assert.Equal("ready", graph.Nodes[^1].Subtitle);
+        Assert.Equal("complete", graph.Edges[^1].Label);
+        Assert.Equal(("edge-a", "start", "end", "next"), (edge.Id, edge.SourceId, edge.TargetId, edge.Label));
+    }
 }

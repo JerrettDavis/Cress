@@ -106,4 +106,93 @@ public sealed class ArtifactPreviewPanelTests : TestContext
         var openButton = cut.Find("[data-testid='artifact-open-button']");
         Assert.NotNull(openButton.GetAttribute("disabled"));
     }
+
+    [Fact]
+    public void ArtifactPreviewPanel_shows_empty_state_when_filters_remove_all_artifacts()
+    {
+        var state = CreateState();
+        JSInterop.SetupVoid("navigator.clipboard.writeText", _ => true);
+
+        state.SelectedRunArtifacts.Add(new StudioArtifactItem("report: html", @"C:\artifacts\report.html", @"C:\artifacts\report.html"));
+
+        var cut = RenderComponent<Cress.Studio.Web.Components.Studio.ArtifactPreviewPanel>();
+        cut.Find("[data-testid='artifact-filter']").Input("missing");
+
+        Assert.NotNull(cut.Find("[data-testid='artifact-filter-empty']"));
+        Assert.Contains("0 shown", cut.Markup, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ArtifactPreviewPanel_report_text_and_other_filters_show_matching_artifacts()
+    {
+        var state = CreateState();
+        JSInterop.SetupVoid("navigator.clipboard.writeText", _ => true);
+
+        state.SelectedRunArtifacts.Add(new StudioArtifactItem("report.json", @"C:\artifacts\report.json", @"C:\artifacts\report.json"));
+        state.SelectedRunArtifacts.Add(new StudioArtifactItem("run.log", @"C:\artifacts\run.log", @"C:\artifacts\run.log"));
+        state.SelectedRunArtifacts.Add(new StudioArtifactItem("trace.bin", @"C:\artifacts\trace.bin", @"C:\artifacts\trace.bin"));
+
+        var cut = RenderComponent<Cress.Studio.Web.Components.Studio.ArtifactPreviewPanel>();
+
+        cut.Find("[data-testid='artifact-type-report']").Click();
+        Assert.Contains("report.json", cut.Markup, StringComparison.Ordinal);
+        Assert.DoesNotContain("run.log", cut.Markup);
+        Assert.Contains("Type: Reports", cut.Markup, StringComparison.Ordinal);
+
+        cut.Find("[data-testid='artifact-type-text']").Click();
+        Assert.Contains("run.log", cut.Markup, StringComparison.Ordinal);
+        Assert.DoesNotContain("trace.bin", cut.Markup);
+        Assert.Contains("Type: Text", cut.Markup, StringComparison.Ordinal);
+
+        cut.Find("[data-testid='artifact-type-other']").Click();
+        Assert.Contains("trace.bin", cut.Markup, StringComparison.Ordinal);
+        Assert.DoesNotContain("report.json", cut.Markup);
+        Assert.Contains("Type: Other", cut.Markup, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public async Task ArtifactPreviewPanel_open_artifact_button_copies_selected_path()
+    {
+        var state = CreateState();
+        JSInterop.SetupVoid("navigator.clipboard.writeText", _ => true);
+        var artifact = new StudioArtifactItem("report.json", @"C:\artifacts\report.json", @"C:\artifacts\report.json");
+        state.SelectedRunArtifacts.Add(artifact);
+        state.SelectArtifact(artifact);
+
+        var cut = RenderComponent<Cress.Studio.Web.Components.Studio.ArtifactPreviewPanel>();
+
+        Assert.Contains("selected", cut.Find(".stack-list .explorer-button").GetAttribute("class"));
+        Assert.Null(cut.Find("[data-testid='artifact-open-button']").GetAttribute("disabled"));
+
+        await cut.InvokeAsync(() => cut.Find("[data-testid='artifact-open-button']").Click());
+
+        Assert.Contains(JSInterop.Invocations, invocation =>
+            invocation.Identifier == "navigator.clipboard.writeText"
+            && string.Equals(invocation.Arguments[0]?.ToString(), artifact.Path, StringComparison.Ordinal));
+    }
+
+    [Fact]
+    public void ArtifactPreviewPanel_shows_image_preview_when_available()
+    {
+        var state = CreateState();
+        JSInterop.SetupVoid("navigator.clipboard.writeText", _ => true);
+        SetPrivate(state, nameof(StudioWorkspaceState.PreviewImageDataUrl), "data:image/png;base64,AQID");
+
+        var cut = RenderComponent<Cress.Studio.Web.Components.Studio.ArtifactPreviewPanel>();
+
+        var image = cut.Find("img.preview-image");
+        Assert.Equal("data:image/png;base64,AQID", image.GetAttribute("src"));
+    }
+
+    [Fact]
+    public void ArtifactPreviewPanel_shows_text_preview_when_available()
+    {
+        var state = CreateState();
+        JSInterop.SetupVoid("navigator.clipboard.writeText", _ => true);
+        SetPrivate(state, nameof(StudioWorkspaceState.PreviewText), "preview text");
+
+        var cut = RenderComponent<Cress.Studio.Web.Components.Studio.ArtifactPreviewPanel>();
+
+        Assert.Contains("preview text", cut.Find("pre.preview-text").TextContent, StringComparison.Ordinal);
+    }
 }

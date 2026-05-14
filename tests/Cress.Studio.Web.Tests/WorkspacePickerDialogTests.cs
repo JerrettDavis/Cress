@@ -72,6 +72,13 @@ public sealed class WorkspacePickerDialogTests : TestContext
         return builder.ToString().Trim('-');
     }
 
+    private static void SetPrivate<T>(object target, string propertyName, T value)
+    {
+        var property = target.GetType().GetProperty(propertyName, System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+            ?? throw new InvalidOperationException($"Property '{propertyName}' not found on {target.GetType().Name}");
+        property.SetValue(target, value);
+    }
+
     [Fact]
     public void WorkspacePicker_renders_current_location_and_workspace_badge()
     {
@@ -199,6 +206,41 @@ public sealed class WorkspacePickerDialogTests : TestContext
     }
 
     [Fact]
+    public void WorkspacePicker_filter_matches_workspace_keyword_and_open_navigates_into_entry()
+    {
+        var state = CreateState();
+        var tempRoot = CreateTemporaryRoot();
+        var projectRoot = CreateProject(tempRoot, "picker-project");
+        Directory.CreateDirectory(Path.Combine(projectRoot, "child-folder"));
+        var openTestId = "workspace-picker-open-" + ToTestIdSegment(projectRoot);
+
+        try
+        {
+            state.SetProjectPath(tempRoot);
+            state.OpenWorkspacePicker();
+
+            var cut = RenderComponent<Cress.Studio.Web.Components.Studio.WorkspacePickerDialog>();
+            cut.Find("[data-testid='workspace-picker-filter']").Input("workspace");
+
+            Assert.Contains("picker-project", cut.Markup, StringComparison.Ordinal);
+            Assert.Contains("1 workspaces", cut.Markup, StringComparison.Ordinal);
+
+            cut.Find($"[data-testid='{openTestId}']").Click();
+
+            Assert.Contains(projectRoot, cut.Find("[data-testid='workspace-picker-location']").GetAttribute("value"));
+            cut.Find("[aria-label='Clear workspace filter']").Click();
+            Assert.Contains("child-folder", cut.Markup, StringComparison.Ordinal);
+        }
+        finally
+        {
+            if (Directory.Exists(tempRoot))
+            {
+                Directory.Delete(tempRoot, recursive: true);
+            }
+        }
+    }
+
+    [Fact]
     public void WorkspacePicker_select_closes_dialog_and_updates_project_path_without_loading()
     {
         var state = CreateState();
@@ -246,6 +288,162 @@ public sealed class WorkspacePickerDialogTests : TestContext
             Assert.False(state.IsWorkspacePickerOpen);
             Assert.True(state.HasLoadedProject);
             Assert.Equal(projectRoot, state.ProjectPathInput);
+        }
+        finally
+        {
+            if (Directory.Exists(tempRoot))
+            {
+                Directory.Delete(tempRoot, recursive: true);
+            }
+        }
+    }
+
+    [Fact]
+    public void WorkspacePicker_backdrop_and_close_button_close_dialog_and_clear_filter()
+    {
+        var state = CreateState();
+        var tempRoot = CreateTemporaryRoot();
+        Directory.CreateDirectory(Path.Combine(tempRoot, "alpha"));
+
+        try
+        {
+            state.SetProjectPath(tempRoot);
+            state.OpenWorkspacePicker();
+
+            var cut = RenderComponent<Cress.Studio.Web.Components.Studio.WorkspacePickerDialog>();
+            cut.Find("[data-testid='workspace-picker-filter']").Input("alpha");
+            cut.Find("[data-testid='workspace-picker-backdrop']").Click();
+
+            Assert.False(state.IsWorkspacePickerOpen);
+
+            state.OpenWorkspacePicker();
+            cut.Render();
+            Assert.DoesNotContain("Filter: alpha", cut.Markup, StringComparison.Ordinal);
+
+            cut.Find("[data-testid='workspace-picker-close']").Click();
+            Assert.False(state.IsWorkspacePickerOpen);
+        }
+        finally
+        {
+            if (Directory.Exists(tempRoot))
+            {
+                Directory.Delete(tempRoot, recursive: true);
+            }
+        }
+    }
+
+    [Fact]
+    public void WorkspacePicker_renders_error_message_when_browser_error_is_present()
+    {
+        var state = CreateState();
+        var tempRoot = CreateTemporaryRoot();
+        Directory.CreateDirectory(Path.Combine(tempRoot, "alpha"));
+
+        try
+        {
+            state.SetProjectPath(tempRoot);
+            state.OpenWorkspacePicker();
+            SetPrivate(state, nameof(StudioWorkspaceState.WorkspaceBrowserError), "Access denied");
+
+            var cut = RenderComponent<Cress.Studio.Web.Components.Studio.WorkspacePickerDialog>();
+
+            Assert.Contains("Access denied", cut.Markup, StringComparison.Ordinal);
+            Assert.NotNull(cut.Find("[data-testid='workspace-picker-error']"));
+        }
+        finally
+        {
+            if (Directory.Exists(tempRoot))
+            {
+                Directory.Delete(tempRoot, recursive: true);
+            }
+        }
+    }
+
+    [Fact]
+    public void WorkspacePicker_use_current_folder_selects_without_loading()
+    {
+        var state = CreateState();
+        var tempRoot = CreateTemporaryRoot();
+        var projectRoot = CreateProject(tempRoot, "picker-project");
+
+        try
+        {
+            state.SetProjectPath(projectRoot);
+            state.OpenWorkspacePicker();
+
+            var cut = RenderComponent<Cress.Studio.Web.Components.Studio.WorkspacePickerDialog>();
+            cut.Find("[data-testid='workspace-picker-use-current']").Click();
+
+            Assert.False(state.IsWorkspacePickerOpen);
+            Assert.Equal(projectRoot, state.ProjectPathInput);
+            Assert.False(state.HasLoadedProject);
+        }
+        finally
+        {
+            if (Directory.Exists(tempRoot))
+            {
+                Directory.Delete(tempRoot, recursive: true);
+            }
+        }
+    }
+
+    [Fact]
+    public void WorkspacePicker_up_navigates_to_parent_folder()
+    {
+        var state = CreateState();
+        var tempRoot = CreateTemporaryRoot();
+        var nestedRoot = Path.Combine(tempRoot, "nested");
+        Directory.CreateDirectory(nestedRoot);
+        CreateProject(nestedRoot, "picker-project");
+        Directory.CreateDirectory(Path.Combine(tempRoot, "sibling-folder"));
+
+        try
+        {
+            state.SetProjectPath(nestedRoot);
+            state.OpenWorkspacePicker();
+
+            var cut = RenderComponent<Cress.Studio.Web.Components.Studio.WorkspacePickerDialog>();
+            cut.Find("[data-testid='workspace-picker-up']").Click();
+
+            Assert.Contains(tempRoot, cut.Find("[data-testid='workspace-picker-location']").GetAttribute("value"));
+            Assert.Contains("nested", cut.Markup);
+            Assert.Contains("sibling-folder", cut.Markup);
+        }
+        finally
+        {
+            if (Directory.Exists(tempRoot))
+            {
+                Directory.Delete(tempRoot, recursive: true);
+            }
+        }
+    }
+
+    [Fact]
+    public void WorkspacePicker_close_clears_filter_before_reopen()
+    {
+        var state = CreateState();
+        var tempRoot = CreateTemporaryRoot();
+        Directory.CreateDirectory(Path.Combine(tempRoot, "alpha"));
+        Directory.CreateDirectory(Path.Combine(tempRoot, "beta"));
+
+        try
+        {
+            state.SetProjectPath(tempRoot);
+            state.OpenWorkspacePicker();
+
+            var cut = RenderComponent<Cress.Studio.Web.Components.Studio.WorkspacePickerDialog>();
+            cut.Find("[data-testid='workspace-picker-filter']").Input("alpha");
+            Assert.Contains("Filter: alpha", cut.Markup);
+
+            cut.Find("[data-testid='workspace-picker-cancel']").Click();
+            Assert.False(state.IsWorkspacePickerOpen);
+
+            state.OpenWorkspacePicker();
+            cut.Render();
+
+            Assert.DoesNotContain("Filter: alpha", cut.Markup);
+            Assert.Contains("alpha", cut.Markup);
+            Assert.Contains("beta", cut.Markup);
         }
         finally
         {

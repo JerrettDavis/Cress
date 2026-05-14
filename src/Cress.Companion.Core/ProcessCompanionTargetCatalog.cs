@@ -3,13 +3,32 @@ using System.Diagnostics;
 
 namespace Cress.Companion;
 
+internal sealed record ProcessCatalogSnapshot(
+    int ProcessId,
+    string ProcessName,
+    IntPtr MainWindowHandle,
+    string MainWindowTitle,
+    Func<string?> GetMainModuleFileName);
+
 public sealed class ProcessCompanionTargetCatalog : ICompanionTargetCatalog
 {
+    private readonly Func<IEnumerable<ProcessCatalogSnapshot>> _enumerateProcesses;
+
+    public ProcessCompanionTargetCatalog()
+        : this(GetProcessSnapshots)
+    {
+    }
+
+    internal ProcessCompanionTargetCatalog(Func<IEnumerable<ProcessCatalogSnapshot>> enumerateProcesses)
+    {
+        _enumerateProcesses = enumerateProcesses;
+    }
+
     public Task<IReadOnlyList<CompanionTargetInfo>> ListTargetsAsync()
     {
         var targets = new List<CompanionTargetInfo>();
 
-        foreach (var process in Process.GetProcesses())
+        foreach (var process in _enumerateProcesses())
         {
             try
             {
@@ -23,7 +42,7 @@ public sealed class ProcessCompanionTargetCatalog : ICompanionTargetCatalog
 
                 try
                 {
-                    mainModuleFileName = process.MainModule?.FileName;
+                    mainModuleFileName = process.GetMainModuleFileName();
                 }
                 catch (Win32Exception)
                 {
@@ -36,7 +55,7 @@ public sealed class ProcessCompanionTargetCatalog : ICompanionTargetCatalog
 
                 targets.Add(new CompanionTargetInfo
                 {
-                    ProcessId = process.Id,
+                    ProcessId = process.ProcessId,
                     ProcessName = process.ProcessName,
                     WindowTitle = process.MainWindowTitle,
                     MainModuleFileName = mainModuleFileName,
@@ -53,5 +72,18 @@ public sealed class ProcessCompanionTargetCatalog : ICompanionTargetCatalog
 
         return Task.FromResult<IReadOnlyList<CompanionTargetInfo>>(
             targets.OrderBy(target => target.ProcessName, StringComparer.OrdinalIgnoreCase).ToList());
+    }
+
+    private static IEnumerable<ProcessCatalogSnapshot> GetProcessSnapshots()
+    {
+        foreach (var process in Process.GetProcesses())
+        {
+            yield return new ProcessCatalogSnapshot(
+                process.Id,
+                process.ProcessName,
+                process.MainWindowHandle,
+                process.MainWindowTitle,
+                () => process.MainModule?.FileName);
+        }
     }
 }

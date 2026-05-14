@@ -2,7 +2,7 @@ namespace Cress.UnitTests;
 
 internal sealed class TestWorkspace : IDisposable
 {
-    private static readonly string RepositoryRoot = GetRepositoryRoot();
+    private static readonly string RepositoryRoot = ResolveRepositoryRoot();
 
     public string RootPath { get; }
 
@@ -48,6 +48,40 @@ internal sealed class TestWorkspace : IDisposable
         }
     }
 
-    private static string GetRepositoryRoot([System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "")
-        => Path.GetFullPath(Path.Combine(Path.GetDirectoryName(sourceFilePath)!, "..", ".."));
+    internal static string ResolveRepositoryRoot([System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "")
+    {
+        var existing = Environment.GetEnvironmentVariable("CRESS_REPOSITORY_ROOT");
+        if (!string.IsNullOrWhiteSpace(existing) && File.Exists(Path.Combine(existing, "Cress.sln")))
+        {
+            return existing;
+        }
+
+        var githubWorkspace = Environment.GetEnvironmentVariable("GITHUB_WORKSPACE");
+        if (!string.IsNullOrWhiteSpace(githubWorkspace) && File.Exists(Path.Combine(githubWorkspace, "Cress.sln")))
+        {
+            return githubWorkspace;
+        }
+
+        if (!string.IsNullOrWhiteSpace(sourceFilePath))
+        {
+            var callerFileRoot = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(sourceFilePath)!, "..", ".."));
+            if (File.Exists(Path.Combine(callerFileRoot, "Cress.sln")))
+            {
+                return callerFileRoot;
+            }
+        }
+
+        var current = new DirectoryInfo(AppContext.BaseDirectory);
+        while (current is not null)
+        {
+            if (File.Exists(Path.Combine(current.FullName, "Cress.sln")))
+            {
+                return current.FullName;
+            }
+
+            current = current.Parent;
+        }
+
+        throw new DirectoryNotFoundException("Could not locate the repository root from the current test workspace.");
+    }
 }

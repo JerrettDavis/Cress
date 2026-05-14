@@ -180,4 +180,100 @@ public sealed class ResultsPanelTests : TestContext
         var flowButton = cut.Find("[data-testid='results-flow-run-error-flow']");
         Assert.Contains("run-status--failed", flowButton.InnerHtml);
     }
+
+    [Fact]
+    public void ResultsPanel_live_events_render_when_run_is_active()
+    {
+        var state = CreateState();
+        state.LiveEvents.AddRange(["Run queued", "Flow started"]);
+        SetPrivate(state, "LiveRunHeadline", "Executing run-123");
+
+        var cut = RenderComponent<Cress.Studio.Web.Components.Studio.ResultsPanel>();
+
+        Assert.DoesNotContain("results-live-empty", cut.Markup);
+        Assert.Contains("Run queued", cut.Markup, StringComparison.Ordinal);
+        Assert.Contains("Flow started", cut.Markup, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ResultsPanel_shows_filter_empty_message_when_runs_exist_but_filters_exclude_all()
+    {
+        var state = CreateState();
+        state.Runs.Add(CreateRun("run-pass", RunOutcome.Passed));
+
+        var cut = RenderComponent<Cress.Studio.Web.Components.Studio.ResultsPanel>();
+        cut.Find("[data-testid='results-run-filter']").Input("missing");
+
+        Assert.NotNull(cut.Find("[data-testid='results-runs-filter-empty']"));
+        Assert.Contains("0 shown", cut.Markup, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ResultsPanel_filters_runs_by_profile_terms()
+    {
+        var state = CreateState();
+        state.Runs.Add(CreateRun("run-skip", RunOutcome.Skipped, profile: "qa"));
+
+        var cut = RenderComponent<Cress.Studio.Web.Components.Studio.ResultsPanel>();
+        cut.Find("[data-testid='results-run-filter']").Input("qa");
+
+        Assert.Contains("run-skip", cut.Markup, StringComparison.Ordinal);
+        Assert.Contains("Filter: qa", cut.Markup, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ResultsPanel_selects_run_flow_and_step_and_renders_empty_follow_up_states()
+    {
+        var state = CreateState();
+        var run = CreateRun("run-001", RunOutcome.Passed);
+        state.Runs.Add(run);
+
+        var cut = RenderComponent<Cress.Studio.Web.Components.Studio.ResultsPanel>();
+
+        cut.Find("[data-testid='results-run-run-001']").Click();
+        cut.Find("[data-testid='results-flow-run-001-flow']").Click();
+        cut.Find("[data-testid='results-step-step-1']").Click();
+
+        Assert.Contains("selected", cut.Find("[data-testid='results-run-run-001']").GetAttribute("class") ?? string.Empty, StringComparison.Ordinal);
+        Assert.Contains("selected", cut.Find("[data-testid='results-flow-run-001-flow']").GetAttribute("class") ?? string.Empty, StringComparison.Ordinal);
+        Assert.Contains("selected", cut.Find("[data-testid='results-step-step-1']").GetAttribute("class") ?? string.Empty, StringComparison.Ordinal);
+
+        state.SelectRun(new StoredRunResult
+        {
+            Result = new RunResult
+            {
+                Metadata = new RunMetadata { RunId = "run-empty" },
+                Flows = []
+            }
+        });
+        cut.Render();
+        Assert.Contains("This run has no flow results.", cut.Markup, StringComparison.Ordinal);
+
+        state.SelectRun(run);
+        state.SelectRunFlow(new FlowRunResult { FlowId = "flow-empty", Name = "Flow empty", Outcome = RunOutcome.Passed, Steps = [] });
+        cut.Render();
+        Assert.Contains("No steps recorded for this flow.", cut.Markup, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ResultsPanel_renders_diagnostic_icons_and_comparison_states()
+    {
+        var state = CreateState();
+        state.Diagnostics.Add(new Diagnostic { Severity = DiagnosticSeverity.Error, Code = "E001", Message = "Broken flow" });
+        state.Diagnostics.Add(new Diagnostic { Severity = DiagnosticSeverity.Info, Code = "I001", Message = "Helpful note" });
+
+        var cut = RenderComponent<Cress.Studio.Web.Components.Studio.ResultsPanel>();
+
+        Assert.Contains("diagnostic-item--error", cut.Markup, StringComparison.Ordinal);
+        Assert.Contains("diagnostic-item--info", cut.Markup, StringComparison.Ordinal);
+        Assert.Contains("No comparison available yet", cut.Markup, StringComparison.Ordinal);
+
+        SetPrivate(state, nameof(StudioWorkspaceState.SelectedRunComparison), new StudioRunComparison
+        {
+            Summary = "1 regression, 1 recovery"
+        });
+        cut.Render();
+
+        Assert.Contains("1 regression, 1 recovery", cut.Markup, StringComparison.Ordinal);
+    }
 }

@@ -13,8 +13,8 @@ namespace Cress.Studio.Web.Tests;
 
 public sealed class RecordingSavePanelTests : TestContext
 {
-    private (StudioWorkspaceState state, FakeStudioRecorderService recorder) CreateState(
-        FakeStudioRecorderService? recorder = null)
+    private (StudioWorkspaceState state, IStudioRecorderService recorder) CreateState(
+        IStudioRecorderService? recorder = null)
     {
         Services.AddCressStudioBackend();
         var fake = recorder ?? new FakeStudioRecorderService();
@@ -45,7 +45,7 @@ public sealed class RecordingSavePanelTests : TestContext
     /// Opens the save panel with a pre-populated recording result that has N editable steps.
     /// </summary>
     private static void OpenSavePanelWith(StudioWorkspaceState state, IReadOnlyList<InferredStep> steps,
-        IReadOnlyList<RecordedEvent>? events = null)
+        IReadOnlyList<RecordedEvent>? events = null, TimeSpan? duration = null, string? processName = "calc")
     {
         // Directly set LastRecordingResult and open the panel.
         state.GetType()
@@ -54,8 +54,8 @@ public sealed class RecordingSavePanelTests : TestContext
             {
                 Steps = steps,
                 Events = events ?? [],
-                Duration = TimeSpan.FromSeconds(5),
-                ProcessName = "calc"
+                Duration = duration ?? TimeSpan.FromSeconds(5),
+                ProcessName = processName
             });
         state.OpenSavePanel();
     }
@@ -129,6 +129,78 @@ public sealed class RecordingSavePanelTests : TestContext
         // btn1 and btn2 appear.
         Assert.Contains("btn1", cut.Markup);
         Assert.Contains("btn2", cut.Markup);
+    }
+
+    [Fact]
+    public void RecordingSavePanel_renders_filtered_events_and_empty_step_message()
+    {
+        var (state, _) = CreateState();
+        var events = new List<RecordedEvent>
+        {
+            new()
+            {
+                Sequence = 1,
+                Timestamp = DateTimeOffset.UtcNow,
+                Kind = EventKind.FocusChanged,
+                Element = new ElementInfo { AutomationId = "focusBox", ControlType = "Text" }
+            },
+            new()
+            {
+                Sequence = 2,
+                Timestamp = DateTimeOffset.UtcNow,
+                Kind = EventKind.KeyDown,
+                Key = "",
+                Element = new ElementInfo { AutomationId = "keyBox", ControlType = "Text" }
+            }
+        };
+        OpenSavePanelWith(state, [], events);
+
+        var cut = RenderComponent<Cress.Studio.Web.Components.Studio.RecordingSavePanel>();
+
+        Assert.Contains("No steps were captured", cut.Markup, StringComparison.Ordinal);
+        Assert.Contains("Captured events not converted to steps (2)", cut.Markup, StringComparison.Ordinal);
+        Assert.Contains("⊙", cut.Markup, StringComparison.Ordinal);
+        Assert.Contains("⌨", cut.Markup, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void RecordingSavePanel_initializes_default_name_when_process_name_is_missing()
+    {
+        var (state, _) = CreateState();
+        OpenSavePanelWith(state, new List<InferredStep> { MakeClickStep("btn1") }, processName: null);
+
+        var cut = RenderComponent<Cress.Studio.Web.Components.Studio.RecordingSavePanel>();
+
+        Assert.Equal("Recorded flow", cut.Find("#rec-flow-name").GetAttribute("value"));
+    }
+
+    [Fact]
+    public void RecordingSavePanel_formats_duration_and_step_kinds_for_multiple_steps()
+    {
+        var (state, _) = CreateState();
+        var steps = new List<InferredStep>
+        {
+            new() { Kind = StepKind.Click, Locator = new Locator { AutomationId = "btn1" }, SourceTimestamp = DateTime.UtcNow },
+            new() { Kind = StepKind.AssertText, Locator = new Locator { AutomationId = "resultBox" }, Value = "42", SourceTimestamp = DateTime.UtcNow },
+            new() { Kind = StepKind.SetValue, Locator = new Locator { AutomationId = "inputBox" }, Value = "hello", SourceTimestamp = DateTime.UtcNow },
+            new() { Kind = StepKind.PressKey, Key = "Enter", SourceTimestamp = DateTime.UtcNow },
+            new() { Kind = StepKind.WaitForWindow, WindowTitle = "Calculator", SourceTimestamp = DateTime.UtcNow }
+        };
+        OpenSavePanelWith(state, steps, duration: TimeSpan.FromSeconds(65));
+
+        var cut = RenderComponent<Cress.Studio.Web.Components.Studio.RecordingSavePanel>();
+
+        Assert.Contains("duration 1m 5s", cut.Markup, StringComparison.Ordinal);
+        Assert.Contains("event-kind--invoke", cut.Markup, StringComparison.Ordinal);
+        Assert.Contains("event-kind--assert", cut.Markup, StringComparison.Ordinal);
+        Assert.Contains("event-kind--value", cut.Markup, StringComparison.Ordinal);
+        Assert.Contains("event-kind--key", cut.Markup, StringComparison.Ordinal);
+        Assert.Contains("event-kind--window", cut.Markup, StringComparison.Ordinal);
+        Assert.Contains("↩", cut.Markup, StringComparison.Ordinal);
+        Assert.Contains("✔", cut.Markup, StringComparison.Ordinal);
+        Assert.Contains("✎", cut.Markup, StringComparison.Ordinal);
+        Assert.Contains("⌨", cut.Markup, StringComparison.Ordinal);
+        Assert.Contains("⧉", cut.Markup, StringComparison.Ordinal);
     }
 
     private static void SetPrivate<T>(object target, string propertyName, T value)
@@ -401,5 +473,62 @@ public sealed class RecordingSavePanelTests : TestContext
 
         Assert.Contains("Failed", cut.Markup);
         Assert.Contains("diagnostic--error", cut.Markup);
+    }
+
+    [Fact]
+    public async Task RecordingSavePanel_replay_shows_error_status_when_replay_throws()
+    {
+        var state = CreateState(new ThrowingReplayRecorderService()).state;
+
+        var catalog = new ProjectCatalog { ProjectRoot = @"C:\fake\project" };
+        var snapshot = new StudioProjectSnapshot { Catalog = catalog };
+        SetPrivate(state, "Snapshot", snapshot);
+
+        OpenSavePanelWith(state, new List<InferredStep> { MakeClickStep("btn1") });
+
+        var cut = RenderComponent<Cress.Studio.Web.Components.Studio.RecordingSavePanel>();
+
+        var field = cut.Instance.GetType()
+            .GetField("_savedPath", BindingFlags.NonPublic | BindingFlags.Instance)!;
+        field.SetValue(cut.Instance, @"C:\fake\project\flows\recorded\my.flow.yaml");
+        await cut.InvokeAsync(() => cut.Instance.GetType()
+            .GetMethod("StateHasChanged", BindingFlags.NonPublic | BindingFlags.Instance)!
+            .Invoke(cut.Instance, null));
+
+        var replayBtn = cut.FindAll("button").First(button => button.TextContent.Contains("Replay just-recorded", StringComparison.Ordinal));
+        await cut.InvokeAsync(() => replayBtn.Click());
+
+        Assert.Contains("Replay error: replay boom", cut.Markup, StringComparison.Ordinal);
+        Assert.Contains("diagnostic--error", cut.Markup, StringComparison.Ordinal);
+    }
+
+    private sealed class ThrowingReplayRecorderService : IStudioRecorderService
+    {
+        public bool IsRecording => false;
+        public RecordingTargetInfo? CurrentTarget => null;
+        public int CapturedEventCount => 0;
+        public TimeSpan Elapsed => TimeSpan.Zero;
+        public IReadOnlyList<RecordedEvent> CurrentEvents => [];
+        public IReadOnlyList<InferredStep> CurrentInferredSteps => [];
+        public event Action? StateChanged
+        {
+            add { }
+            remove { }
+        }
+
+        public Task<IReadOnlyList<RecordingTargetInfo>> ListAvailableTargetsAsync()
+            => Task.FromResult<IReadOnlyList<RecordingTargetInfo>>([]);
+
+        public Task StartRecordingAsync(int processId)
+            => Task.CompletedTask;
+
+        public Task StartWebRecordingAsync(string url, string browserType, CancellationToken ct = default)
+            => Task.CompletedTask;
+
+        public Task<RecordingResult> StopRecordingAsync()
+            => Task.FromResult(new RecordingResult());
+
+        public Task<RecordingReplayResult> ReplayRecordedFlowAsync(string flowFilePath, string projectPath)
+            => Task.FromException<RecordingReplayResult>(new InvalidOperationException("replay boom"));
     }
 }

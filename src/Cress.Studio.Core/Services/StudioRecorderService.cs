@@ -7,6 +7,66 @@ using ComponentModel = System.ComponentModel;
 
 namespace Cress.Studio.Services;
 
+internal interface IDesktopRecordingSession : IDisposable
+{
+    event Action<RecordedEvent>? EventCaptured;
+    void Start();
+    IReadOnlyList<RecordedEvent> Stop();
+}
+
+internal interface IDesktopRecordingSessionFactory
+{
+    IDesktopRecordingSession Create(int processId);
+}
+
+internal interface IWebRecordingClient : IDisposable
+{
+    event Action<RecordedEvent>? EventCaptured;
+    Task StartAsync(string url, string browserType, CancellationToken ct);
+    Task<IReadOnlyList<RecordedEvent>> StopAsync();
+}
+
+internal delegate IWebRecordingClient WebRecordingClientFactory();
+internal delegate RecordingTargetInfo ResolveRecordingTarget(int processId);
+
+internal sealed class DesktopRecordingSessionAdapter(RecordingSession session) : IDesktopRecordingSession
+{
+    public event Action<RecordedEvent>? EventCaptured
+    {
+        add => session.EventCaptured += value;
+        remove => session.EventCaptured -= value;
+    }
+
+    public void Start() => session.Start();
+
+    public IReadOnlyList<RecordedEvent> Stop() => session.Stop();
+
+    public void Dispose() => session.Dispose();
+}
+
+internal sealed class DesktopRecordingSessionFactory : IDesktopRecordingSessionFactory
+{
+    public IDesktopRecordingSession Create(int processId)
+        => new DesktopRecordingSessionAdapter(RecordingSession.FromProcessId(processId));
+}
+
+internal sealed class WebRecordingClientAdapter(WebRecorderClient client) : IWebRecordingClient
+{
+    public event Action<RecordedEvent>? EventCaptured
+    {
+        add => client.EventCaptured += value;
+        remove => client.EventCaptured -= value;
+    }
+
+    public Task StartAsync(string url, string browserType, CancellationToken ct)
+        => client.StartAsync(url, browserType, ct);
+
+    public Task<IReadOnlyList<RecordedEvent>> StopAsync()
+        => client.StopAsync();
+
+    public void Dispose() => client.Dispose();
+}
+
 /// <summary>
 /// Wraps <see cref="RecordingSession"/> (desktop) and <see cref="WebRecorderClient"/> (web)
 /// and exposes recording state for the Blazor Studio.
@@ -17,10 +77,13 @@ namespace Cress.Studio.Services;
 public sealed class StudioRecorderService : IStudioRecorderService, IDisposable
 {
     private readonly RuntimeOrchestrator _orchestrator;
+    private readonly IDesktopRecordingSessionFactory _sessionFactory;
+    private readonly WebRecordingClientFactory _webClientFactory;
+    private readonly ResolveRecordingTarget _resolveTarget;
     private readonly object _lock = new();
 
-    private RecordingSession? _session;
-    private WebRecorderClient? _webClient;
+    private IDesktopRecordingSession? _session;
+    private IWebRecordingClient? _webClient;
 
     /// <summary>Tracks which recording mode is currently active.</summary>
     private enum ActiveDomain { None, Desktop, Web }
@@ -67,8 +130,24 @@ public sealed class StudioRecorderService : IStudioRecorderService, IDisposable
     public event Action? StateChanged;
 
     public StudioRecorderService(RuntimeOrchestrator orchestrator)
+        : this(
+            orchestrator,
+            new DesktopRecordingSessionFactory(),
+            static () => new WebRecordingClientAdapter(new WebRecorderClient()),
+            ResolveDesktopTarget)
+    {
+    }
+
+    internal StudioRecorderService(
+        RuntimeOrchestrator orchestrator,
+        IDesktopRecordingSessionFactory sessionFactory,
+        WebRecordingClientFactory webClientFactory,
+        ResolveRecordingTarget resolveTarget)
     {
         _orchestrator = orchestrator;
+        _sessionFactory = sessionFactory;
+        _webClientFactory = webClientFactory;
+        _resolveTarget = resolveTarget;
         _debounceTimer = new System.Threading.Timer(
             _ => FirePendingNotification(),
             null,
@@ -147,17 +226,9 @@ public sealed class StudioRecorderService : IStudioRecorderService, IDisposable
                 StopActiveSessionUnsafe();
             }
 
-            var target = Process.GetProcessById(processId);
+            _currentTarget = _resolveTarget(processId);
 
-            _currentTarget = new RecordingTargetInfo
-            {
-                ProcessId = processId,
-                ProcessName = target.ProcessName,
-                MainWindowTitle = target.MainWindowTitle,
-                IsAttachable = true
-            };
-
-            _session = RecordingSession.FromProcessId(processId);
+            _session = _sessionFactory.Create(processId);
             _session.EventCaptured += OnEventCaptured;
             _session.Start();
 
@@ -199,7 +270,7 @@ public sealed class StudioRecorderService : IStudioRecorderService, IDisposable
             _isRecording = true;
             _activeRecordingDomain = ActiveDomain.Web;
 
-            _webClient = new WebRecorderClient();
+            _webClient = _webClientFactory();
             _webClient.EventCaptured += OnEventCaptured;
         }
 
@@ -209,8 +280,8 @@ public sealed class StudioRecorderService : IStudioRecorderService, IDisposable
 
     public async Task<RecordingResult> StopRecordingAsync()
     {
-        RecordingSession? session;
-        WebRecorderClient? webClient;
+        IDesktopRecordingSession? session;
+        IWebRecordingClient? webClient;
         RecordingTargetInfo? target;
         ActiveDomain domain;
         TimeSpan duration;
@@ -404,5 +475,17 @@ public sealed class StudioRecorderService : IStudioRecorderService, IDisposable
         }
 
         StateChanged?.Invoke();
+    }
+
+    private static RecordingTargetInfo ResolveDesktopTarget(int processId)
+    {
+        using var target = Process.GetProcessById(processId);
+        return new RecordingTargetInfo
+        {
+            ProcessId = processId,
+            ProcessName = target.ProcessName,
+            MainWindowTitle = target.MainWindowTitle,
+            IsAttachable = true
+        };
     }
 }

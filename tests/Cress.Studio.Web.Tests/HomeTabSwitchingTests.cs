@@ -11,6 +11,90 @@ namespace Cress.Studio.Web.Tests;
 
 public sealed class HomeTabSwitchingTests : TestContext
 {
+    private sealed class TemporaryProject : IDisposable
+    {
+        public TemporaryProject()
+        {
+            RootPath = Path.Combine(Path.GetTempPath(), "cress-home-tab-tests", Guid.NewGuid().ToString("N"));
+            Directory.CreateDirectory(RootPath);
+            WriteFile(Path.Combine(".cress", "config.yaml"), """
+            version: 1
+            project:
+              name: Home tab sample
+              defaultProfile: local
+            paths:
+              capabilities: capabilities
+              flows: flows
+              models: models
+              fixtures: fixtures
+              steps: steps
+              artifacts: .cress/artifacts
+              reports: reports
+            """);
+            WriteFile(Path.Combine(".cress", "profiles", "local.yaml"), """
+            baseUrl: https://example.test
+            """);
+            WriteFile(Path.Combine("capabilities", "search.md"), """
+            ---
+            version: 1
+            id: capability.search
+            owner: qa
+            risk: medium
+            ---
+
+            # Search capability
+
+            ## Rules
+            - Return relevant results.
+            """);
+            WriteFile(Path.Combine("flows", "search.flow.yaml"), """
+            version: 1
+            id: flow.search
+            name: Search flow
+            when:
+              - step: http.get
+                with:
+                  url: https://example.test/search
+            then:
+              - expect: http.assert-status
+                with:
+                  status: "200"
+            """);
+            WriteFile(Path.Combine("steps", "http.yaml"), """
+            version: 1
+            steps:
+              - name: http.get
+                implementation:
+                  plugin: builtin.http
+                  operation: get
+            """);
+            WriteFile(Path.Combine("fixtures", "fixtures.yaml"), """
+            version: 1
+            fixtures:
+              shared.fixture:
+                type: seed.customer
+                strategy: static
+            """);
+        }
+
+        public string RootPath { get; }
+
+        public void Dispose()
+        {
+            if (Directory.Exists(RootPath))
+            {
+                Directory.Delete(RootPath, recursive: true);
+            }
+        }
+
+        private void WriteFile(string relativePath, string contents)
+        {
+            var path = Path.Combine(RootPath, relativePath);
+            Directory.CreateDirectory(Path.GetDirectoryName(path)!);
+            File.WriteAllText(path, contents);
+        }
+    }
+
     private StudioWorkspaceState CreateState()
     {
         Services.AddCressStudioBackend();
@@ -48,8 +132,10 @@ public sealed class HomeTabSwitchingTests : TestContext
     [Fact]
     public void Home_switches_editor_tab_to_flow_when_flow_selection_transitions()
     {
+        using var project = new TemporaryProject();
         var state = CreateState();
-        state.LoadDemoWorkspace("calc-smoke");
+        state.SetProjectPath(project.RootPath);
+        state.LoadProject();
         Services.GetRequiredService<NavigationManager>().NavigateTo("http://localhost/designer");
 
         var cut = RenderComponent<Cress.Studio.Web.Components.Pages.Home>();
@@ -75,8 +161,10 @@ public sealed class HomeTabSwitchingTests : TestContext
     [Fact]
     public void Home_switches_editor_tab_to_suite_when_suite_selection_transitions()
     {
+        using var project = new TemporaryProject();
         var state = CreateState();
-        state.LoadDemoWorkspace("calc-smoke");
+        state.SetProjectPath(project.RootPath);
+        state.LoadProject();
         Services.GetRequiredService<NavigationManager>().NavigateTo("http://localhost/designer");
 
         var cut = RenderComponent<Cress.Studio.Web.Components.Pages.Home>();
@@ -102,8 +190,10 @@ public sealed class HomeTabSwitchingTests : TestContext
     [Fact]
     public void Home_does_not_override_manual_tab_choice_on_repeated_state_change_with_same_flow()
     {
+        using var project = new TemporaryProject();
         var state = CreateState();
-        state.LoadDemoWorkspace("calc-smoke");
+        state.SetProjectPath(project.RootPath);
+        state.LoadProject();
         Services.GetRequiredService<NavigationManager>().NavigateTo("http://localhost/designer");
 
         var cut = RenderComponent<Cress.Studio.Web.Components.Pages.Home>();

@@ -237,6 +237,50 @@ public sealed class TemplateRendererOtherTests
         Assert.Throws<ArgumentException>(() =>
             _renderer.RenderEmbedded("nonexistent", Factories.EmptyModel()));
     }
+
+    [Fact]
+    public void MissingTemplateFile_Throws()
+    {
+        Assert.Throws<FileNotFoundException>(() =>
+            _renderer.Render(Path.Combine(Path.GetTempPath(), Guid.NewGuid() + ".scriban"), Factories.EmptyModel()));
+    }
+
+    [Fact]
+    public void InvalidTemplateSource_Throws()
+    {
+        var templatePath = Path.GetTempFileName();
+
+        try
+        {
+            File.WriteAllText(templatePath, "{{ if");
+
+            Assert.Throws<InvalidOperationException>(() =>
+                _renderer.Render(templatePath, Factories.EmptyModel()));
+        }
+        finally
+        {
+            File.Delete(templatePath);
+        }
+    }
+
+    [Fact]
+    public void FileTemplate_Uses_snake_case_members_and_helpers()
+    {
+        var templatePath = Path.GetTempFileName();
+
+        try
+        {
+            File.WriteAllText(templatePath, "{{ meta.project_name }}|{{ format_percent suite.pass_rate }}");
+
+            var html = _renderer.Render(templatePath, Factories.RichModel(passRate: 0.75));
+
+            Assert.Equal("MyProject|75.0%", html);
+        }
+        finally
+        {
+            File.Delete(templatePath);
+        }
+    }
 }
 
 // ──────────────────────────────────────────────────────────────────────────────

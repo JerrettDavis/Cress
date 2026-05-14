@@ -246,4 +246,117 @@ public sealed class MetricsPanelTests : TestContext
         Assert.Contains("metrics-step-bar-track", cut.Markup);
         Assert.Contains("metrics-step-bar-fill", cut.Markup);
     }
+
+    [Fact]
+    public void MetricsPanel_renders_amber_and_red_status_classes_for_lower_rates()
+    {
+        var state = CreateState();
+        var suite = new SuiteMetrics(
+            TotalRuns: 10,
+            PassedRuns: 7,
+            FailedRuns: 3,
+            PassRate: 0.85,
+            TotalDuration: TimeSpan.FromMinutes(8),
+            AvgDuration: TimeSpan.FromSeconds(5));
+        var flows = new List<FlowMetrics>
+        {
+            new(
+                FlowId: "flow-amber",
+                Runs: 10,
+                Passed: 8,
+                Failed: 2,
+                PassRate: 0.85,
+                FlakeRate: 0.05,
+                AvgDuration: TimeSpan.FromMilliseconds(450),
+                P50: TimeSpan.FromMilliseconds(400),
+                P95: TimeSpan.FromMilliseconds(800),
+                P99: TimeSpan.FromMilliseconds(900),
+                MTTR: null),
+            new(
+                FlowId: "flow-red",
+                Runs: 10,
+                Passed: 6,
+                Failed: 4,
+                PassRate: 0.6,
+                FlakeRate: 0.2,
+                AvgDuration: TimeSpan.FromMinutes(2),
+                P50: TimeSpan.FromSeconds(70),
+                P95: TimeSpan.FromMinutes(2.5),
+                P99: TimeSpan.FromMinutes(3),
+                MTTR: null)
+        };
+
+        SetPrivate(state, "CurrentMetrics", new RunMetrics(suite, flows, [], []));
+
+        var cut = RenderComponent<Cress.Studio.Web.Components.Studio.MetricsPanel>();
+
+        Assert.Contains("metrics-amber", cut.Markup, StringComparison.Ordinal);
+        Assert.Contains("metrics-red", cut.Markup, StringComparison.Ordinal);
+        Assert.Contains("2.5m", cut.Markup, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void MetricsPanel_renders_empty_messages_for_missing_flow_and_heatmap_data()
+    {
+        var state = CreateState();
+        var suite = new SuiteMetrics(
+            TotalRuns: 4,
+            PassedRuns: 4,
+            FailedRuns: 0,
+            PassRate: 1.0,
+            TotalDuration: TimeSpan.FromSeconds(4),
+            AvgDuration: TimeSpan.FromMilliseconds(500));
+
+        SetPrivate(state, "CurrentMetrics", new RunMetrics(suite, [], [], []));
+
+        var cut = RenderComponent<Cress.Studio.Web.Components.Studio.MetricsPanel>();
+
+        Assert.Contains("No flow metrics yet.", cut.Markup, StringComparison.Ordinal);
+        Assert.Contains("No heatmap data yet.", cut.Markup, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void MetricsPanel_renders_mixed_heatmap_outcomes_and_selected_row_state()
+    {
+        var state = CreateState();
+        SetPrivate(state, nameof(StudioWorkspaceState.SelectedFlow), new Cress.Studio.ViewModels.FlowDocumentViewModel
+        {
+            Id = "flow-01",
+            Name = "Flow 01",
+            FilePath = @"C:\workspace\flows\flow-01.flow.yaml"
+        });
+        SetPrivate(state, "CurrentMetrics", MakeMetrics(flowCount: 1, trendPoints: 3));
+
+        state.Runs.Add(new StoredRunResult
+        {
+            Result = new RunResult
+            {
+                Metadata = new RunMetadata { RunId = "run-1" },
+                Flows =
+                [
+                    new FlowRunResult { FlowId = "flow-01", Outcome = RunOutcome.Passed }
+                ]
+            }
+        });
+        state.Runs.Add(new StoredRunResult
+        {
+            Result = new RunResult
+            {
+                Metadata = new RunMetadata { RunId = "run-2" },
+                Flows =
+                [
+                    new FlowRunResult { FlowId = "flow-01", Outcome = RunOutcome.Errored }
+                ]
+            }
+        });
+
+        var cut = RenderComponent<Cress.Studio.Web.Components.Studio.MetricsPanel>();
+
+        Assert.Contains("metrics-row-selected", cut.Markup, StringComparison.Ordinal);
+        Assert.Contains("Passed (1)", cut.Markup, StringComparison.Ordinal);
+        Assert.Contains("Failed (1)", cut.Markup, StringComparison.Ordinal);
+        Assert.Contains("Not run (18)", cut.Markup, StringComparison.Ordinal);
+        Assert.Contains("flow-01 • run-1 • Passed", cut.Markup, StringComparison.Ordinal);
+        Assert.Contains("flow-01 • run-2 • Errored", cut.Markup, StringComparison.Ordinal);
+    }
 }

@@ -2,10 +2,13 @@ namespace Cress.UnitTests;
 
 internal sealed class TestWorkspace : IDisposable
 {
+    private static readonly string RepositoryRoot = GetRepositoryRoot();
+
     public string RootPath { get; }
 
     public TestWorkspace()
     {
+        Environment.SetEnvironmentVariable("CRESS_REPOSITORY_ROOT", RepositoryRoot);
         RootPath = Path.Combine(AppContext.BaseDirectory, "test-workspaces", Guid.NewGuid().ToString("N"));
         Directory.CreateDirectory(RootPath);
     }
@@ -44,4 +47,7 @@ internal sealed class TestWorkspace : IDisposable
             }
         }
     }
+
+    private static string GetRepositoryRoot([System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "")
+        => Path.GetFullPath(Path.Combine(Path.GetDirectoryName(sourceFilePath)!, "..", ".."));
 }

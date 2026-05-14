@@ -3,6 +3,7 @@
 [![CI](https://github.com/JerrettDavis/Cress/actions/workflows/ci.yml/badge.svg)](https://github.com/JerrettDavis/Cress/actions/workflows/ci.yml)
 [![CodeQL](https://github.com/JerrettDavis/Cress/actions/workflows/codeql.yml/badge.svg)](https://github.com/JerrettDavis/Cress/actions/workflows/codeql.yml)
 [![Docs](https://github.com/JerrettDavis/Cress/actions/workflows/docs.yml/badge.svg)](https://github.com/JerrettDavis/Cress/actions/workflows/docs.yml)
+[![codecov](https://codecov.io/gh/JerrettDavis/Cress/graph/badge.svg)](https://codecov.io/gh/JerrettDavis/Cress)
 
 Cress is a **.NET 10 / C# latest** end-to-end testing platform for Windows, with a **Blazor-first Studio experience**, an optional **desktop companion** for anchored in-app recording overlays, Node-based automation components, and an Aspire AppHost for centralized orchestration and monitoring.
 

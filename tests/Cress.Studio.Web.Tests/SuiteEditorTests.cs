@@ -160,4 +160,71 @@ public sealed class SuiteEditorTests : TestContext
         Assert.Contains("Flow B", cut.Markup);
         Assert.Contains("Flow B", cut.Find("[data-testid='suite-selected-flow-chips']").TextContent);
     }
+
+    [Fact]
+    public void SuiteEditor_shows_empty_message_when_filter_matches_nothing()
+    {
+        var state = CreateState();
+
+        var suite = new StudioSuiteEditorModel
+        {
+            FilePath = @"C:\workspace\suites\filtered.suite.yaml",
+            Id = "filtered",
+            Name = "Filtered suite"
+        };
+
+        SetPrivate(state, "SelectedSuite", suite);
+        SetPrivate(state, "Snapshot", new StudioProjectSnapshot
+        {
+            Catalog = new ProjectCatalog
+            {
+                NormalizedFlows =
+                [
+                    new NormalizedFlow { FlowId = "flow-auth", Name = "Auth login", CapabilityId = "auth" }
+                ]
+            }
+        });
+
+        var cut = RenderComponent<Cress.Studio.Web.Components.Studio.SuiteEditor>();
+
+        cut.Find("[data-testid='suite-flow-filter']").Change("missing");
+
+        Assert.Contains("No flows match the current filter", cut.Find("[data-testid='suite-flow-filter-empty']").TextContent);
+    }
+
+    [Fact]
+    public void SuiteEditor_select_all_and_none_buttons_update_selection()
+    {
+        var state = CreateState();
+
+        var suite = new StudioSuiteEditorModel
+        {
+            FilePath = @"C:\workspace\suites\bulk.suite.yaml",
+            Id = "bulk",
+            Name = "Bulk suite"
+        };
+
+        SetPrivate(state, "SelectedSuite", suite);
+        SetPrivate(state, "Snapshot", new StudioProjectSnapshot
+        {
+            Catalog = new ProjectCatalog
+            {
+                NormalizedFlows =
+                [
+                    new NormalizedFlow { FlowId = "flow-a", Name = "Flow A" },
+                    new NormalizedFlow { FlowId = "flow-b", Name = "Flow B" }
+                ]
+            }
+        });
+
+        var cut = RenderComponent<Cress.Studio.Web.Components.Studio.SuiteEditor>();
+
+        cut.FindAll(".checklist-toolbar-link")[0].Click();
+        Assert.Equal(2, state.SelectedSuite!.FlowIds.Count);
+        Assert.Contains("2 / 2 selected", cut.Markup);
+
+        cut.FindAll(".checklist-toolbar-link")[1].Click();
+        Assert.Empty(state.SelectedSuite!.FlowIds);
+        Assert.Contains("0 / 2 selected", cut.Markup);
+    }
 }

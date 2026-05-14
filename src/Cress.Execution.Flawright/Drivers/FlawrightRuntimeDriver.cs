@@ -5,8 +5,31 @@ using FlawrightClient = Flawright.Flawright;
 
 namespace Cress.Execution.Drivers;
 
+internal delegate Task<IFlawright> FlawrightLaunchAsync(LaunchOptions launchOptions, FlawrightOptions options, CancellationToken cancellationToken);
+internal delegate Task<IFlawright> FlawrightAttachAsync(AttachOptions attachOptions, FlawrightOptions options, CancellationToken cancellationToken);
+internal delegate Process? FlawrightProcessResolver(string executablePath);
+
 public sealed class FlawrightRuntimeDriver : IRuntimeDriver
 {
+    private readonly FlawrightLaunchAsync _launchAsync;
+    private readonly FlawrightAttachAsync _attachAsync;
+    private readonly FlawrightProcessResolver _processResolver;
+
+    public FlawrightRuntimeDriver()
+        : this(FlawrightClient.LaunchAsync, FlawrightClient.AttachAsync, TryResolveProcessFromLaunch)
+    {
+    }
+
+    internal FlawrightRuntimeDriver(
+        FlawrightLaunchAsync launchAsync,
+        FlawrightAttachAsync attachAsync,
+        FlawrightProcessResolver processResolver)
+    {
+        _launchAsync = launchAsync;
+        _attachAsync = attachAsync;
+        _processResolver = processResolver;
+    }
+
     public string Name => "flawright";
 
     public IReadOnlyList<Diagnostic> HealthCheck(ProjectCatalog catalog)
@@ -57,7 +80,7 @@ public sealed class FlawrightRuntimeDriver : IRuntimeDriver
     }
 
     public Task<IDriverSession> StartSessionAsync(DriverSessionStartContext context, CancellationToken cancellationToken)
-        => Task.FromResult<IDriverSession>(new FlawrightDriverSession(context));
+        => Task.FromResult<IDriverSession>(new FlawrightDriverSession(context, _launchAsync, _attachAsync, _processResolver));
 
     private static string ResolveConfiguredPath(string projectRoot, string candidate)
     {
@@ -80,6 +103,21 @@ public sealed class FlawrightRuntimeDriver : IRuntimeDriver
            || candidate.Contains(Path.DirectorySeparatorChar)
            || candidate.Contains(Path.AltDirectorySeparatorChar);
 
+    private static Process? TryResolveProcessFromLaunch(string executablePath)
+    {
+        try
+        {
+            var processName = Path.GetFileNameWithoutExtension(executablePath);
+            return Process.GetProcessesByName(processName)
+                .OrderByDescending(candidate => candidate.StartTime)
+                .FirstOrDefault(candidate => !candidate.HasExited);
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
     private sealed class FlawrightDriverSession : IDriverSession
     {
         private readonly DriverSessionStartContext _context;
@@ -98,10 +136,20 @@ public sealed class FlawrightRuntimeDriver : IRuntimeDriver
         private bool _ownsProcess;
         private bool _disposed;
         private int _sequence;
+        private readonly FlawrightLaunchAsync _launchAsync;
+        private readonly FlawrightAttachAsync _attachAsync;
+        private readonly FlawrightProcessResolver _processResolver;
 
-        public FlawrightDriverSession(DriverSessionStartContext context)
+        public FlawrightDriverSession(
+            DriverSessionStartContext context,
+            FlawrightLaunchAsync launchAsync,
+            FlawrightAttachAsync attachAsync,
+            FlawrightProcessResolver processResolver)
         {
             _context = context;
+            _launchAsync = launchAsync;
+            _attachAsync = attachAsync;
+            _processResolver = processResolver;
         }
 
         public string Name => "flawright";
@@ -208,7 +256,7 @@ public sealed class FlawrightRuntimeDriver : IRuntimeDriver
                 StartupTimeout = TimeSpan.FromMilliseconds(timeout)
             };
 
-            var flawright = await FlawrightClient.LaunchAsync(launchOptions, BuildFlawrightOptions(timeout), cancellationToken).ConfigureAwait(false);
+            var flawright = await _launchAsync(launchOptions, BuildFlawrightOptions(timeout), cancellationToken).ConfigureAwait(false);
             var browser = flawright.Browser;
             var page = await ResolvePageAsync(browser, GetWindowTitle(action), timeout, cancellationToken).ConfigureAwait(false);
 
@@ -222,7 +270,7 @@ public sealed class FlawrightRuntimeDriver : IRuntimeDriver
             _browser = browser;
             _page = page;
             _ownsProcess = true;
-            _process = TryResolveProcessFromLaunch(executablePath);
+            _process = _processResolver(executablePath);
 
             if (_process is not null)
             {
@@ -261,7 +309,7 @@ public sealed class FlawrightRuntimeDriver : IRuntimeDriver
             }
 
             var timeout = ResolveTimeoutMs(action);
-            var flawright = await FlawrightClient.AttachAsync(attachOptions, BuildFlawrightOptions(timeout), cancellationToken).ConfigureAwait(false);
+            var flawright = await _attachAsync(attachOptions, BuildFlawrightOptions(timeout), cancellationToken).ConfigureAwait(false);
             var browser = flawright.Browser;
             var page = await ResolvePageAsync(browser, GetWindowTitle(action), timeout, cancellationToken).ConfigureAwait(false);
 
@@ -643,21 +691,6 @@ public sealed class FlawrightRuntimeDriver : IRuntimeDriver
             => string.IsNullOrWhiteSpace(expectedTitle)
                 ? await browser.NewPageAsync(cancellationToken).ConfigureAwait(false)
                 : await browser.WaitForPageAsync(expectedTitle, TimeSpan.FromMilliseconds(timeoutMs <= 0 ? 10000 : timeoutMs), cancellationToken).ConfigureAwait(false);
-
-        private static Process? TryResolveProcessFromLaunch(string executablePath)
-        {
-            try
-            {
-                var processName = Path.GetFileNameWithoutExtension(executablePath);
-                return Process.GetProcessesByName(processName)
-                    .OrderByDescending(candidate => candidate.StartTime)
-                    .FirstOrDefault(candidate => !candidate.HasExited);
-            }
-            catch
-            {
-                return null;
-            }
-        }
 
         private static async Task<string> ReadLocatorTextAsync(IFlawrightLocator locator, CancellationToken cancellationToken)
         {

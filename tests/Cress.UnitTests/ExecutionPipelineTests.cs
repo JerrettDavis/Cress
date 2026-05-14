@@ -735,7 +735,15 @@ public sealed class ExecutionPipelineTests
     }
 
     private static string GetRepositoryRoot([System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "")
-        => Path.GetFullPath(Path.Combine(Path.GetDirectoryName(sourceFilePath)!, "..", ".."));
+    {
+        var repositoryRoot = Environment.GetEnvironmentVariable("CRESS_REPOSITORY_ROOT");
+        if (!string.IsNullOrWhiteSpace(repositoryRoot))
+        {
+            return repositoryRoot;
+        }
+
+        return Path.GetFullPath(Path.Combine(Path.GetDirectoryName(sourceFilePath)!, "..", ".."));
+    }
 
     private static string GetNodeExecutablePath()
         => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "nodejs", "node.exe");

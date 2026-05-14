@@ -115,12 +115,6 @@ public sealed class ReflectionDotNetPluginModuleLoaderTests
 
     private static string GetRepositoryRoot([System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "")
     {
-        var repositoryRoot = Environment.GetEnvironmentVariable("CRESS_REPOSITORY_ROOT");
-        if (!string.IsNullOrWhiteSpace(repositoryRoot))
-        {
-            return repositoryRoot;
-        }
-
-        return Path.GetFullPath(Path.Combine(Path.GetDirectoryName(sourceFilePath)!, "..", ".."));
+        return TestWorkspace.ResolveRepositoryRoot(sourceFilePath);
     }
 }

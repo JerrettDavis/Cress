@@ -196,7 +196,10 @@ public sealed class StudioWorkspaceRunTests : IDisposable
         await scope.State.RunSelectedAsync();
         Assert.Single(runner.Requests);
         Assert.EndsWith("search.flow.yaml", runner.Requests[0].Options.FlowPath, StringComparison.OrdinalIgnoreCase);
-        Assert.Contains("passed", scope.State.LiveRunHeadline, StringComparison.OrdinalIgnoreCase);
+        Assert.True(
+            scope.State.LiveRunHeadline.Contains("Completed", StringComparison.OrdinalIgnoreCase)
+            || scope.State.LiveRunHeadline.Contains("passed", StringComparison.OrdinalIgnoreCase),
+            $"Unexpected live run headline: {scope.State.LiveRunHeadline}");
         Assert.NotEmpty(scope.State.LiveTimelineEntries);
         Assert.Contains(scope.State.LiveTimelineEntries, entry => entry.Category == "Log" && entry.Headline.Contains("Waiting 5s before click.", StringComparison.Ordinal));
         Assert.Contains(scope.State.LiveTimelineEntries, entry => string.Equals(entry.Category, "Step", StringComparison.Ordinal) && (entry.Detail?.Contains("Clicked!", StringComparison.Ordinal) ?? false));

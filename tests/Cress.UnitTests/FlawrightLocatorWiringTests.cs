@@ -4,6 +4,7 @@ using Cress.Core.Models;
 using Cress.Execution;
 using Cress.Execution.Drivers;
 using Flawright;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Cress.UnitTests;
 
@@ -26,6 +27,64 @@ namespace Cress.UnitTests;
 /// </summary>
 public sealed class FlawrightLocatorWiringTests
 {
+    [Fact]
+    public void AddCressFlawrightRuntime_registers_runtime_driver()
+    {
+        var services = new ServiceCollection()
+            .AddCressFlawrightRuntime()
+            .BuildServiceProvider();
+
+        var driver = Assert.Single(services.GetServices<IRuntimeDriver>());
+        Assert.IsType<FlawrightRuntimeDriver>(driver);
+    }
+
+    [Fact]
+    public void HealthCheck_reports_profile_path_diagnostics_for_command_and_relative_paths()
+    {
+        using var workspace = new TestWorkspace();
+        var driver = new FlawrightRuntimeDriver();
+
+        var commandDiagnostics = driver.HealthCheck(CreateCatalog(workspace.GetPath("project"), "sample-app.exe"));
+        var commandDiagnostic = Assert.Single(commandDiagnostics, item => item.Code == "DRV103");
+        Assert.Contains("PATH at runtime", commandDiagnostic.Message, StringComparison.Ordinal);
+
+        var missingDiagnostics = driver.HealthCheck(CreateCatalog(workspace.GetPath("project"), Path.Combine("tools", "missing-app.exe")));
+        var missingDiagnostic = Assert.Single(missingDiagnostics, item => item.Code == "DRV104");
+        Assert.Contains("does not exist", missingDiagnostic.Message, StringComparison.Ordinal);
+
+        var existingRelativePath = Path.Combine("tools", "sample-app.exe");
+        var fullPath = workspace.GetPath("project", existingRelativePath);
+        Directory.CreateDirectory(Path.GetDirectoryName(fullPath)!);
+        File.WriteAllText(fullPath, "stub");
+
+        var existingDiagnostics = driver.HealthCheck(CreateCatalog(workspace.GetPath("project"), existingRelativePath));
+        var existingDiagnostic = Assert.Single(existingDiagnostics, item => item.Code == "DRV103");
+        Assert.Contains(fullPath, existingDiagnostic.Message, StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
+    public void TryResolveProcessFromLaunch_returns_current_process_for_running_executable()
+    {
+        var method = typeof(FlawrightRuntimeDriver).GetMethod("TryResolveProcessFromLaunch", BindingFlags.Static | BindingFlags.NonPublic);
+        Assert.NotNull(method);
+
+        using var currentProcess = Process.GetCurrentProcess();
+        var resolved = Assert.IsType<Process>(method.Invoke(null, [currentProcess.MainModule!.FileName!]));
+
+        Assert.Equal(currentProcess.ProcessName, resolved.ProcessName);
+    }
+
+    [Fact]
+    public void TryResolveProcessFromLaunch_returns_null_when_process_lookup_throws()
+    {
+        var method = typeof(FlawrightRuntimeDriver).GetMethod("TryResolveProcessFromLaunch", BindingFlags.Static | BindingFlags.NonPublic);
+        Assert.NotNull(method);
+
+        var resolved = method.Invoke(null, ["bad\0process.exe"]);
+
+        Assert.Null(resolved);
+    }
+
     // -------------------------------------------------------------------------
     // Helpers
     // -------------------------------------------------------------------------
@@ -649,6 +708,55 @@ public sealed class FlawrightLocatorWiringTests
     }
 
     [Fact]
+    public async Task Open_WithoutApplicationPath_returns_missing_input_failure()
+    {
+        using var tempDir = new TempDirectory();
+        await using var session = await CreateSessionAsync(tempDir.Path);
+
+        var result = await session.ExecuteAsync(
+            MakeAction("open", []),
+            MakeFlowContext(),
+            CancellationToken.None);
+
+        Assert.Equal(RunOutcome.Failed, result.Outcome);
+        Assert.Equal("application-path-missing", result.FailureClassification);
+    }
+
+    [Fact]
+    public async Task Open_WithMissingFile_returns_not_found_failure()
+    {
+        using var tempDir = new TempDirectory();
+        await using var session = await CreateSessionAsync(tempDir.Path);
+
+        var result = await session.ExecuteAsync(
+            MakeAction("open", new Dictionary<string, string> { ["application"] = Path.Combine(tempDir.Path, "missing.exe") }),
+            MakeFlowContext(),
+            CancellationToken.None);
+
+        Assert.Equal(RunOutcome.Failed, result.Outcome);
+        Assert.Equal("application-not-found", result.FailureClassification);
+    }
+
+    [Fact]
+    public async Task Open_WhenAlreadyRunning_returns_success_without_relaunching()
+    {
+        using var tempDir = new TempDirectory();
+        await using var session = await CreateSessionAsync(tempDir.Path);
+
+        SetPrivateField(session, "_ownsProcess", true);
+        SetPrivateField(session, "_activeApp", CreateAppProxy(CreateBrowserProxy()));
+        SetPrivateField(session, "_page", CreatePageProxy());
+
+        var result = await session.ExecuteAsync(
+            MakeAction("open", new Dictionary<string, string> { ["application"] = "sample-app.exe" }),
+            MakeFlowContext(),
+            CancellationToken.None);
+
+        Assert.Equal(RunOutcome.Passed, result.Outcome);
+        Assert.Equal("Application is already running.", result.Message);
+    }
+
+    [Fact]
     public async Task Attach_WithInjectedAttacher_UsesProcessIdAndPopulatesMetadata()
     {
         using var tempDir = new TempDirectory();
@@ -682,6 +790,51 @@ public sealed class FlawrightLocatorWiringTests
     }
 
     [Fact]
+    public async Task Attach_WithProcessName_UsesRunningProcess()
+    {
+        using var tempDir = new TempDirectory();
+        using var process = Process.GetCurrentProcess();
+        var page = CreatePageProxy(title: "Attached By Name");
+        var app = CreateAppProxy(CreateBrowserProxy(newPage: page));
+        AttachOptions? capturedAttachOptions = null;
+        var driver = new FlawrightRuntimeDriver(
+            (_, _, _) => throw new NotSupportedException(),
+            (attachOptions, _, _) =>
+            {
+                capturedAttachOptions = attachOptions;
+                return Task.FromResult(app);
+            },
+            _ => null);
+        await using var session = await CreateSessionAsync(tempDir.Path, driver: driver);
+
+        var result = await session.ExecuteAsync(
+            MakeAction("attach", new Dictionary<string, string> { ["processName"] = process.ProcessName }),
+            MakeFlowContext(),
+            CancellationToken.None);
+
+        Assert.Equal(RunOutcome.Passed, result.Outcome);
+        Assert.NotNull(capturedAttachOptions);
+        Assert.True(capturedAttachOptions!.ProcessId > 0);
+        Assert.Equal(capturedAttachOptions.ProcessId.ToString(), session.Metadata["processId"]);
+        Assert.Equal(process.ProcessName, session.Metadata["processName"]);
+    }
+
+    [Fact]
+    public async Task Attach_WithoutProcessInput_returns_failure()
+    {
+        using var tempDir = new TempDirectory();
+        await using var session = await CreateSessionAsync(tempDir.Path);
+
+        var result = await session.ExecuteAsync(
+            MakeAction("attach", []),
+            MakeFlowContext(),
+            CancellationToken.None);
+
+        Assert.Equal(RunOutcome.Failed, result.Outcome);
+        Assert.Equal("application-attach-failed", result.FailureClassification);
+    }
+
+    [Fact]
     public async Task AssertText_WithFakeLocatorText_ReturnsSuccess()
     {
         using var tempDir = new TempDirectory();
@@ -705,6 +858,65 @@ public sealed class FlawrightLocatorWiringTests
 
         Assert.Equal(RunOutcome.Passed, result.Outcome);
         Assert.Equal("Element text matched 'Ready'.", result.Message);
+    }
+
+    [Fact]
+    public async Task AssertText_WithMismatch_returns_assertion_failure()
+    {
+        using var tempDir = new TempDirectory();
+        await using var session = await CreateSessionAsync(tempDir.Path);
+
+        var locator = CreateLocatorProxy(
+            selector: "#status",
+            textContent: "Waiting");
+        var page = CreatePageProxy(locatorFactory: _ => locator);
+        SetPrivateField(session, "_page", page);
+
+        var result = await session.ExecuteAsync(
+            MakeAction("assert-text", new Dictionary<string, string>
+            {
+                ["selector"] = "#status",
+                ["text"] = "Ready"
+            }),
+            MakeFlowContext(),
+            CancellationToken.None);
+
+        Assert.Equal(RunOutcome.Failed, result.Outcome);
+        Assert.Equal("assertion-failed", result.FailureClassification);
+    }
+
+    [Fact]
+    public async Task AssertText_WithoutExpectedText_returns_invalid_assertion()
+    {
+        using var tempDir = new TempDirectory();
+        await using var session = await CreateSessionAsync(tempDir.Path);
+
+        var result = await session.ExecuteAsync(
+            MakeAction("assert-text", new Dictionary<string, string> { ["selector"] = "#status" }),
+            MakeFlowContext(),
+            CancellationToken.None);
+
+        Assert.Equal(RunOutcome.Failed, result.Outcome);
+        Assert.Equal("invalid-assertion", result.FailureClassification);
+    }
+
+    [Fact]
+    public async Task AssertText_WithWindowFlagWithoutPage_returns_window_not_found()
+    {
+        using var tempDir = new TempDirectory();
+        await using var session = await CreateSessionAsync(tempDir.Path);
+
+        var result = await session.ExecuteAsync(
+            MakeAction("assert-text", new Dictionary<string, string>
+            {
+                ["window"] = "true",
+                ["expected"] = "Desktop"
+            }),
+            MakeFlowContext(),
+            CancellationToken.None);
+
+        Assert.Equal(RunOutcome.Failed, result.Outcome);
+        Assert.Equal("window-not-found", result.FailureClassification);
     }
 
     [Fact]
@@ -733,6 +945,66 @@ public sealed class FlawrightLocatorWiringTests
         Assert.Equal("Ada", filledValue);
         Assert.Equal(RunOutcome.Passed, result.Outcome);
         Assert.Equal("Entered text into '#name'.", result.Message);
+    }
+
+    [Fact]
+    public async Task Fill_WithoutValue_returns_invalid_input()
+    {
+        using var tempDir = new TempDirectory();
+        await using var session = await CreateSessionAsync(tempDir.Path);
+
+        var result = await session.ExecuteAsync(
+            MakeAction("fill", new Dictionary<string, string> { ["selector"] = "#name" }),
+            MakeFlowContext(),
+            CancellationToken.None);
+
+        Assert.Equal(RunOutcome.Failed, result.Outcome);
+        Assert.Equal("invalid-flawright-input", result.FailureClassification);
+    }
+
+    [Fact]
+    public async Task Fill_WithoutWindow_returns_locator_not_found()
+    {
+        using var tempDir = new TempDirectory();
+        await using var session = await CreateSessionAsync(tempDir.Path);
+
+        var result = await session.ExecuteAsync(
+            MakeAction("fill", new Dictionary<string, string>
+            {
+                ["selector"] = "#name",
+                ["value"] = "Ada"
+            }),
+            MakeFlowContext(),
+            CancellationToken.None);
+
+        Assert.Equal(RunOutcome.Failed, result.Outcome);
+        Assert.Equal("locator-not-found", result.FailureClassification);
+    }
+
+    [Fact]
+    public async Task Fill_WithInvalidSelector_returns_invalid_selector_failure()
+    {
+        using var tempDir = new TempDirectory();
+        await using var session = await CreateSessionAsync(tempDir.Path);
+
+        var page = CreateProxy<IFlawrightPage>((method, args) => method.Name switch
+        {
+            "Locator" => throw new ArgumentException("bad selector"),
+            _ => DefaultReturn(method)
+        });
+        SetPrivateField(session, "_page", page);
+
+        var result = await session.ExecuteAsync(
+            MakeAction("fill", new Dictionary<string, string>
+            {
+                ["selector"] = "#[",
+                ["value"] = "Ada"
+            }),
+            MakeFlowContext(),
+            CancellationToken.None);
+
+        Assert.Equal(RunOutcome.Failed, result.Outcome);
+        Assert.Equal("invalid-selector", result.FailureClassification);
     }
 
     [Fact]
@@ -789,6 +1061,62 @@ public sealed class FlawrightLocatorWiringTests
     }
 
     [Fact]
+    public async Task PressKey_WithoutKey_returns_invalid_input()
+    {
+        using var tempDir = new TempDirectory();
+        await using var session = await CreateSessionAsync(tempDir.Path);
+
+        var result = await session.ExecuteAsync(
+            MakeAction("press-key", []),
+            MakeFlowContext(),
+            CancellationToken.None);
+
+        Assert.Equal(RunOutcome.Failed, result.Outcome);
+        Assert.Equal("invalid-flawright-input", result.FailureClassification);
+    }
+
+    [Fact]
+    public async Task PressKey_WithoutPage_returns_window_not_found()
+    {
+        using var tempDir = new TempDirectory();
+        await using var session = await CreateSessionAsync(tempDir.Path);
+
+        var result = await session.ExecuteAsync(
+            MakeAction("press-key", new Dictionary<string, string> { ["key"] = "Enter" }),
+            MakeFlowContext(),
+            CancellationToken.None);
+
+        Assert.Equal(RunOutcome.Failed, result.Outcome);
+        Assert.Equal("window-not-found", result.FailureClassification);
+    }
+
+    [Fact]
+    public async Task PressKey_WithInvalidSelector_returns_invalid_selector_failure()
+    {
+        using var tempDir = new TempDirectory();
+        await using var session = await CreateSessionAsync(tempDir.Path);
+
+        var page = CreateProxy<IFlawrightPage>((method, args) => method.Name switch
+        {
+            "Locator" => throw new ArgumentException("bad selector"),
+            _ => DefaultReturn(method)
+        });
+        SetPrivateField(session, "_page", page);
+
+        var result = await session.ExecuteAsync(
+            MakeAction("press-key", new Dictionary<string, string>
+            {
+                ["selector"] = "#[",
+                ["key"] = "Enter"
+            }),
+            MakeFlowContext(),
+            CancellationToken.None);
+
+        Assert.Equal(RunOutcome.Failed, result.Outcome);
+        Assert.Equal("invalid-selector", result.FailureClassification);
+    }
+
+    [Fact]
     public async Task AssertText_WithWindowFlagAndFakePage_ReturnsSuccess()
     {
         using var tempDir = new TempDirectory();
@@ -832,6 +1160,38 @@ public sealed class FlawrightLocatorWiringTests
     }
 
     [Fact]
+    public async Task AssertWindowTitle_WithMismatch_returns_assertion_failure()
+    {
+        using var tempDir = new TempDirectory();
+        await using var session = await CreateSessionAsync(tempDir.Path);
+
+        SetPrivateField(session, "_page", CreatePageProxy(title: "Other Window"));
+
+        var result = await session.ExecuteAsync(
+            MakeAction("assert-window-title", new Dictionary<string, string> { ["title"] = "Desktop" }),
+            MakeFlowContext(),
+            CancellationToken.None);
+
+        Assert.Equal(RunOutcome.Failed, result.Outcome);
+        Assert.Equal("assertion-failed", result.FailureClassification);
+    }
+
+    [Fact]
+    public async Task AssertWindowTitle_WithoutWindow_returns_failure()
+    {
+        using var tempDir = new TempDirectory();
+        await using var session = await CreateSessionAsync(tempDir.Path);
+
+        var result = await session.ExecuteAsync(
+            MakeAction("assert-window-title", new Dictionary<string, string> { ["title"] = "Desktop" }),
+            MakeFlowContext(),
+            CancellationToken.None);
+
+        Assert.Equal(RunOutcome.Failed, result.Outcome);
+        Assert.Equal("window-not-found", result.FailureClassification);
+    }
+
+    [Fact]
     public async Task Screenshot_WithFakePage_WritesArtifact()
     {
         using var tempDir = new TempDirectory();
@@ -850,6 +1210,28 @@ public sealed class FlawrightLocatorWiringTests
         Assert.Equal("screenshots", artifact.Category);
         Assert.EndsWith("Greeting-Shot-001.png", artifact.RelativePath, StringComparison.Ordinal);
         Assert.True(File.Exists(Path.Combine(tempDir.Path, artifact.RelativePath)));
+    }
+
+    [Fact]
+    public async Task Click_WithInvalidSelector_returns_invalid_selector_failure()
+    {
+        using var tempDir = new TempDirectory();
+        await using var session = await CreateSessionAsync(tempDir.Path);
+
+        var page = CreateProxy<IFlawrightPage>((method, args) => method.Name switch
+        {
+            "Locator" => throw new ArgumentException("bad selector"),
+            _ => DefaultReturn(method)
+        });
+        SetPrivateField(session, "_page", page);
+
+        var result = await session.ExecuteAsync(
+            MakeAction("click", new Dictionary<string, string> { ["selector"] = "#[" }),
+            MakeFlowContext(),
+            CancellationToken.None);
+
+        Assert.Equal(RunOutcome.Failed, result.Outcome);
+        Assert.Equal("invalid-selector", result.FailureClassification);
     }
 
     [Fact]
@@ -884,6 +1266,40 @@ public sealed class FlawrightLocatorWiringTests
     }
 
     [Fact]
+    public async Task DriverExceptions_are_mapped_to_timeout_and_generic_failures()
+    {
+        using var timeoutDir = new TempDirectory();
+        var timeoutDriver = new FlawrightRuntimeDriver(
+            (_, _, _) => throw new FlawrightTimeoutException("timed out"),
+            (_, _, _) => throw new NotSupportedException(),
+            _ => null);
+        await using var timeoutSession = await CreateSessionAsync(timeoutDir.Path, driver: timeoutDriver);
+
+        var timeoutResult = await timeoutSession.ExecuteAsync(
+            MakeAction("open", new Dictionary<string, string> { ["application"] = "sample-app.exe" }),
+            MakeFlowContext(),
+            CancellationToken.None);
+
+        Assert.Equal(RunOutcome.Failed, timeoutResult.Outcome);
+        Assert.Equal("locator-not-found", timeoutResult.FailureClassification);
+
+        using var errorDir = new TempDirectory();
+        var errorDriver = new FlawrightRuntimeDriver(
+            (_, _, _) => throw new InvalidOperationException("boom"),
+            (_, _, _) => throw new NotSupportedException(),
+            _ => null);
+        await using var errorSession = await CreateSessionAsync(errorDir.Path, driver: errorDriver);
+
+        var errorResult = await errorSession.ExecuteAsync(
+            MakeAction("open", new Dictionary<string, string> { ["application"] = "sample-app.exe" }),
+            MakeFlowContext(),
+            CancellationToken.None);
+
+        Assert.Equal(RunOutcome.Failed, errorResult.Outcome);
+        Assert.Equal("flawright-driver-error", errorResult.FailureClassification);
+    }
+
+    [Fact]
     public async Task CaptureFinalEvidence_WithScreenshotsEnabled_WritesArtifact()
     {
         using var tempDir = new TempDirectory();
@@ -908,6 +1324,17 @@ public sealed class FlawrightLocatorWiringTests
         Assert.Equal("screenshots", artifact.Category);
         Assert.EndsWith("final-window-001.png", artifact.RelativePath, StringComparison.Ordinal);
         Assert.True(File.Exists(Path.Combine(tempDir.Path, artifact.RelativePath)));
+    }
+
+    [Fact]
+    public async Task CaptureFinalEvidence_without_page_or_policy_returns_empty()
+    {
+        using var tempDir = new TempDirectory();
+        await using var session = await CreateSessionAsync(tempDir.Path);
+
+        var artifacts = await session.CaptureFinalEvidenceAsync(MakeFlowContext(), CancellationToken.None);
+
+        Assert.Empty(artifacts);
     }
 
     [Fact]
@@ -940,6 +1367,66 @@ public sealed class FlawrightLocatorWiringTests
         Assert.Null(GetPrivateField(session, "_ownedApp"));
         Assert.Null(GetPrivateField(session, "_activeApp"));
         Assert.Null(GetPrivateField(session, "_page"));
+    }
+
+    [Fact]
+    public async Task Close_WithOwnedProcess_disposes_and_clears_process_handle()
+    {
+        using var tempDir = new TempDirectory();
+        await using var session = await CreateSessionAsync(tempDir.Path);
+        var app = CreateAppProxy(CreateBrowserProxy());
+        using var process = Process.GetProcessById(Environment.ProcessId);
+
+        SetPrivateField(session, "_ownedApp", app);
+        SetPrivateField(session, "_activeApp", app);
+        SetPrivateField(session, "_page", CreatePageProxy());
+        SetPrivateField(session, "_ownsProcess", true);
+        SetPrivateField(session, "_process", process);
+
+        var result = await session.ExecuteAsync(
+            MakeAction("close", []),
+            MakeFlowContext(),
+            CancellationToken.None);
+
+        Assert.Equal(RunOutcome.Passed, result.Outcome);
+        Assert.Null(GetPrivateField(session, "_process"));
+    }
+
+    [Fact]
+    public async Task Close_WhenAlreadyClosed_returns_success()
+    {
+        using var tempDir = new TempDirectory();
+        await using var session = await CreateSessionAsync(tempDir.Path);
+
+        var result = await session.ExecuteAsync(
+            MakeAction("close", []),
+            MakeFlowContext(),
+            CancellationToken.None);
+
+        Assert.Equal(RunOutcome.Passed, result.Outcome);
+        Assert.Equal("Application is already closed.", result.Message);
+    }
+
+    [Fact]
+    public async Task DisposeAsync_disposes_resources_and_is_idempotent()
+    {
+        using var tempDir = new TempDirectory();
+        await using var session = await CreateSessionAsync(tempDir.Path);
+
+        var disposed = false;
+        var app = CreateAppProxy(CreateBrowserProxy(), () => disposed = true);
+        using var process = Process.GetProcessById(Environment.ProcessId);
+        SetPrivateField(session, "_ownedApp", app);
+        SetPrivateField(session, "_activeApp", app);
+        SetPrivateField(session, "_page", CreatePageProxy());
+        SetPrivateField(session, "_process", process);
+
+        await session.DisposeAsync();
+        await session.DisposeAsync();
+
+        Assert.True(disposed);
+        Assert.Null(GetPrivateField(session, "_page"));
+        Assert.Null(GetPrivateField(session, "_process"));
     }
 
     [Fact]
@@ -1005,6 +1492,157 @@ public sealed class FlawrightLocatorWiringTests
     }
 
     [Fact]
+    public async Task Private_Open_disposes_existing_owned_app_before_replacing_it()
+    {
+        using var tempDir = new TempDirectory();
+        var applicationPath = Path.Combine(tempDir.Path, "sample-app.exe");
+        File.WriteAllText(applicationPath, "stub");
+
+        var previousDisposed = false;
+        var previousApp = CreateAppProxy(CreateBrowserProxy(), () => previousDisposed = true);
+        var newApp = CreateAppProxy(CreateBrowserProxy(newPage: CreatePageProxy(title: "New Window")));
+        var driver = new FlawrightRuntimeDriver(
+            (_, _, _) => Task.FromResult(newApp),
+            (_, _, _) => throw new NotSupportedException(),
+            _ => null);
+        await using var session = await CreateSessionAsync(tempDir.Path, driver: driver);
+        SetPrivateField(session, "_ownedApp", previousApp);
+
+        var result = await session.ExecuteAsync(
+            MakeAction("open", new Dictionary<string, string> { ["application"] = applicationPath }),
+            MakeFlowContext(),
+            CancellationToken.None);
+
+        Assert.Equal(RunOutcome.Passed, result.Outcome);
+        Assert.True(previousDisposed);
+    }
+
+    [Fact]
+    public async Task Private_ResolveLocator_combines_non_selector_inputs_and_reports_invalid_selectors()
+    {
+        using var tempDir = new TempDirectory();
+        await using var session = await CreateSessionAsync(tempDir.Path);
+        var method = GetPrivateMethod(session, "ResolveLocator");
+
+        IFlawrightLocator CreateNamedLocator(string selector)
+            => CreateProxy<IFlawrightLocator>((m, args) => m.Name switch
+            {
+                "get_Selector" => selector,
+                "And" => CreateNamedLocator($"{selector}&{((IFlawrightLocator)args![0]!).Selector}"),
+                _ => DefaultReturn(m)
+            });
+
+        var page = CreateProxy<IFlawrightPage>((m, args) => m.Name switch
+        {
+            "GetByTestId" => CreateNamedLocator($"testid:{args![0]}"),
+            "Locator" => (string)args![0]! switch
+            {
+                "role:button" => CreateNamedLocator("role:button"),
+                "#[" => throw new ArgumentException("bad selector"),
+                var selector => CreateNamedLocator(selector)
+            },
+            _ => DefaultReturn(m)
+        });
+        SetPrivateField(session, "_page", page);
+
+        object?[] args =
+        [
+            MakeAction("click", new Dictionary<string, string>
+            {
+                ["testId"] = "save",
+                ["name"] = "Save",
+                ["role"] = "button"
+            }),
+            null
+        ];
+
+        var locator = Assert.IsAssignableFrom<IFlawrightLocator?>(method.Invoke(session, args));
+        Assert.NotNull(locator);
+        Assert.Equal("testid:save&name:Save&role:button", locator.Selector);
+        Assert.Null(args[1]);
+
+        object?[] invalidArgs =
+        [
+            MakeAction("click", new Dictionary<string, string> { ["selector"] = "#[" }),
+            null
+        ];
+
+        var invalidLocator = method.Invoke(session, invalidArgs);
+        Assert.Null(invalidLocator);
+        Assert.Equal("invalid-selector", Assert.IsType<DriverExecutionResult>(invalidArgs[1]).FailureClassification);
+    }
+
+    [Fact]
+    public async Task Private_ResolveLocator_returns_null_when_no_desktop_locators_are_supplied()
+    {
+        using var tempDir = new TempDirectory();
+        await using var session = await CreateSessionAsync(tempDir.Path);
+        var method = GetPrivateMethod(session, "ResolveLocator");
+
+        SetPrivateField(session, "_page", CreatePageProxy());
+        object?[] args =
+        [
+            MakeAction("click", []),
+            null
+        ];
+
+        var locator = method.Invoke(session, args);
+
+        Assert.Null(locator);
+        Assert.Null(args[1]);
+    }
+
+    [Fact]
+    public async Task Private_helpers_cover_timeout_and_matching_fallbacks()
+    {
+        using var tempDir = new TempDirectory();
+        await using var session = await CreateSessionAsync(tempDir.Path);
+
+        var containsOrEquals = GetPrivateMethod(session, "ContainsOrEquals", isStatic: true);
+        var buildFlawrightOptions = GetPrivateMethod(session, "BuildFlawrightOptions");
+        var waitForLocatorText = GetPrivateMethod(session, "WaitForLocatorTextAsync", isStatic: true);
+        var waitForWindowTitle = GetPrivateMethod(session, "WaitForWindowTitleAsync", isStatic: true);
+
+        Assert.True(Assert.IsType<bool>(containsOrEquals.Invoke(null, ["Desktop", "desktop"])));
+
+        var options = buildFlawrightOptions.Invoke(session, [-5]);
+        Assert.Equal(TimeSpan.FromMilliseconds(10000), ((FlawrightOptions)options!).DefaultTimeout);
+
+        var locator = CreateLocatorProxy(selector: "#status", textContent: "Waiting");
+        var page = CreatePageProxy(title: "Waiting Window");
+
+        var locatorText = await InvokeAsync<string>(waitForLocatorText, null, locator, "Ready", 1, CancellationToken.None);
+        var title = await InvokeAsync<string>(waitForWindowTitle, null, page, "Ready", 1, CancellationToken.None);
+
+        Assert.Equal("Waiting", locatorText);
+        Assert.Equal("Waiting Window", title);
+    }
+
+    [Fact]
+    public async Task Private_helpers_cover_text_content_and_page_resolution_branches()
+    {
+        using var tempDir = new TempDirectory();
+        await using var session = await CreateSessionAsync(tempDir.Path);
+
+        var readLocatorText = GetPrivateMethod(session, "ReadLocatorTextAsync", isStatic: true);
+        var resolvePage = GetPrivateMethod(session, "ResolvePageAsync", isStatic: true);
+
+        var locator = CreateLocatorProxy(selector: "#status", textContent: "Ready");
+        var text = await InvokeAsync<string>(readLocatorText, null, locator, CancellationToken.None);
+
+        var newPage = CreatePageProxy(title: "New Page");
+        var waitedPage = CreatePageProxy(title: "Waited Page");
+        var browser = CreateBrowserProxy(newPage, waitedPage);
+
+        var resolvedNewPage = await InvokeAsync<IFlawrightPage>(resolvePage, null, browser, null, 0, CancellationToken.None);
+        var resolvedWaitedPage = await InvokeAsync<IFlawrightPage>(resolvePage, null, browser, "Expected", 0, CancellationToken.None);
+
+        Assert.Equal("Ready", text);
+        Assert.Same(newPage, resolvedNewPage);
+        Assert.Same(waitedPage, resolvedWaitedPage);
+    }
+
+    [Fact]
     public async Task Private_ResolveApplicationPath_UsesActionAndProfileInputs()
     {
         using var tempDir = new TempDirectory();
@@ -1060,6 +1698,22 @@ public sealed class FlawrightLocatorWiringTests
         Assert.True(usesWindow);
         Assert.True(Assert.IsType<bool>(assertionArgs[1]));
     }
+
+    private static ProjectCatalog CreateCatalog(string projectRoot, string? applicationPath) => new()
+    {
+        ProjectRoot = projectRoot,
+        EffectiveConfig = new EffectiveConfig
+        {
+            ActiveProfile = "local",
+            Profile = new CressProfile
+            {
+                Flawright = applicationPath is null ? null : new FlawrightProfileConfig
+                {
+                    ApplicationPath = applicationPath
+                }
+            }
+        }
+    };
 
     // -------------------------------------------------------------------------
     // Internal helpers

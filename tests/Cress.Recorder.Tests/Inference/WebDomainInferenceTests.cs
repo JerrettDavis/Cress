@@ -163,6 +163,91 @@ public class WebDomainInferenceTests
         Assert.Null(locator.Label);
     }
 
+    [Fact]
+    public void Engine_web_domain_falls_back_to_label_when_role_is_missing()
+    {
+        var element = new ElementInfo
+        {
+            Label = "Search field",
+            Text = "Search",
+            CssSelector = "#search"
+        };
+
+        var steps = Engine.Infer([MakeWebInvoke(element)], WebOptions);
+
+        Assert.Single(steps);
+        var locator = steps[0].Locator!;
+        Assert.Equal("Search field", locator.Label);
+        Assert.Null(locator.Role);
+        Assert.Null(locator.Text);
+        Assert.Null(locator.CssSelector);
+    }
+
+    [Fact]
+    public void Engine_web_domain_falls_back_to_visible_text_when_no_stronger_locator_exists()
+    {
+        var element = new ElementInfo
+        {
+            Text = "Continue",
+            CssSelector = ".continue"
+        };
+
+        var steps = Engine.Infer([MakeWebInvoke(element)], WebOptions);
+
+        Assert.Single(steps);
+        var locator = steps[0].Locator!;
+        Assert.Equal("Continue", locator.Text);
+        Assert.Null(locator.CssSelector);
+    }
+
+    [Fact]
+    public void Engine_web_domain_falls_back_to_placeholder_text()
+    {
+        var element = new ElementInfo
+        {
+            Placeholder = "Search products",
+            XPath = "//input[@type='search']"
+        };
+
+        var steps = Engine.Infer([MakeWebInvoke(element)], WebOptions);
+
+        Assert.Single(steps);
+        var locator = steps[0].Locator!;
+        Assert.Equal("Search products", locator.Text);
+        Assert.Null(locator.XPath);
+    }
+
+    [Fact]
+    public void Engine_web_domain_falls_back_to_xpath_when_css_is_unavailable()
+    {
+        var element = new ElementInfo
+        {
+            XPath = "//button[@id='checkout']"
+        };
+
+        var steps = Engine.Infer([MakeWebInvoke(element)], WebOptions);
+
+        Assert.Single(steps);
+        Assert.Equal("//button[@id='checkout']", steps[0].Locator!.XPath);
+    }
+
+    [Fact]
+    public void Engine_web_domain_falls_back_to_tag_name_as_last_resort()
+    {
+        var element = new ElementInfo
+        {
+            TagName = "section"
+        };
+
+        var steps = Engine.Infer([MakeWebInvoke(element)], WebOptions);
+
+        Assert.Single(steps);
+        var locator = steps[0].Locator!;
+        Assert.Equal("section", locator.Name);
+        Assert.Null(locator.XPath);
+        Assert.Null(locator.CssSelector);
+    }
+
     // ── ValueChanged always SetValue in web domain ────────────────────────────
 
     [Fact]
@@ -254,6 +339,25 @@ public class WebDomainInferenceTests
         Assert.Equal(2, steps.Count);
         Assert.Equal("user@example.com", steps[0].Value);
         Assert.Equal("s3cr3t", steps[1].Value);
+    }
+
+    [Fact]
+    public void Engine_web_domain_fill_debounce_can_match_on_runtime_id_when_css_and_testid_are_missing()
+    {
+        var t0 = DateTimeOffset.UtcNow;
+        var first = new ElementInfo { RuntimeId = [4, 2, 1] };
+        var second = new ElementInfo { RuntimeId = [4, 2, 1] };
+
+        var events = new[]
+        {
+            MakeWebValueChanged(first, "hel", t0),
+            MakeWebValueChanged(second, "hello", t0.AddMilliseconds(50)),
+        };
+
+        var steps = Engine.Infer(events, WebOptions with { WebDebounceWindow = TimeSpan.FromMilliseconds(250) });
+
+        Assert.Single(steps);
+        Assert.Equal("hello", steps[0].Value);
     }
 
     // ── Navigate serialization ────────────────────────────────────────────────

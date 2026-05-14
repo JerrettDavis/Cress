@@ -31,7 +31,7 @@ public sealed class WebRecorderClient : IDisposable
     /// Resolves the absolute path to <c>bin/record.mjs</c> by walking up from the assembly
     /// location until the solution root (containing the <c>node/</c> directory) is found.
     /// </summary>
-    private static string FindRecordMjs()
+    private static string FindRecordMjs(string? assemblyDirectory = null)
     {
         // Try environment override first (useful in tests / CI).
         var envOverride = Environment.GetEnvironmentVariable("CRESS_RECORD_MJS");
@@ -41,7 +41,7 @@ public sealed class WebRecorderClient : IDisposable
         }
 
         // Walk up from the assembly directory.
-        var dir = Path.GetDirectoryName(typeof(WebRecorderClient).Assembly.Location);
+        var dir = assemblyDirectory ?? Path.GetDirectoryName(typeof(WebRecorderClient).Assembly.Location);
         while (dir is not null)
         {
             var candidate = Path.Combine(dir, RecordMjsRelative);

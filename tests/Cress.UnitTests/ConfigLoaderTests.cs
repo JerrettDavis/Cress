@@ -49,4 +49,33 @@ drivers:
         Assert.True(result.Value.Drivers["http"].Enabled);
         Assert.False(result.Value.Drivers["flawright"].Enabled);
     }
+
+    [Fact]
+    public void LoadFile_uses_empty_config_when_yaml_document_is_empty()
+    {
+        using var workspace = new TestWorkspace();
+        var path = workspace.GetPath("project", ".cress", "config.yaml");
+        Directory.CreateDirectory(Path.GetDirectoryName(path)!);
+        File.WriteAllText(path, string.Empty);
+
+        var result = new ConfigLoader(new ProjectLocator()).LoadFile(path);
+
+        Assert.NotNull(result.Value);
+        Assert.Contains(result.Diagnostics, diagnostic => diagnostic.Code == "CFG003");
+        Assert.Contains(result.Diagnostics, diagnostic => diagnostic.Code == "CFG004");
+        Assert.Equal(string.Empty, result.Value!.Project.Name);
+    }
+
+    [Fact]
+    public void Serialize_uses_camel_case_yaml_names()
+    {
+        var yaml = new ConfigLoader(new ProjectLocator()).Serialize(new
+        {
+            ProjectName = "Sample",
+            DefaultProfile = "local"
+        });
+
+        Assert.Contains("projectName: Sample", yaml);
+        Assert.Contains("defaultProfile: local", yaml);
+    }
 }

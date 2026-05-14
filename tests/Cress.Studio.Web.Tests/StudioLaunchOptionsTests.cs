@@ -35,6 +35,36 @@ public sealed class StudioLaunchOptionsTests
         Assert.False(options.LaunchBrowserClient);
     }
 
+    [Theory]
+    [InlineData("--browser", "--desktop", StudioLaunchMode.Desktop)]
+    [InlineData("--desktop", "--browser", StudioLaunchMode.Browser)]
+    public void Parse_LastExplicitModeWins(string first, string second, StudioLaunchMode expectedMode)
+    {
+        var options = StudioLaunchOptions.Parse([first, second]);
+
+        Assert.Equal(expectedMode, options.Mode);
+    }
+
+    [Theory]
+    [InlineData(" BROWSER ", StudioLaunchMode.Browser)]
+    [InlineData("desktop", StudioLaunchMode.Desktop)]
+    public void Parse_TrimsAndNormalizesModeValues(string rawMode, StudioLaunchMode expectedMode)
+    {
+        var options = StudioLaunchOptions.Parse(["--mode", rawMode]);
+
+        Assert.Equal(expectedMode, options.Mode);
+    }
+
+    [Fact]
+    public void Parse_ReadsExplicitDesktopModeAndCustomPort()
+    {
+        var options = StudioLaunchOptions.Parse(["--desktop", "--port", "6010"]);
+
+        Assert.Equal(StudioLaunchMode.Desktop, options.Mode);
+        Assert.Equal(6010, options.Port);
+        Assert.True(options.LaunchBrowserClient);
+    }
+
     [Fact]
     public void Parse_ThrowsUsageExceptionForHelp()
     {
@@ -53,6 +83,17 @@ public sealed class StudioLaunchOptionsTests
         var exception = Assert.Throws<ArgumentException>(() => StudioLaunchOptions.Parse([option, value]));
 
         Assert.NotEmpty(exception.Message);
+    }
+
+    [Theory]
+    [InlineData("--mode")]
+    [InlineData("--port")]
+    [InlineData("--web-root")]
+    public void Parse_RejectsMissingOptionValues(string option)
+    {
+        var exception = Assert.Throws<ArgumentException>(() => StudioLaunchOptions.Parse([option]));
+
+        Assert.Contains(option, exception.Message, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -84,6 +125,18 @@ public sealed class StudioLaunchOptionsTests
     }
 
     [Fact]
+    public void ResolveWebRoot_FallsBackFromMissingExplicitPathToBaseDirectoryBundle()
+    {
+        using var tempRoot = new TemporaryBundleRoot();
+        var studioWebRoot = tempRoot.CreateBundle("studio", "web");
+        var missingExplicitPath = Path.Combine(tempRoot.RootPath, "missing-bundle");
+
+        var resolved = StudioBundleLocator.ResolveWebRoot(missingExplicitPath, baseDirectory: tempRoot.RootPath);
+
+        Assert.Equal(studioWebRoot, resolved);
+    }
+
+    [Fact]
     public void ResolveWebRoot_FallsBackToStudioFolderUnderBaseDirectory()
     {
         using var tempRoot = new TemporaryBundleRoot();
@@ -105,6 +158,19 @@ public sealed class StudioLaunchOptionsTests
         var resolved = StudioBundleLocator.ResolveWebRoot(baseDirectory: nestedBaseDirectory);
 
         Assert.Equal(artifactsWebRoot, resolved);
+    }
+
+    [Fact]
+    public void ResolveWebRoot_PrefersExplicitBundleOverOtherCandidates()
+    {
+        using var tempRoot = new TemporaryBundleRoot();
+        var explicitWebRoot = tempRoot.CreateBundle("explicit");
+        _ = tempRoot.CreateBundle("studio", "web");
+        _ = tempRoot.CreateBundle("artifacts", "studio-publish", "web");
+
+        var resolved = StudioBundleLocator.ResolveWebRoot(explicitWebRoot, baseDirectory: tempRoot.RootPath);
+
+        Assert.Equal(explicitWebRoot, resolved);
     }
 
     [Fact]

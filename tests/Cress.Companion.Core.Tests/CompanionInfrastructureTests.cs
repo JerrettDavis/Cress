@@ -1,6 +1,7 @@
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using Cress.Companion;
 using Cress.Recorder;
 
@@ -45,6 +46,29 @@ public sealed class CompanionInfrastructureTests
     }
 
     [Fact]
+    public void ScreenPreviewProvider_returns_null_when_internal_maximums_reduce_capture_to_zero()
+    {
+        var provider = new ScreenPreviewProvider((_, _, _, _) => throw new UnreachableException(), maxWidth: 0, maxHeight: 360);
+
+        var preview = provider.CapturePreview(new CompanionWindowBounds(10, 20, 50, 50));
+
+        Assert.Null(preview);
+    }
+
+    [Fact]
+    public void ScreenPreviewProvider_capture_png_returns_png_bytes()
+    {
+        var screen = System.Windows.Forms.SystemInformation.VirtualScreen;
+        var bytes = ScreenPreviewProvider.CapturePng(screen.Left, screen.Top, 1, 1);
+
+        Assert.NotEmpty(bytes);
+        Assert.Equal(0x89, bytes[0]);
+        Assert.Equal((byte)'P', bytes[1]);
+        Assert.Equal((byte)'N', bytes[2]);
+        Assert.Equal((byte)'G', bytes[3]);
+    }
+
+    [Fact]
     public void ProcessWindowInspector_returns_invisible_state_for_missing_process()
     {
         var inspector = new ProcessWindowInspector();
@@ -53,6 +77,21 @@ public sealed class CompanionInfrastructureTests
 
         Assert.False(state.IsVisible);
         Assert.Null(state.Bounds);
+    }
+
+    [Fact]
+    public void ProcessWindowInspector_try_get_bounds_returns_null_for_invalid_handle()
+    {
+        Assert.Null(ProcessWindowInspector.TryGetBounds(IntPtr.Zero));
+    }
+
+    [Fact]
+    public void ProcessWindowInspector_try_get_bounds_reads_desktop_window_rect()
+    {
+        var bounds = Assert.IsType<CompanionWindowBounds>(ProcessWindowInspector.TryGetBounds(GetDesktopWindow()));
+
+        Assert.True(bounds.Width >= 0);
+        Assert.True(bounds.Height >= 0);
     }
 
     [Fact]
@@ -231,4 +270,7 @@ public sealed class CompanionInfrastructureTests
 
         Assert.Empty(targets);
     }
+
+    [DllImport("user32.dll")]
+    private static extern IntPtr GetDesktopWindow();
 }

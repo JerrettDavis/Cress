@@ -182,6 +182,111 @@ public sealed class RecordedFlowSerializerTests
         Assert.Equal("hello", action.With["value"]);
     }
 
+    [Fact]
+    public void Serialize_PressKeyStep_UsesUiPressKey()
+    {
+        var steps = new List<InferredStep>
+        {
+            new() { Kind = StepKind.PressKey, Key = "Enter", SourceTimestamp = DateTime.UtcNow },
+            MakeAssertText("resultLabel", "submitted"),
+        };
+
+        var yaml = Serializer.Serialize(steps, DefaultMeta());
+        var result = Parser.Parse(yaml);
+
+        Assert.True(result.Success);
+        var action = result.Value!.When.Single();
+        Assert.Equal("ui.press-key", action.Step);
+        Assert.Equal("Enter", action.With!["key"]);
+    }
+
+    [Fact]
+    public void Serialize_WaitForWindowStep_UsesUiWaitForWindow()
+    {
+        var steps = new List<InferredStep>
+        {
+            new() { Kind = StepKind.WaitForWindow, WindowTitle = "Calculator", SourceTimestamp = DateTime.UtcNow },
+            MakeAssertText("resultLabel", "ready"),
+        };
+
+        var yaml = Serializer.Serialize(steps, DefaultMeta());
+        var result = Parser.Parse(yaml);
+
+        Assert.True(result.Success);
+        var action = result.Value!.When.Single();
+        Assert.Equal("ui.wait-for-window", action.Step);
+        Assert.Equal("Calculator", action.With!["title"]);
+    }
+
+    [Fact]
+    public void Serialize_NavigateStep_UsesBrowserNavigate()
+    {
+        var steps = new List<InferredStep>
+        {
+            new() { Kind = StepKind.Navigate, NavigateUrl = "https://example.test/dashboard", SourceTimestamp = DateTime.UtcNow },
+            MakeAssertText("resultLabel", "loaded"),
+        };
+
+        var yaml = Serializer.Serialize(steps, DefaultMeta());
+        var result = Parser.Parse(yaml);
+
+        Assert.True(result.Success);
+        var action = result.Value!.When.Single();
+        Assert.Equal("browser.navigate", action.Step);
+        Assert.Equal("https://example.test/dashboard", action.With!["url"]);
+    }
+
+    [Fact]
+    public void Serialize_InvalidActionShapes_AreDroppedBeforeWritingFlow()
+    {
+        var steps = new List<InferredStep>
+        {
+            MakeClick("keep-me"),
+            new() { Kind = StepKind.Navigate, SourceTimestamp = DateTime.UtcNow },
+            new() { Kind = StepKind.PressKey, Key = " ", SourceTimestamp = DateTime.UtcNow.AddMilliseconds(1) },
+            new() { Kind = StepKind.WaitForWindow, WindowTitle = "", SourceTimestamp = DateTime.UtcNow.AddMilliseconds(2) },
+            MakeAssertText("resultLabel", "fallback"),
+        };
+
+        var yaml = Serializer.Serialize(steps, DefaultMeta());
+        var result = Parser.Parse(yaml);
+
+        Assert.True(result.Success);
+        var action = Assert.Single(result.Value!.When);
+        Assert.Equal("ui.invoke", action.Step);
+        Assert.Equal("keep-me", action.With!["automationId"]);
+        Assert.Single(result.Value.Then);
+    }
+
+    [Fact]
+    public void SaveToFile_CreatesParentDirectoryAndWritesSerializedYaml()
+    {
+        var steps = new List<InferredStep>
+        {
+            MakeClick("okButton"),
+            MakeAssertText("statusLabel", "Done"),
+        };
+        var tempRoot = Path.Combine(Path.GetTempPath(), "cress-recorder-serializer", Guid.NewGuid().ToString("N"));
+        var filePath = Path.Combine(tempRoot, "nested", "recorded.flow.yaml");
+
+        try
+        {
+            Serializer.SaveToFile(steps, DefaultMeta("saved-flow", "Saved Flow"), filePath);
+
+            Assert.True(File.Exists(filePath));
+            var yaml = File.ReadAllText(filePath);
+            Assert.Contains("id: saved-flow", yaml);
+            Assert.Contains("name: Saved Flow", yaml);
+        }
+        finally
+        {
+            if (Directory.Exists(tempRoot))
+            {
+                Directory.Delete(tempRoot, recursive: true);
+            }
+        }
+    }
+
     // -------------------------------------------------------------------------
     // T8: metadata fields are written correctly (id, name, capability)
     // -------------------------------------------------------------------------

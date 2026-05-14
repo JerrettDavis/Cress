@@ -1,3 +1,4 @@
+using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Cress.Core.Models;
@@ -401,12 +402,172 @@ public sealed class DocumentBuilderTests
         Assert.EndsWith("preview.bin", screenshot.FilePath, StringComparison.OrdinalIgnoreCase);
     }
 
+    [Fact]
+    public void BuildFlowSummaries_falls_back_to_latest_run_when_metrics_are_missing()
+    {
+        var latestRun = CreateStoredRun(
+            new RunResult
+            {
+                Metadata = new RunMetadata
+                {
+                    RunId = "run-latest",
+                    StartedAt = new DateTimeOffset(2026, 5, 7, 14, 0, 0, TimeSpan.Zero)
+                },
+                Flows =
+                [
+                    new FlowRunResult
+                    {
+                        FlowId = "flow.pass",
+                        Name = "Passing flow",
+                        Outcome = RunOutcome.Passed,
+                        DurationMs = 1200
+                    },
+                    new FlowRunResult
+                    {
+                        FlowId = "flow.fail",
+                        Name = "Failing flow",
+                        Outcome = RunOutcome.Failed,
+                        DurationMs = 450
+                    }
+                ]
+            });
+
+        var summaries = InvokePrivateStatic<IReadOnlyList<FlowSummary>>(
+            "BuildFlowSummaries",
+            null,
+            new List<StoredRunResult> { latestRun });
+
+        Assert.Equal(2, summaries.Count);
+        Assert.Collection(
+            summaries,
+            first =>
+            {
+                Assert.Equal("flow.pass", first.Id);
+                Assert.Equal("Passing flow", first.Name);
+                Assert.Equal("passing", first.Status);
+                Assert.Equal(1.0, first.PassRate);
+                Assert.Equal(TimeSpan.FromMilliseconds(1200), first.AvgDuration);
+            },
+            second =>
+            {
+                Assert.Equal("flow.fail", second.Id);
+                Assert.Equal("Failing flow", second.Name);
+                Assert.Equal("failing", second.Status);
+                Assert.Equal(0.0, second.PassRate);
+                Assert.Equal(TimeSpan.FromMilliseconds(450), second.AvgDuration);
+            });
+    }
+
+    [Fact]
+    public void BuildSuiteSummary_falls_back_to_latest_run_statistics_when_metrics_are_missing()
+    {
+        var latestRun = CreateStoredRun(
+            new RunResult
+            {
+                Metadata = new RunMetadata
+                {
+                    RunId = "run-suite",
+                    StartedAt = new DateTimeOffset(2026, 5, 7, 15, 0, 0, TimeSpan.Zero)
+                },
+                Flows =
+                [
+                    new FlowRunResult { FlowId = "flow.one", Name = "Flow One", Outcome = RunOutcome.Passed, DurationMs = 1000 },
+                    new FlowRunResult { FlowId = "flow.two", Name = "Flow Two", Outcome = RunOutcome.Failed, DurationMs = 500 }
+                ]
+            });
+
+        var suite = InvokePrivateStatic<SuiteSummary>(
+            "BuildSuiteSummary",
+            null,
+            new List<StoredRunResult> { latestRun },
+            Array.Empty<FlowSummary>());
+
+        Assert.Equal(2, suite.TotalFlows);
+        Assert.Equal(1, suite.PassedRuns);
+        Assert.Equal(1, suite.FailedRuns);
+        Assert.Equal(0.5, suite.PassRate);
+        Assert.Equal(TimeSpan.FromMilliseconds(750), suite.AvgDuration);
+    }
+
+    [Fact]
+    public void BuildSuiteSummary_handles_latest_run_with_no_flows()
+    {
+        var latestRun = CreateStoredRun(
+            new RunResult
+            {
+                Metadata = new RunMetadata
+                {
+                    RunId = "run-empty",
+                    StartedAt = new DateTimeOffset(2026, 5, 7, 16, 0, 0, TimeSpan.Zero)
+                },
+                Flows = []
+            });
+
+        var suite = InvokePrivateStatic<SuiteSummary>(
+            "BuildSuiteSummary",
+            null,
+            new List<StoredRunResult> { latestRun },
+            Array.Empty<FlowSummary>());
+
+        Assert.Equal(0, suite.TotalFlows);
+        Assert.Equal(0, suite.PassedRuns);
+        Assert.Equal(0, suite.FailedRuns);
+        Assert.Equal(0.0, suite.PassRate);
+        Assert.Equal(TimeSpan.Zero, suite.AvgDuration);
+    }
+
+    [Fact]
+    public void CollectDiagnostics_uses_empty_flow_id_when_file_is_missing()
+    {
+        var latestRun = CreateStoredRun(
+            new RunResult
+            {
+                Metadata = new RunMetadata
+                {
+                    RunId = "run-diagnostics",
+                    StartedAt = new DateTimeOffset(2026, 5, 7, 17, 0, 0, TimeSpan.Zero)
+                },
+                Diagnostics =
+                [
+                    new Diagnostic
+                    {
+                        Severity = DiagnosticSeverity.Error,
+                        File = null,
+                        Message = "Missing file context"
+                    }
+                ]
+            });
+
+        var diagnostics = InvokePrivateStatic<IReadOnlyList<DiagnosticEntry>>(
+            "CollectDiagnostics",
+            new List<StoredRunResult> { latestRun });
+
+        var entry = Assert.Single(diagnostics);
+        Assert.Equal("Error", entry.Severity);
+        Assert.Equal(string.Empty, entry.FlowId);
+        Assert.Equal("Missing file context", entry.Message);
+    }
+
     private static DocumentBuilder CreateBuilder()
         => new(
             new RunResultRepository(),
             new RunMetricsService(),
             new FlowParser(),
             new ConfigLoader(new ProjectLocator()));
+
+    private static StoredRunResult CreateStoredRun(RunResult result)
+        => new()
+        {
+            Result = result,
+            ArtifactDirectory = Path.Combine(Path.GetTempPath(), "cress-livingdocs-tests", Guid.NewGuid().ToString("N"))
+        };
+
+    private static T InvokePrivateStatic<T>(string methodName, params object?[] arguments)
+    {
+        var method = typeof(DocumentBuilder).GetMethod(methodName, BindingFlags.NonPublic | BindingFlags.Static);
+        Assert.NotNull(method);
+        return Assert.IsAssignableFrom<T>(method.Invoke(null, arguments));
+    }
 
     private static void WriteRunArtifact(TemporaryWorkspace workspace, string projectPath, string directoryName, RunResult result)
     {

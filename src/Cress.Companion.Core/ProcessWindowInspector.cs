@@ -78,7 +78,7 @@ public sealed class ProcessWindowInspector : ICompanionWindowInspector
         return new ProcessWindowSnapshot(process.MainWindowHandle, process.MainWindowTitle);
     }
 
-    private static CompanionWindowBounds? TryGetBounds(IntPtr handle)
+    internal static CompanionWindowBounds? TryGetBounds(IntPtr handle)
     {
         if (!GetWindowRect(handle, out var rect))
         {

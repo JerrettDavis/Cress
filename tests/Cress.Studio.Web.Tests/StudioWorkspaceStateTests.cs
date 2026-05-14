@@ -280,6 +280,20 @@ public sealed class StudioWorkspaceStateTests : IDisposable
     }
 
     [Fact]
+    public void Runner_node_changes_fall_back_to_local_node_when_none_are_available()
+    {
+        var runner = new FakeRunnerService([CreateNode("node-a", "Node A", StudioRunnerNodeStatus.Healthy)]);
+        using var scope = CreateState(runnerService: runner);
+        scope.State.SelectedRunnerNodeId = "node-a";
+
+        runner.ReplaceNodes([]);
+        runner.RaiseChanged();
+
+        Assert.Equal(StudioEmbeddedRunnerNode.LocalNodeId, scope.State.SelectedRunnerNodeId);
+        Assert.Null(scope.State.SelectedRunnerNode);
+    }
+
+    [Fact]
     public void CreateNewFlow_and_save_selected_flow_persist_new_document()
     {
         using var scope = CreateState();
@@ -534,6 +548,36 @@ public sealed class StudioWorkspaceStateTests : IDisposable
     }
 
     [Fact]
+    public async Task Companion_properties_reflect_availability_and_sessions()
+    {
+        var companion = new FakeStudioCompanionClient
+        {
+            Snapshot = new CompanionServiceSnapshot
+            {
+                IsAvailable = true,
+                GeneratedAtUtc = DateTimeOffset.UtcNow,
+                Sessions =
+                [
+                    new CompanionSessionSnapshot
+                    {
+                        ProcessId = 42,
+                        ProcessName = "sample-app",
+                        WindowTitle = "Sample App",
+                        Status = CompanionSessionStatus.Recording,
+                        StartedAtUtc = DateTimeOffset.UtcNow
+                    }
+                ]
+            }
+        };
+        using var scope = CreateState(companionClient: companion);
+
+        await scope.State.RefreshCompanionAsync();
+
+        Assert.True(scope.State.IsCompanionAvailable);
+        Assert.True(scope.State.HasCompanionSessions);
+    }
+
+    [Fact]
     public async Task Companion_recording_commands_update_snapshot_state()
     {
         var companion = new FakeStudioCompanionClient
@@ -588,6 +632,29 @@ public sealed class StudioWorkspaceStateTests : IDisposable
     }
 
     [Fact]
+    public async Task BeginRecordingAsync_formats_exited_and_com_errors()
+    {
+        using var exitedScope = CreateState(recorderService: new ThrowingRecorderService
+        {
+            StartRecordingException = new InvalidOperationException("target exited before recording could start")
+        });
+
+        await exitedScope.State.BeginRecordingAsync(42);
+
+        Assert.Contains("exited before recording could start", exitedScope.State.RecordingError, StringComparison.Ordinal);
+
+        using var comScope = CreateState(recorderService: new ThrowingRecorderService
+        {
+            StartRecordingException = new System.Runtime.InteropServices.COMException("uia failed", unchecked((int)0x80004005))
+        });
+
+        await comScope.State.BeginRecordingAsync(42);
+
+        Assert.Contains("UIA COM error", comScope.State.RecordingError, StringComparison.Ordinal);
+        Assert.Contains("80004005", comScope.State.RecordingError, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public async Task BeginWebRecordingAsync_formats_node_not_found_errors()
     {
         using var scope = CreateState(recorderService: new ThrowingRecorderService
@@ -598,6 +665,43 @@ public sealed class StudioWorkspaceStateTests : IDisposable
         await scope.State.BeginWebRecordingAsync("https://example.test", "chromium");
 
         Assert.Contains("Node.js not found", scope.State.RecordingError, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public async Task BeginWebRecordingAsync_formats_generic_node_errors()
+    {
+        using var scope = CreateState(recorderService: new ThrowingRecorderService
+        {
+            StartWebRecordingException = new InvalidOperationException("node failed to start browser")
+        });
+
+        await scope.State.BeginWebRecordingAsync("https://example.test", "chromium");
+
+        Assert.Equal("Web recording error: node failed to start browser", scope.State.RecordingError);
+    }
+
+    [Fact]
+    public void Recorder_properties_expose_target_name_fallbacks_and_inferred_steps()
+    {
+        var inferredStep = new InferredStep
+        {
+            Kind = StepKind.Click,
+            SourceTimestamp = DateTime.UtcNow
+        };
+        using var titledScope = CreateState(recorderService: new StaticRecorderService(
+            new RecordingTargetInfo { MainWindowTitle = "Calculator", ProcessName = "calc" },
+            [inferredStep]));
+
+        Assert.Equal("Calculator", titledScope.State.RecordingTargetName);
+        Assert.Single(titledScope.State.CurrentInferredSteps);
+
+        using var processScope = CreateState(recorderService: new StaticRecorderService(
+            new RecordingTargetInfo { ProcessName = "calc", MainWindowTitle = null! },
+            []));
+        Assert.Equal("calc", processScope.State.RecordingTargetName);
+
+        using var emptyScope = CreateState(recorderService: new StaticRecorderService(null, []));
+        Assert.Null(emptyScope.State.RecordingTargetName);
     }
 
     [Fact]
@@ -765,6 +869,38 @@ public sealed class StudioWorkspaceStateTests : IDisposable
 
         public Task<RecordingResult> StopRecordingAsync()
             => Task.FromException<RecordingResult>(StopRecordingException ?? new InvalidOperationException("stop failed"));
+
+        public Task<RecordingReplayResult> ReplayRecordedFlowAsync(string flowFilePath, string projectPath)
+            => Task.FromResult(new RecordingReplayResult());
+    }
+
+    private sealed class StaticRecorderService(
+        RecordingTargetInfo? currentTarget,
+        IReadOnlyList<InferredStep> currentInferredSteps) : IStudioRecorderService
+    {
+        public bool IsRecording => currentTarget is not null;
+        public RecordingTargetInfo? CurrentTarget => currentTarget;
+        public int CapturedEventCount => 0;
+        public TimeSpan Elapsed => TimeSpan.Zero;
+        public IReadOnlyList<RecordedEvent> CurrentEvents => [];
+        public IReadOnlyList<InferredStep> CurrentInferredSteps => currentInferredSteps;
+        public event Action? StateChanged
+        {
+            add { }
+            remove { }
+        }
+
+        public Task<IReadOnlyList<RecordingTargetInfo>> ListAvailableTargetsAsync()
+            => Task.FromResult<IReadOnlyList<RecordingTargetInfo>>([]);
+
+        public Task StartRecordingAsync(int processId)
+            => Task.CompletedTask;
+
+        public Task StartWebRecordingAsync(string url, string browserType, CancellationToken ct = default)
+            => Task.CompletedTask;
+
+        public Task<RecordingResult> StopRecordingAsync()
+            => Task.FromResult(new RecordingResult());
 
         public Task<RecordingReplayResult> ReplayRecordedFlowAsync(string flowFilePath, string projectPath)
             => Task.FromResult(new RecordingReplayResult());

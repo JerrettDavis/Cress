@@ -5,6 +5,7 @@ using Cress.Recorder;
 using Cress.Specs;
 using Cress.Studio.Services;
 using Cress.Validation;
+using System.Diagnostics;
 using System.Reflection;
 using System.Threading;
 
@@ -271,6 +272,59 @@ public sealed class StudioServicesTests
     }
 
     [Fact]
+    public void RunResultRepository_returns_empty_for_missing_root_and_invalid_artifacts()
+    {
+        using var workspace = new TestWorkspace();
+        var repository = new RunResultRepository();
+
+        var missingRuns = repository.ListRuns(workspace.GetPath("project"), Path.Combine("artifacts", "runs"));
+        Assert.Empty(missingRuns);
+
+        var artifactsRoot = workspace.GetPath("project", "artifacts", "runs");
+        Directory.CreateDirectory(Path.Combine(artifactsRoot, "run-invalid"));
+        Directory.CreateDirectory(Path.Combine(artifactsRoot, "run-missing"));
+        File.WriteAllText(Path.Combine(artifactsRoot, "run-invalid", "result.json"), "{ invalid json");
+
+        var filteredRuns = repository.ListRuns(workspace.GetPath("project"), Path.Combine("artifacts", "runs"));
+        Assert.Empty(filteredRuns);
+        Assert.Null(repository.LoadRunFromArtifactDirectory(Path.Combine(artifactsRoot, "run-missing")));
+        Assert.Null(repository.LoadRunFromArtifactDirectory(Path.Combine(artifactsRoot, "run-invalid")));
+    }
+
+    [Fact]
+    public void RunResultRepository_honors_max_count_and_exposes_stored_run_properties()
+    {
+        using var workspace = new TestWorkspace();
+        var repository = new RunResultRepository();
+        var artifactsRoot = workspace.GetPath("project", "artifacts", "runs");
+        Directory.CreateDirectory(Path.Combine(artifactsRoot, "run-20240101000000001"));
+        Directory.CreateDirectory(Path.Combine(artifactsRoot, "run-20240101000000002"));
+        Directory.CreateDirectory(Path.Combine(artifactsRoot, "run-20240101000000003"));
+
+        foreach (var runId in new[] { "run-20240101000000001", "run-20240101000000002", "run-20240101000000003" })
+        {
+            var runDirectory = Path.Combine(artifactsRoot, runId);
+            File.WriteAllText(
+                Path.Combine(runDirectory, "result.json"),
+                System.Text.Json.JsonSerializer.Serialize(new RunResult
+                {
+                    Metadata = new RunMetadata
+                    {
+                        RunId = runId,
+                        ArtifactRoot = runDirectory
+                    }
+                }));
+        }
+
+        var runs = repository.ListRuns(workspace.GetPath("project"), Path.Combine("artifacts", "runs"), maxCount: 2);
+
+        Assert.Equal(2, runs.Count);
+        Assert.Equal(Path.Combine(artifactsRoot, "run-20240101000000003"), runs[0].ArtifactDirectory);
+        Assert.Equal("run-20240101000000003", runs[0].Result.Metadata.RunId);
+        Assert.Equal("run-20240101000000002", runs[1].Result.Metadata.RunId);
+    }
+
+    [Fact]
     public void StudioSuiteService_RoundTripsSuiteDefinitions()
     {
         using var workspace = new TestWorkspace();
@@ -336,6 +390,52 @@ public sealed class StudioServicesTests
     }
 
     [Fact]
+    public void StudioSuiteService_LoadAll_returns_empty_when_suites_directory_is_missing()
+    {
+        using var workspace = new TestWorkspace();
+        var service = new StudioSuiteService();
+
+        var result = service.LoadAll(workspace.GetPath("project"));
+
+        Assert.Empty(result.Value!);
+        Assert.Empty(result.Diagnostics);
+    }
+
+    [Fact]
+    public void StudioSuiteService_Load_returns_parse_diagnostic_for_invalid_yaml()
+    {
+        using var workspace = new TestWorkspace();
+        var path = workspace.GetPath("project", ".cress", "suites", "broken.suite.yaml");
+        Directory.CreateDirectory(Path.GetDirectoryName(path)!);
+        File.WriteAllText(path, "version: [");
+        var service = new StudioSuiteService();
+
+        var result = service.Load(path);
+
+        var diagnostic = Assert.Single(result.Diagnostics);
+        Assert.Equal("STE002", diagnostic.Code);
+        Assert.Null(result.Value);
+    }
+
+    [Fact]
+    public void StudioSuiteService_Load_defaults_to_empty_document_when_yaml_is_empty()
+    {
+        using var workspace = new TestWorkspace();
+        var path = workspace.GetPath("project", ".cress", "suites", "empty.suite.yaml");
+        Directory.CreateDirectory(Path.GetDirectoryName(path)!);
+        File.WriteAllText(path, string.Empty);
+        var service = new StudioSuiteService();
+
+        var result = service.Load(path);
+
+        Assert.Null(result.Value);
+        Assert.Collection(
+            result.Diagnostics.OrderBy(diagnostic => diagnostic.Code, StringComparer.Ordinal),
+            diagnostic => Assert.Equal("STE004", diagnostic.Code),
+            diagnostic => Assert.Equal("STE005", diagnostic.Code));
+    }
+
+    [Fact]
     public void StudioSuiteService_Save_requires_file_path()
     {
         var service = new StudioSuiteService();
@@ -352,6 +452,28 @@ public sealed class StudioServicesTests
     }
 
     [Fact]
+    public void StudioSuiteService_Save_returns_validation_errors_before_writing()
+    {
+        using var workspace = new TestWorkspace();
+        var path = workspace.GetPath("project", ".cress", "suites", "invalid.suite.yaml");
+        var service = new StudioSuiteService();
+
+        var result = service.Save(new StudioSuiteDocument
+        {
+            FilePath = path,
+            Id = string.Empty,
+            Name = string.Empty
+        });
+
+        Assert.Null(result.Value);
+        Assert.False(File.Exists(path));
+        Assert.Collection(
+            result.Diagnostics.OrderBy(diagnostic => diagnostic.Code, StringComparer.Ordinal),
+            diagnostic => Assert.Equal("STE004", diagnostic.Code),
+            diagnostic => Assert.Equal("STE005", diagnostic.Code));
+    }
+
+    [Fact]
     public void StudioSuiteService_CreateNew_increments_filename_when_default_exists()
     {
         using var workspace = new TestWorkspace();
@@ -365,6 +487,21 @@ public sealed class StudioServicesTests
 
         Assert.EndsWith("new-suite-1.suite.yaml", document.FilePath, StringComparison.OrdinalIgnoreCase);
         Assert.Equal("new-suite-1", document.Id);
+    }
+
+    [Fact]
+    public void StudioSuiteService_Delete_removes_existing_file_and_ignores_missing_file()
+    {
+        using var workspace = new TestWorkspace();
+        var path = workspace.GetPath("project", ".cress", "suites", "delete-me.suite.yaml");
+        Directory.CreateDirectory(Path.GetDirectoryName(path)!);
+        File.WriteAllText(path, "version: 1");
+        var service = new StudioSuiteService();
+
+        service.Delete(path);
+        service.Delete(path);
+
+        Assert.False(File.Exists(path));
     }
 
     [Fact]
@@ -435,6 +572,110 @@ public sealed class StudioServicesTests
         Assert.Empty(flows);
         var diagnostic = Assert.Single(diagnostics);
         Assert.Equal("STE003", diagnostic.Code);
+    }
+
+    [Fact]
+    public void StudioProjectService_Load_returns_diagnostics_when_project_cannot_be_found()
+    {
+        var service = CreateStudioProjectService();
+
+        var result = service.Load(@"C:\missing\project");
+
+        Assert.Null(result.Value);
+        Assert.Contains(result.Diagnostics, diagnostic => diagnostic.Code == "PRJ001");
+    }
+
+    [Fact]
+    public void StudioProjectService_Load_builds_snapshot_with_capability_coverage_and_insights()
+    {
+        using var workspace = new TestWorkspace();
+        WriteProjectFiles(workspace);
+        workspace.WriteFile(Path.Combine("project", "capabilities", "inventory.md"), """
+        ---
+        version: 1
+        id: inventory
+        owner: QE
+        ---
+
+        # Capability: Inventory
+
+        ## Rules
+
+        - Inventory stays accurate.
+        """);
+        workspace.WriteFile(Path.Combine("project", "capabilities", "orders.md"), """
+        ---
+        version: 1
+        id: orders
+        owner: QE
+        ---
+
+        # Capability: Orders
+
+        ## Acceptance Criteria
+
+        ### ORD-1
+
+        Orders can be placed.
+        """);
+        workspace.WriteFile(Path.Combine("project", "flows", "order.flow.yaml"), """
+        version: 1
+        id: order-flow
+        name: Order flow
+        capability: orders
+        when:
+          - step: order.start
+        then:
+          - expect: order.completed
+        """);
+        workspace.WriteFile(Path.Combine("project", "steps", "manifests", "order.yaml"), """
+        version: 1
+        steps:
+          - name: order.start
+            retrySafe: true
+            implementation:
+              plugin: sample
+              operation: Execute
+          - name: order.completed
+            retrySafe: true
+            implementation:
+              plugin: sample
+              operation: Execute
+        """);
+
+        var artifactsRoot = workspace.GetPath("project", "artifacts", "runs");
+        Directory.CreateDirectory(Path.Combine(artifactsRoot, "run-20240101000000001"));
+        Directory.CreateDirectory(Path.Combine(artifactsRoot, "run-20240101000000002"));
+        File.WriteAllText(
+            Path.Combine(artifactsRoot, "run-20240101000000001", "result.json"),
+            System.Text.Json.JsonSerializer.Serialize(CreateRunResult("run-20240101000000001", artifactsRoot, RunOutcome.Passed, DateTimeOffset.Parse("2026-01-01T00:00:00Z"))));
+        File.WriteAllText(
+            Path.Combine(artifactsRoot, "run-20240101000000002", "result.json"),
+            System.Text.Json.JsonSerializer.Serialize(CreateRunResult("run-20240101000000002", artifactsRoot, RunOutcome.Failed, DateTimeOffset.Parse("2026-01-02T00:00:00Z"))));
+
+        var service = CreateStudioProjectService();
+
+        var result = service.Load(workspace.GetPath("project"));
+
+        var snapshot = Assert.IsType<StudioProjectSnapshot>(result.Value);
+        Assert.Equal(2, snapshot.Runs.Count);
+        Assert.Collection(
+            snapshot.CapabilityCoverage,
+            capability =>
+            {
+                Assert.Equal("inventory", capability.CapabilityId);
+                Assert.Equal(0, capability.FlowCount);
+                Assert.Equal("Not run", capability.LatestOutcome);
+            },
+            capability =>
+            {
+                Assert.Equal("orders", capability.CapabilityId);
+                Assert.Equal(1, capability.FlowCount);
+                Assert.Equal(1, capability.AcceptanceCriteriaCount);
+                Assert.Equal("Failed", capability.LatestOutcome);
+            });
+        Assert.Equal(2, snapshot.RunInsights.TotalRunCount);
+        Assert.Equal("run-20240101000000002", snapshot.RunInsights.LatestComparison.CurrentRunId);
     }
 
     [Fact]
@@ -540,6 +781,68 @@ public sealed class StudioServicesTests
     }
 
     [Fact]
+    public void StudioAuthoringService_flags_missing_id_and_empty_sections()
+    {
+        var service = new StudioAuthoringService();
+
+        var analysis = service.Analyze(null, new FlowEditorDocument
+        {
+            Name = "Unnamed flow"
+        });
+
+        Assert.Contains(analysis.Diagnostics, diagnostic => diagnostic.Message.Contains("Flow id is required.", StringComparison.Ordinal));
+        Assert.Contains(analysis.Diagnostics, diagnostic => diagnostic.Message.Contains("The flow has no actions.", StringComparison.Ordinal));
+        Assert.Contains(analysis.Diagnostics, diagnostic => diagnostic.Message.Contains("The flow has no expectations.", StringComparison.Ordinal));
+    }
+
+    [Fact]
+    public void StudioAuthoringService_accepts_registered_steps_without_declared_inputs()
+    {
+        using var workspace = new TestWorkspace();
+        WriteProjectFiles(workspace);
+        workspace.WriteFile(Path.Combine("project", "steps", "manifests", "authoring-null-inputs.yaml"), """
+        version: 1
+        steps:
+          - name: app.open
+            retrySafe: true
+            implementation:
+              plugin: sample
+              operation: Execute
+          - name: app.is_visible
+            retrySafe: true
+            implementation:
+              plugin: sample
+              operation: Execute
+        """);
+
+        var catalog = CreateCatalogService().Load(workspace.GetPath("project")).Value!;
+        var service = new StudioAuthoringService();
+        var analysis = service.Analyze(catalog, new FlowEditorDocument
+        {
+            Id = "desktop-smoke",
+            Name = "Desktop smoke",
+            Actions =
+            [
+                new EditableExecutable
+                {
+                    Name = "app.open",
+                    InputsText = "freeform"
+                }
+            ],
+            Expectations =
+            [
+                new EditableExecutable
+                {
+                    Name = "app.is_visible",
+                    InputsText = string.Empty
+                }
+            ]
+        });
+
+        Assert.DoesNotContain(analysis.Diagnostics, diagnostic => diagnostic.Message.Contains("missing required input", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [Fact]
     public void StudioAuthoringService_reports_ready_state_and_supports_additional_quick_actions()
     {
         using var workspace = new TestWorkspace();
@@ -640,6 +943,37 @@ public sealed class StudioServicesTests
 
         Assert.Equal("browser.screenshot", screenshot.Actions[^1].Name);
         Assert.Equal("app.is_visible", visible.Expectations[^1].Name);
+    }
+
+    [Fact]
+    public void StudioAuthoringService_ApplyQuickAction_clones_existing_fixtures_when_requested_step_is_unavailable()
+    {
+        using var workspace = new TestWorkspace();
+        WriteProjectFiles(workspace);
+        var catalog = CreateCatalogService().Load(workspace.GetPath("project")).Value!;
+        var service = new StudioAuthoringService();
+        var original = new FlowEditorDocument
+        {
+            Id = "fixture-clone",
+            Name = "Fixture clone",
+            Fixtures =
+            [
+                new EditableFixture
+                {
+                    Alias = "session",
+                    Use = "shared.fixture",
+                    Source = "fixtures/shared.yaml",
+                    For = "app.open"
+                }
+            ]
+        };
+
+        var updated = service.ApplyQuickAction(catalog, original, "action.screenshot");
+
+        Assert.Single(updated.Fixtures);
+        Assert.NotSame(original.Fixtures[0], updated.Fixtures[0]);
+        Assert.Empty(updated.Actions);
+        Assert.Equal("session", original.Fixtures[0].Alias);
     }
 
     [Fact]
@@ -921,6 +1255,87 @@ public sealed class StudioServicesTests
     }
 
     [Fact]
+    public async Task StudioRecorderService_ListAvailableTargetsAsync_filters_sorts_and_marks_unattachable_targets()
+    {
+        var accessible = new FakeProcessInfo
+        {
+            MainWindowHandleValue = (IntPtr)1,
+            MainWindowTitleValue = "Alpha Window",
+            IdValue = 10,
+            ProcessNameValue = "alpha",
+            MainModuleFileNameValue = @"C:\apps\alpha.exe"
+        };
+        var accessDenied = new FakeProcessInfo
+        {
+            MainWindowHandleValue = (IntPtr)2,
+            MainWindowTitleValue = "Zulu Window",
+            IdValue = 20,
+            ProcessNameValue = "zulu",
+            MainModuleFileNameFactory = static () => throw new System.ComponentModel.Win32Exception(5)
+        };
+        var noWindow = new FakeProcessInfo
+        {
+            MainWindowHandleValue = IntPtr.Zero,
+            MainWindowTitleValue = "Hidden",
+            IdValue = 30,
+            ProcessNameValue = "hidden",
+            MainModuleFileNameValue = @"C:\apps\hidden.exe"
+        };
+        var blankTitle = new FakeProcessInfo
+        {
+            MainWindowHandleValue = (IntPtr)3,
+            MainWindowTitleValue = string.Empty,
+            IdValue = 40,
+            ProcessNameValue = "blank",
+            MainModuleFileNameValue = @"C:\apps\blank.exe"
+        };
+        var exitedDuringModuleRead = new FakeProcessInfo
+        {
+            MainWindowHandleValue = (IntPtr)4,
+            MainWindowTitleValue = "Exited",
+            IdValue = 50,
+            ProcessNameValue = "exited",
+            MainModuleFileNameFactory = static () => throw new InvalidOperationException("gone")
+        };
+        var titleAccessDenied = new FakeProcessInfo
+        {
+            MainWindowHandleValue = (IntPtr)5,
+            MainWindowTitleFactory = static () => throw new System.ComponentModel.Win32Exception(5)
+        };
+        using var service = new StudioRecorderService(
+            CreateRuntimeOrchestrator(new AlwaysPassingDriver()),
+            new FakeDesktopRecordingSessionFactory(new FakeDesktopRecordingSession()),
+            () => new FakeWebRecordingClient(),
+            processId => new RecordingTargetInfo { ProcessId = processId, ProcessName = "unused", MainWindowTitle = "unused", IsAttachable = true },
+            () => [accessDenied, noWindow, blankTitle, exitedDuringModuleRead, accessible, titleAccessDenied]);
+
+        var targets = await service.ListAvailableTargetsAsync();
+
+        Assert.Collection(
+            targets,
+            target =>
+            {
+                Assert.Equal(10, target.ProcessId);
+                Assert.Equal("alpha", target.ProcessName);
+                Assert.Equal("Alpha Window", target.MainWindowTitle);
+                Assert.Equal(@"C:\apps\alpha.exe", target.MainModuleFileName);
+                Assert.True(target.IsAttachable);
+            },
+            target =>
+            {
+                Assert.Equal(20, target.ProcessId);
+                Assert.Equal("zulu", target.ProcessName);
+                Assert.Equal("Zulu Window", target.MainWindowTitle);
+                Assert.Null(target.MainModuleFileName);
+                Assert.False(target.IsAttachable);
+            });
+
+        Assert.All(
+            new[] { accessible, accessDenied, noWindow, blankTitle, exitedDuringModuleRead, titleAccessDenied },
+            process => Assert.True(process.Disposed));
+    }
+
+    [Fact]
     public async Task StudioRecorderService_ReplayRecordedFlowAsync_returns_pass_summary_for_successful_flow()
     {
         using var workspace = new TestWorkspace();
@@ -1181,6 +1596,22 @@ public sealed class StudioServicesTests
     }
 
     [Fact]
+    public async Task StudioRecorderService_ReplayRecordedFlowAsync_returns_replay_error_when_orchestrator_fails()
+    {
+        using var service = new StudioRecorderService(
+            null!,
+            new FakeDesktopRecordingSessionFactory(new FakeDesktopRecordingSession()),
+            () => new FakeWebRecordingClient(),
+            processId => new RecordingTargetInfo { ProcessId = processId, ProcessName = "unused", MainWindowTitle = "unused", IsAttachable = true });
+
+        var result = await service.ReplayRecordedFlowAsync("flow.yaml", "project");
+
+        Assert.False(result.Passed);
+        Assert.StartsWith("Replay error:", result.Summary, StringComparison.Ordinal);
+        Assert.Empty(result.StepResults);
+    }
+
+    [Fact]
     public async Task StudioRecorderService_disposed_instance_rejects_new_recording_sessions()
     {
         var service = new StudioRecorderService(CreateRuntimeOrchestrator(new AlwaysPassingDriver()));
@@ -1219,6 +1650,38 @@ public sealed class StudioServicesTests
 
         service.Dispose();
         service.Dispose();
+    }
+
+    [Fact]
+    public void StudioRecorderService_private_helpers_cover_idle_elapsed_and_resolve_target()
+    {
+        var service = new StudioRecorderService(CreateRuntimeOrchestrator(new AlwaysPassingDriver()));
+
+        Assert.Equal(TimeSpan.Zero, service.Elapsed);
+
+        service.Dispose();
+
+        var target = Assert.IsType<RecordingTargetInfo>(InvokePrivateStaticMethod(typeof(StudioRecorderService), "ResolveDesktopTarget", Environment.ProcessId));
+        Assert.Equal(Environment.ProcessId, target.ProcessId);
+        Assert.Equal(Process.GetCurrentProcess().ProcessName, target.ProcessName);
+    }
+
+    [Fact]
+    public void StudioRecorderService_FirePendingNotification_handles_missing_target_process()
+    {
+        var service = new StudioRecorderService(CreateRuntimeOrchestrator(new AlwaysPassingDriver()));
+        var notifications = 0;
+        service.StateChanged += () => notifications++;
+
+        SetPrivateField(service, "_pendingNotification", true);
+        SetPrivateField(service, "_isRecording", true);
+        SetPrivateField(service, "_currentTarget", null);
+        SetPrivateField(service, "_liveEvents", new List<RecordedEvent>());
+
+        InvokePrivateInstanceMethod(service, "FirePendingNotification");
+
+        Assert.Equal(1, notifications);
+        Assert.Empty(service.CurrentInferredSteps);
     }
 
     [Fact]
@@ -1330,6 +1793,54 @@ public sealed class StudioServicesTests
             new ReportGenerator(),
             [driver]);
 
+    private static StudioProjectService CreateStudioProjectService()
+    {
+        var locator = new ProjectLocator();
+        return new StudioProjectService(
+            CreateCatalogService(),
+            new ProjectValidator(
+                locator,
+                new ConfigLoader(locator),
+                new ProfileLoader(),
+                new FlowParser(),
+                new CapabilityParser(),
+                new StepManifestParser(),
+                new FixtureManifestParser()),
+            new RunResultRepository(),
+            new StudioRunInsightsService());
+    }
+
+    private static RunResult CreateRunResult(string runId, string artifactsRoot, RunOutcome outcome, DateTimeOffset startedAt)
+        => new()
+        {
+            Metadata = new RunMetadata
+            {
+                RunId = runId,
+                StartedAt = startedAt,
+                ArtifactRoot = Path.Combine(artifactsRoot, runId),
+                Profile = "local"
+            },
+            Flows =
+            [
+                new FlowRunResult
+                {
+                    FlowId = "order-flow",
+                    Name = "Order flow",
+                    CapabilityId = "orders",
+                    Outcome = outcome,
+                    FailureMessage = outcome == RunOutcome.Passed ? null : "order failed",
+                    Steps =
+                    [
+                        new StepRunResult
+                        {
+                            Name = "order.start",
+                            Outcome = outcome
+                        }
+                    ]
+                }
+            ]
+        };
+
     private static void WriteReplayFlow(TestWorkspace workspace)
     {
         workspace.WriteFile(Path.Combine("project", "flows", "replay.flow.yaml"), """
@@ -1419,6 +1930,20 @@ public sealed class StudioServicesTests
         var method = target.GetType().GetMethod(methodName, BindingFlags.Instance | BindingFlags.NonPublic);
         Assert.NotNull(method);
         return method.Invoke(target, args);
+    }
+
+    private static object? InvokePrivateStaticMethod(Type targetType, string methodName, params object?[]? args)
+    {
+        var method = targetType.GetMethod(methodName, BindingFlags.Static | BindingFlags.NonPublic);
+        Assert.NotNull(method);
+        return method.Invoke(null, args);
+    }
+
+    private static void SetPrivateField(object target, string fieldName, object? value)
+    {
+        var field = target.GetType().GetField(fieldName, BindingFlags.Instance | BindingFlags.NonPublic);
+        Assert.NotNull(field);
+        field.SetValue(target, value);
     }
 
     private sealed class StubHttpMessageHandler : HttpMessageHandler
@@ -1617,6 +2142,43 @@ public sealed class StudioServicesTests
         public void Dispose() => Disposed = true;
 
         public void Emit(RecordedEvent recordedEvent) => EventCaptured?.Invoke(recordedEvent);
+    }
+
+    private sealed class FakeProcessInfo : IProcessInfo
+    {
+        public Func<IntPtr>? MainWindowHandleFactory { get; init; }
+
+        public Func<string>? MainWindowTitleFactory { get; init; }
+
+        public Func<int>? IdFactory { get; init; }
+
+        public Func<string>? ProcessNameFactory { get; init; }
+
+        public Func<string?>? MainModuleFileNameFactory { get; init; }
+
+        public IntPtr MainWindowHandleValue { get; init; }
+
+        public string MainWindowTitleValue { get; init; } = string.Empty;
+
+        public int IdValue { get; init; }
+
+        public string ProcessNameValue { get; init; } = string.Empty;
+
+        public string? MainModuleFileNameValue { get; init; }
+
+        public bool Disposed { get; private set; }
+
+        public IntPtr MainWindowHandle => MainWindowHandleFactory?.Invoke() ?? MainWindowHandleValue;
+
+        public string MainWindowTitle => MainWindowTitleFactory?.Invoke() ?? MainWindowTitleValue;
+
+        public int Id => IdFactory?.Invoke() ?? IdValue;
+
+        public string ProcessName => ProcessNameFactory?.Invoke() ?? ProcessNameValue;
+
+        public string? MainModuleFileName => MainModuleFileNameFactory?.Invoke() ?? MainModuleFileNameValue;
+
+        public void Dispose() => Disposed = true;
     }
 
     private sealed class FakeWebRecordingClient : IWebRecordingClient

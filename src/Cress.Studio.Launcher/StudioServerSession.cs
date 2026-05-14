@@ -4,7 +4,12 @@ using System.Text;
 
 namespace Cress.Studio.Launcher;
 
-public sealed class StudioServerSession : IDisposable
+internal interface IStudioServerSession : IDisposable
+{
+    Uri BaseAddress { get; }
+}
+
+public sealed class StudioServerSession : IStudioServerSession
 {
     private static readonly TimeSpan StartupTimeout = TimeSpan.FromSeconds(30);
     private static readonly TimeSpan StartupPollInterval = TimeSpan.FromMilliseconds(350);

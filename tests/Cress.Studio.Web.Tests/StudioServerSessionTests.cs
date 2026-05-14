@@ -1,5 +1,8 @@
 using System.Diagnostics;
 using System.Net.Http;
+using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Text;
 
 using Cress.Studio.Launcher;
 
@@ -28,6 +31,25 @@ public sealed class StudioServerSessionTests
     }
 
     [Fact]
+    public async Task StartAsync_honors_requested_port()
+    {
+        using var host = TemporaryPublishedStudioHost.Create(
+            """
+            var builder = WebApplication.CreateBuilder(args);
+            var app = builder.Build();
+            app.MapGet("/", () => Results.Text("studio-port"));
+            app.Run();
+            """);
+
+        using var session = await StudioServerSession.StartAsync(
+            new StudioLaunchOptions(StudioLaunchMode.Browser, host.PublishDirectory, 5129, false));
+        using var client = new HttpClient();
+
+        Assert.Equal(new Uri("http://127.0.0.1:5129/"), session.BaseAddress);
+        Assert.Equal("studio-port", await client.GetStringAsync(session.BaseAddress));
+    }
+
+    [Fact]
     public async Task StartAsync_throws_when_packaged_payload_exits_before_startup()
     {
         using var host = TemporaryPublishedStudioHost.Create(
@@ -42,12 +64,63 @@ public sealed class StudioServerSessionTests
     }
 
     [Fact]
+    public async Task StartAsync_honors_cancellation_when_server_never_becomes_reachable()
+    {
+        using var host = TemporaryPublishedStudioHost.Create(
+            """
+            await Task.Delay(Timeout.InfiniteTimeSpan);
+            """);
+        using var cancellationSource = new CancellationTokenSource(TimeSpan.FromMilliseconds(800));
+
+        await Assert.ThrowsAnyAsync<OperationCanceledException>(() => StudioServerSession.StartAsync(
+            new StudioLaunchOptions(StudioLaunchMode.Browser, host.PublishDirectory, null, false),
+            cancellationSource.Token));
+    }
+
+    [Fact]
+    public async Task Dispose_is_idempotent_after_successful_start()
+    {
+        using var host = TemporaryPublishedStudioHost.Create(
+            """
+            var builder = WebApplication.CreateBuilder(args);
+            var app = builder.Build();
+            app.MapGet("/", () => Results.Text("studio-dispose"));
+            app.Run();
+            """);
+
+        var session = await StudioServerSession.StartAsync(
+            new StudioLaunchOptions(StudioLaunchMode.Browser, host.PublishDirectory, null, false));
+
+        session.Dispose();
+        session.Dispose();
+    }
+
+    [Fact]
+    public void GetCapturedOutput_returns_default_message_when_no_output_was_recorded()
+    {
+        var session = CreateUninitializedSession();
+
+        var output = (string)InvokeNonPublic(session, "GetCapturedOutput")!;
+
+        Assert.Equal("No Studio server output was captured.", output);
+    }
+
+    [Fact]
+    public void Dispose_swallows_invalid_operation_for_unstarted_process()
+    {
+        var session = CreateUninitializedSession();
+
+        session.Dispose();
+    }
+
+    [Fact]
     public void GetUsage_includes_browser_specific_options()
     {
         var usage = StudioLaunchOptions.GetUsage("cress-studio");
 
         Assert.Contains("--no-open-browser", usage, StringComparison.Ordinal);
         Assert.Contains("--web-root <path>", usage, StringComparison.Ordinal);
+        Assert.Contains("cress-studio", usage, StringComparison.Ordinal);
     }
 
     private sealed class TemporaryPublishedStudioHost : IDisposable
@@ -118,5 +191,29 @@ public sealed class StudioServerSessionTests
                 process.ExitCode == 0,
                 $"dotnet {string.Join(' ', arguments)} failed.{Environment.NewLine}{standardOutput}{Environment.NewLine}{standardError}");
         }
+    }
+
+    private static StudioServerSession CreateUninitializedSession()
+    {
+        var session = (StudioServerSession)RuntimeHelpers.GetUninitializedObject(typeof(StudioServerSession));
+        SetField(session, "_process", new Process());
+        SetField(session, "_output", new StringBuilder());
+        SetField(session, "<BaseAddress>k__BackingField", new Uri("http://127.0.0.1:5999/"));
+        SetField(session, "_disposed", false);
+        return session;
+    }
+
+    private static object? InvokeNonPublic(object instance, string methodName, params object?[] arguments)
+    {
+        var method = instance.GetType().GetMethod(methodName, BindingFlags.Instance | BindingFlags.NonPublic)
+            ?? throw new InvalidOperationException($"Could not find method '{methodName}'.");
+        return method.Invoke(instance, arguments);
+    }
+
+    private static void SetField(object instance, string fieldName, object? value)
+    {
+        var field = instance.GetType().GetField(fieldName, BindingFlags.Instance | BindingFlags.NonPublic)
+            ?? throw new InvalidOperationException($"Could not find field '{fieldName}'.");
+        field.SetValue(instance, value);
     }
 }

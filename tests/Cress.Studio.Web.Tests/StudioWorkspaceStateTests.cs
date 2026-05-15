@@ -541,6 +541,7 @@ public sealed class StudioWorkspaceStateTests : IDisposable
     public async Task Idle_workspace_commands_cover_guard_paths_without_mutating_state()
     {
         using var scope = CreateState();
+        scope.State.SetProjectPath(null);
 
         Assert.Equal(0, scope.State.FlowCount);
         Assert.Equal(0, scope.State.CapabilityCount);

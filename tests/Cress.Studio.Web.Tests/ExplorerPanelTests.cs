@@ -279,4 +279,120 @@ public sealed class ExplorerPanelTests : TestContext
         Assert.Contains("No fixtures match the filter.", cut.Markup, StringComparison.Ordinal);
         Assert.Contains("No steps match the filter.", cut.Markup, StringComparison.Ordinal);
     }
+
+    [Fact]
+    public void ExplorerPanel_buttons_select_flow_capability_fixture_step_and_run()
+    {
+        var state = CreateState();
+        var tempRoot = Path.Combine(Path.GetTempPath(), "cress-explorer-tests", Guid.NewGuid().ToString("N"));
+        Directory.CreateDirectory(tempRoot);
+
+        try
+        {
+            var flowPath = Path.Combine(tempRoot, "alpha.flow.yaml");
+            File.WriteAllText(flowPath, """
+            version: 1
+            id: flow-alpha
+            name: Alpha flow
+            when:
+              - step: http.get
+                with:
+                  url: https://example.test
+            """);
+
+            SetPrivate(state, "Snapshot", new StudioProjectSnapshot
+            {
+                Catalog = new ProjectCatalog
+                {
+                    NormalizedFlows =
+                    [
+                        new NormalizedFlow { FlowId = "flow-alpha", Name = "Alpha flow", SourceFile = flowPath },
+                        new NormalizedFlow { FlowId = "flow-beta", Name = "Beta flow", SourceFile = Path.Combine(tempRoot, "beta.flow.yaml") }
+                    ],
+                    Capabilities =
+                    [
+                        new CressCapability { Id = "cap-auth", Name = "Authentication", SourceFile = Path.Combine(tempRoot, "auth.md") }
+                    ],
+                    FixtureDefinitions = new Dictionary<string, FixtureDefinition>(StringComparer.OrdinalIgnoreCase)
+                    {
+                        ["browser"] = new FixtureDefinition { Name = "browser", Type = "playwright.browser", SourceFile = Path.Combine(tempRoot, "fixtures.yaml") }
+                    },
+                    StepRegistry = new StepRegistrySnapshot(
+                        new Dictionary<string, StepDefinition>(StringComparer.OrdinalIgnoreCase)
+                        {
+                            ["Log in"] = new()
+                            {
+                                Name = "Log in",
+                                SourceFile = Path.Combine(tempRoot, "steps.yaml"),
+                                Implementation = new StepImplementationBinding { Plugin = "builtin", Operation = "login" }
+                            }
+                        },
+                        new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase))
+                }
+            });
+
+            var run = new StoredRunResult
+            {
+                Result = new RunResult
+                {
+                    Metadata = new RunMetadata
+                    {
+                        RunId = "run-select",
+                        Profile = "local",
+                        StartedAt = new DateTimeOffset(2026, 3, 1, 9, 0, 0, TimeSpan.Zero)
+                    },
+                    Flows = []
+                }
+            };
+            state.Runs.Add(run);
+
+            var cut = RenderComponent<Cress.Studio.Web.Components.Studio.ExplorerPanel>();
+
+            cut.Find("[data-testid='explorer-flow-flow-alpha']").Click();
+            Assert.Equal(flowPath, state.SelectedFlow?.FilePath);
+
+            cut.FindAll("[data-testid='explorer-capabilities-section'] .explorer-button")
+                .Single(button => button.TextContent.Contains("Authentication", StringComparison.Ordinal))
+                .Click();
+            Assert.Equal("Authentication", state.SelectionHeadline);
+
+            cut.FindAll("[data-testid='explorer-fixtures-section'] .explorer-button")
+                .Single(button => button.TextContent.Contains("browser", StringComparison.Ordinal))
+                .Click();
+            Assert.Equal("browser", state.SelectionHeadline);
+
+            cut.FindAll("[data-testid='explorer-steps-section'] .explorer-button")
+                .Single(button => button.TextContent.Contains("Log in", StringComparison.Ordinal))
+                .Click();
+            Assert.Equal("Log in", state.SelectionHeadline);
+
+            cut.FindAll("[data-testid='explorer-runs-section'] .explorer-button")
+                .Single(button => button.TextContent.Contains("run-select", StringComparison.Ordinal))
+                .Click();
+            Assert.Equal("run-select", state.SelectedRun?.Result.Metadata.RunId);
+        }
+        finally
+        {
+            if (Directory.Exists(tempRoot))
+            {
+                Directory.Delete(tempRoot, true);
+            }
+        }
+    }
+
+    [Fact]
+    public void ExplorerPanel_private_helpers_cover_empty_test_ids_and_button_classes()
+    {
+        var toTestIdSegment = typeof(Cress.Studio.Web.Components.Studio.ExplorerPanel)
+            .GetMethod("ToTestIdSegment", BindingFlags.Static | BindingFlags.NonPublic)
+            ?? throw new InvalidOperationException("ToTestIdSegment was not found.");
+        var getExplorerButtonClass = typeof(Cress.Studio.Web.Components.Studio.ExplorerPanel)
+            .GetMethod("GetExplorerButtonClass", BindingFlags.Static | BindingFlags.NonPublic)
+            ?? throw new InvalidOperationException("GetExplorerButtonClass was not found.");
+
+        Assert.Equal("empty", Assert.IsType<string>(toTestIdSegment.Invoke(null, [null])));
+        Assert.Equal("flow-alpha-beta", Assert.IsType<string>(toTestIdSegment.Invoke(null, ["Flow Alpha/Beta"])));
+        Assert.Equal("explorer-button selected", Assert.IsType<string>(getExplorerButtonClass.Invoke(null, [true])));
+        Assert.Equal("explorer-button", Assert.IsType<string>(getExplorerButtonClass.Invoke(null, [false])));
+    }
 }

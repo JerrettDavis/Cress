@@ -7,6 +7,7 @@ using Cress.Core.Models;
 using Cress.Execution;
 using Cress.Recorder;
 using Cress.Recorder.Inference;
+using System.Reflection;
 
 namespace Cress.Studio.Web.Tests;
 
@@ -45,6 +46,25 @@ public sealed class StudioWorkspaceStateTests : IDisposable
         Assert.Single(scope.State.RecentWorkspaces);
         Assert.Equal(second, scope.State.RecentWorkspaces[0]);
         Assert.Equal(second, scope.State.ProjectPathInput);
+    }
+
+    [Fact]
+    public void RemoveRecentWorkspace_ignores_blank_and_unknown_paths()
+    {
+        using var scope = CreateState();
+        var first = CreateDirectory("recent-remove-guard-a");
+        var second = CreateDirectory("recent-remove-guard-b");
+
+        scope.State.SetProjectPath(second);
+        scope.State.SetRecentWorkspaces([first]);
+
+        scope.State.RemoveRecentWorkspace(" ");
+        scope.State.RemoveRecentWorkspace(second);
+
+        Assert.Single(scope.State.RecentWorkspaces);
+        Assert.Equal(first, scope.State.RecentWorkspaces[0]);
+        Assert.Equal(second, scope.State.ProjectPathInput);
+        Assert.Contains(second, scope.State.StatusMessage, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -158,6 +178,30 @@ public sealed class StudioWorkspaceStateTests : IDisposable
 
         Assert.True(scope.State.HasLoadedProject);
         Assert.Contains("Loaded", scope.State.StatusMessage, StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
+    public void LoadProject_with_invalid_workspace_clears_loaded_state_and_surfaces_error()
+    {
+        using var scope = CreateState();
+        var validRoot = CreateProject("load-valid-before-invalid");
+        var invalidRoot = CreateDirectory("load-invalid-root");
+
+        scope.State.SetProjectPath(validRoot);
+        scope.State.LoadProject();
+        Assert.True(scope.State.HasLoadedProject);
+        Assert.NotNull(scope.State.SelectedFlow);
+
+        scope.State.SetProjectPath(invalidRoot);
+        scope.State.LoadProject();
+
+        Assert.False(scope.State.HasLoadedProject);
+        Assert.Null(scope.State.Snapshot);
+        Assert.Null(scope.State.SelectedFlow);
+        Assert.Null(scope.State.SelectedSuite);
+        Assert.Equal("No run selected.", scope.State.SelectedRunComparison.Summary);
+        Assert.False(string.IsNullOrWhiteSpace(scope.State.StatusMessage));
+        Assert.DoesNotContain("Loaded", scope.State.StatusMessage, StringComparison.OrdinalIgnoreCase);
     }
 
     [Fact]
@@ -316,6 +360,26 @@ public sealed class StudioWorkspaceStateTests : IDisposable
     }
 
     [Fact]
+    public void SaveSelectedFlow_reloads_project_even_when_snapshot_is_missing()
+    {
+        using var scope = CreateState();
+        var projectRoot = CreateProject("save-flow-without-snapshot");
+        scope.State.SetProjectPath(projectRoot);
+        scope.State.LoadProject();
+        scope.State.CreateNewFlow();
+
+        var flowPath = scope.State.SelectedFlow!.FilePath;
+        SetAutoProperty<StudioProjectSnapshot?>(scope.State, nameof(StudioWorkspaceState.Snapshot), null);
+
+        scope.State.SaveSelectedFlow();
+
+        Assert.True(File.Exists(flowPath));
+        Assert.True(scope.State.HasLoadedProject);
+        Assert.Equal(projectRoot, scope.State.Snapshot!.Catalog.ProjectRoot);
+        Assert.Contains("Loaded flow", scope.State.StatusMessage, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void ApplySource_with_invalid_yaml_preserves_selection_and_reports_parse_failure()
     {
         using var scope = CreateState();
@@ -393,6 +457,118 @@ public sealed class StudioWorkspaceStateTests : IDisposable
     }
 
     [Fact]
+    public void SaveSelectedSuite_with_invalid_document_reports_validation_failure()
+    {
+        using var scope = CreateState();
+        var projectRoot = CreateProject("save-invalid-suite");
+        scope.State.SetProjectPath(projectRoot);
+        scope.State.LoadProject();
+        scope.State.CreateNewSuite();
+
+        scope.State.SelectedSuite!.Name = string.Empty;
+
+        scope.State.SaveSelectedSuite();
+
+        Assert.Equal("Suite save failed. Review diagnostics.", scope.State.StatusMessage);
+        Assert.Contains(scope.State.Diagnostics, diagnostic => diagnostic.Code == "STE005");
+    }
+
+    [Fact]
+    public void SelectFlow_with_invalid_yaml_reports_error_and_keeps_existing_selection()
+    {
+        using var scope = CreateState();
+        var projectRoot = CreateProject("select-missing-flow");
+        var brokenFlowPath = Path.Combine(projectRoot, "flows", "broken.flow.yaml");
+        File.WriteAllText(brokenFlowPath, "version: [");
+        scope.State.SetProjectPath(projectRoot);
+        scope.State.LoadProject();
+        var selectedBefore = scope.State.SelectedFlow;
+
+        scope.State.SelectFlow(brokenFlowPath);
+
+        Assert.Same(selectedBefore, scope.State.SelectedFlow);
+        Assert.Contains("Could not load", scope.State.StatusMessage, StringComparison.Ordinal);
+        Assert.Contains(scope.State.Diagnostics, diagnostic => diagnostic.Code == "FLW001");
+    }
+
+    [Fact]
+    public void Authoring_commands_without_selected_assets_leave_state_unchanged()
+    {
+        using var scope = CreateState();
+
+        scope.State.CreateNewFlow();
+        scope.State.SaveSelectedFlow();
+        scope.State.ApplySource();
+        scope.State.RebuildSource();
+        scope.State.CreateNewSuite();
+        scope.State.SaveSelectedSuite();
+        scope.State.DeleteSelectedSuite();
+        scope.State.ToggleSuiteFlow("flow.search", selected: true);
+        scope.State.RefreshFlowAnalysis();
+
+        Assert.False(scope.State.HasLoadedProject);
+        Assert.False(scope.State.HasSelectedFlow);
+        Assert.False(scope.State.HasSelectedSuite);
+        Assert.Equal("Ready", scope.State.FlowAnalysis.Summary);
+        Assert.Empty(scope.State.FlowAnalysis.QuickActions);
+    }
+
+    [Fact]
+    public void ApplyQuickAction_updates_selected_flow_and_refreshes_analysis()
+    {
+        using var scope = CreateState();
+        var projectRoot = CreateProject("quick-action-flow");
+        scope.State.SetProjectPath(projectRoot);
+        scope.State.LoadProject();
+
+        var originalFixtureCount = scope.State.SelectedFlow!.Fixtures.Count;
+
+        scope.State.ApplyQuickAction("fixture.session");
+
+        Assert.Equal(originalFixtureCount + 1, scope.State.SelectedFlow.Fixtures.Count);
+        Assert.Equal(scope.State.SelectedFlow.SourceText, scope.State.SourceEditorText);
+        Assert.Contains("Applied quick action", scope.State.SelectedAssetSummary, StringComparison.Ordinal);
+        Assert.NotEmpty(scope.State.FlowAnalysis.QuickActions);
+
+        SetAutoProperty<Cress.Studio.ViewModels.FlowDocumentViewModel?>(scope.State, nameof(StudioWorkspaceState.SelectedFlow), null);
+        scope.State.RefreshFlowAnalysis();
+
+        Assert.Equal("Ready", scope.State.FlowAnalysis.Summary);
+        Assert.Empty(scope.State.FlowAnalysis.QuickActions);
+    }
+
+    [Fact]
+    public async Task Idle_workspace_commands_cover_guard_paths_without_mutating_state()
+    {
+        using var scope = CreateState();
+
+        Assert.Equal(0, scope.State.FlowCount);
+        Assert.Equal(0, scope.State.CapabilityCount);
+        Assert.Equal(0, scope.State.FixtureCount);
+        Assert.Equal(0, scope.State.StepCount);
+
+        scope.State.LoadProject();
+        scope.State.SelectFlow(null);
+        scope.State.SelectFixture("missing.fixture");
+        scope.State.SelectStep("missing.step");
+        scope.State.StopActiveRun();
+
+        await scope.State.AddFixtureRowAsync();
+        await scope.State.RemoveFixtureRowAsync(0);
+        await scope.State.AddActionRowAsync();
+        await scope.State.RemoveActionRowAsync(0);
+        await scope.State.AddExpectationRowAsync();
+        await scope.State.RemoveExpectationRowAsync(0);
+        await scope.State.RunSelectedAsync();
+        await scope.State.RunAllAsync();
+        await scope.State.RerunFromStepAsync();
+
+        Assert.False(scope.State.HasLoadedProject);
+        Assert.False(scope.State.HasLiveRunActivity);
+        Assert.Equal("Choose a workspace path, browse for a folder, or load one of the demos to continue.", scope.State.StatusMessage);
+    }
+
+    [Fact]
     public async Task RerunFailedAsync_with_no_failed_flows_sets_informational_status()
     {
         using var scope = CreateState();
@@ -456,6 +632,402 @@ public sealed class StudioWorkspaceStateTests : IDisposable
 
         scope.State.ToggleLiveLogVisibility();
         Assert.False(scope.State.IsLiveLogVisible);
+    }
+
+    [Fact]
+    public void Workspace_browser_root_invalid_path_and_parent_guard_paths_are_covered()
+    {
+        using var scope = CreateState();
+
+        scope.State.BrowseWorkspacePath(null);
+        Assert.Equal(string.Empty, scope.State.WorkspaceBrowserCurrentPath);
+        Assert.Equal("This machine", scope.State.WorkspaceBrowserLocationLabel);
+        Assert.NotNull(scope.State.WorkspaceBrowserEntries);
+
+        scope.State.BrowseWorkspaceParent();
+        Assert.Equal(string.Empty, scope.State.WorkspaceBrowserCurrentPath);
+
+        scope.State.BrowseWorkspacePath("\0");
+        Assert.Contains("Could not open", scope.State.WorkspaceBrowserError, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void Workspace_state_accessors_refresh_and_recent_workspace_loading_cover_remaining_simple_paths()
+    {
+        using var scope = CreateState(recorderService: new StaticRecorderService(
+            new RecordingTargetInfo { ProcessName = "calc", MainWindowTitle = "Calculator" },
+            []));
+        var projectRoot = CreateProject("state-accessors");
+        var recentRoot = CreateProject("state-recent-load");
+
+        scope.State.SetProjectPath(projectRoot);
+        scope.State.LoadProject();
+        scope.State.LiveTimelineEntries.Add(new StudioLiveRunEntry(DateTimeOffset.UtcNow, "Run", "headline", "detail", "Running", "Search flow", null, "INFO"));
+        SetAutoProperty(scope.State, nameof(StudioWorkspaceState.LiveStepStartedAt), DateTimeOffset.UtcNow.AddSeconds(-3));
+
+        Assert.NotNull(scope.State.RecorderService);
+        Assert.True(scope.State.IsRecording);
+        Assert.Equal(0, scope.State.RecordedEventCount);
+        Assert.Equal(TimeSpan.Zero, scope.State.RecordedElapsed);
+        Assert.True(scope.State.HasLiveTimeline);
+        Assert.True(scope.State.LiveStepElapsed > TimeSpan.Zero);
+        Assert.Contains("local", scope.State.AvailableProfiles);
+        Assert.Contains("capability.search", scope.State.CapabilityOptions);
+        Assert.NotNull(scope.State.RunInsights);
+
+        var run = new StoredRunResult
+        {
+            Result = new RunResult
+            {
+                Metadata = new RunMetadata
+                {
+                    RunId = "run-01",
+                    ArtifactRoot = projectRoot,
+                    Profile = "local",
+                    StartedAt = DateTimeOffset.UtcNow,
+                    EndedAt = DateTimeOffset.UtcNow
+                },
+                Flows =
+                [
+                    new FlowRunResult { Outcome = RunOutcome.Passed, PassedWithRetry = true },
+                    new FlowRunResult { Outcome = RunOutcome.Failed }
+                ]
+            }
+        };
+        Assert.Contains("1/2 passed", scope.State.DescribeRun(run), StringComparison.Ordinal);
+        Assert.Contains("1 retried", scope.State.DescribeRun(run), StringComparison.Ordinal);
+
+        scope.State.SetProjectPath(null);
+        scope.State.SetRecentWorkspaces([recentRoot]);
+        Assert.True(scope.State.HasRecentWorkspaces);
+
+        scope.State.LoadRecentWorkspace(recentRoot);
+        Assert.True(scope.State.HasLoadedProject);
+        Assert.Equal(recentRoot, scope.State.ProjectPathInput);
+
+        scope.State.RefreshProject();
+        Assert.True(scope.State.HasLoadedProject);
+    }
+
+    [Fact]
+    public void Recorder_event_passthroughs_cover_current_events_and_state_changed_notifications()
+    {
+        var recorder = new FakeStudioRecorderService
+        {
+            IsRecording = true,
+            Elapsed = TimeSpan.FromSeconds(4),
+            CurrentTarget = new RecordingTargetInfo { ProcessId = 42, ProcessName = "sample-app", MainWindowTitle = "Sample App" }
+        };
+        using var scope = CreateState(recorderService: recorder);
+        var notifications = 0;
+        scope.State.Changed += () => notifications++;
+
+        recorder.SimulateEvent(new RecordedEvent
+        {
+            Sequence = 1,
+            Timestamp = DateTimeOffset.UtcNow,
+            Kind = EventKind.Invoke,
+            Element = new ElementInfo { AutomationId = "save", ControlType = "Button" }
+        });
+
+        Assert.Single(scope.State.CurrentEvents);
+        Assert.Equal(1, scope.State.RecordedEventCount);
+        Assert.Equal(TimeSpan.FromSeconds(4), scope.State.RecordedElapsed);
+        Assert.True(notifications > 0);
+    }
+
+    [Fact]
+    public void Private_initial_flow_resolution_falls_back_to_flows_directory_when_catalog_paths_are_missing()
+    {
+        var recorder = new FakeStudioRecorderService();
+        using var scope = CreateState(recorderService: recorder);
+        var projectRoot = CreateProject("state-initial-flow");
+        var flowPath = Path.Combine(projectRoot, "flows", "search.flow.yaml");
+        scope.State.SetProjectPath(projectRoot);
+        scope.State.LoadProject();
+
+        var snapshot = scope.State.Snapshot ?? throw new InvalidOperationException("Snapshot was not loaded.");
+        SetAutoProperty(scope.State, nameof(StudioWorkspaceState.Snapshot), snapshot with
+        {
+            Catalog = snapshot.Catalog with
+            {
+                NormalizedFlows =
+                [
+                    new NormalizedFlow
+                    {
+                        FlowId = "flow.search",
+                        Name = "Search flow"
+                    }
+                ]
+            }
+        });
+
+        var resolveInitialFlowPath = typeof(StudioWorkspaceState).GetMethod("ResolveInitialFlowPath", BindingFlags.Instance | BindingFlags.NonPublic)
+            ?? throw new InvalidOperationException("ResolveInitialFlowPath was not found.");
+
+        Assert.Equal(flowPath, Assert.IsType<string>(resolveInitialFlowPath.Invoke(scope.State, [])));
+    }
+
+    [Fact]
+    public void Private_live_progress_helpers_cover_resolution_status_and_timeline_trimming()
+    {
+        using var scope = CreateState();
+        var projectRoot = CreateProject("state-live-helpers");
+        scope.State.SetProjectPath(projectRoot);
+        scope.State.LoadProject();
+
+        var stateType = typeof(StudioWorkspaceState);
+        var flowOrder = (Dictionary<string, int>)(stateType.GetField("_liveFlowOrder", BindingFlags.Instance | BindingFlags.NonPublic)?.GetValue(scope.State)
+            ?? throw new InvalidOperationException("_liveFlowOrder field was not found."));
+        var flowOffsets = (Dictionary<string, int>)(stateType.GetField("_liveFlowStepOffsets", BindingFlags.Instance | BindingFlags.NonPublic)?.GetValue(scope.State)
+            ?? throw new InvalidOperationException("_liveFlowStepOffsets field was not found."));
+        var resolveFlowIndex = stateType.GetMethod("ResolveFlowIndex", BindingFlags.Instance | BindingFlags.NonPublic)
+            ?? throw new InvalidOperationException("ResolveFlowIndex was not found.");
+        var resolveFlowStepCount = stateType.GetMethod("ResolveFlowStepCount", BindingFlags.Instance | BindingFlags.NonPublic)
+            ?? throw new InvalidOperationException("ResolveFlowStepCount was not found.");
+        var calculateOverallStepPosition = stateType.GetMethod("CalculateOverallStepPosition", BindingFlags.Instance | BindingFlags.NonPublic)
+            ?? throw new InvalidOperationException("CalculateOverallStepPosition was not found.");
+        var addLiveTimelineEntry = stateType.GetMethod("AddLiveTimelineEntry", BindingFlags.Instance | BindingFlags.NonPublic)
+            ?? throw new InvalidOperationException("AddLiveTimelineEntry was not found.");
+        var resolveLiveEntryStatus = stateType.GetMethod("ResolveLiveEntryStatus", BindingFlags.Static | BindingFlags.NonPublic)
+            ?? throw new InvalidOperationException("ResolveLiveEntryStatus was not found.");
+
+        flowOrder["flow.search"] = 2;
+        flowOffsets["flow.search"] = 10;
+        SetAutoProperty(scope.State, nameof(StudioWorkspaceState.LiveCompletedSteps), 7);
+
+        Assert.Equal(2, Assert.IsType<int>(resolveFlowIndex.Invoke(scope.State, ["flow.search"])));
+        Assert.Equal(0, Assert.IsType<int>(resolveFlowIndex.Invoke(scope.State, [null])));
+        Assert.Equal(2, Assert.IsType<int>(resolveFlowStepCount.Invoke(scope.State, ["flow.search"])));
+        Assert.Equal(0, Assert.IsType<int>(resolveFlowStepCount.Invoke(scope.State, [null])));
+        Assert.Equal(12, Assert.IsType<int>(calculateOverallStepPosition.Invoke(scope.State, ["flow.search", 2])));
+        Assert.Equal(7, Assert.IsType<int>(calculateOverallStepPosition.Invoke(scope.State, [null, 0])));
+
+        var seedEntry = new StudioLiveRunEntry(DateTimeOffset.UtcNow, "Step", "seed", "detail", "Running", "Search flow", "http.get", "INFO");
+        addLiveTimelineEntry.Invoke(scope.State, [seedEntry, false]);
+        Assert.Single(scope.State.LiveTimelineEntries);
+        Assert.Empty(scope.State.LiveEvents);
+
+        for (var index = 0; index < 205; index++)
+        {
+            addLiveTimelineEntry.Invoke(scope.State, [new StudioLiveRunEntry(DateTimeOffset.UtcNow, "Log", $"headline-{index}", "detail", "Info", "Search flow", null, "INFO"), true]);
+        }
+
+        Assert.Equal(200, scope.State.LiveTimelineEntries.Count);
+        Assert.Equal(200, scope.State.LiveEvents.Count);
+        Assert.Equal("headline-204", scope.State.LiveEvents[0]);
+        Assert.Equal("headline-5", scope.State.LiveEvents[^1]);
+
+        Assert.Equal("Warning", Assert.IsType<string>(resolveLiveEntryStatus.Invoke(null, [new RuntimeProgressUpdate
+        {
+            Kind = RuntimeProgressKind.Log,
+            LogLevel = "WARN"
+        }])));
+        Assert.Equal("Error", Assert.IsType<string>(resolveLiveEntryStatus.Invoke(null, [new RuntimeProgressUpdate
+        {
+            Kind = RuntimeProgressKind.Log,
+            LogLevel = "ERROR"
+        }])));
+        Assert.Equal("Info", Assert.IsType<string>(resolveLiveEntryStatus.Invoke(null, [new RuntimeProgressUpdate
+        {
+            Kind = RuntimeProgressKind.Log,
+            LogLevel = "INFO"
+        }])));
+        Assert.Equal("Passed", Assert.IsType<string>(resolveLiveEntryStatus.Invoke(null, [new RuntimeProgressUpdate
+        {
+            Kind = RuntimeProgressKind.RunCompleted,
+            Run = new RunResult
+            {
+                Flows = [new FlowRunResult { Outcome = RunOutcome.Passed }]
+            }
+        }])));
+        Assert.Equal("Failed", Assert.IsType<string>(resolveLiveEntryStatus.Invoke(null, [new RuntimeProgressUpdate
+        {
+            Kind = RuntimeProgressKind.FlowCompleted,
+            Flow = new FlowRunResult { Outcome = RunOutcome.Failed }
+        }])));
+        Assert.Equal("Running", Assert.IsType<string>(resolveLiveEntryStatus.Invoke(null, [new RuntimeProgressUpdate
+        {
+            Kind = RuntimeProgressKind.StepStarted
+        }])));
+        Assert.Equal("Info", Assert.IsType<string>(resolveLiveEntryStatus.Invoke(null, [new RuntimeProgressUpdate
+        {
+            Kind = (RuntimeProgressKind)999
+        }])));
+        Assert.Equal("Failed", Assert.IsType<string>(resolveLiveEntryStatus.Invoke(null, [new RuntimeProgressUpdate
+        {
+            Kind = RuntimeProgressKind.StepCompleted,
+            Step = new StepRunResult
+            {
+                Name = "http.get",
+                Outcome = RunOutcome.Errored
+            }
+        }])));
+    }
+
+    [Fact]
+    public void Private_run_resolution_helpers_cover_path_name_tag_and_browser_selection()
+    {
+        using var scope = CreateState();
+        var projectRoot = CreateProject("state-run-resolution");
+        var apiFlowPath = Path.Combine(projectRoot, "flows", "search.flow.yaml");
+        var browserFlowPath = Path.Combine(projectRoot, "flows", "browser.flow.yaml");
+        scope.State.SetProjectPath(projectRoot);
+        scope.State.LoadProject();
+
+        var snapshot = scope.State.Snapshot ?? throw new InvalidOperationException("Snapshot was not loaded.");
+        SetAutoProperty(scope.State, nameof(StudioWorkspaceState.Snapshot), snapshot with
+        {
+            Catalog = snapshot.Catalog with
+            {
+                NormalizedFlows =
+                [
+                    new NormalizedFlow
+                    {
+                        FlowId = "flow.search",
+                        Name = "Search flow",
+                        SourceFile = apiFlowPath,
+                        Tags = ["api"],
+                        Actions = [new NormalizedExecutable { Name = "http.get" }],
+                        Expectations = [new NormalizedExecutable { Name = "http.assert-status" }]
+                    },
+                    new NormalizedFlow
+                    {
+                        FlowId = "flow.browser",
+                        Name = "Browser flow",
+                        SourceFile = browserFlowPath,
+                        Tags = ["ui"],
+                        Actions = [new NormalizedExecutable { Name = "browser.open" }],
+                        Expectations = [new NormalizedExecutable { Name = "browser.assert-title" }]
+                    }
+                ]
+            }
+        });
+
+        var stateType = typeof(StudioWorkspaceState);
+        var resolveRunFlows = stateType.GetMethod("ResolveRunFlows", BindingFlags.Instance | BindingFlags.NonPublic)
+            ?? throw new InvalidOperationException("ResolveRunFlows was not found.");
+        var runTargetsBrowserWorkflow = stateType.GetMethod("RunTargetsBrowserWorkflow", BindingFlags.Instance | BindingFlags.NonPublic)
+            ?? throw new InvalidOperationException("RunTargetsBrowserWorkflow was not found.");
+
+        Assert.Equal("flow.browser", Assert.Single(Assert.IsAssignableFrom<IReadOnlyList<NormalizedFlow>>(resolveRunFlows.Invoke(scope.State, [new RunOptions
+        {
+            FlowPaths = [Path.Combine("flows", "browser.flow.yaml")]
+        }]!))).FlowId);
+        Assert.Equal("flow.search", Assert.Single(Assert.IsAssignableFrom<IReadOnlyList<NormalizedFlow>>(resolveRunFlows.Invoke(scope.State, [new RunOptions
+        {
+            FlowPath = "search"
+        }]!))).FlowId);
+        Assert.Equal("flow.browser", Assert.Single(Assert.IsAssignableFrom<IReadOnlyList<NormalizedFlow>>(resolveRunFlows.Invoke(scope.State, [new RunOptions
+        {
+            FlowPath = "Browser"
+        }]!))).FlowId);
+        Assert.Equal("flow.search", Assert.Single(Assert.IsAssignableFrom<IReadOnlyList<NormalizedFlow>>(resolveRunFlows.Invoke(scope.State, [new RunOptions
+        {
+            Tag = "api"
+        }]!))).FlowId);
+        Assert.True(Assert.IsType<bool>(runTargetsBrowserWorkflow.Invoke(scope.State, [new RunOptions
+        {
+            FlowPath = browserFlowPath
+        }])));
+        Assert.False(Assert.IsType<bool>(runTargetsBrowserWorkflow.Invoke(scope.State, [new RunOptions
+        {
+            FlowPath = apiFlowPath
+        }])));
+    }
+
+    [Fact]
+    public async Task Private_live_ticker_notifies_while_step_is_active_and_stops_cleanly()
+    {
+        using var scope = CreateState();
+        var stateType = typeof(StudioWorkspaceState);
+        var startLiveTicker = stateType.GetMethod("StartLiveTicker", BindingFlags.Instance | BindingFlags.NonPublic)
+            ?? throw new InvalidOperationException("StartLiveTicker was not found.");
+        var stopLiveTicker = stateType.GetMethod("StopLiveTicker", BindingFlags.Instance | BindingFlags.NonPublic)
+            ?? throw new InvalidOperationException("StopLiveTicker was not found.");
+
+        var notifications = 0;
+        scope.State.Changed += () => Interlocked.Increment(ref notifications);
+        SetAutoProperty(scope.State, nameof(StudioWorkspaceState.LiveStepStartedAt), DateTimeOffset.UtcNow);
+
+        startLiveTicker.Invoke(scope.State, []);
+        await WaitForAsync(() => Volatile.Read(ref notifications) > 0, timeoutMilliseconds: 4000);
+        stopLiveTicker.Invoke(scope.State, []);
+
+        var notified = Volatile.Read(ref notifications);
+        await Task.Delay(1200);
+
+        Assert.True(notified > 0);
+        Assert.Equal(notified, Volatile.Read(ref notifications));
+    }
+
+    [Fact]
+    public void Private_workspace_helpers_cover_start_priority_history_file_resolution_and_suite_summary()
+    {
+        using var scope = CreateState();
+        var first = CreateProject("workspace-helper-a");
+        var second = CreateProject("workspace-helper-b");
+        var third = CreateProject("workspace-helper-c");
+        var extraRoots = Enumerable.Range(0, 7).Select(index => CreateDirectory($"recent-{index}")).ToList();
+
+        var stateType = typeof(StudioWorkspaceState);
+        var resolveProjectStartDirectory = stateType.GetMethod("ResolveProjectStartDirectory", BindingFlags.Instance | BindingFlags.NonPublic)
+            ?? throw new InvalidOperationException("ResolveProjectStartDirectory was not found.");
+        var rememberWorkspace = stateType.GetMethod("RememberWorkspace", BindingFlags.Instance | BindingFlags.NonPublic)
+            ?? throw new InvalidOperationException("RememberWorkspace was not found.");
+        var resolveProjectFilePath = stateType.GetMethod("ResolveProjectFilePath", BindingFlags.Static | BindingFlags.NonPublic)
+            ?? throw new InvalidOperationException("ResolveProjectFilePath was not found.");
+        var buildSuiteSummary = stateType.GetMethod("BuildSuiteSummary", BindingFlags.Static | BindingFlags.NonPublic)
+            ?? throw new InvalidOperationException("BuildSuiteSummary was not found.");
+
+        scope.State.SetProjectPath(first);
+        scope.State.SetRecentWorkspaces([second]);
+        SetAutoProperty(scope.State, nameof(StudioWorkspaceState.SuggestedWorkspacePath), third);
+        Assert.Equal(first, Assert.IsType<string>(resolveProjectStartDirectory.Invoke(scope.State, [])));
+
+        scope.State.SetProjectPath(null);
+        scope.State.SetRecentWorkspaces([second]);
+        Assert.Equal(second, Assert.IsType<string>(resolveProjectStartDirectory.Invoke(scope.State, [])));
+
+        scope.State.ClearRecentWorkspaces();
+        Assert.Equal(third, Assert.IsType<string>(resolveProjectStartDirectory.Invoke(scope.State, [])));
+
+        scope.State.SetProjectPath(null);
+        SetAutoProperty<string?>(scope.State, nameof(StudioWorkspaceState.SuggestedWorkspacePath), null);
+        Assert.Null(resolveProjectStartDirectory.Invoke(scope.State, []));
+
+        foreach (var root in new[] { first, second, third }.Concat(extraRoots))
+        {
+            rememberWorkspace.Invoke(scope.State, [root]);
+        }
+
+        rememberWorkspace.Invoke(scope.State, [second]);
+        Assert.Equal(8, scope.State.RecentWorkspaces.Count);
+        Assert.Equal(Path.GetFullPath(second), scope.State.RecentWorkspaces[0]);
+        Assert.Equal(1, scope.State.RecentWorkspaces.Count(path => string.Equals(path, Path.GetFullPath(second), StringComparison.OrdinalIgnoreCase)));
+
+        Assert.Null(resolveProjectFilePath.Invoke(null, [first, null]));
+        Assert.Equal(Path.Combine(first, "flows", "search.flow.yaml"), Assert.IsType<string>(resolveProjectFilePath.Invoke(null, [first, Path.Combine("flows", "search.flow.yaml")])));
+        Assert.Equal(second, Assert.IsType<string>(resolveProjectFilePath.Invoke(null, [first, second])));
+
+        var suite = new StudioSuiteEditorModel
+        {
+            Id = "suite.smoke",
+            Name = "Smoke suite",
+            Description = "Covers smoke scenarios.",
+            Profile = null,
+            Tag = null,
+            ReportFormatsText = "html, json"
+        };
+        suite.FlowIds.Add("flow.b");
+        suite.FlowIds.Add("flow.a");
+
+        var summary = Assert.IsType<string>(buildSuiteSummary.Invoke(null, [suite]));
+        Assert.Contains("Profile: inherit", summary, StringComparison.Ordinal);
+        Assert.Contains("Tag filter: none", summary, StringComparison.Ordinal);
+        Assert.Contains("Flows: flow.a, flow.b", summary, StringComparison.Ordinal);
+        Assert.Contains("Reports: html, json", summary, StringComparison.Ordinal);
+        Assert.Contains("Covers smoke scenarios.", summary, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -719,6 +1291,39 @@ public sealed class StudioWorkspaceStateTests : IDisposable
         Assert.Contains("Invalid target:", scope.State.RecordingError, StringComparison.Ordinal);
     }
 
+    [Fact]
+    public async Task EndRecordingAsync_stores_result_and_opens_save_panel_when_stop_succeeds()
+    {
+        var expected = new RecordingResult
+        {
+            Events =
+            [
+                new RecordedEvent
+                {
+                    Sequence = 1,
+                    Timestamp = DateTimeOffset.UtcNow,
+                    Kind = EventKind.Invoke
+                }
+            ],
+            Steps =
+            [
+                new InferredStep
+                {
+                    Kind = StepKind.Click,
+                    SourceTimestamp = DateTime.UtcNow
+                }
+            ]
+        };
+        using var scope = CreateState(recorderService: new ResultRecorderService(expected));
+
+        var result = await scope.State.EndRecordingAsync();
+
+        Assert.Same(expected, result);
+        Assert.Same(expected, scope.State.LastRecordingResult);
+        Assert.True(scope.State.IsRecorderSavePanelOpen);
+        Assert.Null(scope.State.RecordingError);
+    }
+
     private StateScope CreateState(IStudioRecorderService? recorderService = null, IStudioCompanionClient? companionClient = null, IStudioRunnerService? runnerService = null)
     {
         var services = new ServiceCollection();
@@ -901,6 +1506,36 @@ public sealed class StudioWorkspaceStateTests : IDisposable
 
         public Task<RecordingResult> StopRecordingAsync()
             => Task.FromResult(new RecordingResult());
+
+        public Task<RecordingReplayResult> ReplayRecordedFlowAsync(string flowFilePath, string projectPath)
+            => Task.FromResult(new RecordingReplayResult());
+    }
+
+    private sealed class ResultRecorderService(RecordingResult result) : IStudioRecorderService
+    {
+        public bool IsRecording => false;
+        public RecordingTargetInfo? CurrentTarget => null;
+        public int CapturedEventCount => result.Events.Count;
+        public TimeSpan Elapsed => TimeSpan.Zero;
+        public IReadOnlyList<RecordedEvent> CurrentEvents => result.Events;
+        public IReadOnlyList<InferredStep> CurrentInferredSteps => result.Steps;
+        public event Action? StateChanged
+        {
+            add { }
+            remove { }
+        }
+
+        public Task<IReadOnlyList<RecordingTargetInfo>> ListAvailableTargetsAsync()
+            => Task.FromResult<IReadOnlyList<RecordingTargetInfo>>([]);
+
+        public Task StartRecordingAsync(int processId)
+            => Task.CompletedTask;
+
+        public Task StartWebRecordingAsync(string url, string browserType, CancellationToken ct = default)
+            => Task.CompletedTask;
+
+        public Task<RecordingResult> StopRecordingAsync()
+            => Task.FromResult(result);
 
         public Task<RecordingReplayResult> ReplayRecordedFlowAsync(string flowFilePath, string projectPath)
             => Task.FromResult(new RecordingReplayResult());

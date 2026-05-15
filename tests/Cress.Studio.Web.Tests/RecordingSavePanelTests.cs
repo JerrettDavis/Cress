@@ -502,6 +502,53 @@ public sealed class RecordingSavePanelTests : TestContext
         Assert.Contains("diagnostic--error", cut.Markup, StringComparison.Ordinal);
     }
 
+    [Fact]
+    public void RecordingSavePanel_state_changes_initialize_defaults_once_and_preserve_custom_values()
+    {
+        var (state, _) = CreateState();
+        var cut = RenderComponent<Cress.Studio.Web.Components.Studio.RecordingSavePanel>();
+
+        OpenSavePanelWith(state, [MakeClickStep("btn1")], [MakeInvokeEvent("btn1")], processName: "CALC");
+        cut.Render();
+
+        var initialFlowId = cut.Find("#rec-flow-id").GetAttribute("value");
+        Assert.Contains("recorded.calc.", initialFlowId, StringComparison.Ordinal);
+
+        cut.Find("#rec-flow-id").Change("custom-flow");
+        state.CloseSavePanel();
+        OpenSavePanelWith(state, [MakeClickStep("btn2")], [MakeInvokeEvent("btn2")], processName: "NOTEPAD");
+        cut.Render();
+
+        Assert.Equal("custom-flow", cut.Find("#rec-flow-id").GetAttribute("value"));
+    }
+
+    [Fact]
+    public void RecordingSavePanel_private_helpers_cover_default_icons_slugify_and_no_result_guards()
+    {
+        var panelType = typeof(Cress.Studio.Web.Components.Studio.RecordingSavePanel);
+        var stepKindIcon = panelType.GetMethod("StepKindIcon", BindingFlags.Static | BindingFlags.NonPublic)
+            ?? throw new InvalidOperationException("StepKindIcon was not found.");
+        var stepKindCssClass = panelType.GetMethod("StepKindCssClass", BindingFlags.Static | BindingFlags.NonPublic)
+            ?? throw new InvalidOperationException("StepKindCssClass was not found.");
+        var eventKindIcon = panelType.GetMethod("EventKindIcon", BindingFlags.Static | BindingFlags.NonPublic)
+            ?? throw new InvalidOperationException("EventKindIcon was not found.");
+        var slugifyProcessName = panelType.GetMethod("SlugifyProcessName", BindingFlags.Static | BindingFlags.NonPublic)
+            ?? throw new InvalidOperationException("SlugifyProcessName was not found.");
+
+        Assert.Equal("●", Assert.IsType<string>(stepKindIcon.Invoke(null, [(StepKind)999])));
+        Assert.Equal(string.Empty, Assert.IsType<string>(stepKindCssClass.Invoke(null, [(StepKind)999])));
+        Assert.Equal("↩", Assert.IsType<string>(eventKindIcon.Invoke(null, [EventKind.Invoke])));
+        Assert.Equal("✎", Assert.IsType<string>(eventKindIcon.Invoke(null, [EventKind.ValueChanged])));
+        Assert.Equal("⧉", Assert.IsType<string>(eventKindIcon.Invoke(null, [EventKind.WindowOpened])));
+        Assert.Equal("●", Assert.IsType<string>(eventKindIcon.Invoke(null, [(EventKind)999])));
+        Assert.Equal(string.Empty, Assert.IsType<string>(slugifyProcessName.Invoke(null, ["!!!"])));
+
+        var (state, _) = CreateState();
+        state.OpenSavePanel();
+        var cut = RenderComponent<Cress.Studio.Web.Components.Studio.RecordingSavePanel>();
+        Assert.DoesNotContain("Save recording", cut.Markup);
+    }
+
     private sealed class ThrowingReplayRecorderService : IStudioRecorderService
     {
         public bool IsRecording => false;

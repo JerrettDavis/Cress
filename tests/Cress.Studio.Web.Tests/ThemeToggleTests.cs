@@ -11,7 +11,7 @@ public sealed class ThemeToggleTests : TestContext
         JSInterop.Setup<string>("getTheme").SetResult("system");
         JSInterop.Setup<string>("getEffectiveTheme").SetResult("dark");
         // setTheme is called on button clicks.
-        JSInterop.SetupVoid("setTheme", _ => true);
+        JSInterop.SetupVoid("setTheme", _ => true).SetVoidResult();
     }
 
     [Fact]
@@ -145,4 +145,36 @@ public sealed class ThemeToggleTests : TestContext
 
         Assert.Contains("Following OS - Dark now.", cut.Find("[data-testid='theme-toggle-summary']").TextContent);
     }
+
+    [Fact]
+    public void ThemeToggle_defaults_to_system_when_stored_theme_is_null()
+    {
+        JSInterop.Setup<string>("getTheme").SetResult((string)null!);
+        JSInterop.Setup<string>("getEffectiveTheme").SetResult("light");
+
+        var cut = RenderComponent<Cress.Studio.Web.Components.Studio.ThemeToggle>();
+
+        var activeButtons = cut.FindAll(".tab-button.active");
+        Assert.Single(activeButtons);
+        Assert.Equal("System theme", activeButtons[0].GetAttribute("aria-label"));
+        Assert.Contains("Following OS - Light now.", cut.Find("[data-testid='theme-toggle-summary']").TextContent);
+    }
+
+    [Fact]
+    public async Task ThemeToggle_switching_to_system_refreshes_effective_theme_after_js_call()
+    {
+        JSInterop.Setup<string>("getEffectiveTheme").SetResult("light");
+
+        var cut = RenderComponent<Cress.Studio.Web.Components.Studio.ThemeToggle>();
+
+        await cut.InvokeAsync(() => cut.Find("[aria-label='Light theme']").Click());
+        await cut.InvokeAsync(() => cut.Find("[aria-label='System theme']").Click());
+
+        var activeButtons = cut.FindAll(".tab-button.active");
+        Assert.Single(activeButtons);
+        Assert.Equal("System theme", activeButtons[0].GetAttribute("aria-label"));
+        Assert.Contains("Following OS - Light now.", cut.Find("[data-testid='theme-toggle-summary']").TextContent);
+        Assert.Contains(JSInterop.Invocations, invocation => invocation.Identifier == "setTheme" && string.Equals(invocation.Arguments[0]?.ToString(), "system", StringComparison.Ordinal));
+    }
+
 }

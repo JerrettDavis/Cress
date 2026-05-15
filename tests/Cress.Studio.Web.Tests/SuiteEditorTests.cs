@@ -227,4 +227,48 @@ public sealed class SuiteEditorTests : TestContext
         Assert.Empty(state.SelectedSuite!.FlowIds);
         Assert.Contains("0 / 2 selected", cut.Markup);
     }
+
+    [Fact]
+    public void SuiteEditor_checkbox_toggle_and_filter_summary_cover_capability_and_overflow_chips()
+    {
+        var state = CreateState();
+
+        var suite = new StudioSuiteEditorModel
+        {
+            FilePath = @"C:\workspace\suites\overflow.suite.yaml",
+            Id = "overflow",
+            Name = "Overflow suite"
+        };
+        suite.FlowIds.UnionWith(["flow-1", "flow-2", "flow-3", "flow-4", "flow-5", "flow-6", "flow-7"]);
+
+        SetPrivate(state, "SelectedSuite", suite);
+        SetPrivate(state, "Snapshot", new StudioProjectSnapshot
+        {
+            Catalog = new ProjectCatalog
+            {
+                NormalizedFlows =
+                [
+                    new NormalizedFlow { FlowId = "flow-1", Name = "Alpha auth", CapabilityId = "cap.auth" },
+                    new NormalizedFlow { FlowId = "flow-2", Name = "Beta browse" },
+                    new NormalizedFlow { FlowId = "flow-3", Name = "Gamma browse" },
+                    new NormalizedFlow { FlowId = "flow-4", Name = "Delta browse" },
+                    new NormalizedFlow { FlowId = "flow-5", Name = "Epsilon browse" },
+                    new NormalizedFlow { FlowId = "flow-6", Name = "Zeta browse" },
+                    new NormalizedFlow { FlowId = "flow-7", Name = "Eta browse" }
+                ]
+            }
+        });
+
+        var cut = RenderComponent<Cress.Studio.Web.Components.Studio.SuiteEditor>();
+
+        Assert.Contains("+1 more", cut.Find("[data-testid='suite-selected-flow-chips']").TextContent, StringComparison.Ordinal);
+        Assert.Contains("cap.auth", cut.Markup, StringComparison.Ordinal);
+
+        cut.Find("[data-testid='suite-flow-filter']").Change("cap.auth");
+        Assert.Contains("Filter: cap.auth", cut.Find("[data-testid='suite-flow-summary']").TextContent, StringComparison.Ordinal);
+        Assert.Single(cut.FindAll(".flow-checklist .check-item"));
+
+        cut.Find(".flow-checklist input[type=checkbox]").Change(false);
+        Assert.DoesNotContain("flow-1", state.SelectedSuite!.FlowIds);
+    }
 }

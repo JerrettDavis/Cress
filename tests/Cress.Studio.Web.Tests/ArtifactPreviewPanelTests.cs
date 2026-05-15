@@ -195,4 +195,25 @@ public sealed class ArtifactPreviewPanelTests : TestContext
 
         Assert.Contains("preview text", cut.Find("pre.preview-text").TextContent, StringComparison.Ordinal);
     }
+
+    [Fact]
+    public void ArtifactPreviewPanel_private_helpers_cover_pdf_markdown_svg_and_default_types()
+    {
+        var getArtifactTypeLabel = typeof(Cress.Studio.Web.Components.Studio.ArtifactPreviewPanel)
+            .GetMethod("GetArtifactTypeLabel", BindingFlags.Static | BindingFlags.NonPublic)
+            ?? throw new InvalidOperationException("GetArtifactTypeLabel was not found.");
+        var getArtifactKind = typeof(Cress.Studio.Web.Components.Studio.ArtifactPreviewPanel)
+            .GetMethod("GetArtifactKind", BindingFlags.Static | BindingFlags.NonPublic)
+            ?? throw new InvalidOperationException("GetArtifactKind was not found.");
+
+        Assert.Equal("pdf", Assert.IsType<string>(getArtifactTypeLabel.Invoke(null, ["report.pdf"])));
+        Assert.Equal("doc", Assert.IsType<string>(getArtifactTypeLabel.Invoke(null, ["notes.md"])));
+        Assert.Equal("img", Assert.IsType<string>(getArtifactTypeLabel.Invoke(null, ["diagram.svg"])));
+        Assert.Equal("file", Assert.IsType<string>(getArtifactTypeLabel.Invoke(null, ["archive.bin"])));
+
+        Assert.Equal("report", Assert.IsType<string>(getArtifactKind.Invoke(null, [new StudioArtifactItem("report", "pdf", @"C:\artifacts\report.pdf")])));
+        Assert.Equal("text", Assert.IsType<string>(getArtifactKind.Invoke(null, [new StudioArtifactItem("notes", "log", @"C:\artifacts\run.log")])));
+        Assert.Equal("image", Assert.IsType<string>(getArtifactKind.Invoke(null, [new StudioArtifactItem("diagram", "svg", @"C:\artifacts\diagram.svg")])));
+        Assert.Equal("other", Assert.IsType<string>(getArtifactKind.Invoke(null, [new StudioArtifactItem("archive", "bin", @"C:\artifacts\archive.bin")])));
+    }
 }

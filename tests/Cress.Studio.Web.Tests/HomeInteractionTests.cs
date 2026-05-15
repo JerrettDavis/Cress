@@ -277,6 +277,23 @@ public sealed class HomeInteractionTests : TestContext, IDisposable
     }
 
     [Fact]
+    public void Home_recent_workspace_actions_can_load_a_recent_workspace()
+    {
+        var first = CreateProject("recent-load-a");
+        var second = CreateProject("recent-load-b");
+        var state = CreateState(recentWorkspaces: [first, second]);
+
+        var cut = RenderComponent<Home>();
+
+        var secondCard = cut.FindAll("[data-testid^='recent-workspace-card-']")
+            .Single(element => element.TextContent.Contains("recent-load-b", StringComparison.Ordinal));
+        secondCard.QuerySelector("[data-testid^='load-recent-workspace-']")!.Click();
+
+        Assert.True(state.HasLoadedProject);
+        Assert.Equal(second, state.ProjectPathInput);
+    }
+
+    [Fact]
     public void Home_workspace_setup_summary_reflects_current_configuration_and_invalid_retry()
     {
         var state = CreateState(runnerService: new FakeRunnerService(
@@ -494,6 +511,21 @@ public sealed class HomeInteractionTests : TestContext, IDisposable
     }
 
     [Fact]
+    public void Home_new_mode_can_use_suggested_workspace_path()
+    {
+        var suggestedProject = CreateProject("new-mode-suggested");
+        var state = CreateState();
+        SetAutoProperty(state, nameof(StudioWorkspaceState.SuggestedWorkspacePath), suggestedProject);
+        state.SetProjectPath(string.Empty);
+
+        var cut = RenderComponent<Home>();
+        cut.Find("[data-testid='startup-mode-new']").Click();
+        cut.Find("[data-testid='startup-new-use-suggested']").Click();
+
+        Assert.Equal(suggestedProject, state.ProjectPathInput);
+    }
+
+    [Fact]
     public void Home_onboarding_defaults_to_single_open_mode_panel()
     {
         CreateState();
@@ -596,6 +628,113 @@ public sealed class HomeInteractionTests : TestContext, IDisposable
 
         Assert.True(state.HasLoadedProject);
         Assert.Equal(firstDemoProject, state.ProjectPathInput);
+    }
+
+    [Fact]
+    public async Task Home_designer_tabs_switch_between_flow_suite_source_and_metrics_views()
+    {
+        var state = CreateState();
+        var projectRoot = CreateProject("designer-tabs");
+        state.SetProjectPath(projectRoot);
+        state.LoadProject();
+        Services.GetRequiredService<NavigationManager>().NavigateTo("http://localhost/designer");
+
+        var cut = RenderComponent<Home>();
+
+        cut.Find("[data-testid='designer-tab-flow']").Click();
+        Assert.NotNull(cut.Find("[data-testid='flow-gherkin-preview']"));
+
+        await InvokePrivateAsync(cut.Instance, "CreateSuiteAsync");
+        cut.Render();
+        cut.Find("[data-testid='designer-tab-suite']").Click();
+        Assert.NotNull(cut.Find("[data-testid='suite-flow-filter']"));
+
+        cut.Find("[data-testid='designer-tab-source']").Click();
+        Assert.NotNull(cut.Find("[data-testid='designer-source-editor']"));
+
+        cut.Find("[data-testid='designer-tab-metrics']").Click();
+        Assert.NotNull(cut.Find("[data-testid='metrics-panel']"));
+    }
+
+    [Fact]
+    public async Task Home_private_editor_commands_refresh_save_apply_rebuild_and_delete_suite()
+    {
+        var state = CreateState();
+        var projectRoot = CreateProject("designer-commands");
+        state.SetProjectPath(projectRoot);
+        state.LoadProject();
+
+        var cut = RenderComponent<Home>();
+        var flowPath = state.SelectedFlow!.FilePath;
+
+        state.SelectedFlow.Name = "Updated flow";
+        await InvokePrivateAsync(cut.Instance, "SaveFlowAsync");
+        Assert.True(File.Exists(flowPath));
+
+        state.SourceEditorText = """
+        version: 1
+        id: flow.search
+        name: Updated flow from source
+        when:
+          - step: http.get
+            with:
+              url: https://example.test/search
+        then:
+          - expect: http.assert-status
+            with:
+              status: "200"
+        """;
+        await InvokePrivateAsync(cut.Instance, "ApplySourceAsync");
+        Assert.Contains("active", InvokePrivate<string>(cut.Instance, "GetTabClass", "flow"), StringComparison.Ordinal);
+
+        await InvokePrivateAsync(cut.Instance, "RebuildSourceAsync");
+        Assert.Contains("Updated flow from source", state.SourceEditorText, StringComparison.Ordinal);
+        Assert.Contains("active", InvokePrivate<string>(cut.Instance, "GetTabClass", "source"), StringComparison.Ordinal);
+
+        await InvokePrivateAsync(cut.Instance, "RefreshProjectAsync");
+        Assert.True(state.HasLoadedProject);
+
+        await InvokePrivateAsync(cut.Instance, "CreateSuiteAsync");
+        await InvokePrivateAsync(cut.Instance, "SaveSuiteAsync");
+        Assert.NotNull(state.SelectedSuite);
+        Assert.True(File.Exists(state.SelectedSuite!.FilePath));
+
+        await InvokePrivateAsync(cut.Instance, "DeleteSuiteAsync");
+        Assert.Null(state.SelectedSuite);
+        Assert.Contains("active", InvokePrivate<string>(cut.Instance, "GetTabClass", "overview"), StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public async Task Home_private_helpers_cover_local_runner_relative_time_and_empty_file_open()
+    {
+        var state = CreateState();
+        var projectRoot = CreateProject("home-private-helpers");
+        state.SetProjectPath(projectRoot);
+        state.LoadProject();
+        state.SelectedRunnerNodeId = "missing-node";
+        Services.GetRequiredService<NavigationManager>().NavigateTo("http://localhost/designer");
+
+        var cut = RenderComponent<Home>();
+        var toTestIdSegment = typeof(Home).GetMethod("ToTestIdSegment", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic)
+            ?? throw new InvalidOperationException("Method 'ToTestIdSegment' was not found.");
+        var formatRelativeTime = typeof(Home).GetMethod("FormatRelativeTime", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic)
+            ?? throw new InvalidOperationException("Method 'FormatRelativeTime' was not found.");
+
+        Assert.Equal(
+            "The setup step is complete, so the shell promotes flow editing and source work.",
+            InvokePrivate<string>(cut.Instance, "GetCurrentWorkflowSupportCopy"));
+        Assert.Equal("Local embedded", InvokePrivate<string>(cut.Instance, "GetRunnerNodeSelectionSummary"));
+        Assert.Contains("workflow-stage--active", InvokePrivate<string>(cut.Instance, "GetWorkflowStageClass", "design"), StringComparison.Ordinal);
+        Assert.Equal("empty", Assert.IsType<string>(toTestIdSegment.Invoke(null, [null])));
+        Assert.Equal("just now", Assert.IsType<string>(formatRelativeTime.Invoke(null, [DateTimeOffset.UtcNow])));
+        Assert.EndsWith("s ago", Assert.IsType<string>(formatRelativeTime.Invoke(null, [DateTimeOffset.UtcNow.AddSeconds(-20)])), StringComparison.Ordinal);
+        Assert.EndsWith("m ago", Assert.IsType<string>(formatRelativeTime.Invoke(null, [DateTimeOffset.UtcNow.AddMinutes(-5)])), StringComparison.Ordinal);
+        Assert.EndsWith("h ago", Assert.IsType<string>(formatRelativeTime.Invoke(null, [DateTimeOffset.UtcNow.AddHours(-2)])), StringComparison.Ordinal);
+
+        var clipboardInvocationCount = JSInterop.Invocations.Count(invocation => invocation.Identifier == "navigator.clipboard.writeText");
+        SetAutoProperty<Cress.Studio.ViewModels.FlowDocumentViewModel?>(state, nameof(StudioWorkspaceState.SelectedFlow), null);
+        await InvokePrivateAsync(cut.Instance, "OpenFileAsync");
+        Assert.Equal(clipboardInvocationCount, JSInterop.Invocations.Count(invocation => invocation.Identifier == "navigator.clipboard.writeText"));
     }
 
     [Fact]

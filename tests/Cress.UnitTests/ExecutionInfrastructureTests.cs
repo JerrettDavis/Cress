@@ -1,4 +1,5 @@
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using Cress.Core.Models;
 using Cress.Execution;
 
@@ -95,6 +96,267 @@ public sealed class ExecutionInfrastructureTests
             Environment.SetEnvironmentVariable("CRESS_REPOSITORY_ROOT", originalRoot);
             Environment.CurrentDirectory = originalCurrentDirectory;
         }
+    }
+
+    [Fact]
+    public void NodeProcessJsonRpcClient_private_helpers_include_stderr_details()
+    {
+        var clientType = typeof(ReportGenerator).Assembly.GetType("Cress.Execution.NodeProcessJsonRpcClient", throwOnError: true)!;
+        var client = RuntimeHelpers.GetUninitializedObject(clientType);
+        var stderrField = clientType.GetField("_stderr", BindingFlags.Instance | BindingFlags.NonPublic)
+            ?? throw new InvalidOperationException("The _stderr field was not found.");
+        stderrField.SetValue(client, new List<string> { "first", "second" });
+
+        var buildTerminationMessage = clientType.GetMethod("BuildTerminationMessage", BindingFlags.Instance | BindingFlags.NonPublic)
+            ?? throw new InvalidOperationException("BuildTerminationMessage was not found.");
+        var buildStderrSummary = clientType.GetMethod("BuildStderrSummary", BindingFlags.Instance | BindingFlags.NonPublic)
+            ?? throw new InvalidOperationException("BuildStderrSummary was not found.");
+
+        var summary = Assert.IsType<string>(buildStderrSummary.Invoke(client, []));
+        var termination = Assert.IsType<string>(buildTerminationMessage.Invoke(client, ["invoke"]));
+
+        Assert.Contains("stderr:", summary, StringComparison.Ordinal);
+        Assert.Contains("first", summary, StringComparison.Ordinal);
+        Assert.Contains("second", termination, StringComparison.Ordinal);
+        Assert.Contains("invoke", termination, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public async Task NodeProcessJsonRpcClient_can_initialize_invoke_and_surface_host_failures()
+    {
+        using var workspace = new TestWorkspace();
+        var scriptPath = workspace.GetPath("rpc-host.mjs");
+        workspace.WriteFile("rpc-host.mjs", """
+        import readline from 'node:readline';
+
+        const rl = readline.createInterface({
+          input: process.stdin,
+          crlfDelay: Infinity
+        });
+
+        for await (const line of rl) {
+          const request = JSON.parse(line);
+
+          if (request.method === 'cress/initialize') {
+            console.log(JSON.stringify({
+              jsonrpc: '2.0',
+              id: request.id,
+              result: {
+                protocolVersion: 1,
+                pluginId: 'test.plugin',
+                capabilities: [],
+                ready: true
+              }
+            }));
+            continue;
+          }
+
+          if (request.method === 'math/add') {
+            console.log(JSON.stringify({
+              jsonrpc: '2.0',
+              id: request.id,
+              result: request.params.a + request.params.b
+            }));
+            continue;
+          }
+
+          if (request.method === 'noop') {
+            console.log(JSON.stringify({
+              jsonrpc: '2.0',
+              id: request.id,
+              result: null
+            }));
+            continue;
+          }
+
+          if (request.method === 'fail') {
+            console.error('rpc failure on stderr');
+            console.log(JSON.stringify({
+              jsonrpc: '2.0',
+              id: request.id,
+              error: {
+                code: -32000,
+                message: 'boom'
+              }
+            }));
+            continue;
+          }
+
+          if (request.method === 'exit') {
+            console.error('host exiting');
+            process.exit(0);
+          }
+        }
+        """);
+
+        var clientType = typeof(ReportGenerator).Assembly.GetType("Cress.Execution.NodeProcessJsonRpcClient", throwOnError: true)!;
+        var client = Activator.CreateInstance(clientType, scriptPath)
+            ?? throw new InvalidOperationException("NodeProcessJsonRpcClient could not be constructed.");
+        var initializeAsync = clientType.GetMethod("InitializeAsync")
+            ?? throw new InvalidOperationException("InitializeAsync was not found.");
+        var invokeAsync = clientType.GetMethod("InvokeAsync")
+            ?? throw new InvalidOperationException("InvokeAsync was not found.");
+
+        await ((Task?)initializeAsync.Invoke(client, [workspace.RootPath, "local", CancellationToken.None])
+            ?? throw new InvalidOperationException("InitializeAsync returned null."));
+
+        var sumTask = (Task<int>?)invokeAsync.MakeGenericMethod(typeof(int)).Invoke(client, ["math/add", new { a = 2, b = 3 }, CancellationToken.None])
+            ?? throw new InvalidOperationException("InvokeAsync<int> returned null.");
+        Assert.Equal(5, await sumTask);
+
+        var noopTask = (Task<string?>?)invokeAsync.MakeGenericMethod(typeof(string)).Invoke(client, ["noop", null, CancellationToken.None])
+            ?? throw new InvalidOperationException("InvokeAsync<string> returned null.");
+        Assert.Null(await noopTask);
+
+        var failureTask = (Task<string>?)invokeAsync.MakeGenericMethod(typeof(string)).Invoke(client, ["fail", null, CancellationToken.None])
+            ?? throw new InvalidOperationException("InvokeAsync<string> failure task returned null.");
+        var failure = await Assert.ThrowsAsync<InvalidOperationException>(async () => await failureTask);
+        Assert.Contains("boom", failure.Message, StringComparison.Ordinal);
+        Assert.Contains("stderr:", failure.Message, StringComparison.Ordinal);
+
+        var exitTask = (Task<string>?)invokeAsync.MakeGenericMethod(typeof(string)).Invoke(client, ["exit", null, CancellationToken.None])
+            ?? throw new InvalidOperationException("InvokeAsync<string> exit task returned null.");
+        var termination = await Assert.ThrowsAsync<InvalidOperationException>(async () => await exitTask);
+        Assert.Contains("The Node host exited while handling 'exit'.", termination.Message, StringComparison.Ordinal);
+        Assert.Contains("host exiting", termination.Message, StringComparison.Ordinal);
+
+        await ((IAsyncDisposable)client).DisposeAsync();
+    }
+
+    [Fact]
+    public void PlanGenerator_reports_fixture_step_input_and_driver_diagnostics()
+    {
+        var generator = new PlanGenerator();
+        var catalog = new ProjectCatalog
+        {
+            ProjectRoot = @"C:\workspace",
+            EffectiveConfig = new EffectiveConfig
+            {
+                Config = new CressConfig
+                {
+                    Drivers = new Dictionary<string, DriverConfig>(StringComparer.OrdinalIgnoreCase)
+                    {
+                        ["playwright"] = new() { Enabled = false }
+                    }
+                }
+            },
+            StepRegistry = new StepRegistrySnapshot(
+                new Dictionary<string, StepDefinition>(StringComparer.OrdinalIgnoreCase)
+                {
+                    ["browser.open"] = new()
+                    {
+                        Name = "browser.open",
+                        Drivers = ["playwright"],
+                        Inputs = new Dictionary<string, StepContractField>(StringComparer.OrdinalIgnoreCase)
+                        {
+                            ["path"] = new() { Required = true }
+                        },
+                        Implementation = new StepImplementationBinding { Plugin = "builtin.playwright", Operation = "open" }
+                    }
+                },
+                new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)),
+            FixtureDefinitions = new Dictionary<string, FixtureDefinition>(StringComparer.OrdinalIgnoreCase)
+        };
+        var flow = new NormalizedFlow
+        {
+            FlowId = "diagnostic-flow",
+            Name = "Diagnostic flow",
+            SourceFile = @"C:\workspace\flows\diagnostic.flow.yaml",
+            Fixtures =
+            [
+                new() { Name = "anon" },
+                new() { Name = "missing", Use = "missing.fixture" }
+            ],
+            Actions =
+            [
+                new()
+                {
+                    Kind = "action",
+                    Name = "browser.open",
+                    Source = new SourceReference { SourceFile = @"C:\workspace\flows\diagnostic.flow.yaml" }
+                }
+            ],
+            Expectations =
+            [
+                new()
+                {
+                    Kind = "expectation",
+                    Name = "browser.assert",
+                    Source = new SourceReference { SourceFile = @"C:\workspace\flows\diagnostic.flow.yaml" }
+                }
+            ]
+        };
+
+        var plan = generator.Generate(catalog, [flow]);
+
+        Assert.Contains(plan.Diagnostics, diagnostic => diagnostic.Code == "PLN001");
+        Assert.Contains(plan.Diagnostics, diagnostic => diagnostic.Code == "PLN002");
+        Assert.Contains(plan.Diagnostics, diagnostic => diagnostic.Code == "PLN003");
+        Assert.Contains(plan.Diagnostics, diagnostic => diagnostic.Code == "PLN004");
+        Assert.Contains(plan.Diagnostics, diagnostic => diagnostic.Code == "PLN005");
+    }
+
+    [Fact]
+    public void RuntimeOrchestrator_private_helpers_select_flows_build_invocation_and_match_requested_steps()
+    {
+        var orchestrator = RuntimeHelpers.GetUninitializedObject(typeof(RuntimeOrchestrator));
+        var selectFlows = typeof(RuntimeOrchestrator).GetMethod("SelectFlows", BindingFlags.Instance | BindingFlags.NonPublic)
+            ?? throw new InvalidOperationException("SelectFlows was not found.");
+        var buildInvocation = typeof(RuntimeOrchestrator).GetMethod("BuildInvocation", BindingFlags.Static | BindingFlags.NonPublic)
+            ?? throw new InvalidOperationException("BuildInvocation was not found.");
+        var matchesRequestedStart = typeof(RuntimeOrchestrator).GetMethod("MatchesRequestedStart", BindingFlags.Static | BindingFlags.NonPublic)
+            ?? throw new InvalidOperationException("MatchesRequestedStart was not found.");
+
+        var catalog = new ProjectCatalog
+        {
+            ProjectRoot = @"C:\workspace",
+            EffectiveConfig = new EffectiveConfig
+            {
+                Config = new CressConfig
+                {
+                    Defaults = new DefaultsConfig { Retries = 2, Evidence = "standard" }
+                },
+                Profile = new CressProfile
+                {
+                    Evidence = new EvidenceProfileConfig { Mode = "full", ScreenshotPolicy = "on-failure" }
+                }
+            },
+            NormalizedFlows =
+            [
+                new() { FlowId = "checkout", Name = "Checkout", Tags = ["smoke"], SourceFile = @"C:\workspace\flows\checkout.flow.yaml" },
+                new() { FlowId = "returns", Name = "Returns", Tags = ["regression"], SourceFile = @"C:\workspace\flows\returns.flow.yaml" }
+            ]
+        };
+        var diagnostics = new List<Diagnostic>();
+        var options = new RunOptions
+        {
+            FlowPaths = [Path.Combine("flows", "checkout.flow.yaml"), Path.Combine("flows", "missing.flow.yaml")],
+            Tag = "smoke",
+            Trigger = "",
+            StartFromStep = "action:browser.open"
+        };
+
+        var selected = Assert.IsAssignableFrom<IReadOnlyList<NormalizedFlow>>(selectFlows.Invoke(orchestrator, [catalog, options, diagnostics]));
+        var invocation = Assert.IsType<RunInvocation>(buildInvocation.Invoke(null, [options, catalog, selected]));
+
+        Assert.Single(selected);
+        Assert.Equal("checkout", selected[0].FlowId);
+        Assert.Equal("manual", invocation.Trigger);
+        Assert.Equal(["C:\\workspace\\flows\\checkout.flow.yaml"], invocation.RequestedFlows);
+        Assert.Equal(2, invocation.RetryCount);
+        Assert.Equal("full", invocation.EvidenceMode);
+        Assert.Equal("on-failure", invocation.ScreenshotPolicy);
+        Assert.True(diagnostics.Count == 0);
+
+        var unmatched = Assert.IsAssignableFrom<IReadOnlyList<NormalizedFlow>>(selectFlows.Invoke(orchestrator, [catalog, options with { Tag = "missing" }, diagnostics]));
+        Assert.Empty(unmatched);
+        Assert.Contains(diagnostics, diagnostic => diagnostic.Code == "SEL002");
+
+        var action = new PlanAction { Kind = "action", Name = "browser.open", Step = "browser.open" };
+        Assert.True(Assert.IsType<bool>(matchesRequestedStart.Invoke(null, [action, "browser.open"])));
+        Assert.True(Assert.IsType<bool>(matchesRequestedStart.Invoke(null, [action, "action:browser.open"])));
+        Assert.True(Assert.IsType<bool>(matchesRequestedStart.Invoke(null, [action, null])));
+        Assert.False(Assert.IsType<bool>(matchesRequestedStart.Invoke(null, [action, "other.step"])));
     }
 
     private static ProjectCatalog CreateCatalog(string projectRoot) => new()

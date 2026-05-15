@@ -618,7 +618,239 @@ public sealed class ExecutionPipelineTests
         Assert.Contains("operation: \"Execute\"", manifest, StringComparison.Ordinal);
     }
 
-    private static RuntimeOrchestrator CreateRuntimeOrchestrator(Func<HttpMessageHandler>? httpHandlerFactory = null)
+    [Fact]
+    public async Task RuntimeOrchestrator_parallel_runs_cover_retry_failure_summary_and_auto_capture()
+    {
+        using var workspace = new TestWorkspace();
+        WriteProjectFiles(workspace, "http://localhost:5000", profileExtras: """
+        evidence:
+          screenshotPolicy: every-step
+        """);
+        workspace.WriteFile(Path.Combine("project", "flows", "retry.flow.yaml"), """
+        version: 1
+        id: retry-flow
+        name: Retry flow
+        when:
+          - step: browser.open
+        then:
+          - expect: browser.text
+        """);
+        workspace.WriteFile(Path.Combine("project", "flows", "failed.flow.yaml"), """
+        version: 1
+        id: failed-flow
+        name: Failed flow
+        when:
+          - step: browser.fail
+        then:
+          - expect: browser.text
+        """);
+        workspace.WriteFile(Path.Combine("project", "steps", "manifests", "flawright.yaml"), """
+        version: 1
+        steps:
+          - name: browser.open
+            drivers:
+              - flawright
+            retrySafe: true
+            implementation:
+              plugin: builtin.fake
+              operation: open
+          - name: browser.fail
+            drivers:
+              - flawright
+            retrySafe: false
+            implementation:
+              plugin: builtin.fake
+              operation: fail
+          - name: browser.text
+            drivers:
+              - flawright
+            retrySafe: true
+            implementation:
+              plugin: builtin.fake
+              operation: assert-text
+        """);
+
+        var driver = new ScriptedRuntimeDriver(
+            "flawright",
+            context => context.FlowId switch
+            {
+                "retry-flow" => new ScriptedDriverSession(
+                    "flawright",
+                    new Dictionary<string, Queue<DriverExecutionResult>>(StringComparer.OrdinalIgnoreCase)
+                    {
+                        ["browser.open"] = new([
+                            new DriverExecutionResult
+                            {
+                                Outcome = RunOutcome.Failed,
+                                Message = "Not ready",
+                                FailureClassification = "assertion-failed"
+                            },
+                            new DriverExecutionResult
+                            {
+                                Outcome = RunOutcome.Passed,
+                                Message = "Recovered"
+                            }
+                        ]),
+                        ["browser.text"] = new([
+                            new DriverExecutionResult
+                            {
+                                Outcome = RunOutcome.Passed,
+                                Message = "Matched"
+                            }
+                        ])
+                    },
+                    [
+                        new EvidenceArtifact
+                        {
+                            Category = "trace",
+                            RelativePath = $"traces\\{context.FlowId}.zip",
+                            Description = "Trace archive"
+                        }
+                    ]),
+                "failed-flow" => new ScriptedDriverSession(
+                    "flawright",
+                    new Dictionary<string, Queue<DriverExecutionResult>>(StringComparer.OrdinalIgnoreCase)
+                    {
+                        ["browser.fail"] = new([
+                            new DriverExecutionResult
+                            {
+                                Outcome = RunOutcome.Failed,
+                                Message = "Boom",
+                                FailureClassification = "step-failed"
+                            }
+                        ])
+                    }),
+                _ => throw new InvalidOperationException($"Unexpected flow '{context.FlowId}'.")
+            });
+
+        var orchestrator = CreateRuntimeOrchestrator(extraDrivers: [driver]);
+        var progress = new List<RuntimeProgressUpdate>();
+
+        var result = await orchestrator.ExecuteAsync(
+            workspace.GetPath("project"),
+            new RunOptions
+            {
+                ContinueOnFailure = true,
+                Parallel = 2,
+                RetryCountOverride = 1
+            },
+            new Progress<RuntimeProgressUpdate>(progress.Add));
+
+        Assert.False(result.Passed);
+        Assert.Equal(2, result.Flows.Count);
+
+        var retryFlow = Assert.Single(result.Flows, flow => flow.FlowId == "retry-flow");
+        Assert.Equal(RunOutcome.Passed, retryFlow.Outcome);
+        Assert.True(retryFlow.PassedWithRetry);
+        Assert.Contains(retryFlow.Steps, step => step.Name == "browser.open" && step.Attempt == 1 && step.Outcome == RunOutcome.Failed);
+        Assert.Contains(retryFlow.Steps, step => step.Name == "browser.open" && step.Attempt == 2 && step.Outcome == RunOutcome.Passed);
+        Assert.Contains(retryFlow.Steps.SelectMany(step => step.Artifacts), artifact => artifact.RelativePath.Contains("browser.open", StringComparison.OrdinalIgnoreCase));
+        Assert.Contains(retryFlow.Steps, step => step.Kind == "evidence" && step.Artifacts.Any(artifact => artifact.RelativePath.EndsWith("retry-flow.zip", StringComparison.OrdinalIgnoreCase)));
+
+        var failedFlow = Assert.Single(result.Flows, flow => flow.FlowId == "failed-flow");
+        Assert.Equal(RunOutcome.Failed, failedFlow.Outcome);
+        Assert.Equal("step-failed", failedFlow.FailureClassification);
+        Assert.Contains("Boom", failedFlow.FailureMessage, StringComparison.Ordinal);
+
+        var failureSummary = File.ReadAllText(Path.Combine(result.Metadata.ArtifactRoot, "failure-analysis.md"));
+        Assert.Contains("failed-flow", failureSummary, StringComparison.Ordinal);
+        Assert.Contains("step-failed", failureSummary, StringComparison.Ordinal);
+        Assert.Contains(progress, update => update.Kind == RuntimeProgressKind.RunStarted);
+        Assert.Contains(progress, update => update.Kind == RuntimeProgressKind.RunCompleted && update.Run is not null);
+        Assert.Equal(2, driver.StartedContexts.Count);
+    }
+
+    [Fact]
+    public async Task RuntimeOrchestrator_stops_after_first_failed_flow_when_continue_on_failure_is_disabled()
+    {
+        using var workspace = new TestWorkspace();
+        WriteProjectFiles(workspace, "http://localhost:5000", profileExtras: string.Empty);
+        workspace.WriteFile(Path.Combine("project", "flows", "a-fail.flow.yaml"), """
+        version: 1
+        id: a-fail
+        name: A fail
+        when:
+          - step: browser.fail
+        then:
+          - expect: browser.text
+        """);
+        workspace.WriteFile(Path.Combine("project", "flows", "b-pass.flow.yaml"), """
+        version: 1
+        id: b-pass
+        name: B pass
+        when:
+          - step: browser.open
+        then:
+          - expect: browser.text
+        """);
+        workspace.WriteFile(Path.Combine("project", "steps", "manifests", "flawright-stop.yaml"), """
+        version: 1
+        steps:
+          - name: browser.open
+            drivers:
+              - flawright
+            retrySafe: true
+            implementation:
+              plugin: builtin.fake
+              operation: open
+          - name: browser.fail
+            drivers:
+              - flawright
+            retrySafe: true
+            implementation:
+              plugin: builtin.fake
+              operation: fail
+          - name: browser.text
+            drivers:
+              - flawright
+            retrySafe: true
+            implementation:
+              plugin: builtin.fake
+              operation: assert-text
+        """);
+
+        var driver = new ScriptedRuntimeDriver(
+            "flawright",
+            _ => new ScriptedDriverSession(
+                "flawright",
+                new Dictionary<string, Queue<DriverExecutionResult>>(StringComparer.OrdinalIgnoreCase)
+                {
+                    ["browser.fail"] = new([
+                        new DriverExecutionResult
+                        {
+                            Outcome = RunOutcome.Failed,
+                            Message = "Stop here",
+                            FailureClassification = "driver-step-failed"
+                        }
+                    ]),
+                    ["browser.open"] = new([
+                        new DriverExecutionResult
+                        {
+                            Outcome = RunOutcome.Passed,
+                            Message = "Would have passed"
+                        }
+                    ]),
+                    ["browser.text"] = new([
+                        new DriverExecutionResult
+                        {
+                            Outcome = RunOutcome.Passed,
+                            Message = "Would have matched"
+                        }
+                    ])
+                }));
+
+        var orchestrator = CreateRuntimeOrchestrator(extraDrivers: [driver]);
+
+        var result = await orchestrator.ExecuteAsync(workspace.GetPath("project"), new RunOptions());
+
+        var onlyFlow = Assert.Single(result.Flows);
+        Assert.Equal("a-fail", onlyFlow.FlowId);
+        Assert.Equal(RunOutcome.Failed, onlyFlow.Outcome);
+        Assert.Single(driver.StartedContexts);
+        Assert.Equal("a-fail", driver.StartedContexts[0].FlowId);
+    }
+
+    private static RuntimeOrchestrator CreateRuntimeOrchestrator(Func<HttpMessageHandler>? httpHandlerFactory = null, params IRuntimeDriver[] extraDrivers)
     {
         var configLoader = new ConfigLoader(new ProjectLocator());
         var catalogService = CreateCatalogService();
@@ -630,7 +862,8 @@ public sealed class ExecutionPipelineTests
             new ReportGenerator(),
             [
                 new HttpRuntimeDriver(httpHandlerFactory),
-                new PlaywrightRuntimeDriver()
+                new PlaywrightRuntimeDriver(),
+                .. extraDrivers
             ]);
     }
 
@@ -684,6 +917,8 @@ public sealed class ExecutionPipelineTests
           http:
             enabled: true
           playwright:
+            enabled: true
+          flawright:
             enabled: true
         """);
         workspace.WriteFile(Path.Combine("project", ".cress", "profiles", "local.yaml"), $$"""
@@ -756,6 +991,71 @@ public sealed class ExecutionPipelineTests
 
         protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
             => Task.FromResult(_handler(request));
+    }
+
+    private sealed class ScriptedRuntimeDriver(string name, Func<DriverSessionStartContext, IDriverSession> sessionFactory) : IRuntimeDriver
+    {
+        public string Name => name;
+        public List<DriverSessionStartContext> StartedContexts { get; } = [];
+
+        public IReadOnlyList<Diagnostic> HealthCheck(ProjectCatalog catalog) => [];
+
+        public Task<IDriverSession> StartSessionAsync(DriverSessionStartContext context, CancellationToken cancellationToken)
+        {
+            StartedContexts.Add(context);
+            return Task.FromResult(sessionFactory(context));
+        }
+    }
+
+    private sealed class ScriptedDriverSession(
+        string name,
+        IDictionary<string, Queue<DriverExecutionResult>> scriptedResults,
+        IReadOnlyList<EvidenceArtifact>? finalArtifacts = null) : IDriverSession
+    {
+        public string Name => name;
+
+        public IReadOnlyDictionary<string, string> Metadata { get; } = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+        {
+            ["session"] = "scripted"
+        };
+
+        public ValueTask DisposeAsync() => ValueTask.CompletedTask;
+
+        public Task<DriverExecutionResult> ExecuteAsync(PlanAction action, FlowExecutionContext context, CancellationToken cancellationToken)
+        {
+            if (string.Equals(action.Operation, "capture-screenshot", StringComparison.OrdinalIgnoreCase))
+            {
+                var captureName = action.Inputs.TryGetValue("name", out var nameOverride) ? nameOverride : action.Name;
+                return Task.FromResult(new DriverExecutionResult
+                {
+                    Outcome = RunOutcome.Passed,
+                    Message = "Captured",
+                    Artifacts =
+                    [
+                        new EvidenceArtifact
+                        {
+                            Category = "screenshot",
+                            RelativePath = Path.Combine("screenshots", $"{captureName}.png"),
+                            Description = "Auto capture"
+                        }
+                    ]
+                });
+            }
+
+            if (!scriptedResults.TryGetValue(action.Name, out var queue) || queue.Count == 0)
+            {
+                return Task.FromResult(new DriverExecutionResult
+                {
+                    Outcome = RunOutcome.Passed,
+                    Message = $"{action.Name} passed"
+                });
+            }
+
+            return Task.FromResult(queue.Dequeue());
+        }
+
+        public Task<IReadOnlyList<EvidenceArtifact>> CaptureFinalEvidenceAsync(FlowExecutionContext context, CancellationToken cancellationToken)
+            => Task.FromResult(finalArtifacts ?? []);
     }
 
     private sealed class SimpleHttpServer : IDisposable

@@ -260,6 +260,25 @@ public sealed class StudioWorkspaceRunTests : IDisposable
     }
 
     [Fact]
+    public async Task WorkspaceState_run_all_dispatches_project_wide_request_with_retry_override()
+    {
+        var runner = new FakeRunnerService();
+        using var scope = CreateState(runner);
+        var projectRoot = CreateProject("runner-all");
+        scope.State.SetProjectPath(projectRoot);
+        scope.State.LoadProject();
+        scope.State.RetryCountOverrideText = "2";
+
+        await scope.State.RunAllAsync();
+
+        var request = Assert.Single(runner.Requests);
+        Assert.Null(request.Options.FlowPath);
+        Assert.Empty(request.Options.FlowPaths);
+        Assert.Equal(2, request.Options.RetryCountOverride);
+        Assert.Equal(scope.State.SelectedProfile, request.Options.Profile);
+    }
+
+    [Fact]
     public async Task WorkspaceState_blocks_browser_runs_when_local_base_url_is_unreachable()
     {
         var runner = new FakeRunnerService();

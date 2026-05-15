@@ -359,4 +359,68 @@ public sealed class MetricsPanelTests : TestContext
         Assert.Contains("flow-01 • run-1 • Passed", cut.Markup, StringComparison.Ordinal);
         Assert.Contains("flow-01 • run-2 • Errored", cut.Markup, StringComparison.Ordinal);
     }
+
+    [Fact]
+    public void MetricsPanel_flow_row_click_selects_flow_and_private_helpers_cover_zero_rate_and_warning_color()
+    {
+        var state = CreateState();
+        var projectRoot = Path.Combine(Path.GetTempPath(), "cress-metrics-tests", Guid.NewGuid().ToString("N"));
+        var flowPath = Path.Combine(projectRoot, "flows", "flow-01.flow.yaml");
+
+        try
+        {
+            Directory.CreateDirectory(Path.GetDirectoryName(flowPath)!);
+            File.WriteAllText(flowPath, """
+            version: 1
+            id: flow-01
+            name: Flow 01
+            when:
+              - step: http.get
+                with:
+                  url: https://example.test
+            then:
+              - expect: http.assert-status
+                with:
+                  status: "200"
+            """);
+
+            SetPrivate(state, nameof(StudioWorkspaceState.Snapshot), new StudioProjectSnapshot
+            {
+                Catalog = new ProjectCatalog
+                {
+                    NormalizedFlows =
+                    [
+                        new NormalizedFlow
+                        {
+                            FlowId = "flow-01",
+                            Name = "Flow 01",
+                            SourceFile = flowPath
+                        }
+                    ]
+                }
+            });
+            SetPrivate(state, "CurrentMetrics", MakeMetrics(flowCount: 1, trendPoints: 3));
+
+            var cut = RenderComponent<Cress.Studio.Web.Components.Studio.MetricsPanel>();
+            cut.Find(".metrics-flows-table tbody tr").Click();
+
+            Assert.Equal("flow-01", state.SelectedFlow?.Id);
+
+            var panelType = typeof(Cress.Studio.Web.Components.Studio.MetricsPanel);
+            var trendPassRate = panelType.GetMethod("TrendPassRate", BindingFlags.Static | BindingFlags.NonPublic)
+                ?? throw new InvalidOperationException("TrendPassRate was not found.");
+            var sparklineColor = panelType.GetMethod("SparklineColor", BindingFlags.Static | BindingFlags.NonPublic)
+                ?? throw new InvalidOperationException("SparklineColor was not found.");
+
+            Assert.Equal(0d, Assert.IsType<double>(trendPassRate.Invoke(null, [new TrendPoint(DateTimeOffset.UtcNow, 0, 0, TimeSpan.Zero)])));
+            Assert.Equal("var(--color-warning)", Assert.IsType<string>(sparklineColor.Invoke(null, [new TrendPoint(DateTimeOffset.UtcNow, 8, 2, TimeSpan.FromSeconds(1))])));
+        }
+        finally
+        {
+            if (Directory.Exists(projectRoot))
+            {
+                Directory.Delete(projectRoot, true);
+            }
+        }
+    }
 }

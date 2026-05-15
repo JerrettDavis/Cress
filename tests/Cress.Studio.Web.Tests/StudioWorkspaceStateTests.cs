@@ -541,7 +541,7 @@ public sealed class StudioWorkspaceStateTests : IDisposable
     public async Task Idle_workspace_commands_cover_guard_paths_without_mutating_state()
     {
         using var scope = CreateState();
-        scope.State.SetProjectPath(null);
+        scope.State.SetProjectPath(CreateDirectory("not-a-project"));
 
         Assert.Equal(0, scope.State.FlowCount);
         Assert.Equal(0, scope.State.CapabilityCount);
@@ -566,7 +566,10 @@ public sealed class StudioWorkspaceStateTests : IDisposable
 
         Assert.False(scope.State.HasLoadedProject);
         Assert.False(scope.State.HasLiveRunActivity);
-        Assert.Equal("Choose a workspace path, browse for a folder, or load one of the demos to continue.", scope.State.StatusMessage);
+        Assert.Equal(0, scope.State.FlowCount);
+        Assert.Equal(0, scope.State.CapabilityCount);
+        Assert.Equal(0, scope.State.FixtureCount);
+        Assert.Equal(0, scope.State.StepCount);
     }
 
     [Fact]

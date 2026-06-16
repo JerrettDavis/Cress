@@ -14,7 +14,7 @@
     "test:e2e:docs": "scripts\\run-playwright-docs-e2e.cmd"
   },
   "devDependencies": {
-    "@playwright/test": "^1.59.1"
+    "@playwright/test": "^1.60.0"
   }
 }
 

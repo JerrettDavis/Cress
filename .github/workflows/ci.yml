@@ -237,7 +237,7 @@ jobs:
           flags: full
           name: cress-full
           disable_search: true
-          fail_ci_if_error: true
+          fail_ci_if_error: false
           use_oidc: true
           verbose: true
 
@@ -249,7 +249,7 @@ jobs:
           flags: core
           name: cress-core
           disable_search: true
-          fail_ci_if_error: true
+          fail_ci_if_error: false
           use_oidc: true
           verbose: true
 

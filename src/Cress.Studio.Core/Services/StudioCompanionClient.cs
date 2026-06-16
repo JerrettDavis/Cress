@@ -22,7 +22,7 @@ public sealed class StudioCompanionClient : IStudioCompanionClient, IDisposable
         _httpClient = new HttpClient
         {
             BaseAddress = new Uri(baseUrl, UriKind.Absolute),
-            Timeout = TimeSpan.FromMilliseconds(1500)
+            Timeout = TimeSpan.FromSeconds(5)
         };
     }
 

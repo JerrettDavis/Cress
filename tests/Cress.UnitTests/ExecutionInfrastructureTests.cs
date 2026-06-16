@@ -183,8 +183,8 @@ public sealed class ExecutionInfrastructureTests
           }
 
           if (request.method === 'exit') {
-            console.error('host exiting');
-            process.exit(0);
+            process.stderr.write('host exiting\n', () => process.exit(0));
+            continue;
           }
         }
         """);

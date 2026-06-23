@@ -36,6 +36,7 @@ jobs:
         uses: github/codeql-action/init@v4
         with:
           languages: csharp, javascript
+          queries: security-extended
 
       - name: Install Node dependencies
         run: npm ci

@@ -473,7 +473,7 @@ function sanitizeFileName(value) {
 }
 
 function normalizeOperation(operation) {
-  return String(operation).trim().toLowerCase().replace(/_/g, "_");
+  return String(operation).trim().toLowerCase();
 }
 
 function toArtifact(absolutePath, category, description) {

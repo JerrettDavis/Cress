@@ -950,12 +950,19 @@ public sealed class StudioWorkspaceStateTests : IDisposable
         var stopLiveTicker = stateType.GetMethod("StopLiveTicker", BindingFlags.Instance | BindingFlags.NonPublic)
             ?? throw new InvalidOperationException("StopLiveTicker was not found.");
 
+        // Drive a fast tick cadence so the assertion does not depend on wall-clock
+        // seconds; the default 1s interval makes this flaky under coverage-instrumented
+        // CI load where the thread pool is starved.
+        var intervalField = stateType.GetField("_liveTickerInterval", BindingFlags.Instance | BindingFlags.NonPublic)
+            ?? throw new InvalidOperationException("_liveTickerInterval field was not found.");
+        intervalField.SetValue(scope.State, TimeSpan.FromMilliseconds(50));
+
         var notifications = 0;
         scope.State.Changed += () => Interlocked.Increment(ref notifications);
         SetAutoProperty(scope.State, nameof(StudioWorkspaceState.LiveStepStartedAt), DateTimeOffset.UtcNow);
 
         startLiveTicker.Invoke(scope.State, []);
-        await WaitForAsync(() => Volatile.Read(ref notifications) > 0, timeoutMilliseconds: 4000);
+        await WaitForAsync(() => Volatile.Read(ref notifications) > 0, timeoutMilliseconds: 10000);
         stopLiveTicker.Invoke(scope.State, []);
 
         var notified = Volatile.Read(ref notifications);

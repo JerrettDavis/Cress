@@ -122,6 +122,9 @@ public sealed class StudioWorkspaceState : IDisposable
     private readonly object _liveRunEventsGate = new();
     private CancellationTokenSource? _activeRunCts;
     private CancellationTokenSource? _liveTickerCts;
+    // Interval between live-ticker notifications. Configurable so tests can drive a
+    // faster cadence deterministically instead of depending on wall-clock seconds.
+    private TimeSpan _liveTickerInterval = TimeSpan.FromSeconds(1);
     private bool _ignoreLateProgressUpdates;
 
     public void OpenRecorderPicker()
@@ -1902,7 +1905,7 @@ public sealed class StudioWorkspaceState : IDisposable
             {
                 while (!token.IsCancellationRequested)
                 {
-                    await Task.Delay(TimeSpan.FromSeconds(1), token);
+                    await Task.Delay(_liveTickerInterval, token);
                     if (!token.IsCancellationRequested && LiveStepStartedAt is not null)
                     {
                         NotifyChanged();

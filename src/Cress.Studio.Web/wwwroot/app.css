@@ -3597,11 +3597,32 @@ input[type="checkbox"] {
    Recording modals (R4-R6 + V5) — overlay + dialog chrome
    ========================================================================== */
 
+@keyframes modal-backdrop-enter {
+    /* Fade the dimming overlay in. Crucially, keep the backdrop transparent to
+       pointer input for the whole entrance: the click that OPENS a modal lands
+       on a trigger that the backdrop immediately covers, and without this guard
+       the backdrop intercepts that in-flight pointer interaction (and any
+       retried click on the trigger), leaving the trigger permanently
+       unclickable while the modal is open. */
+    from {
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    to {
+        opacity: 1;
+        pointer-events: none;
+    }
+}
+
 .modal-backdrop {
     position: fixed;
     inset: 0;
     background: rgba(0, 0, 0, 0.45);
     z-index: 200;
+    /* Once the entrance animation finishes the backdrop reverts to its default
+       pointer-events: auto, so clicking it still dismisses the modal. */
+    animation: modal-backdrop-enter 240ms ease-out;
 }
 
 .modal-dialog {

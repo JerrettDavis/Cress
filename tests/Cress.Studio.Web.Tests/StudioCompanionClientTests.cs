@@ -123,7 +123,19 @@ public sealed class StudioCompanionClientTests
 
         public string BaseAddress { get; }
 
+        /// <summary>
+        /// Paths for requests that matched a route this test queued a response for. Only these
+        /// are recorded so that incidental connections from the CI host (e.g. loopback probes
+        /// from network/security agents on hosted runners) can never leak into a test's
+        /// assertions about which of *its own* routes were hit.
+        /// </summary>
         public List<string> RequestPaths { get; } = [];
+
+        /// <summary>
+        /// Paths for requests that did not match any queued route. Kept separately, purely for
+        /// diagnostics, so unexpected traffic is visible without destabilizing route assertions.
+        /// </summary>
+        public List<string> UnmatchedRequestPaths { get; } = [];
 
         public void QueueJsonResponse<T>(string pathAndQuery, T response)
             => _responses[pathAndQuery] = JsonSerializer.Serialize(response);
@@ -157,9 +169,16 @@ public sealed class StudioCompanionClientTests
                 }
 
                 var requestPath = context.Request.RawUrl ?? "/";
-                RequestPaths.Add(requestPath);
-                var body = _responses.TryGetValue(requestPath, out var payload) ? payload : "{}";
-                var buffer = Encoding.UTF8.GetBytes(body);
+                if (_responses.TryGetValue(requestPath, out var payload))
+                {
+                    RequestPaths.Add(requestPath);
+                }
+                else
+                {
+                    UnmatchedRequestPaths.Add(requestPath);
+                    payload = "{}";
+                }
+                var buffer = Encoding.UTF8.GetBytes(payload);
                 context.Response.StatusCode = 200;
                 context.Response.ContentType = "application/json";
                 context.Response.ContentLength64 = buffer.LongLength;

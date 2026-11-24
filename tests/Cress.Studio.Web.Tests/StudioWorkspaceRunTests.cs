@@ -718,6 +718,40 @@ public sealed class StudioWorkspaceRunTests : IDisposable
     }
 
     [Fact]
+    public async Task StopActiveRun_preserves_canceled_status_when_dispatch_completes_inline()
+    {
+        var started = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var runner = new FakeRunnerService
+        {
+            DispatchHandler = (_, _, token) =>
+            {
+                var completion = new TaskCompletionSource<StudioRunnerDispatchResult>();
+                token.Register(() => completion.TrySetCanceled(token));
+                started.SetResult();
+                return completion.Task;
+            }
+        };
+        using var scope = CreateState(runner);
+        var projectRoot = CreateProject("suite-cancel-inline");
+        scope.State.SetProjectPath(projectRoot);
+        scope.State.LoadProject();
+        scope.State.CreateNewSuite();
+        scope.State.SelectedSuite!.Name = "Cancelable suite";
+        scope.State.SelectedSuite.FlowIds.Add("flow.search");
+
+        await Task.Run(async () =>
+        {
+            var runTask = scope.State.RunSelectedSuiteAsync();
+            await started.Task.WaitAsync(TimeSpan.FromSeconds(10));
+            scope.State.StopActiveRun();
+            await runTask;
+        });
+
+        Assert.Equal("Canceled", scope.State.LiveRunStatus);
+        Assert.Equal("Suite Cancelable suite canceled.", scope.State.StatusMessage);
+    }
+
+    [Fact]
     public void SelectArtifact_with_unknown_extension_uses_fallback_preview_text()
     {
         using var scope = CreateState();

@@ -1055,7 +1055,6 @@ public sealed class StudioWorkspaceState : IDisposable
             return;
         }
 
-        _activeRunCts!.Cancel();
         LiveRunStatus = "Stopping";
         LiveRunHeadline = "Stopping run...";
         LiveCurrentStepMessage = "Cancel requested. Waiting for the active step to acknowledge cancellation.";
@@ -1069,6 +1068,7 @@ public sealed class StudioWorkspaceState : IDisposable
             LiveCurrentStep,
             LogLevel: null),
             addStringEvent: true);
+        _activeRunCts!.Cancel();
         NotifyChanged();
     }
 
